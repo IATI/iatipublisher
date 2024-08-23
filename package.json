@@ -59,6 +59,7 @@
   },
   "dependencies": {
     "@renatodeleao/vue-sticky-directive": "^0.3.0",
+    "@vueform/multiselect": "^2.6.9",
     "@types/select2": "^4.0.63",
     "@vueform/multiselect": "^2.6.8",
     "@vuepic/vue-datepicker": "^5.3.0",
