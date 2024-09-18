@@ -41,13 +41,15 @@ class OrganizationOnboardingController extends Controller
 
             $this->organizationOnboardingService->updateDontShowAgain(Auth::user()->organization_id, $request->value);
             DB::commit();
+            $translatedMessage = trans('common/common.updated_successfully');
 
-            return response()->json(['success' => true, 'message' => 'Dont show again updated successfully']);
+            return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
+            $translatedMessage = trans('organisationDetail/organisation_onboarding_controller.error_occurred_while_updating_dont_show_again');
 
-            return response()->json(['success' => false, 'message' => 'Error occurred while updating dont show again']);
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
     }
 
@@ -62,13 +64,15 @@ class OrganizationOnboardingController extends Controller
             DB::beginTransaction();
             $this->organizationOnboardingService->updateOrganizationOnboardingStepToComplete(Auth::user()->organization_id, OrganizationOnboarding::ACTIVITY, true);
             DB::commit();
+            $translatedMessage = trans('common/common.updated_successfully');
 
-            return response()->json(['success' => true, 'message' => 'Activity status updated successfully']);
+            return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
+            $translatedMessage = trans('organisationDetail/organisation_onboarding_controller.error_occurred_while_storing_updating_activity_status');
 
-            return response()->json(['success' => false, 'message' => 'Error occurred while storing updating activity status']);
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
     }
 }

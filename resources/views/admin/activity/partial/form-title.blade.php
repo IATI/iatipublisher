@@ -38,7 +38,7 @@
                     <svg-vue icon="activity-elements/{{ $data['name'] }}"></svg-vue>
                 @endif
             </span>
-            <div class="text-sm font-bold title"> {{ str_replace(' ', '-', strtolower($data['title'])) }}
+            <div class="text-sm font-bold title"> {{ trans(str_replace(' ', '-', strtolower($data['title']))) }}
             </div>
             @if (isCoreElement($data['name']))
                 <svg-vue icon="core" class="ml-2"></svg-vue>

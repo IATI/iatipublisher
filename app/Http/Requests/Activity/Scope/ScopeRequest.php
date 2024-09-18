@@ -41,9 +41,15 @@ class ScopeRequest extends ActivityBaseRequest
         }
 
         return [
-            'activity_scope' => sprintf('nullable|in:%s', implode(',', array_keys(
-                $this->getCodeListForRequestFiles('ActivityScope', 'Activity', false)
-            ))),
+            'activity_scope' => sprintf(
+                'nullable|in:%s',
+                implode(
+                    ',',
+                    array_keys(
+                        $this->getCodeListForRequestFiles('ActivityScope', 'Activity', false)
+                    )
+                )
+            ),
         ];
     }
 
@@ -63,8 +69,8 @@ class ScopeRequest extends ActivityBaseRequest
     public function messages(): array
     {
         return [
-            'in'   => 'The activity scope does not exist.',
-            'size' => 'The activity scope cannot have more than one value.',
+            'in'   => trans('validation.activity_scope.in'),
+            'size' => trans('validation.activity_scope.size'),
         ];
     }
 }

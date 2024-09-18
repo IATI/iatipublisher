@@ -30,7 +30,7 @@
             <span class="text-bluecoral text-xl mr-1.5">
                 <svg-vue icon="organisation-elements/{{ str_replace('-', '_', $data['name']) }}"></svg-vue>
             </span>
-            <div class="text-sm font-bold title"> {{ str_replace(' ', '-', strtolower($data['title'])) }}</div>
+            <div class="text-sm font-bold title"> {{ trans(str_replace(' ', '-', strtolower($data['title']))) }}</div>
 
             @if ($data['name'] === 'name' || $data['name'] === 'reporting-org')
                 <svg-vue icon="core"></svg-vue>

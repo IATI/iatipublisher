@@ -74,7 +74,27 @@ if (!function_exists('readElementJsonSchema')) {
      */
     function readElementJsonSchema(): array
     {
-        return readJsonFile('IATI/Data/elementJsonSchema.json');
+        $cacheKey = 'elementJsonSchema';
+
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
+        $jsonContentAsAssocArray = readJsonFile('IATI/Data/elementJsonSchema.json');
+
+        $jsonContentAsFlattenedArray = Arr::dot($jsonContentAsAssocArray);
+
+        foreach ($jsonContentAsFlattenedArray as $key => &$value) {
+            if (preg_match('/label|placeholder|hover_text|help_text/', $key)) {
+                $value = trans($value);
+            }
+        }
+
+        $cacheableData = Arr::undot($jsonContentAsFlattenedArray);
+
+        Cache::put($cacheKey, $cacheableData);
+
+        return $cacheableData;
     }
 }
 
@@ -87,7 +107,29 @@ if (!function_exists('readOrganizationElementJsonSchema')) {
      */
     function readOrganizationElementJsonSchema(): array
     {
-        return readJsonFile('IATI/Data/organizationElementJsonSchema.json');
+        $cacheKey = 'organizationElementJsonSchema';
+
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
+        $jsonContentAsAssocArray = readJsonFile('IATI/Data/organizationElementJsonSchema.json');
+
+        $jsonContentAsFlattenedArray = Arr::dot($jsonContentAsAssocArray);
+
+        foreach ($jsonContentAsFlattenedArray as $key => &$value) {
+            if (preg_match('/label|placeholder|hover_text|help_text/', $key)) {
+                {
+                    $value = trans($value);
+                }
+            }
+        }
+
+        $cacheableData = Arr::undot($jsonContentAsFlattenedArray);
+
+        Cache::put($cacheKey, $cacheableData);
+
+        return $cacheableData;
     }
 }
 
@@ -1525,6 +1567,11 @@ function regroupResponseForAllActivity(array $response, array $uniqueIdentifiers
     }
 
     return $groupedResponses;
+}
+
+function getTranslatedUntitled(): string
+{
+    return trans('common/common.untitled');
 }
 
 /**

@@ -195,7 +195,8 @@
                               <div class="mr-4">
                                 {{
                                   indic.indicator.title[0].narrative[0]
-                                    .narrative ?? 'untitled'
+                                    .narrative ??
+                                  getTranslatedUntitled(translatedData)
                                 }}
                               </div>
                               <div class="flex shrink-0 grow justify-between">
@@ -366,7 +367,10 @@ import getActivityTitle from 'Composable/title';
 import dateFormat from 'Composable/dateFormat';
 import HelperText from 'Components/HelperText.vue';
 import indicator from 'Activity/results/elements/Indicator.vue';
-import { onlyDeprecatedStatusMap } from 'Composable/utils';
+import {
+  getTranslatedUntitled,
+  onlyDeprecatedStatusMap,
+} from 'Composable/utils';
 
 export default defineComponent({
   name: 'ActivityResult',
@@ -435,6 +439,6 @@ export default defineComponent({
       return indicator;
     },
   },
-  methods: { onlyDeprecatedStatusMap },
+  methods: { getTranslatedUntitled, onlyDeprecatedStatusMap },
 });
 </script>

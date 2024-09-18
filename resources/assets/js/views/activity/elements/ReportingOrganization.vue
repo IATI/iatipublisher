@@ -13,31 +13,33 @@
         <span>{{
           reporting_org.type
             ? types?.organizationType[reporting_org.type]
-            : 'Type Missing'
+            : getTranslatedMissing(translatedData, 'type')
         }}</span>
       </div>
       <table>
         <tbody>
           <tr>
-            <td>Reference</td>
+            <td>{{ getTranslatedElement(translatedData, 'reference') }}</td>
             <td>
               {{ reporting_org.ref ?? 'Reference Missing' }}
             </td>
           </tr>
           <tr>
-            <td>Secondary Reporter</td>
+            <td>
+              {{ getTranslatedElement(translatedData, 'secondary_reporter') }}
+            </td>
             <td>
               {{
                 parseInt(reporting_org.secondary_reporter)
-                  ? 'True'
+                  ? translatedData['common.common.true']
                   : reporting_org.secondary_reporter
-                  ? 'False'
-                  : 'Missing'
+                  ? translatedData['common.common.false']
+                  : getTranslatedMissing(translatedData)
               }}
             </td>
           </tr>
           <tr>
-            <td>Name</td>
+            <td>{{ getTranslatedElement(translatedData, 'name') }}</td>
             <td>
               <div
                 v-for="(narrative, j) in reporting_org.narrative"
@@ -50,12 +52,19 @@
                 <div class="language mb-1.5">
                   ({{
                     narrative.language
-                      ? `Language: ${types?.languages[narrative.language]}`
-                      : 'Language : Missing'
+                      ? `${getTranslatedLanguage(translatedData)} : ${
+                          types?.languages[narrative.language]
+                        }`
+                      : `${getTranslatedLanguage(
+                          translatedData
+                        )} : ${getTranslatedMissing(translatedData)}`
                   }})
                 </div>
                 <div class="w-[500px] max-w-full">
-                  {{ narrative.narrative ?? 'Narrative Missing' }}
+                  {{
+                    narrative.narrative ??
+                    getTranslatedMissing(translatedData, 'narrative')
+                  }}
                 </div>
               </div>
             </td>
@@ -68,6 +77,11 @@
 
 <script setup lang="ts">
 import { defineProps, inject } from 'vue';
+import {
+  getTranslatedElement,
+  getTranslatedLanguage,
+  getTranslatedMissing,
+} from 'Composable/utils';
 
 defineProps({
   data: { type: Object, required: true },
@@ -79,4 +93,5 @@ interface Types {
 }
 
 const types = inject('types') as Types;
+const translatedData = inject('translatedData') as Record<string, string>;
 </script>

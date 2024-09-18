@@ -14,83 +14,94 @@
               class="nav__list flex pt-10 leading-5 xl:space-x-3"
             >
               <li class="nav__links active dropdown">
-                <a href="/about">ABOUT</a>
+                <a href="/about">{{ translatedData['common.common.about'] }}</a>
                 <NavDropdown
-                  name="About"
-                  text="IATI Publisher helps small and medium-sized organisations publish IATI data on development and humanitarian financing and activities"
-                  btn-text="Learn more"
+                  :name="translatedData['common.common.about']"
+                  :text="translatedData['public.header.about.description']"
+                  :btn-text="translatedData['common.common.learn_more']"
                   btn-link="/about"
                 />
               </li>
               <li class="nav__links active dropdown">
-                <a href="/publishing-checklist">PUBLISHING CHECKLIST</a>
+                <a href="/publishing-checklist">{{
+                  translatedData['common.common.publishing_checklist']
+                }}</a>
                 <NavDropdown
-                  name="Publishing checklist"
-                  text="New to IATI? Use our checklist to track each step required for your organisation to successfully publish IATI data"
-                  btn-text="Read more"
+                  :name="translatedData['common.common.publishing_checklist']"
+                  :text="
+                    translatedData[
+                      'public.header.publishing_checklist.description'
+                    ]
+                  "
+                  :btn-text="translatedData['common.common.learn_more']"
                   btn-link="/publishing-checklist"
                 />
               </li>
               <li class="nav__links active dropdown relative">
-                <a href="/iati-standard">IATI STANDARD</a>
+                <a href="/iati-standard">{{
+                  translatedData['common.common.iati_standard']
+                }}</a>
                 <NavDropdown
-                  name="IATI Standard"
-                  text="The IATI Standard provides information and guidance on all the data fields that
-                        your organisation can publish IATI data on"
-                  btn-text="See all data fields"
+                  :name="translatedData['common.common.iati_standard']"
+                  :text="
+                    translatedData['public.header.iati_standard.description']
+                  "
+                  :btn-text="translatedData['common.common.learn_more']"
                   btn-link="/iati-standard"
                 />
               </li>
               <li class="nav__links active dropdown">
-                <a href="/support">SUPPORT</a>
+                <a href="/support">{{
+                  translatedData['common.common.support']
+                }}</a>
                 <NavDropdown
-                  name="Support"
-                  text=" Any questions? Get help to publish your organisation’s data"
-                  btn-text="Read more"
+                  :name="translatedData['common.common.support']"
+                  :text="translatedData['public.header.support.description']"
+                  :btn-text="translatedData['common.common.learn_more']"
                   btn-link="/support"
                 />
               </li>
-
-              <!-- commented to temporarily hide language buttons -->
-
-              <!-- <li class="absolute bottom-4 left-0 right-0  xl:hidden">
-                <div class="flex items-center justify-center">
-                  <span class="mr-2 pt-5 pb-5 uppercase text-white xl:pt-0"
-                    >Language:</span
-                  >
-                  <ul class="languages flex items-center justify-center">
-                    <li class="nav__links">
-                      <a class="nav__active links__active" href="/">EN</a>
-                    </li>
-                    <li class="nav__links">
-                      <a href="/">FR</a>
-                    </li>
-                    <li class="nav__links">
-                      <a href="/">ES</a>
-                    </li>
-                  </ul>
-                </div>
-              </li> -->
             </ul>
           </div>
           <!-- remove width later -->
-          <div class="languages hidden w-[170px] pt-11 xl:block">
-            <!-- commented to temporarily hide language buttons -->
-
-            <!-- <div class="flex">
-              <span class="mr-2 pt-5 pb-5 uppercase xl:pt-0">Language:</span>
+          <div class="languages hidden pt-11 xl:block">
+            <div class="flex">
+              <span class="mr-2 pt-5 pb-5 uppercase xl:pt-0"
+                >{{ translatedData['elements.label.language'] }}:</span
+              >
               <ul class="flex items-center justify-center">
                 <li class="nav__links">
-                  <a class="nav__active links__active" href="/">EN</a>
+                  <button
+                    :class="{
+                      'nav__active links__active': currentLanguage === 'en',
+                    }"
+                    @click="changeLanguage('en')"
+                  >
+                    EN
+                  </button>
                 </li>
                 <li class="nav__links">
-                  <a href="/">FR</a>
+                  <button
+                    :class="{
+                      'nav__active links__active': currentLanguage === 'fr',
+                    }"
+                    @click="changeLanguage('fr')"
+                  >
+                    FR
+                  </button>
                 </li>
                 <li class="nav__links">
-                  <a href="/">ES</a>
+                  <button
+                    :class="{
+                      'nav__active links__active': currentLanguage === 'es',
+                    }"
+                    @click="changeLanguage('es')"
+                  >
+                    ES
+                  </button>
                 </li>
               </ul>
-            </div> -->
+            </div>
           </div>
           <div id="menu-overlay"></div>
           <div
@@ -127,8 +138,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted } from 'vue';
+import { defineComponent, onUnmounted } from 'vue';
 import NavDropdown from '../../../components/NavDropdown.vue';
+import LanguageService from 'Services/language';
 
 export default defineComponent({
   components: {
@@ -138,14 +150,27 @@ export default defineComponent({
     title: { type: String, required: true },
     auth: { type: String, required: true },
     superAdmin: { type: Boolean, required: false, default: false },
+    translatedData: { type: Object, required: true },
+    currentLanguage: { type: String, required: true },
   },
   setup() {
-    onMounted(() => {
-      document.body.classList.add('no-nav');
-    });
     onUnmounted(() => {
       document.body.classList.remove('no-nav');
     });
+
+    const changeLanguage = (lang: string) => {
+      LanguageService.changeLanguage(lang)
+        .then(() => {
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    return {
+      changeLanguage,
+    };
   },
 });
 </script>

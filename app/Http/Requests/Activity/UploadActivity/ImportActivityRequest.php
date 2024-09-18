@@ -50,9 +50,9 @@ class ImportActivityRequest extends ActivityBaseRequest
      */
     public function messages(): array
     {
-        $messages['activity.required'] = 'The activity file must be uploaded';
-        $messages['activity.activity_file'] = 'The file must be of either xml or csv format.';
-        $messages['activity.max'] = 'The file shouldn\'t be greater than 10MB.';
+        $messages['activity.required'] = trans('validation.activity_upload.required');
+        $messages['activity.activity_file'] = trans('validation.activity_upload.activity_file');
+        $messages['activity.max'] = trans('validation.activity_upload.max');
 
         return $messages;
     }
@@ -60,7 +60,7 @@ class ImportActivityRequest extends ActivityBaseRequest
     /**
      * Overwritten failedValidation method for JSON response.
      *
-     * @param Validator $validator
+     * @param  Validator  $validator
      *
      * @return ValidationException
      */

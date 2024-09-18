@@ -49,3 +49,6 @@ Route::get('/activities/activities_count_by_published_status', [ActivityControll
     ->middleware('auth')
     ->name('activities.getActivitiesCountByPublishedStatus');
 Route::get('/duplicate-activity', [ActivityController::class, 'duplicateActivity'])->middleware('auth');
+Route::get('/language/{language}', [App\Http\Controllers\Web\WebController::class, 'setLocale'])->name('set-locale');
+Route::get('/current-language', [App\Http\Controllers\Web\WebController::class, 'getLocale'])->name('get-locale');
+Route::get('/translated-data', [App\Http\Controllers\Web\WebController::class, 'getTranslatedData'])->name('get-translated-data');
