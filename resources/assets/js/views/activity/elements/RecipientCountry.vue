@@ -11,7 +11,9 @@
           >({{ roundFloat(participating_org.percentage) }}%)</span
         >
       </div>
-      <span v-else class="italic">Missing</span>
+      <span v-else class="italic">{{
+        getTranslatedMissing(translatedData)
+      }}</span>
     </div>
 
     <div
@@ -22,17 +24,21 @@
     >
       <div v-if="item.narrative" class="flex max-w-[887px] flex-col">
         <span v-if="item.language" class="language mb-1.5">
-          (Language: {{ types.languages[item.language] }})
+          ({{ getTranslatedLanguage(translatedData) }}:
+          {{ types.languages[item.language] }})
         </span>
         <span>{{ item.narrative }}</span>
       </div>
-      <span v-else class="italic">Narrative Missing</span>
+      <span v-else class="italic">{{
+        getTranslatedMissing(translatedData, 'narrative')
+      }}</span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
+import { getTranslatedLanguage, getTranslatedMissing } from 'Composable/utils';
 
 export default defineComponent({
   name: 'ActivityRecipientCountry',
@@ -49,12 +55,14 @@ export default defineComponent({
     }
 
     const types = inject('types') as Types;
+    const translatedData = inject('translatedData') as Record<string, string>;
 
     function roundFloat(num: string) {
       return parseFloat(num).toFixed(2);
     }
 
-    return { types, roundFloat };
+    return { types, roundFloat, translatedData };
   },
+  methods: { getTranslatedLanguage, getTranslatedMissing },
 });
 </script>

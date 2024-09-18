@@ -41,7 +41,7 @@ class TotalExpenditureController extends Controller
     {
         try {
             $id = Auth::user()->organization_id;
-            $element = json_decode(file_get_contents(app_path('IATI/Data/organizationElementJsonSchema.json')), true, 512, JSON_THROW_ON_ERROR);
+            $element = readOrganizationElementJsonSchema();
             $organization = $this->totalExpenditureService->getOrganizationData($id);
             $form = $this->totalExpenditureService->formGenerator($id, Arr::get($organization->deprecation_status_map, 'total_expenditure`', []));
             $data = ['title'=> $element['total_expenditure']['label'], 'name'=>'total-expenditure'];
@@ -49,8 +49,9 @@ class TotalExpenditureController extends Controller
             return view('admin.organisation.forms.totalExpenditure.totalExpenditure', compact('form', 'organization', 'data'));
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
-            return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while opening organization total-expenditure form.');
+            return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
     }
 
@@ -65,14 +66,18 @@ class TotalExpenditureController extends Controller
     {
         try {
             if (!$this->totalExpenditureService->update(Auth::user()->organization_id, $request->all())) {
-                return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while updating organization total-expenditure.');
-            }
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.organisation.index')->with('success', 'Organization total-expenditure updated successfully.');
+                return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return redirect()->route('admin.organisation.index')->with('success', $translatedMessage);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while updating organization total-expenditure.');
+            return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
     }
 }

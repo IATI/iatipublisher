@@ -9,11 +9,15 @@
         <span v-if="identifier.reference_type">{{
           types.otherIdentifierType[identifier.reference_type]
         }}</span>
-        <span v-else class="italic">Type Missing</span>
+        <span v-else class="italic">{{
+          getTranslatedMissing(translatedData, 'type')
+        }}</span>
       </div>
       <div class="text-sm">
         <span v-if="identifier.reference">{{ identifier.reference }}</span>
-        <span v-else class="italic">Reference Missing</span>
+        <span v-else class="italic">{{
+          getTranslatedMissing(translatedData, 'reference')
+        }}</span>
       </div>
       <div>
         <div class="tb-content ml-5">
@@ -25,12 +29,28 @@
             <table>
               <tbody>
                 <tr>
-                  <td>Owner Organisation Reference</td>
+                  <td>
+                    {{
+                      getTranslatedElement(
+                        translatedData,
+                        'owner_organisation_reference'
+                      )
+                    }}
+                  </td>
                   <td v-if="post.ref">{{ post.ref }}</td>
-                  <td v-else class="italic">Missing</td>
+                  <td v-else class="italic">
+                    {{ getTranslatedMissing(translatedData) }}
+                  </td>
                 </tr>
                 <tr>
-                  <td>Owner Organisation Narrative</td>
+                  <td>
+                    {{
+                      getTranslatedElement(
+                        translatedData,
+                        'owner_organisation_narrative'
+                      )
+                    }}
+                  </td>
                   <td>
                     <div
                       v-for="(n, k) in post.narrative"
@@ -40,13 +60,16 @@
                     >
                       <div v-if="n.narrative" class="flex flex-col">
                         <span v-if="n.language" class="language top"
-                          >(Language: {{ types.languages[n.language] }})</span
+                          >({{ getTranslatedLanguage(translatedData) }} :
+                          {{ types.languages[n.language] }})</span
                         >
                         <span v-if="n.narrative" class="description">{{
                           n.narrative
                         }}</span>
                       </div>
-                      <span v-else class="italic">Missing</span>
+                      <span v-else class="italic">{{
+                        getTranslatedMissing(translatedData)
+                      }}</span>
                     </div>
                   </td>
                 </tr>
@@ -61,6 +84,11 @@
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
+import {
+  getTranslatedElement,
+  getTranslatedLanguage,
+  getTranslatedMissing,
+} from 'Composable/utils';
 
 export default defineComponent({
   name: 'OtherIdentifier',
@@ -76,7 +104,14 @@ export default defineComponent({
       languages: [];
     }
     const types = inject('types') as Types;
-    return { types };
+    const translatedData = inject('translatedData') as Record<string, string>;
+
+    return { types, translatedData };
+  },
+  methods: {
+    getTranslatedLanguage,
+    getTranslatedElement,
+    getTranslatedMissing,
   },
 });
 </script>

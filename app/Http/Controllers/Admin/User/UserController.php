@@ -96,7 +96,9 @@ class UserController extends Controller
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
 
-            return redirect()->back()->with('error', 'Error has occurred while rendering user listing page');
+            $translatedMessage = 'Error Has Occurred While Rendering User Listing Page';
+
+            return redirect()->back()->with('error', $translatedMessage);
         }
     }
 
@@ -116,12 +118,16 @@ class UserController extends Controller
             $this->userService->store($formData);
             $this->db->commit();
 
-            return response()->json(['success' => true, 'message' => 'New user successfully created.']);
+            $translatedMessage = trans('userProfile/user_controller.new_user_successfully_created');
+
+            return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             $this->db->rollback();
             logger()->error($e->getMessage());
 
-            return response()->json(['success' => false, 'message' => 'Error has occurred while creating user.']);
+            $translatedMessage = trans('userProfile/user_controller.error_has_occurred_while_creating_user');
+
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
     }
 
@@ -145,12 +151,16 @@ class UserController extends Controller
             $this->userService->update($id, $formData);
             $this->db->commit();
 
-            return response()->json(['success' => true, 'message' => 'User has been updated successfully.']);
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             $this->db->rollback();
             logger()->error($e->getMessage());
 
-            return response()->json(['success' => false, 'message' => 'Error has occurred while updating user.']);
+            $translatedMessage = trans('common/common.failed_to_update_data');
+
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
     }
 
@@ -164,14 +174,20 @@ class UserController extends Controller
     {
         try {
             if ($this->userService->delete($id)) {
-                return response()->json(['success' => true, 'message' => 'User has been deleted successfully.']);
+                $translatedMessage = trans('userProfile/user_controller.user_has_been_deleted_successfully');
+
+                return response()->json(['success' => true, 'message' => $translatedMessage]);
             }
 
-            return response()->json(['success' => false, 'message' => 'The user cannot be deleted.']);
+            $translatedMessage = trans('userProfile/user_controller.the_user_cannot_be_deleted');
+
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             logger()->error($e);
 
-            return response()->json(['success' => false, 'message' => 'Error has occurred while deleting user.']);
+            $translatedMessage = trans('userProfile/user_controller.error_has_occurred_while_deleting_user');
+
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
     }
 
@@ -184,11 +200,12 @@ class UserController extends Controller
     {
         try {
             $status = $this->userService->getStatus();
+            $translatedMessage = 'User status successfully retrieved.';
 
             return response()->json([
                 'success' => true,
-                'message' => 'User status successfully retrieved.',
-                'data' => ['account_verified' => $status],
+                'message' => $translatedMessage,
+                'data'    => ['account_verified' => $status],
             ]);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
@@ -209,10 +226,11 @@ class UserController extends Controller
     {
         try {
             $this->userService->resendVerificationEmail();
+            $translatedMessage = trans('userProfile/user_controller.verification_email_successfully_sent');
 
             return response()->json([
                 'success' => true,
-                'message' => 'Verification email successfully sent.',
+                'message' => $translatedMessage,
             ]);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
@@ -240,8 +258,9 @@ class UserController extends Controller
             return view('admin.user.profile', compact('user', 'languagePreference'));
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_while_rendering_setting_page');
 
-            return redirect()->route('admin.activities.index')->with('error', 'Error while rendering setting page');
+            return redirect()->route('admin.activities.index')->with('error', $translatedMessage);
         }
     }
 
@@ -258,18 +277,20 @@ class UserController extends Controller
         try {
             $queryParams = $this->getQueryParams($request);
             $users = $this->userService->getPaginatedUsers($page, $queryParams);
+            $translatedMessage = 'Paginated users fetched successfully.';
 
             return response()->json([
                 'success' => true,
-                'message' => 'Paginated users fetched successfully.',
+                'message' => $translatedMessage,
                 'data' => $users,
             ]);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = 'Error occurred while trying to get paginated user.';
 
             return response()->json([
                 'success' => false,
-                'message' => 'Error occurred while trying to get paginated user.',
+                'message' => $translatedMessage,
             ]);
         }
     }
@@ -344,21 +365,25 @@ class UserController extends Controller
             $formData = $request->only(['current_password', 'password']);
 
             if (!Hash::check($formData['current_password'], Auth::user()->getAuthPassword())) {
-                return response()->json(['success' => false, 'errors' => ['current_password' => ['Please enter correct current password']]]);
+                $translatedMessage = trans('userProfile/user_controller.please_enter_correct_current_password');
+
+                return response()->json(['success' => false, 'errors' => ['current_password' => $translatedMessage]]);
             }
 
             $this->userService->updatePassword(Auth::user()->id, $formData);
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return response()->json([
                 'success' => true,
-                'message' => 'Password updated successfully.',
+                'message' => $translatedMessage,
             ]);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('userProfile/user_controller.error_occurred_while_updating_password');
 
             return response()->json([
                 'success' => false,
-                'message' => 'Error occurred while updating password.',
+                'message' => $translatedMessage,
             ]);
         }
     }
@@ -379,18 +404,20 @@ class UserController extends Controller
             $this->db->beginTransaction();
             $this->userService->update(Auth::user()->id, $formData);
             $this->db->commit();
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return response()->json([
                 'success' => true,
-                'message' => 'User profile updated successfully.',
+                'message' => $translatedMessage,
             ]);
         } catch (\Exception $e) {
             $this->db->rollback();
             logger()->error($e->getMessage());
+            $translatedMessage = trans('userProfile/user_controller.error_occurred_while_updating_user_profile');
 
             return response()->json([
                 'success' => false,
-                'message' => 'Error occurred while updating user profile.',
+                'message' => $translatedMessage,
             ]);
         }
     }
@@ -408,16 +435,22 @@ class UserController extends Controller
             $user = $this->userService->getUser($id);
 
             if ($this->userService->toggleUserStatus($id)) {
-                return response()->json(['success' => true, 'message' => $user->status ? 'User has been deactivated successfully.' : 'User has been activated successfully.']);
-            }
+                $translatedMessage = $user->status
+                    ? trans('userProfile/user_controller.user_has_been_deactivated_successfully')
+                    : trans('userProfile/user_controller.user_has_been_activated_successfully');
 
-            return response()->json(['success' => false, 'message' => 'The status of this user cannot be changed.']);
+                return response()->json(['success' => true, 'message' => $translatedMessage]);
+            }
+            $translatedMessage = trans('userProfile/user_controller.the_status_of_this_user_cannot_be_changed');
+
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = 'Error has occurred while trying to toggle user status';
 
             return response()->json([
                 'success' => false,
-                'message' => 'Error has occurred while trying to toggle user status',
+                'message' => $translatedMessage,
             ]);
         }
     }

@@ -65,7 +65,6 @@ $(document).on('click', function (event) {
 
 $(document).on('click', '.help', function (event) {
   event.stopPropagation();
-  console.log('Hello');
 
   $('.help__text').removeAttr('style');
 

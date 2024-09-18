@@ -14,10 +14,13 @@
             icon="warning-fill"
           ></svg-vue>
           <div class="font-bold">
-            {{ errorCount(errorData) + importErrorlength }} Issues found
+            {{ errorCount(errorData) + importErrorlength }}
+            {{ translatedData['common.common.issues_found'] }}
           </div>
         </div>
-        <button class="validation__toggle" @click="errorToggle()">Show</button>
+        <button class="validation__toggle" @click="errorToggle()">
+          {{ translatedData['common.common.show'] }}
+        </button>
       </div>
     </div>
     <div
@@ -39,7 +42,7 @@
             "
             @click="issueType = 'validator'"
           >
-            IATI Validator Issues
+            {{ translatedData['common.common.iati_validator_issues'] }}
           </div>
           <div
             v-if="importErrors"
@@ -51,7 +54,7 @@
             "
             @click="issueType = 'upload'"
           >
-            Uploaded file Issues
+            {{ translatedData['common.common.uploaded_file_issues'] }}
           </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -61,7 +64,9 @@
             @click="deleteErrors"
           >
             <svg-vue class="text-sm text-bluecoral" icon="delete"></svg-vue>
-            <span class="ml-0.5 mt-1 text-bluecoral">REMOVE</span>
+            <span class="ml-0.5 mt-1 text-bluecoral">
+              {{ translatedData['common.common.remove'] }}
+            </span>
           </button>
           <button
             class="validation__toggle text-bluecoral"
@@ -119,6 +124,7 @@ const props = defineProps({
 
 // toggle issues
 const [errorValue, errorToggle] = useToggle();
+const translatedData = inject('translatedData') as Record<string, string>;
 const importErrors = inject('importActivityError') as object;
 const activityId = inject('activityId');
 const issueType = ref();

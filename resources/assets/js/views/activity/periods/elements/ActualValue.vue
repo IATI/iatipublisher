@@ -4,7 +4,11 @@
       <table class="mb-3 w-full">
         <tbody>
           <tr>
-            <td><span class="category flex">Actual Value</span></td>
+            <td>
+              <span class="category flex">{{
+                getTranslatedElement(translatedData, 'actual_value')
+              }}</span>
+            </td>
             <td v-if="!isEveryValueNull(tValue)">
               <div :class="elementSpacing">
                 {{ tValue.value ?? '' }}
@@ -16,7 +20,11 @@
               </div>
 
               <div class="flex" :class="elementSpacing">
-                <div>Location Reference:&nbsp;</div>
+                <div>
+                  {{
+                    getTranslatedElement(translatedData, 'location_reference')
+                  }}:&nbsp;
+                </div>
                 <div>
                   {{
                     getLocation(tValue.location)
@@ -32,7 +40,9 @@
               </div>
 
               <div class="flex" :class="elementSpacing">
-                <div>Dimension:&nbsp;</div>
+                <div>
+                  {{ getTranslatedElement(translatedData, 'dimension') }}:&nbsp;
+                </div>
                 <div>
                   <div
                     v-for="(dim, d) in tValue.dimension"
@@ -56,7 +66,9 @@
               </div>
 
               <div class="flex" :class="elementSpacing">
-                <div>Comment:&nbsp;</div>
+                <div>
+                  {{ getTranslatedElement(translatedData, 'comment') }}:&nbsp;
+                </div>
                 <div>
                   <div
                     v-for="(com, c) in tValue.comment[0].narrative"
@@ -67,7 +79,7 @@
                     }"
                   >
                     <div class="language subtle-darker mb-1.5">
-                      (Language:
+                      ({{ getTranslatedLanguage(translatedData) }}:
                       {{ com.language ? dlType.language[com.language] : '' }}
                       <span
                         v-if="!com.language"
@@ -98,7 +110,9 @@
           <tbody>
             <tr>
               <td colspan="2">
-                <div class="category flex">Document Link</div>
+                <div class="category flex">
+                  {{ getTranslatedElement(translatedData, 'document_link') }}
+                </div>
                 <div
                   class="divider my-4 h-px w-full border-b border-n-20"
                 ></div>
@@ -113,7 +127,9 @@
           <tbody>
             <tr>
               <td>
-                <div class="category flex">Document Link</div>
+                <div class="category flex">
+                  {{ getTranslatedElement(translatedData, 'document_link') }}
+                </div>
               </td>
               <td>
                 <span class="text-xs italic text-light-gray">N/A</span>
@@ -133,7 +149,12 @@ import { defineComponent, toRefs, inject } from 'vue';
 import { DocumentLink } from 'Activity/indicators/elements/Index';
 
 //composable
-import { getLocation, isEveryValueNull } from 'Composable/utils';
+import {
+  getLocation,
+  getTranslatedElement,
+  getTranslatedLanguage,
+  isEveryValueNull,
+} from 'Composable/utils';
 
 export default defineComponent({
   name: 'ActualValue',
@@ -148,10 +169,10 @@ export default defineComponent({
     let { data } = toRefs(props);
 
     // vue inject
+    const translatedData = inject('translatedData') as Record<string, string>;
     const dlType = inject('types');
 
     const elementSpacing = 'mb-1';
-
     const actualValue = data.value;
 
     return {
@@ -161,7 +182,9 @@ export default defineComponent({
       getLocation,
       dlType,
       isEveryValueNull,
+      translatedData,
     };
   },
+  methods: { getTranslatedLanguage, getTranslatedElement },
 });
 </script>

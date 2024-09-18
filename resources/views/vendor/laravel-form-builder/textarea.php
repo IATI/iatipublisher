@@ -37,7 +37,8 @@ if ($showLabel && $showField) : ?>
             <?php else : ?>
                 <div class="flex">
                     <p class="help-button text-xs text-n-40 hover:text-spring-50 mb-1 cursor-pointer inline-block">
-                        Help</p>
+                        Help
+                    </p>
                     <div class="help-button-content hidden">
                         <p class="font-bold text-bluecoral">
                             <?= $options['help_block']['title'] ?>

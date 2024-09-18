@@ -40,9 +40,10 @@ class TitleXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The first title is required.', $flattenErrors);
-        $this->assertContains('The narrative is required when language is specified.', $flattenErrors);
-        $this->assertContains('The title language field must be unique.', $flattenErrors);
+
+        $this->assertContains(trans('validation.first_title_required'), $flattenErrors);
+        $this->assertContains(trans('validation.narrative_language_unique'), $flattenErrors);
+        $this->assertContains(trans('validation.narrative_is_required_when_language_is_populated'), $flattenErrors);
     }
 
     /**

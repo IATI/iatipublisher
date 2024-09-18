@@ -85,7 +85,7 @@ class WrapperCollectionForm extends Form
 
         if (isset($data['add_more']) && $data['add_more']) {
             $name = $data['name'];
-            $this->add('delete_this_' . $data['name'], 'button', [
+            $this->add(trans('common/common.delete_this') . $data['name'], 'button', [
                 'attr' => [
                     'class' => 'delete-parent two text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1.2rem] w-[100%] justify-end pr-6 ' . " delete-parent-item-$name delete-parent-item delete-parent-selector",
 

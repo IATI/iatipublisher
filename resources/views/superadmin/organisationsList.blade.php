@@ -8,6 +8,7 @@
             :publisher-types='{{json_encode($publisherType)}}'
             :data-licenses='{{json_encode($dataLicense)}}'
             :oldest-dates='{{json_encode($oldestDates)}}'
+            :translated-data='{{json_encode($translatedData)}}'
     >
     </organisation-list>
 @endsection

@@ -17,7 +17,8 @@ class SectorXmlTest extends XmlBaseTest
     {
         $rows = $this->vocabulary_same_empty_percentage_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The sum of percentages of same vocabulary must be equal to 100%', $flattenErrors);
+
+        $this->assertContains(trans('validation.sum'), $flattenErrors);
     }
 
     /**
@@ -135,7 +136,8 @@ class SectorXmlTest extends XmlBaseTest
     {
         $rows = $this->narrative_empty_vocabulary_98_or_99();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The Narrative field is required.', $flattenErrors);
+
+        $this->assertContains(trans('validation.narrative_is_required'), $flattenErrors);
     }
 
     /**
@@ -210,10 +212,11 @@ class SectorXmlTest extends XmlBaseTest
     {
         $rows = $this->get_invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The sector code is invalid.', $flattenErrors);
-        $this->assertContains('The sector vocabulary-uri field must be a valid url.', $flattenErrors);
-        $this->assertContains('The sector vocabulary is invalid.', $flattenErrors);
-        $this->assertContains('The sector percentage field must be a number.', $flattenErrors);
+
+        $this->assertContains(trans('validation.sector_code_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.url_valid'), $flattenErrors);
+        $this->assertContains(trans('validation.vocabulary_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_sector.percentage.numeric'), $flattenErrors);
     }
 
     /**

@@ -12,14 +12,14 @@
         <span>{{
           sec.sector_vocabulary
             ? type.sectorVocabulary[sec.sector_vocabulary]
-            : 'Vocabulary Missing'
+            : getTranslatedMissing(translatedData, 'vocabulary')
         }}</span>
       </div>
       <div class="ml-4">
         <table class="mb-3">
           <tbody>
             <tr>
-              <td>Code</td>
+              <td>{{ getTranslatedElement(translatedData, 'code') }}</td>
               <td>
                 <div class="text-sm">
                   <span v-if="sec.text">
@@ -79,11 +79,13 @@
                 sec.sector_vocabulary === '98' || sec.sector_vocabulary === '99'
               "
             >
-              <td>Vocabulary URI</td>
+              <td>
+                {{ getTranslatedElement(translatedData, 'vocabulary_uri') }}
+              </td>
               <td>
                 <div class="text-sm">
                   <span v-if="sec.vocabulary_uri">
-                    <a href="sec.vocabulary_uri" target="_blank">
+                    <a :href="sec.vocabulary_uri" target="_blank">
                       {{ sec.vocabulary_uri }}
                     </a>
                   </span>
@@ -94,7 +96,7 @@
               </td>
             </tr>
             <tr>
-              <td>Description</td>
+              <td>{{ getTranslatedElement(translatedData, 'description') }}</td>
               <td>
                 <div
                   v-for="(sd, i) in sec.narrative"
@@ -110,8 +112,10 @@
                   >
                     ({{
                       sd.language
-                        ? `Language: ${type.languages[sd.language]}`
-                        : 'Language: N/A'
+                        ? `${getTranslatedLanguage(translatedData)} : ${
+                            type.languages[sd.language]
+                          }`
+                        : `${getTranslatedLanguage(translatedData)} : N/A`
                     }})
                   </div>
                   <div class="text-sm">
@@ -134,6 +138,11 @@
 
 <script lang="ts">
 import { defineComponent, toRefs, inject } from 'vue';
+import {
+  getTranslatedElement,
+  getTranslatedLanguage,
+  getTranslatedMissing,
+} from 'Composable/utils';
 
 export default defineComponent({
   name: 'TransactionSector',
@@ -145,8 +154,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { data } = toRefs(props);
-
     interface Sector {
       sectorVocabulary: object;
       sectorCode: {};
@@ -155,8 +162,6 @@ export default defineComponent({
       unsdgTargets: {};
       languages: {};
     }
-
-    const type = inject('types') as Sector;
 
     interface ArrayObject {
       category_code: string;
@@ -169,12 +174,22 @@ export default defineComponent({
       vocabulary_uri: string;
     }
 
+    const { data } = toRefs(props);
     const sector = data.value as ArrayObject[];
+
+    const type = inject('types') as Sector;
+    const translatedData = inject('translatedData') as Record<string, string>;
 
     return {
       sector,
       type,
+      translatedData,
     };
+  },
+  methods: {
+    getTranslatedMissing,
+    getTranslatedElement,
+    getTranslatedLanguage,
   },
 });
 </script>

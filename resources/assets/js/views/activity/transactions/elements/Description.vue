@@ -10,8 +10,10 @@
     <div v-if="post.narrative" class="language subtle-darker mb-1.5">
       ({{
         post.language
-          ? `Language: ${type.languages[post.language]}`
-          : 'Language: N/A'
+          ? `${getTranslatedLanguage(translatedData)} : ${
+              type.languages[post.language]
+            }`
+          : `${getTranslatedLanguage(translatedData)} : N/A`
       }})
     </div>
     <div class="description text-sm">
@@ -25,6 +27,7 @@
 
 <script lang="ts">
 import { defineComponent, toRefs, inject } from 'vue';
+import { getTranslatedLanguage } from 'Composable/utils';
 
 export default defineComponent({
   name: 'TransactionDescription',
@@ -51,8 +54,12 @@ export default defineComponent({
 
     let { data } = toRefs(props);
     const tdData = data.value as Narratives;
+
     const type = inject('types');
-    return { tdData, type };
+    const translatedData = inject('translatedData') as Record<string, string>;
+
+    return { tdData, type, translatedData };
   },
+  methods: { getTranslatedLanguage },
 });
 </script>

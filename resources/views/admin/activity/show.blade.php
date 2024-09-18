@@ -17,6 +17,7 @@
         :iati-validator-response="{{ json_encode($iatiValidatorResponse) }}"
         :import-activity-error="{{ json_encode($importActivityError) }}"
         :deprecation-status-map="{{json_encode($deprecationStatusMap)}}"
+        :translated-data='{{json_encode($translatedData)}}'
     >
      </activities-detail>
 @endsection

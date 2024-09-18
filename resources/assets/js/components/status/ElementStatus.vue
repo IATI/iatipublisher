@@ -5,7 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, toRefs } from 'vue';
+import { defineProps, inject, toRefs } from 'vue';
+const translatedData = inject('translatedData') as Record<string, string>;
 
 const props = defineProps({
   data: { type: Boolean, required: true },
@@ -14,5 +15,7 @@ const props = defineProps({
 const { data } = toRefs(props);
 
 let color = data.value ? 'text-spring-50' : 'text-crimson-50',
-  text = data.value ? 'completed' : 'not completed';
+  text = data.value
+    ? translatedData['common.common.completed']
+    : translatedData['common.common.not_completed'];
 </script>

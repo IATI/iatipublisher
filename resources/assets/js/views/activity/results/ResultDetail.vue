@@ -22,7 +22,7 @@
     </div>
     <PageTitle
       :breadcrumb-data="breadcrumbData"
-      title="Result Detail"
+      :title="translatedData['common.common.result_detail']"
       :back-link="`${activityLink}/result`"
     >
       <div class="flex items-center space-x-3">
@@ -33,12 +33,17 @@
           class="mr-3"
         />
         <a :href="`${activityLink}/result/create`">
-          <Btn text="Edit Result" :link="`${resultLink}/edit`" icon="edit" />
+          <Btn
+            :text="translatedData['common.common.edit_result']"
+            :link="`${resultLink}/edit`"
+            icon="edit"
+          />
         </a>
       </div>
     </PageTitle>
     <div class="-mt-6 mb-8 ml-[26px] text-n-40">
-      Result Number: {{ result.result_code }}
+      {{ translatedData['common.common.result_number'] }} :
+      {{ result.result_code }}
     </div>
     <div
       class="sidebar-open-icon"
@@ -73,13 +78,14 @@
           <li v-for="(rData, r, ri) in resultsData" :key="ri">
             <a v-smooth-scroll :href="`#${String(r)}`" :class="linkClasses">
               <!-- <svg-vue icon="moon" class="mr-2 text-base"></svg-vue> -->
-              {{ r }}
+              {{ toKebabCase(r) }}
             </a>
           </li>
           <li v-if="hasIndicators">
             <a v-smooth-scroll href="#indicator" :class="linkClasses">
               <!-- <svg-vue icon="moon" class="mr-2 text-base"></svg-vue> -->
-              indicator <span class="required-icon px-1"> * </span>
+              {{ getTranslatedElement(translatedData, 'indicator') }}
+              <span class="required-icon px-1"> * </span>
             </a>
           </li>
           <li v-if="!hasIndicators">
@@ -89,7 +95,8 @@
               class="border border-dashed border-n-40"
             >
               <svg-vue icon="add" class="mr-2 text-n-40"></svg-vue>
-              add indicator <span class="required-icon px-1"> * </span>
+              {{ translatedData['common.common.add_indicator'] }}
+              <span class="required-icon px-1"> * </span>
             </a>
           </li>
         </ul>
@@ -104,7 +111,7 @@
             <li v-for="(rData, r, ri) in resultsData" :key="ri">
               <a v-smooth-scroll :href="`#${String(r)}`" :class="linkClasses">
                 <!-- <svg-vue icon="moon" class="mr-2 text-base"></svg-vue> -->
-                {{ r }}
+                {{ toKebabCase(r) }}
                 <span v-if="isMandatoryForResult(r)" class="required-icon px-1"
                   >*</span
                 >
@@ -113,7 +120,13 @@
             <li v-if="hasIndicators">
               <a v-smooth-scroll href="#indicator" :class="linkClasses">
                 <!-- <svg-vue icon="moon" class="mr-2 text-base"></svg-vue> -->
-                indicator <span class="required-icon px-1">*</span>
+                {{
+                  getTranslatedElement(
+                    translatedData,
+                    'indicator'
+                  ).toLowerCase()
+                }}
+                <span class="required-icon px-1">*</span>
               </a>
             </li>
             <li v-if="!hasIndicators">
@@ -123,7 +136,8 @@
                 class="border border-dashed border-n-40"
               >
                 <svg-vue icon="add" class="mr-2 text-n-40"></svg-vue>
-                add indicator <span class="required-icon px-1">*</span>
+                {{ translatedData['common.common.add_indicator'] }}
+                <span class="required-icon px-1">*</span>
               </a>
             </li>
           </ul>
@@ -159,7 +173,7 @@
 
           <!-- Indicator -->
           <template v-if="hasIndicators">
-            <Indicator :result="result" :type="types" tool-tip="Example text" />
+            <Indicator :result="result" :type="types" tool-tip="Indicator" />
           </template>
         </div>
 
@@ -170,14 +184,17 @@
           class="add_indicator flex w-full rounded border border-dashed border-n-40 bg-white px-4 py-3 text-xs leading-normal"
         >
           <div class="grow text-left italic">
-            You haven't added any Indicator yet. Indicator(s) are required to
-            complete Result.
+            {{
+              translatedData['common.common.you_havent_added_any_indicator_yet']
+            }}
           </div>
           <div
             class="flex shrink-0 items-center font-bold uppercase text-bluecoral"
           >
             <svg-vue icon="add" class="mr-1 shrink-0 text-base"></svg-vue>
-            <span class="grow text-[10px]">Add new indicator</span>
+            <span class="grow text-[10px]">{{
+              translatedData['common.common.add_new_indicator']
+            }}</span>
           </div>
         </a>
       </div>
@@ -195,6 +212,8 @@ import {
   watch,
   onUnmounted,
   reactive,
+  watchEffect,
+  provide,
 } from 'vue';
 
 //component
@@ -207,6 +226,8 @@ import Toast from 'Components/ToastMessage.vue';
 //composable
 import dateFormat from 'Composable/dateFormat';
 import getActivityTitle from 'Composable/title';
+import { getTranslatedElement, toKebabCase } from 'Composable/utils';
+import transactionElement from '../transactions/TransactionElement.vue';
 
 export default defineComponent({
   name: 'ResultDetail',
@@ -236,6 +257,10 @@ export default defineComponent({
       required: true,
     },
     element: {
+      type: Object,
+      required: true,
+    },
+    translatedData: {
       type: Object,
       required: true,
     },
@@ -273,7 +298,7 @@ export default defineComponent({
      */
     const breadcrumbData = [
       {
-        title: 'Your Activities',
+        title: props.translatedData['common.common.your_activities'],
         link: '/activities',
       },
       {
@@ -285,6 +310,17 @@ export default defineComponent({
         link: '',
       },
     ];
+
+    /**
+     * Using Translated Breadcrumb titles
+     */
+    watchEffect(() => {
+      if (props.translatedData) {
+        breadcrumbData[0].title =
+          props.translatedData['common.common.your_activities'];
+      }
+    });
+
     const istopVisible = computed(() => {
       return positionY.value === 0;
     });
@@ -334,6 +370,8 @@ export default defineComponent({
       }
     );
 
+    provide('translatedData', props.translatedData);
+
     return {
       activityLink,
       resultTitle,
@@ -349,5 +387,11 @@ export default defineComponent({
       isMandatoryForResult,
     };
   },
+  computed: {
+    transactionElement() {
+      return transactionElement;
+    },
+  },
+  methods: { toKebabCase, getTranslatedElement },
 });
 </script>

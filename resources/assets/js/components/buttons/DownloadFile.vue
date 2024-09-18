@@ -13,23 +13,27 @@
           class="mr-1 mt-0.5 text-lg text-spring-50"
           icon="download-file"
         />
-        <b>Download file.</b>
+        <b>{{ translatedData['common.common.download_file'] }}</b>
       </div>
       <div class="rounded-lg bg-mint p-4">
-        Click the download button to save the file.
+        {{
+          translatedData[
+            'common.common.click_the_download_button_to_save_the_file'
+          ]
+        }}
       </div>
     </div>
     <div class="flex justify-end">
       <div class="inline-flex">
         <BtnComponent
           class="bg-white px-6 uppercase"
-          text="Go Back"
+          :text="translatedData['common.common.go_back']"
           type=""
           @click="downloadValue = false"
         />
         <BtnComponent
           class="space"
-          text="Download"
+          :text="translatedData['common.common.download']"
           type="primary"
           @click="downloadFunction()"
         />
@@ -39,6 +43,7 @@
   <Loader
     v-if="loader.value"
     :text="loader.text"
+    :translated-data="translatedData"
     :class="{ 'animate-loader': loader }"
   />
 </template>

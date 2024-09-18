@@ -111,7 +111,9 @@ class IatiRegisterController extends Controller
                 ]);
             }
 
-            return response()->json(['success' => true, 'message' => 'Publisher verified successfully', 'data' => $publisherCheck]);
+            $translatedMessage = trans('common/common.publisher_verified_successfully');
+
+            return response()->json(['success' => true, 'message' => $translatedMessage, 'data' => $publisherCheck]);
         } catch (ClientException $e) {
             logger()->error($e->getMessage());
 
@@ -123,27 +125,31 @@ class IatiRegisterController extends Controller
         } catch (Exception $e) {
             logger()->error($e->getMessage());
 
-            return response()->json(['success' => false, 'errors' => 'Error has occurred while verifying the publisher.']);
+            $translatedMessage = trans('common/common.error_has_occurred_while_verifying_the_publisher');
+
+            return response()->json(['success' => false, 'errors' => $translatedMessage]);
         }
     }
 
     /**
      * Verifies and validates contact info form.
      *
-     * @param ContactInfoFormRequest $request
+     * @param IatiRegisterFormRequest $request
      *
      * @return RedirectResponse|JsonResponse
-     * @throws \JsonException
-     * @throws \Throwable
      */
     public function verifyContactInfo(IatiRegisterFormRequest $request): JsonResponse|RedirectResponse
     {
         try {
-            return response()->json(['success' => true, 'message' => 'Contact info successfully verified']);
+            $translatedMessage = trans('register/iati_register_controller.contact_info_successfully_verified');
+
+            return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
 
-            return response()->json(['success' => true, 'message' => 'Error occurred while verifying contact info']);
+            $translatedMessage = trans('register/iati_register_controller.error_occurred_while_verifying_contact_info');
+
+            return response()->json(['success' => true, 'message' => $translatedMessage]);
         }
     }
 
@@ -159,11 +165,15 @@ class IatiRegisterController extends Controller
     public function verifyAdditionalInfo(IatiRegisterFormRequest $request): JsonResponse|RedirectResponse
     {
         try {
-            return response()->json(['success' => true, 'message' => 'Additional Information successfully verified.']);
+            $translatedMessage = trans('register/iati_register_controller.additional_information_successfully_verified');
+
+            return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
 
-            return response()->json(['success' => true, 'message' => 'Error occurred while verifying additional info.']);
+            $translatedMessage = trans('register/iati_register_controller.error_occurred_while_verifying_additional_info');
+
+            return response()->json(['success' => true, 'message' => $translatedMessage]);
         }
     }
 
@@ -228,11 +238,15 @@ class IatiRegisterController extends Controller
             event(new Registered($createUser['user']));
             Session::put('role_id', app(Role::class)->getOrganizationAdminId());
 
-            return response()->json(['success' => true, 'message' => 'User registered successfully']);
+            $translatedMessage = trans('common/common.user_registered_successfully');
+
+            return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (Exception $e) {
             logger()->error($e);
 
-            return response()->json(['success' => false, 'message' => 'Error has occured while trying to register user. Please try again later.']);
+            $translatedMessage = trans('register/iati_register_controller.error_has_occurred_while_trying_to_register_user');
+
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
     }
 
@@ -319,8 +333,9 @@ class IatiRegisterController extends Controller
         $iatiUserErrors = flattenArrayWithKeys($iatiUserErrors);
 
         foreach ($iatiUserErrors as $key => $value) {
-            if ($value === 'Email already exists.') {
-                $value = 'Email is already in use in IATI Registry.';
+            if ($value === '$Email already exists.') {
+                $translatedMessage = trans('register/iati_register_controller.email_is_already_in_use_in_iati_registry');
+                $value = $translatedMessage;
             }
 
             Arr::set($unflattenedArray, $key, $value);

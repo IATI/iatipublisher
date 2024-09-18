@@ -6,31 +6,43 @@
     <Loader v-if="loaderVisibility" />
 
     <h5 class="title mb-5 flex text-xl font-bold text-bluecoral sm:text-2xl">
-      Add a title and identifier for the activity
+      {{
+        translatedData[
+          'activity_index.create_modal.add_a_title_and_identifier_for_the_activity'
+        ]
+      }}
     </h5>
     <div class="manual-import overflow-hidden">
       <div class="input__field">
         <div class="mb-5">
           <div class="form-group-title-container">
             <HoverText
-              :name="'title'"
-              hover-text="A short, human-readable title. <a href='https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/title/' target='_blank'>For more information</a>"
+              :name="translatedData['elements.label.title']"
+              :hover-text="
+                translatedData['elements.element_json_schema.title_hover_text']
+              "
               position="right"
               :show-iati-reference="true"
             />
-            <p class="form-group-title">title</p>
+            <p class="form-group-title">
+              {{ translatedData['elements.label.title'] }}
+            </p>
           </div>
           <div class="form-group">
             <div class="form__content gap-6">
               <div>
                 <div class="label-field">
                   <label class="label" for="narrative"
-                    >narrative
+                    >{{ translatedData['elements.label.narrative'] }}
                     <span class="required-icon"> *</span>
                   </label>
                   <HoverText
-                    :name="'narrative'"
-                    hover-text="The free text name or description of the item being described. This can be repeated in multiple languages. <a href='https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/title/narrative/' target='_blank'>For more information</a>"
+                    :name="translatedData['elements.label.narrative']"
+                    :hover-text="
+                      translatedData[
+                        'elements.element_json_schema.title_sub_elements_narrative_hover_text'
+                      ]
+                    "
                     :show-iati-reference="true"
                   />
                 </div>
@@ -41,7 +53,7 @@
                     error__input: errorData.narrative != '',
                   }"
                   type="text"
-                  placeholder="Type narrative here"
+                  :placeholder="translatedData['common.common.enter_narrative']"
                 />
                 <span
                   v-if="errorData.narrative != ''"
@@ -53,13 +65,17 @@
               </div>
               <div>
                 <div class="label-field">
-                  <label class="label" for=""
-                    >language
+                  <label class="label" for="">
+                    {{ translatedData['elements.label.language'] }}
                     <span class="required-icon"> *</span>
                   </label>
                   <HoverText
-                    name="language"
-                    hover-text="A code specifying the language of text in this element. It is recommended that wherever possible only codes from ISO 639-1 are used. If not present, the default language is assumed. <a href='https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/title/narrative/' target='_blank'>For more information</a>"
+                    :name="translatedData['elements.label.language']"
+                    :hover-text="
+                      translatedData[
+                        'activity_index.create_modal.a_code_specifying_the_language_of_text_in_this_element'
+                      ]
+                    "
                     :show-iati-reference="true"
                   />
                 </div>
@@ -73,7 +89,10 @@
                   }"
                   :searchable="true"
                   :options="languages"
-                  :placeholder="defaultLanguage ?? 'Select language'"
+                  :placeholder="
+                    defaultLanguage ??
+                    translatedData['common.common.select_language']
+                  "
                 />
 
                 <span
@@ -85,7 +104,11 @@
                 </span>
 
                 <span v-else class="text-xs font-normal text-n-40"
-                  >If no language is selected, your default language is assumed.
+                  >{{
+                    translatedData[
+                      'common.common.if_no_language_is_selected_your_default_language_is_assumed'
+                    ]
+                  }}
                 </span>
               </div>
             </div>
@@ -94,19 +117,25 @@
         <div>
           <div class="form-group-title-container">
             <HoverText
-              :name="'iati-identifier'"
+              :name="translatedData['elements.name.iati_identifier']"
               position="right"
-              hover-text="A globally unique identifier for the activity.<br><br>This MUST be prefixed with EITHER the current IATI organisation identifier for the reporting organisation (reporting-org/@ref) OR a previous identifier reported in other-identifier, and suffixed with the organisation’s own activity identifier. The prefix and the suffix should be separated by a hyphen “-“.<br><br>Once an activity has been reported to IATI its identifier MUST NOT be changed in subsequent updates. <a href='https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/iati-identifier/' target='_blank'>For more information</a>"
+              :hover-text="
+                translatedData[
+                  'activity_index.create_modal.a_globally_unique_identifier_for_the_activity'
+                ]
+              "
               :show-iati-reference="true"
             />
-            <p class="form-group-title">iati-identifier</p>
+            <p class="form-group-title">
+              {{ translatedData['elements.name.iati_identifier'] }}
+            </p>
           </div>
           <div class="form-group">
             <div class="form__content">
               <div>
                 <div class="label-field">
                   <label class="label" for=""
-                    >activity identifiers
+                    >{{ translatedData['elements.label.activity_identifier'] }}
                     <span class="required-icon"> *</span>
                   </label>
                 </div>
@@ -117,7 +146,11 @@
                     error__input: errorData.activity_identifier != '',
                   }"
                   type="text"
-                  placeholder="Type activity-identifier here"
+                  :placeholder="
+                    translatedData[
+                      'activity_index.create_modal.type_activity_identifier_here'
+                    ]
+                  "
                 />
                 <span
                   v-if="errorData.activity_identifier != ''"
@@ -126,18 +159,20 @@
                 >
                   {{ errorData.activity_identifier }}
                 </span>
-                <span v-else class="text-xs font-normal text-n-40"
-                  >Enter your own unique activity identifier such as
-                  abbreviation or simply a number. Make sure it is unique across
-                  all the activities. IATI Publisher will concatenate
-                  Organization Identifier and Activity Identifier to
-                  autogenerate 'iati-identifier'.
+                <span v-else class="text-xs font-normal text-n-40">
+                  {{
+                    translatedData[
+                      'activity_index.create_modal.enter_your_own_unique_activity_identifier_such_as_abbreviation_or_simply_a_number'
+                    ]
+                  }}
                 </span>
               </div>
               <div>
                 <div class="label-field">
                   <label class="label" for=""
-                    >iati-identifier
+                    >{{
+                      translatedData['elements.label.iati_identifier_block']
+                    }}
                     <span class="required-icon"> *</span>
                   </label>
                 </div>
@@ -158,7 +193,11 @@
                 </span>
 
                 <span v-else class="text-xs font-normal text-n-40"
-                  >This is autogenerated
+                  >{{
+                    translatedData[
+                      'activity_index.create_modal.this_is_autogenerated'
+                    ]
+                  }}
                 </span>
               </div>
             </div>
@@ -169,13 +208,13 @@
             <BtnComponent
               class="mx-3 bg-white px-3 uppercase"
               type=""
-              text="Cancel"
+              :text="translatedData['common.common.cancel']"
               @click="closeModal"
             />
             <BtnComponent
               class="space"
               type="primary"
-              text="Save"
+              :text="translatedData['common.common.save']"
               @click="storeActivity()"
             />
           </div>
@@ -188,10 +227,10 @@
 <script lang="ts">
 import {
   defineComponent,
+  inject,
+  onMounted,
   reactive,
   ref,
-  onMounted,
-  inject,
   computed,
 } from 'vue';
 import Modal from '../../components/PopupModal.vue';
@@ -233,6 +272,7 @@ export default defineComponent({
       narrative: '',
       language: '',
       activity_identifier: '',
+      iati_identifier_text: '',
     });
 
     const iatiIdentifierText = computed(() => {
@@ -245,6 +285,8 @@ export default defineComponent({
 
     const languages = reactive({});
     const organization: ObjectType = reactive({});
+    const translatedData = inject('translatedData') as Record<string, string>;
+    const defaultLanguage = inject('defaultLanguage');
 
     onMounted(async () => {
       axios.get('/activities/codelists').then((res) => {
@@ -286,8 +328,6 @@ export default defineComponent({
         });
     }
 
-    const defaultLanguage = inject('defaultLanguage');
-
     return {
       props,
       formData,
@@ -298,6 +338,7 @@ export default defineComponent({
       closeModal,
       storeActivity,
       defaultLanguage,
+      translatedData,
       iatiIdentifierText,
     };
   },
@@ -321,9 +362,11 @@ export default defineComponent({
     }
   }
 }
+
 .form-group-title-container {
   @apply mb-1.5 flex space-x-1;
 }
+
 .form-group-title {
   @apply text-xs font-bold text-bluecoral;
 }

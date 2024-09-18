@@ -4,7 +4,9 @@
       v-if="!isChecking"
       class="mb-4 flex items-center gap-1 border-b border-n-20 pb-2 text-sm font-bold"
     >
-      <span> Publishing Activity </span>
+      <span>
+        {{ translatedData['common.common.publishing_activity'] }}
+      </span>
       <span
         class="inline-block rounded-full bg-lagoon-10 px-2 py-1 text-xs font-[500] text-spring-50"
       >
@@ -47,7 +49,14 @@
           :core-completed-activities="coreCompletedActivities"
           :permalink="permalink"
         />
-        <RollingLoader v-else header="Checking your data before publication" />
+        <RollingLoader
+          v-else
+          :header="
+            translatedData[
+              'common.common.checking_your_data_before_publication'
+            ]
+          "
+        />
       </div>
     </div>
   </div>
@@ -84,11 +93,15 @@
         "
         class="flex items-center gap-3 rounded-md bg-mint p-3 text-xs"
       >
-        Activity has been published successfully, Close to see changes.
+        {{
+          translatedData[
+            'workflow_frontend.bulk_publish.activity_has_been_published_successfully'
+          ]
+        }}
       </p>
       <BtnComponent
         type="primary"
-        text="Close"
+        :text="translatedData['common.common.close']"
         class="bg-white px-6 uppercase"
         @click="cancelActivityPublishing(true)"
       />
@@ -98,14 +111,14 @@
         v-if="store?.state?.startBulkPublish || showPublishingActivityModal"
         class="space"
         type=""
-        text="CANCEL"
+        :text="translatedData['common.common.cancel']"
         @click="cancelActivityPublishing()"
       />
       <BtnComponent
         v-else
         class="space"
         type=""
-        text="CANCEL"
+        :text="translatedData['common.common.cancel']"
         @click="cancelValidation()"
       />
       <button
@@ -118,7 +131,9 @@
         className="flex items-center gap-1.5 font-bold text-bluecoral border border-bluecoral rounded px-2.5 py-3 text-xs uppercase"
         @click="handleMinimize()"
       >
-        <span> Minimize screen </span>
+        <span>
+          {{ translatedData['workflow_frontend.bulk_publish.minimize_screen'] }}
+        </span>
         <svg-vue icon="open-link" class="rotate-90 text-[10px] text-n-40" />
       </button>
       <template v-if="percentageWidth !== 100">
@@ -136,7 +151,11 @@
             "
             class="bg-white px-6 uppercase"
             type="primary"
-            text="Continue publishing Anyway"
+            :text="
+              translatedData[
+                'workflow_frontend.bulk_publish.continue_publishing_anyway'
+              ]
+            "
             @click="validateActivities()"
           />
         </template>
@@ -147,7 +166,7 @@
           <BtnComponent
             class="bg-white px-6 uppercase"
             type="primary"
-            :text="`Continue Publishing (${newSelectedActivities.length})`"
+            :text="`${translatedData['workflow_frontend.bulk_publish.continue_publishing']} (${newSelectedActivities.length})`"
             :disabled="newSelectedActivities.length === 0"
             @click="startBulkPublish()"
           />
@@ -173,6 +192,7 @@ import {
   provide,
   watchEffect,
   onMounted,
+  inject,
 } from 'vue';
 import WizardIndex from '../wizardSteps/WizardIndex.vue';
 import BtnComponent from 'Components/ButtonComponent.vue';
@@ -227,6 +247,8 @@ const newSelectedActivities = ref([] as number[]);
 const isChecking = ref(true);
 const dataChanged = ref(false);
 const showSlideIn = ref(false);
+
+const translatedData = inject('translatedData') as Record<string, string>;
 
 provide('newSelectedActivities', newSelectedActivities);
 

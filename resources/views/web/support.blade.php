@@ -1,6 +1,6 @@
 @extends('web.layouts.app')
 
-@section('title', 'Support')
+@section('title', trans('common/common.support'))
 
 @section('content')
 <support-page></support-page>

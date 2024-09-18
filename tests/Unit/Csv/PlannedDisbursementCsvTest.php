@@ -145,18 +145,18 @@ class PlannedDisbursementCsvTest extends CsvBaseTest
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
 
-        $this->assertContains('Period Start must be a date.', $flattenErrors);
-        $this->assertContains('The Planned Disbursement Period must not be longer than three months', $flattenErrors);
-        $this->assertContains('Period end must be a date field', $flattenErrors);
-        $this->assertContains('Period end must be a date after period', $flattenErrors);
-        $this->assertContains('The Planned Disbursement Period must not be longer than three months', $flattenErrors);
-        $this->assertContains('Amount field must be a number', $flattenErrors);
-        $this->assertContains('Amount field must not be in negative.', $flattenErrors);
-        $this->assertContains('The value currency is invalid.', $flattenErrors);
-        $this->assertContains('The Value Date must be a valid Date', $flattenErrors);
-        $this->assertContains('The planned disbursement provider org type is invalid.', $flattenErrors);
-        $this->assertContains('The planned disbursement provider org ref shouldn\'t contain the symbols /, &, | or ?.', $flattenErrors);
-        $this->assertContains('The planned disbursement receiver org type is invalid.', $flattenErrors);
-        $this->assertContains('The planned disbursement receiver org ref shouldn\'t contain the symbols /, &, | or ?.', $flattenErrors);
+        $this->assertContains(trans('validation.date_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_planned_disbursement.date.period_start_end'), $flattenErrors);
+        $this->assertContains(trans('validation.date_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.period_end_after'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_planned_disbursement.date.period_start_end'), $flattenErrors);
+        $this->assertContains(trans('validation.amount_number'), $flattenErrors);
+        $this->assertContains(trans('validation.amount_negative'), $flattenErrors);
+        $this->assertContains(trans('validation.invalid_currency'), $flattenErrors);
+        $this->assertContains(trans('validation.date_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.organisation_type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.reference_should_not_contain_symbol'), $flattenErrors);
+        $this->assertContains(trans('validation.organisation_type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.reference_should_not_contain_symbol'), $flattenErrors);
     }
 }

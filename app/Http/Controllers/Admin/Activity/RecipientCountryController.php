@@ -71,7 +71,7 @@ class RecipientCountryController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : $hasData,
                 elementName: 'recipient_country',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->basicBreadCrumbInfo($activity, 'recipient_country');
 
@@ -85,10 +85,11 @@ class RecipientCountryController extends Controller
             return view('admin.activity.recipientCountry.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while opening recipient-country form.'
+                $translatedMessage
             );
         }
     }
@@ -105,14 +106,18 @@ class RecipientCountryController extends Controller
     {
         try {
             if (!$this->recipientCountryService->update($id, $request->all())) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating recipient-country.');
-            }
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Recipient-country updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating recipient-country.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 
@@ -136,7 +141,9 @@ class RecipientCountryController extends Controller
 
             if (!is_array_value_empty($recipient_region) || !is_array_value_empty($recipient_country)) {
                 $element['freeze'] = true;
-                $element['info_text'] = 'Recipient Country is already added at transaction level. You can add a Recipient Country either at activity level or at transaction level but not at both.';
+                $translatedMessage = trans('activity_detail/recipient_country_controller.recipient_country_is_already_added_at_transaction_level');
+
+                $element['info_text'] = $translatedMessage;
             }
         }
 
