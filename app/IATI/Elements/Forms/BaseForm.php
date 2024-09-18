@@ -28,7 +28,7 @@ class BaseForm extends Form
                 foreach ($sub_elements as $i => $sub_element) {
                     $this->buildCollection($sub_element);
                     if (Arr::get($element, 'add_more', false) && Arr::get($sub_element, 'add_more', false) && !Arr::get($element, 'do_not_repeat_button', false)) {
-                        $this->add('delete_this_' . $element['name'] ?? $sub_element['name'], 'button', [
+                        $this->add(trans('common/common.delete_this') . $element['name'] ?? $sub_element['name'], 'button', [
                             'attr' => [
                                 'class' => 'delete-parent one text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1.2rem] w-[100%] justify-end pr-6 delete-parent-item delete-parent-selector',
                             ],
@@ -53,7 +53,7 @@ class BaseForm extends Form
 
                     if (Arr::get($element, 'add_more', false) || Arr::get($element, 'add_more_attributes', false)) {
                         $name = $element['name'];
-                        $this->add('delete_this_' . $element['name'], 'button', [
+                        $this->add(trans('common/common.delete_this') . $element['name'], 'button', [
                             'attr' => [
                                 'class' => 'delete-parent one text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1.2rem] w-[100%] justify-end pr-6 ' . " delete-parent-item-$name delete-parent-item delete-parent-selector",
                             ],
@@ -78,7 +78,7 @@ class BaseForm extends Form
 
                     if (Arr::get($element, 'add_more', false) || Arr::get($element, 'add_more_attributes', false)) {
                         $name = $element['name'];
-                        $this->add('delete_this_' . $element['name'], 'button', [
+                        $this->add(trans('common/common.delete_this') . $element['name'], 'button', [
                             'attr' => [
                                 'class' => 'delete-parent one text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1.2rem] w-[100%] justify-end pr-6 ' . " delete-parent-item-$name delete-parent-item delete-parent-selector",
                             ],
@@ -91,7 +91,7 @@ class BaseForm extends Form
                 foreach ($sub_elements as $i => $sub_element) {
                     $this->buildCollection($sub_element);
                     if (Arr::get($element, 'add_more', false) && Arr::get($sub_element, 'add_more', false) && !Arr::get($element, 'do_not_repeat_button', false)) {
-                        $this->add('delete_this_' . $element['name'] ?? $sub_element['name'], 'button', [
+                        $this->add(trans('common/common.delete_this') . $element['name'] ?? $sub_element['name'], 'button', [
                             'attr' => [
                                 'class' => 'delete-parent one text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1.2rem] w-[100%] justify-end pr-6 delete-parent-item delete-parent-selector',
                             ],

@@ -87,16 +87,15 @@ class BaseFormCreator
                 ],
                 'buttons' => [
                     'clear'    => [
-                        'label'     => 'Cancel',
+                        'label'     => trans('common/common.cancel'),
                         'attr'      => [
                             'type'  => 'anchor',
                             'class' => 'ghost-btn mr-8',
                             'href'  => $parent_url,
                         ],
                     ],
-
                     'submit'    => [
-                        'label'     => 'Save and Exit',
+                        'label'     => trans('common/common.save_and_exit'),
                         'attr'      => [
                             'type'  => empty($additonalInfo) ? 'submit' : 'button',
                             'class' => 'primary-btn save-btn',

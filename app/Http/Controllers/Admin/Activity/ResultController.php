@@ -70,10 +70,11 @@ class ResultController extends Controller
             return view('admin.activity.result.index', compact('activity', 'results', 'types', 'toast'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_has_occurred_while_rendering_activity_transactions_listing');
 
             return redirect()->route('admin.activity.result.index', $activityId)->with(
                 'error',
-                'Error has occurred while rendering activity transactions listing.'
+                $translatedMessage
             );
         }
     }
@@ -86,15 +87,16 @@ class ResultController extends Controller
      *
      * @return JsonResponse
      */
-    public function getPaginatedResults(int $activityId, int $page = 1): JsonResponse
+    public function getPaginatedResults(int $activityId, int $page = 1) : JsonResponse
     {
         try {
             $result = $this->resultService->getPaginatedResult($activityId, $page, $this->sanitizeRequest(request()));
             $stats = $this->resultService->getResultCountStats($activityId);
+            $translatedMessage = 'Results Fetched Successfully';
 
             return response()->json([
                 'success' => true,
-                'message' => 'Results fetched successfully',
+                'message' => $translatedMessage,
                 'data'    => [
                     'results' => $result,
                     'stats'   => $stats,
@@ -102,8 +104,9 @@ class ResultController extends Controller
             ]);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = 'Error occurred while fetching the data.';
 
-            return response()->json(['success' => false, 'message' => 'Error occurred while fetching the data']);
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
     }
 
@@ -161,7 +164,7 @@ class ResultController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : false,
                 elementName: 'result',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->resultBreadCrumbInfo(
                 activity: $activity,
@@ -178,10 +181,11 @@ class ResultController extends Controller
             return view('admin.activity.result.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.result.index', $id)->with(
                 'error',
-                'Error has occurred while rendering activity result form.'
+                $translatedMessage
             );
         }
     }
@@ -202,10 +206,11 @@ class ResultController extends Controller
                 'activity_id' => $activityId,
                 'result'      => $resultData,
             ]);
+            $translatedMessage = trans('activity_detail/result_controller.activity_result_created_successfully');
 
             return redirect()->route('admin.activity.result.show', [$activityId, $result['id']])->with(
                 'success',
-                'Activity result created successfully.'
+                $translatedMessage
             );
         } catch (Exception $e) {
             logger()->error($e->getMessage());
@@ -237,10 +242,11 @@ class ResultController extends Controller
             return view('admin.activity.result.detail', compact('activity', 'result', 'types', 'toast', 'element'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_has_occurred_while_rending_result_detail_page');
 
             return redirect()->route('admin.activity.result.index', $activityId)->with(
                 'error',
-                'Error has occurred while rending result detail page.'
+                $translatedMessage
             );
         }
     }
@@ -267,7 +273,7 @@ class ResultController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : true,
                 elementName: 'result',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->resultBreadCrumbInfo(
                 activity: $activity,
@@ -284,10 +290,11 @@ class ResultController extends Controller
             return view('admin.activity.result.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.result.index', $activityId)->with(
                 'error',
-                'Error has occurred while rendering activity result form.'
+                $translatedMessage
             );
         }
     }
@@ -307,22 +314,26 @@ class ResultController extends Controller
             $resultData = $request->except(['_method', '_token']);
 
             if (!$this->resultService->update($resultId, ['activity_id' => $activityId, 'result' => $resultData])) {
+                $translatedMessage = trans('common/common.failed_to_update_data');
+
                 return redirect()->route('admin.activity.result.index', $activityId)->with(
                     'error',
-                    'Error has occurred while updating activity result.'
+                    $translatedMessage
                 );
             }
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.activity.result.show', [$activityId, $resultId])->with(
                 'success',
-                'Activity result updated successfully.'
+                $translatedMessage
             );
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.result.index', $activityId)->with(
                 'error',
-                'Error has occurred while updating activity result.'
+                $translatedMessage
             );
         }
     }
@@ -339,20 +350,22 @@ class ResultController extends Controller
     {
         try {
             $this->resultService->deleteResult($resultId);
-            Session::flash('success', 'Result Deleted Successfully');
+            $translatedMessage = trans('common/common.deleted_successfully');
+            Session::flash('success', $translatedMessage);
 
             return response()->json([
                 'status'      => true,
-                'msg'         => 'Result Deleted Successfully',
+                'msg'         => $translatedMessage,
                 'activity_id' => $id,
             ]);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            Session::flash('error', 'Result Delete Error');
+            $translatedMessage = trans('common/common.delete_error');
+            Session::flash('error', $translatedMessage);
 
             return response()->json([
                 'status'      => true,
-                'msg'         => 'Result Delete Error',
+                'msg'         => $translatedMessage,
                 'activity_id' => $id,
             ], 400);
         }
@@ -375,18 +388,21 @@ class ResultController extends Controller
             $this->resultService->bulkDeleteResults($resultIds);
             DB::commit();
 
+            $translatedMessage = trans('common/common.deleted_successfully');
+
             return response()->json([
                 'status'      => true,
-                'msg'         => 'Results Deleted Successfully',
+                'msg'         => $translatedMessage,
                 'activity_id' => $id,
             ], 200);
         } catch (Exception $e) {
             DB::rollback();
             logger()->error($e);
+            $translatedMessage = trans('common/common.failed_to_bulk_delete');
 
             return response()->json([
                 'status'      => false,
-                'msg'         => 'Failed to bulk delete results.',
+                'msg'         => $translatedMessage,
                 'activity_id' => $id,
             ], 400);
         }

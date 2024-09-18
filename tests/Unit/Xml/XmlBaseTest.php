@@ -93,7 +93,10 @@ class XmlBaseTest extends ImportBaseTest
      * Collects validation messages.
      *
      * @param $rows
+     *
      * @return array
+     * @throws BindingResolutionException
+     * @throws \JsonException
      */
     public function getErrors($rows): array
     {

@@ -17,11 +17,12 @@ class DefaultAidTypeXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The default aid type is invalid.', $flattenErrors);
-        $this->assertContains('The default aid type vocabulary is invalid.', $flattenErrors);
-        $this->assertContains('The default aid type cash and voucher modalities is invalid.', $flattenErrors);
-        $this->assertContains('The default aid type earmarking modality is invalid.', $flattenErrors);
-        $this->assertContains('The default aid type earmarking category is invalid.', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_default_aid_type.invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.vocabulary_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.this_field_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.this_field_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_default_aid_type.invalid_earmarking_category'), $flattenErrors);
     }
 
     /**

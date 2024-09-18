@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Activity\Scope;
 
 use App\Http\Requests\Activity\ActivityBaseRequest;
+use App\Rules\SingleCharacter;
 
 /**
  * Class ScopeRequest.
@@ -17,6 +18,7 @@ class ScopeRequest extends ActivityBaseRequest
      * @param $scope
      *
      * @return array
+     * @throws \JsonException
      */
     public function rules($scope = null): array
     {
@@ -28,22 +30,29 @@ class ScopeRequest extends ActivityBaseRequest
     /**
      * Returns critical error for scope.
      *
-     * @param $scope
+     * @param null $scope
      *
      * @return array
+     * @throws \JsonException
      */
     public function getErrorsForActivityScope($scope = null): array
     {
         if ($scope && is_array($scope)) {
             return [
-                'activity_scope' => 'nullable|size:1',
+                'activity_scope' => ['nullable', new SingleCharacter('activity_scope')],
             ];
         }
 
         return [
-            'activity_scope' => sprintf('nullable|in:%s', implode(',', array_keys(
-                $this->getCodeListForRequestFiles('ActivityScope', 'Activity', false)
-            ))),
+            'activity_scope' => sprintf(
+                'nullable|in:%s',
+                implode(
+                    ',',
+                    array_keys(
+                        $this->getCodeListForRequestFiles('ActivityScope', 'Activity', false)
+                    )
+                )
+            ),
         ];
     }
 
@@ -63,8 +72,7 @@ class ScopeRequest extends ActivityBaseRequest
     public function messages(): array
     {
         return [
-            'in'   => 'The activity scope does not exist.',
-            'size' => 'The activity scope cannot have more than one value.',
+            'in'   => trans('validation.activity_scope.in'),
         ];
     }
 }

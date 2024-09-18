@@ -46,24 +46,27 @@
     </div>
     <div id="nav-list" class="activity-nav-menu flex w-full justify-between">
       <!-- commented to temporarily hide language buttons , remove width later -->
-      <nav class="w-[85px] justify-end">
-        <!-- <ul class="flex">
-          <li
-            v-for="(language, index) in data.languages"
-            :key="index"
-            :class="data.languageNavLiClasses"
-          >
-            <a
-              :class="[
-                { nav__pointer: language.active },
-                data.languageNavAnchorClasses,
-              ]"
-              :href="language.permalink"
-            >
-              <span>{{ language.language }}</span>
-            </a>
-          </li>
-        </ul> -->
+      <nav class="justify-end">
+        <!--              <ul class="flex">-->
+        <!--                <li-->
+        <!--                  v-for="(language, index) in data.languages"-->
+        <!--                  :key="index"-->
+        <!--                  :class="data.languageNavLiClasses"-->
+        <!--                >-->
+        <!--                  <button-->
+        <!--                    type="button"-->
+        <!--                    :class="[-->
+        <!--                      language.language.toLowerCase() == currentLanguage.toLowerCase()-->
+        <!--                        ? 'nav__pointer'-->
+        <!--                        : '',-->
+        <!--                      data.languageNavAnchorClasses,-->
+        <!--                    ]"-->
+        <!--                    @click="changeLanguage(language.language.toLowerCase())"-->
+        <!--                  >-->
+        <!--                    <span>{{ language.language }}</span>-->
+        <!--                  </button>-->
+        <!--                </li>-->
+        <!--              </ul>-->
       </nav>
       <nav>
         <ul class="activity-nav-list -mx-4">
@@ -75,9 +78,7 @@
             :class="data.menuNavLiClasses"
           >
             <a
-              v-if="
-                menu.name !== 'Add / Import Activity' && menu.name !== 'Logs'
-              "
+              v-if="menu.identifier !== 'add-import-activity'"
               :class="[
                 { nav__pointer: menu.active },
                 data.menuNavAnchorClasses,
@@ -87,7 +88,7 @@
               <span class="">{{ menu.name }}</span>
             </a>
             <span
-              v-if="menu.name === 'Add / Import Activity'"
+              v-if="menu.identifier === 'add-import-activity'"
               :class="[
                 { nav__pointer: menu.active },
                 data.menuNavAnchorClasses,
@@ -96,7 +97,7 @@
               <span class="add-import"
                 >{{ menu.name }}
                 <div
-                  v-if="menu.name === 'Add / Import Activity'"
+                  v-if="menu.identifier === 'add-import-activity'"
                   style="visibility: hidden"
                   class="button__dropdown add-import-dropdown absolute top-full z-50 w-56 -translate-y-3 bg-white p-2 text-left shadow-dropdown duration-300"
                 >
@@ -107,7 +108,9 @@
                         class="cursor-pointer"
                         :class="liClass"
                         @click="modalValue = true"
-                        >Add activity manually</a
+                        >{{
+                          translatedData['common.common.add_activity_manually']
+                        }}</a
                       >
                     </li>
                     <li>
@@ -115,7 +118,11 @@
                         id="header-import-activity"
                         href="/import"
                         :class="liClass"
-                        >Import activities from .csv/.xml</a
+                        >{{
+                          translatedData[
+                            'common.common.import_activities_from_csv_xml'
+                          ]
+                        }}</a
                       >
                     </li>
                     <li>
@@ -123,62 +130,11 @@
                         id="header-import-xls"
                         href="/import/xls"
                         :class="liClass"
-                        >Import activities from .XLS</a
-                      >
-                    </li>
-                  </ul>
-                </div>
-              </span>
-            </span>
-
-            <div
-              v-if="menu.name === 'Logs'"
-              class="button__dropdown invisible absolute left-4 top-full z-10 w-56 -translate-y-3 bg-white p-2 text-left opacity-0 shadow-dropdown outline transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
-            >
-              <ul class="flex-col">
-                <li>
-                  <a href="#" :class="liClass">User Logs</a>
-                </li>
-                <li>
-                  <a href="#" :class="liClass">API Logs</a>
-                </li>
-                <li>
-                  <a href="/log-viewer" :class="liClass">Error Logs</a>
-                </li>
-                <li>
-                  <a href="/import" :class="liClass">System Details</a>
-                </li>
-              </ul>
-            </div>
-
-            <span
-              v-if="menu.name === 'Logs'"
-              :class="[
-                { nav__pointer: menu.active },
-                data.menuNavAnchorClasses,
-              ]"
-            >
-              <span class="add-import"
-                >{{ menu.name }}
-                <div
-                  v-if="menu.name === 'Logs'"
-                  class="button__dropdown add-import-dropdown absolute top-full z-10 w-56 -translate-y-3 bg-white p-2 text-left shadow-dropdown transition-all duration-300"
-                >
-                  <ul class="flex-col">
-                    <li>
-                      <a href="#" class="cursor-pointer" :class="liClass"
-                        >User Logs</a
-                      >
-                    </li>
-                    <li>
-                      <a href="#" :class="liClass">API Logs</a>
-                    </li>
-                    <li>
-                      <a href="/log-viewer" :class="liClass">Error Logs</a>
-                    </li>
-                    <li>
-                      <a href="/system-version" :class="liClass"
-                        >System Details</a
+                        >{{
+                          translatedData[
+                            'common.common.import_activities_from_xls'
+                          ]
+                        }}</a
                       >
                     </li>
                   </ul>
@@ -192,19 +148,23 @@
             >
               <ul class="flex-col">
                 <li>
-                  <a :class="liClass" @click="modalValue = true"
-                    >Add activity manually</a
-                  >
+                  <a :class="liClass" @click="modalValue = true">{{
+                    translatedData['common.common.add_activity_manually']
+                  }}</a>
                 </li>
                 <li>
-                  <a href="/import" :class="liClass"
-                    >Import activities from .csv/.xml</a
-                  >
+                  <a href="/import" :class="liClass">{{
+                    translatedData[
+                      'common.common.import_activities_from_csv_xml'
+                    ]
+                  }}</a>
                 </li>
                 <li>
-                  <a id="header-import-xls" href="/import/xls" :class="liClass"
-                    >Import activities from .XLS</a
-                  >
+                  <a id="header-import-xls" href="/import/xls" :class="liClass">
+                    {{
+                      translatedData['common.common.import_activities_from_xls']
+                    }}
+                  </a>
                 </li>
               </ul>
             </div>
@@ -223,7 +183,9 @@
             v-model="searchValue"
             class="search__input mr-3.5"
             type="text"
-            placeholder="Search activity..."
+            :placeholder="
+              translatedData['workflow_frontend.import.search_activity']
+            "
             @keyup.enter="searchFunction('/activities')"
           />
           <input
@@ -272,7 +234,9 @@
               >
                 <a class="flex w-full space-x-4" href="/profile"
                   ><svg-vue class="mx-1 text-base" icon="user" />
-                  <span>Your Profile</span></a
+                  <span>{{
+                    translatedData['adminHeader.admin_header.your_profile']
+                  }}</span></a
                 >
               </li>
               <li
@@ -282,12 +246,16 @@
               >
                 <a class="flex w-full space-x-4">
                   <svg-vue icon="rocket-icon" class="mx-1 mt-0.5 scale-[1.2]" />
-                  <span>Get Started</span></a
+                  <span>{{
+                    translatedData['common.common.get_started']
+                  }}</span></a
                 >
               </li>
               <li class="dropdown__list flex" @click="logout">
                 <svg-vue class="ml-1 mr-3" icon="logout"></svg-vue>
-                <button class="text-sm">Logout</button>
+                <button class="text-sm">
+                  {{ translatedData['adminHeader.admin_header.logout'] }}
+                </button>
               </li>
             </ul>
           </div>
@@ -320,7 +288,9 @@
               >
                 <a class="flex w-full space-x-4" href="/profile"
                   ><svg-vue class="mx-1 text-base" icon="user" />
-                  <span>Your Profile</span></a
+                  <span>{{
+                    translatedData['adminHeader.admin_header.your_profile']
+                  }}</span></a
                 >
               </li>
               <li
@@ -330,12 +300,15 @@
               >
                 <a class="flex w-full space-x-4">
                   <svg-vue icon="rocket-icon" class="mx-1 mt-0.5 scale-[1.2]" />
-                  <span>Get Started</span></a
+                  <span>{{
+                    translatedData['common.common.get_started']
+                  }}</span></a
                 >
               </li>
               <li class="dropdown__list flex" @click="logout">
-                <svg-vue class="ml-1 mr-3" icon="logout"></svg-vue>
-                <button class="text-sm">Logout</button>
+                <button class="text-sm">
+                  {{ translatedData['adminHeader.admin_header.logout'] }}
+                </button>
               </li>
             </ul>
           </div>
@@ -370,6 +343,9 @@ import axios from 'axios';
 import { useToggle, useStorage } from '@vueuse/core';
 import CreateModal from '../views/activity/CreateModal.vue';
 import Toast from './ToastMessage.vue';
+import LanguageService from 'Services/language';
+import Multiselect from '@vueform/multiselect';
+
 const store = detailStore();
 
 const props = defineProps({
@@ -387,6 +363,8 @@ const props = defineProps({
   superAdmin: { type: Boolean, required: true },
   hasAdminBar: { type: Number || Boolean, default: false },
   defaultLanguage: { type: String, default: '' },
+  translatedData: { type: Object, required: true },
+  currentLanguage: { type: String, required: true },
 });
 
 const showUserDropdown = ref(false);
@@ -401,6 +379,7 @@ const toastType = ref(false);
 const errorToastVisibility = ref(false);
 const errorToastMessage = ref('');
 const errorToastType = ref(false);
+// const translatedData = ref({});
 
 const data = reactive({
   languageNavLiClasses: 'flex',
@@ -413,42 +392,50 @@ const data = reactive({
     {
       language: 'EN',
       permalink: '#',
-      active: true,
+      active: props.currentLanguage == 'en',
     },
     {
       language: 'FR',
       permalink: '#',
-      active: false,
+      active: props.currentLanguage == 'fr',
     },
     {
       language: 'ES',
       permalink: '#',
-      active: false,
+      active: props.currentLanguage == 'es',
     },
   ],
+
   org_menus: [
     {
-      name: 'Activity DATA',
+      name: props.translatedData['adminHeader.admin_header.activity_data'],
+      identifier: 'activity-data',
       permalink: '/activities',
       active: true,
     },
     {
-      name: 'Organisation DATA',
+      name: props.translatedData['adminHeader.admin_header.organisation_data'],
+      identifier: 'organisation-data',
       permalink: '/organisation',
       active: false,
     },
     {
-      name: 'Settings',
+      name: props.translatedData['common.common.settings'],
+      identifier: 'settings',
       permalink: '/setting',
       active: false,
     },
     {
-      name: 'Add / Import Activity',
+      name: props.translatedData[
+        'adminHeader.admin_header.add_import_activity'
+      ],
+      identifier: 'add-import-activity',
       permalink: '#',
       active: false,
     },
     {
-      name: 'Users',
+      name: props.translatedData['common.common.users'],
+      identifier: 'users',
       permalink: '/users',
       active: false,
     },
@@ -456,27 +443,36 @@ const data = reactive({
   superadmin_menus: [
     {
       name: 'Dashboard',
+      identifier: 'dashboard',
       permalink: '/dashboard',
       active: false,
     },
     {
       name: 'Organisation List',
+      identifier: 'organisation-list',
       permalink: '/list-organisations',
       active: false,
     },
 
     {
-      name: 'Users',
+      name: props.translatedData['common.common.users'],
+      identifier: 'users',
       permalink: '/users',
       active: false,
     },
-    // {
-    //   name: 'Logs',
-    //   permalink: '/system-version',
-    //   active: false,
-    // },
   ],
 });
+
+const changeLanguage = (lang: string) => {
+  LanguageService.changeLanguage(lang)
+    .then(() => {
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 watch(
   () => store.state.isLoading,
   (value) => {
@@ -636,6 +632,7 @@ onUnmounted(() => {
 });
 
 provide('defaultLanguage', props.defaultLanguage);
+provide('translatedData', props.translatedData);
 </script>
 
 <style src="@vueform/multiselect/themes/default.css"></style>

@@ -17,7 +17,8 @@ class RelatedActivityXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The relationship type in related activity is invalid.', $flattenErrors);
+
+        $this->assertContains(trans('validation.this_field_is_invalid'), $flattenErrors);
     }
 
     /**

@@ -66,8 +66,8 @@ class LoginController extends Controller
      * Resolve actual field( either email or username).
      * Update request and set value for the resolved field.
      *
-     * @param AuditService $auditService
-     * @param UserService $userService
+     * @param  AuditService  $auditService
+     * @param  UserService  $userService
      */
     public function __construct(AuditService $auditService, UserService $userService)
     {
@@ -108,7 +108,7 @@ class LoginController extends Controller
     /**
      * Validate the user login request.
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return void
      */
@@ -120,16 +120,39 @@ class LoginController extends Controller
             $emailOrUsernameValidation .= '|email|not_in_spam_emails';
         }
 
-        $request->validate([
-            'emailOrUsername' => $emailOrUsernameValidation,
-            'password' => 'required|string',
-        ]);
+        $request->validate(
+            [
+                'emailOrUsername' => $emailOrUsernameValidation,
+                'password'        => 'required|string',
+            ],
+            [
+                'emailOrUsername.required'           => trans(
+                    'validation.required',
+                    ['attribute' => trans('public/login.sign_in_section.username_label')]
+                ),
+                'emailOrUsername.string'             => trans(
+                    'validation.string',
+                    ['attribute' => trans('public/login.sign_in_section.username_label')]
+                ),
+                'emailOrUsername.email'              => trans(
+                    'validation.email',
+                    ['attribute' => trans('public/login.sign_in_section.username_label')]
+                ),
+                'emailOrUsername.not_in_spam_emails' => trans('validation.not_in_spam_emails'),
+                'password.required'                  => trans(
+                    'validation.required',
+                ),
+                'password.string'                    => trans(
+                    'validation.string',
+                ),
+            ]
+        );
     }
 
     /**
      * Log the user out of the application.
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return RedirectResponse|JsonResponse
      */
@@ -155,7 +178,7 @@ class LoginController extends Controller
     /**
      * Handle a login request to the application.
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return Response
      *
@@ -173,7 +196,7 @@ class LoginController extends Controller
         $fieldMappedToValue = $request->only('email', 'username');
         $credentials = [
             ...$fieldMappedToValue,
-            'password' => $request->input('password'),
+            'password'   => $request->input('password'),
             'deleted_at' => null,
         ];
 
@@ -187,7 +210,7 @@ class LoginController extends Controller
 
         if (!Auth::attempt($credentials)) {
             throw ValidationException::withMessages([
-                'emailOrUsername' => [trans('auth.inactive_user')],
+                'emailOrUsername' => [trans('validation.your_account_is_inactive')],
             ]);
         }
 
@@ -205,7 +228,11 @@ class LoginController extends Controller
                 $request->session()->put('auth.password_confirmed_at', time());
                 $request->session()->put('role_id', auth()->user()->role_id);
 
-                if (in_array(auth()->user()->role_id, [app(Role::class)->getSuperAdminId(), app(Role::class)->getIatiAdminId()], true)) {
+                if (in_array(
+                    auth()->user()->role_id,
+                    [app(Role::class)->getSuperAdminId(), app(Role::class)->getIatiAdminId()],
+                    true
+                )) {
                     $request->session()->put('superadmin_user_id', auth()->user()->id);
                 }
             }

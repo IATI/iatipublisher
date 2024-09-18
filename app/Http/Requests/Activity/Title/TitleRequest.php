@@ -25,7 +25,11 @@ class TitleRequest extends ActivityBaseRequest
             $titles = request()->get('narrative');
         }
 
-        $totalRules = [$this->getCriticalErrorsForTitle($name, $titles), $this->getErrorsForTitle($name, $titles), $this->getWarningForTitle($name, $titles)];
+        $totalRules = [
+            $this->getCriticalErrorsForTitle($name, $titles),
+            $this->getErrorsForTitle($name, $titles),
+            $this->getWarningForTitle($name, $titles),
+        ];
 
         return mergeRules($totalRules);
     }
@@ -60,9 +64,12 @@ class TitleRequest extends ActivityBaseRequest
     public function getErrorsForTitle($name, $titles = []): array
     {
         $rules = [];
-        $validLanguages = implode(',', array_keys(
-            $this->getCodeListForRequestFiles('Language', 'Activity', false, false)
-        ));
+        $validLanguages = implode(
+            ',',
+            array_keys(
+                $this->getCodeListForRequestFiles('Language', 'Activity', false, false)
+            )
+        );
 
         if (is_array($titles) && count($titles)) {
             foreach ($titles as $key => $title) {
@@ -89,7 +96,11 @@ class TitleRequest extends ActivityBaseRequest
         if (is_array($titles) && count($titles)) {
             foreach ($titles as $key => $title) {
                 if ($key !== 0 && !empty(Arr::get($title, 'language', ''))) {
-                    $rules[sprintf('%s.%s.narrative', $name, $key)] = 'required_with_language:' . Arr::get($title, 'narrative', '');
+                    $rules[sprintf('%s.%s.narrative', $name, $key)] = 'required_with_language:' . Arr::get(
+                        $title,
+                        'narrative',
+                        ''
+                    );
                 }
             }
         }
@@ -110,14 +121,16 @@ class TitleRequest extends ActivityBaseRequest
             $titles = request()->get('narrative');
         }
 
-        $messages[sprintf('%s.unique_lang', $name)] = 'The title language field must be unique.';
-        $messages[sprintf('%s.unique_default_lang', $name)] = 'The title language field must be unique.';
-        $messages[sprintf('%s.0.narrative.required', $name)] = 'The first title is required.';
+        $messages[sprintf('%s.unique_lang', $name)] = trans('validation.narrative_language_unique');
+        $messages[sprintf('%s.unique_default_lang', $name)] = trans('validation.narrative_language_unique');
+        $messages[sprintf('%s.0.narrative.required', $name)] = trans('validation.first_title_required');
 
         if (is_array($titles) && count($titles)) {
             foreach ($titles as $key => $title) {
                 if ($key !== 0) {
-                    $messages[sprintf('%s.%s.narrative.required_with_language', $name, $key)] = 'The narrative is required when language is specified.';
+                    $messages[sprintf('%s.%s.narrative.required_with_language', $name, $key)] = trans(
+                        'validation.narrative_is_required_when_language_is_populated'
+                    );
                 }
             }
         }

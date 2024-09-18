@@ -28,9 +28,10 @@ class DateRequest extends ActivityBaseRequest
     /**
      * Returns critical rules for date.
      *
-     * @param array $formFields
+     * @param  array  $formFields
+     * @return array
      *
-     * @return
+     * @throws \JsonException
      */
     public function getErrorsForActivityDate(array $formFields): array
     {
@@ -39,11 +40,22 @@ class DateRequest extends ActivityBaseRequest
         foreach ($formFields as $activityDateIndex => $activityDate) {
             $activityDateForm = sprintf('activity_date.%s', $activityDateIndex);
             $rules[sprintf('%s.date', $activityDateForm)] = 'nullable|date';
-            $rules[sprintf('%s.type', $activityDateForm)] = sprintf('nullable|in:%s', implode(',', array_keys(
-                $this->getCodeListForRequestFiles('ActivityDateType', 'Activity')
-            )));
+            $rules[sprintf('%s.type', $activityDateForm)] = sprintf(
+                'nullable|in:%s',
+                implode(
+                    ',',
+                    array_keys(
+                        $this->getCodeListForRequestFiles('ActivityDateType', 'Activity')
+                    )
+                )
+            );
 
-            foreach ($this->getErrorsForNarrative($activityDate['narrative'], $activityDateForm) as $narrativeIndex => $narrativeRules) {
+            foreach (
+                $this->getErrorsForNarrative(
+                    $activityDate['narrative'],
+                    $activityDateForm
+                ) as $narrativeIndex => $narrativeRules
+            ) {
                 $rules[$narrativeIndex] = $narrativeRules;
             }
         }
@@ -54,7 +66,7 @@ class DateRequest extends ActivityBaseRequest
     /**
      * Returns rules for related activity.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -65,7 +77,12 @@ class DateRequest extends ActivityBaseRequest
         foreach ($formFields as $activityDateIndex => $activityDate) {
             $activityDateForm = sprintf('activity_date.%s', $activityDateIndex);
 
-            foreach ($this->getWarningForNarrative($activityDate['narrative'], $activityDateForm) as $narrativeIndex => $narrativeRules) {
+            foreach (
+                $this->getWarningForNarrative(
+                    $activityDate['narrative'],
+                    $activityDateForm
+                ) as $narrativeIndex => $narrativeRules
+            ) {
                 $rules[$narrativeIndex] = $narrativeRules;
             }
         }
@@ -76,8 +93,8 @@ class DateRequest extends ActivityBaseRequest
     /**
      * Validate activity date data based on Activity Date and Activity Date Type.
      *
-     * @param array $activityDates
-     * @param array $rules
+     * @param  array  $activityDates
+     * @param  array  $rules
      *
      * @return array
      */
@@ -95,7 +112,11 @@ class DateRequest extends ActivityBaseRequest
 
             if (isset($date, $type)) {
                 if (($type === '2' || $type === '4')) {
-                    (dateStrToTime($date) <= dateStrToTime(date('Y-m-d'))) ?: $rules[sprintf('%s.date', $activityDateForm)][] = 'before:' . now();
+                    (dateStrToTime($date) <= dateStrToTime(date('Y-m-d'))) ?: $rules[sprintf(
+                        '%s.date',
+                        $activityDateForm
+                    )][]
+                        = 'before:' . now();
                 }
 
                 if ($type === '4') {
@@ -108,7 +129,11 @@ class DateRequest extends ActivityBaseRequest
 
                     if (count($actualStartDate)) {
                         foreach ($actualStartDate as $startDate) {
-                            dateStrToTime($date) > dateStrToTime($startDate) ?: $rules[sprintf('%s.date', $activityDateForm)][] = 'end_later_than_start';
+                            dateStrToTime($date) > dateStrToTime($startDate) ?: $rules[sprintf(
+                                '%s.date',
+                                $activityDateForm
+                            )][]
+                                = 'end_later_than_start';
                         }
                     }
                 }
@@ -123,7 +148,11 @@ class DateRequest extends ActivityBaseRequest
 
                     if (count($plannedStartDate)) {
                         foreach ($plannedStartDate as $startDate) {
-                            dateStrToTime($date) > dateStrToTime($startDate) ?: $rules[sprintf('%s.date', $activityDateForm)][] = 'end_later_than_start';
+                            dateStrToTime($date) > dateStrToTime($startDate) ?: $rules[sprintf(
+                                '%s.date',
+                                $activityDateForm
+                            )][]
+                                = 'end_later_than_start';
                         }
                     }
                 }
@@ -146,7 +175,7 @@ class DateRequest extends ActivityBaseRequest
     /**
      * Returns messages for related activity validations.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -156,10 +185,18 @@ class DateRequest extends ActivityBaseRequest
 
         foreach ($formFields as $activityDateIndex => $activityDate) {
             $activityDateForm = sprintf('activity_date.%s', $activityDateIndex);
-            $messages[sprintf('%s.date.date', $activityDateForm)] = 'Date is invalid.';
-            $messages[sprintf('%s.date.before', $activityDateForm)] = 'Actual start and end dates may not be in the future.';
-            $messages[sprintf('%s.date.end_later_than_start', $activityDateForm)] = 'End date must be later than the start date.';
-            $messages[sprintf('%s.type.in', $activityDateForm)] = 'The selected type is invalid.';
+            $messages[sprintf('%s.date.date', $activityDateForm)] = trans('validation.date_is_invalid');
+            $messages[sprintf(
+                '%s.date.before',
+                $activityDateForm
+            )]
+                = trans('validation.actual_date');
+            $messages[sprintf(
+                '%s.date.end_later_than_start',
+                $activityDateForm
+            )]
+                = trans('validation.activity_date.end_later_than_start');
+            $messages[sprintf('%s.type.in', $activityDateForm)] = trans('validation.type_is_invalid');
             $messages += $this->getMessagesForNarrative($activityDate['narrative'], $activityDateForm);
         }
 

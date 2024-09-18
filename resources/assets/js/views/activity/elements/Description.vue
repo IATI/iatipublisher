@@ -8,7 +8,9 @@
       <span v-if="post.type">
         {{ types.descriptionType[post.type] }}
       </span>
-      <span v-else class="italic">Type Missing</span>
+      <span v-else class="italic">{{
+        getTranslatedMissing(translatedData, 'type')
+      }}</span>
     </div>
     <div
       v-for="(item, i) in post.narrative"
@@ -18,19 +20,23 @@
     >
       <div v-if="item.narrative" class="flex flex-col">
         <span v-if="item.language" class="language mb-1.5">
-          (Language: {{ types.languages[item.language] }})
+          ({{ getTranslatedLanguage(translatedData) }} :
+          {{ types.languages[item.language] }})
         </span>
         <span v-if="item.narrative" class="max-w-[887px]">
           {{ item.narrative }}
         </span>
       </div>
-      <span v-else class="italic">Narrative Missing</span>
+      <span v-else class="italic">{{
+        getTranslatedMissing(translatedData, 'narrative')
+      }}</span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
+import { getTranslatedLanguage, getTranslatedMissing } from 'Composable/utils';
 
 export default defineComponent({
   name: 'ActivityDescription',
@@ -47,7 +53,10 @@ export default defineComponent({
       languages: [];
     }
     const types = inject('types') as Types;
-    return { types };
+    const translatedData = inject('translatedData') as Record<string, string>;
+
+    return { types, translatedData };
   },
+  methods: { getTranslatedMissing, getTranslatedLanguage },
 });
 </script>

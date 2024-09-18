@@ -83,12 +83,12 @@ class IatiRegisterFormRequest extends FormRequest
 
         switch ($step) {
             case '1':
-                $messages['publisher_id.regex'] = 'The publisher id is invalid. The publisher id must be at least two characters long and lower case. It can include letters, numbers and also - (dash) and _ (underscore).';
-                $messages['registration_number.regex'] = 'The registration number is invalid. Valid registration number includes letter, number, . and _, - (dash).';
+                $messages['publisher_id.regex'] = trans('common/common.the_publisher_id_is_invalid');
+                $messages['registration_number.regex'] = trans('register/iati_register_form_request.the_registration_number_is_invalid');
                 break;
             case '4':
-                $messages['username.regex'] = 'The username is invalid. Username must be purely lowercase alphabets followed by alphanumeric(ascii) characters and these symbols:-_';
-                $messages['email.unique'] = 'Email is already in use in IATI Publisher.';
+                $messages['username.regex'] = trans('common/common.the_username_is_invalid');
+                $messages['email.unique'] = trans('common/common.email_is_already_in_use_in_iati_publisher');
                 break;
         }
 

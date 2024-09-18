@@ -14,11 +14,18 @@
       <div v-if="!isSaving">
         <div class="relative">
           <h3 class="pb-[2px] text-[20px] font-bold leading-9 text-n-50">
-            Complete Publishing Settings
+            {{
+              translatedData[
+                'onboarding.publishing_setting_step.complete_publishing_settings'
+              ]
+            }}
           </h3>
           <div class="text-sm">
-            Link your account to the IATI Registry. Generate an API token in
-            your IATI Registry account and add it here.
+            {{
+              translatedData[
+                'onboarding.publishing_setting_step.link_your_account_to_the_iati_registry'
+              ]
+            }}
           </div>
           <Transition mode="out-in">
             <div
@@ -31,13 +38,17 @@
               >
                 <div class="flex justify-between">
                   <label for="api-token" class="text-[14px]">
-                    API Token
+                    {{ translatedData['common.common.api_token'] }}
                     <span class="required-icon"> *</span>
                   </label>
                   <button>
                     <HoverText
-                      name="API Token"
-                      hover-text="The API token is a unique key that is generated from your organisation's IATI Registry Publisher Account. It is required to give IATI Publisher permission to add data to the IATI Registry on your behalf. Generate a Token in the 'My Account' tab by <a href='https://www.iatiregistry.org/user/login' target='_blank' target='_blank'>logging</a> into to the IATI Registry."
+                      :name="translatedData['common.common.api_token']"
+                      :hover-text="
+                        translatedData[
+                          'common.common.the_api_token_is_a_unique_key_that_is_generated_from_your_organisation'
+                        ]
+                      "
                       :show-iati-reference="true"
                     />
                   </button>
@@ -48,7 +59,9 @@
                     v-model="apiToken"
                     type="text"
                     class="mt-2 h-12 w-full rounded-[4px] border border-n-30 py-[13px] px-4 text-sm focus-within:outline-0 focus:outline-0"
-                    placeholder="Type your API token here"
+                    :placeholder="
+                      translatedData['common.common.enter_api_token_here']
+                    "
                   />
                   <ShimmerLoading
                     v-if="!tokenStatus"
@@ -76,7 +89,11 @@
                   <LinesLoader />
                 </div>
                 <h3 class="pt-4 font-bold text-bluecoral">
-                  Verifying API Token
+                  {{
+                    translatedData[
+                      'onboarding.publishing_setting_step.verifying_api_token'
+                    ]
+                  }}
                 </h3>
               </div>
 
@@ -86,7 +103,7 @@
                 class="mt-3 rounded-[4px] bg-bluecoral py-[11px] px-[38.5px] text-sm font-[700] text-white"
                 @click.once="verifyToken"
               >
-                VERIFY
+                {{ translatedData['common.common.verify'] }}
               </button>
             </div>
             <!-- If Success -->
@@ -95,18 +112,26 @@
                 class="mt-3 flex w-full flex-col items-center justify-center gap-2 rounded-lg bg-n-10 py-[62px]"
               >
                 <svg-vue icon="green-circle-tick" class="text-[29px]" />
-                <span class="text-sm font-bold text-bluecoral"
-                  >API Token verified</span
-                >
+                <span class="text-sm font-bold text-bluecoral">
+                  {{
+                    translatedData[
+                      'onboarding.publishing_setting_step.api_token_verified'
+                    ]
+                  }}
+                </span>
               </div>
             </div>
           </Transition>
 
           <div class="flex items-center gap-1 pt-3 text-xs text-n-40">
             <svg-vue icon="message-icon" />
-            <span>
-              You can always revisit and adjust these settings later by
-              navigating to the 'Publishing Settings' section at any time.
+            <span
+              v-html="
+                translatedData[
+                  'onboarding.publishing_setting_step.you_can_always_revisit_and_adjust_these_settings_later'
+                ]
+              "
+            >
             </span>
           </div>
         </div>
@@ -119,14 +144,14 @@
               class="text-xs font-bold text-n-40"
               @click="emit(`proceedStep`)"
             >
-              Skip to next step
+              {{ translatedData['common.common.skip_to_next_step'] }}
             </button>
             <button
               class="button primary-btn text-xs disabled:cursor-not-allowed disabled:bg-n-20 disabled:shadow-none"
               :disabled="isSaving || !apiToken"
               @click="proceedStep"
             >
-              Save and NEXT
+              {{ translatedData['common.common.save_and_next'] }}
             </button>
           </div>
         </div>
@@ -147,13 +172,20 @@
             <svg-vue icon="green-circle-tick" class="text-[34px]" />
             <div>
               <h2 class="max-w-[587px] py-[5.4px] text-2xl font-bold text-n-50">
-                Your account has been successfully linked to the IATI Registry.
+                {{
+                  translatedData[
+                    'onboarding.publishing_setting_step.your_account_has_been_successfully_linked_to_the_iati_registry'
+                  ]
+                }}
               </h2>
-              <p class="max-w-[587px] text-sm text-n-50">
-                The API token has been generated and added successfully. If you
-                need to make any changes or updates, please visit your
-                <a href="/setting" target="_blank">account settings</a>.
-              </p>
+              <p
+                class="max-w-[587px] text-sm text-n-50"
+                v-html="
+                  translatedData[
+                    'onboarding.publishing_setting_step.the_api_token_has_been_generated_and_added_successfully'
+                  ]
+                "
+              ></p>
             </div>
           </div>
         </div>
@@ -162,7 +194,7 @@
             class="button primary-btn text-xs"
             @click="emit(`proceedStep`)"
           >
-            NEXT
+            {{ translatedData['common.common.next'] }}
           </button>
         </div>
       </div>
@@ -176,20 +208,25 @@
           <svg-vue icon="green-circle-tick" class="text-[34px]" />
           <div>
             <h2 class="py-[5.4px] text-2xl font-bold text-n-50">
-              Publishing settings completed.
+              {{
+                translatedData[
+                  'onboarding.publishing_setting_step.publishing_settings_completed'
+                ]
+              }}
             </h2>
             <p class="max-w-[587px] text-sm text-n-50">
-              Your IATI Registry account has been linked and needs to be
-              approved before you can publish data. Someone from the IATI team
-              will review it and be in contact within two working days. You can
-              start entering data in IATI Publisher straight away.
+              {{
+                translatedData[
+                  'onboarding.publishing_setting_step.your_iati_registry_account_has_been_linked_and_needs_to_be_approved_before_you_can_publish_data'
+                ]
+              }}
             </p>
           </div>
         </div>
       </div>
       <div class="mb-[30px] self-end">
         <button class="button primary-btn text-xs" @click="emit(`proceedStep`)">
-          NEXT
+          {{ translatedData['common.common.next'] }}
         </button>
       </div>
     </div>
@@ -197,7 +234,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, watchEffect, defineEmits } from 'vue';
+import { defineEmits, defineProps, inject, ref, watchEffect } from 'vue';
 import LinesLoader from 'Components/LinesLoader.vue';
 import axios from 'axios';
 import ShimmerLoading from 'Components/ShimmerLoading.vue';
@@ -241,6 +278,7 @@ const emit = defineEmits([
   'removeCompletedStep',
 ]);
 
+const translatedData = inject('translatedData') as Record<string, string>;
 const apiToken = ref('');
 const isVerifyingToken = ref(false);
 const isSaving = ref(false);

@@ -15,25 +15,32 @@
     <div class="popup mb-4">
       <div class="title mb-6 flex items-center text-sm">
         <svg-vue class="mr-1 text-lg text-spring-50" icon="warning" />
-        <b>Another Activity is currently being published</b>
+        <b>{{
+          translatedData[
+            'common.common.another_activity_is_currently_being_published'
+          ]
+        }}</b>
       </div>
       <div class="rounded-lg bg-[#FFF1F0] p-4">
         <div class="text-sm leading-normal">
-          Please wait for previous bulk publish to complete or cancel previous
-          bulk publish to continue this bulk publish.
+          {{
+            translatedData[
+              'common.common.please_wait_for_previous_bulk_publish_to_complete_or_cancel_previous_bulk_publish'
+            ]
+          }}
         </div>
       </div>
     </div>
     <div class="flex justify-between space-x-2">
       <BtnComponent
         class="bg-white px-6 uppercase"
-        text="Cancel Previous Bulk publish"
+        :text="translatedData['common.common.cancel_previous_bulk_publish']"
         type=""
         @click="startNewPublishing()"
       />
       <BtnComponent
         class="bg-white px-6 uppercase"
-        text="Wait for completion"
+        :text="translatedData['common.common.wait_for_completion']"
         type="primary"
         @click="showExistingProcessModal = false"
       />
@@ -47,46 +54,25 @@
     @reset="resetPublishStep"
   >
     <div class="popup mb-4">
-      <div class="">
-        <div class="title mb-6 flex items-center text-sm">
-          <svg-vue
-            class="mr-1 text-lg"
-            :class="{
-              'text-spring-50': publishStateChange.alertState,
-              'text-crimson-40': !publishStateChange.alertState,
-            }"
-            :icon="publishStateChange.icon"
-          />
-          <b>{{ publishStateChange.title }} </b>
-        </div>
-        <div
-          class="rounded-lg bg-mint p-4"
-          :class="{
-            'bg-mint': publishStateChange.alertState,
-            'bg-[#FFF1F0]': !publishStateChange.alertState && publishStep !== 1,
-            '!bg-eggshell': !publishStateChange.alertState && publishStep === 1,
-          }"
-        >
-          <div
-            class="text-sm leading-normal"
-            v-html="publishStateChange.description"
-          ></div>
-        </div>
-      </div>
-
       <div v-if="hasDeprecatedValueInUse && publishStep === 0" class="my-6">
         <div class="title mb-4 flex h-5 items-center text-sm">
           <svg-vue
             icon="exclamation-warning"
             class="mr-1 h-full text-lg text-spring-50"
           />
-          <b class="h-full">Some elements use deprecated codelist values</b>
+          <b class="h-full">{{
+            translatedData[
+              'activity_index.publish_button.some_elements_use_deprecated_codelist_values'
+            ]
+          }}</b>
         </div>
         <div class="rounded-lg bg-eggshell p-4">
           <div class="text-sm leading-normal">
-            Certain elements in this activity use deprecated code list values,
-            which we do not recommend. Using these outdated values can undermine
-            data quality.
+            {{
+              translatedData[
+                'activity_index.publish_button.certain_elements_in_this_activity_use_deprecated_code_list_values'
+              ]
+            }}
           </div>
         </div>
       </div>
@@ -97,75 +83,25 @@
           <BtnComponent
             v-if="publishStep == 0"
             class="bg-white px-6 uppercase"
-            text="Go Back"
+            :text="translatedData['common.common.go_back']"
             type=""
             @click="publishValue = false"
           />
-          <!-- <BtnComponent
-            v-if="publishStep == 0"
-            class="space"
-            text="Continue"
-            type="primary"
-            @click="stepPlusOne"
-          /> -->
         </template>
         <template v-else>
-          <!-- <BtnComponent
-            v-if="publishStep == 0"
-            class="bg-white px-6 uppercase"
-            text="Continue Anyway"
-            type=""
-            @click="stepPlusOne"
-          /> -->
           <BtnComponent
             v-if="publishStep == 0"
             class="space"
-            text="Add Missing Data"
+            :text="translatedData['common.common.add_missing_data']"
             type="primary"
             @click="publishValue = false"
           />
         </template>
-
-        <!-- <BtnComponent
-          v-if="publishStep === 1 || publishStep === 2"
-          class="bg-white px-6 uppercase"
-          text="Go Back"
-          type=""
-          @click="stepMinusOne"
-        /> -->
-
-        <!-- api validator button (validatorFunction) -->
-        <!-- <BtnComponent
-          v-if="publishStep === 1"
-          class="space"
-          text="Continue"
-          :is-loading="showModalButtonLoader"
-          type="primary"
-          @click="validatorFunction"
-        /> -->
-
-        <!-- api publishing button (publishFunction) -->
-        <!-- <BtnComponent
-          v-if="publishStep === 2"
-          class="space"
-          text="Publish"
-          type="primary"
-          @click="publishFunction"
-        /> -->
-
-        <!-- api publishing button (publishFunction) -->
-        <!-- <BtnComponent
-          v-if="publishStep === 3 || publishStep === 4"
-          class="bg-white px-6 uppercase"
-          text="Publish Anyway"
-          type=""
-          @click="publishFunction"
-        /> -->
 
         <BtnComponent
           v-if="publishStep === 3 || publishStep === 4"
           class="space"
-          text="Fix issues"
+          :text="translatedData['activity_index.publish_button.fix_issues']"
           type="primary"
           @click="resetPublishStep"
         />
@@ -175,6 +111,7 @@
   <Loader
     v-if="loader"
     :text="loaderText"
+    :translated-data="translatedData"
     :class="{ 'animate-loader': loader }"
   />
 </template>
@@ -199,7 +136,7 @@ import Loader from 'Components/sections/ProgressLoader.vue';
 
 // Vuex Store
 import { detailStore } from 'Store/activities/show';
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
 
 const props = defineProps({
   type: { type: String, default: 'primary' },
@@ -268,6 +205,7 @@ const loader = ref(false);
 
 const coreElementStatus = coreCompleted.value;
 const hasDeprecatedValueInUse = checkIfHasDeprecatedValueInUse();
+const translatedData = inject('translatedData') as Record<string, string>;
 
 function checkIfHasDeprecatedValueInUse(): boolean {
   function recursiveCheck(item): boolean {
@@ -292,7 +230,7 @@ function checkIfHasDeprecatedValueInUse(): boolean {
   return recursiveCheck(props.deprecationStatusMap);
 }
 // Dynamic text for loader
-const loaderText = ref('Please Wait');
+const loaderText = ref(translatedData['common.common.please_wait']);
 
 // reset step to zero after closing modal
 const resetPublishStep = () => {
@@ -365,18 +303,6 @@ const publishStateChange = computed(() => {
 
   return publishState;
 });
-
-// // increment and decrement function
-// const stepPlusOne = () => {
-//   if (publishStep.value >= 0 && publishStep.value < 4) {
-//     publishStep.value++;
-//   }
-// };
-// const stepMinusOne = () => {
-//   if (publishStep.value > 0 && publishStep.value <= 4) {
-//     publishStep.value--;
-//   }
-// };
 
 // reactive variable for errors number
 interface Err {
@@ -494,12 +420,12 @@ const publishStatus = reactive({
 
 const btnText = computed(() => {
   if (publishStatus.linked_to_iati && publishStatus.status === 'draft') {
-    return 'Republish';
+    return translatedData['common.common.republish'];
   } else if (
     !publishStatus.linked_to_iati &&
     publishStatus.status === 'draft'
   ) {
-    return 'Publish';
+    return translatedData['common.common.publish'];
   } else {
     return '';
   }

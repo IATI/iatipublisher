@@ -22,9 +22,9 @@ class RequiredEitherNumericTargetValueOrActualValue implements Rule
     /**
      * Create a new rule instance.
      *
-     * @param string $field
-     * @param string $otherField
-     * @param array $formFields
+     * @param  string  $field
+     * @param  string  $otherField
+     * @param  array  $formFields
      */
     public function __construct(protected string $field, protected string $otherField, protected array $formFields)
     {
@@ -68,10 +68,14 @@ class RequiredEitherNumericTargetValueOrActualValue implements Rule
     public function message(): string
     {
         if ($this->errorType === 'numeric') {
-            return 'The @value field must be numeric.';
+            return trans('validation.activity_periods.value.numeric');
         }
 
-        return sprintf('%s value is required if %s value is not provided.', ucfirst($this->field), $this->otherField);
+        if ($this->field === 'target') {
+            return trans('validation.activity_periods.value.target_required');
+        }
+
+        return trans('validation.activity_periods.value.actual_required');
     }
 
     /**

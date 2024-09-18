@@ -43,23 +43,32 @@ class BulkDeleteResultRequest extends FormRequest
             $results = Result::whereIn('id', $resultIds)->get();
 
             if ($this->resultsBelongToSameActivity($results)) {
-                $validator->errors()->add('result_ids', 'All results must belong to the same activity.');
+                $validator->errors()->add(
+                    'result_ids',
+                    trans('validation.activity_results.result_id.same_activity')
+                );
             }
 
             if ($this->resultsBelongsToActivityInRequest($results, $activityId)) {
-                $validator->errors()->add('result_ids', 'Results IDs do not match the specified activity.');
+                $validator->errors()->add(
+                    'result_ids',
+                    trans('validation.activity_results.result_id.no_match')
+                );
             }
 
             $activity = Activity::find($activityId);
 
             if ($this->activityIsPublished($activity)) {
-                $validator->errors()->add('result_ids', 'Please unpublish activity before deleting results.');
+                $validator->errors()->add(
+                    'result_ids',
+                    trans('validation.activity_results.result_id.unpublish')
+                );
             }
         });
     }
 
     /**
-     * @param Collection<Transaction> $transactions
+     * @param  Collection<Transaction>  $transactions
      *
      * @return bool
      */
@@ -71,7 +80,7 @@ class BulkDeleteResultRequest extends FormRequest
     /**
      * Check if activity is published.
      *
-     * @param Activity $activity
+     * @param  Activity  $activity
      *
      * @return bool
      */

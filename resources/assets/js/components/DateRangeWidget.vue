@@ -47,7 +47,10 @@
     </div>
     <div class="">
       <div
-        :class="{ empty: !selectedDate[0], 'all-time': fixed === 'All time ' }"
+        :class="{
+          empty: !selectedDate[0],
+          'all-time': fixed === translatedData['common.common.all_time'],
+        }"
         class="relative flex"
       >
         <VueDatePicker
@@ -55,7 +58,7 @@
           v-model="selectedDate"
           range
           month-name-format="long"
-          placeholder="Select date"
+          :placeholder="translatedData['common.common.select_date']"
           mode-height="650"
           :clearable="true"
           :format="format"
@@ -78,13 +81,13 @@
                 class="font-neutral mx-2 w-fit p-2 font-bold uppercase"
                 @click="closeCalendar"
               >
-                Cancel
+                {{ translatedData['common.common.cancel'] }}
               </button>
               <button
                 class="font-spring mx-2 w-fit p-2 font-bold uppercase"
                 @click="selectDate"
               >
-                Apply
+                {{ translatedData['common.common.apply'] }}
               </button>
             </div>
           </template>
@@ -111,6 +114,7 @@ import {
   defineProps,
   onMounted,
   computed,
+  inject,
 } from 'vue';
 import {
   subDays,
@@ -175,6 +179,9 @@ const dateRangeMain: Ref<Element | null> = ref(null);
 const dateType = ref('');
 const dateDropdown = ref();
 const dateTypeName = ref(props.dateName);
+
+const translatedData = inject('translatedData') as Record<string, string>;
+
 dateType.value = props.dropdownRange && Object.values(props.dropdownRange)[0];
 
 const dateTypeKey = ref('');
@@ -283,41 +290,41 @@ const resetDate = async () => {
   triggerSetDateRange('', '');
   selectedDate.value[0] = '';
   selectedDate.value[1] = '';
-  fixed.value = 'All time';
+  fixed.value = translatedData['common.common.all_time'];
   return { success: true };
 };
 
 const presetRanges = computed(() => [
   {
-    label: 'Today',
+    label: translatedData['common.common.today'],
     range: [startOfDay(new Date()), endOfDay(new Date())],
   },
   {
-    label: 'This week',
+    label: translatedData['common.common.this_week'],
     range: [startOfWeek(new Date()), endOfDay(new Date())],
   },
   {
-    label: 'Last 7 days',
+    label: translatedData['common.common.last_7_days'],
     range: [subDays(new Date(), 6), endOfDay(new Date())],
   },
   {
-    label: 'This month',
+    label: translatedData['common.common.this_month'],
     range: [startOfMonth(new Date()), endOfMonth(new Date())],
   },
   {
-    label: 'Last 6 month',
+    label: translatedData['common.common.last_6_month'],
     range: [startOfMonth(subMonths(new Date(), 6)), endOfMonth(new Date())],
   },
   {
-    label: 'This year',
+    label: translatedData['common.common.this_year'],
     range: [startOfYear(new Date()), endOfDay(new Date())],
   },
   {
-    label: 'Last 12 months',
+    label: translatedData['common.common.last_12_months'],
     range: [startOfMonth(subMonths(new Date(), 12)), endOfDay(new Date())],
   },
   {
-    label: 'All time',
+    label: translatedData['common.common.all_time'],
     range: [new Date(initialDate.value), endOfDay(new Date())],
   },
 ]);
@@ -417,7 +424,7 @@ watch(
   () => {
     selectedDate.value[0] = '';
     selectedDate.value[1] = '';
-    fixed.value = 'All time';
+    fixed.value = translatedData['common.common.all_time'];
   },
   { deep: true }
 );

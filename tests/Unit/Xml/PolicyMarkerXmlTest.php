@@ -17,13 +17,13 @@ class PolicyMarkerXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The policy marker vocabulary is invalid.', $flattenErrors);
-        $this->assertContains('The policy marker significance is invalid.', $flattenErrors);
-        $this->assertContains('The policy marker code is invalid.', $flattenErrors);
-        $this->assertContains('The @vocabulary-uri field must be a valid url.', $flattenErrors);
-        $this->assertContains('The narrative field is required when vocabulary is reporting organisation.', $flattenErrors);
-        $this->assertContains('The @xml:lang field is invalid.', $flattenErrors);
-        $this->assertContains('The narrative field is required with @xml:lang field.', $flattenErrors);
+        $this->assertContains(trans('validation.vocabulary_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.this_field_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_policy_marker.invalid_code'), $flattenErrors);
+        $this->assertContains(trans('validation.url_valid'), $flattenErrors);
+        $this->assertContains(trans('validation.language_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.narrative_is_required_when_language_is_populated'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_policy_marker.narrative_required'), $flattenErrors);
     }
 
     /**

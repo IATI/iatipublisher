@@ -63,8 +63,9 @@ class DownloadCodesController extends Controller
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
             $this->auditService->auditEvent(null, 'download', 'codes');
+            $translatedMessage = trans('common/common.error_has_occurred_while_downloading_activity_csv');
 
-            return response()->json(['success' => false, 'message' => 'Error has occurred while downloading activity csv.']);
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
     }
 }

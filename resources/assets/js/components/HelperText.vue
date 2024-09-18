@@ -23,7 +23,13 @@
           class="strong flex items-center justify-between align-middle text-bluecoral"
           @click="toggleShowAccordian"
         >
-          <span> This element uses deprecated codelist values. </span>
+          <span>
+            {{
+              translatedData[
+                'workflow_frontend.bulk_publish.this_element_uses_deprecated_codelist_values'
+              ]
+            }}
+          </span>
 
           <span :class="{ 'rotate-180 transform': showAccordianItems }">
             <svg-vue icon="dropdown-arrow" class="h-2"></svg-vue>
@@ -44,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { defineProps, inject, ref } from 'vue';
 
 const props = defineProps({
   helperText: {
@@ -52,6 +58,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const translatedData = inject('translatedData') as Record<string, string>;
 
 const showAccordianItems = ref(false);
 const hasTruePath = typeof props.helperText === 'string';
