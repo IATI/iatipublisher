@@ -5,12 +5,19 @@
       store.state.bulkActivityPublishStatus.iatiValidatorLoader
     "
   >
-    <RollingLoader header="Validating your data before publication" />
+    <RollingLoader
+      :header="
+        translatedData['common.common.checking_your_data_before_publication']
+      "
+    />
     <p
       class="mt-2.5 rounded-lg bg-paper p-4 text-sm leading-[22px] tracking-normal text-n-50"
     >
-      This process may take some time. You can minimize this tab and continue
-      working on other tasks.
+      {{
+        translatedData[
+          'workflow_frontend.bulk_publish.this_process_may_take_some_time'
+        ]
+      }}
     </p>
   </div>
 
@@ -19,35 +26,48 @@
       <div class="flex items-center gap-1">
         <svg-vue class="text-xl text-crimson-50" icon="warninig-activity-red" />
         <h3 class="text-sm font-bold uppercase text-bluecoral">
-          Validation incomplete
+          {{
+            translatedData[
+              'workflow_frontend.bulk_publish.validation_incomplete'
+            ]
+          }}
         </h3>
       </div>
-      <h6 v-if="errorType === 'generic'" class="my-2 text-sm">
-        <b class="text-[18px]"
-          >{{ Object.keys(validActivities).length }}/{{
+      <h6
+        v-if="errorType === 'generic'"
+        class="my-2 text-sm"
+        v-html="
+          getTranslatedValidationIncompleteMessage(
+            Object.keys(validActivities).length,
             Object.keys(activitiesList).length
-          }}</b
-        >
-        activities could only be validated due to server error. Would you like
-        to publish the validated files?
-      </h6>
+          )
+        "
+      ></h6>
 
       <h6 v-if="errorType === 'max_merge_size_exception'" class="my-2 text-sm">
         <b class="text-[16px] text-crimson-50">
-          Exceeded max publish size.
+          {{
+            translatedData[
+              'workflow_frontend.bulk_publish.exceeded_max_publish_size'
+            ]
+          }}
           <a
             class="border-b-2 border-b-transparent font-bold text-bluecoral hover:border-b-2 hover:border-b-turquoise hover:text-bluecoral"
             href="mailto:support@iatistandard.org"
             target="_blank"
           >
-            Contact Support.
+            {{ translatedData['common.common.contact_support_label'] }}
           </a>
         </b>
       </h6>
     </div>
     <div v-else>
       <h6 class="text-sm font-bold text-bluecoral">
-        Data checking complete. Click continue to publish
+        {{
+          translatedData[
+            'workflow_frontend.bulk_publish.data_checking_complete_click_continue_to_publish'
+          ]
+        }}
       </h6>
     </div>
     <div class="mt-2 rounded-md border border-n-20">
@@ -56,7 +76,11 @@
       >
         <svg-vue class="text-xl" icon="warning-activity" />
         <span class="text-xs font-bold">
-          Activities marked with this symbol have data quality issues
+          {{
+            translatedData[
+              'workflow_frontend.bulk_publish.activities_marked_with_this_symbol_have_data_quality_issues'
+            ]
+          }}
         </span>
       </div>
       <ul class="max-h-[50vh] divide-y divide-n-20 overflow-auto duration-200">
@@ -94,8 +118,11 @@
 
                 <div v-if="value.top_level_error === 'critical'">
                   <span class="text-xs italic text-crimson-50">
-                    (The activity contains critical errors and cannot be
-                    published.)
+                    ({{
+                      translatedData[
+                        'workflow_frontend.bulk_publish.the_activity_contains_critical_errors_and_cannot_be_published'
+                      ]
+                    }})
                   </span>
                 </div>
               </div>
@@ -118,7 +145,11 @@
                   target="_blank"
                   class="flex items-center gap-[2px]"
                 >
-                  Open in new tab
+                  {{
+                    translatedData[
+                      'workflow_frontend.bulk_publish.open_in_new_tab'
+                    ]
+                  }}
                   <svg-vue class="text-base" icon="open-link-small" />
                 </a>
               </div>
@@ -127,7 +158,11 @@
         </template>
         <template v-else>
           <li class="pt-4 text-sm leading-[22px] tracking-normal text-n-50">
-            No activities are ready to publish
+            {{
+              translatedData[
+                'workflow_frontend.bulk_publish.no_activities_are_ready_to_publish'
+              ]
+            }}
           </li>
         </template>
       </ul>
@@ -143,8 +178,9 @@
       >
         <span
           class="inline-block pl-3 pt-1 text-xs font-bold uppercase leading-[18px]"
-          >Select all</span
         >
+          {{ translatedData['workflow_frontend.bulk_publish.select_all'] }}
+        </span>
         <input
           id="selectAll"
           type="checkbox"
@@ -171,7 +207,7 @@ import {
   watchEffect,
 } from 'vue';
 
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
 import RollingLoader from '../RollingLoaderComponent.vue';
 
 const store = useStore();
@@ -201,6 +237,8 @@ const props = defineProps({
 });
 
 const newSelectedActivities = inject('newSelectedActivities') as Ref<number[]>;
+const translatedData = inject('translatedData') as Record<string, string>;
+
 const activeTab = ref(1);
 
 const isAllCriticalErrors = computed(() => {
@@ -270,6 +308,17 @@ const validActivities = computed(() => {
     )
   );
 });
+
+function getTranslatedValidationIncompleteMessage(
+  count: number,
+  totalCount: number
+): string {
+  return translatedData[
+    'workflow_frontend.bulk_publish.activities_could_only_be_validated_due_to_server_error'
+  ]
+    .replace(':count', String(count))
+    .replace(':totalCount', String(totalCount));
+}
 
 watchEffect(() => {
   if (validActivities.value) {

@@ -7,21 +7,19 @@
       <div class="mb-4 flex">
         <div class="title flex grow items-center">
           <svg-vue class="mr-1.5 text-xl text-bluecoral" icon="bill"></svg-vue>
-          <div class="title text-sm font-bold">Indicator</div>
-          <!--          <div class="status ml-2.5 flex text-xs leading-5 text-crimson-50">-->
-          <!--            <b class="mr-2 text-base leading-3">.</b>-->
-          <!--            <span>not completed</span>-->
-          <!--          </div>-->
+          <div class="title text-sm font-bold">
+            {{ getTranslatedElement(translatedData, 'indicator') }}
+          </div>
         </div>
         <div class="icons flex items-center">
           <Btn
-            text="Add Indicator"
+            :text="translatedData['common.common.add_indicator']"
             icon="add"
             :link="`/result/${result.id}/indicator/create`"
             class="mr-2.5"
           />
           <Btn
-            text="Show full indicator list"
+            :text="translatedData['common.common.show_full_indicator_list']"
             icon=""
             design="bgText"
             :link="`/result/${result.id}/indicator`"
@@ -71,19 +69,19 @@
                 <div class="flex shrink-0 grow justify-between">
                   <span class="flex">
                     <Btn
-                      text="View Indicator"
+                      :text="translatedData['common.common.view_indicator']"
                       icon="eye"
                       :link="`/result/${result.id}/indicator/${post.id}`"
                       class="mr-2.5"
                     />
                     <Btn
-                      text="Edit Indicator"
+                      :text="translatedData['common.common.edit_indicator']"
                       icon="edit"
                       :link="`/result/${result.id}/indicator/${post.id}/edit`"
                     />
                   </span>
                   <Btn
-                    text="Add Period"
+                    :text="translatedData['common.common.add_period']"
                     icon="edit"
                     :link="`/indicator/${post.id}/period/create`"
                     class="mr-2.5"
@@ -95,7 +93,14 @@
                   <table class="mb-3">
                     <tbody>
                       <tr>
-                        <td>Indicator Title</td>
+                        <td>
+                          {{
+                            getTranslatedElement(
+                              translatedData,
+                              'indicator_title'
+                            )
+                          }}
+                        </td>
                         <td>
                           <template
                             v-for="(title, t) in post.indicator.title[0]
@@ -114,7 +119,7 @@
                                 v-if="title.narrative"
                                 class="language subtle-darker mb-1"
                               >
-                                (Language:
+                                ({{ getTranslatedLanguage(translatedData) }}:
                                 {{
                                   type.language[title.language]
                                     ? type.language[title.language]
@@ -135,19 +140,32 @@
                       </tr>
 
                       <tr v-if="post.indicator.measure">
-                        <td>Measure</td>
+                        <td>
+                          {{ getTranslatedElement(translatedData, 'measure') }}
+                        </td>
                         <td>
                           {{ type.indicatorMeasure[post.indicator.measure] }}
                         </td>
                       </tr>
 
                       <tr v-if="post.indicator.aggregation_status">
-                        <td>Aggregation Status</td>
+                        <td>
+                          {{
+                            getTranslatedElement(
+                              translatedData,
+                              'aggregation_status'
+                            )
+                          }}
+                        </td>
                         <td>{{ post.indicator.aggregation_status != 0 }}</td>
                       </tr>
 
                       <tr>
-                        <td>Description</td>
+                        <td>
+                          {{
+                            getTranslatedElement(translatedData, 'description')
+                          }}
+                        </td>
                         <td>
                           <template
                             v-for="(description, d) in post.indicator
@@ -168,7 +186,7 @@
                                 v-if="description.narrative"
                                 class="language subtle-darker mb-1"
                               >
-                                (Language:
+                                ({{ getTranslatedLanguage(translatedData) }}:
                                 {{
                                   type.language[description.language]
                                     ? type.language[description.language]
@@ -189,7 +207,11 @@
                       </tr>
 
                       <tr>
-                        <td>Reference</td>
+                        <td>
+                          {{
+                            getTranslatedElement(translatedData, 'reference')
+                          }}
+                        </td>
 
                         <td v-if="!isEveryValueNull(post.indicator.reference)">
                           <div
@@ -201,7 +223,12 @@
                             }"
                           >
                             <span>
-                              Vocabulary: {{ ref.vocabulary ?? '' }}
+                              {{
+                                getTranslatedElement(
+                                  translatedData,
+                                  'vocabulary'
+                                )
+                              }}: {{ ref.vocabulary ?? '' }}
                               <span
                                 v-if="!ref.vocabulary"
                                 class="text-xs italic text-light-gray"
@@ -209,7 +236,8 @@
                               >,
                             </span>
                             <span>
-                              Code: {{ ref.code ? ref.code : '' }}
+                              {{ getTranslatedElement(translatedData, 'code') }}
+                              : {{ ref.code ? ref.code : '' }}
                               <span
                                 v-if="!ref.code"
                                 class="text-xs italic text-light-gray"
@@ -217,7 +245,12 @@
                               >,
                             </span>
                             <span>
-                              Indicator URI:
+                              {{
+                                getTranslatedElement(
+                                  translatedData,
+                                  'indicator_uri'
+                                )
+                              }}:
                               <a
                                 v-if="ref.indicator_uri"
                                 :href="ref.indicator_uri"
@@ -242,15 +275,26 @@
                       </tr>
 
                       <tr>
-                        <td>Document Link</td>
+                        <td>
+                          {{
+                            getTranslatedElement(
+                              translatedData,
+                              'document_link'
+                            )
+                          }}
+                        </td>
                         <td>
                           {{ countDocumentLink(post.indicator.document_link) }}
-                          documents
+                          {{
+                            getTranslatedElement(translatedData, 'documents')
+                          }}
                         </td>
                       </tr>
 
                       <tr>
-                        <td>Baseline</td>
+                        <td>
+                          {{ getTranslatedElement(translatedData, 'baseline') }}
+                        </td>
 
                         <td v-if="!isEveryValueNull(post.indicator.baseline)">
                           <div
@@ -263,7 +307,9 @@
                           >
                             <div>
                               <span>
-                                Year:
+                                {{
+                                  getTranslatedElement(translatedData, 'year')
+                                }}:
                                 <template v-if="base.year">
                                   {{ base.year }}
                                 </template>
@@ -275,7 +321,9 @@
                                 ,
                               </span>
                               <span>
-                                Date:
+                                {{
+                                  getTranslatedElement(translatedData, 'date')
+                                }}:
                                 <template v-if="base.date">
                                   {{ base.date }}
                                 </template>
@@ -287,7 +335,9 @@
                                 ,
                               </span>
                               <span>
-                                Value:
+                                {{
+                                  getTranslatedElement(translatedData, 'value')
+                                }}:
                                 <template v-if="base.value">
                                   {{ base.value }}
                                 </template>
@@ -299,7 +349,14 @@
                               </span>
                             </div>
                             <div class="flex">
-                              <div>Location:&nbsp;</div>
+                              <div>
+                                {{
+                                  getTranslatedElement(
+                                    translatedData,
+                                    'location'
+                                  )
+                                }}:&nbsp;
+                              </div>
                               <div>
                                 <div
                                   v-for="(loc, l) in base.location"
@@ -322,7 +379,14 @@
                             </div>
 
                             <div class="flex">
-                              <div>Dimension:&nbsp;</div>
+                              <div>
+                                {{
+                                  getTranslatedElement(
+                                    translatedData,
+                                    'dimension'
+                                  )
+                                }}:&nbsp;
+                              </div>
                               <div class="description">
                                 <div
                                   v-for="(dim, d) in base.dimension"
@@ -361,7 +425,14 @@
                             </div>
 
                             <div class="flex">
-                              <div>Comment:&nbsp;</div>
+                              <div>
+                                {{
+                                  getTranslatedElement(
+                                    translatedData,
+                                    'comment'
+                                  )
+                                }}:&nbsp;
+                              </div>
                               <div class="description">
                                 <div
                                   v-for="(com, c) in base.comment[0].narrative"
@@ -387,7 +458,9 @@
                                       &nbsp;
                                     </span>
                                     <span class="language subtle-darker">
-                                      (Language:
+                                      ({{
+                                        getTranslatedLanguage(translatedData)
+                                      }}:
                                       <template v-if="com.language">
                                         {{ type.language[com.language] }})
                                       </template>
@@ -399,10 +472,22 @@
                             </div>
 
                             <div class="flex">
-                              <div>Document Link:&nbsp;</div>
+                              <div>
+                                {{
+                                  getTranslatedElement(
+                                    translatedData,
+                                    'document_link'
+                                  )
+                                }}:&nbsp;
+                              </div>
                               <div>
                                 {{ countDocumentLink(base.document_link) }}
-                                document
+                                {{
+                                  getTranslatedElement(
+                                    translatedData,
+                                    'document'
+                                  )
+                                }}
                               </div>
                             </div>
                           </div>
@@ -420,7 +505,11 @@
                           <div class="mt-3">
                             <NotYet
                               :link="`/indicator/${post.id}/period/create`"
-                              description="You haven't added any periods yet."
+                              :description="
+                                translatedData[
+                                  'common.common.you_havent_added_any_periods_yet'
+                                ]
+                              "
                               btn-text="Add period"
                               class="w-[442px]"
                             />
@@ -437,7 +526,8 @@
                       <tr>
                         <td>
                           <div class="category">
-                            Period {{ Number(key) + 1 }}
+                            {{ getTranslatedElement(translatedData, 'period') }}
+                            {{ Number(key) + 1 }}
                           </div>
                         </td>
                         <td>
@@ -464,13 +554,17 @@
                             </div>
                             <div class="flex shrink-0 grow justify-between">
                               <Btn
-                                text="View Period"
+                                :text="
+                                  translatedData['common.common.view_period']
+                                "
                                 icon="eye"
                                 :link="`/indicator/${post.id}/period/${item.id}`"
                                 class="mr-2.5"
                               />
                               <Btn
-                                text="Edit Period"
+                                :text="
+                                  translatedData['common.common.edit_period']
+                                "
                                 icon="edit"
                                 :link="`/indicator/${post.id}/period/${item.id}/edit`"
                               />
@@ -479,7 +573,11 @@
                         </td>
                       </tr>
                       <tr>
-                        <td>Target Value</td>
+                        <td>
+                          {{
+                            getTranslatedElement(translatedData, 'target_value')
+                          }}
+                        </td>
                         <td>
                           <template
                             v-for="(tar, t) in item.period.target"
@@ -496,7 +594,14 @@
                               </div>
 
                               <div class="location_reference flex">
-                                <div>Location Reference:&nbsp;</div>
+                                <div>
+                                  {{
+                                    getTranslatedElement(
+                                      translatedData,
+                                      'location_reference'
+                                    )
+                                  }}:&nbsp;
+                                </div>
                                 <div>
                                   <div
                                     v-for="(loc, l) in tar.location"
@@ -524,7 +629,14 @@
                               </div>
 
                               <div class="dimension flex">
-                                <div>Dimension:&nbsp;</div>
+                                <div>
+                                  {{
+                                    getTranslatedElement(
+                                      translatedData,
+                                      'dimension'
+                                    )
+                                  }}:&nbsp;
+                                </div>
                                 <div>
                                   <div
                                     v-for="(dim, d) in tar.dimension"
@@ -549,14 +661,25 @@
                                       <template v-if="dim.value">
                                         ({{ dim.value }})
                                       </template>
-                                      <template v-else> (Missing) </template>
+                                      <template v-else>
+                                        ({{
+                                          getTranslatedMissing(translatedData)
+                                        }})
+                                      </template>
                                     </span>
                                   </div>
                                 </div>
                               </div>
 
                               <div class="flex">
-                                <div>Comment:&nbsp;</div>
+                                <div>
+                                  {{
+                                    getTranslatedElement(
+                                      translatedData,
+                                      'comment'
+                                    )
+                                  }}:&nbsp;
+                                </div>
                                 <div>
                                   <div
                                     v-for="(com, c) in tar.comment[0].narrative"
@@ -583,7 +706,9 @@
                                         v-if="com.narrative"
                                         class="language subtle-darker"
                                       >
-                                        (Language:
+                                        ({{
+                                          getTranslatedLanguage(translatedData)
+                                        }}:
                                         <template v-if="com.language">
                                           {{ type.language[com.language] }})
                                         </template>
@@ -599,7 +724,11 @@
                       </tr>
 
                       <tr>
-                        <td>Actual Value</td>
+                        <td>
+                          {{
+                            getTranslatedElement(translatedData, 'actual_value')
+                          }}
+                        </td>
                         <td>
                           <template
                             v-for="(tar, t) in item.period.actual"
@@ -616,7 +745,14 @@
                               </div>
 
                               <div class="location_reference flex">
-                                <div>Location Reference:&nbsp;</div>
+                                <div>
+                                  {{
+                                    getTranslatedElement(
+                                      translatedData,
+                                      'location_reference'
+                                    )
+                                  }}:&nbsp;
+                                </div>
                                 <div>
                                   <div
                                     v-for="(loc, l) in tar.location"
@@ -644,7 +780,14 @@
                               </div>
 
                               <div class="dimension flex">
-                                <div>Dimension:&nbsp;</div>
+                                <div>
+                                  {{
+                                    getTranslatedElement(
+                                      translatedData,
+                                      'dimension'
+                                    )
+                                  }}:&nbsp;
+                                </div>
                                 <div>
                                   <div
                                     v-for="(dim, d) in tar.dimension"
@@ -669,14 +812,25 @@
                                       <template v-if="dim.value">
                                         ({{ dim.value }})
                                       </template>
-                                      <template v-else> (Missing) </template>
+                                      <template v-else>
+                                        ({{
+                                          getTranslatedMissing(translatedData)
+                                        }})
+                                      </template>
                                     </span>
                                   </div>
                                 </div>
                               </div>
 
                               <div class="flex">
-                                <div>Comment:&nbsp;</div>
+                                <div>
+                                  {{
+                                    getTranslatedElement(
+                                      translatedData,
+                                      'comment'
+                                    )
+                                  }}:&nbsp;
+                                </div>
                                 <div>
                                   <div
                                     v-for="(com, c) in tar.comment[0].narrative"
@@ -703,7 +857,9 @@
                                         v-if="com.narrative"
                                         class="language subtle-darker"
                                       >
-                                        (Language:
+                                        ({{
+                                          getTranslatedLanguage(translatedData)
+                                        }}:
                                         <template v-if="com.language">
                                           {{ type.language[com.language] }})
                                         </template>
@@ -734,7 +890,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs } from 'vue';
+import { defineComponent, inject, toRefs } from 'vue';
 
 //composable
 import dateFormat from 'Composable/dateFormat';
@@ -747,6 +903,9 @@ import Btn from 'Components/buttons/Link.vue';
 // helper function
 import {
   countDocumentLink,
+  getTranslatedElement,
+  getTranslatedLanguage,
+  getTranslatedMissing,
   isEveryValueNull,
   onlyDeprecatedStatusMap,
 } from 'Composable/utils';
@@ -776,6 +935,7 @@ export default defineComponent({
   },
   setup(props) {
     let { result } = toRefs(props);
+    const translatedData = inject('translatedData') as Record<string, string>;
 
     const indicatorData = result.value.indicators.reverse();
 
@@ -785,8 +945,14 @@ export default defineComponent({
       getActivityTitle,
       countDocumentLink,
       isEveryValueNull,
+      translatedData,
     };
   },
-  methods: { onlyDeprecatedStatusMap },
+  methods: {
+    getTranslatedMissing,
+    getTranslatedElement,
+    getTranslatedLanguage,
+    onlyDeprecatedStatusMap,
+  },
 });
 </script>

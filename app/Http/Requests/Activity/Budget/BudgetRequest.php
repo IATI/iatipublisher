@@ -52,7 +52,7 @@ class BudgetRequest extends ActivityBaseRequest
     /**
      * Returns rules for related activity.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      * @throws BindingResolutionException
@@ -68,13 +68,25 @@ class BudgetRequest extends ActivityBaseRequest
 
         foreach ($formFields as $budgetIndex => $budget) {
             $budgetForm = sprintf('budget.%s', $budgetIndex);
-            $rules[sprintf('%s.budget_type', $budgetForm)] = sprintf('nullable|in:%s', implode(',', array_keys(
-                $this->getCodeListForRequestFiles('BudgetType', 'Activity', false)
-            )));
+            $rules[sprintf('%s.budget_type', $budgetForm)] = sprintf(
+                'nullable|in:%s',
+                implode(
+                    ',',
+                    array_keys(
+                        $this->getCodeListForRequestFiles('BudgetType', 'Activity', false)
+                    )
+                )
+            );
             $rules[sprintf('%s.budget_status', $budgetForm)][] = 'nullable';
-            $rules[sprintf('%s.budget_status', $budgetForm)][] = sprintf('in:%s', implode(',', array_keys(
-                $this->getCodeListForRequestFiles('BudgetStatus', 'Activity', false)
-            )));
+            $rules[sprintf('%s.budget_status', $budgetForm)][] = sprintf(
+                'in:%s',
+                implode(
+                    ',',
+                    array_keys(
+                        $this->getCodeListForRequestFiles('BudgetStatus', 'Activity', false)
+                    )
+                )
+            );
 
             $periodStartRules = $this->getCriticalBudgetWarningForPeriodStart($budget['period_start'], $budgetForm);
 
@@ -101,7 +113,7 @@ class BudgetRequest extends ActivityBaseRequest
     /**
      * Returns rules for related activity.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      *
@@ -156,7 +168,8 @@ class BudgetRequest extends ActivityBaseRequest
             }
 
             $startDate = Arr::get($budget, 'period_start.0.date', null);
-            $newDate = $startDate && isDate($startDate) ? date('Y-m-d', strtotime($startDate . '+1year')) : null;
+            $newDate = $startDate && isDate($startDate) ?
+                date('Y-m-d', strtotime($startDate . '+1year')) : null;
 
             if ($newDate) {
                 $rules[$budgetForm . '.period_end.0.date'][] = sprintf('before:%s', $newDate);
@@ -184,9 +197,12 @@ class BudgetRequest extends ActivityBaseRequest
             $valueForm = sprintf('%s.budget_value.%s', $formBase, $valueIndex);
             $rules[sprintf('%s.amount', $valueForm)] = 'nullable|numeric|min:0';
             $rules[sprintf('%s.value_date', $valueForm)] = 'nullable|date';
-            $rules[sprintf('%s.currency', $valueForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('Currency', 'Activity', false)
-            ));
+            $rules[sprintf('%s.currency', $valueForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles('Currency', 'Activity', false)
+                )
+            );
         }
 
         return $rules;
@@ -206,7 +222,8 @@ class BudgetRequest extends ActivityBaseRequest
         $rules = [];
 
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $rules[$formBase . '.period_start.' . $periodStartKey . '.date'] = 'nullable|date_greater_than:1900|period_start_end:' . $diff . ',365';
+            $rules[$formBase . '.period_start.' . $periodStartKey . '.date']
+                = 'nullable|date_greater_than:1900|period_start_end:' . $diff . ',365';
         }
 
         return $rules;
@@ -281,8 +298,8 @@ class BudgetRequest extends ActivityBaseRequest
     /**
      * Returns messages for related activity validations.
      *
-     * @param array $formFields
-     * @param bool $fileUpload
+     * @param  array  $formFields
+     * @param  bool  $fileUpload
      *
      * @return array
      *
@@ -299,7 +316,9 @@ class BudgetRequest extends ActivityBaseRequest
         if (count($this->identicalIds)) {
             foreach ($this->identicalIds as $ids) {
                 foreach ($ids as $id) {
-                    $messages['budget.' . $id . '.budget_type.budgets_identical'] = 'The periods of multiple budgets with the same type should not be the same';
+                    $messages['budget.' . $id . '.budget_type.budgets_identical'] = trans(
+                        'validation.activity_budget.budget.budgets_identical'
+                    );
                 }
             }
         }
@@ -324,10 +343,10 @@ class BudgetRequest extends ActivityBaseRequest
                 $messages[$key] = $valueMessage;
             }
 
-            $messages[$budgetForm . '.budget_type.in'] = 'The budget type is invalid.';
-            $messages[$budgetForm . '.budget_status.in'] = 'The budget status is invalid.';
-            $messages[$budgetForm . '.period_end.0.date.before'] = 'The Period End iso-date must be within a year after Period Start iso-date.';
-            $messages[$budgetForm . '.period_end.0.date.period_start_end'] = 'The Budget Period must not be longer than one year';
+            $messages[$budgetForm . '.budget_type.in'] = trans('validation.activity_budget.budget.invalid_type');
+            $messages[$budgetForm . '.budget_status.in'] = trans('validation.activity_budget.budget.invalid_status');
+            $messages[$budgetForm . '.period_end.0.date.before'] = trans('validation.period_end_cannot_be_more_than_one_year');
+            $messages[$budgetForm . '.period_end.0.date.period_start_end'] = trans('validation.date_must_be_after_1900');
         }
 
         return $messages;
@@ -346,9 +365,15 @@ class BudgetRequest extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.date'] = 'The iso-date field must be a valid date.';
-            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.date_greater_than'] = 'The iso-date field must date after year 1900.';
-            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.period_start_end'] = 'The Budget Period must not be longer than one year';
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.date'] = trans(
+                'validation.date_is_invalid'
+            );
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.date_greater_than'] = trans(
+                'validation.date_must_be_after_1900'
+            );
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.period_start_end'] = trans(
+                'validation.activity_budget.date.period_start_end'
+            );
         }
 
         return $messages;
@@ -367,9 +392,15 @@ class BudgetRequest extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date'] = 'The iso-date field must be a valid date.';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date_greater_than'] = 'The iso-date field must be date after year 1900.';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after'] = 'The Period End iso-date must be a date after Period Start iso-date';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date'] = trans(
+                'validation.date_is_invalid'
+            );
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date_greater_than'] = trans(
+                'validation.date_must_be_after_1900'
+            );
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after'] = trans(
+                'validation.period_end_after'
+            );
         }
 
         return $messages;
@@ -389,10 +420,18 @@ class BudgetRequest extends ActivityBaseRequest
 
         foreach ($formFields as $valueIndex => $value) {
             $valueForm = sprintf('%s.budget_value.%s', $formBase, $valueIndex);
-            $messages[sprintf('%s.amount.numeric', $valueForm)] = 'The amount field must be a number.';
-            $messages[sprintf('%s.amount.min', $valueForm)] = 'The amount field must not be in negative.';
-            $messages[sprintf('%s.value_date.date', $valueForm)] = 'The value-date field must be a valid date.';
-            $messages[sprintf('%s.currency.in', $valueForm)] = 'The value currency is invalid.';
+            $messages[sprintf('%s.amount.numeric', $valueForm)] = trans(
+                'validation.amount_number'
+            );
+            $messages[sprintf('%s.amount.min', $valueForm)] = trans(
+                'validation.amount_negative'
+            );
+            $messages[sprintf('%s.value_date.date', $valueForm)] = trans(
+                'validation.date_is_invalid'
+            );
+            $messages[sprintf('%s.currency.in', $valueForm)] = trans(
+                'validation.invalid_currency'
+            );
         }
 
         return $messages;

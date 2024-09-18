@@ -153,7 +153,7 @@ class OrganizationIdentifierService
      */
     public function formGenerator($id, $deprecationStatusMap = []): Form
     {
-        $element = json_decode(file_get_contents(app_path('IATI/Data/organizationElementJsonSchema.json')), true, 512, JSON_THROW_ON_ERROR);
+        $element = readOrganizationElementJsonSchema();
         $organization = $this->getOrganizationData($id);
         $model['organisation_identifier'] = $organization['identifier'];
         $model['organization_country'] = $organization['country'];

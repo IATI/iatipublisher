@@ -53,10 +53,11 @@ class RecipientCountryCsvTest extends CsvBaseTest
         $rows = $this->invalid_data();
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('The recipient country percentage must be at least 0.', $flattenErrors);
-        $this->assertContains('The Country Code cannot be redundant.', $flattenErrors);
-        $this->assertContains('The recipient country code is invalid.', $flattenErrors);
-        $this->assertContains('The sum of recipient country percentage cannot be greater than 100', $flattenErrors);
+
+        $this->assertContains(trans('validation.percentage_must_be_at_least_0'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_recipient_country.duplicate_country_code'), $flattenErrors);
+        $this->assertContains(trans('validation.country_code'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_recipient_country.percentage.sum_exceeded'), $flattenErrors);
     }
 
     /**

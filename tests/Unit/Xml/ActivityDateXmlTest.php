@@ -17,12 +17,13 @@ class ActivityDateXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('Date is invalid.', $flattenErrors);
-        $this->assertContains('Actual start and end dates may not be in the future.', $flattenErrors);
-        $this->assertContains('End date must be later than the start date.', $flattenErrors);
-        $this->assertContains('The @xml:lang field is invalid.', $flattenErrors);
-        $this->assertContains('The narrative field is required with @xml:lang field.', $flattenErrors);
-        $this->assertContains('The selected type is invalid.', $flattenErrors);
+
+        $this->assertContains(trans('validation.date_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_date.date_before'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_date.end_later_than_start'), $flattenErrors);
+        $this->assertContains(trans('validation.language_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.narrative_is_required_when_language_is_populated'), $flattenErrors);
+        $this->assertContains(trans('validation.type_is_invalid'), $flattenErrors);
     }
 
     /**

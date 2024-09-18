@@ -60,7 +60,7 @@ class OtherIdentifierController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : $hasData,
                 elementName: 'other_identifier',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->basicBreadCrumbInfo($activity, 'other_identifier');
 
@@ -74,10 +74,11 @@ class OtherIdentifierController extends Controller
             return view('admin.activity.otherIdentifier.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while opening other-identifier edit form.'
+                $translatedMessage
             );
         }
     }
@@ -94,14 +95,18 @@ class OtherIdentifierController extends Controller
     {
         try {
             if (!$this->otherIdentifierService->update($id, $request->get('other_identifier'))) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating other-identifier.');
-            }
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Other-identifier updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating other-identifier.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

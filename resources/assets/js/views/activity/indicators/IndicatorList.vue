@@ -2,7 +2,7 @@
   <div class="relative bg-paper px-5 pb-[71px] pt-4 xl:px-10">
     <PageTitle
       :breadcrumb-data="breadcrumbData"
-      title="Indicator List"
+      :title="translatedData['common.common.indicator_list']"
       :back-link="`${resultLink}`"
     >
       <div class="flex items-center space-x-3">
@@ -13,7 +13,11 @@
           class="mr-3"
         />
         <a :href="`${indicatorLink}/create`">
-          <Btn text="Add Indicator" icon="plus" type="primary" />
+          <Btn
+            :text="translatedData['common.common.add_indicator']"
+            icon="plus"
+            type="primary"
+          />
         </a>
       </div>
     </PageTitle>
@@ -23,19 +27,23 @@
         <thead>
           <tr class="bg-n-10">
             <th id="title" scope="col">
-              <span>Title</span>
+              <span>{{ getTranslatedElement(translatedData, 'title') }}</span>
             </th>
             <th id="code" scope="col" width="190px">
-              <span>Indicator number</span>
+              <span>{{
+                translatedData['common.common.indicator_number']
+              }}</span>
             </th>
             <th id="measure" scope="col" width="190px">
-              <span>Measure</span>
+              <span>{{ getTranslatedElement(translatedData, 'measure') }}</span>
             </th>
             <th id="aggregation_status" scope="col" width="208px">
-              <span>Aggregation Status</span>
+              <span>{{
+                getTranslatedElement(translatedData, 'aggregation_status')
+              }}</span>
             </th>
             <th id="action" scope="col" width="190px">
-              <span>Action</span>
+              <span>{{ translatedData['common.common.action'] }}</span>
             </th>
           </tr>
         </thead>
@@ -92,10 +100,10 @@
             >
               {{
                 parseInt(indicator.indicator.aggregation_status)
-                  ? 'True'
+                  ? translatedData['common.common.true']
                   : indicator.indicator.aggregation_status
-                  ? 'False'
-                  : 'Missing'
+                  ? translatedData['common.common.false']
+                  : getTranslatedMissing(translatedData)
               }}
             </td>
             <td>
@@ -112,7 +120,9 @@
           </tr>
         </tbody>
         <tbody v-else>
-          <td colspan="5" class="text-center">Indicators not found</td>
+          <td colspan="5" class="text-center">
+            {{ translatedData['common.common.no_data_found'] }}
+          </td>
         </tbody>
       </table>
     </div>
@@ -148,6 +158,7 @@ import DeleteAction from 'Components/sections/DeleteAction.vue';
 // composable
 import dateFormat from 'Composable/dateFormat';
 import getActivityTitle from 'Composable/title';
+import { getTranslatedElement, getTranslatedMissing } from 'Composable/utils';
 
 export default defineComponent({
   name: 'IndicatorList',
@@ -176,6 +187,10 @@ export default defineComponent({
       required: true,
     },
     toast: {
+      type: Object,
+      required: true,
+    },
+    translatedData: {
       type: Object,
       required: true,
     },
@@ -219,7 +234,7 @@ export default defineComponent({
      */
     const breadcrumbData = [
       {
-        title: 'Your Activities',
+        title: props.translatedData['common.common.your_activities'],
         link: '/activities',
       },
       {
@@ -227,7 +242,7 @@ export default defineComponent({
         link: `/activity/${activityId}`,
       },
       {
-        title: 'Result List',
+        title: props.translatedData['common.common.result_list'],
         link: `/activity/${activityId}/result`,
       },
       {
@@ -235,7 +250,7 @@ export default defineComponent({
         link: `/activity/${activityId}/result/${resultId}`,
       },
       {
-        title: 'Indicator List',
+        title: props.translatedData['common.common.indicator_list'],
         link: '',
       },
     ];
@@ -274,6 +289,7 @@ export default defineComponent({
 
     // provide
     provide('parentItemId', resultId);
+    provide('translatedData', props.translatedData);
 
     return {
       activityId,
@@ -289,5 +305,6 @@ export default defineComponent({
       handleNavigate,
     };
   },
+  methods: { getTranslatedElement, getTranslatedMissing },
 });
 </script>

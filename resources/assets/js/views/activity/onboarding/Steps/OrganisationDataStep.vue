@@ -23,7 +23,13 @@
           ></svg-vue>
         </div>
         <div class="text-xs leading-[20px] tracking-[-2%]">
-          <p class="font-bold">Verification Required</p>
+          <p class="font-bold">
+            {{
+              translatedData[
+                'onboarding.organisation_data_step.verification_required'
+              ]
+            }}
+          </p>
           <ul class="list-disc">
             <li
               v-for="(message, index) in errorMessages"
@@ -33,8 +39,11 @@
             ></li>
           </ul>
           <em>
-            You can skip this step for now and come back to it once your account
-            has been verified.
+            {{
+              translatedData[
+                'onboarding.organisation_data_step.you_can_skip_this_step_for_now'
+              ]
+            }}
           </em>
         </div>
       </div>
@@ -42,10 +51,18 @@
       <!-- Organization Data Publish -->
       <div>
         <h3 class="pb-[2px] text-[20px] font-bold leading-9 text-n-50">
-          Publish Organisation Data
+          {{
+            translatedData[
+              'onboarding.organisation_data_step.publish_organisation_data'
+            ]
+          }}
         </h3>
         <div class="text-sm">
-          Review the basic information on your organisation and publish it.
+          {{
+            translatedData[
+              'onboarding.organisation_data_step.review_the_basic_information'
+            ]
+          }}
         </div>
         <div
           class="mt-3 rounded-lg bg-n-10 pt-[20px] pl-[27px] pb-[20px]"
@@ -57,18 +74,25 @@
                 class="text-base text-bluecoral"
                 icon="organisation-elements/building"
               ></svg-vue>
-              <span class="ml-1 mr-[10px]">reporting-organisation</span>
+              <span class="ml-1 mr-[10px]">{{
+                translatedData['elements.name.reporting_org']
+              }}</span>
               <svg-vue class="text-base text-camel-50" icon="core"></svg-vue>
             </p>
           </div>
           <div class="pt-[18px] pr-5">
             <div class="flex items-center justify-between">
-              <p class="text-sm font-bold text-n-50">reporting-org</p>
+              <p class="text-sm font-bold text-n-50">
+                {{ translatedData['elements.name.reporting_org'] }}
+              </p>
               <p class="flex items-center gap-1">
-                <span class="text-xs text-n-50">Help</span>
                 <HoverText
-                  name="reporting-org"
-                  hover-text="The organisation issuing the report. May be a primary source (reporting on its own activity as donor, implementing agency, etc) or a secondary source (reporting on the activities of another organisation)."
+                  :name="translatedData['elements.name.reporting_org']"
+                  :hover-text="
+                    translatedData[
+                      'common.common.the_organisation_issuing_the_report'
+                    ]
+                  "
                   :show-iati-reference="true"
                   link="https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/reporting-org/"
                 />
@@ -79,13 +103,21 @@
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
                   <label for="reference" class="text-[14px]">
-                    reference
+                    {{
+                      toTitleCase(translatedData['elements.label.reference'])
+                    }}
                     <span class="required-icon"> *</span>
                   </label>
                   <button>
                     <HoverText
-                      name="reference"
-                      hover-text="Machine-readable identification string for the organisation issuing the report. Must be in the format {RegistrationAgency}-{RegistrationNumber}."
+                      :name="
+                        toTitleCase(translatedData['elements.label.reference'])
+                      "
+                      :hover-text="
+                        translatedData[
+                          'common.common.provide_your_organisations_iati_identifier'
+                        ]
+                      "
                       :show-iati-reference="true"
                       link="https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/reporting-org/"
                     />
@@ -97,31 +129,29 @@
                   class="w-full rounded-[4px] border border-n-20 py-2 pl-4 focus:outline-0 focus-visible:outline-0"
                   :class="{ 'border-crimson-50': hasReferenceError }"
                   type="text"
-                  placeholder="Type reference"
+                  :placeholder="translatedData['common.common.type_reference']"
                   @keyup="hasReferenceError = false"
                 />
                 <span v-if="hasReferenceError" class="text-danger error">{{
                   referenceErrorMessage
                 }}</span>
-                <button
-                  class="pt-2 text-xs text-n-40 hover:text-spring-50"
-                  @click="showHelp(`reference`)"
-                >
-                  Help
-                </button>
               </div>
 
               <!-- Type -->
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
                   <label for="type" class="text-[14px]">
-                    type
+                    {{ toTitleCase(translatedData['elements.label.type']) }}
                     <span class="required-icon"> *</span>
                   </label>
                   <button>
                     <HoverText
-                      name="type"
-                      hover-text="The type of organisation issuing the report."
+                      :name="toTitleCase(translatedData['elements.label.type'])"
+                      :hover-text="
+                        translatedData[
+                          'common.common.select_the_type_that_best_describes_your_organisation'
+                        ]
+                      "
                       :show-iati-reference="true"
                       link="https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/reporting-org/"
                     />
@@ -130,7 +160,7 @@
                 <Multiselect
                   id="type"
                   class="vue__select"
-                  placeholder="Select @type"
+                  :placeholder="translatedData['common.common.select_type']"
                   :searchable="true"
                   :options="props.organizationTypeOptions"
                   :value="organizationData.type"
@@ -138,25 +168,31 @@
                 (value:string) => (organizationData.type = value)
               "
                 />
-                <button
-                  class="pt-2 text-xs text-n-40 hover:text-spring-50"
-                  @click="showHelp(`type`)"
-                >
-                  Help
-                </button>
               </div>
 
               <!-- Secondary reporter -->
               <div class="w-full max-w-[335px] pt-6">
                 <div class="flex justify-between pb-2">
                   <label for="secondary-reporter" class="text-[14px]">
-                    secondary-reporter
+                    {{
+                      toTitleCase(
+                        translatedData['elements.label.secondary_reporter']
+                      )
+                    }}
                   </label>
                   <button>
                     <HoverText
                       position="top-left"
-                      name="secondary-reporter"
-                      hover-text="A flag indicating that the reporting organisation of this activity is acting as a secondary reporter. A secondary reporter is one that reproduces data on the activities of an organisation for which it is not directly responsible."
+                      :name="
+                        toTitleCase(
+                          translatedData['elements.label.secondary_reporter']
+                        )
+                      "
+                      :hover-text="
+                        translatedData[
+                          'common.common.if_you_are_publishing_data_about_your_own_organisation'
+                        ]
+                      "
                       :show-iati-reference="true"
                       link="https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/reporting-org/"
                     />
@@ -165,7 +201,9 @@
                 <Multiselect
                   id="secondary-reporter"
                   class="vue__select"
-                  placeholder="Select secondary-reporter"
+                  :placeholder="
+                    translatedData['common.common.select_an_option']
+                  "
                   :searchable="true"
                   :options="secondaryReporterOptions"
                   :value="organizationData.secondary_reporter"
@@ -173,12 +211,6 @@
                 (value:string) => (organizationData.secondary_reporter = value)
               "
                 />
-                <button
-                  class="pt-2 text-xs text-n-40 hover:text-spring-50"
-                  @click="showHelp(`secondary-reporter`)"
-                >
-                  Help
-                </button>
               </div>
             </div>
           </div>
@@ -186,24 +218,31 @@
         <div class="flex items-center gap-1 pt-3 text-xs text-n-40">
           <svg-vue icon="message-icon" />
           <span>
-            You can adjust these values later from the 'Organisation Data'
-            section.
+            {{
+              translatedData[
+                'onboarding.organisation_data_step.you_can_adjust_these_values_later_from_the_organisation_data_section'
+              ]
+            }}
           </span>
         </div>
       </div>
       <div class="mt-3 flex w-full items-center justify-between">
         <button class="text-xs font-bold text-n-40" @click="previousStep">
-          Previous
+          {{ translatedData['common.common.previous'] }}
         </button>
         <div class="flex items-center gap-4">
           <button
             class="text-xs font-bold text-n-40"
             @click="emit('proceedStep')"
           >
-            Skip to next step
+            {{ translatedData['common.common.skip_to_next_step'] }}
           </button>
           <button class="button primary-btn text-xs" @click="proceedStep">
-            Publish and NEXT
+            {{
+              translatedData[
+                'onboarding.organisation_data_step.publish_and_next'
+              ]
+            }}
           </button>
         </div>
       </div>
@@ -231,8 +270,13 @@
             <svg-vue icon="green-circle-tick" class="text-[41px]" />
             <span
               class="max-w-[200px] text-center text-sm font-bold text-bluecoral"
-              >Organisation data has been successfully published.</span
             >
+              {{
+                translatedData[
+                  'onboarding.organisation_data_step.organisation_data_has_been_successfully_published'
+                ]
+              }}
+            </span>
           </div>
         </Transition>
       </div>
@@ -246,18 +290,26 @@
           <svg-vue icon="green-circle-tick" class="text-[34px]" />
           <div>
             <h2 class="max-w-[693px] py-[5.4px] text-2xl font-bold text-n-50">
-              Organisation data has been successfully published.
+              {{
+                translatedData[
+                  'onboarding.organisation_data_step.organisation_data_has_been_successfully_published'
+                ]
+              }}
             </h2>
-            <p class="max-w-[587px] text-sm text-n-50">
-              If you want to make changes, go to
-              <a href="/organisation" target="_blank">Organisation data</a>.
-            </p>
+            <p
+              class="max-w-[587px] text-sm text-n-50"
+              v-html="
+                translatedData[
+                  'onboarding.organisation_data_step.if_you_want_to_make_changes_go_to_organisation_data'
+                ]
+              "
+            ></p>
           </div>
         </div>
       </div>
       <div class="mb-[30px] self-end">
         <button class="button primary-btn text-xs" @click="emit(`proceedStep`)">
-          NEXT
+          {{ translatedData['common.common.next'] }}
         </button>
       </div>
     </div>
@@ -265,7 +317,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps, ref } from 'vue';
+import { defineEmits, defineProps, inject, ref } from 'vue';
 
 import Multiselect from '@vueform/multiselect';
 import HoverText from 'Components/HoverText.vue';
@@ -274,6 +326,7 @@ import axios from 'axios';
 import LinesLoader from 'Components/LinesLoader.vue';
 import ToastMessage from 'Components/ToastMessage.vue';
 import Loader from 'Components/Loader.vue';
+import { toTitleCase } from 'Composable/utils';
 
 const props = defineProps({
   organizationTypeOptions: {
@@ -330,30 +383,22 @@ const toastType = ref(false);
 
 const hasReferenceError = ref(false);
 const referenceErrorMessage = ref('');
+const translatedData = inject('translatedData') as Record<string, string>;
 
 const contentValues = [
   {
-    title: 'reference',
-    content:
-      '<div class="space-y-1.5"> Provide the IATI Organisation Identifier of the organisation publishing the data. The quickest way to find this is to search for the organisation in the <a target="_blank" href="https://www.iatiregistry.org/publisher/">IATI Publisher List</a>. If you cannot find the organisation, see <a target="_blank" href="https://iatistandard.org/en/guidance/publishing-data/data-quality-and-visualisation/finding-other-organisations-identifiers/">further guidance</a>. </div>',
+    title: translatedData['elements.label.reference'],
+    content: '',
   },
   {
-    title: 'type',
-    content:
-      '<div class="space-y-1.5"> Select the type that best describes the organisation publishing the data.<a target="_blank" href="https://iatistandard.org/en/iati-standard/203/codelists/organisationtype/">Information on all organisation types.</a></div>',
+    title: translatedData['elements.label.reference'],
+    content: '',
   },
   {
-    title: 'secondary-reporter',
-    content: `<div class="space-y-1.5"> Are you reproducing the data reported by another organisation? If so, your organisation is a ‘secondary reporter’ and you should select '<b>Yes</b>’. If you are reporting your own organisation’s data, select ‘<b>No</b>’.<br><br>Please note: you are <b>not</b> a secondary reporter if your organisation is officially assigned as a proxy to report IATI data on behalf of another organisation. </div>`,
+    title: translatedData['elements.label.secondary_reporter'],
+    content: '',
   },
 ];
-
-const showHelp = (title: string) => {
-  helpTitle.value = title;
-  helpContent.value = contentValues.find((content) => content.title === title)
-    ?.content as string;
-  helpVisible.value = true;
-};
 
 const resendVerificationEmail = () => {
   isLoaderVisible.value = true;
@@ -384,11 +429,27 @@ document.addEventListener('click', (e) => {
 const transformMessages = (messages: string[]): string[] => {
   return messages.map((message) => {
     switch (message) {
-      case 'You have not verified your email address.':
-        return `Your email address has not been verified. <span class="resend-verification text-bluecoral cursor-pointer hover:text-spring-50 underline transition-all duration-[400ms]">Resend Verification email</span>`;
+      case translatedData[
+        'common.common.your_email_address_has_not_been_verified'
+      ]: {
+        const text_p1 =
+          translatedData[
+            'onboarding.organisation_data_step.your_email_address_has_not_been_verified'
+          ];
+        const text_p2 =
+          '<span class="resend-verification text-bluecoral cursor-pointer hover:text-spring-50 underline transition-all duration-[400ms]">';
+        const text_p3 =
+          translatedData['common.common.resend_verification_email'];
+        const text_p4 = '</span>';
 
-      case 'The Publisher ID is not verified in IATI Registry.':
-        return 'Your IATI Registry account is pending approval. Contact <a href="mailto:support@iatistandard.org">support@iatistandard.org</a> if your account has not been approved within two working days of registering.';
+        return `${text_p1} ${text_p2} ${text_p3} ${text_p4}`;
+      }
+      case translatedData[
+        'onboarding.organisation_data_step.the_publisher_id_is_not_verified_in_iati_registry'
+      ]:
+        return translatedData[
+          'onboarding.organisation_data_step.your_iati_registry_account_is_pending_approval'
+        ];
 
       default:
         return message;

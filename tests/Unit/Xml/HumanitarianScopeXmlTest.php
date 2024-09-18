@@ -17,11 +17,11 @@ class HumanitarianScopeXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The humanitarian scope type is invalid.', $flattenErrors);
-        $this->assertContains('The humanitarian scope vocabulary is invalid.', $flattenErrors);
-        $this->assertContains('The humanitarian scope vocabulary-uri must be a proper url.', $flattenErrors);
-        $this->assertContains('The @xml:lang field is invalid.', $flattenErrors);
-        $this->assertContains('The narrative field is required with @xml:lang field.', $flattenErrors);
+        $this->assertContains(trans('validation.type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.vocabulary_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.url_valid'), $flattenErrors);
+        $this->assertContains(trans('validation.language_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.narrative_is_required_when_language_is_populated'), $flattenErrors);
     }
 
     /**

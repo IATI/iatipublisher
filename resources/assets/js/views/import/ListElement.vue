@@ -6,7 +6,7 @@
         >{{
           activity['data']['title'][0]['narrative']
             ? activity['data']['title'][0]['narrative']
-            : 'Missing'
+            : getTranslatedMissing(translatedData)
         }}</span
       >
 
@@ -17,7 +17,14 @@
       >
         <span class="flex items-center space-x-2">
           <svg-vue class="text-crimson-40" icon="alert" />
-          <span> Show {{ countErrors() }} Issues</span>
+          <span>
+            {{
+              translatedData['common.common.show_count_issues'].replace(
+                ':count',
+                String(countErrors())
+              )
+            }}</span
+          >
         </span>
 
         <svg-vue
@@ -44,7 +51,10 @@
           >
             <span class="flex items-center space-x-2">
               <svg-vue class="text-crimson-40" icon="alert" />
-              <span> {{ errorLength('critical') }} Critical errors</span>
+              <span>
+                {{ errorLength('critical') }}
+                {{ translatedData['common.common.critical_errors'] }}</span
+              >
             </span>
 
             <svg-vue
@@ -54,8 +64,11 @@
             />
           </div>
           <div class="error-help">
-            (The activity contains critical errors and thus cannot be uploaded
-            to the system.)
+            ({{
+              translatedData[
+                'workflow_frontend.import.the_activity_contains_critical_errors'
+              ]
+            }})
           </div>
           <div class="critical-dropdown-container">
             <div class="critical-dropdown">
@@ -93,7 +106,10 @@
           >
             <span class="flex items-center space-x-2">
               <svg-vue class="text-crimson-40" icon="alert" />
-              <span>{{ errorLength('error') }} Errors</span>
+              <span
+                >{{ errorLength('error') }}
+                {{ translatedData['common.common.errors'] }}</span
+              >
             </span>
             <svg-vue
               icon="dropdown-arrow"
@@ -102,10 +118,11 @@
             />
           </div>
           <div class="error-help">
-            (The activity with the errors will be uploaded to our system, but
-            the field containing the error will be removed. You will need to
-            refill these fields with correct data once the activity is uploaded
-            to our system.)
+            ({{
+              translatedData[
+                'workflow_frontend.import.the_activity_with_the_errors_will_be_uploaded_to_our_system'
+              ]
+            }})
           </div>
           <div class="error-dropdown-container">
             <div class="error-dropdown">
@@ -140,7 +157,8 @@
           <div class="flex items-center justify-between bg-eggshell p-3 pb-0.5">
             <span class="flex items-center space-x-2">
               <svg-vue icon="alert" class="text-camel-40" /><span>
-                {{ errorLength('warning') }} Warnings</span
+                {{ errorLength('warning') }}
+                {{ translatedData['common.common.warnings'] }}</span
               >
             </span>
             <svg-vue
@@ -150,9 +168,11 @@
             />
           </div>
           <div class="error-help bg-eggshell">
-            (The field with warnings will be uploaded to our system. These
-            fields contain data that are against the rules of the IATI Validator
-            and will cause validation errors while publishing.)
+            ({{
+              translatedData[
+                'workflow_frontend.import.the_field_with_warnings_will_be_uploaded_to_our_system'
+              ]
+            }})
           </div>
           <div class="warning-dropdown-container">
             <div class="warning-dropdown">
@@ -179,28 +199,14 @@
           </div>
         </div>
       </div>
-      <!-- <div v-for="(ele_err, i) in activity['errors']" :key="i">
-        <ul>
-          <li v-for="(err, key, j) in ele_err" :key="j">
-            <p class="mb-2 font-semibold capitalize">
-              {{ key.toString().replace(/_/g, ' ').replace(/\./g, ' > ') }}
-            </p>
-            <p
-              v-for="item in Object.values(err)"
-              :key="(item as string)"
-              class="error-list mb-2"
-            >
-              {{ item }}
-            </p>
-          </li>
-        </ul>
-      </div> -->
     </div>
   </td>
 
   <td>
     <span class="text-sm leading-relaxed">{{
-      !activity['existence'] ? 'New' : 'Existing'
+      !activity['existence']
+        ? translatedData['common.common.new']
+        : translatedData['common.common.existing']
     }}</span>
   </td>
 
@@ -225,7 +231,8 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, watch, reactive } from 'vue';
+import { defineProps, defineEmits, ref, watch, reactive, inject } from 'vue';
+import { getTranslatedMissing } from 'Composable/utils';
 
 const props = defineProps({
   activity: {
@@ -243,6 +250,7 @@ const props = defineProps({
   },
 });
 
+const translatedData = inject('translatedData') as Record<string, string>;
 const emit = defineEmits(['selectElement']);
 
 const active = ref(false);

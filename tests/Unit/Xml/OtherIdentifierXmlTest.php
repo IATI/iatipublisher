@@ -17,11 +17,12 @@ class OtherIdentifierXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_other_identifier_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The other identifier type is not valid.', $flattenErrors);
-        $this->assertContains("The other identifier reference field shouldn't contain the symbols /, &, | or ?.", $flattenErrors);
-        $this->assertContains("The owner org reference field shouldn't contain the symbols /, &, | or ?.", $flattenErrors);
-        $this->assertContains('The @xml:lang field is invalid.', $flattenErrors);
-        $this->assertContains('The narrative field is required with @xml:lang field.', $flattenErrors);
+
+        $this->assertContains(trans('validation.type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.reference_should_not_contain_symbol'), $flattenErrors);
+        $this->assertContains(trans('validation.reference_should_not_contain_symbol'), $flattenErrors);
+        $this->assertContains(trans('validation.language_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.narrative_is_required_when_language_is_populated'), $flattenErrors);
     }
 
     /**

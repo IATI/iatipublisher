@@ -59,12 +59,12 @@ class UserProfileRequest extends FormRequest
         $form_type = $this->get('form_type');
 
         if ($form_type === 'password') {
-            $messages['publisher_id.regex'] = 'The publisher id is invalid. The publisher id must be at least two characters long and lower case. It can include letters, numbers and also - (dash) and _ (underscore).';
+            $messages['publisher_id.regex'] = trans('common/common.the_publisher_id_is_invalid');
         } else {
-            $messages['username.regex'] = 'The username is invalid. Username must be purely lowercase alphabets followed by alphanumeric(ascii) characters and these symbols:-_';
+            $messages['username.regex'] = trans('common/common.the_username_is_invalid');
         }
 
-        $messages['email.unique'] = 'Email is already in use in IATI Publisher.';
+        $messages['email.unique'] = trans('common/common.email_is_already_in_use_in_iati_publisher');
 
         return $messages;
     }

@@ -14,41 +14,63 @@
     <div class="mb-4">
       <div class="title mb-6 flex">
         <svg-vue class="mr-1 mt-0.5 text-lg text-crimson-40" icon="delete" />
-        <b v-if="props.itemType === 'result'">Delete Result</b>
-        <b v-else-if="props.itemType === 'indicator'">Delete Indicator</b>
-        <b v-else-if="props.itemType === 'period'">Delete Period</b>
-        <b v-else-if="props.itemType === 'transaction'">Delete Transaction</b>
+        <b v-if="props.itemType === 'result'">
+          {{ getTranslatedDeleteElement(translatedData, 'result') }}
+        </b>
+        <b v-else-if="props.itemType === 'indicator'">
+          {{ getTranslatedDeleteElement(translatedData, 'indicator') }}
+        </b>
+        <b v-else-if="props.itemType === 'period'">
+          {{ getTranslatedDeleteElement(translatedData, 'period') }}
+        </b>
+        <b v-else-if="props.itemType === 'transaction'">
+          {{ getTranslatedDeleteElement(translatedData, 'transaction') }}
+        </b>
         <b v-else>Delete</b>
       </div>
       <div class="rounded-lg bg-rose p-4">
         <p v-if="props.itemType === 'result'">
-          Are you sure you want to delete this Result? Related Indicators and
-          Periods will also be deleted
+          {{
+            translatedData[
+              'common.common.are_you_sure_you_want_to_delete_this_result'
+            ]
+          }}
         </p>
         <p v-else-if="props.itemType === 'indicator'">
-          Are you sure you want to delete this Indicator? Related Periods will
-          also be deleted
+          {{
+            translatedData[
+              'common.common.are_you_sure_you_want_to_delete_this_indicator'
+            ]
+          }}
         </p>
         <p v-else-if="props.itemType === 'period'">
-          Are you sure you want to delete this Period?
+          {{
+            translatedData[
+              'common.common.are_you_sure_you_want_to_delete_this_period'
+            ]
+          }}
         </p>
         <p v-else-if="props.itemType === 'transaction'">
-          Are you sure you want to delete this Transaction?
+          {{
+            translatedData[
+              'common.common.are_you_sure_you_want_to_delete_this_transaction'
+            ]
+          }}
         </p>
-        <p v-else>Are you sure you want to delete this module?</p>
+        <p v-else>Are you sure you want to delete this module ?</p>
       </div>
     </div>
     <div class="flex justify-end">
       <div class="inline-flex">
         <BtnComponent
           class="bg-white px-6 uppercase"
-          text="Go Back"
+          :text="translatedData['common.common.go_back']"
           type=""
           @click="deleteValue = false"
         />
         <BtnComponent
           class="space"
-          text="Delete"
+          :text="translatedData['common.common.delete']"
           type="primary"
           @click="deleteFunction"
         />
@@ -58,19 +80,22 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { defineProps, inject } from 'vue';
 import { useToggle } from '@vueuse/core';
 import axios from 'axios';
 
 //component
 import BtnComponent from 'Components/ButtonComponent.vue';
 import Modal from 'Components/PopupModal.vue';
+import { getTranslatedDeleteElement } from 'Composable/utils';
 
 // props
 const props = defineProps({
   itemId: { type: [Number, String], required: true },
   itemType: { type: String, required: true },
 });
+
+const translatedData = inject('translatedData') as Record<string, string>;
 
 // toggle state for modal popup
 let [deleteValue, deleteToggle] = useToggle();

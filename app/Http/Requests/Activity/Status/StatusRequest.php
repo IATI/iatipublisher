@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Activity\Status;
 
 use App\Http\Requests\Activity\ActivityBaseRequest;
+use App\Rules\SingleCharacter;
 
 /**
  * Class StatusRequest.
@@ -48,7 +49,7 @@ class StatusRequest extends ActivityBaseRequest
     {
         if ($status && is_array($status)) {
             return [
-                'activity_status' => 'nullable|size:1',
+                'activity_status' => ['nullable', new SingleCharacter('activity_status')],
             ];
         }
 
@@ -67,8 +68,8 @@ class StatusRequest extends ActivityBaseRequest
     public function messages(): array
     {
         return [
-            'in'   => 'The activity status does not exist.',
-            'size' => 'The activity status cannot have more than one value.',
+            'in'   => trans('validation.activity_status.in'),
+            'size' => trans('validation.activity_status.size'),
         ];
     }
 }

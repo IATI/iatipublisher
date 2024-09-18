@@ -59,7 +59,7 @@ class DateController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : $hasData,
                 elementName: 'activity_date',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->basicBreadCrumbInfo($activity, 'activity_date');
 
@@ -73,10 +73,11 @@ class DateController extends Controller
             return view('admin.activity.date.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while rendering activity-date form.'
+                $translatedMessage
             );
         }
     }
@@ -95,14 +96,18 @@ class DateController extends Controller
             $activityDate = $request->all();
 
             if (!$this->dateService->update($id, $activityDate)) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity-date.');
-            }
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Activity-date updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity-date.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

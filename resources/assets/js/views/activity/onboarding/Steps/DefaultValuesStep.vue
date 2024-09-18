@@ -3,29 +3,48 @@
     <div v-if="!isSavingStarted">
       <div>
         <h3 class="pb-[2px] text-[20px] font-bold leading-9 text-n-50">
-          Set Default Values
+          {{
+            translatedData['onboarding.default_values_step.set_default_values']
+          }}
         </h3>
         <div class="text-sm">
-          These commonly occurring values can be populated here and IATI
-          Publisher will automatically apply them to all of your activities.
+          {{
+            translatedData[
+              'onboarding.default_values_step.these_commonly_occurring_values_can_be_populated_here'
+            ]
+          }}
         </div>
         <div
           class="mt-3 max-h-[373px] overflow-x-hidden overflow-y-scroll rounded-lg bg-n-10 pt-[20px] pl-[27px] pb-[20px] pr-[18px]"
         >
           <!-- All Values Default Start -->
           <div>
-            <p class="text-sm font-bold">Default for all data</p>
+            <p class="text-sm font-bold">
+              {{ translatedData['common.common.default_for_all_data'] }}
+            </p>
             <div class="grid grid-cols-2 gap-[22px] pt-4">
               <!-- Default Currency Start -->
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
                   <label for="default-currency" class="text-[14px]">
-                    Default Currency
+                    {{
+                      toTitleCase(
+                        translatedData['elements.label.default_currency']
+                      )
+                    }}
                   </label>
                   <button>
                     <HoverText
-                      name="Default Currency"
-                      hover-text="The currency in which you report your financial transactions. You can later manually change the currency on individual transactions and budgets if required."
+                      :name="
+                        toTitleCase(
+                          translatedData['elements.label.default_currency']
+                        )
+                      "
+                      :hover-text="
+                        translatedData[
+                          'common.common.the_currency_in_which_you_report_your_financial_transactions'
+                        ]
+                      "
                       :show-iati-reference="true"
                     />
                   </button>
@@ -33,7 +52,9 @@
                 <Multiselect
                   id="default-currency"
                   class="vue__select"
-                  placeholder="Select from dropdown"
+                  :placeholder="
+                    translatedData['common.common.select_an_option']
+                  "
                   :searchable="true"
                   :options="props.currencies"
                   :value="allDefaultValue.default_currency"
@@ -42,21 +63,37 @@
               "
                 />
                 <p class="pt-2 text-xs text-n-40">
-                  The currency in which you normally report your financial
-                  transactions. Select from dropdown.
+                  {{
+                    translatedData[
+                      'onboarding.default_values_step.the_currency_in_which_you_normally_report_your_financial_transactions'
+                    ]
+                  }}
                 </p>
               </div>
               <!-- Default Currency End -->
+
               <!-- Default Language Start -->
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
                   <label for="default-language" class="text-[14px]">
-                    Default Language
+                    {{
+                      toTitleCase(
+                        translatedData['elements.label.default_language']
+                      )
+                    }}
                   </label>
                   <button>
                     <HoverText
-                      name="Default Language"
-                      hover-text="The language in which you provide data on your activities. You can later manually change the language on individual text if required."
+                      :name="
+                        toTitleCase(
+                          translatedData['elements.label.default_language']
+                        )
+                      "
+                      :hover-text="
+                        translatedData[
+                          'common.common.the_language_in_which_you_provide_data_on_your_activities'
+                        ]
+                      "
                       :show-iati-reference="true"
                     />
                   </button>
@@ -64,7 +101,9 @@
                 <Multiselect
                   id="default-language"
                   class="vue__select"
-                  placeholder="Select language from dropdown"
+                  :placeholder="
+                    translatedData['common.common.select_an_option']
+                  "
                   :searchable="true"
                   :options="props.languages"
                   :value="allDefaultValue.default_language"
@@ -73,8 +112,11 @@
               "
                 />
                 <p class="pt-2 text-xs text-n-40">
-                  The language in which you normally report. Select from
-                  dropdown.
+                  {{
+                    translatedData[
+                      'onboarding.default_values_step.the_language_in_which_you_normally_report'
+                    ]
+                  }}
                 </p>
               </div>
               <!-- Default Language End -->
@@ -83,21 +125,37 @@
           <!-- All Values Default End -->
           <!-- Activity Data Default Start -->
           <div class="pt-6">
-            <p class="text-sm font-bold">Default for activity data</p>
+            <p class="text-sm font-bold">
+              {{
+                translatedData[
+                  'onboarding.default_values_step.default_for_activity_data'
+                ]
+              }}
+            </p>
             <div class="grid grid-cols-2 gap-[22px] pt-4">
               <!-- Default Hierarchy Start -->
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
-                  <label for="ddefault-hierarchy" class="text-[14px]">
-                    Default Hierarchy
+                  <label for="default-hierarchy" class="text-[14px]">
+                    {{
+                      toTitleCase(
+                        translatedData['elements.label.default_hierarchy']
+                      )
+                    }}
                   </label>
                   <button>
                     <HoverText
                       width="w-64"
-                      name="Default Hierarchy"
-                      hover-text="If you are reporting both programmes (parent activities) and projects (child activities),
-                choose the hierarchical level that most of your activities are at. e.g. parent activity = 1; child activity = 2.
-                <br>If all your activities are at the same level i.e. you have no child activities, then choose 1."
+                      :name="
+                        toTitleCase(
+                          translatedData['elements.label.default_hierarchy']
+                        )
+                      "
+                      :hover-text="
+                        translatedData[
+                          'common.common.if_you_are_reporting_both_programmes'
+                        ]
+                      "
                       :show-iati-reference="true"
                     />
                   </button>
@@ -108,7 +166,9 @@
                   class="mb-2 w-full rounded-[4px] border border-n-20 py-2 pl-4 focus:outline-0 focus-visible:outline-0"
                   :class="hierarchyErrors.length > 0 ? 'border-crimson-50' : ''"
                   type="text"
-                  placeholder="Type default hierarchy here"
+                  :placeholder="
+                    translatedData['common.common.type_default_hierarchy_here']
+                  "
                 />
 
                 <p
@@ -117,25 +177,29 @@
                 >
                   {{ hierarchyErrors[0] }}
                 </p>
-                <p v-else class="pt-2 text-xs text-n-40">
-                  If hierarchy is not reported then 1 is assumed. If multiple
-                  levels are reported then, to avoid double counting, financial
-                  transactions should only be reported at the lowest
-                  hierarchical level.
-                </p>
               </div>
               <!-- Default Heirarchy End -->
               <!-- Humanitarian Start -->
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
                   <label for="humanitarian" class="text-[14px]">
-                    Humanitarian
+                    {{
+                      toTitleCase(translatedData['elements.label.humanitarian'])
+                    }}
                   </label>
                   <button>
                     <HoverText
                       width="w-72"
-                      name="Humanitarian"
-                      hover-text="Add a 'Humanitarian Flag' to every activity that your organisation publishes data on. This means that your organisation identifies all their activities as wholly or partially addressing a humanitarian crisis or multiple crises. You can later manually add or remove a Humanitarian Flag on individual activities if required."
+                      :name="
+                        toTitleCase(
+                          translatedData['elements.label.humanitarian']
+                        )
+                      "
+                      :hover-text="
+                        translatedData[
+                          'common.common.add_a_humanitarian_flag_to_every_activity'
+                        ]
+                      "
                       :show-iati-reference="true"
                     />
                   </button>
@@ -143,7 +207,9 @@
                 <Multiselect
                   id="humanitarian"
                   class="vue__select"
-                  placeholder="Select Humanitarian here"
+                  :placeholder="
+                    translatedData['common.common.select_an_option']
+                  "
                   :searchable="true"
                   :options="props.humanitarian"
                   :value="allDefaultValue.humanitarian"
@@ -156,14 +222,24 @@
               <!-- Default Flow Type Start -->
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
-                  <label for="default-flow-type" class="text-[14px]"
-                    >Default Flow Type</label
-                  >
+                  <label for="default-flow-type" class="text-[14px]">{{
+                    toTitleCase(
+                      translatedData['elements.label.default_flow_type']
+                    )
+                  }}</label>
                   <button>
                     <HoverText
                       width="w-72"
-                      name="default-flow-type"
-                      hover-text="Whether the activity is funded by Official Development Assistance (ODA), Other Official Flows (OOF), etc. <a target='_blank' href='https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/default-flow-type/'>For more information</a>"
+                      :name="
+                        toTitleCase(
+                          translatedData['elements.label.default_flow_type']
+                        )
+                      "
+                      :hover-text="
+                        translatedData[
+                          'common.common.flow_type_is_a_way_to_categorise'
+                        ]
+                      "
                       :show-iati-reference="true"
                     />
                   </button>
@@ -171,7 +247,9 @@
                 <Multiselect
                   id="default-flow-type"
                   class="vue__select"
-                  placeholder="Select Default Flow Type here"
+                  :placeholder="
+                    translatedData['common.common.select_an_option']
+                  "
                   :searchable="true"
                   :options="props.defaultFlowType"
                   :value="allDefaultValue.default_flow_type"
@@ -179,23 +257,32 @@
                 (value:string) => (allDefaultValue.default_flow_type = value)
               "
                 />
-                <p class="pt-2 text-xs text-n-40">
-                  If selected, then default flow type will be automatically
-                  populated in activity when created.
-                </p>
+                <p class="pt-2 text-xs text-n-40"></p>
               </div>
               <!-- Default Flow Type End -->
               <!-- Default Finance Type Start -->
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
-                  <label for="default-finance-type" class="text-[14px]"
-                    >Default Finance Type</label
-                  >
+                  <label for="default-finance-type" class="text-[14px]">
+                    {{
+                      toTitleCase(
+                        translatedData['elements.label.default_finance_type']
+                      )
+                    }}
+                  </label>
                   <button>
                     <HoverText
                       width="w-72"
-                      name="default-finance-type"
-                      hover-text="The type of finance (e.g. grant, loan, debt relief, etc). This the default value for all transactions in the activity report; it can be overridden by individual transactions. <a target='_blank' href='https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/default-finance-type/'>For more information</a>"
+                      :name="
+                        toTitleCase(
+                          translatedData['elements.label.default_finance_type']
+                        )
+                      "
+                      :hover-text="
+                        translatedData[
+                          'common.common.the_type_of_finance_eg_grant_loan'
+                        ]
+                      "
                       :show-iati-reference="true"
                     />
                   </button>
@@ -203,7 +290,9 @@
                 <Multiselect
                   id="default-finance-type"
                   class="vue__select"
-                  placeholder="Select Default Finance Type here"
+                  :placeholder="
+                    translatedData['common.common.select_an_option']
+                  "
                   :searchable="true"
                   :options="props.defaultFinanceType"
                   :value="allDefaultValue.default_finance_type"
@@ -211,24 +300,32 @@
                 (value:string) => (allDefaultValue.default_finance_type = value)
               "
                 />
-                <p class="pt-2 text-xs text-n-40">
-                  If selected, then default finance type will be automatically
-                  populated in activity when created.
-                </p>
               </div>
               <!-- Default Finance Type End -->
               <!-- Default Aid Type Start -->
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
-                  <label for="default-aid-type" class="text-[14px]"
-                    >Default Aid Type</label
-                  >
+                  <label for="default-aid-type" class="text-[14px]">
+                    {{
+                      toTitleCase(
+                        translatedData['elements.label.default_aid_type']
+                      )
+                    }}
+                  </label>
                   <button>
                     <HoverText
                       width="w-72"
                       position="top-left"
-                      name="default-aid-type"
-                      hover-text="The type of aid being supplied (project-type intervention, budget support, debt relief, etc.). This element specifies a default for all the activity’s financial transactions; it can be overridden at the individual transaction level. <a target='_blank' href='https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/default-aid-type/'>For more information</a>"
+                      :name="
+                        toTitleCase(
+                          translatedData['elements.label.default_aid_type']
+                        )
+                      "
+                      :hover-text="
+                        translatedData[
+                          'common.common.the_type_of_aid_being_supplied_project_type_intervention'
+                        ]
+                      "
                       :show-iati-reference="true"
                     />
                   </button>
@@ -236,7 +333,9 @@
                 <Multiselect
                   id="default-aid-type"
                   class="vue__select"
-                  placeholder="Select Default Aid Type here"
+                  :placeholder="
+                    translatedData['common.common.select_an_option']
+                  "
                   :searchable="true"
                   :options="props.defaultAidType"
                   :value="allDefaultValue.default_aid_type"
@@ -244,25 +343,32 @@
                 (value:string) => (allDefaultValue.default_aid_type = value)
               "
                 />
-                <p class="pt-2 text-xs text-n-40">
-                  If selected, then default aid type will be automatically
-                  populated in activity when created. Also, Vocabulary type
-                  "OECD DAC" will be chosen by default.
-                </p>
               </div>
               <!-- Default Aid Type End -->
               <!-- Default Tied Status Start -->
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
-                  <label for="default-tied-status" class="text-[14px]"
-                    >Default Tied Status</label
-                  >
+                  <label for="default-tied-status" class="text-[14px]">
+                    {{
+                      toTitleCase(
+                        translatedData['elements.label.default_tied_status']
+                      )
+                    }}
+                  </label>
                   <button>
                     <HoverText
                       width="w-72"
                       position="top-left"
-                      name="default-tied-status"
-                      hover-text="Whether the aid is untied, tied, or partially tied. This element specifies a default for all the activity’s financial transactions; it can be overridden at the individual transaction level.<a target='_blank' href='https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/default-tied-status/'>For more information</a>"
+                      :name="
+                        toTitleCase(
+                          translatedData['elements.label.default_tied_status']
+                        )
+                      "
+                      :hover-text="
+                        translatedData[
+                          'common.common.whether_the_aid_is_untied_tied_or_partially_tied'
+                        ]
+                      "
                       :show-iati-reference="true"
                     />
                   </button>
@@ -270,7 +376,9 @@
                 <Multiselect
                   id="default-tied-status"
                   class="vue__select"
-                  placeholder="Select Default Tied Status here"
+                  :placeholder="
+                    translatedData['common.common.select_an_option']
+                  "
                   :searchable="true"
                   :options="props.defaultTiedStatus"
                   :value="allDefaultValue.default_tied_status"
@@ -278,10 +386,6 @@
                 (value:string) => (allDefaultValue.default_tied_status = value)
               "
                 />
-                <p class="pt-2 text-xs text-n-40">
-                  If selected, then default tied status will be automatically
-                  populated in activity when created.
-                </p>
               </div>
               <!-- Default Tied Status End -->
             </div>
@@ -290,24 +394,29 @@
         </div>
         <div class="flex items-center gap-1 pt-3 text-xs text-n-40">
           <svg-vue icon="message-icon" />
-          <span>
-            You can adjust these values later from the 'Default Values' section.
+          <span
+            v-html="
+              translatedData[
+                'onboarding.default_values_step.you_can_adjust_these_values_later_from_the_default_values_section'
+              ]
+            "
+          >
           </span>
         </div>
       </div>
       <div class="mt-3 flex w-full items-center justify-between">
         <button class="text-xs font-bold text-n-40" @click="previousStep">
-          Previous
+          {{ translatedData['common.common.previous'] }}
         </button>
         <div class="flex items-center gap-4">
           <button
             class="text-xs font-bold text-n-40"
             @click="emit(`proceedStep`)"
           >
-            Skip to next step
+            {{ translatedData['common.common.skip_to_next_step'] }}
           </button>
           <button class="button primary-btn text-xs" @click="proceedStep">
-            Save and NEXT
+            {{ translatedData['common.common.save_and_next'] }}
           </button>
         </div>
       </div>
@@ -327,8 +436,13 @@
             <svg-vue icon="green-circle-tick" class="text-[41px]" />
             <span
               class="max-w-[200px] text-center text-sm font-bold text-bluecoral"
-              >Default values have been saved successfully.</span
             >
+              {{
+                translatedData[
+                  'settings.setting_controller.default_setting_stored_successfully'
+                ]
+              }}
+            </span>
           </div>
         </Transition>
       </div>
@@ -342,18 +456,26 @@
           <svg-vue icon="green-circle-tick" class="text-[34px]" />
           <div>
             <h2 class="max-w-[587px] py-[5.4px] text-2xl font-bold text-n-50">
-              Default values have already been set.
+              {{
+                translatedData[
+                  'onboarding.default_values_step.default_values_have_already_been_set'
+                ]
+              }}
             </h2>
-            <p class="max-w-[587px] text-sm text-n-50">
-              If you want to make any changes, go to
-              <a href="/setting" target="_blank">settings</a>.
-            </p>
+            <p
+              class="max-w-[587px] text-sm text-n-50"
+              v-html="
+                translatedData[
+                  'onboarding.default_values_step.if_you_want_to_make_any_changes_go_to_settings'
+                ]
+              "
+            ></p>
           </div>
         </div>
       </div>
       <div class="mb-[30px] self-end">
         <button class="button primary-btn text-xs" @click="emit(`proceedStep`)">
-          NEXT
+          {{ translatedData['common.common.next'] }}
         </button>
       </div>
     </div>
@@ -361,12 +483,13 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, watchEffect, ref } from 'vue';
+import { defineProps, defineEmits, watchEffect, ref, inject } from 'vue';
 
 import Multiselect from '@vueform/multiselect';
 import HoverText from 'Components/HoverText.vue';
 import axios from 'axios';
 import LinesLoader from 'Components/LinesLoader.vue';
+import { toTitleCase } from 'Composable/utils';
 
 const props = defineProps({
   currencies: {
@@ -428,6 +551,7 @@ const allDefaultValue = ref({
   default_tied_status: '',
 });
 
+const translatedData = inject('translatedData') as Record<string, string>;
 const isSavingStarted = ref(false);
 const isSaved = ref(false);
 const hierarchyErrors = ref([]);

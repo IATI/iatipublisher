@@ -2,6 +2,7 @@ import axios from 'axios';
 import $ from 'jquery';
 import 'select2';
 import { DynamicField } from './DynamicField';
+import LanguageService from 'Services/language';
 
 const dynamicField = new DynamicField();
 class FormBuilder {
@@ -458,7 +459,8 @@ class FormBuilder {
   }
 }
 
-$(function () {
+$(async function () {
+  const currentLanguage = await LanguageService.getLanguage();
   const formBuilder = new FormBuilder();
 
   formBuilder.addWrapper();
@@ -631,7 +633,10 @@ $(function () {
    *
    * @param button - The button element that manages the collapsible form section.
    */
-  function attachCollapsableButtonEvents(button: HTMLButtonElement) {
+  function attachCollapsableButtonEvents(
+    button: HTMLButtonElement,
+    currentLanguage: string
+  ) {
     const label = getClosestLabelDom(button);
     const optionalLabel = label ? getOptionalTextDom(label) : null;
     const subelement = label ? getClosestParentSubelementDom(label) : null;
@@ -640,7 +645,7 @@ $(function () {
 
     button.addEventListener('click', () => {
       if (optionalLabel) {
-        toggleOptionalText(optionalLabel);
+        toggleOptionalText(optionalLabel, currentLanguage);
       }
 
       if (subelement) {
@@ -710,11 +715,28 @@ $(function () {
    * Toggles what is rendered on optional text. (dot or bracket)
    *
    * @param optionalLabel
+   * @param currentLanguage
    */
-  function toggleOptionalText(optionalLabel: Element) {
-    const optionalLabelWithSvg =
-      '<svg viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9a1.87 1.87 0 1 0 3.74 0A1.87 1.87 0 0 0 6 9Z" fill="#68797E"></path></svg><span>Optional</span>';
-    const optionalLabelWithBrackets = '<span>( Optional )</span>';
+  function toggleOptionalText(optionalLabel: Element, currentLanguage = 'en') {
+    console.log('currentLanguage');
+    console.log(currentLanguage);
+    let optionalLabelString = 'Optional';
+
+    if (currentLanguage === 'fr') {
+      optionalLabelString = 'fr_Optional';
+    } else if (currentLanguage === 'es') {
+      optionalLabelString = 'es_Optional';
+    }
+
+    const optionalLabelWithSvg = `<svg viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 9a1.87 1.87 0 1 0 3.74 0A1.87 1.87 0 0 0 6 9Z" fill="#68797E"></path>
+        </svg>
+        <span>
+          ${optionalLabelString}
+        </span>`;
+
+    const optionalLabelWithBrackets = `<span>( ${optionalLabelString} )</span>`;
+
     const svgExists = optionalLabel.querySelector('svg') !== null;
 
     if (svgExists) {
@@ -783,19 +805,19 @@ $(function () {
   /**
    * This function handles the forms rendered on initial page load.
    */
-  function attachInitialCollapsableButtonEvents() {
+  function attachInitialCollapsableButtonEvents(currentLanguage: string) {
     const allCollapsableButtons = document.querySelectorAll<HTMLButtonElement>(
       '.collapsable-button'
     );
     allCollapsableButtons.forEach((button) =>
-      attachCollapsableButtonEvents(button)
+      attachCollapsableButtonEvents(button, currentLanguage)
     );
   }
 
   /**
    * This function handles the forms rendered on clicking 'ADD ADDITIONAL X' button.
    */
-  function observeNewCollapsableButtons() {
+  function observeNewCollapsableButtons(currentLanguage: string) {
     const observer = new MutationObserver((mutationsList) => {
       mutationsList.forEach((mutation) => {
         if (mutation.type === 'childList') {
@@ -804,7 +826,7 @@ $(function () {
               const newCollapsableButtons =
                 node.querySelectorAll<HTMLButtonElement>('.collapsable-button');
               newCollapsableButtons.forEach((button) =>
-                attachCollapsableButtonEvents(button)
+                attachCollapsableButtonEvents(button, currentLanguage)
               );
             }
           });
@@ -815,8 +837,8 @@ $(function () {
     observer.observe(document.body, { childList: true, subtree: true });
   }
 
-  attachInitialCollapsableButtonEvents();
-  observeNewCollapsableButtons();
+  attachInitialCollapsableButtonEvents(currentLanguage);
+  observeNewCollapsableButtons(currentLanguage);
 });
 
 function escapeHtml(unsafe: string) {

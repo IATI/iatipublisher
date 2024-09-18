@@ -42,7 +42,7 @@ class PolicyMarkerRequest extends ActivityBaseRequest
     /**
      * Returns rules for related activity.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -53,13 +53,19 @@ class PolicyMarkerRequest extends ActivityBaseRequest
         foreach ($formFields as $policyMarkerIndex => $policyMarker) {
             $policyMarkerForm = sprintf('policy_marker.%s', $policyMarkerIndex);
 
-            foreach ($this->getWarningForNarrative($policyMarker['narrative'], $policyMarkerForm) as $policyMarkerNarrativeIndex => $narrativeRules) {
+            foreach (
+                $this->getWarningForNarrative(
+                    $policyMarker['narrative'],
+                    $policyMarkerForm
+                ) as $policyMarkerNarrativeIndex => $narrativeRules
+            ) {
                 $rules[$policyMarkerNarrativeIndex] = $narrativeRules;
             }
 
             if (Arr::get($policyMarker, 'policy_marker_vocabulary') === '99') {
                 foreach (array_keys($policyMarker['narrative']) as $narrativeIndex) {
-                    $rules[sprintf('%s.narrative.%s.narrative', $policyMarkerForm, $narrativeIndex)] = 'required';
+                    $rules[sprintf('%s.narrative.%s.narrative', $policyMarkerForm, $narrativeIndex)]
+                        = 'required';
                 }
             }
         }
@@ -70,7 +76,7 @@ class PolicyMarkerRequest extends ActivityBaseRequest
     /**
      * Returns criticalrules for related activity.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -80,18 +86,40 @@ class PolicyMarkerRequest extends ActivityBaseRequest
 
         foreach ($formFields as $policyMarkerIndex => $policyMarker) {
             $policyMarkerForm = sprintf('policy_marker.%s', $policyMarkerIndex);
-            $rules[sprintf('%s.policy_marker_vocabulary', $policyMarkerForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('PolicyMarkerVocabulary', 'Activity', false)
-            ));
-            $rules[sprintf('%s.significance', $policyMarkerForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('PolicySignificance', 'Activity', false)
-            ));
-            $rules[sprintf('%s.policy_marker', $policyMarkerForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('PolicyMarker', 'Activity', false)
-            ));
+            $rules[sprintf('%s.policy_marker_vocabulary', $policyMarkerForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles(
+                        'PolicyMarkerVocabulary',
+                        'Activity',
+                        false
+                    )
+                )
+            );
+            $rules[sprintf('%s.significance', $policyMarkerForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles(
+                        'PolicySignificance',
+                        'Activity',
+                        false
+                    )
+                )
+            );
+            $rules[sprintf('%s.policy_marker', $policyMarkerForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles('PolicyMarker', 'Activity', false)
+                )
+            );
             $rules[sprintf('%s.vocabulary_uri', $policyMarkerForm)] = 'nullable|url';
 
-            foreach ($this->getErrorsForNarrative($policyMarker['narrative'], $policyMarkerForm) as $policyMarkerNarrativeIndex => $narrativeRules) {
+            foreach (
+                $this->getErrorsForNarrative(
+                    $policyMarker['narrative'],
+                    $policyMarkerForm
+                ) as $policyMarkerNarrativeIndex => $narrativeRules
+            ) {
                 $rules[$policyMarkerNarrativeIndex] = $narrativeRules;
             }
         }
@@ -102,7 +130,7 @@ class PolicyMarkerRequest extends ActivityBaseRequest
     /**
      * Returns messages for related activity validations.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -112,19 +140,32 @@ class PolicyMarkerRequest extends ActivityBaseRequest
 
         foreach ($formFields as $policyMarkerIndex => $policyMarker) {
             $policyMarkerForm = sprintf('policy_marker.%s', $policyMarkerIndex);
-            $messages[sprintf('%s.policy_marker_vocabulary.in', $policyMarkerForm)] = 'The policy marker vocabulary is invalid.';
-            $messages[sprintf('%s.significance.in', $policyMarkerForm)] = 'The policy marker significance is invalid.';
-            $messages[sprintf('%s.policy_marker.in', $policyMarkerForm)] = 'The policy marker code is invalid.';
-            $messages[sprintf('%s.vocabulary_uri.url', $policyMarkerForm)]
-                                                                                    = 'The @vocabulary-uri field must be a valid url.';
+            $messages[sprintf(
+                '%s.policy_marker_vocabulary.in',
+                $policyMarkerForm
+            )]
+                = trans('validation.vocabulary_is_invalid');
+            $messages[sprintf('%s.significance.in', $policyMarkerForm)] = trans('validation.this_field_is_invalid');
+            $messages[sprintf('%s.policy_marker.in', $policyMarkerForm)] = trans('validation.activity_policy_marker.invalid_code');
+            $messages[sprintf('%s.vocabulary_uri.url', $policyMarkerForm)] = trans('validation.url_valid');
 
-            foreach ($this->getMessagesForNarrative($policyMarker['narrative'], $policyMarkerForm) as $policyMarkerNarrativeIndex => $narrativeMessages) {
+            foreach (
+                $this->getMessagesForNarrative(
+                    $policyMarker['narrative'],
+                    $policyMarkerForm
+                ) as $policyMarkerNarrativeIndex => $narrativeMessages
+            ) {
                 $messages[$policyMarkerNarrativeIndex] = $narrativeMessages;
             }
 
             if (Arr::get($policyMarker, 'policy_marker_vocabulary') === '99') {
                 foreach (array_keys($policyMarker['narrative']) as $narrativeIndex) {
-                    $messages[sprintf('%s.narrative.%s.narrative.required', $policyMarkerForm, $narrativeIndex)] = 'The narrative field is required when vocabulary is reporting organisation.';
+                    $messages[sprintf(
+                        '%s.narrative.%s.narrative.required',
+                        $policyMarkerForm,
+                        $narrativeIndex
+                    )]
+                        = trans('validation.activity_policy_marker.narrative_required');
                 }
             }
         }
