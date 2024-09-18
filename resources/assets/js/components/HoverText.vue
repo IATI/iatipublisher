@@ -35,15 +35,15 @@
       <!-- eslint-disable vue/no-v-html -->
       <p class="!text-black" v-html="hoverText" />
       <!--eslint-enable-->
-      <a v-if="link" :href="link" class="inline-block font-bold text-bluecoral"
-        >Learn more</a
-      >
+      <a v-if="link" :href="link" class="inline-block font-bold text-bluecoral">
+        {{ translatedData['common.common.learn_more'] }}
+      </a>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, inject } from 'vue';
 
 export default defineComponent({
   props: {
@@ -82,6 +82,13 @@ export default defineComponent({
       default: false,
     },
   },
+  setup() {
+    const translatedData = inject('translatedData') as Record<string, string>;
+
+    return {
+      translatedData,
+    };
+  },
 });
 </script>
 
@@ -100,16 +107,4 @@ export default defineComponent({
     }
   }
 }
-
-// .help:hover {
-//   .help__text {
-//     //! Removed Transition of Hover Here
-//     // transform: translate(50%, 5px);
-//     visibility: visible;
-//     opacity: 1;
-//     @media (max-width: 1024px) {
-//       width: 200px;
-//     }
-//   }
-// }
 </style>

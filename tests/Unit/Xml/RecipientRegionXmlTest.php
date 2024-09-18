@@ -17,7 +17,8 @@ class RecipientRegionXmlTest extends XmlBaseTest
     {
         $rows = $this->region_country_percentage_sum_not_equal_to_100_single_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The sum of recipient country and recipient region of a specific vocabulary must be 100%', $flattenErrors);
+
+        $this->assertContains(trans('validation.recipient_country_region_percentage_sum'), $flattenErrors);
     }
 
     /**
@@ -120,7 +121,8 @@ class RecipientRegionXmlTest extends XmlBaseTest
     {
         $rows = $this->country_20_region_60_multiple_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The sum of recipient country and recipient region of a specific vocabulary must be 100%', $flattenErrors);
+
+        $this->assertContains(trans('validation.recipient_country_region_percentage_sum'), $flattenErrors);
     }
 
     /**
@@ -224,7 +226,8 @@ class RecipientRegionXmlTest extends XmlBaseTest
     {
         $rows = $this->diff_vocal_percentage();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The sum of percentage of Recipient Country and Recipient Regions (within the same Region Vocabulary) must be equal to 100%', $flattenErrors);
+
+        $this->assertContains(trans('validation.recipient_country_region_percentage_sum'), $flattenErrors);
     }
 
     /**
@@ -299,10 +302,12 @@ class RecipientRegionXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('Recipient Country’s percentage is already 100%. The sum of the percentages of Recipient Country and Recipient Region must be 100%', $flattenErrors);
-        $this->assertContains('The recipient region vocabulary uri must be a valid url.', $flattenErrors);
-        $this->assertContains('The recipient region percentage field must be a number.', $flattenErrors);
-        $this->assertContains('The recipient country percentage must be at least 0. ', $flattenErrors);
+
+        $this->assertContains(trans('validation.percentage_must_be_at_least_0'), $flattenErrors);
+        $this->assertContains(trans('validation.url_valid'), $flattenErrors);
+        $this->assertContains(trans('validation.percentage_must_be_a_number'), $flattenErrors);
+        $this->assertContains(trans('validation.recipient_country_region_percentage_sum'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_recipient_region.percentage.country_percentage_complete'), $flattenErrors);
     }
 
     /**

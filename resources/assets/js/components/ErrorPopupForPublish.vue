@@ -19,8 +19,11 @@
           "
         >
           <span class="text-md">
-            This organization has surpassed the tool's maximum allowed file size
-            for publishing.
+            {{
+              translatedData[
+                'activity_index.error_popup_for_publish.the_organisation_has_surpassed_the_tools_maximum_allowed_file_size'
+              ]
+            }}
             <span
               class="cursor-pointer font-bold text-bluecoral"
               @click="
@@ -30,7 +33,11 @@
                 }
               "
             >
-              Contact support
+              {{
+                translatedData[
+                  'activity_index.error_popup_for_publish.contact_info'
+                ]
+              }}
             </span>
           </span>
         </span>
@@ -41,8 +48,11 @@
           "
         >
           <span class="text-md">
-            The selected items exceed the allowed size for publishing at once.
-            Please try publishing a smaller batch.
+            {{
+              translatedData[
+                'activity_index.error_popup_for_publish.the_selected_items_exceed_the_allowed_size_for_publishing_at_once'
+              ]
+            }}
           </span>
         </span>
         <span v-else>
@@ -58,9 +68,20 @@
           <span>
             {{ item }}
           </span>
-          <template v-if="item === 'Your Organisation data is not published.'">
+          <template
+            v-if="
+              item ===
+              translatedData[
+                'activity_index.error_popup_for_publish.your_organisation_data_not_published'
+              ]
+            "
+          >
             <a class="text-base font-semibold" href="/organisation">
-              Go to Organisation
+              {{
+                translatedData[
+                  'activity_index.error_popup_for_publish.go_to_organisation'
+                ]
+              }}
             </a>
           </template>
         </li>
@@ -70,7 +91,7 @@
           class="rounded bg-bluecoral px-5 py-2 font-semibold text-white"
           @click="close"
         >
-          Close
+          {{ translatedData['common.common.close'] }}
         </button>
       </div>
     </div>
@@ -83,6 +104,7 @@ import {
   defineEmits,
   onMounted,
   onUnmounted,
+  inject,
 } from 'vue';
 
 const emit = defineEmits(['close-popup']);
@@ -98,6 +120,7 @@ const props = defineProps({
   },
 });
 
+const translatedData = inject('translatedData') as Record<string, string>;
 const close = () => {
   emit('close-popup', 'closed');
 };

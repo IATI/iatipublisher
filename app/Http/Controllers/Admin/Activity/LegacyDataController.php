@@ -58,7 +58,7 @@ class LegacyDataController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : $hasData,
                 elementName: 'legacy_data',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->basicBreadCrumbInfo($activity, 'legacy_data');
 
@@ -72,10 +72,11 @@ class LegacyDataController extends Controller
             return view('admin.activity.legacyData.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while rendering legacy-data form.'
+                $translatedMessage
             );
         }
     }
@@ -92,14 +93,18 @@ class LegacyDataController extends Controller
     {
         try {
             if ($this->activityLegacyDataService->update($id, $request->all())) {
-                return redirect()->route('admin.activity.show', $id)->with('success', 'Legacy-data updated successfully.');
-            }
+                $translatedMessage = trans('common/common.updated_successfully');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating legacy-data.');
+                return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
+            }
+            $translatedMessage = trans('common/common.failed_to_update_data');
+
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating legacy-data.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

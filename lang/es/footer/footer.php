@@ -1,0 +1,14 @@
+<?php
+
+return [
+    'iati_publisher'                          => 'ES_IATI Publisher',
+    'user_manual_v1'                          => 'ES_User Manual v1.1',
+    'privacy_policy'                          => 'ES_Privacy Policy',
+    'part_of_the_iati_unified_platform'       => 'ES_Part of the IATI Unified Platform',
+    'code_licensed_under_the_gnu_agpl'        => 'ES_Code licensed under the GNU AGPL.',
+    'documentation_licensed_under_cc_by3'     => 'ES_Documentation licensed under CC BY 3.0',
+    'any_questions_contact_support'           => 'ES_Any questions? Contact Support',
+    'support_iati_standard_org'               => 'ES_support@iatistandard.org',
+    'copyright_iati_2022_all_rights_reserved' => 'ES_Copyright IATI 2022. All rights reserved.',
+    'home'                                    => 'ES_Home',
+];

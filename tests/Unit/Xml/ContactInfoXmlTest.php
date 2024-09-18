@@ -17,12 +17,13 @@ class ContactInfoXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The contact info type is invalid.', $flattenErrors);
-        $this->assertContains('The contact info telephone number is invalid.', $flattenErrors);
-        $this->assertContains('The contact info telephone number must have atleast 7 digits.', $flattenErrors);
-        $this->assertContains('The contact info telephone number must not have more than 20 digits.', $flattenErrors);
-        $this->assertContains('The contact info email must be valid.', $flattenErrors);
-        $this->assertContains('The contact info website url must be valid url.', $flattenErrors);
+
+        $this->assertContains(trans('validation.type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.contact_info_telephone_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_contact_info.telephone.min'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_contact_info.telephone.max'), $flattenErrors);
+        $this->assertContains(trans('validation.email_address_format_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.url_valid'), $flattenErrors);
     }
 
     /**

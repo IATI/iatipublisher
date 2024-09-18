@@ -1,11 +1,15 @@
 import moment from 'moment';
 
-function dateFormat(date: Date, format = 'MMMM DD, YYYY' as string) {
+function dateFormat(
+  date: Date,
+  format = 'MMMM DD, YYYY' as string,
+  currentLocale = 'en' as string
+) {
   let format_date;
 
   switch (format) {
     case 'fromNow':
-      format_date = date ? moment(date).fromNow() : '';
+      format_date = date ? moment(date).locale(currentLocale).fromNow() : '';
       break;
 
     case 'calendar':

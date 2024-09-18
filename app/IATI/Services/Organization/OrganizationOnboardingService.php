@@ -10,6 +10,7 @@ use App\IATI\Models\Organization\OrganizationOnboarding;
 use App\IATI\Repositories\Organization\OrganizationOnboardingRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * Class OrganizationOnboardingService.
@@ -221,5 +222,28 @@ class OrganizationOnboardingService
             $organizationOnboarding->dont_show_again = $value;
             $organizationOnboarding->save();
         }
+    }
+
+    /**
+     * Since onboarding titles are pulled from db and rendered, we need to translate the step titles.
+     *
+     * @param OrganizationOnboarding $organizationOnboarding
+     *
+     * @return array
+     */
+    public function translateOrganisationOnboardingTitles(OrganizationOnboarding $organizationOnboarding): array
+    {
+        $organizationOnboarding = $organizationOnboarding->toArray();
+
+        foreach ($organizationOnboarding['steps_status'] as &$onboardingStep) {
+            $onboardingStep['title'] = match ($onboardingStep['step']) {
+                1 => Str::title(trans('common/common.publishing_settings')),
+                2 => Str::title(trans('common/common.default_values')),
+                3 => Str::title(trans('adminHeader/admin_header.organisation_data')),
+                4 => Str::title(trans('common/common.activity')),
+            };
+        }
+
+        return $organizationOnboarding;
     }
 }

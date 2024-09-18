@@ -39,6 +39,7 @@ class ParticipatingOrganizationController extends Controller
 
     /**
      * Renders participating organization edit form.
+     * Renders participating organization edit form.
      *
      * @param int $id
      *
@@ -60,7 +61,7 @@ class ParticipatingOrganizationController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : $hasData,
                 elementName: 'participating_org',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->basicBreadCrumbInfo($activity, 'participating_org');
 
@@ -74,10 +75,11 @@ class ParticipatingOrganizationController extends Controller
             return view('admin.activity.participatingOrganization.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while rendering participating-organization form.'
+                $translatedMessage
             );
         }
     }
@@ -94,14 +96,18 @@ class ParticipatingOrganizationController extends Controller
     {
         try {
             if (!$this->participatingOrganizationService->update($id, $request->except(['_token', '_method']))) {
-                return redirect()->route('admin.activities.show', $id)->with('error', 'Error has occurred while updating participating-organization.');
-            }
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Participating-organization updated successfully.');
+                return redirect()->route('admin.activities.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e);
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating participating-organization.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

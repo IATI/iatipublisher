@@ -25,7 +25,8 @@
               class="mr-2 grow-0 text-base text-salmon-50"
             ></svg-vue>
             <span class="text-sm font-bold text-n-50">
-              {{ errorCount + ' Alerts' }}
+              {{ errorCount }}
+              {{ translatedData['activity_index.error_message.alerts'] }}
             </span>
           </div>
           <div
@@ -33,9 +34,13 @@
             :class="show ? 'text-show' : 'text-hide'"
           >
             <svg-vue icon="red-dot" class="text-[6px]"></svg-vue>
-            <span class="text-sm font-bold text-n-50"
-              >Account not verified</span
-            >
+            <span class="text-sm font-bold text-n-50">
+              {{
+                translatedData[
+                  'activity_index.error_message.email_not_verified'
+                ]
+              }}
+            </span>
           </div>
           <div
             v-if="!errorData.publisher_setting || !errorData.default_setting"
@@ -47,18 +52,26 @@
             "
           >
             <svg-vue icon="red-dot" class="text-[6px]"></svg-vue>
-            <span class="text-sm font-bold text-bluecoral"
-              >Complete your setup</span
-            >
+            <span class="text-sm font-bold text-bluecoral">
+              {{
+                translatedData[
+                  'activity_index.error_message.complete_your_setup'
+                ]
+              }}
+            </span>
           </div>
           <div
             v-if="!errorData.publisher_active"
             :class="show ? 'text-show' : 'text-hide'"
           >
             <svg-vue icon="red-dot" class="text-[6px]"></svg-vue>
-            <span class="text-sm font-bold text-n-50"
-              >Publisher is Inactive</span
-            >
+            <span class="text-sm font-bold text-n-50">
+              {{
+                translatedData[
+                  'activity_index.error_message.publisher_is_inactive'
+                ]
+              }}
+            </span>
           </div>
         </div>
         <div>
@@ -66,7 +79,11 @@
             class="text-sm leading-relaxed text-bluecoral"
             @click="show = !show"
           >
-            Show {{ show ? 'less' : 'more' }}
+            {{
+              show
+                ? translatedData['common.common.show_more']
+                : translatedData['activity_index.error_message.show_less']
+            }}
           </button>
         </div>
       </div>
@@ -91,26 +108,41 @@
           <div class="alert__container">
             <div class="alert__content">
               <svg-vue icon="red-dot" class="text-[6px]"></svg-vue>
-              <span>Email not verified</span>
+              <span>{{
+                translatedData[
+                  'activity_index.error_message.email_not_verified'
+                ]
+              }}</span>
             </div>
 
             <div class="ml-5 text-left">
               <p>
-                Please check for the verification email sent to you when you
-                registered (<span
-                  ><a
+                {{
+                  translatedData[
+                    'activity_index.error_message.please_check_for_the_verification_email_sent_to_you'
+                  ]
+                }}
+                <span>
+                  (
+                  <a
                     class="cursor-pointer border-b-2 border-b-bluecoral font-bold text-bluecoral hover:border-b-spring-50"
-                    @click="resendVerificationEmail()"
-                    >click here to resend the verification email</a
-                  >).</span
-                >
-                Contact
+                    @click="resendVerificationEmail"
+                  >
+                    {{
+                      translatedData[
+                        'activity_index.error_message.click_here_to_resend_the_verification_email'
+                      ]
+                    }}
+                  </a>
+                  ).
+                </span>
                 <span
-                  ><a target="_blank" href="mailto:support@iatistandard.org"
-                    >support@iatistandard.org</a
-                  ></span
-                >
-                for further assistance.
+                  v-html="
+                    translatedData[
+                      'activity_index.error_message.contact_support_for_further_assistance'
+                    ]
+                  "
+                ></span>
               </p>
             </div>
           </div>
@@ -136,26 +168,35 @@
           <div class="alert__container">
             <div class="alert__content">
               <svg-vue icon="red-dot" class="text-[6px]"></svg-vue>
-              <span>Complete your setup</span>
+              <span>{{
+                translatedData[
+                  'activity_index.error_message.complete_your_setup'
+                ]
+              }}</span>
             </div>
             <div class="ml-5">
-              <p>
-                We recommend that you
-                <span
-                  ><a href="/setting" target="_blank"
-                    >complete default values</a
-                  ></span
-                >
-                (language, currency and recommended defaults for activity data)
-                to enable full functionality of IATI Publisher.
-              </p>
+              <p
+                v-html="
+                  translatedData[
+                    'activity_index.error_message.we_recommend_that_you_complete_default_values'
+                  ]
+                "
+              ></p>
               <div v-if="!errorData.publisher_setting" class="alert__message">
                 <svg-vue icon="red-cross" class="text-[7px]"></svg-vue>
                 <p>
-                  Update registry information - API Key & Publisher ID<span
-                    v-if="!errorData.token_status"
-                    >. Please enter correct API token.</span
-                  >
+                  {{
+                    translatedData[
+                      'activity_index.error_message.update_registry_information_api_key_and_publisher_id'
+                    ]
+                  }}
+                  <span v-if="!errorData.token_status">
+                    {{
+                      translatedData[
+                        'activity_index.error_message.please_enter_correct_api_token'
+                      ]
+                    }}
+                  </span>
                 </p>
               </div>
             </div>
@@ -178,13 +219,20 @@
           <div class="alert__container">
             <div class="alert__content">
               <svg-vue icon="red-dot" class="text-[6px]"></svg-vue>
-              <span>IATI Registry account is inactive</span>
+              <span>{{
+                translatedData[
+                  'activity_index.error_message.iati_registry_account_is_inactive'
+                ]
+              }}</span>
             </div>
 
             <div class="ml-5 text-left">
               <p>
-                Your account is pending approval by the IATI team - someone
-                should be in touch within two working days.
+                {{
+                  translatedData[
+                    'common.common.your_account_is_pending_approval_by_the_iati_team'
+                  ]
+                }}
               </p>
             </div>
           </div>
@@ -195,7 +243,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, reactive, onMounted, inject } from 'vue';
+import { defineProps, inject, onMounted, reactive, ref } from 'vue';
 import { TransitionRoot } from '@headlessui/vue';
 import Loader from '../components/Loader.vue';
 import axios from 'axios';
@@ -290,6 +338,8 @@ onMounted(async () => {
       })
     );
 });
+
+const translatedData = inject('translatedData') as Record<string, string>;
 </script>
 
 <style lang="scss" scoped>
@@ -299,6 +349,7 @@ onMounted(async () => {
   &__container {
     @apply flex flex-col leading-6;
   }
+
   &__content {
     @apply flex items-center space-x-4;
 
@@ -306,17 +357,21 @@ onMounted(async () => {
       @apply text-sm font-bold text-n-50;
     }
   }
+
   &__message {
     @apply flex items-center space-x-1;
   }
 }
+
 .text-show {
   @apply invisible flex items-center space-x-2 opacity-0 duration-300;
   transform: translate(-50px, 30px);
 }
+
 .text-hide {
   @apply flex -translate-y-0 items-center space-x-2 duration-300;
 }
+
 .border-hide::before {
   @apply absolute left-0 top-0 rounded bg-salmon-50 duration-300 ease-out;
   width: 2px;
@@ -324,6 +379,7 @@ onMounted(async () => {
   content: '';
   transform: translateY(-100%);
 }
+
 .border-show::before {
   @apply absolute left-0 top-0 rounded bg-salmon-50 duration-300 ease-out;
   width: 2px;

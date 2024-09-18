@@ -2,7 +2,7 @@
   <div class="relative bg-paper px-5 pb-[71px] pt-4 xl:px-10">
     <PageTitle
       :breadcrumb-data="breadcrumbData"
-      title="Period List"
+      :title="translatedData['common.common.period_list']"
       :back-link="indicatorLink"
     >
       <div class="flex items-center space-x-3">
@@ -13,7 +13,11 @@
           class="mr-3"
         />
         <a :href="`${periodLink}/create`">
-          <Btn text="Add Period" icon="plus" type="primary" />
+          <Btn
+            :text="translatedData['common.common.add_period']"
+            icon="plus"
+            type="primary"
+          />
         </a>
       </div>
     </PageTitle>
@@ -23,13 +27,18 @@
         <thead>
           <tr class="bg-n-10 text-left">
             <th id="transaction_type" scope="col">
-              <span>Start Date - End Date</span>
+              <span
+                >{{ getTranslatedElement(translatedData, 'start_date') }} -
+                {{ getTranslatedElement(translatedData, 'end_date') }}</span
+              >
             </th>
             <th id="code" scope="col" width="190px">
-              <span>Period number</span>
+              <span>{{
+                getTranslatedElement(translatedData, 'period_number')
+              }}</span>
             </th>
             <th id="action" scope="col" width="177px">
-              <span>Action</span>
+              <span>{{ translatedData['common.common.action'] }}</span>
             </th>
           </tr>
         </thead>
@@ -48,13 +57,13 @@
                 {{
                   pe.period.period_start[0].date
                     ? dateFormat(pe.period.period_start[0].date)
-                    : 'Missing'
+                    : getTranslatedMissing(translatedData)
                 }}
                 -
                 {{
                   pe.period.period_end[0].date
                     ? dateFormat(pe.period.period_end[0].date)
-                    : 'Missing'
+                    : getTranslatedMissing(translatedData)
                 }}
               </a>
             </td>
@@ -64,13 +73,15 @@
                 <a class="mr-6 text-n-40" :href="`${periodLink}/${pe.id}/edit`">
                   <svg-vue icon="edit" class="text-xl"></svg-vue>
                 </a>
-                <DeleteAction item-type="period" :item-id="pe.id" />
+                <DeleteAction :item-id="pe.id" item-type="period" />
               </div>
             </td>
           </tr>
         </tbody>
         <tbody v-else>
-          <td colspan="5" class="text-center">Periods not found</td>
+          <td colspan="5" class="text-center">
+            {{ translatedData['common.common.no_data_found'] }}
+          </td>
         </tbody>
       </table>
     </div>
@@ -105,6 +116,10 @@ import DeleteAction from 'Components/sections/DeleteAction.vue';
 // composable
 import dateFormat from 'Composable/dateFormat';
 import getActivityTitle from 'Composable/title';
+import {
+  getTranslatedElement,
+  getTranslatedMissing,
+} from '../../../composable/utils';
 
 export default defineComponent({
   name: 'PeriodList',
@@ -129,6 +144,10 @@ export default defineComponent({
       required: true,
     },
     toast: {
+      type: Object,
+      required: true,
+    },
+    translatedData: {
       type: Object,
       required: true,
     },
@@ -178,7 +197,7 @@ export default defineComponent({
      */
     const breadcrumbData = [
       {
-        title: 'Your Activities',
+        title: props.translatedData['common.common.your_activities'],
         link: '/activity',
       },
       {
@@ -186,7 +205,7 @@ export default defineComponent({
         link: activityLink,
       },
       {
-        title: 'Result List',
+        title: props.translatedData['common.common.result_list'],
         link: `/activity/${activityId}/result`,
       },
       {
@@ -194,7 +213,7 @@ export default defineComponent({
         link: resultLink,
       },
       {
-        title: 'Indicator List',
+        title: props.translatedData['common.common.indicator_list'],
         link: `/result/${resultId}/indicator`,
       },
       {
@@ -202,7 +221,7 @@ export default defineComponent({
         link: indicatorLink,
       },
       {
-        title: 'Period List',
+        title: props.translatedData['common.common.period_list'],
         link: '',
       },
     ];
@@ -239,6 +258,7 @@ export default defineComponent({
 
     // provide
     provide('parentItemId', indicatorId);
+    provide('translatedData', props.translatedData);
 
     return {
       breadcrumbData,
@@ -253,5 +273,6 @@ export default defineComponent({
       handleNavigate,
     };
   },
+  methods: { getTranslatedMissing, getTranslatedElement },
 });
 </script>

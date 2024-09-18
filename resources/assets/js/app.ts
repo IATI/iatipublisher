@@ -28,7 +28,6 @@ import PeriodsDetail from './views/activity/periods/PeriodsDetail.vue';
 import PeriodsList from './views/activity/periods/PeriodsList.vue';
 import TransactionList from './views/activity/transactions/TransactionList.vue';
 import TransactionDetail from './views/activity/transactions/TransactionDetail.vue';
-import StaticDescriptionForm from './components/DescriptionForm.vue';
 import ElementsNote from './views/activity/partials/ElementsNote.vue';
 import Activity from './views/activity/ActivityIndex.vue';
 import LoggedInHeader from './components/AdminHeader.vue';
@@ -94,9 +93,9 @@ app.use(VueApexCharts);
  */
 
 app
-  .component('WebHeader', WebHeader)
-  .component('WebFooter', WebFooter)
-  .component('AdminFooter', AdminFooter)
+  .component('WebHeader', WebHeader) //y
+  .component('WebFooter', WebFooter) //y
+  .component('AdminFooter', AdminFooter) //y
 
   .component('WelcomeSignin', WelcomeSignIn)
   .component('RegisterForm', RegisterPage)
@@ -117,10 +116,9 @@ app
  */
 app
   .component('ActivityTemplate', Activity)
-  .component('LoggedinHeader', LoggedInHeader)
+  .component('LoggedinHeader', LoggedInHeader) //y
   .component('ActivitiesDetail', ActivitiesDetail)
-  .component('DescriptionForm', StaticDescriptionForm)
-  .component('ElementsNote', ElementsNote)
+  .component('ElementsNote', ElementsNote) //y
   .component('ResultDetail', ResultDetail)
   .component('ResultList', ResultList)
   .component('IndicatorDetail', IndicatorDetail)
@@ -129,7 +127,7 @@ app
   .component('PeriodsList', PeriodsList)
   .component('TransactionList', TransactionList)
   .component('TransactionDetail', TransactionDetail)
-  .component('SidebarHelpBlock', SidebarHelpBlock);
+  .component('SidebarHelpBlock', SidebarHelpBlock); //y
 
 /*
  * Import page

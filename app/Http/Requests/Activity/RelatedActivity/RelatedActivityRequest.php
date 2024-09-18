@@ -41,20 +41,26 @@ class RelatedActivityRequest extends ActivityBaseRequest
     /**
      * Returns rules for related activity.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
     public function getErrorsForRelatedActivity(array $formFields): array
     {
         $rules = [];
-        $relatedActivityType = implode(',', array_keys(
-            $this->getCodeListForRequestFiles('RelatedActivityType', 'Activity', false)
-        ));
+        $relatedActivityType = implode(
+            ',',
+            array_keys(
+                $this->getCodeListForRequestFiles('RelatedActivityType', 'Activity', false)
+            )
+        );
 
         foreach ($formFields as $index => $formField) {
             $baseForm = sprintf('related_activity.%s', $index);
-            $rules[sprintf('%s.relationship_type', $baseForm)] = sprintf('nullable|in:%s', $relatedActivityType);
+            $rules[sprintf('%s.relationship_type', $baseForm)] = sprintf(
+                'nullable|in:%s',
+                $relatedActivityType
+            );
         }
 
         return $rules;
@@ -63,21 +69,19 @@ class RelatedActivityRequest extends ActivityBaseRequest
     /**
      * Returns rules for related activity.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
     public function getWarningForRelatedActivity(array $formFields): array
     {
-        $rules = [];
-
-        return $rules;
+        return [];
     }
 
     /**
      * Returns messages for related activity validations.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -87,7 +91,11 @@ class RelatedActivityRequest extends ActivityBaseRequest
 
         foreach ($formFields as $index => $formField) {
             $baseForm = sprintf('related_activity.%s', $index);
-            $messages[sprintf('%s.relationship_type.in', $baseForm)] = 'The relationship type in related activity is invalid.';
+            $messages[sprintf(
+                '%s.relationship_type.in',
+                $baseForm
+            )]
+                = trans('validation.this_field_is_invalid');
         }
 
         return $messages;

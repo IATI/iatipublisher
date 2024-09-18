@@ -44,8 +44,8 @@ class DefaultFinanceTypeCsvTest extends CsvBaseTest
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
 
-        $this->assertContains('The default finance type does not exist.', $flattenErrors);
-        $this->assertContains('The default finance type cannot have more than one value.', $flattenErrors);
+        $this->assertContains(trans('validation.activity_default_finance_type.in'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_default_finance_type.size'), $flattenErrors);
     }
 
     /**

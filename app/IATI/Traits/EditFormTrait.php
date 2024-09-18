@@ -9,6 +9,7 @@ use App\IATI\Models\Activity\Indicator;
 use App\IATI\Models\Activity\Period;
 use App\IATI\Models\Activity\Result;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * Class EditFormTrait.
@@ -33,16 +34,16 @@ trait EditFormTrait
         $elementName = ucfirst(str_replace('_', ' ', $elementName));
 
         if ($hasData) {
-            return sprintf('Edit %s for %s', $elementName, $parentTitle);
+            return sprintf('%s %s %s %s', trans('common/common.edit'), $elementName, trans('common/common.for'), $parentTitle);
         }
 
-        return sprintf('Add %s for %s', $elementName, $parentTitle);
+        return sprintf('%s %s %s %s', trans('common/common.add'), $elementName, trans('common/common.for'), $parentTitle);
     }
 
     protected function basicBreadCrumbInfo(Activity $activity, string $elementName): array
     {
         $activityId = Arr::get($activity, 'id');
-        $activityTitle = Arr::get($activity, 'title.0.narrative') ?? 'Untitled Activity';
+        $activityTitle = Arr::get($activity, 'title.0.narrative') ?? $this->getTranslatedUntitledActivity();
         $activityTitle = substr($activityTitle, 0, 32);
 
         return [
@@ -54,10 +55,10 @@ trait EditFormTrait
     protected function resultBreadCrumbInfo(Activity $activity, ?Result $result): array
     {
         $activityId = Arr::get($activity, 'id');
-        $activityTitle = Arr::get($activity, 'title.0.narrative') ?? 'Untitled Activity';
+        $activityTitle = Arr::get($activity, 'title.0.narrative') ?? $this->getTranslatedUntitledActivity();
         $activityTitle = substr($activityTitle, 0, 32);
 
-        $resultTitle = 'Untitled Result';
+        $resultTitle = $this->getTranslatedUntitledResult();
         $resultPath = 'result/create';
 
         if ($result) {
@@ -68,24 +69,24 @@ trait EditFormTrait
         }
 
         return [
-            $activityTitle => "/activity/$activityId",
-            'Result List'  => "/activity/$activityId/result",
-            $resultTitle   => "/activity/$activityId/$resultPath",
+            $activityTitle                     => "/activity/$activityId",
+            trans('common/common.result_list') => "/activity/$activityId/result",
+            $resultTitle                       => "/activity/$activityId/$resultPath",
         ];
     }
 
     protected function indicatorBreadCrumbInfo(Activity $activity, Result $result, ?Indicator $indicator): array
     {
         $activityId = Arr::get($activity, 'id');
-        $activityTitle = Arr::get($activity, 'title.0.narrative') ?? 'Untitled Activity';
+        $activityTitle = Arr::get($activity, 'title.0.narrative') ?? $this->getTranslatedUntitledActivity();
         $activityTitle = substr($activityTitle, 0, 32);
-        $resultTitle = 'Untitled Result';
+        $resultTitle = $this->getTranslatedUntitledResult();
         $resultTitle = Arr::get($result, 'result.title.0.narrative.0.narrative') ?? $resultTitle;
         $resultTitle = substr($resultTitle, 0, 32);
         $resultId = Arr::get($result, 'id');
         $resultPath = "result/$resultId";
 
-        $indicatorTitle = 'Untitled Indicator';
+        $indicatorTitle = $this->getTranslatedUntitledIndicator();
         $indicatorPath = 'indicator/create';
 
         if ($indicator) {
@@ -96,11 +97,11 @@ trait EditFormTrait
         }
 
         return [
-            $activityTitle   => "/activity/$activityId",
-            'Result List'    => "/activity/$activityId/result",
-            $resultTitle     => "/activity/$activityId/$resultPath",
-            'Indicator List' => "/result/$resultId/indicator",
-            $indicatorTitle  => "/result/$resultId/$indicatorPath",
+            $activityTitle                        => "/activity/$activityId",
+            trans('common/common.result_list')    => "/activity/$activityId/result",
+            $resultTitle                          => "/activity/$activityId/$resultPath",
+            trans('common/common.indicator_list') => "/result/$resultId/indicator",
+            $indicatorTitle                       => "/result/$resultId/$indicatorPath",
         ];
     }
 
@@ -111,13 +112,13 @@ trait EditFormTrait
         ?Period $period
     ): array {
         $activityId = Arr::get($activity, 'id');
-        $activityTitle = Arr::get($activity, 'title.0.narrative') ?? 'Untitled Activity';
+        $activityTitle = Arr::get($activity, 'title.0.narrative') ?? $this->getTranslatedUntitledActivity();
         $activityTitle = substr($activityTitle, 0, 32);
-        $resultTitle = 'Untitled Result';
+        $resultTitle = $this->getTranslatedUntitledResult();
         $resultId = '#';
-        $indicatorTitle = 'Untitled Indicator';
+        $indicatorTitle = $this->getTranslatedUntitledIndicator();
         $indicatorId = '#';
-        $periodTitle = 'New Period';
+        $periodTitle = $this->getTranslatedNewPeriod();
         $periodId = 'create';
 
         if ($result) {
@@ -138,13 +139,13 @@ trait EditFormTrait
         }
 
         return [
-            $activityTitle   => "/activity/$activityId",
-            'Result List'    => "/activity/$activityId/result",
-            $resultTitle     => "/activity/$activityId/result/$resultId",
-            'Indicator List' => "/result/$resultId/indicator",
-            $indicatorTitle  => "/result/$resultId/indicator/$indicatorId",
-            'Period List'    => "/indicator/$indicatorId/period",
-            $periodTitle     => "/indicator/$indicatorId/period/$periodId",
+            $activityTitle                        => "/activity/$activityId",
+            trans('common/common.result_list')    => "/activity/$activityId/result",
+            $resultTitle                          => "/activity/$activityId/result/$resultId",
+            trans('common/common.indicator_list') => "/result/$resultId/indicator",
+            $indicatorTitle                       => "/result/$resultId/indicator/$indicatorId",
+            trans('common/common.period_list')    => "/indicator/$indicatorId/period",
+            $periodTitle                          => "/indicator/$indicatorId/period/$periodId",
         ];
     }
 
@@ -158,5 +159,31 @@ trait EditFormTrait
             $activityTitle => "/activity/$activityId",
             'Transactions' => "/activity/$activityId/transaction",
         ];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTranslatedUntitledActivity(): string
+    {
+        return Str::title(sprintf('%s %s', trans('common/common.untitled'), trans('common/common.activity')));
+    }
+
+    public function getTranslatedUntitledResult(): string
+    {
+        return Str::title(sprintf('%s Result', trans('common/common.untitled')));
+    }
+
+    public function getTranslatedUntitledIndicator(): string
+    {
+        return Str::title(sprintf('%s Indicator', trans('common/common.untitled')));
+    }
+
+    /**
+     * @return string
+     */
+    public function getTranslatedNewPeriod(): string
+    {
+        return Str::title(sprintf('%s Period', trans('common/common.new')));
     }
 }

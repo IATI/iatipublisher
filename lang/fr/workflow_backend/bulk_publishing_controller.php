@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'another_bulk_publishing_is_already_in_progress'            => 'FR_Another bulk publish is already in progress.',
+    'retrieved_data_successfully'                               => 'FR_Data retrieved successfully.',
+    'error_has_occurred_while_checking_core_elements_completed' => 'FR_Error checking core elements.',
+    'another_activity_validation_already_in_progress'           => 'FR_Activity validation is already in progress.',
+    'error_has_occurred_while_validating_activities'            => 'FR_Error validating activities.',
+    'bulk_publishing_started'                                   => 'FR_Bulk publish started.',
+    'bulk_publishing_failed'                                    => 'FR_Bulk publish failed.',
+    'no_bulk_publishing_in_progress'                            => 'FR_No bulk publish is in progress.',
+    'status_generation_failed'                                  => 'FR_Status generation failed.',
+    'no_bulk_publish_were_cancelled'                            => 'FR_Bulk publish was not cancelled.',
+    'failed_to_stop_bulk_publishing'                            => 'FR_Failed to stop bulk publishing.',
+    'another_bulk_validation_is_already_in_progress'            => 'FR_Another bulk validation is already in progress.',
+    'activities_are_ready_to_validate'                          => 'FR_Activities are ready to validate.',
+    'bulk_publishing_status_successfully_deleted'               => 'FR_Bulk publishing status successfully deleted.',
+    'failed_to_delete_bulk_publishing_status'                   => 'FR_Failed to delete bulk publishing status.',
+    'activity_not_selected'                                     => 'FR_Activity not selected.',
+    'error_has_occurred_while_fetching_validation_response'     => 'FR_Error fetching validation response.',
+    'error_has_occurred_while_fetching_validation_status'       => 'FR_Error fetching validation status.',
+    'successfully_deleted'                                      => 'FR_Successfully deleted.',
+    'error_has_occurred_while_deleting_validation_status'       => 'FR_Error deleting validation status.',
+    'bulk_publish_of_numberofdeletedrows_activities_canceled'   => 'FR_Bulk publish of :numberOfDeletedRows activities cancelled.',
+];

@@ -9,7 +9,7 @@
       <div
         class="progress_bar__state"
         :data-start="text"
-        data-end="Almost there!"
+        :data-end="translatedData['common.common.almost_there']"
       ></div>
     </div>
   </div>
@@ -27,6 +27,10 @@ defineProps({
     type: Boolean,
     required: false,
     default: true,
+  },
+  translatedData: {
+    type: Object,
+    required: true,
   },
 });
 

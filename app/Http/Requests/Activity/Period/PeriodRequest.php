@@ -44,17 +44,22 @@ class PeriodRequest extends ActivityBaseRequest
     /**
      * Returns rules for result indicator.
      *
-     * @param array $formFields
-     * @param bool $fileUpload
-     * @param array $indicator
-     * @param array $periodBase
+     * @param  array  $formFields
+     * @param  bool  $fileUpload
+     * @param  array  $indicator
+     * @param  array  $periodBase
      * @param $indicatorId
      *
      * @return array
      * @throws BindingResolutionException
      */
-    public function getWarningForPeriod(array $formFields, bool $fileUpload = false, array $indicator = [], $periodBase = [], $indicatorId = null): array
-    {
+    public function getWarningForPeriod(
+        array $formFields,
+        bool $fileUpload = false,
+        array $indicator = [],
+        $periodBase = [],
+        $indicatorId = null
+    ): array {
         $rules = [];
 
         $tempRules = [
@@ -76,16 +81,20 @@ class PeriodRequest extends ActivityBaseRequest
     /**
      * Returns rules for result indicator.
      *
-     * @param array $formFields
-     * @param bool $fileUpload
-     * @param array $indicator
-     * @param array $periodBase
+     * @param  array  $formFields
+     * @param  bool  $fileUpload
+     * @param  array  $indicator
+     * @param  array  $periodBase
      *
      * @return array
      * @throws BindingResolutionException
      */
-    public function getErrorsForPeriod(array $formFields, bool $fileUpload = false, array $indicator = [], $periodBase = []): array
-    {
+    public function getErrorsForPeriod(
+        array $formFields,
+        bool $fileUpload = false,
+        array $indicator = [],
+        $periodBase = []
+    ): array {
         $rules = [];
         $tempRules = [
             $this->getErrorsForResultPeriodStart($formFields['period_start'], 'period_start'),
@@ -106,22 +115,38 @@ class PeriodRequest extends ActivityBaseRequest
     /**
      * Returns messages for result indicator validations.
      *
-     * @param array $formFields
-     * @param bool $fileUpload
-     * @param array $indicator
+     * @param  array  $formFields
+     * @param  bool  $fileUpload
+     * @param  array  $indicator
      * @param $indicatorId
      *
      * @return array
      * @throws BindingResolutionException
      */
-    public function getMessagesForPeriod(array $formFields, bool $fileUpload = false, array $indicator = [], $indicatorId = null): array
-    {
+    public function getMessagesForPeriod(
+        array $formFields,
+        bool $fileUpload = false,
+        array $indicator = [],
+        $indicatorId = null
+    ): array {
         $messages = [];
         $tempMessages = [
             $this->getMessagesForResultPeriod($formFields['period_start'], 'period_start'),
             $this->getMessagesForResultPeriod($formFields['period_end'], 'period_end'),
-            $this->getMessagesForTargetOrActual($formFields['target'], 'target', $fileUpload, $indicator, $indicatorId),
-            $this->getMessagesForTargetOrActual($formFields['actual'], 'actual', $fileUpload, $indicator, $indicatorId),
+            $this->getMessagesForTargetOrActual(
+                $formFields['target'],
+                'target',
+                $fileUpload,
+                $indicator,
+                $indicatorId
+            ),
+            $this->getMessagesForTargetOrActual(
+                $formFields['actual'],
+                'actual',
+                $fileUpload,
+                $indicator,
+                $indicatorId
+            ),
         ];
 
         foreach ($tempMessages as $index => $tempMessage) {
@@ -184,11 +209,17 @@ class PeriodRequest extends ActivityBaseRequest
         $rules = [];
 
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $date = $periodBase ? $periodBase . '.period_start.' . $periodEndKey . '.date' : 'period_start.' . $periodEndKey . '.date';
+            $date = $periodBase ?
+                $periodBase . '.period_start.' . $periodEndKey . '.date' : 'period_start.' . $periodEndKey . '.date';
+
             if ($periodBase) {
-                $rules[sprintf('%s.%s.date', $periodType, $periodEndKey)] = sprintf('nullable|date_greater_than:1900|after:%s', $date);
+                $rules[sprintf('%s.%s.date', $periodType, $periodEndKey)] = sprintf(
+                    'nullable|date_greater_than:1900|after:%s',
+                    $date
+                );
             } else {
-                $rules[sprintf('%s.%s.date', $periodType, $periodEndKey)] = sprintf('nullable|after:%s', $date);
+                $rules[sprintf('%s.%s.date', $periodType, $periodEndKey)]
+                    = sprintf('nullable|after:%s', $date);
             }
         }
 
@@ -236,28 +267,28 @@ class PeriodRequest extends ActivityBaseRequest
                 $periodType,
                 $periodStartKey
             )]
-                = 'The @date field must be a proper date.';
+                = trans('validation.date_is_invalid');
 
             $messages[sprintf(
                 '%s.%s.date.after',
                 $periodType,
                 $periodStartKey
             )]
-                = 'The @iso-date field of period end must be a date after @iso-field of period start';
+                = trans('validation.activity_periods.date.after');
 
             $messages[sprintf(
                 '%s.%s.date.date_greater_than',
                 $periodType,
                 $periodStartKey
             )]
-                = 'The @iso-date must be greater than 1900';
+                = trans('validation.date_must_be_after_1900');
 
             $messages[sprintf(
                 '%s.%s.date.period_start_end',
                 $periodType,
                 $periodStartKey
             )]
-                = 'The @iso-date field of period end and @iso-date of period start must not have difference of more than a year';
+                = trans('validation.period_end_cannot_be_more_than_one_year');
         }
 
         return $messages;
@@ -275,8 +306,13 @@ class PeriodRequest extends ActivityBaseRequest
      * @return array
      * @throws BindingResolutionException
      */
-    protected function getWarningForTargetOrActual($formFields, $valueType, $fileUpload, $indicator, $indicatorId): array
-    {
+    protected function getWarningForTargetOrActual(
+        $formFields,
+        $valueType,
+        $fileUpload,
+        $indicator,
+        $indicatorId
+    ): array {
         $targetOrActualFields = $formFields[$valueType];
         $fieldToValidateAgainst = $valueType === 'target' ? 'actual' : 'target';
 
@@ -285,7 +321,10 @@ class PeriodRequest extends ActivityBaseRequest
         $indicatorService = app()->make(IndicatorService::class);
 
         if ($fileUpload) {
-            $measure = $indicatorId ? $indicatorService->getIndicatorMeasureType($indicatorId) : Arr::get($indicator, 'measure');
+            $measure = $indicatorId ? $indicatorService->getIndicatorMeasureType($indicatorId) : Arr::get(
+                $indicator,
+                'measure'
+            );
             $indicatorMeasureType = is_array($measure) ? $measure : [
                 'qualitative'     => $measure === '5',
                 'non_qualitative' => in_array($measure, ['1', '2', '3', '4']),
@@ -306,7 +345,10 @@ class PeriodRequest extends ActivityBaseRequest
          */
         foreach ($targetOrActualFields as $targetIndex => $target) {
             $targetForm = sprintf('%s.%s', $valueType, $targetIndex);
-            $narrativeRules = $this->getWarningForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm));
+            $narrativeRules = $this->getWarningForNarrative(
+                $target['comment'][0]['narrative'],
+                sprintf('%s.comment.0', $targetForm)
+            );
             $docLinkRules = $this->getWarningForDocumentLink(Arr::get($target, 'document_link', []), $targetForm);
 
             foreach ($narrativeRules as $key => $narrativeRule) {
@@ -318,7 +360,18 @@ class PeriodRequest extends ActivityBaseRequest
             }
 
             if ($indicatorMeasureType['non_qualitative']) {
-                $rules[sprintf('%s.%s.value', $valueType, $targetIndex)] = [new RequiredEitherNumericTargetValueOrActualValue($valueType, $fieldToValidateAgainst, $formFields)];
+                $rules[sprintf(
+                    '%s.%s.value',
+                    $valueType,
+                    $targetIndex
+                )]
+                    = [
+                    new RequiredEitherNumericTargetValueOrActualValue(
+                        $valueType,
+                        $fieldToValidateAgainst,
+                        $formFields
+                    ),
+                ];
             } elseif ($indicatorMeasureType['qualitative'] && !empty($target['value'])) {
                 $rules[sprintf('%s.%s.value', $valueType, $targetIndex)] = 'qualitative_empty';
             }
@@ -344,7 +397,10 @@ class PeriodRequest extends ActivityBaseRequest
 
         foreach ($formFields as $targetIndex => $target) {
             $targetForm = sprintf('%s.%s', $valueType, $targetIndex);
-            $narrativeRules = $this->getErrorsForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm));
+            $narrativeRules = $this->getErrorsForNarrative(
+                $target['comment'][0]['narrative'],
+                sprintf('%s.comment.0', $targetForm)
+            );
             $docLinkRules = $this->getErrorsForDocumentLink(Arr::get($target, 'document_link', []), $targetForm);
 
             foreach ($narrativeRules as $key => $narrativeRule) {
@@ -371,14 +427,22 @@ class PeriodRequest extends ActivityBaseRequest
      * @return array
      * @throws BindingResolutionException
      */
-    protected function getMessagesForTargetOrActual($formFields, $valueType, $fileUpload, $indicator, $indicatorId): array
-    {
+    protected function getMessagesForTargetOrActual(
+        $formFields,
+        $valueType,
+        $fileUpload,
+        $indicator,
+        $indicatorId
+    ): array {
         /** @var IndicatorService $indicatorService */
         $messages = [];
         $indicatorService = app()->make(IndicatorService::class);
 
         if ($fileUpload) {
-            $measure = $indicatorId ? $indicatorService->getIndicatorMeasureType($indicatorId) : Arr::get($indicator, 'measure');
+            $measure = $indicatorId ? $indicatorService->getIndicatorMeasureType($indicatorId) : Arr::get(
+                $indicator,
+                'measure'
+            );
             $indicatorMeasureType = is_array($measure) ? $measure : [
                 'qualitative'     => $measure === '5',
                 'non_qualitative' => in_array($measure, ['1', '2', '3', '4']),
@@ -391,9 +455,14 @@ class PeriodRequest extends ActivityBaseRequest
         foreach ($formFields as $targetIndex => $target) {
             $targetForm = sprintf('%s.%s', $valueType, $targetIndex);
 
-            $messages[sprintf('%s.%s.value.numeric', $valueType, $targetIndex)] = 'The @value field must be numeric.';
+            $messages[sprintf('%s.%s.value.numeric', $valueType, $targetIndex)] = trans(
+                'validation.activity_periods.value.numeric'
+            );
 
-            $narrativeMessages = $this->getMessagesForNarrative($target['comment'][0]['narrative'], sprintf('%s.comment.0', $targetForm));
+            $narrativeMessages = $this->getMessagesForNarrative(
+                $target['comment'][0]['narrative'],
+                sprintf('%s.comment.0', $targetForm)
+            );
 
             foreach ($narrativeMessages as $key => $narrativeMessage) {
                 $messages[$key] = $narrativeMessage;
@@ -406,7 +475,12 @@ class PeriodRequest extends ActivityBaseRequest
             }
 
             if ($indicatorMeasureType['qualitative'] && !empty($target['value'])) {
-                $messages[sprintf('%s.%s.value.qualitative_empty', $valueType, $targetIndex)] = 'Value must be omitted when the indicator measure is qualitative.';
+                $messages[sprintf(
+                    '%s.%s.value.qualitative_empty',
+                    $valueType,
+                    $targetIndex
+                )]
+                    = trans('validation.activity_periods.value.qualitative_empty');
             }
         }
 

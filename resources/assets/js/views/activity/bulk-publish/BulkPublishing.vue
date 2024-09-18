@@ -7,7 +7,11 @@
   >
     <div class="bulk-head flex items-center justify-between bg-eggshell p-4">
       <div class="grow text-sm font-bold leading-normal">
-        Publishing {{ activities && Object.keys(activities).length }} activities
+        {{
+          translatedData[
+            'workflow_frontend.bulk_publish.publishing_count_activities'
+          ].replace(':count', activities && Object.keys(activities).length)
+        }}
       </div>
       <div class="flex shrink-0">
         <div
@@ -15,7 +19,9 @@
           @click="retryPublishing"
         >
           <svg-vue class="mr-1" icon="redo" />
-          <span class="text-xs uppercase">Retry</span>
+          <span class="text-xs uppercase">
+            {{ translatedData['common.common.retry'] }}
+          </span>
         </div>
         <div
           v-if="completed === 'completed'"
@@ -66,7 +72,8 @@ import {
 } from 'vue';
 import axios from 'axios';
 import { detailStore } from 'Store/activities/show';
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
+
 const singleStore = useStore();
 const emit = defineEmits(['close']);
 const store = detailStore();
@@ -81,6 +88,7 @@ interface RefreshToastMsgTypeface {
   refreshMessage: string;
 }
 
+let translatedData = inject('translatedData') as Record<string, string>;
 let refreshToastMsg = inject('refreshToastMsg') as RefreshToastMsgTypeface;
 
 interface paInterface {
@@ -301,7 +309,9 @@ const failedActivities = (nestedObject: actElements) => {
     hasFailedActivities.data = failedActivitiesData as actElements;
     refreshToastMsg.refreshMessageType = false;
     refreshToastMsg.refreshMessage =
-      'Some activities have failed to publish. Refresh to see changes.';
+      translatedData[
+        'workflow_frontend.bulk_publish.some_activities_have_failed_to_publish_refresh_to_see_changes'
+      ];
   } else {
     hasFailedActivities.status = false;
     hasFailedActivities.ids = [];

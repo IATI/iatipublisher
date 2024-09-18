@@ -109,7 +109,7 @@ class RecipientCountryBudgetService
      */
     public function formGenerator($id, $deprecationStatusMap = []): Form
     {
-        $element = json_decode(file_get_contents(app_path('IATI/Data/organizationElementJsonSchema.json')), true);
+        $element = readOrganizationElementJsonSchema();
         $model['recipient_country_budget'] = $this->getRecipientCountryBudgetData($id) ?? [];
         $this->parentCollectionFormCreator->url = route('admin.organisation.recipient-country-budget.update', [$id]);
 

@@ -14,7 +14,7 @@ class ParticipatingOrganizationRequest extends ActivityBaseRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @param array $participating_org
+     * @param  array  $participating_org
      *
      * @return array
      * @throws \JsonException
@@ -33,7 +33,9 @@ class ParticipatingOrganizationRequest extends ActivityBaseRequest
      */
     public function messages($participating_org = []): array
     {
-        return $this->getMessagesForParticipatingOrg($this->get('participating_org') ?? $participating_org);
+        return $this->getMessagesForParticipatingOrg(
+            $this->get('participating_org') ?? $participating_org
+        );
     }
 
     /**
@@ -52,7 +54,12 @@ class ParticipatingOrganizationRequest extends ActivityBaseRequest
             $identifier = $participatingOrgForm . '.identifier';
             $rules[$identifier] = 'nullable|exclude_operators';
 
-            foreach ($this->getWarningForNarrative($participatingOrg['narrative'], $participatingOrgForm) as $participatingNarrativeIndex => $narrativeRules) {
+            foreach (
+                $this->getWarningForNarrative(
+                    $participatingOrg['narrative'],
+                    $participatingOrgForm
+                ) as $participatingNarrativeIndex => $narrativeRules
+            ) {
                 $rules[$participatingNarrativeIndex] = $narrativeRules;
             }
         }
@@ -81,7 +88,11 @@ class ParticipatingOrganizationRequest extends ActivityBaseRequest
             $rules[sprintf('%s.organization_role', $participatingOrgForm)] = 'nullable|in:' . implode(
                 ',',
                 array_keys(
-                    $this->getCodeListForRequestFiles('OrganisationRole', 'Organization', false)
+                    $this->getCodeListForRequestFiles(
+                        'OrganisationRole',
+                        'Organization',
+                        false
+                    )
                 )
             );
 
@@ -92,12 +103,19 @@ class ParticipatingOrganizationRequest extends ActivityBaseRequest
             $rules[sprintf('%s.type', $participatingOrgForm)] = 'nullable|in:' . implode(
                 ',',
                 array_keys(
-                    $this->getCodeListForRequestFiles('OrganizationType', 'Organization', false)
+                    $this->getCodeListForRequestFiles(
+                        'OrganizationType',
+                        'Organization',
+                        false
+                    )
                 )
             );
-            $rules[sprintf('%s.crs_channel_code', $participatingOrgForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('CRSChannelCode', 'Activity', false)
-            ));
+            $rules[sprintf('%s.crs_channel_code', $participatingOrgForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles('CRSChannelCode', 'Activity', false)
+                )
+            );
 
             foreach ($allNarrative as $narrativeIndex => $narrative) {
                 $formKey = sprintf('%s.narrative.%s.narrative', $participatingOrgForm, $narrativeIndex);
@@ -129,25 +147,51 @@ class ParticipatingOrganizationRequest extends ActivityBaseRequest
 
         foreach ($formFields as $participatingOrgIndex => $participatingOrg) {
             $participatingOrgForm = 'participating_org.' . $participatingOrgIndex;
-            $messages[$participatingOrgForm . '.organization_role.required'] = trans('validation.required', ['attribute' => trans('elementForm.organisation_role')]);
+            $messages[$participatingOrgForm . '.organization_role.required'] = trans(
+                'validation.required',
+                ['attribute' => trans(' elements/label.organisation_role')]
+            );
             $identifier = $participatingOrgForm . '.identifier';
-            $messages[$identifier . '.exclude_operators'] = 'The identifier must not contain symbols or blank space';
+            $messages[$identifier . '.exclude_operators'] = trans(
+                'validation.activity_participating_org.invalid_identifier'
+            );
 
-            $messages[sprintf('%s.organization_role.in', $participatingOrgForm)] = 'The participating organisation role is invalid.';
-            $messages[sprintf('%s.type.in', $participatingOrgForm)] = 'The participating organisation type is invalid.';
-            $messages[sprintf('%s.ref.required_when_narrative_is_empty', $participatingOrgForm)] = 'The reference field is required when name is empty.';
-            $messages[sprintf('%s.crs_channel_code.in', $participatingOrgForm)] = 'The Crs Channel Code is invalid.';
+            $messages[sprintf(
+                '%s.organization_role.in',
+                $participatingOrgForm
+            )]
+                = trans('validation.activity_participating_org.invalid_role');
+            $messages[sprintf('%s.type.in', $participatingOrgForm)] = trans(
+                'validation.organisation_type_is_invalid'
+            );
+            $messages[sprintf(
+                '%s.ref.required_when_narrative_is_empty',
+                $participatingOrgForm
+            )]
+                = trans('validation.activity_participating_org.reference_required');
+            $messages[sprintf('%s.crs_channel_code.in', $participatingOrgForm)] = trans(
+                'validation.activity_participating_org.invalid_crs_channel_code'
+            );
 
-            foreach ($this->getMessagesForNarrative($participatingOrg['narrative'], $participatingOrgForm) as $participatingNarrativeIndex => $narrativeMessages) {
+            foreach (
+                $this->getMessagesForNarrative(
+                    $participatingOrg['narrative'],
+                    $participatingOrgForm
+                ) as $participatingNarrativeIndex => $narrativeMessages
+            ) {
                 $messages[$participatingNarrativeIndex] = $narrativeMessages;
             }
 
             $allNarrative = $participatingOrg['narrative'];
             foreach ($allNarrative as $narrativeIndex => $narrative) {
-                $messageKey = sprintf('%s.narrative.%s.narrative.required_when_reference_is_empty', $participatingOrgForm, $narrativeIndex);
+                $messageKey = sprintf(
+                    '%s.narrative.%s.narrative.required_when_reference_is_empty',
+                    $participatingOrgForm,
+                    $narrativeIndex
+                );
 
                 if ($this->bothReferenceAndNarrativeEmpty($allNarrative, $participatingOrg['ref'])) {
-                    $messages[$messageKey] = 'The name field is required when participating org reference is empty.';
+                    $messages[$messageKey] = trans('validation.activity_participating_org.name_required');
                 }
             }
         }

@@ -17,8 +17,9 @@ class DefaultFinanceTypeXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The default finance type does not exist.', $flattenErrors);
-        $this->assertContains('The default finance type must be 1 characters.', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_default_finance_type.in'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_default_finance_type.size'), $flattenErrors);
     }
 
     /**

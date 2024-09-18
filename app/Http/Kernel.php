@@ -10,6 +10,7 @@ use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectActivity;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\SanitizeRequest;
+use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\SuperAdminMiddleware;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
@@ -61,6 +62,7 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
+            SetLocale::class,
         ],
 
         'admin' => [
@@ -70,21 +72,25 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             SubstituteBindings::class,
             LogoutIfInactive::class,
+            SetLocale::class,
         ],
 
         'activity' => [
             LogoutIfInactive::class,
             VerifyCsrfToken::class,
             RedirectActivity::class,
+            SetLocale::class,
         ],
 
         'general' => [
             VerifyCsrfToken::class,
+            SetLocale::class,
         ],
 
         'superadmin' => [
             LogoutIfInactive::class,
             SuperAdminMiddleware::class,
+            SetLocale::class,
         ],
 
         'api' => [

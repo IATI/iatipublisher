@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Activity\Description;
 
 use App\Http\Requests\Activity\ActivityBaseRequest;
-use Arr;
+use Illuminate\Support\Arr;
 
 /**
  * Class DescriptionRequest.
@@ -16,6 +16,8 @@ class DescriptionRequest extends ActivityBaseRequest
      * Get the validation rules that apply to the request.
      *
      * @return array
+     *
+     * @throws \JsonException
      */
     public function rules(): array
     {
@@ -38,7 +40,7 @@ class DescriptionRequest extends ActivityBaseRequest
     /**
      * Returns rules for related activity.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      *
@@ -50,10 +52,23 @@ class DescriptionRequest extends ActivityBaseRequest
 
         foreach ($formFields as $descriptionIndex => $description) {
             $descriptionForm = sprintf('description.%s', $descriptionIndex);
-            $rules[sprintf('%s.type', $descriptionForm)] = sprintf('nullable|in:%s', implode(',', array_keys(
-                $this->getCodeListForRequestFiles('DescriptionType', 'Activity', false)
-            )));
-            $narrativeRules = $this->getErrorsForNarrative(Arr::get($description, 'narrative', []), $descriptionForm);
+            $rules[sprintf('%s.type', $descriptionForm)] = sprintf(
+                'nullable|in:%s',
+                implode(
+                    ',',
+                    array_keys(
+                        $this->getCodeListForRequestFiles('DescriptionType', 'Activity', false)
+                    )
+                )
+            );
+            $narrativeRules = $this->getErrorsForNarrative(
+                Arr::get(
+                    $description,
+                    'narrative',
+                    []
+                ),
+                $descriptionForm
+            );
 
             foreach ($narrativeRules as $key => $item) {
                 $rules[$key] = $item;
@@ -66,7 +81,7 @@ class DescriptionRequest extends ActivityBaseRequest
     /**
      * Returns rules for related activity.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -76,7 +91,14 @@ class DescriptionRequest extends ActivityBaseRequest
 
         foreach ($formFields as $descriptionIndex => $description) {
             $descriptionForm = sprintf('description.%s', $descriptionIndex);
-            $narrativeRules = $this->getWarningForNarrative(Arr::get($description, 'narrative', []), $descriptionForm);
+            $narrativeRules = $this->getWarningForNarrative(
+                Arr::get(
+                    $description,
+                    'narrative',
+                    []
+                ),
+                $descriptionForm
+            );
 
             foreach ($narrativeRules as $key => $item) {
                 $rules[$key] = $item;
@@ -89,7 +111,7 @@ class DescriptionRequest extends ActivityBaseRequest
     /**
      * Returns messages for related activity validations.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -99,9 +121,12 @@ class DescriptionRequest extends ActivityBaseRequest
 
         foreach ($formFields as $descriptionIndex => $description) {
             $descriptionForm = sprintf('description.%s', $descriptionIndex);
-            $messages[$descriptionForm . '.type'] = 'The selected description type is invalid.';
+            $messages[$descriptionForm . '.type'] = trans('validation.description_type_invalid');
 
-            $narrativeMessages = $this->getMessagesForNarrative(Arr::get($description, 'narrative', []), $descriptionForm);
+            $narrativeMessages = $this->getMessagesForNarrative(
+                Arr::get($description, 'narrative', []),
+                $descriptionForm
+            );
 
             foreach ($narrativeMessages as $key => $item) {
                 $messages[$key] = $item;

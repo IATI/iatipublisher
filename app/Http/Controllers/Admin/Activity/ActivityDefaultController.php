@@ -53,10 +53,11 @@ class ActivityDefaultController extends Controller
             );
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.show', $activityId)->with(
                 'error',
-                'Error has occurred while rendering default values form.'
+                $translatedMessage
             );
         }
     }
@@ -72,12 +73,14 @@ class ActivityDefaultController extends Controller
     {
         try {
             $setting = $this->activityDefaultService->getActivityDefaultValues($activityId);
+            $translatedMessage = 'Default Values Fetched Successfully';
 
-            return response()->json(['success' => true, 'message' => 'Default values fetched successfully', 'data' => $setting]);
+            return response()->json(['success' => true, 'message' => $translatedMessage, 'data' => $setting]);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = 'Error occurred while fetching the data.';
 
-            return response()->json(['success' => false, 'message' => 'Error occurred while fetching the data']);
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
     }
 
@@ -98,12 +101,16 @@ class ActivityDefaultController extends Controller
 
             DB::commit();
 
-            return response()->json(['success' => true, 'message' => 'Activity default values updated successfully']);
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
 
-            return response()->json(['success' => false, 'message' => 'Error occurred while updating data']);
+            $translatedMessage = trans('activity_detail/activity_default_controller.error_occurred_while_updating_data');
+
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
     }
 }

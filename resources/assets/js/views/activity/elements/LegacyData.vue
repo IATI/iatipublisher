@@ -7,7 +7,9 @@
   >
     <div class="mb-1 text-sm">
       <div v-if="post.legacy_name">{{ post.legacy_name }}</div>
-      <span v-else class="italic">Name Missing</span>
+      <span v-else class="italic">{{
+        getTranslatedMissing(translatedData, 'name')
+      }}</span>
     </div>
     <div class="ml-5">
       <table>
@@ -16,7 +18,9 @@
           <td v-if="post.value">
             <span class="description">{{ post.value }}</span>
           </td>
-          <td v-else class="italic">Missing</td>
+          <td v-else class="italic">
+            {{ getTranslatedMissing(translatedData) }}
+          </td>
         </tr>
       </table>
       <table>
@@ -25,7 +29,9 @@
           <td v-if="post.iati_equivalent">
             <span class="description">{{ post.iati_equivalent }}</span>
           </td>
-          <td v-else class="italic">Missing</td>
+          <td v-else class="italic">
+            {{ getTranslatedMissing(translatedData) }}
+          </td>
         </tr>
       </table>
     </div>
@@ -33,7 +39,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, inject } from 'vue';
+import { getTranslatedMissing } from 'Composable/utils';
 
 export default defineComponent({
   name: 'ActivitySector',
@@ -44,7 +51,10 @@ export default defineComponent({
     },
   },
   setup() {
-    return {};
+    const translatedData = inject('translatedData') as Record<string, string>;
+
+    return { translatedData };
   },
+  methods: { getTranslatedMissing },
 });
 </script>

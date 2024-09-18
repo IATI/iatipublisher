@@ -6,5 +6,6 @@
                         :types="{{ json_encode($types) }}"
                         :toast="{{ json_encode($toast) }}"
                         :element= "{{ json_encode($element)}}"
+                        :translated-data="{{ json_encode($translatedData) }}"
     ></transaction-detail>
 @endsection

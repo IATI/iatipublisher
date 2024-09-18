@@ -143,11 +143,10 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     {
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new MailMessage)
-                ->subject('Verify Email Address')
-                ->greeting('Hello ' . $notifiable->full_name)
-                ->line('Welcome to IATI Publisher. Your email has been used to create a new account here.
-                Please click the button below to verify that you have created the account in it.')
-                ->action('Verify Email Address', $url);
+                ->subject(trans('common/common.verify_email_address'))
+                ->greeting(trans('common/common.hello') . ' ' . $notifiable->full_name)
+                ->line(trans('common/common.welcome_to_iati_publisher_your_email_has_been_used_to_create_a_new_account_here_please_click_the_button_below_to_verify_that_you_have_created_the_account_in_it'))
+                ->action(trans('common/common.verify_email_address'), $url);
         });
     }
 
@@ -159,9 +158,8 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     public static function sendNewUserEmail($user): void
     {
         $mailDetails = [
-            'greeting' => 'Hello ' . $user->username,
-            'message' => 'Welcome to IATI Publisher. Your email has been used to create a new account here.
-            Please click the button below to update the password of your account.',
+            'greeting' =>trans('common/common.hello') . ' ' . $user->username,
+            'message' => trans('common/common.welcome_to_iati_publisher_your_email_has_been_used_to_create_a_new_account_here_please_click_the_button_below_to_update_the_password_of_your_account'),
             'password_update' => true,
             'token' => app('auth.password.broker')->createToken($user),
         ];

@@ -9,25 +9,38 @@
         <div class="left__container rounded-lg p-5 sm:p-10">
           <span class="left__title font-bold">IATI Publisher</span>
           <p class="pt-2 sm:pb-8 sm:pt-6">
-            Welcome to IATI Publisher. This lets you publish IATI data on your
-            organisation's development and humanitarian activities.
+            {{
+              translatedData[
+                'public.login.iati_publishing_tool_section.welcome_text'
+              ]
+            }}
             <br />
             <span v-if="pageContent !== 'Join Now'">
-              Use this page to create a new account for your organisation.
+              {{
+                translatedData[
+                  'public.login.iati_publishing_tool_section.page_to_register'
+                ]
+              }}
             </span>
           </p>
           <div class="block">
             <span class="flex flex-wrap">
               {{
                 pageContent === 'Join Now'
-                  ? "Haven't registered yet?"
-                  : 'Already have an account?'
+                  ? translatedData[
+                      'public.login.iati_publishing_tool_section.havent_registered_label'
+                    ]
+                  : translatedData['common.common.already_have_an_account']
               }}
               <button
                 class="ml-1 border-b-2 border-b-transparent text-base text-turquoise hover:border-b-2 hover:border-b-turquoise"
                 @click="togglePage"
               >
-                {{ pageContent }}
+                {{
+                  pageContent === 'Join Now'
+                    ? translatedData['common.common.join_now']
+                    : translatedData['common.common.sign_in']
+                }}
               </button>
             </span>
           </div>
@@ -38,8 +51,9 @@
         v-if="pageContent === 'Join Now'"
         :message="message"
         :intent="intent"
+        :translated-data="translatedData"
       />
-      <JoinNow v-else />
+      <JoinNow v-else :translated-data="translatedData" />
     </div>
   </section>
 </template>
@@ -66,6 +80,10 @@ export default defineComponent({
     },
     intent: {
       type: String,
+      required: true,
+    },
+    translatedData: {
+      type: Object,
       required: true,
     },
   },

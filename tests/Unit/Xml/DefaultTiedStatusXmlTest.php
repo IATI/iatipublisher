@@ -17,8 +17,8 @@ class DefaultTiedStatusXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The default tied status does not exist.', $flattenErrors);
-        $this->assertContains('The default tied status must be 1 characters.', $flattenErrors);
+        $this->assertContains(trans('validation.activity_default_tied_status.in'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_default_tied_status.size'), $flattenErrors);
     }
 
     /**

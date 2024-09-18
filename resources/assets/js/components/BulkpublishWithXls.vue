@@ -4,7 +4,13 @@
       <h3
         class="flex items-center gap-2 pb-2 text-base font-bold leading-6 text-n-50"
       >
-        <span> Publishing Activities </span>
+        <span>
+          {{
+            translatedData[
+              'workflow_frontend.bulk_publish.publishing_activities'
+            ]
+          }}
+        </span>
         <span
           v-if="
             percentageWidth === 100 &&
@@ -13,7 +19,7 @@
           "
           class="inline-block rounded-full bg-[#CDF8FA] px-2 py-0.5 text-xs font-medium leading-[18px] text-[#3C7080]"
         >
-          Completed
+          {{ translatedData['common.common.completed'] }}
         </span>
         <span
           v-else
@@ -27,7 +33,7 @@
         class="flex items-center gap-1.5 text-xs font-bold text-bluecoral"
         @click="handleMinimize"
       >
-        <span>EXPAND</span>
+        <span>{{ translatedData['common.common.expand'] }}</span>
         <svg-vue class="text-[9px]" icon="open-link" />
       </button>
       <button
@@ -40,14 +46,14 @@
         "
       >
         <svg-vue icon="cross" class="mt-2 text-lg text-bluecoral" />
-        <span>Clear</span>
+        <span>{{ translatedData['common.common.clear'] }}</span>
       </button>
     </div>
     <div class="relative w-full rounded-lg bg-white duration-200">
       <div class="rounded-lg border border-n-20 bg-white p-4">
         <div class="flex items-center justify-between">
           <h3 class="flex items-center space-x-2 text-sm text-n-50">
-            <span>Activities</span>
+            <span>{{ translatedData['common.common.activities'] }}</span>
             <span
               class="flex h-6 w-6 items-center justify-center rounded-full bg-lagoon-10 font-medium text-spring-50"
               >{{
@@ -73,14 +79,14 @@
               @click="retryPublishing"
             >
               <svg-vue class="mr-1" icon="redo" />
-              <span class="text-xs">Retry</span>
+              <span>{{ translatedData['common.common.retry'] }}</span>
             </div>
             <button
               v-if="percentageWidth === 100"
               class="text-xs font-bold capitalize text-bluecoral"
               @click="handleMinimize"
             >
-              View detail
+              {{ translatedData['workflow_frontend.validation.view_detail'] }}
             </button>
             <button
               v-else
@@ -92,7 +98,7 @@
               "
             >
               <svg-vue icon="cross" class="mt-2 text-lg text-bluecoral" />
-              <span>Cancel</span>
+              <span>{{ translatedData['common.common.cancel'] }}</span>
             </button>
           </div>
         </div>
@@ -126,7 +132,9 @@
             <div class="h-1 w-full bg-crimson-50"></div>
             <svg-vue icon="warning-fill" class="flex-shrink-0 text-lg" />
           </div>
-          <div class="pt-2">Validation failed</div>
+          <div class="pt-2">
+            {{ translatedData['common.common.validation_failed'] }}
+          </div>
         </div>
       </div>
     </div>
@@ -144,7 +152,7 @@ import {
   defineEmits,
   onUnmounted,
 } from 'vue';
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
 import axios from 'axios';
 import { isJson } from 'Composable/utils';
 
@@ -187,6 +195,7 @@ const emit = defineEmits([
 ]);
 
 let refreshToastMsg = inject('refreshToastMsg') as RefreshToastMsgTypeface;
+const translatedData = inject('translatedData') as Record<string, string>;
 
 onMounted(() => {
   setTimeout(() => {
@@ -235,11 +244,15 @@ const pollingForBulkpublishData = () => {
             refreshToastMsg.visibility = true;
             refreshToastMsg.refreshMessageType = false;
             refreshToastMsg.refreshMessage =
-              'Some activities have failed to publish. Refresh to see changes.';
+              translatedData[
+                'workflow_frontend.bulk_publish.some_activities_have_failed_to_publish_refresh_to_see_changes'
+              ];
           } else {
             refreshToastMsg.visibility = true;
             refreshToastMsg.refreshMessage =
-              'Activity has been published successfully, refresh to see changes';
+              translatedData[
+                'common.common.activity_has_been_published_successfully_refresh_to_see_changes'
+              ];
             setTimeout(() => {
               refreshToastMsg.visibility = false;
             }, 10000);
@@ -349,7 +362,9 @@ const failedActivities = (nestedObject: object) => {
       failedActivitiesData as actElements;
     refreshToastMsg.refreshMessageType = false;
     refreshToastMsg.refreshMessage =
-      'Some activities have failed to publish. Refresh to see changes.';
+      translatedData[
+        'workflow_frontend.bulk_publish.some_activities_have_failed_to_publish_refresh_to_see_changes'
+      ];
   } else {
     store.state.bulkActivityPublishStatus.publishing.hasFailedActivities.status =
       false;

@@ -47,11 +47,7 @@ textarea.form__input {
 }
 .form__input {
   @apply mb-2 box-border w-full rounded border border-n-30 text-bluecoral outline-none duration-300;
-
-  @media screen and (min-width: 640px) {
-    padding: 13px 0 13px 16px;
-  }
-  padding: 10px 0 10px 16px;
+  padding: 8px 0 8px 16px;
 
   &::placeholder {
     @apply text-sm font-normal text-n-40;
@@ -256,41 +252,41 @@ label {
 }
 
 select.select2.default-value-indicator
-  + .select2
-  .selection
-  .select2-selection:not(:focus) {
++ .select2
+.selection
+.select2-selection:not(:focus) {
   border: 2px solid #3f9a7c;
   background-color: #3f9a7c15;
 }
 
 select.select2.default-value-indicator
-  + .select2
-  .selection
-  .select2-selection:not(:focus) {
++ .select2
+.selection
+.select2-selection:not(:focus) {
   border: 2px solid #3f9a7c;
   background-color: #3f9a7c15;
 }
 
 select.select2.default-value-indicator
-  + .select2
-  .selection
-  .select2-selection
-  .select2-selection__placeholder {
++ .select2
+.selection
+.select2-selection
+.select2-selection__placeholder {
   color: var(--bluecoral-50);
 }
 
 select.select2.default-value-indicator
-  + .select2.select2-container--open
-  .selection
-  .select2-selection {
++ .select2.select2-container--open
+.selection
+.select2-selection {
   border: 1px solid #a6b5ba;
   background-color: white;
 }
 
 select.select2.default-value-indicator
-  + .select2
-  .selection
-  .select2-selection.select2-selection--clearable {
++ .select2
+.selection
+.select2-selection.select2-selection--clearable {
   border: 1px solid #a6b5ba;
   background-color: white;
 }

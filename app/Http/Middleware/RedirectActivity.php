@@ -42,11 +42,11 @@ class RedirectActivity
     private TransactionService $transactionService;
 
     /**
-     * @param ActivityService    $activityService
-     * @param ResultService      $resultService
-     * @param IndicatorService   $indicatorService
-     * @param PeriodService      $periodService
-     * @param TransactionService $transactionService
+     * @param  ActivityService  $activityService
+     * @param  ResultService  $resultService
+     * @param  IndicatorService  $indicatorService
+     * @param  PeriodService  $periodService
+     * @param  TransactionService  $transactionService
      */
     public function __construct(
         ActivityService $activityService,
@@ -65,8 +65,8 @@ class RedirectActivity
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      *
      * @return mixed
      */
@@ -98,7 +98,8 @@ class RedirectActivity
                 $activity = $this->activityService->getActivity($id);
 
                 if ($activity === null || !$activity->isActivityOfOrg()) {
-                    return redirect(RouteServiceProvider::HOME)->with('error', 'Activity does not exist');
+                    return redirect(RouteServiceProvider::HOME)
+                        ->with('error', trans('validation.activity_not_exist'));
                 }
 
                 $byPassResultRoutes = [
@@ -109,11 +110,16 @@ class RedirectActivity
                     'admin.activity.results.bulkDelete',
                 ];
 
-                if (in_array($subModule, ['result', 'results']) && !in_array($request->route()->getName(), $byPassResultRoutes, true)) {
+                if (in_array($subModule, ['result', 'results']) && !in_array(
+                    $request->route()->getName(),
+                    $byPassResultRoutes,
+                    true
+                )) {
                     $resultId = (int) $request->route('resultId');
 
                     if (!$this->resultService->activityResultExists($id, $resultId)) {
-                        return redirect(RouteServiceProvider::HOME)->with('error', 'Result does not exist');
+                        return redirect(RouteServiceProvider::HOME)
+                            ->with('error', trans('validation.result_not_exist'));
                     }
                 }
 
@@ -128,31 +134,48 @@ class RedirectActivity
                     'admin.activity.transactions.bulkDelete',
                 ];
 
-                if (in_array($subModule, ['transaction', 'transactions']) && !in_array($request->route()->getName(), $byPassTransactionRoutes, true)) {
+                if (in_array($subModule, ['transaction', 'transactions']) && !in_array(
+                    $request->route()->getName(),
+                    $byPassTransactionRoutes,
+                    true
+                )) {
                     $transactionId = (int) $request->route('transactionId');
 
                     if (!$this->transactionService->activityTransactionExists($id, $transactionId)) {
-                        return redirect(RouteServiceProvider::HOME)->with('error', 'Transaction does not exist');
+                        return redirect(RouteServiceProvider::HOME)
+                            ->with('error', trans('validation.transaction_not_exist'));
                     }
                 }
             } elseif ($module === 'result') {
                 $result = $this->resultService->getResult($id);
 
                 if ($result === null) {
-                    return redirect(RouteServiceProvider::HOME)->with('error', 'Result does not exist');
+                    return redirect(RouteServiceProvider::HOME)
+                        ->with('error', trans('validation.result_not_exist'));
                 }
 
                 if ($result->activity === null || !$result->activity->isActivityOfOrg()) {
-                    return redirect(RouteServiceProvider::HOME)->with('error', 'Activity does not exist');
+                    return redirect(RouteServiceProvider::HOME)
+                        ->with('error', trans('validation.activity_not_exist'));
                 }
 
-                $byPassIndicatorRoutes = ['admin.result.indicator.index', 'admin.result.indicators.paginate', 'admin.result.indicator.create', 'admin.result.indicator.store'];
+                $byPassIndicatorRoutes = [
+                    'admin.result.indicator.index',
+                    'admin.result.indicators.paginate',
+                    'admin.result.indicator.create',
+                    'admin.result.indicator.store',
+                ];
 
-                if (in_array($subModule, ['indicator', 'indicators']) && !in_array($request->route()->getName(), $byPassIndicatorRoutes, true)) {
+                if (in_array($subModule, ['indicator', 'indicators']) && !in_array(
+                    $request->route()->getName(),
+                    $byPassIndicatorRoutes,
+                    true
+                )) {
                     $indicatorId = (int) $request->route('indicatorId');
 
                     if (!$this->indicatorService->resultIndicatorExists($id, $indicatorId)) {
-                        return redirect(RouteServiceProvider::HOME)->with('error', 'Indicator does not exist');
+                        return redirect(RouteServiceProvider::HOME)
+                            ->with('error', trans('validation.indicator_not_exist'));
                     }
                 }
 
@@ -161,24 +184,37 @@ class RedirectActivity
                 $indicator = $this->indicatorService->getIndicator($id);
 
                 if ($indicator === null) {
-                    return redirect(RouteServiceProvider::HOME)->with('error', 'Indicator does not exist');
+                    return redirect(RouteServiceProvider::HOME)
+                        ->with('error', trans('validation.indicator_not_exist'));
                 }
 
                 if ($indicator->result === null) {
-                    return redirect(RouteServiceProvider::HOME)->with('error', 'Result does not exist');
+                    return redirect(RouteServiceProvider::HOME)
+                        ->with('error', trans('validation.result_not_exist'));
                 }
 
                 if ($indicator->result->activity === null || !$indicator->result->activity->isActivityOfOrg()) {
-                    return redirect(RouteServiceProvider::HOME)->with('error', 'Activity does not exist');
+                    return redirect(RouteServiceProvider::HOME)
+                        ->with('error', trans('validation.activity_not_exist'));
                 }
 
-                $byPassPeriodRoutes = ['admin.indicator.period.index', 'admin.indicator.periods.paginate', 'admin.indicator.period.create', 'admin.indicator.period.store'];
+                $byPassPeriodRoutes = [
+                    'admin.indicator.period.index',
+                    'admin.indicator.periods.paginate',
+                    'admin.indicator.period.create',
+                    'admin.indicator.period.store',
+                ];
 
-                if (in_array($subModule, ['period', 'periods']) && !in_array($request->route()->getName(), $byPassPeriodRoutes, true)) {
+                if (in_array($subModule, ['period', 'periods']) && !in_array(
+                    $request->route()->getName(),
+                    $byPassPeriodRoutes,
+                    true
+                )) {
                     $periodId = (int) $request->route('periodId');
 
                     if (!$this->periodService->indicatorPeriodExist($id, $periodId)) {
-                        return redirect(RouteServiceProvider::HOME)->with('error', 'Period does not exist');
+                        return redirect(RouteServiceProvider::HOME)
+                            ->with('error', trans('validation.period_not_exist'));
                     }
                 }
                 $activity = $indicator->result->activity;
@@ -188,7 +224,8 @@ class RedirectActivity
                 return $next($request);
             }
 
-            return redirect(RouteServiceProvider::HOME)->with('error', 'Activity does not exist');
+            return redirect(RouteServiceProvider::HOME)
+                ->with('error', trans('validation.activity_not_exist'));
         }
 
         return abort(404);

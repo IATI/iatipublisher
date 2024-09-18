@@ -5,25 +5,34 @@
       <div class="popup mb-4">
         <div class="title mb-6 flex items-center text-sm">
           <svg-vue class="mr-1 text-lg text-spring-50" icon="warning" />
-          <b>Another Activity is currently being published</b>
+          <b>
+            {{
+              translatedData[
+                'common.common.another_activity_is_currently_being_published'
+              ]
+            }}
+          </b>
         </div>
         <div class="rounded-lg bg-[#FFF1F0] p-4">
           <div class="text-sm leading-normal">
-            Please wait for previous bulk publish to complete or cancel previous
-            bulk publish to continue this bulk publish.
+            {{
+              translatedData[
+                'common.common.please_wait_for_previous_bulk_publish_to_complete'
+              ]
+            }}
           </div>
         </div>
       </div>
       <div class="flex justify-between space-x-2">
         <BtnComponent
           class="bg-white px-6 uppercase"
-          text="Cancel Previous Bulk publish"
+          :text="translatedData['common.common.cancel_previous_bulk_publish']"
           type=""
           @click="startNewPublishing"
         />
         <BtnComponent
           class="bg-white px-6 uppercase"
-          text="Wait for completion"
+          :text="translatedData['common.common.wait_for_completion']"
           type="primary"
           @click="showExistingProcessModal = false"
         />
@@ -63,6 +72,7 @@
     <Loader
       v-if="loader"
       :text="loaderText"
+      :translated-data="translatedData"
       :class="{ 'animate-loader': loader }"
     />
   </div>
@@ -93,16 +103,13 @@ import {
 
 import { useStorage } from '@vueuse/core';
 import axios from 'axios';
-
-//component
 import BtnComponent from 'Components/ButtonComponent.vue';
 import Modal from 'Components/PopupModal.vue';
 import Loader from 'Components/sections/ProgressLoader.vue';
 import PageLoader from 'Components/Loader.vue';
 import BulkPublishingModal from './bulkPublishModal/BulkPublish.vue';
 import { useSharedMinimize } from 'Composable/useSharedLocalStorage';
-// Vuex Store
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
 import { ErrorInterface } from 'Interfaces/ErrorInterface';
 
 defineProps({
@@ -115,6 +122,7 @@ defineProps({
 const store = useStore();
 const sharedMinimize = useSharedMinimize();
 
+const translatedData = inject('translatedData') as Record<string, string>;
 const bulkPublishStatus = reactive({});
 const isLoading = ref(false);
 const startPublish = ref(false);
@@ -124,7 +132,7 @@ const published = ref(false);
 
 // display/hide validator loader
 const loader = ref(false);
-const loaderText = ref('Please Wait');
+const loaderText = ref(translatedData['common.common.please_wait']);
 const coreElementLoader = ref(false);
 
 // reset step to zero after closing modal
@@ -190,7 +198,6 @@ const cancelBulkPublishing = async () => {
 // toast visibility
 
 const errorData = inject('errorData') as ErrorInterface;
-
 const displayToast = (
   message: string,
   type: boolean,

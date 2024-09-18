@@ -20,10 +20,10 @@
             N/A
           </span>
         </div>
-        <div clas="ml-4">
+        <div class="ml-4">
           <table class="mb-3">
             <tr>
-              <td>Code</td>
+              <td>{{ getTranslatedElement(translatedData, 'code') }}</td>
               <td>
                 <div class="text-sm">
                   <span v-if="at.aid_type_code">
@@ -59,7 +59,7 @@
 </template>
 
 <script lang="ts">
-import { isEveryValueNull } from 'Composable/utils';
+import { getTranslatedElement, isEveryValueNull } from 'Composable/utils';
 import { defineComponent, toRefs, inject } from 'vue';
 
 export default defineComponent({
@@ -72,8 +72,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { data } = toRefs(props);
-
     interface ArrayObject {
       aid_type_code: string;
       aid_type_vocabulary: string;
@@ -81,7 +79,6 @@ export default defineComponent({
       earmarking_category: string;
       earmarking_modality: string;
     }
-    const atData = data.value as ArrayObject[];
 
     interface TypesInterface {
       aidType: [];
@@ -91,12 +88,19 @@ export default defineComponent({
       earMarkingModality: [];
     }
 
+    const { data } = toRefs(props);
+    const atData = data.value as ArrayObject[];
+
     const type = inject('types') as TypesInterface;
+    const translatedData = inject('translatedData') as Record<string, string>;
+
     return {
       atData,
       type,
       isEveryValueNull,
+      translatedData,
     };
   },
+  methods: { getTranslatedElement },
 });
 </script>

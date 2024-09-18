@@ -18,7 +18,10 @@ class ConditionRequest extends ActivityBaseRequest
      */
     public function rules(): array
     {
-        $totalRules = [$this->getWarningForCondition($this->get('condition')), $this->getErrorsForCondition($this->get('condition'))];
+        $totalRules = [
+            $this->getWarningForCondition($this->get('condition')),
+            $this->getErrorsForCondition($this->get('condition')),
+        ];
 
         return mergeRules($totalRules);
     }
@@ -26,7 +29,7 @@ class ConditionRequest extends ActivityBaseRequest
     /**
      * Returns rules for related activity.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -37,7 +40,12 @@ class ConditionRequest extends ActivityBaseRequest
         foreach ($formFields as $conditionIndex => $condition) {
             $conditionForm = sprintf('condition.%s', $conditionIndex);
 
-            foreach ($this->getWarningForNarrative($condition['narrative'], $conditionForm) as $conditionNarrativeIndex => $conditionNarrativeRules) {
+            foreach (
+                $this->getWarningForNarrative(
+                    $condition['narrative'],
+                    $conditionForm
+                ) as $conditionNarrativeIndex => $conditionNarrativeRules
+            ) {
                 $rules[$conditionNarrativeIndex] = $conditionNarrativeRules;
             }
         }
@@ -48,7 +56,7 @@ class ConditionRequest extends ActivityBaseRequest
     /**
      * Returns rules for related activity.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -58,11 +66,19 @@ class ConditionRequest extends ActivityBaseRequest
 
         foreach ($formFields as $conditionIndex => $condition) {
             $conditionForm = sprintf('condition.%s', $conditionIndex);
-            $rules[sprintf('%s.condition_type', $conditionForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('ConditionType', 'Activity', false)
-            ));
+            $rules[sprintf('%s.condition_type', $conditionForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles('ConditionType', 'Activity', false)
+                )
+            );
 
-            foreach ($this->getErrorsForNarrative($condition['narrative'], $conditionForm) as $conditionNarrativeIndex => $conditionNarrativeRules) {
+            foreach (
+                $this->getErrorsForNarrative(
+                    $condition['narrative'],
+                    $conditionForm
+                ) as $conditionNarrativeIndex => $conditionNarrativeRules
+            ) {
                 $rules[$conditionNarrativeIndex] = $conditionNarrativeRules;
             }
         }
@@ -83,7 +99,7 @@ class ConditionRequest extends ActivityBaseRequest
     /**
      * Returns messages for related activity validations.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -93,9 +109,16 @@ class ConditionRequest extends ActivityBaseRequest
 
         foreach ($formFields as $conditionIndex => $condition) {
             $conditionForm = sprintf('condition.%s', $conditionIndex);
-            $messages[sprintf('%s.condition_type.in', $conditionForm)] = 'The condition type is invalid.';
+            $messages[sprintf('%s.condition_type.in', $conditionForm)] = trans(
+                'validation.activity_conditions.invalid_type'
+            );
 
-            foreach ($this->getMessagesForNarrative($condition['narrative'], $conditionForm) as $conditionNarrativeIndex => $conditionNarrativeMessages) {
+            foreach (
+                $this->getMessagesForNarrative(
+                    $condition['narrative'],
+                    $conditionForm
+                ) as $conditionNarrativeIndex => $conditionNarrativeMessages
+            ) {
                 $messages[$conditionNarrativeIndex] = $conditionNarrativeMessages;
             }
         }

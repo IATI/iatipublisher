@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'another_bulk_publishing_is_already_in_progress'            => 'Another bulk publish is already in progress.',
+    'retrieved_data_successfully'                               => 'Data retrieved successfully.',
+    'error_has_occurred_while_checking_core_elements_completed' => 'Error checking core elements.',
+    'another_activity_validation_already_in_progress'           => 'Activity validation is already in progress.',
+    'error_has_occurred_while_validating_activities'            => 'Error validating activities.',
+    'bulk_publishing_started'                                   => 'Bulk publish started.',
+    'bulk_publishing_failed'                                    => 'Bulk publish failed.',
+    'no_bulk_publishing_in_progress'                            => 'No bulk publish is in progress.',
+    'status_generation_failed'                                  => 'Status generation failed.',
+    'no_bulk_publish_were_cancelled'                            => 'Bulk publish was not cancelled.',
+    'failed_to_stop_bulk_publishing'                            => 'Failed to stop bulk publishing.',
+    'another_bulk_validation_is_already_in_progress'            => 'Another bulk validation is already in progress.',
+    'activities_are_ready_to_validate'                          => 'Activities are ready to validate.',
+    'bulk_publishing_status_successfully_deleted'               => 'Bulk publishing status successfully deleted.',
+    'failed_to_delete_bulk_publishing_status'                   => 'Failed to delete bulk publishing status.',
+    'activity_not_selected'                                     => 'Activity not selected.',
+    'error_has_occurred_while_fetching_validation_response'     => 'Error fetching validation response.',
+    'error_has_occurred_while_fetching_validation_status'       => 'Error fetching validation status.',
+    'successfully_deleted'                                      => 'Successfully deleted.',
+    'error_has_occurred_while_deleting_validation_status'       => 'Error deleting validation status.',
+    'bulk_publish_of_numberofdeletedrows_activities_canceled'   => 'Bulk publish of :numberOfDeletedRows activities cancelled.',
+];

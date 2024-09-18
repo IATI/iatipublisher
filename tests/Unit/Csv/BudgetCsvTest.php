@@ -49,10 +49,10 @@ class BudgetCsvTest extends CsvBaseTest
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
 
-        $this->assertContains('The periods of multiple budgets with the same type should not be the same', $flattenErrors);
-        $this->assertContains('The Period End iso-date must be a date after Period Start iso-date', $flattenErrors);
-        $this->assertContains('The Budget Period must not be longer than one year', $flattenErrors);
-        $this->assertContains('The iso-date field must be date after year 1900.', $flattenErrors);
+        $this->assertContains(trans('validation.activity_budget.budget.budgets_identical'), $flattenErrors);
+        $this->assertContains(trans('validation.period_end_after'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_budget.date.period_start_end'), $flattenErrors);
+        $this->assertContains(trans('validation.date_must_be_after_1900'), $flattenErrors);
     }
 
     /**
@@ -148,11 +148,11 @@ class BudgetCsvTest extends CsvBaseTest
         $rows = $this->get_invalid_data();
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('The budget status is invalid.', $flattenErrors);
-        $this->assertContains('The budget type is invalid.', $flattenErrors);
-        $this->assertContains('The amount field must not be in negative.', $flattenErrors);
-        $this->assertContains('The value-date field must be a valid date.', $flattenErrors);
-        $this->assertContains('The amount field must be a number.', $flattenErrors);
+        $this->assertContains(trans('validation.activity_budget.budget.invalid_status'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_budget.budget.invalid_type'), $flattenErrors);
+        $this->assertContains(trans('validation.amount_negative'), $flattenErrors);
+        $this->assertContains(trans('validation.date_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.amount_number'), $flattenErrors);
     }
 
     /**

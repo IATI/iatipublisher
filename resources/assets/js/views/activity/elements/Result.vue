@@ -19,19 +19,19 @@
           >
             <span v-if="!completed">
               <b class="mr-2 text-base leading-3">.</b>
-              not completed
+              {{ translatedData['common.common.not_completed']?.toLowerCase() }}
             </span>
           </div>
         </div>
         <div class="icons flex items-center">
           <Btn
-            text="Add New Result"
+            :text="translatedData['common.common.add_new_result']"
             icon="add"
             :link="`/activity/${activityId}/${title}/create`"
             class="mr-2.5"
           />
           <Btn
-            text="Show full result list"
+            :text="translatedData['common.common.show_full_result_list']"
             icon=""
             design="bgText"
             :link="`/activity/${activityId}/${title}`"
@@ -71,13 +71,13 @@
                   </div>
                   <div class="flex shrink-0">
                     <Btn
-                      text="View Result"
+                      :text="translatedData['common.common.view_result']"
                       icon="eye"
                       :link="`/activity/${activityId}/${title}/${result.id}`"
                       class="mr-2.5"
                     />
                     <Btn
-                      text="Edit Result"
+                      :text="translatedData['common.common.edit_result']"
                       icon="edit"
                       :link="`/activity/${activityId}/${title}/${result.id}/edit`"
                     />
@@ -136,8 +136,16 @@
                           <div>
                             <NotYet
                               :link="`/${title}/${result.id}/indicator/create`"
-                              description="You haven't added any Indicator yet. Indicator(s) are required to complete Result."
-                              btn-text="Add new indicator"
+                              :description="
+                                translatedData[
+                                  'common.common.you_havent_added_any_indicator_yet'
+                                ]
+                              "
+                              :btn-text="
+                                translatedData[
+                                  'common.common.add_new_indicator'
+                                ]
+                              "
                             />
                           </div>
                         </td>
@@ -157,13 +165,19 @@
                         </div>
                         <div class="inline-flex shrink-0">
                           <Btn
-                            text="Add New Indicator"
+                            :text="
+                              translatedData['common.common.add_new_indicator']
+                            "
                             icon="add"
                             :link="`/${title}/${result.id}/indicator/create`"
                             class="mr-2.5"
                           />
                           <Btn
-                            text="Show full indicator list"
+                            :text="
+                              translatedData[
+                                'common.common.show_full_indicator_list'
+                              ]
+                            "
                             icon=""
                             design="bgText"
                             :link="`/${title}/${result.id}/indicator`"
@@ -195,25 +209,36 @@
                               <div class="mr-4">
                                 {{
                                   indic.indicator.title[0].narrative[0]
-                                    .narrative ?? 'untitled'
+                                    .narrative ??
+                                  getTranslatedUntitled(translatedData)
                                 }}
                               </div>
                               <div class="flex shrink-0 grow justify-between">
                                 <span class="flex">
                                   <Btn
-                                    text="View Indicator"
+                                    :text="
+                                      translatedData[
+                                        'common.common.view_indicator'
+                                      ]
+                                    "
                                     icon="eye"
                                     :link="`/${title}/${result.id}/indicator/${indic.id}`"
                                     class="mr-2.5"
                                   />
                                   <Btn
-                                    text="Edit Indicator"
+                                    :text="
+                                      translatedData[
+                                        'common.common.edit_indicator'
+                                      ]
+                                    "
                                     :link="`/${title}/${result.id}/indicator/${indic.id}/edit`"
                                     class="mr-2.5"
                                   />
                                 </span>
                                 <Btn
-                                  text="Add Period"
+                                  :text="
+                                    translatedData['common.common.add_period']
+                                  "
                                   icon="add"
                                   :link="`/indicator/${indic.id}/period/create`"
                                 />
@@ -302,7 +327,11 @@
                                           </div>
                                           <div class="ml-2">
                                             <Btn
-                                              text="Edit"
+                                              :text="
+                                                translatedData[
+                                                  'common.common.edit'
+                                                ]
+                                              "
                                               icon="edit"
                                               :link="`/indicator/${indic.id}/period/${period.id}/edit`"
                                             />
@@ -312,7 +341,11 @@
                                       <div class="shrink-0">
                                         <Btn
                                           class="-mt-1"
-                                          text="Show full period list"
+                                          :text="
+                                            translatedData[
+                                              'common.common.show_full_period_list'
+                                            ]
+                                          "
                                           icon=""
                                           design="bgText"
                                           :link="`/indicator/${indic.id}/period`"
@@ -327,7 +360,11 @@
                                     <div>
                                       <NotYet
                                         :link="`/indicator/${indic.id}/period/create`"
-                                        description="You haven't added any period yet."
+                                        :description="
+                                          translatedData[
+                                            'common.common.you_havent_added_any_period_yet'
+                                          ]
+                                        "
                                       />
                                     </div>
                                   </td>
@@ -354,7 +391,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs } from 'vue';
+import { defineComponent, inject, toRefs } from 'vue';
 import moment from 'moment';
 
 //components
@@ -365,12 +402,19 @@ import NotYet from 'Components/sections/HaveNotAddedYet.vue';
 import getActivityTitle from 'Composable/title';
 import dateFormat from 'Composable/dateFormat';
 import HelperText from 'Components/HelperText.vue';
+
 import indicator from 'Activity/results/elements/Indicator.vue';
-import { onlyDeprecatedStatusMap } from 'Composable/utils';
+import {
+  getTranslatedUntitled,
+  onlyDeprecatedStatusMap,
+} from 'Composable/utils';
+import { traceSegment } from '@jridgewell/trace-mapping';
 
 export default defineComponent({
   name: 'ActivityResult',
   components: {
+    // NavDropdown,
+    // BtnComponent,
     HelperText,
     Btn,
     NotYet,
@@ -412,9 +456,10 @@ export default defineComponent({
       default: false,
     },
   },
+
   setup(props) {
     const format = 'MMMM DD, YYYY';
-
+    const translatedData = inject('translatedData') as Record<string, string>;
     const { data } = toRefs(props);
 
     let resultData = data.value.content;
@@ -428,6 +473,7 @@ export default defineComponent({
       getActivityTitle,
       currentLanguage,
       dateFormat,
+      translatedData,
     };
   },
   computed: {
@@ -435,6 +481,6 @@ export default defineComponent({
       return indicator;
     },
   },
-  methods: { onlyDeprecatedStatusMap },
+  methods: { traceSegment, getTranslatedUntitled, onlyDeprecatedStatusMap },
 });
 </script>

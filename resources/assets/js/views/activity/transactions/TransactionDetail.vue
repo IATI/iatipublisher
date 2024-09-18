@@ -25,8 +25,8 @@
       :title="`${
         transactionData.reference && transactionData.reference !== ''
           ? transactionData.reference
-          : 'Untitled'
-      } - Transaction detail`"
+          : getTranslatedUntitled(translatedData)
+      } - ${translatedData['common.common.transaction_detail']}`"
       :back-link="`${activityLink}/transaction`"
     >
       <div class="flex items-center space-x-3">
@@ -37,7 +37,7 @@
           class="mr-3"
         />
         <Btn
-          text="Edit Transaction"
+          :text="translatedData['common.common.edit_transaction']"
           :link="`${activityLink}/transaction/${transaction.id}/edit`"
           icon="edit"
         />
@@ -90,7 +90,7 @@
           <ul class="text-sm font-bold leading-relaxed">
             <li v-for="(rData, r, ri) in transactionData" :key="ri">
               <a v-smooth-scroll :href="`#${String(r)}`" :class="linkClasses">
-                <span>{{ r }}</span>
+                <span>{{ toKebabCase(r) }}</span>
                 <span v-if="isMandatoryIcon(r)" class="required-icon px-1"
                   >*</span
                 >
@@ -141,14 +141,16 @@
 
 <script lang="ts">
 import {
+  computed,
   defineComponent,
-  toRefs,
   onMounted,
   onUnmounted,
-  watch,
-  computed,
-  ref,
+  provide,
   reactive,
+  ref,
+  toRefs,
+  watch,
+  watchEffect,
 } from 'vue';
 //components
 import Btn from 'Components/buttons/Link.vue';
@@ -158,6 +160,12 @@ import Toast from 'Components/ToastMessage.vue';
 import dateFormat from 'Composable/dateFormat';
 import getActivityTitle from 'Composable/title';
 import TransactionElement from './TransactionElement.vue';
+import {
+  getTranslatedElement,
+  getTranslatedUntitled,
+  toKebabCase,
+  toTitleCase,
+} from 'Composable/utils';
 
 export default defineComponent({
   name: 'TransactionDetail',
@@ -188,9 +196,14 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    translatedData: {
+      type: Object,
+      required: true,
+    },
   },
   setup(props) {
     const { activity, transaction } = toRefs(props);
+
     const linkClasses =
       'flex items-center w-full bg-white rounded p-2 text-sm text-n-50 font-bold leading-relaxed mb-2 shadow-default';
     const showSidebar = ref(false);
@@ -230,6 +243,7 @@ export default defineComponent({
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', calcWidth);
     });
+
     watch(
       () => showSidebar.value,
       (sidebar) => {
@@ -245,7 +259,7 @@ export default defineComponent({
      */
     const breadcrumbData = [
       {
-        title: 'Your Activities',
+        title: props.translatedData['common.common.your_activities'],
         link: '/activity',
       },
       {
@@ -253,11 +267,11 @@ export default defineComponent({
         link: activityLink,
       },
       {
-        title: 'Transaction List',
+        title: props.translatedData['common.common.transaction_list'],
         link: `/activity/${activityId}/transaction`,
       },
       {
-        title: 'Transaction',
+        title: props.translatedData['elements.label.transaction'],
         link: '',
       },
     ];
@@ -285,6 +299,8 @@ export default defineComponent({
       );
     };
 
+    provide('translatedData', props.translatedData);
+
     return {
       activityTitle,
       dateFormat,
@@ -299,5 +315,6 @@ export default defineComponent({
       istopVisible,
     };
   },
+  methods: { toKebabCase, getTranslatedElement, getTranslatedUntitled },
 });
 </script>

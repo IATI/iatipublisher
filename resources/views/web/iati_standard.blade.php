@@ -1,6 +1,6 @@
 @extends('web.layouts.app')
 
-@section('title', 'IATI Standard')
+@section('title', trans('common/common.iati_standard'))
 
 @section('content')
 <iati-standard></iati-standard>

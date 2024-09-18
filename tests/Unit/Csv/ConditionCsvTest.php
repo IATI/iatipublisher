@@ -78,7 +78,7 @@ class ConditionCsvTest extends CsvBaseTest
         $rows = $this->invalid_data();
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('The condition type is invalid.', $flattenErrors);
+        $this->assertContains(trans('validation.activity_conditions.invalid_type'), $flattenErrors);
     }
 
     /**

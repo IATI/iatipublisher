@@ -12,59 +12,38 @@
             <div class="inline-flex min-h-[48px] grow items-center">
               <h4 class="ellipsis__title relative mr-4 font-bold">
                 <span class="ellipsis__title overflow-hidden">
-                  Import Activity
+                  {{
+                    translatedData['workflow_frontend.import.import_activity']
+                  }}
                 </span>
               </h4>
               <div class="tooltip-btn">
                 <button class="">
                   <svg-vue icon="question-mark" />
-                  <span>What is an activity?</span>
+                  <span>{{
+                    translatedData['common.common.what_is_an_activity']
+                  }}</span>
                 </button>
                 <div class="tooltip-btn__content z-[1]">
                   <div class="content">
                     <div
                       class="mb-1.5 text-caption-c1 font-bold text-bluecoral"
                     >
-                      What is an activity?
+                      {{ translatedData['common.common.what_is_an_activity'] }}
                     </div>
-                    <p>
-                      You need to provide data about your organisation's
-                      development and humanitarian 'activities'. The unit of
-                      work described by an 'activity' is determined by the
-                      organisation that is publishing the data. For example, an
-                      activity could be a donor government providing US$ 50
-                      million to a recipient country's government to implement
-                      basic education over 5 years. Or an activity could be an
-                      NGO spending US$ 500,000 to deliver clean drinking water
-                      to 1000 households over 6 months.
-                      <br />
-                      Therefore your organisation will need to determine how it
-                      will divide its work internally into activities. Read the
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="/publishing-checklist"
-                        class="text-bluecoral"
-                        ><b>Publishing Checklist</b></a
-                      >
-                      for more information.
-                    </p>
+                    <p
+                      v-html="
+                        translatedData[
+                          'common.common.what_is_an_activity_description'
+                        ]
+                      "
+                    ></p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- <div class="actions flex grow justify-end">
-          <div class="inline-flex justify-center">
-            <BtnComponent
-              class="mr-3.5"
-              type="primary"
-              text="Import (5/10)"
-              icon="download-file"
-            />
-          </div>
-        </div> -->
       </div>
     </div>
     <div
@@ -75,25 +54,17 @@
           v-if="hasOngoingImportWarning"
           class="border-orangeish my-2 flex max-w-[95%] items-center space-x-2 rounded-md bg-eggshell px-4 py-6 align-middle text-xs font-normal text-n-50"
         >
-          Cannot import.
+          {{ translatedData['workflow_frontend.import.cannot_import'] }}
           <template v-if="ongoingImportType === ''">
             {{ ongoingImportType }}
-            <a href="#" class="px-1 font-bold" @click="openZendeskLauncher"
-              >Contact support</a
-            >
+            <a href="#" class="px-1 font-bold" @click="openZendeskLauncher">
+              {{ translatedData['common.common.contact_support'] }}
+            </a>
           </template>
           <template v-else>
-            Another import is in progress. Please try again later or
-            <a
-              :href="
-                ongoingImportType === 'xls'
-                  ? '/import/xls/list'
-                  : '/import/list'
-              "
-              class="px-1 font-bold"
-            >
-              view import list </a
-            >.
+            <span
+              v-html="getTranslatedAnotherImportInProgress(ongoingImportType)"
+            ></span>
           </template>
         </div>
 
@@ -101,7 +72,7 @@
           <p
             class="border-b border-n-30 p-4 text-sm font-bold uppercase text-n-50"
           >
-            Import .CSV/.XML file
+            {{ translatedData['workflow_frontend.import.import_csv_xml_file'] }}
           </p>
           <div class="p-6">
             <div class="mb-4 rounded border border-n-30 px-4 py-3">
@@ -118,19 +89,27 @@
               <BtnComponent
                 class="!border-red !border"
                 type="primary"
-                text="Upload file"
+                :text="translatedData['workflow_frontend.import.upload_file']"
                 icon="upload-file"
                 @click="checkOngoingImports"
               />
               <div class="flex items-center space-x-2.5">
                 <button class="relative text-sm text-bluecoral">
                   <svg-vue :icon="'download'" class="mr-1" />
-                  <span @click="downloadExcel"
-                    >Download .CSV activity Template</span
-                  >
+                  <span @click="downloadExcel">
+                    {{
+                      translatedData[
+                        'workflow_frontend.import.download_csv_activity_template'
+                      ]
+                    }}
+                  </span>
                 </button>
                 <HoverText
-                  hover-text="This template contains all the elements that you have to fill as per the IATI Standard before uploading in IATI Publisher. Please make sure that you follow the structure and format of the template."
+                  :hover-text="
+                    translatedData[
+                      'common.common.this_template_covers_basic_activity_data_and_transactions_all_possible_data_elements_of_the_iati_standard_are_included_for_flexibility'
+                    ]
+                  "
                   name=""
                   class="hover-text import-activity"
                   position="right"
@@ -146,6 +125,7 @@
   <Loader
     v-if="loader"
     :text="loaderText"
+    :translated-data="translatedData"
     :class="{ 'animate-loader': loader }"
   />
 </template>
@@ -156,14 +136,24 @@ import BtnComponent from 'Components/ButtonComponent.vue';
 import HoverText from 'Components/HoverText.vue';
 import Loader from 'Components/sections/ProgressLoader.vue';
 import axios from 'axios';
+import { defineProps } from 'vue';
 
 const file = ref(),
   error = ref(''),
   loader = ref(false),
-  loaderText = ref('Please Wait'),
+  loaderText = ref(''),
   hasOngoingImportWarning = ref(false),
   ongoingImportType = ref('');
 
+const props = defineProps({
+  translatedData: {
+    type: Object,
+    required: true,
+  },
+});
+
+loaderText.value =
+  props.translatedData['common.common.please_wait'] ?? 'Please Wait';
 async function checkOngoingImports() {
   try {
     const response = await axios.get('/import/check-ongoing-import');
@@ -171,7 +161,7 @@ async function checkOngoingImports() {
     if (hasOngoingImport(response.data.data)) {
       showHasOngoingImportWarning(response.data.data.import_type);
     } else {
-      uploadFile();
+      uploadFile().then();
     }
   } catch (e) {
     console.log(e);
@@ -189,7 +179,8 @@ function showHasOngoingImportWarning(importType: null | string) {
 
 async function uploadFile() {
   loader.value = true;
-  loaderText.value = 'Uploading .csv/.xml file';
+  loaderText.value =
+    props.translatedData['workflow_frontend.import.uploading_csv_xml_file'];
   let activity = file.value.files.length ? file.value.files[0] : '';
   const config = {
     headers: {
@@ -243,6 +234,20 @@ function openZendeskLauncher() {
     window.zE.activate();
   }
 }
+
+const getTranslatedAnotherImportInProgress = (ongoingImportType: string) => {
+  let message =
+    props.translatedData['common.common.another_import_in_progress'];
+
+  const url = ongoingImportType === 'xls' ? '/import/xls/list' : '/import/list';
+
+  message = message.replace(
+    ':link',
+    `<a href="${url}" class="px-1 font-bold">view import list</a>`
+  );
+
+  return message;
+};
 
 declare global {
   interface Window {

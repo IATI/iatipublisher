@@ -15,5 +15,7 @@
             :default-tied-status='{{ json_encode($defaultTiedStatus) }}'
             :organization-type='{{ json_encode($organizationType) }}'
             :is-first-time='{{ json_encode($isFirstTime) }}'
-    ></activity-template>
+            :translated-data='{{json_encode($translatedData)}}'
+            :current-language='{{json_encode($currentLanguage)}}'
+></activity-template>
 @endsection

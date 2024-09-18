@@ -225,10 +225,10 @@ class Activity extends Model implements Auditable
                 }
             }
 
-            return array_key_exists('narrative', $titles[0]) ? (string) $titles[0]['narrative'] : 'Untitled';
+            return array_key_exists('narrative', $titles[0]) ? (string) $titles[0]['narrative'] : getTranslatedUntitled();
         }
 
-        return 'Untitled';
+        return getTranslatedUntitled();
     }
 
     /**

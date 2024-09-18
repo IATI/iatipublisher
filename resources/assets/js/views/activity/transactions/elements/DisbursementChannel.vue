@@ -26,13 +26,15 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { data } = toRefs(props);
-
     interface ArrayObject {
       [index: number]: { disbursement_channel_code: string };
     }
+    const { data } = toRefs(props);
+
     const code = data.value as ArrayObject;
+
     const type = inject('types');
+
     return { code, type };
   },
 });

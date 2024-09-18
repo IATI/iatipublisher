@@ -9,7 +9,8 @@
         <!-- Left -->
         <div class="max-w-[365px] bg-bluecoral px-[35px] py-12 text-white">
           <h3 class="text-[28px] font-bold leading-9">
-            Get started with <br />
+            {{ translatedData['onboarding.onboarding_index.get_started_with'] }}
+            <br />
             <span class="flex items-center gap-3">
               <span> IATI Publisher </span>
               <span>
@@ -18,8 +19,11 @@
             </span>
           </h3>
           <p class="pt-[2px] text-xs">
-            To get you started with publishing, there are a few key steps you
-            need to complete. Let's walk through them!
+            {{
+              translatedData[
+                'onboarding.onboarding_index.to_get_you_started_with_publishing'
+              ]
+            }}
           </p>
           <StepBar
             :current-step="step"
@@ -131,7 +135,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, watchEffect, onMounted } from 'vue';
+import { ref, defineProps, watchEffect, onMounted, inject } from 'vue';
 import { useStorage } from '@vueuse/core';
 
 import StepBar from 'Components/StepBar.vue';
@@ -194,6 +198,7 @@ const props = defineProps({
   },
 });
 
+const translatedData = inject('translatedData') as Record<string, string>;
 const step = ref(1);
 const modalState = ref(true);
 const initialRender = ref(true);
@@ -245,34 +250,6 @@ if (isForceOpenModal) {
 ) {
   modalState.value = false;
 }
-// console.log(
-//   props.organizationOnboarding.completed_onboarding,
-//   props.organizationOnboarding.dont_show_again,
-//   isModelCloseClicked.value,
-//   'Status'
-// );
-
-// if (
-//   !props.organizationOnboarding.completed_onboarding ||
-//   !props.organizationOnboarding.dont_show_again ||
-//   !isModelCloseClicked.value
-// ) {
-//   modalState.value = true;
-// }
-
-// if(props.)
-
-// watchEffect(() => {
-//   if (
-//     props.organizationOnboarding.completed_onboarding ||
-//     props.organizationOnboarding.dont_show_again ||
-//     isModelCloseClicked.value
-//   ) {
-//     modalState.value = false;
-//   } else if (store.state.getStartedButton) {
-//     modalState.value = true;
-//   }
-// });
 
 watchEffect(() => {
   if (modalState.value) {

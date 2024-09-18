@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Activity\DefaultTiedStatus;
 
 use App\Http\Requests\Activity\ActivityBaseRequest;
+use App\Rules\SingleCharacter;
 
 /**
  * Class DefaultTiedStatusRequest.
@@ -40,22 +41,29 @@ class DefaultTiedStatusRequest extends ActivityBaseRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @param $tied_status
+     * @param null $tied_status
      *
      * @return array
+     * @throws \JsonException
      */
     public function getErrorsForDefaultTiedStatus($tied_status = null): array
     {
         if ($tied_status && is_array($tied_status)) {
             return [
-                'default_tied_status' => 'nullable|size:1',
+                'default_tied_status' =>['nullable', new SingleCharacter('default_tied_status')],
             ];
         }
 
         return [
-            'default_tied_status' => sprintf('nullable|in:%s', implode(',', array_keys(
-                $this->getCodeListForRequestFiles('TiedStatus', 'Activity', false)
-            ))),
+            'default_tied_status' => sprintf(
+                'nullable|in:%s',
+                implode(
+                    ',',
+                    array_keys(
+                        $this->getCodeListForRequestFiles('TiedStatus', 'Activity', false)
+                    )
+                )
+            ),
         ];
     }
 
@@ -67,8 +75,8 @@ class DefaultTiedStatusRequest extends ActivityBaseRequest
     public function messages(): array
     {
         return [
-            'in'   => 'The default tied status does not exist.',
-            'size' => 'The default tied status cannot have more than one value.',
+            'in'   => trans('validation.activity_default_tied_status.in'),
+            'size' => trans('validation.activity_default_tied_status.size'),
         ];
     }
 }

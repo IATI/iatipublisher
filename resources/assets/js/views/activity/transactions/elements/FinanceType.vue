@@ -26,12 +26,14 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { data } = toRefs(props);
-
     interface ArrayObject {
       [index: number]: { finance_type: string };
     }
+
+    const { data } = toRefs(props);
+
     const financeData = data.value as ArrayObject;
+
     const type = inject('types');
 
     return { financeData, type };

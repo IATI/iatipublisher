@@ -41,11 +41,6 @@
 </head>
 <body  class="overflow-x-hidden" >
     <div id="app">
-
-
-
-
-
         @if (isSuperAdmin() && Auth::user()->organization)
             <admin-bar :name="{{ json_encode(Auth::user()->full_name, JSON_THROW_ON_ERROR) }}"
                 :organization-name="{{ json_encode(Auth::user()->organization?->publisher_name, JSON_THROW_ON_ERROR) }}">
@@ -53,13 +48,15 @@
         @endif
 
         @if (isSuperAdmin())
-            
+
             <loggedin-header :user="{{ Auth::user() }}"
                 has-admin-bar = "{{ isSuperAdmin() && Auth::user()->organization }}"
                 :languages="{{ json_encode(getCodeList('Language', 'Activity'), JSON_THROW_ON_ERROR) }}"
                 v-bind:super-admin="{{ isSuperAdminRoute() ? 1 : 0 }}"
                 :default-language="{{ json_encode(getSettingDefaultLanguage()) }}"
                  :onboarding="{{ json_encode(Auth::user()->organization ? Auth::user()->organization->onboarding : null) }}"
+                :translated-data="{{json_encode($translatedData)}}"
+                :current-language="{{json_encode($currentLanguage)}}"
             > </loggedin-header>
         @else
             <loggedin-header
@@ -68,13 +65,18 @@
                 v-bind:super-admin="{{ isSuperAdminRoute() ? 1 : 0 }}"
                 :default-language="{{ json_encode(getSettingDefaultLanguage()) }}"
                  :onboarding="{{ json_encode(Auth::user()->organization ? Auth::user()->organization->onboarding : null) }}"
+                :translated-data="{{json_encode($translatedData)}}"
+                :current-language="{{json_encode($currentLanguage)}}"
             ></loggedin-header>
         @endif
         <main>
             @yield('content')
             @stack('scripts')
         </main>
-        <admin-footer v-bind:super-admin={{ (int) isSuperAdmin() }}></admin-footer>
+        <admin-footer v-bind:super-admin="{{ (int) isSuperAdmin() }}"
+                      :translated-data="{{json_encode($translatedData)}}"
+        >
+        </admin-footer>
     </div>
     <script defer src="{{ mix('/manifest.js') }}"></script>
     <script defer src="{{ mix('/js/vendor.js') }}"></script>

@@ -39,13 +39,13 @@
         <BtnComponent
           v-if="!mandatoryElementStatus"
           class="bg-white px-6 uppercase"
-          text="Add Missing Data"
+          :text="translatedData['common.common.add_missing_data']"
           type=""
           @click="publishValue = false"
         />
         <BtnComponent
           class="space"
-          text="Continue"
+          :text="translatedData['common.common.continue']"
           type="primary"
           @click="publishFunction"
         />
@@ -56,7 +56,7 @@
   <BtnComponent
     v-if="publishStatus.is_published"
     class="ml-4"
-    text="Unpublish"
+    :text="translatedData['common.common.unpublish']"
     type="primary"
     icon="cancel-cloud"
     @click="unpublishValue = true"
@@ -68,23 +68,27 @@
           class="mr-1 mt-0.5 text-lg text-crimson-40"
           icon="cancel-cloud"
         />
-        <b>Unpublish organisation</b>
+        <b>{{ translatedData['common.common.unpublish_organisation'] }}</b>
       </div>
       <div class="rounded-lg bg-rose p-4">
-        Are you sure you want to unpublish this organisation?
+        {{
+          translatedData[
+            'common.common.are_you_sure_you_want_to_unpublish_this_organisation'
+          ]
+        }}
       </div>
     </div>
     <div class="flex justify-end">
       <div class="inline-flex">
         <BtnComponent
           class="bg-white px-6 uppercase"
-          text="Go Back"
+          :text="translatedData['common.common.go_back']"
           type=""
           @click="unpublishValue = false"
         />
         <BtnComponent
           class="space"
-          text="Unpublish"
+          :text="translatedData['common.common.unpublish']"
           type="primary"
           @click="unPublishFunction"
         />
@@ -95,6 +99,7 @@
   <Loader
     v-if="loader"
     :text="loaderText"
+    :translated-data="translatedData"
     :class="{ 'animate-loader': loader }"
   />
 </template>
@@ -110,6 +115,9 @@ import Loader from 'Components/sections/ProgressLoader.vue';
 // toggle state for modal popup
 let [publishValue, publishToggle] = useToggle();
 let [unpublishValue, unpublishToggle] = useToggle();
+
+const translatedData = inject('translatedData') as Record<string, string>;
+
 // display/hide validator loader
 const loader = ref(false);
 // state for first step
@@ -117,7 +125,8 @@ const loader = ref(false);
 // true for completed and false for not completed
 const mandatoryElementStatus = inject('mandatoryCompleted') as boolean;
 // Dynamic text for loader
-const loaderText = ref('Please Wait');
+const loaderText = ref(translatedData['common.common.please_wait']);
+
 // computed function to change content of modal
 const publishStateChange = computed(() => {
   const publishState = reactive({
@@ -128,14 +137,19 @@ const publishStateChange = computed(() => {
   });
   // different content for step 1 based on coreElement status
   if (mandatoryElementStatus) {
-    publishState.title = 'Core Elements Complete';
+    publishState.title = translatedData['common.common.core_elements_complete'];
     publishState.description =
-      'Congratulations! All the core elements are complete. Continue to publish this organization.';
+      translatedData[
+        'common.common.congratulations_all_the_core_elements_are_complete'
+      ];
     publishState.icon = 'tick';
   } else {
-    publishState.title = 'Core Elements not complete';
+    publishState.title =
+      translatedData['common.common.core_elements_not_complete'];
     publishState.description =
-      '<p>There is missing data in some of the core elements. We highly recommend that you complete these data fields to help ensure your data is useful.</p>';
+      translatedData[
+        'common.common.there_is_missing_data_in_some_of_the_core_elements'
+      ];
     publishState.icon = 'warning-fill';
   }
   return publishState;
@@ -168,7 +182,7 @@ const checkPublish = () => {
 
 const publishFunction = () => {
   loader.value = true;
-  loaderText.value = 'Publishing';
+  loaderText.value = translatedData['common.common.publishing'];
   publishValue.value = false;
 
   axios.post(`/organisation/publish`).then((res) => {
@@ -191,7 +205,7 @@ const unPublishFunction = () => {
   unpublishValue.value = false;
 
   loader.value = true;
-  loaderText.value = 'Unpublishing';
+  loaderText.value = translatedData['common.common.unpublishing'];
   axios.post(`/organisation/unpublish`).then((res) => {
     const response = res.data;
     toastData.message = response.message;
@@ -215,9 +229,9 @@ const publishStatus = inject('publishStatus') as PublishStatusTypeface;
 
 const btnText = computed(() => {
   if (publishStatus.is_published && publishStatus.status === 'draft') {
-    return 'Republish';
+    return translatedData['common.common.republish'];
   } else {
-    return 'Publish';
+    return translatedData['common.common.publish'];
   }
 });
 </script>

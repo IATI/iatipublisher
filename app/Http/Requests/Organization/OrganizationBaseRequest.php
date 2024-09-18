@@ -166,7 +166,7 @@ class OrganizationBaseRequest extends FormRequest
         $validator->addReplacer(
             'unique_default_lang',
             function ($message) use ($validator, $defaultLanguage) {
-                return 'The @xml:lang must be unique';
+                return trans('validation.narrative_language_unique');
             }
         );
 
@@ -178,7 +178,11 @@ class OrganizationBaseRequest extends FormRequest
             }
 
             if (count($languages) === count(array_unique($languages))) {
-                if ((in_array('', $languages, true) || in_array(null, $languages, true)) && in_array($defaultLanguage, $languages, true)) {
+                if ((in_array('', $languages, true) || in_array(null, $languages, true)) && in_array(
+                    $defaultLanguage,
+                    $languages,
+                    true
+                )) {
                     $check = false;
                 }
             }
@@ -202,13 +206,19 @@ class OrganizationBaseRequest extends FormRequest
         $rules[sprintf('%s.narrative', $formBase)][] = 'unique_lang';
         $rules[sprintf('%s.narrative', $formBase)][] = 'unique_default_lang';
 
-        $validLanguages = implode(',', array_keys(
-            $this->getCodeListForRequestFiles('Language', 'Activity', false, false)
-        ));
+        $validLanguages = implode(
+            ',',
+            array_keys(
+                $this->getCodeListForRequestFiles('Language', 'Activity', false, false)
+            )
+        );
 
         foreach ($formFields as $narrativeIndex => $narrative) {
             $rules[sprintf('%s.narrative.%s.language', $formBase, $narrativeIndex)][] = 'nullable';
-            $rules[sprintf('%s.narrative.%s.language', $formBase, $narrativeIndex)][] = sprintf('in:%s', $validLanguages);
+            $rules[sprintf('%s.narrative.%s.language', $formBase, $narrativeIndex)][] = sprintf(
+                'in:%s',
+                $validLanguages
+            );
             $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)][] = 'required_with_language';
         }
 
@@ -226,17 +236,26 @@ class OrganizationBaseRequest extends FormRequest
     public function getMessagesForNarrative($formFields, $formBase): array
     {
         $messages = [];
-        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'The @xml:lang field must be unique.';
-        $messages[sprintf('%s.narrative.unique_default_lang', $formBase)] = 'The narrative language field must be unique.';
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = trans('validation.narrative_language_unique');
+        $messages[sprintf(
+            '%s.narrative.unique_default_lang',
+            $formBase
+        )]
+            = trans('validation.narrative_language_unique');
 
         foreach ($formFields as $narrativeIndex => $narrative) {
-            $messages[sprintf('%s.narrative.%s.narrative.required', $formBase, $narrativeIndex)] = 'The narrative field is required.';
+            $messages[sprintf(
+                '%s.narrative.%s.narrative.required',
+                $formBase,
+                $narrativeIndex
+            )]
+                = trans('validation.narrative_is_required');
             $messages[sprintf(
                 '%s.narrative.%s.narrative.required_with_language',
                 $formBase,
                 $narrativeIndex
             )]
-                                                                                                 = 'The language field is required when narrative field is present.';
+                = trans('validation.language_required_with_narrative');
         }
 
         return $messages;
@@ -258,9 +277,15 @@ class OrganizationBaseRequest extends FormRequest
         foreach ($formFields as $valueKey => $valueVal) {
             $valueForm = $formBase . '.value.' . $valueKey;
             $rules[$valueForm . '.amount'] = 'nullable|numeric|min:0';
-            $rules[$valueForm . '.currency'] = sprintf('nullable|in:%s', implode(',', array_keys(
-                $this->getCodeListForRequestFiles('Currency', 'Activity')
-            )));
+            $rules[$valueForm . '.currency'] = sprintf(
+                'nullable|in:%s',
+                implode(
+                    ',',
+                    array_keys(
+                        $this->getCodeListForRequestFiles('Currency', 'Activity')
+                    )
+                )
+            );
             $rules[$valueForm . '.value_date'] = $valueDateRule;
         }
 
@@ -281,12 +306,12 @@ class OrganizationBaseRequest extends FormRequest
 
         foreach ($formFields as $valueKey => $valueVal) {
             $valueForm = $formBase . '.value.' . $valueKey;
-            $messages[$valueForm . '.amount.required'] = 'The amount field is required.';
-            $messages[$valueForm . '.amount.numeric'] = 'The amount must be numeric.';
-            $messages[$valueForm . '.amount.min'] = 'The amount must not be in negative.';
-            $messages[$valueForm . '.value_date.required'] = 'The @value-date field is required.';
-            $messages[$valueForm . '.value_date.date'] = 'The @value-date must be date.';
-            $messages[$valueForm . '.currency.in'] = 'The value currency is invalid.';
+            $messages[$valueForm . '.amount.required'] = trans('validation.amount_required');
+            $messages[$valueForm . '.amount.numeric'] = trans('validation.amount_number');
+            $messages[$valueForm . '.amount.min'] = trans('validation.amount_negative');
+            $messages[$valueForm . '.value_date.required'] = trans('validation.value_date_required');
+            $messages[$valueForm . '.value_date.date'] = trans('validation.date_is_invalid');
+            $messages[$valueForm . '.currency.in'] = trans('validation.invalid_currency');
         }
 
         return $messages;
@@ -306,13 +331,20 @@ class OrganizationBaseRequest extends FormRequest
 
         foreach ($formFields as $budgetLineKey => $budgetLineVal) {
             $budgetLineForm = $formBase . '.budget_line.' . $budgetLineKey;
-            $valueRules = $this->getWarningForBudgetOrExpenseLineValue($budgetLineVal['value'], $budgetLineForm, $formBase);
+            $valueRules = $this->getWarningForBudgetOrExpenseLineValue(
+                $budgetLineVal['value'],
+                $budgetLineForm,
+                $formBase
+            );
 
             foreach ($valueRules as $key => $valueRule) {
                 $rules[$key] = $valueRule;
             }
 
-            $narrativeRules = $this->getWarningForBudgetOrExpenseLineNarrative($budgetLineVal['narrative'], $budgetLineForm);
+            $narrativeRules = $this->getWarningForBudgetOrExpenseLineNarrative(
+                $budgetLineVal['narrative'],
+                $budgetLineForm
+            );
 
             foreach ($narrativeRules as $key => $narrativeRule) {
                 $rules[$key] = $narrativeRule;
@@ -342,7 +374,10 @@ class OrganizationBaseRequest extends FormRequest
                 $messages[$key] = $valueMessage;
             }
 
-            $narrativeMessages = $this->getMessagesForBudgetOrExpenseLineNarrative($budgetLineVal['narrative'], $budgetLineForm);
+            $narrativeMessages = $this->getMessagesForBudgetOrExpenseLineNarrative(
+                $budgetLineVal['narrative'],
+                $budgetLineForm
+            );
 
             foreach ($narrativeMessages as $key => $narrativeMessage) {
                 $messages[$key] = $narrativeMessage;
@@ -358,7 +393,7 @@ class OrganizationBaseRequest extends FormRequest
      * @param      $formFields
      * @param      $formBase
      * @param      $diff
-     * @param null $time_period
+     * @param  null  $time_period
      *
      * @return array
      */
@@ -367,7 +402,8 @@ class OrganizationBaseRequest extends FormRequest
         $rules = [];
 
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $rules[$formBase . '.period_start.' . $periodStartKey . '.date'] = 'nullable|date|period_start_end:' . $diff . ',' . $time_period;
+            $rules[$formBase . '.period_start.' . $periodStartKey . '.date']
+                = 'nullable|date|period_start_end:' . $diff . ',' . $time_period;
         }
 
         return $rules;
@@ -386,9 +422,15 @@ class OrganizationBaseRequest extends FormRequest
         $messages = [];
 
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = 'The @iso-date field is required.';
-            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date'] = 'The @iso-date field must be a date.';
-            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.period_start_end'] = 'The period must not be longer than one year.';
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = trans(
+                'validation.this_field_is_required'
+            );
+            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date'] = trans(
+                'validation.this_must_be_a_valid_date'
+            );
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.period_start_end'] = trans(
+                'validation.period_longer'
+            );
         }
 
         return $messages;
@@ -400,7 +442,7 @@ class OrganizationBaseRequest extends FormRequest
      * @param      $formFields
      * @param      $formBase
      * @param      $diff
-     * @param null $time_period
+     * @param  null  $time_period
      *
      * @return array
      */
@@ -409,7 +451,10 @@ class OrganizationBaseRequest extends FormRequest
         $rules = [];
 
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $rules[$formBase . '.period_end.' . $periodEndKey . '.date'] = sprintf('nullable|date|after:%s', $formBase . '.period_start.' . $periodEndKey . '.date|period_start_end:' . $diff . ',' . $time_period);
+            $rules[$formBase . '.period_end.' . $periodEndKey . '.date'] = sprintf(
+                'nullable|date|after:%s',
+                $formBase . '.period_start.' . $periodEndKey . '.date|period_start_end:' . $diff . ',' . $time_period
+            );
         }
 
         return $rules;
@@ -428,10 +473,18 @@ class OrganizationBaseRequest extends FormRequest
         $messages = [];
 
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = 'The @iso-date field is required.';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date'] = 'The @iso-date field must be a date.';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after'] = 'The @iso-date field must be a date after period-start date.';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.period_start_end'] = 'The period must not be longer than one year.';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = trans(
+                'validation.this_field_is_required'
+            );
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date'] = trans(
+                'validation.this_must_be_a_valid_date'
+            );
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after'] = trans(
+                'validation.iso_date_after'
+            );
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.period_start_end'] = trans(
+                'validation.period_longer'
+            );
         }
 
         return $messages;
@@ -452,9 +505,15 @@ class OrganizationBaseRequest extends FormRequest
 
         foreach ($formField as $budgetLineIndex => $budgetLine) {
             $rules[$formBase . '.value.' . $budgetLineIndex . '.amount'] = 'nullable|numeric|min:0';
-            $rules[$formBase . '.value.' . $budgetLineIndex . '.currency'] = sprintf('nullable|in:%s', implode(',', array_keys(
-                $this->getCodeListForRequestFiles('Currency', 'Activity')
-            )));
+            $rules[$formBase . '.value.' . $budgetLineIndex . '.currency'] = sprintf(
+                'nullable|in:%s',
+                implode(
+                    ',',
+                    array_keys(
+                        $this->getCodeListForRequestFiles('Currency', 'Activity')
+                    )
+                )
+            );
             $rules[$formBase . '.value.' . $budgetLineIndex . '.value_date'] = $valueDateRule;
         }
 
@@ -473,13 +532,48 @@ class OrganizationBaseRequest extends FormRequest
         $messages = [];
 
         foreach ($formField as $budgetLineIndex => $budgetLine) {
-            $messages[sprintf('%s.value.%s.amount.required_with', $formBase, $budgetLineIndex)] = 'The amount field is required with value.';
-            $messages[sprintf('%s.value.%s.amount.numeric', $formBase, $budgetLineIndex)] = 'The amount field must be a number.';
-            $messages[sprintf('%s.value.%s.amount.min', $formBase, $budgetLineIndex)] = 'The amount field must not be in negative.';
-            $messages[sprintf('%s.value.%s.value_date.date', $formBase, $budgetLineIndex)] = 'The @value-date must be a date.';
-            $messages[sprintf('%s.value.%s.value_date.required_with', $formBase, $budgetLineIndex)] = 'The @value-date is required with value,.';
-            $messages[sprintf('%s.value.%s.value_date.after_or_equal', $formBase, $budgetLineIndex)] = 'The @value-date field must be a date between period start and period end';
-            $messages[sprintf('%s.value.%s.value_date.before_or_equal', $formBase, $budgetLineIndex)] = 'The @value-date field must be a date between period start and period end';
+            $messages[sprintf(
+                '%s.value.%s.amount.required_with',
+                $formBase,
+                $budgetLineIndex
+            )]
+                = trans('validation.amount_with_value');
+            $messages[sprintf(
+                '%s.value.%s.amount.numeric',
+                $formBase,
+                $budgetLineIndex
+            )]
+                = trans('validation.amount_number');
+            $messages[sprintf(
+                '%s.value.%s.amount.min',
+                $formBase,
+                $budgetLineIndex
+            )]
+                = trans('validation.amount_negative');
+            $messages[sprintf(
+                '%s.value.%s.value_date.date',
+                $formBase,
+                $budgetLineIndex
+            )]
+                = trans('validation.date_is_invalid');
+            $messages[sprintf(
+                '%s.value.%s.value_date.required_with',
+                $formBase,
+                $budgetLineIndex
+            )]
+                = trans('validation.value_date_with_value');
+            $messages[sprintf(
+                '%s.value.%s.value_date.after_or_equal',
+                $formBase,
+                $budgetLineIndex
+            )]
+                = trans('validation.value_date_after_or_equal');
+            $messages[sprintf(
+                '%s.value.%s.value_date.before_or_equal',
+                $formBase,
+                $budgetLineIndex
+            )]
+                = trans('validation.value_date_after_or_equal');
         }
 
         return $messages;
@@ -497,13 +591,19 @@ class OrganizationBaseRequest extends FormRequest
         $rules = [];
         $rules[sprintf('%s.narrative', $formBase)] = 'unique_lang';
         $rules[sprintf('%s.narrative', $formBase)] = 'unique_default_lang';
-        $validLanguages = implode(',', array_keys(
-            $this->getCodeListForRequestFiles('Language', 'Activity', false, false)
-        ));
+        $validLanguages = implode(
+            ',',
+            array_keys(
+                $this->getCodeListForRequestFiles('Language', 'Activity', false, false)
+            )
+        );
 
         foreach ($formFields as $narrativeIndex => $narrative) {
             $rules[sprintf('%s.narrative.%s.language', $formBase, $narrativeIndex)][] = 'nullable';
-            $rules[sprintf('%s.narrative.%s.language', $formBase, $narrativeIndex)][] = sprintf('in:%s', $validLanguages);
+            $rules[sprintf('%s.narrative.%s.language', $formBase, $narrativeIndex)][] = sprintf(
+                'in:%s',
+                $validLanguages
+            );
             $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)][] = 'required_with_language';
         }
 
@@ -521,11 +621,22 @@ class OrganizationBaseRequest extends FormRequest
     public function getMessagesForBudgetOrExpenseLineNarrative($formFields, $formBase): array
     {
         $messages = [];
-        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'The narrative language field must be unique.';
-        $messages[sprintf('%s.narrative.unique_default_lang', $formBase)] = 'The narrative language field must be unique.';
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = trans(
+            'validation.narrative_language_unique'
+        );
+        $messages[sprintf(
+            '%s.narrative.unique_default_lang',
+            $formBase
+        )]
+            = trans('validation.narrative_language_unique');
 
         foreach ($formFields as $narrativeIndex => $narrative) {
-            $messages[sprintf('%s.narrative.%s.narrative.required_with_language', $formBase, $narrativeIndex)] = 'The narrative field is required with language field.';
+            $messages[sprintf(
+                '%s.narrative.%s.narrative.required_with_language',
+                $formBase,
+                $narrativeIndex
+            )]
+                = trans('validation.narrative_is_required_when_language_is_populated');
         }
 
         return $messages;
@@ -555,6 +666,12 @@ class OrganizationBaseRequest extends FormRequest
      */
     protected function getCodeListForRequestFiles($listName, $listType, bool $code = true): array
     {
-        return getCodeList($listName, $listType, $code, filterDeprecated: true, deprecationStatusMap: $this->getDeprecatedStatusMap());
+        return getCodeList(
+            $listName,
+            $listType,
+            $code,
+            filterDeprecated: true,
+            deprecationStatusMap: $this->getDeprecatedStatusMap()
+        );
     }
 }
