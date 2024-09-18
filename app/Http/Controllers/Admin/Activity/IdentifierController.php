@@ -73,10 +73,11 @@ class IdentifierController extends Controller
             return view('admin.activity.identifier.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_activity_title_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while opening activity title form.'
+                $translatedMessage
             );
         }
     }
@@ -95,18 +96,24 @@ class IdentifierController extends Controller
             DB::beginTransaction();
 
             if (!$this->identifierService->update($id, $request->except(['_method', '_token']))) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating iati-identifier.');
+                $translatedMessage = trans('activity_detail/identifier_controller.error_has_occurred_while_updating_iati_identifier');
+
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
             }
 
             DB::commit();
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Iati-identifier updated successfully.');
+            $translatedMessage = trans('activity_detail/identifier_controller.iati_identifier_updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
 
+            $translatedMessage = trans('activity_detail/identifier_controller.error_has_occurred_while_updating_iati_identifier');
+
             return response()->json(
-                ['success' => false, 'error' => 'Error has occurred while updating iati-identifier.']
+                ['success' => false, 'error' => $translatedMessage]
             );
         }
     }

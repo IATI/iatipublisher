@@ -27,6 +27,8 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use JsonException;
+use Throwable;
 
 /**
  * Class ActivityController.
@@ -76,15 +78,15 @@ class ActivityController extends Controller
     /**
      * ActivityController Constructor.
      *
-     * @param  ActivityService  $activityService
-     * @param  DatabaseManager  $db
-     * @param  ResultService  $resultService
-     * @param  TransactionService  $transactionService
-     * @param  ActivityValidatorResponseService  $activityValidatorResponseService
-     * @param  ImportActivityErrorService  $importActivityErrorService
-     * @param  OrganizationService  $organizationService
-     * @param  SettingService  $settingService
-     * @param  OrganizationOnboardingService  $organizationOnboardingService
+     * @param ActivityService $activityService
+     * @param DatabaseManager $db
+     * @param ResultService $resultService
+     * @param TransactionService $transactionService
+     * @param ActivityValidatorResponseService $activityValidatorResponseService
+     * @param ImportActivityErrorService $importActivityErrorService
+     * @param OrganizationService $organizationService
+     * @param SettingService $settingService
+     * @param OrganizationOnboardingService $organizationOnboardingService
      */
     public function __construct(
         ActivityService $activityService,
@@ -132,7 +134,7 @@ class ActivityController extends Controller
                 DB::commit();
             }
 
-            $organizationOnboarding = $organizationOnboarding->toArray();
+            $organizationOnboarding = $this->organizationOnboardingService->translateOrganisationOnboardingTitles($organizationOnboarding);
 
             // Data for user onboarding
             $currencies = getCodeList('Currency', 'Organization', filterDeprecated: true);
@@ -164,8 +166,9 @@ class ActivityController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/activity_controller.error_has_occurred_while_fetching_activities');
 
-            return response()->json(['success' => false, 'error' => 'Error has occurred while fetching activities.']);
+            return response()->json(['success' => false, 'error' => $translatedMessage]);
         }
     }
 
@@ -185,7 +188,7 @@ class ActivityController extends Controller
      * @param ActivityCreateRequest $request
      *
      * @return JsonResponse
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function store(ActivityCreateRequest $request): JsonResponse
     {
@@ -195,17 +198,20 @@ class ActivityController extends Controller
             $this->db->beginTransaction();
             $activity = $this->activityService->store($input);
             $this->db->commit();
-            Session::put('success', 'Activity has been created successfully.');
+            Session::put('success', trans('activity_detail/activity_controller.activity_has_been_created_successfully'));
+
+            $translatedMessage = trans('activity_detail/activity_controller.activity_created_successfully');
 
             return response()->json([
                 'success' => true,
-                'message' => 'Activity created successfully.',
-                'data' => $activity,
+                'message' => $translatedMessage,
+                'data'    => $activity,
             ]);
         } catch (Exception $e) {
             logger()->error($e);
+            $translatedMessage = trans('activity_detail/activity_controller.error_has_occurred_while_saving_activity');
 
-            return response()->json(['success' => false, 'message' => 'Error has occurred while saving activity.', 'data' => []]);
+            return response()->json(['success' => false, 'message' => $translatedMessage, 'data' => []]);
         }
     }
 
@@ -263,8 +269,9 @@ class ActivityController extends Controller
             );
         } catch (Exception $e) {
             logger()->error($e);
+            $translatedMessage = trans('activity_detail/activity_controller.error_has_occurred_while_opening_activity_detail_page');
 
-            return redirect()->route('admin.activities.index')->with('error', 'Error has occurred while opening activity detail page.');
+            return redirect()->route('admin.activities.index')->with('error', $translatedMessage);
         }
     }
 
@@ -275,7 +282,7 @@ class ActivityController extends Controller
      *
      * @return array
      *
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getElementJsonSchema($activity): array
     {
@@ -303,9 +310,9 @@ class ActivityController extends Controller
         }
 
         $element['transactions']['warning_info_text'] = match (true) {
-            $emptyRecipientRegionOrCountryTransactionCount > 0 && $emptySectorTransactionCount > 0 => 'Recipient Region , Recipient Country and Sector are declared at transaction level. Some of the transactions are missing these values.',
-            $emptyRecipientRegionOrCountryTransactionCount > 0 && $emptySectorTransactionCount === 0 => 'Recipient Region and Recipient Country is declared at transaction level. Some of the transactions are missing these values.',
-            $emptySectorTransactionCount > 0 && $emptyRecipientRegionOrCountryTransactionCount === 0  => 'Sector is declared at transaction level. Some of the transactions are missing this value.',
+            $emptyRecipientRegionOrCountryTransactionCount > 0 && $emptySectorTransactionCount > 0   => trans('activity_detail/activity_controller.recipient_region_recipient_country_and_sector_are_declared_at_transaction_level'),
+            $emptyRecipientRegionOrCountryTransactionCount > 0 && $emptySectorTransactionCount === 0 => trans('activity_detail/activity_controller.recipient_region_and_recipient_country_is_declared_at_transaction_level'),
+            $emptySectorTransactionCount > 0 && $emptyRecipientRegionOrCountryTransactionCount === 0 => trans('activity_detail/activity_controller.sector_is_declared_at_transaction_level'),
             default => ''
         };
 
@@ -460,7 +467,7 @@ class ActivityController extends Controller
      * Get activity detail data type.
      *
      * @return array
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getActivityDetailDataType(): array
     {
@@ -516,27 +523,33 @@ class ActivityController extends Controller
         ];
     }
 
-    /**
+    /*
+     * Get languages
+     *
      * @return JsonResponse
      */
     public function getActivitiesCountByPublishedStatus(): JsonResponse
     {
         try {
+            $translatedMessage = trans('activity_detail/activity_controller.fetched_activities_count_by_published_status');
+
             return response()->json(
                 [
                     'success' => true,
-                    'message' => 'Fetched activities count by published status',
+                    'message' => $translatedMessage,
                     'data'    => $this->activityService->getActivitiesCountByPublishedStatus((int) Auth::user()->organization_id),
                 ]
             );
         } catch (Exception $e) {
             logger()->error($e);
 
+            $translatedMessage = trans('activity_detail/activity_controller.failed_to_fetch_activities_count_error');
+
             return response()->json(
                 [
                     'success' => false,
-                    'message' => 'Failed to fetch activities count. Error: ' . $e->getMessage(),
-                    'data' => [],
+                    'message' => $translatedMessage . $e->getMessage(),
+                    'data'    => [],
                 ],
                 500
             );
@@ -554,7 +567,9 @@ class ActivityController extends Controller
     public function duplicateActivity(Request $request): JsonResponse
     {
         if (env('APP_ENV') === 'production') {
-            abort(403, 'This operation is not allowed in the production environment.');
+            $translatedMessage = trans('activity_detail/activity_controller.this_operation_is_not_allowed_in_the_production_environment');
+
+            abort(403, $translatedMessage);
         }
 
         $validated = $request->validate([
@@ -567,8 +582,10 @@ class ActivityController extends Controller
             'no_of_iterations' => $validated['no_of_iterations'],
         ]);
 
+        $translatedMessage = trans('activity_detail/activity_controller.activity_duplication_completed_successfully');
+
         return response()->json([
-            'message' => 'Activity duplication completed successfully.',
+            'message' => $translatedMessage,
         ]);
     }
 }

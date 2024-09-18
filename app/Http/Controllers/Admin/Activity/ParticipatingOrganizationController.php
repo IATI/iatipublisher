@@ -39,6 +39,7 @@ class ParticipatingOrganizationController extends Controller
 
     /**
      * Renders participating organization edit form.
+     * Renders participating organization edit form.
      *
      * @param int $id
      *
@@ -74,10 +75,11 @@ class ParticipatingOrganizationController extends Controller
             return view('admin.activity.participatingOrganization.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/participating_organization_controller.error_has_occurred_while_rendering_participating_organization_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while rendering participating-organization form.'
+                $translatedMessage
             );
         }
     }
@@ -94,14 +96,18 @@ class ParticipatingOrganizationController extends Controller
     {
         try {
             if (!$this->participatingOrganizationService->update($id, $request->except(['_token', '_method']))) {
-                return redirect()->route('admin.activities.show', $id)->with('error', 'Error has occurred while updating participating-organization.');
-            }
+                $translatedMessage = trans('activity_detail/participating_organization_controller.error_has_occurred_while_updating_participating_organization');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Participating-organization updated successfully.');
+                return redirect()->route('admin.activities.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('activity_detail/participating_organization_controller.participating_organization_updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e);
+            $translatedMessage = trans('activity_detail/participating_organization_controller.error_has_occurred_while_updating_participating_organization');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating participating-organization.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

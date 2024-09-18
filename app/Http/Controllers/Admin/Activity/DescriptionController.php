@@ -73,10 +73,11 @@ class DescriptionController extends Controller
             return view('admin.activity.description.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/description_controller.error_has_occurred_while_rendering_activity_description_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while rendering activity description form.'
+                $translatedMessage
             );
         }
     }
@@ -96,14 +97,18 @@ class DescriptionController extends Controller
             $activityDescription = $request->all();
 
             if (!$this->descriptionService->update($activityDescription, $activityData)) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating description.');
-            }
+                $translatedMessage = trans('activity_detail/description_controller.error_has_occurred_while_updating_description');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Description updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('activity_detail/description_controller.description_updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/description_controller.error_has_occurred_while_updating_description');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating description.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

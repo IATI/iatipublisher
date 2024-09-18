@@ -49,8 +49,9 @@ class NameController extends Controller
             return view('admin.organisation.forms.name.name', compact('form', 'organization', 'data'));
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('organisationDetail/name_controller.error_has_occurred_while_opening_organization_name_form');
 
-            return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while opening organization name form.');
+            return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
     }
 
@@ -65,14 +66,18 @@ class NameController extends Controller
     {
         try {
             if (!$this->nameService->update(Auth::user()->organization_id, $request->all())) {
-                return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while updating organization name.');
-            }
+                $translatedMessage = trans('organisationDetail/name_controller.error_has_occurred_while_updating_organization_name');
 
-            return redirect()->route('admin.organisation.index')->with('success', 'Organization name updated successfully.');
+                return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('organisationDetail/name_controller.organization_name_updated_successfully');
+
+            return redirect()->route('admin.organisation.index')->with('success', $translatedMessage);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('organisationDetail/name_controller.error_has_occurred_while_updating_organization_name');
 
-            return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while updating organization name.');
+            return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
     }
 }

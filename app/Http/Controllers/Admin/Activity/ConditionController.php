@@ -73,10 +73,11 @@ class ConditionController extends Controller
             return view('admin.activity.condition.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/condition_controller.error_has_occurred_while_rendering_activity_condition_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while rendering activity condition form.'
+                $translatedMessage
             );
         }
     }
@@ -95,14 +96,18 @@ class ConditionController extends Controller
             $activityCondition = $request->except(['_token', '_method']);
 
             if (!$this->conditionService->update($id, $activityCondition)) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity condition.');
-            }
+                $translatedMessage = trans('activity_detail/condition_controller.error_has_occurred_while_updating_activity_condition');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Activity condition updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('activity_detail/condition_controller.activity_condition_updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/condition_controller.error_has_occurred_while_updating_activity_condition');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity condition.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

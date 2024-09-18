@@ -72,10 +72,11 @@ class ScopeController extends Controller
             return view('admin.activity.scope.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/scope_controller.error_has_occurred_while_opening_activity_scope_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while opening activity-scope form.'
+                $translatedMessage
             );
         }
     }
@@ -94,14 +95,18 @@ class ScopeController extends Controller
             $activityScope = $request->get('activity_scope') !== null ? (int) $request->get('activity_scope') : null;
 
             if (!$this->scopeService->update($id, $activityScope)) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity-scope.');
-            }
+                $translatedMessage = trans('activity_detail/scope_controller.error_has_occurred_while_updating_activity_scope');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Activity-scope updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('activity_detail/scope_controller.activity_scope_updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/scope_controller.error_has_occurred_while_updating_activity_scope');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity-scope.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

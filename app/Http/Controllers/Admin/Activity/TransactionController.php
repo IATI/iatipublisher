@@ -78,10 +78,11 @@ class TransactionController extends Controller
             return view('admin.activity.transaction.transaction', compact('activity', 'transactions', 'types', 'toast'));
         } catch (Exception $e) {
             logger()->error($e);
+            $translatedMessage = trans('common/common.error_has_occurred_while_rendering_activity_transactions_listing');
 
             return redirect()->route('admin.activity.show', $activityId)->with(
                 'error',
-                'Error has occurred while rendering activity transactions listing.'
+                $translatedMessage
             );
         }
     }
@@ -99,10 +100,11 @@ class TransactionController extends Controller
         try {
             $transaction = $this->transactionService->getPaginatedTransactionAndStats($activityId, $page, $this->sanitizeRequest(request()));
             $stats = $this->transactionService->getTransactionCountStats($activityId);
+            $translatedMessage = trans('activity_detail/transaction_controller.transactions_fetched_successfully');
 
             return response()->json([
                 'success' => true,
-                'message' => 'Transactions fetched successfully',
+                'message' => $translatedMessage,
                 'data'    => [
                     'transactions' => $transaction,
                     'stats'        => $stats,
@@ -110,8 +112,9 @@ class TransactionController extends Controller
             ]);
         } catch (Exception $e) {
             logger()->error($e);
+            $translatedMessage = 'Error occurred while fetching the data.';
 
-            return response()->json(['success' => false, 'message' => 'Error occurred while fetching the data']);
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
     }
 
@@ -190,10 +193,11 @@ class TransactionController extends Controller
             return view('admin.activity.transaction.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e);
+            $translatedMessage = trans('activity_detail/transaction_controller.error_has_occurred_while_rendering_activity_transaction_form');
 
             return redirect()->route('admin.activity.show', $activityId)->with(
                 'error',
-                'Error has occurred while rendering activity transaction form.'
+                $translatedMessage
             );
         }
     }
@@ -214,17 +218,19 @@ class TransactionController extends Controller
                 'activity_id' => $activityId,
                 'transaction' => $transactionData,
             ]);
+            $translatedMessage = trans('activity_detail/transaction_controller.activity_transaction_created_successfully');
 
             return redirect()->route('admin.activity.transaction.show', [$activityId, $transaction['id']])->with(
                 'success',
-                'Activity transaction created successfully.'
+                $translatedMessage
             );
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/transaction_controller.error_has_occurred_while_creating_activity_transaction');
 
             return redirect()->route('admin.activity.transaction.index', $activityId)->with(
                 'error',
-                'Error has occurred while creating activity transaction.'
+                $translatedMessage
             );
         }
     }
@@ -249,10 +255,11 @@ class TransactionController extends Controller
             return view('admin.activity.transaction.detail', compact('transaction', 'activity', 'types', 'toast', 'element'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/transaction_controller.error_has_occurred_while_rendering_transaction_detail_page');
 
             return redirect()->route('admin.activity.transaction.index', $activityId)->with(
                 'error',
-                'Error has occurred while rending transaction detail page.'
+                $translatedMessage
             );
         }
     }
@@ -291,10 +298,11 @@ class TransactionController extends Controller
             return view('admin.activity.transaction.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/transaction_controller.error_has_occurred_while_rendering_activity_transaction_form');
 
             return redirect()->route('admin.activity.transaction.index', $activityId)->with(
                 'error',
-                'Error has occurred while rendering activity transaction form.'
+                $translatedMessage
             );
         }
     }
@@ -312,22 +320,26 @@ class TransactionController extends Controller
     {
         try {
             if (!$this->transactionService->update($transactionId, $request->except(['_method', '_token']))) {
+                $translatedMessage = trans('activity_detail/transaction_controller.error_has_occurred_while_updating_activity_transaction');
+
                 return redirect()->route('admin.activity.transaction.index', $activityId)->with(
                     'error',
-                    'Error has occurred while updating activity transaction.'
+                    $translatedMessage
                 );
             }
+            $translatedMessage = trans('activity_detail/transaction_controller.activity_transaction_updated_successfully');
 
             return redirect()->route('admin.activity.transaction.show', [$activityId, $transactionId])->with(
                 'success',
-                'Activity transaction updated successfully.'
+                $translatedMessage
             );
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/transaction_controller.error_has_occurred_while_updating_activity_transaction');
 
             return redirect()->route('admin.activity.transaction.index', $activityId)->with(
                 'error',
-                'Error has occurred while updating activity transaction.'
+                $translatedMessage
             );
         }
     }
@@ -344,22 +356,25 @@ class TransactionController extends Controller
     {
         try {
             $this->transactionService->deleteTransaction($transactionId);
+            $translatedMessage = trans('activity_detail/transaction_controller.transaction_deleted_successfully');
 
             $activity = $this->activityService->getActivity($id);
-            Session::flash('success', 'Transaction Deleted Successfully');
+            Session::flash('success', $translatedMessage);
 
             return response()->json([
                 'status'      => true,
-                'msg'         => 'Transaction Deleted Successfully',
+                'msg'         => $translatedMessage,
                 'activity_id' => $id,
             ]);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            Session::flash('error', 'Transaction Delete Error');
+            $translatedMessage = trans('activity_detail/transaction_controller.transaction_delete_error');
+
+            Session::flash('error', $translatedMessage);
 
             return response()->json([
                 'status'      => false,
-                'msg'         => 'Transaction Delete Error',
+                'msg'         => $translatedMessage,
                 'activity_id' => $id,
             ], 400);
         }
@@ -381,19 +396,21 @@ class TransactionController extends Controller
             DB::beginTransaction();
             $this->transactionService->bulkDeleteTransactions($transactionIds);
             DB::commit();
+            $translatedMessage = trans('activity_detail/transaction_controller.transactions_deleted_successfully');
 
             return response()->json([
                 'status'      => true,
-                'msg'         => 'Transactions Deleted Successfully',
+                'msg'         => $translatedMessage,
                 'activity_id' => $id,
             ], 200);
         } catch (Exception $e) {
             DB::rollback();
             logger()->error($e);
+            $translatedMessage = trans('activity_detail/transaction_controller.failed_to_bulk_delete_transactions');
 
             return response()->json([
                 'status'      => false,
-                'msg'         => 'Failed to bulk delete transactions.',
+                'msg'         => $translatedMessage,
                 'activity_id' => $id,
             ], 400);
         }

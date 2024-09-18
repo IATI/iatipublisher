@@ -73,10 +73,11 @@ class CountryBudgetItemController extends Controller
             return view('admin.activity.countryBudgetItem.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/country_budget_item_controller.error_has_occurred_while_rendering_country_budget_item_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while rendering country-budget-item form.'
+                $translatedMessage
             );
         }
     }
@@ -95,14 +96,18 @@ class CountryBudgetItemController extends Controller
             $activityCountryBudgetItem = $request->except(['_token', '_method']);
 
             if (!$this->countryBudgetItemService->update($id, $activityCountryBudgetItem)) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating country-budget-item.');
-            }
+                $translatedMessage = trans('activity_detail/country_budget_item_controller.error_has_occurred_while_rendering_country_budget_item_form');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Country-budget-item updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('activity_detail/country_budget_item_controller.country_budget_item_updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/country_budget_item_controller.error_has_occurred_while_rendering_country_budget_item_form');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating country-budget-item.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

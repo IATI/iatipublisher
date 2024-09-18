@@ -74,10 +74,11 @@ class LocationController extends Controller
             return view('admin.activity.location.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/location_controller.error_has_occurred_while_rendering_location_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while rendering location form.'
+                $translatedMessage
             );
         }
     }
@@ -94,14 +95,18 @@ class LocationController extends Controller
     {
         try {
             if (!$this->locationService->update($id, $request->except(['_token', '_method']))) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating location.');
-            }
+                $translatedMessage = trans('activity_detail/location_controller.error_has_occurred_while_updating_location');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Location updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('activity_detail/location_controller.location_updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/location_controller.error_has_occurred_while_updating_location');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating location.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

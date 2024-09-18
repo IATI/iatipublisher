@@ -6,21 +6,22 @@
     <div class="section__container">
       <div class="section__title">
         <h2 class="text-2xl font-bold md:text-4xl">
-          Create IATI Publisher Account and IATI Registry Account
+          {{ translatedData['public.register.not_registered_page.heading'] }}
         </h2>
 
         <p>
-          Start your IATI publishing journey by creating accounts in both IATI
-          Publisher and the IATI Registry
+          {{
+            translatedData['public.register.not_registered_page.start_journey']
+          }}
         </p>
       </div>
       <div class="section__wrapper flex justify-center">
         <EmailVerification v-if="checkStep('5')" :email="formData['email']" />
         <div v-else class="form input__field" @keyup.enter="goToNextForm">
           <aside class="mb-4 block border-b border-b-n-10 pb-4 xl:hidden">
-            <span class="text-base font-bold"
-              >Step {{ getCurrentStep() }} out of 5</span
-            >
+            <span class="text-base font-bold">
+              {{ translatedStepXOutOf5 }}
+            </span>
             <ul class="relative mt-3 text-sm text-n-40">
               <li
                 v-for="(form, key, i) in registerForm"
@@ -68,7 +69,9 @@
               <div class="flex items-center">
                 <small class="label">
                   <span class="required-icon px-1">*</span>
-                  <span>Mandatory fields</span>
+                  <span>{{
+                    translatedData['common.common.mandatory_fields']
+                  }}</span>
                 </small>
               </div>
             </div>
@@ -183,16 +186,17 @@
               @click="goToPreviousForm()"
             >
               <svg-vue class="mr-3 cursor-pointer" icon="left-arrow" />
-              Go back
+              {{ translatedData['common.common.go_back'] }}
             </button>
             <span
               v-if="checkStep(1)"
               class="pb-4 text-sm font-normal text-n-40 sm:pb-0"
-              >Already have an account?
+            >
+              {{ translatedData['common.common.already_have_an_acoount'] }}
               <a
                 class="border-b-2 border-b-transparent font-bold text-bluecoral hover:border-b-2 hover:border-b-turquoise hover:text-bluecoral"
                 href="/"
-                >Sign In.</a
+                >{{ translatedData['common.common.sign_in'] }} .</a
               ></span
             >
             <button
@@ -200,26 +204,26 @@
               class="btn btn-next"
               @click="goToNextForm()"
             >
-              Next Step
+              {{ translatedData['public.register.commons.next_step'] }}
               <svg-vue class="text-2xl" icon="right-arrow" />
             </button>
           </div>
           <div v-if="checkStep(2)" class="mt-6 text-center">
-            <span class="text-sm font-normal text-n-40"
-              >Already have an account?
+            <span class="text-sm font-normal text-n-40">
+              {{ translatedData['common.common.already_have_an_acoount'] }}
               <a
                 class="border-b-2 border-b-transparent font-bold text-bluecoral hover:border-b-2 hover:border-b-turquoise hover:text-bluecoral"
                 href="/"
-                >Sign In.</a
+                >{{ translatedData['common.common.sign_in'] }} .</a
               ></span
             >
           </div>
         </div>
 
         <aside class="register__sidebar hidden xl:block">
-          <span class="text-base font-bold"
-            >Step {{ getCurrentStep() }} out of 5</span
-          >
+          <span class="text-base font-bold">
+            {{ translatedStepXOutOf5 }}
+          </span>
           <ul class="relative mt-6 text-sm text-n-40">
             <li
               v-for="(form, key, i) in registerForm"
@@ -262,7 +266,15 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, watch } from 'vue';
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+  watchEffect,
+} from 'vue';
 import axios from 'axios';
 import EmailVerification from './EmailVerification.vue';
 import HoverText from './../../components/HoverText.vue';
@@ -270,6 +282,7 @@ import Multiselect from '@vueform/multiselect';
 import Loader from '../../components/Loader.vue';
 
 import { generateUsername } from 'Composable/utils';
+import LanguageService from 'Services/language';
 
 export default defineComponent({
   components: {
@@ -287,6 +300,7 @@ export default defineComponent({
   },
 
   setup(props) {
+    const translatedData = ref({});
     const step = ref(1);
     const publisherExists = ref(true);
     const isLoaderVisible = ref(false);
@@ -407,6 +421,275 @@ export default defineComponent({
       return (formStep: string | number) => {
         return parseInt(formStep.toString()) === step.value;
       };
+    });
+
+    /**
+     * For translated : Step 1 out of 5 and stuff.
+     */
+    const translatedStepXOutOf5 = ref('');
+
+    /**
+     * For translation
+     * Since actual texts are inside a reactive objects, we need a watch effect.
+     * */
+    watchEffect(() => {
+      if (translatedData.value && registerForm) {
+        // Form 1
+        registerForm[1].title =
+          translatedData.value['common.common.publisher_information'];
+        registerForm[1].description =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.publisher_information_description'
+          ];
+        registerForm[1].hover_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.publisher_information_hover_text'
+          ];
+        registerForm[1].fields.publisher_name.label =
+          translatedData.value['common.common.publisher_name'];
+        registerForm[1].fields.publisher_name.placeholder =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.publisher_name_placeholder'
+          ];
+        registerForm[1].fields.publisher_name.hover_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.publisher_name_hover_text'
+          ];
+        registerForm[1].fields.publisher_id.label =
+          translatedData.value['common.common.publisher_id'];
+        registerForm[1].fields.publisher_id.placeholder =
+          translatedData.value['common.common.type_your_publisher_id_here'];
+        registerForm[1].fields.publisher_id.hover_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.publisher_id_hover_text'
+          ];
+        registerForm[1].fields.country.label =
+          translatedData.value['common.common.country'];
+        registerForm[1].fields.country.placeholder =
+          translatedData.value['common.common.select_a_country'];
+        registerForm[1].fields.country.hover_text =
+          translatedData.value[
+            'common.common.add_the_location_of_your_organisation'
+          ];
+        registerForm[1].fields.registration_agency.label =
+          translatedData.value[
+            'common.common.organisation_registration_agency'
+          ];
+        registerForm[1].fields.registration_agency.placeholder =
+          translatedData.value[
+            'common.common.select_an_organisation_registration_agency'
+          ];
+        registerForm[1].fields.registration_agency.hover_text =
+          translatedData.value[
+            'common/common.organisation_identifier_attributes_registration_number_label'
+          ];
+        registerForm[1].fields.registration_number.label =
+          translatedData.value[
+            'common/common.organisation_identifier_attributes_registration_number_label'
+          ];
+        registerForm[1].fields.registration_number.placeholder =
+          translatedData.value[
+            'common.common.type_your_registration_number_here'
+          ];
+        registerForm[1].fields.registration_number.hover_text =
+          translatedData.value[
+            'common.common.organisation_identifier_attributes_registration_number_label'
+          ];
+        registerForm[1].fields.registration_number.help_text =
+          translatedData.value['common.common.for_example_123456'];
+        registerForm[1].fields.identifier.label =
+          translatedData.value['common.common.iati_organisation_identifier'];
+        registerForm[1].fields.identifier.placeholder =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.identifier_placeholder'
+          ];
+        registerForm[1].fields.identifier.hover_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.identifier_hover_text'
+          ];
+        registerForm[1].fields.identifier.help_text =
+          translatedData.value['common.common.this_is_autogenerated'];
+        registerForm[1].fields.publisher_type.label =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.organisation_type'
+          ];
+        registerForm[1].fields.publisher_type.placeholder =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.organisation_type_placeholder'
+          ];
+        registerForm[1].fields.publisher_type.hover_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.organisation_type_hover_text'
+          ];
+        registerForm[1].fields.license_id.label =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.data_licence'
+          ];
+        registerForm[1].fields.license_id.placeholder =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.data_licence_placeholder'
+          ];
+        registerForm[1].fields.license_id.hover_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.data_licence_hover_text'
+          ];
+        registerForm[1].fields.image_url.label =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.publisher_logo_url'
+          ];
+        registerForm[1].fields.image_url.placeholder =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.publisher_logo_url_placeholder'
+          ];
+        registerForm[1].fields.image_url.hover_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.publisher_logo_url_hover_text'
+          ];
+        registerForm[1].fields.description.label =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.organisation_description'
+          ];
+        registerForm[1].fields.description.placeholder =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.organisation_description_placeholder'
+          ];
+        registerForm[1].fields.description.hover_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.organisation_description_hover_text'
+          ];
+        // Form 2
+        registerForm[2].title =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.heading_two'
+          ];
+        registerForm[2].description =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.contact_information_description'
+          ];
+        registerForm[2].fields.contact_email.label =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.contact_email'
+          ];
+        registerForm[2].fields.contact_email.hover_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.contact_email_hover_text'
+          ];
+
+        registerForm[2].fields.website.label =
+          translatedData.value[
+            'common.common.contact_info_sub_elements_website_label'
+          ];
+
+        registerForm[2].fields.website.hover_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.website_hover_text'
+          ];
+        registerForm[2].fields.website.placeholder =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.website_placeholder'
+          ];
+        registerForm[2].fields.address.label =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.address'
+          ];
+        registerForm[2].fields.address.hover_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.address_hover_text'
+          ];
+        registerForm[2].fields.address.placeholder =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.address_placeholder'
+          ];
+        // Form 3
+        registerForm[3].title =
+          translatedData.value['common.common.email_verification'];
+        registerForm[3].description =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.publishing_additional_information_description'
+          ];
+        registerForm[3].fields.source.label =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.source'
+          ];
+        registerForm[3].fields.source.hover_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.source_hover_text'
+          ];
+        registerForm[3].fields.source.placeholder =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.source_placeholder'
+          ];
+        registerForm[3].fields.default_language.label =
+          translatedData.value['elements.label.default_language'];
+        registerForm[3].fields.default_language.placeholder =
+          translatedData.value['common.common.select_your_default_language'];
+
+        registerForm[3].fields.record_exclusions.label =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.record_exclusions'
+          ];
+        registerForm[3].fields.record_exclusions.hover_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.record_exclusions_hover_text'
+          ];
+        registerForm[3].fields.record_exclusions.placeholder =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.record_exclusions_placeholder'
+          ];
+        // Form 4
+        registerForm[4].title =
+          translatedData.value['common.common.administrator_information'];
+        registerForm[4].description =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.administrator_information_description'
+          ];
+        registerForm[4].fields.full_name.label =
+          translatedData.value['common.common.full_name'];
+        registerForm[4].fields.full_name.placeholder =
+          translatedData.value['common.common.type_your_full_name_here'];
+
+        registerForm[4].fields.email.label =
+          translatedData.value['common.common.email_address'];
+        registerForm[4].fields.email.placeholder =
+          translatedData.value['common.common.type_valid_email_here'];
+
+        registerForm[4].fields.username.label =
+          translatedData.value['common.common.username'];
+        registerForm[4].fields.username.placeholder =
+          translatedData.value['common.common.type_username_here'];
+        registerForm[4].fields.username.hover_text =
+          translatedData.value[
+            'common.common.you_will_need_this_later_to_login'
+          ];
+        registerForm[4].fields.password.label =
+          translatedData.value['common.common.password'];
+        registerForm[4].fields.password.placeholder =
+          translatedData.value['common.common.type_password_here'];
+
+        registerForm[4].fields.password.help_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.password_help_text'
+          ];
+        registerForm[4].fields.password_confirmation.label =
+          translatedData.value['common.common.confirm_password'];
+        registerForm[4].fields.password_confirmation.placeholder =
+          translatedData.value['common.common.type_password_here'];
+        registerForm[4].fields.password_confirmation.help_text =
+          translatedData.value[
+            'public.register.not_registered_page.register_section.confirm_password_help_text'
+          ];
+        // Form 5
+        registerForm[5].title =
+          translatedData.value['common.common.email_verification'];
+        registerForm[5].description =
+          translatedData.value[
+            'common.common.please_verify_and_activate_your_iati_publisher_account'
+          ];
+
+        translatedStepXOutOf5.value = translatedData.value[
+          'public.register.not_registered_page.step_count_out_of_5'
+        ].replace(':count', getCurrentStep());
+      }
     });
 
     /**
@@ -943,6 +1226,14 @@ export default defineComponent({
       step.value -= 1;
     }
 
+    onMounted(() => {
+      LanguageService.getTranslatedData('common,public')
+        .then((response) => {
+          translatedData.value = response.data;
+        })
+        .catch((error) => console.log(error));
+    });
+
     return {
       registerForm,
       formData,
@@ -959,6 +1250,8 @@ export default defineComponent({
       step,
       resize,
       textarea,
+      translatedData,
+      translatedStepXOutOf5,
     };
   },
 });

@@ -53,9 +53,15 @@ class DefaultTiedStatusRequest extends ActivityBaseRequest
         }
 
         return [
-            'default_tied_status' => sprintf('nullable|in:%s', implode(',', array_keys(
-                $this->getCodeListForRequestFiles('TiedStatus', 'Activity', false)
-            ))),
+            'default_tied_status' => sprintf(
+                'nullable|in:%s',
+                implode(
+                    ',',
+                    array_keys(
+                        $this->getCodeListForRequestFiles('TiedStatus', 'Activity', false)
+                    )
+                )
+            ),
         ];
     }
 
@@ -67,8 +73,8 @@ class DefaultTiedStatusRequest extends ActivityBaseRequest
     public function messages(): array
     {
         return [
-            'in'   => 'The default tied status does not exist.',
-            'size' => 'The default tied status cannot have more than one value.',
+            'in'   => trans('validation.activity_default_tied_status.in'),
+            'size' => trans('validation.activity_default_tied_status.size'),
         ];
     }
 }

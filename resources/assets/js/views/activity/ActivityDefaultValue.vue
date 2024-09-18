@@ -32,7 +32,11 @@
                 <button>
                   <HoverText
                     name="Default Currency"
-                    hover-text="The currency in which you report your financial transactions. You can later manually change the currency on individual transactions and budgets if required."
+                    :hover-text="
+                      translatedData[
+                        'common.common.the_currency_in_which_you_report_your_financial_transactions'
+                      ]
+                    "
                     :show-iati-reference="true"
                   />
                 </button>
@@ -70,7 +74,11 @@
                 <button>
                   <HoverText
                     name="Default Language"
-                    hover-text="The language in which you provide data on your activities. You can later manually change the language on individual text if required."
+                    :hover-text="
+                      translatedData[
+                        'common.common.the_language_in_which_you_provide_data_on_your_activities'
+                      ]
+                    "
                     :show-iati-reference="true"
                   />
                 </button>
@@ -191,7 +199,9 @@
                 id="humanitarian"
                 v-model="defaultValues.humanitarian"
                 class="vue__select"
-                placeholder="Select Humanitarian here"
+                :placeholder="
+                  translatedData['common.common.select_humanitarian_here']
+                "
                 :options="humanitarian"
                 :searchable="true"
               />

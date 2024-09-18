@@ -4,23 +4,31 @@
       <div class="mb-4">
         <div class="title mb-6 flex">
           <svg-vue class="mr-1 mt-0.5 text-lg text-crimson-40" icon="delete" />
-          <b>Delete element</b>
+          <b>{{
+            translatedData[
+              'organisationDetail.organisation_elements_detail.delete_element'
+            ]
+          }}</b>
         </div>
         <div class="rounded-lg bg-rose p-4">
-          Are you sure you want to delete this element?
+          {{
+            translatedData[
+              'organisationDetail.organisation_elements_detail.are_you_sure_you_want_to_delete_this_element'
+            ]
+          }}
         </div>
       </div>
       <div class="flex justify-end">
         <div class="inline-flex">
           <BtnComponent
             class="bg-white px-6 uppercase"
-            text="Go Back"
+            :text="translatedData['common.common.go_back']"
             type=""
             @click="deleteValue = false"
           />
           <BtnComponent
             class="space"
-            text="Delete"
+            :text="translatedData['common.common.delete']"
             type="primary"
             @click="deleteElement(title)"
           />
@@ -56,7 +64,7 @@
             ></svg-vue>
           </template>
           <div class="title text-sm font-bold">
-            {{ replaceUnderscore(title) }}
+            {{ getTranslatedElementName(title) }}
           </div>
           <div
             class="status ml-2.5 flex text-xs leading-5"
@@ -66,8 +74,12 @@
             }"
           >
             <b class="mr-2 text-base leading-3">.</b>
-            <span v-if="status">completed</span>
-            <span v-else>not completed</span>
+            <span v-if="status">{{
+              translatedData['common.common.completed']
+            }}</span>
+            <span v-else>{{
+              translatedData['common.common.not_completed']
+            }}</span>
           </div>
         </div>
         <div class="icons flex flex-row-reverse items-center">
@@ -77,7 +89,11 @@
             :href="'/organisation/' + title"
           >
             <svg-vue class="mr-0.5 text-base" icon="edit"></svg-vue>
-            <span class="hidden text-[10px] lg:block">Edit</span>
+            <span class="hidden text-[10px] lg:block">{{
+              translatedData[
+                'organisationDetail.organisation_elements_detail.edit'
+              ]
+            }}</span>
           </a>
 
           <HoverText
@@ -99,7 +115,9 @@
             @click="deleteValue = true"
           >
             <svg-vue class="mr-0.5 text-base" icon="delete"></svg-vue>
-            <span class="hidden text-[10px] lg:block">Delete</span>
+            <span class="hidden text-[10px] lg:block">{{
+              translatedData['common.common.delete']
+            }}</span>
           </a>
         </div>
       </div>
@@ -124,7 +142,11 @@
                 {{ post.narrative }}
               </span>
             </div>
-            <span v-else class="text-sm italic">Title Missing</span>
+            <span v-else class="text-sm italic">{{
+              translatedData[
+                'organisationDetail.organisation_elements_detail.title_missing'
+              ]
+            }}</span>
             <div v-if="i !== data.content.length - 1" class="mb-4"></div>
           </div>
         </div>
@@ -165,18 +187,18 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, provide, inject } from 'vue';
+import { defineProps, inject, provide, Ref } from 'vue';
 import HoverText from 'Components/HoverText.vue';
 import { orgMandatoryElements } from 'Composable/coreElements';
 
 import {
+  DocumentLink,
+  RecipientCountryBudget,
   ReportingOrganisation,
-  TotalBudget,
   ReportingOrgBudget,
   ReportingRegionBudget,
-  RecipientCountryBudget,
+  TotalBudget,
   TotalExpenditure,
-  DocumentLink,
 } from 'Organisation/elements/Index';
 import BtnComponent from 'Components/ButtonComponent.vue';
 import Modal from 'Components/PopupModal.vue';
@@ -234,10 +256,10 @@ if (props.width === 'full') {
 
 provide('orgTypes', props.types);
 
-const replaceUnderscore = (string) => {
-  let regex = /_/g;
-  let result = string.replace(regex, '-');
-  return result;
+const getTranslatedElementName = (string) => {
+  const translationKey = `elements.name.${string}`;
+
+  return translatedData.value[translationKey];
 };
 
 let notDeletableElements = ['organisation_identifier', 'name', 'reporting_org'];
@@ -248,6 +270,7 @@ interface ToastDataTypeface {
   visibility: boolean;
 }
 const toastData = inject('toastData') as ToastDataTypeface;
+const translatedData = inject('translatedData') as Ref;
 
 const deleteElement = (element) => {
   deleteValue.value = false;
@@ -270,7 +293,9 @@ const deleteElement = (element) => {
     })
     .catch(() => {
       toastData.message =
-        "Couldn't delete the organisation element due to system error.";
+        translatedData[
+          'organisationDetail.organisation_elements_detail.couldnt_delete_the_organisation_element_due_to_system_error'
+        ];
       toastData.type = false;
       toastData.visibility = true;
     });

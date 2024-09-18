@@ -75,10 +75,11 @@ class TitleController extends Controller
             return view('admin.activity.title.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_activity_title_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while opening activity title form.'
+                $translatedMessage
             );
         }
     }
@@ -95,14 +96,18 @@ class TitleController extends Controller
     {
         try {
             if (!$this->titleService->update($id, $request->all())) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity title.');
-            }
+                $translatedMessage = trans('activity_detail/title_controller.error_has_occurred_while_updating_activity_title');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Activity title updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('activity_detail/title_controller.activity_title_updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/title_controller.error_has_occurred_while_updating_activity_title');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity title.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

@@ -51,8 +51,9 @@ class RecipientCountryBudgetController extends Controller
             return view('admin.organisation.forms.recipientCountryBudget.recipientCountryBudget', compact('form', 'organization', 'data'));
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('organisationDetail/recipient_country_budget_controller.error_has_occurred_while_opening_organization_recipient_country_budget_form');
 
-            return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while opening organization recipient-country-budget form.');
+            return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
     }
 
@@ -67,14 +68,18 @@ class RecipientCountryBudgetController extends Controller
     {
         try {
             if (!$this->recipientCountryBudgetService->update(Auth::user()->organization_id, $request->all())) {
-                return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while updating organization recipient-country-budget.');
-            }
+                $translatedMessage = trans('organisationDetail/recipient_country_budget_controller.error_has_occurred_while_updating_organization_recipient_country_budget');
 
-            return redirect()->route('admin.organisation.index')->with('success', 'Organization recipient-country-budget updated successfully.');
+                return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('organisationDetail/recipient_country_budget_controller.organization_recipient_country_budget_updated_successfully');
+
+            return redirect()->route('admin.organisation.index')->with('success', $translatedMessage);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('organisationDetail/recipient_country_budget_controller.error_has_occurred_while_updating_organization_recipient_country_budget');
 
-            return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while updating organization recipient-country-budget.');
+            return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
     }
 }

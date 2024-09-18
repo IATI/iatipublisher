@@ -74,7 +74,17 @@ if (!function_exists('readElementJsonSchema')) {
      */
     function readElementJsonSchema(): array
     {
-        return readJsonFile('IATI/Data/elementJsonSchema.json');
+        $jsonContentAsAssocArray = readJsonFile('IATI/Data/elementJsonSchema.json');
+
+        $jsonContentAsFlattenedArray = Arr::dot($jsonContentAsAssocArray);
+
+        foreach ($jsonContentAsFlattenedArray as $key => &$value) {
+            if (preg_match('/label|placeholder|hover_text|help_text/', $key)) {
+                $value = trans($value);
+            }
+        }
+
+        return Arr::undot($jsonContentAsFlattenedArray);
     }
 }
 
@@ -87,7 +97,19 @@ if (!function_exists('readOrganizationElementJsonSchema')) {
      */
     function readOrganizationElementJsonSchema(): array
     {
-        return readJsonFile('IATI/Data/organizationElementJsonSchema.json');
+        $jsonContentAsAssocArray = readJsonFile('IATI/Data/organizationElementJsonSchema.json');
+
+        $jsonContentAsFlattenedArray = Arr::dot($jsonContentAsAssocArray);
+
+        foreach ($jsonContentAsFlattenedArray as $key => &$value) {
+            if (preg_match('/label|placeholder|hover_text|help_text/', $key)) {
+                {
+                    $value = trans($value);
+                }
+            }
+        }
+
+        return Arr::undot($jsonContentAsFlattenedArray);
     }
 }
 

@@ -74,10 +74,11 @@ class OtherIdentifierController extends Controller
             return view('admin.activity.otherIdentifier.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/other_identifier_controller.error_has_occurred_while_opening_other_identifier_edit_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while opening other-identifier edit form.'
+                $translatedMessage
             );
         }
     }
@@ -94,14 +95,18 @@ class OtherIdentifierController extends Controller
     {
         try {
             if (!$this->otherIdentifierService->update($id, $request->get('other_identifier'))) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating other-identifier.');
-            }
+                $translatedMessage = trans('activity_detail/other_identifier_controller.error_has_occurred_while_updating_other_identifier');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Other-identifier updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('activity_detail/other_identifier_controller.other_identifier_updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/other_identifier_controller.error_has_occurred_while_updating_other_identifier');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating other-identifier.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

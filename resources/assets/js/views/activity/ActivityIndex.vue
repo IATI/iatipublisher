@@ -17,7 +17,11 @@
           >
             <button @click="filterByPublishStatus('all')">
               <svg-vue icon="bill" class="n-10" />
-              <span>All ({{ allPublishStatusCountMap.all }})</span>
+              <span>
+                {{ translatedData['activity_index.activity_index.all'] }} ({{
+                  allPublishStatusCountMap.all
+                }})
+              </span>
             </button>
           </div>
           <div
@@ -26,7 +30,10 @@
           >
             <button @click="filterByPublishStatus('published')">
               <svg-vue icon="approved-cloud" />
-              <span>Published ({{ allPublishStatusCountMap.published }})</span>
+              <span>
+                {{ translatedData['activity_index.activity_index.published'] }}
+                ({{ allPublishStatusCountMap.published }})
+              </span>
             </button>
           </div>
           <div
@@ -37,11 +44,14 @@
           >
             <button @click="filterByPublishStatus('ready_for_republishing')">
               <svg-vue icon="cancel-cloud" />
-              <span
-                >Ready for republishing ({{
-                  allPublishStatusCountMap.ready_for_republishing
-                }})</span
-              >
+              <span>
+                {{
+                  translatedData[
+                    'activity_index.activity_index.ready_for_republishing'
+                  ]
+                }}
+                ({{ allPublishStatusCountMap.ready_for_republishing }})
+              </span>
             </button>
           </div>
           <div
@@ -50,7 +60,11 @@
           >
             <button @click="filterByPublishStatus('draft')">
               <svg-vue icon="document-write" />
-              <span>Draft ({{ allPublishStatusCountMap.draft }})</span>
+              <span>
+                {{ translatedData['activity_index.activity_index.draft'] }} ({{
+                  allPublishStatusCountMap.draft
+                }})
+              </span>
             </button>
           </div>
         </div>
@@ -129,6 +143,7 @@ import ErrorMessage from 'Components/ErrorMessage.vue';
 import { useStore } from 'Store/activities/index';
 import { detailStore } from 'Store/activities/show';
 import { useStorage } from '@vueuse/core';
+import Language from 'Services/language';
 
 const store = useStore();
 const activityStore = detailStore();
@@ -244,8 +259,7 @@ export default defineComponent({
 
     const paginationReset = ref(false);
     const isDisabledPublish = ref(false);
-
-    fetchActivitiesCountByPublishStatus();
+    const translatedData = ref({});
 
     // local storage for publishing
     interface paType {
@@ -423,7 +437,14 @@ export default defineComponent({
       }
     );
 
-    onMounted(() => {
+    onMounted(async () => {
+      translatedData.value = (
+        await Language.getTranslatedData(
+          'common,activity_index,onboarding,elements'
+        )
+      ).data;
+
+      fetchActivitiesCountByPublishStatus();
       publishingActivities.value = pa.value?.publishingActivities;
 
       checkXlsStatus();
@@ -449,6 +470,12 @@ export default defineComponent({
           isEmpty.value = !response.data.data.length;
         }
       });
+
+      // LanguageService.getTranslatedData('common,activity')
+      //   .then((response) => {
+      //     translatedData.value = response.data;
+      //   })
+      //   .catch((error) => console.log(error));
     });
     watch(
       () => toastData.visibility,
@@ -509,7 +536,9 @@ export default defineComponent({
       visibility: false,
       refreshMessageType: true,
       refreshMessage:
-        'Activity has been published successfully, refresh to see changes',
+        translatedData.value[
+          'common.common.activity_has_been_published_successfully_refresh_to_see_changes'
+        ],
     });
 
     function filterByPublishStatus(status) {
@@ -590,6 +619,7 @@ export default defineComponent({
     provide('activities', publishingActivities as Ref);
     provide('completed', uploadComplete);
     provide('defaultLanguage', props.defaultLanguage);
+    provide('translatedData', translatedData);
 
     return {
       store,
@@ -625,6 +655,7 @@ export default defineComponent({
       currentPage,
       paginationReset,
       isDisabledPublish,
+      translatedData,
     };
   },
 });

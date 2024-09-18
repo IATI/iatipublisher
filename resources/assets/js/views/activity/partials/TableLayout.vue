@@ -4,10 +4,12 @@
       <thead>
         <tr class="bg-n-10">
           <th id="sn" scope="col">
-            <span>S.N</span>
+            <span>{{ translatedData['activity_index.table_layout.s_n'] }}</span>
           </th>
           <th id="title" scope="col">
-            <span>Activity Title</span>
+            <span>{{
+              translatedData['activity_index.table_layout.activity_title']
+            }}</span>
           </th>
           <th id="publishing-progress" scope="col" class="progress-bar-header">
             <a
@@ -28,14 +30,22 @@
               <span class="sorting-indicator" :class="sortingDirection()">
                 <svg-vue :icon="`${sortingDirection()}-arrow`" />
               </span>
-              <span>Updated On</span>
+              <span>{{
+                translatedData['activity_index.table_layout.updated_on']
+              }}</span>
             </a>
           </th>
           <th id="status" scope="col">
-            <span class="hidden">Status</span>
+            <span class="hidden">{{
+              translatedData[
+                'common.common.budget_attributes_budget_status_label'
+              ]
+            }}</span>
           </th>
           <th id="publish" scope="col">
-            <span class="hidden">Publish</span>
+            <span class="hidden">{{
+              translatedData['common.common.publish']
+            }}</span>
           </th>
           <th id="cb" scope="col">
             <span>
@@ -83,7 +93,7 @@
                     datum['default_title_narrative'] &&
                     datum['default_title_narrative'] !== ''
                       ? datum['default_title_narrative']
-                      : 'Untitled'
+                      : translatedData['common.common.untitled']
                   }}</a
                 >
                 <div class="w-52">
@@ -91,7 +101,7 @@
                     datum['default_title_narrative'] &&
                     datum['default_title_narrative'] !== ''
                       ? datum['default_title_narrative']
-                      : 'Untitled'
+                      : translatedData['common.common.untitled']
                   }}</span>
                 </div>
               </div>
@@ -147,6 +157,7 @@
                 :activity-id="datum['id']"
               />
 
+              <!--TODO: Review after 1567-->
               <Publish
                 v-if="datum['status'] !== 'published'"
                 :linked-to-iati="datum.linked_to_iati"
@@ -184,14 +195,18 @@
         <td v-if="loader" colspan="5" class="text-center">
           <div colspan="5" class="spin"></div>
         </td>
-        <td v-else colspan="5" class="text-center">Activities not found</td>
+        <td v-else colspan="5" class="text-center">
+          {{
+            translatedData['activity_index.table_layout.activities_not_found']
+          }}
+        </td>
       </tbody>
     </table>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, watch, ref } from 'vue';
+import { defineProps, inject, Ref, ref, watch } from 'vue';
 import moment from 'moment';
 
 // Vuex Store
@@ -208,8 +223,10 @@ const props = defineProps({
   currentPage: { type: Number, required: true, default: 1 },
 });
 
+const translatedData = inject('translatedData') as Ref;
 const isAllValueSelected = ref(false);
 const store = useStore();
+
 function formatDate(date: Date) {
   return moment(date).fromNow();
 }
@@ -369,6 +386,7 @@ watch(
   width: 20px;
   will-change: transform;
 }
+
 .spin {
   height: 40px;
   position: relative;

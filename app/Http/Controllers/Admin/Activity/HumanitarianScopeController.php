@@ -73,10 +73,11 @@ class HumanitarianScopeController extends Controller
             return view('admin.activity.humanitarianScope.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/humanitarian_scope_controller.error_has_occurred_while_rendering_humanitarian_scope_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while rendering humanitarian-scope form.'
+                $translatedMessage
             );
         }
     }
@@ -93,14 +94,19 @@ class HumanitarianScopeController extends Controller
     {
         try {
             if ($this->humanitarianScopeService->update($id, $request->except(['_token', '_method']))) {
-                return redirect()->route('admin.activity.show', $id)->with('success', 'Humanitarian-scope updated successfully.');
+                $translatedMessage = trans('activity_detail/humanitarian_scope_controller.humanitarian_scope_updated_successfully');
+
+                return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
             }
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating humanitarian-scope.');
+            $translatedMessage = trans('activity_detail/humanitarian_scope_controller.error_has_occurred_while_updating_humanitarian_scope');
+
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/humanitarian_scope_controller.humanitarian_scope_updated_successfully');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating humanitarian-scope.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

@@ -5,45 +5,39 @@
         <div class="mb-2 text-caption-c1 text-n-40 xl:mb-4">
           <nav aria-label="breadcrumbs" class="breadcrumb">
             <p>
-              <span class="last font-bold">Your Activities</span>
+              <span class="last font-bold">{{
+                translatedData['common.common.your_activities']
+              }}</span>
             </p>
           </nav>
         </div>
         <div class="inline-flex flex-col space-y-2 md:flex-row md:items-center">
           <h4 class="mr-4 text-3xl font-bold xl:text-heading-4">
-            Your Activities
+            {{ translatedData['common.common.your_activities'] }}
           </h4>
           <div class="tooltip-btn">
             <button class="">
               <svg-vue icon="question-mark" />
-              <span>What is an activity?</span>
+              <span>{{
+                translatedData['activity_index.page_title.what_is_an_activity']
+              }}</span>
             </button>
             <div class="tooltip-btn__content z-[1]">
               <div class="content">
                 <div class="mb-1.5 text-caption-c1 font-bold text-bluecoral">
-                  What is an activity?
+                  {{
+                    translatedData[
+                      'activity_index.page_title.what_is_an_activity'
+                    ]
+                  }}
                 </div>
-                <p>
-                  You need to provide data about your organisation's development
-                  and humanitarian 'activities'. The unit of work described by
-                  an 'activity' is determined by the organisation that is
-                  publishing the data. For example, an activity could be a donor
-                  government providing US$ 50 million to a recipient country's
-                  government to implement basic education over 5 years. Or an
-                  activity could be an NGO spending US$ 500,000 to deliver clean
-                  drinking water to 1000 households over 6 months.
-                  <br />
-                  Therefore your organisation will need to determine how it will
-                  divide its work internally into activities. Read the
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="/publishing-checklist"
-                    class="text-bluecoral"
-                    ><b>Publishing Checklist</b></a
-                  >
-                  for more information.
-                </p>
+                <p
+                  v-html="
+                    translatedData[
+                      'activity_index.page_title.what_is_an_activity_description'
+                    ]
+                  "
+                ></p>
               </div>
             </div>
           </div>
@@ -66,7 +60,11 @@
           :extra-info="
             errorData.extra_info !== null ? errorData.extra_info : undefined
           "
-          title="Activity couldn’t be published because"
+          :title="
+            translatedData[
+              'common.common.activity_couldnt_be_published_because'
+            ]
+          "
           @close-popup="
             () => {
               errorData.visibility = false;
@@ -88,7 +86,11 @@
                 <BtnComponent
                   v-if="store.state.selectedActivities.length > 0"
                   type="secondary"
-                  :text="`Publish Selected (${store.state.selectedActivities.length})`"
+                  :text="
+                    getPublishedSelectedMessage(
+                      store.state.selectedActivities.length
+                    )
+                  "
                   icon="approved-cloud"
                   :disabled="
                     store.state.selectedActivities.length === 0 ||
@@ -97,17 +99,14 @@
                   "
                   :tooltip-text="
                     store.state.selectedActivities.length > 100
-                      ? `You can only publish up to 100 activities at a time. Please remove ${
-                          store.state.selectedActivities.length - 100
-                        } ${
-                          store.state.selectedActivities.length > 1
-                            ? 'activities'
-                            : 'activity'
-                        } from your selection to publish.`
+                      ? getYouCanOnlyPublish100ActivitiesAtATimeMessage(
+                          store.state.selectedActivities.length
+                        )
                       : ''
                   "
                   @click="checkPublish"
                 />
+                <!--TODO: Baki-->
                 <PublishSelected ref="publishRef" />
               </div>
               <div class="flex gap-2">
@@ -145,6 +144,7 @@ interface RefreshToastMsgTypeface {
   refreshMessage: string;
 }
 
+const translatedData = inject('translatedData') as Ref;
 const refreshToastMsg = inject('refreshToastMsg') as RefreshToastMsgTypeface;
 const toastMessage = inject('toastData') as ToastInterface;
 const errorData = inject('errorData') as ErrorInterface;
@@ -163,4 +163,38 @@ const checkPublish = () => {
     publishRef.value.checkPublish();
   }
 };
+
+function getYouCanOnlyPublish100ActivitiesAtATimeMessage(length: number) {
+  const baseMessage =
+    translatedData.value[
+      'activity.page_title.you_can_only_publish_up_to_100_activities_at_a_time'
+    ];
+  let dynamicMessage =
+    translatedData.value[
+      'activity.page_title.please_remove_activities_from_selection_to_publish'
+    ];
+
+  if (length > 1) {
+    dynamicMessage =
+      translatedData.value[
+        'activity.page_title.please_remove_activity_from_selection_to_publish'
+      ];
+  }
+
+  dynamicMessage = replaceCountPlaceHolderWithCount(dynamicMessage, length);
+
+  return `${baseMessage} ${dynamicMessage}`;
+}
+
+function getPublishedSelectedMessage(length: number) {
+  let baseMessage =
+    translatedData.value['activity.page_title.publish_selected'];
+  baseMessage = replaceCountPlaceHolderWithCount(baseMessage, length);
+
+  return baseMessage;
+}
+
+function replaceCountPlaceHolderWithCount(text: string, count: number) {
+  return text.replace(':count', count.toString());
+}
 </script>

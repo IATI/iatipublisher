@@ -1,0 +1,20 @@
+<?php
+
+return [
+    'these_values_will_be_automatically_added'                                    => 'These values will be automatically added to your data files.',
+    'if_you_do_not_set_your_default_currency'                                     => 'If you do not set your default currency, you have to choose and select currency manually for all the financial transactions.',
+    'if_you_do_not_set_your_default_language'                                     => 'If you do not set your default language, you have to choose and select language for all the narrative text in activity and organisation.',
+    'recommended_defaults_for_activity_data'                                      => 'Recommended defaults for activity data',
+    'if_you_are_reporting_both_programmes_parent_activities'                      => 'If you are reporting both programmes (parent activities) and projects (child activities), choose the hierarchical level that most of your activities are at. e.g. parent activity = 1; child activity = 2. If all your activities are at the same level i.e. you have no child activities, then choose 1.',
+    'add_a_humanitarian_flag_to_every_activity_that_your_organisation'            => 'Add a "Humanitarian Flag" to every activity that your organisation publishes data on. This means that your organisation identifies all their activities as wholly or partially addressing a humanitarian crisis or multiple crises. You can later manually add or remove a Humanitarian Flag on individual activities if required.',
+    'whether_the_activity_is_funded_by_official_development_assistance_oda'       => 'Whether the activity is funded by Official Development Assistance (ODA), Other Official Flows (OOF), etc.  <a target=\'_blank\' href=\'https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/default-flow-type/\'>For more information</a>',
+    'whether_the_aid_is_untied_tied_or_partially_tied'                            => 'Whether the aid is untied, tied, or partially tied. This element specifies a default for all the activity’s financial transactions; it can be overridden at the individual transaction level.<a target=\'_blank\' href=\'https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/default-tied-status/\'>For more information</a>',
+    'optional_defaults_for_activity_data'                                         => 'Optional defaults for activity data',
+    'a_code_indicating_the_reason_why_this_activity_does_not_contain'             => 'A code indicating the reason why this activity does not contain any iati-activity budget elements. The attribute MUST only be used when no budget elements are present.',
+    'select_budget_not_provided_type_here'                                        => 'Select budget not provided type here',
+    'if_a_publisher_chooses_to_publish_linked_data'                               => 'If a publisher chooses to publish linked data about their IATI activities then allowing them to declare where this data is published would support discovery of it, and any additional information they may choose to publish as Linked Data alongside it.',
+    'type_linked_data_uri_here'                                                   => 'Type linked data uri here',
+    'the_type_of_collaboration_involved_in_the_activitys_disbursements'           => 'The type of collaboration involved in the activity’s disbursements, e.g. “bilateral” or “multilateral”. <a target=\'_blank\' href=\'https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/collaboration-type/\'>For more information</a>',
+    'select_collaboration_type'                                                   => 'Select Collaboration Type here',
+    'if_selected_then_default_collaboration_type_will_be_automatically_populated' => 'If selected, then default collaboration type will be automatically populated in activity when created.',
+];

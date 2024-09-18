@@ -74,10 +74,11 @@ class CollaborationTypeController extends Controller
             return view('admin.activity.collaborationType.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/collaboration_type_controller.error_has_occurred_while_rendering_activity_collaboration_type_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while rendering activity collaboration-type form.'
+                $translatedMessage
             );
         }
     }
@@ -96,14 +97,18 @@ class CollaborationTypeController extends Controller
             $activityCollaborationType = $request->get('collaboration_type') !== null ? (int) $request->get('collaboration_type') : null;
 
             if (!$this->collaborationTypeService->update($id, $activityCollaborationType)) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity collaboration-type.');
-            }
+                $translatedMessage = trans('activity_detail/collaboration_type_controller.error_has_occurred_while_updating_activity_collaboration_type');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Activity collaboration-type updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('activity_detail/collaboration_type_controller.activity_collaboration_type_updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/collaboration_type_controller.error_has_occurred_while_updating_activity_collaboration_type');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity collaboration type.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

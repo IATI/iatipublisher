@@ -12,7 +12,9 @@
             <div class="flex min-h-[48px] w-full grow items-center">
               <h4 class="ellipsis__title relative mr-4 font-bold">
                 <span class="ellipsis__title overflow-hidden">
-                  Import Activities from .XLS
+                  {{
+                    translatedData['common.common.import_activities_from_xls']
+                  }}
                 </span>
               </h4>
             </div>

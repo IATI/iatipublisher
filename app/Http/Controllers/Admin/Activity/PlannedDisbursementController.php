@@ -74,10 +74,11 @@ class PlannedDisbursementController extends Controller
             return view('admin.activity.plannedDisbursement.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/planned_disbursement_controller.error_has_occurred_while_rendering_planned_disbursement_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while rendering planned-disbursement form.'
+                $translatedMessage
             );
         }
     }
@@ -94,14 +95,18 @@ class PlannedDisbursementController extends Controller
     {
         try {
             if (!$this->plannedDisbursementService->update($id, $request->except(['_token', '_method']))) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating planned-disbursement.');
-            }
+                $translatedMessage = trans('activity_detail/planned_disbursement_controller.error_has_occurred_while_updating_planned_disbursement');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Planned-disbursement updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('activity_detail/planned_disbursement_controller.planned_disbursement_updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/planned_disbursement_controller.error_has_occurred_while_updating_planned_disbursement');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating planned-disbursement.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

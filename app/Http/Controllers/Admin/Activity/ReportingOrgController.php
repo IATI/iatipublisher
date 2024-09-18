@@ -74,10 +74,11 @@ class ReportingOrgController extends Controller
             return view('admin.activity.reportingOrg.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e);
+            $translatedMessage = trans('activity_detail/reporting_org_controller.error_has_occurred_while_opening_activity_reporting_org_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while opening activity reporting_org form.'
+                $translatedMessage
             );
         }
     }
@@ -96,17 +97,22 @@ class ReportingOrgController extends Controller
             DB::beginTransaction();
 
             if (!$this->reportingOrgService->update($id, $request->all())) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating reporting-org.');
+                $translatedMessage = trans('activity_detail/reporting_org_controller.error_has_occurred_while_updating_reporting_org');
+
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
             }
 
             DB::commit();
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Activity reporting-org updated successfully.');
+            $translatedMessage = trans('activity_detail/reporting_org_controller.activity_reporting_org_updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
+            $translatedMessage = trans('activity_detail/reporting_org_controller.error_has_occurred_while_updating_activity_reporting_org');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity reporting-org.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

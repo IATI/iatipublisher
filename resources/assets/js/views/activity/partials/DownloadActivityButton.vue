@@ -6,7 +6,10 @@
       class="button secondary-btn font-bold"
       @click="toggle"
     >
-      <svg-vue icon="download-file" /> Download All
+      <svg-vue icon="download-file" />
+      {{
+        translatedData['activity_index.download_activity_button.download_all']
+      }}
       <svg-vue icon="dropdown-arrow" class="text-blue-coral !text-[6px]" />
     </button>
     <button
@@ -29,7 +32,11 @@
             href="#"
             :class="liClass"
             @click="downloadCsv(store.state.selectedActivities.length)"
-            >Download CSV</a
+            >{{
+              translatedData[
+                'activity_index.download_activity_button.download_csv'
+              ]
+            }}</a
           >
         </li>
         <li>
@@ -37,11 +44,19 @@
             href="#"
             :class="liClass"
             @click="downloadXml(store.state.selectedActivities.length)"
-            >Download XML</a
+            >{{
+              translatedData[
+                'activity_index.download_activity_button.download_xml'
+              ]
+            }}</a
           >
         </li>
         <li>
-          <a href="#" :class="liClass" @click="checkDownload">Download XLS</a>
+          <a href="#" :class="liClass" @click="checkDownload">{{
+            translatedData[
+              'activity_index.download_activity_button.download_xls'
+            ]
+          }}</a>
         </li>
       </ul>
     </div>
@@ -55,16 +70,30 @@
       "
     >
       <p class="text-sm font-bold">
-        The XML file is in wrong format. Would you like to download it anyway?
+        {{
+          translatedData[
+            'activity.download_activity_button.the_xml_file_is_in_wrong_format'
+          ]
+        }}
       </p>
 
       <div class="mb-4 h-40 overflow-y-auto rounded-lg bg-rose p-4 text-sm">
         <div class="mb-2 flex justify-between">
-          <div class="text-xs font-bold">Error message</div>
+          <div class="text-xs font-bold">
+            {{
+              translatedData[
+                'activity_index.download_activity_button.error_message'
+              ]
+            }}
+          </div>
           <a
             class="right-3 top-1 cursor-pointer text-xs font-bold"
             @click="downloadError('error', message)"
-            >Download error message</a
+            >{{
+              translatedData[
+                'activity.download_activity_button.download_error_message'
+              ]
+            }}</a
           >
         </div>
         {{ message }}
@@ -79,13 +108,17 @@
             }
           "
         >
-          Go back
+          {{ translatedData['common.common.go_back'] }}
         </button>
         <button
           class="rounded bg-bluecoral px-4 py-3 font-bold text-white"
           @click="downloadErrorxml(store.state.selectedActivities.length)"
         >
-          Download Anyway
+          {{
+            translatedData[
+              'activity_index.download_activity_button.download_anyway'
+            ]
+          }}
         </button>
       </div>
     </Modal>
@@ -104,20 +137,26 @@
       <div class="modal-inner">
         <div class="mb-4 flex items-center space-x-1">
           <svg-vue icon="warning-fill" class="text-camel-50"></svg-vue>
-          <span class="text-sm font-bold text-n-50"
-            >Preparing activities for download</span
-          >
+          <span class="text-sm font-bold text-n-50">{{
+            translatedData[
+              'activity.download_activity_button.preparing_activities_for_download'
+            ]
+          }}</span>
         </div>
         <div class="mb-4 rounded-lg bg-eggshell p-4 text-sm text-n-50">
           <p class="mb-4">
-            Please be advised that we are currently zipping your activities for
-            a seamless download experience. This process will run in the
-            background and may require some time to complete.
+            {{
+              translatedData[
+                'activity.download_activity_button.please_be_advised_that_we_are_currently_zipping_activities'
+              ]
+            }}
           </p>
           <p>
-            To monitor the progress, kindly refer to the status bar at the
-            bottom of the screen. Upon completion, a notification email will be
-            sent to you, confirming that the file is ready for download.
+            {{
+              translatedData[
+                'activity.download_activity_button.to_monitor_the_progress_kindly_refer_to_the_status_bar'
+              ]
+            }}
           </p>
         </div>
         <div class="flex justify-end space-x-5">
@@ -125,13 +164,19 @@
             class="ghost-btn"
             @click="downloadingBackgroundMessage = false"
           >
-            cancel download
+            {{
+              translatedData[
+                'activity.download_activity_button.cancel_download'
+              ]
+            }}
           </button>
           <button
             class="primary-btn"
             @click="downloadXls(store.state.selectedActivities.length)"
           >
-            Continue
+            {{
+              translatedData['activity_index.download_activity_button.continue']
+            }}
           </button>
         </div>
       </div>
@@ -140,27 +185,47 @@
       <div class="modal-inner">
         <div class="mb-4 flex items-center space-x-1">
           <svg-vue icon="warning-fill" class="text-crimson-50"></svg-vue>
-          <span class="text-sm font-bold text-n-50"
-            >Preparation for download already in progress</span
+          <span class="text-sm font-bold text-n-50">
+            {{
+              translatedData[
+                'activity.download_activity_button.preparation_for_download_already_in_progress'
+              ]
+            }}</span
           >
         </div>
         <div class="mb-4 rounded-lg bg-rose p-4 text-sm text-n-50">
           <p>
-            We are currently preparing the activities for download. This may
-            take a few minutes.
+            {{
+              translatedData[
+                'activity.download_activity_button.we_are_currently_preparing_the_activities_for_download'
+              ]
+            }}
           </p>
           <p>
-            If you would like to proceed with the new download, the prior
-            download will be cancelled and your new download will start zipping.
+            {{
+              translatedData[
+                'activity.download_activity_button.if_you_would_like_to_proceed_with_the_new_download'
+              ]
+            }}
           </p>
-          <p>Would you like to proceed with the new download?</p>
+          <p>
+            {{
+              translatedData[
+                'activity.download_activity_button.would_you_like_to_proceed_with_the_new_download'
+              ]
+            }}
+          </p>
         </div>
         <div class="flex justify-end space-x-5">
           <button class="ghost-btn" @click="downloadingInProcess = false">
-            go back
+            {{ translatedData['common.common.go_back'] }}
           </button>
           <button class="primary-btn" @click="downloadAnyway">
-            Download Anyway
+            {{
+              translatedData[
+                'activity.download_activity_button.download_anyway'
+              ]
+            }}
           </button>
         </div>
       </div>
@@ -179,7 +244,7 @@
 <script lang="ts">
 import { useStore } from 'Store/activities/index';
 
-import { reactive, defineComponent, ref, onMounted } from 'vue';
+import { reactive, defineComponent, ref, onMounted, inject, Ref } from 'vue';
 import CreateModal from '../CreateModal.vue';
 import { useToggle } from '@vueuse/core';
 import Toast from '../../../components/ToastMessage.vue';
@@ -215,6 +280,9 @@ export default defineComponent({
     const downloadingBackgroundMessage = ref(false);
     const downloadingInProcess = ref(false);
     const isLoading = ref(false);
+
+    const translatedData = inject('translatedData') as Ref;
+
     const toggleModel = (value: boolean) => {
       modelVisible.value = value;
     };
@@ -222,6 +290,7 @@ export default defineComponent({
     const liClass =
       'block p-2.5 text-n-40 text-tiny leading-[1.5] font-bold hover:text-n-50 hover:bg-n-10';
     const dropdownBtn = ref();
+
     onMounted(() => {
       window.addEventListener('click', (e) => {
         if (!dropdownBtn.value.contains(e.target)) {
@@ -229,6 +298,7 @@ export default defineComponent({
         }
       });
     });
+
     function downloadError(filename, text) {
       var element = document.createElement('a');
       element.setAttribute(
@@ -431,6 +501,7 @@ export default defineComponent({
       downloadingInProcess,
       isLoading,
       downloadAnyway,
+      translatedData,
     };
   },
 });

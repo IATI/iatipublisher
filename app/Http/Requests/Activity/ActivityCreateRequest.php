@@ -21,7 +21,7 @@ class ActivityCreateRequest extends FormRequest
     /**
      * ActivityCreateRequest constructor.
      *
-     * @param ActivityService $activityService
+     * @param  ActivityService  $activityService
      */
     public function __construct(ActivityService $activityService)
     {
@@ -47,7 +47,9 @@ class ActivityCreateRequest extends FormRequest
     public function rules(): array
     {
         $activityIdentifiers = [];
-        $organizationActivityIdentifiers = $this->activityService->getActivityIdentifiersForOrganization(auth()->user()->organization->id);
+        $organizationActivityIdentifiers = $this->activityService->getActivityIdentifiersForOrganization(
+            auth()->user()->organization->id
+        );
 
         if (count($organizationActivityIdentifiers)) {
             foreach ($organizationActivityIdentifiers as $identifier) {
@@ -70,7 +72,7 @@ class ActivityCreateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'activity_identifier.not_in' => 'The activity identifier already exists.',
+            'activity_identifier.not_in' => trans('validation.attribute_exists'),
         ];
     }
 }

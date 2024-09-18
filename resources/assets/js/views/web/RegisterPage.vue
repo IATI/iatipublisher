@@ -5,19 +5,20 @@
     <Loader v-if="isLoaderVisible" />
     <div class="section__container">
       <div class="section__title">
-        <h2>Create IATI Publisher Account</h2>
+        <h2>
+          {{ translatedData['public.register.registered_page.heading'] }}
+        </h2>
         <p>
-          Start your IATI publishing journey by creating an account in IATI
-          Publisher
+          {{ translatedData['public.register.registered_page.start_journey'] }}
         </p>
       </div>
       <div class="section__wrapper flex justify-center">
         <EmailVerification v-if="checkStep('3')" :email="formData['email']" />
         <div v-else class="form input__field" @keyup.enter="goToNextForm">
           <aside class="mb-4 block border-b border-b-n-10 pb-4 xl:hidden">
-            <span class="text-base font-bold"
-              >Step {{ getCurrentStep() }} out of 3</span
-            >
+            <span class="text-base font-bold">
+              {{ translatedStepXOutOf3 }}
+            </span>
             <ul class="relative mt-3 text-sm text-n-40">
               <li
                 v-for="(form, key, i) in registerForm"
@@ -65,7 +66,9 @@
               <div class="flex items-center">
                 <small class="label">
                   <span class="required-icon px-1">*</span>
-                  <span>Mandatory fields</span>
+                  <span>{{
+                    translatedData['common.common.mandatory_fields']
+                  }}</span>
                 </small>
               </div>
             </div>
@@ -75,27 +78,20 @@
             >
               <p class="mb-2 flex font-bold">
                 <svg-vue class="mr-2 text-xl" icon="warning" />
-                Sorry, the information you provided doesn’t match your IATI
-                Registry information.
+                {{
+                  translatedData[
+                    'public.register.registered_page.register_section.info_doesnt_match_iati_registry'
+                  ]
+                }}
               </p>
-              <p class="ml-8 xl:mr-1">
-                Please note that if you’re an account holder in
-                <span
-                  ><a href="https://iatiregistry.org/">IATI Registry</a></span
-                >, make sure your
-                <span class="font-bold"
-                  >Publisher Name, Publisher ID and IATI Organisation ID</span
-                >
-                match your IATI Registry Information. Contact
-                <span
-                  ><a
-                    class="text-bluecoral"
-                    href="mailto:support@iatistandard.org"
-                    >support@iatistandard.org</a
-                  ></span
-                >
-                for more details.
-              </p>
+              <p
+                class="ml-8 xl:mr-1"
+                v-html="
+                  translatedData[
+                    'public.register.registered_page.register_section.make_sure_account_holder'
+                  ]
+                "
+              ></p>
             </div>
             <div class="form__content">
               <div
@@ -174,16 +170,18 @@
               @click="goToPreviousForm()"
             >
               <svg-vue class="mr-3 cursor-pointer" icon="left-arrow" />
-              Go back
+              {{ translatedData['common.common.go_back'] }}
             </button>
             <span
               v-if="checkStep(1)"
               class="pb-4 text-sm font-normal text-n-40 sm:pb-0"
-              >Already have an account?
+            >
+              {{ translatedData['common.common.already_have_an_acoount'] }}
               <a
                 class="border-b-2 border-b-transparent font-bold text-bluecoral hover:border-b-2 hover:border-b-turquoise hover:text-bluecoral"
                 href="/"
-                >Sign In.</a
+              >
+                {{ translatedData['common.common.sign_in'] }} .</a
               ></span
             >
             <button
@@ -191,26 +189,27 @@
               class="btn btn-next"
               @click="goToNextForm()"
             >
-              Next Step
+              {{ translatedData['public.register.commons.next_step'] }}
               <svg-vue class="text-2xl" icon="right-arrow" />
             </button>
           </div>
           <div v-if="checkStep(2)" class="mt-6 text-center">
-            <span class="text-sm font-normal text-n-40"
-              >Already have an account?
+            <span class="text-sm font-normal text-n-40">
+              {{ translatedData['common.common.already_have_an_acoount'] }}
               <a
                 class="border-b-2 border-b-transparent font-bold text-bluecoral hover:border-b-2 hover:border-b-turquoise hover:text-bluecoral"
                 href="/"
-                >Sign In.</a
+              >
+                {{ translatedData['common.common.sign_in'] }} .</a
               ></span
             >
           </div>
         </div>
 
         <aside class="register__sidebar hidden xl:block">
-          <span class="text-base font-bold"
-            >Step {{ getCurrentStep() }} out of 3</span
-          >
+          <span class="text-base font-bold">
+            {{ translatedStepXOutOf3 }}
+          </span>
           <ul class="relative mt-6 text-sm text-n-40">
             <li
               v-for="(form, key, i) in registerForm"
@@ -254,7 +253,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, toRefs, watch } from 'vue';
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  reactive,
+  ref,
+  toRefs,
+  watch,
+  watchEffect,
+} from 'vue';
 import axios from 'axios';
 import EmailVerification from './EmailVerification.vue';
 import HoverText from './../../components/HoverText.vue';
@@ -262,6 +270,7 @@ import Multiselect from '@vueform/multiselect';
 import Loader from '../../components/Loader.vue';
 
 import { generateUsername } from 'Composable/utils';
+import LanguageService from 'Services/language';
 
 export default defineComponent({
   components: {
@@ -291,9 +300,11 @@ export default defineComponent({
   },
 
   setup(props) {
+    const translatedData = ref({});
     const step = ref(1);
     const publisherExists = ref(true);
     const isLoaderVisible = ref(false);
+    const translatedStepXOutOf3 = ref('');
 
     let { agency } = toRefs(props);
 
@@ -389,6 +400,141 @@ export default defineComponent({
       return (formStep: string | number) => {
         return parseInt(formStep.toString()) === step.value;
       };
+    });
+
+    watchEffect(() => {
+      if (translatedData.value && registerForm) {
+        // Form 1
+        registerForm[1].title =
+          translatedData.value['common.common.publisher_information'];
+        registerForm[1].description =
+          translatedData.value[
+            'public.register.registered_page.register_section.publisher_information_description'
+          ];
+        registerForm[1].hover_text =
+          translatedData.value[
+            'public.register.registered_page.register_section.publisher_information_hover_text'
+          ];
+        registerForm[1].fields.publisher_name.label =
+          translatedData.value['common.common.publisher_name'];
+        registerForm[1].fields.publisher_name.placeholder =
+          translatedData.value[
+            'public.register.registered_page.register_section.publisher_name_placeholder'
+          ];
+        registerForm[1].fields.publisher_name.hover_text =
+          translatedData.value[
+            'public.register.registered_page.register_section.publisher_name_hover_text'
+          ];
+        registerForm[1].fields.publisher_id.label =
+          translatedData.value['common.common.publisher_id'];
+        registerForm[1].fields.publisher_id.placeholder =
+          translatedData.value['common.common.type_your_publisher_id_here'];
+        registerForm[1].fields.publisher_id.hover_text =
+          translatedData.value[
+            'public.register.registered_page.register_section.publisher_id_hover_text'
+          ];
+        registerForm[1].fields.country.label =
+          translatedData.value['common.common.country'];
+        registerForm[1].fields.country.placeholder =
+          translatedData.value['common.common.select_a_country'];
+        registerForm[1].fields.country.hover_text =
+          translatedData.value[
+            'public.register.registered_page.register_section.country_hover_tezt'
+          ];
+        registerForm[1].fields.organization_registration_agency.label =
+          translatedData.value[
+            'common.common.organisation_registration_agency'
+          ];
+        registerForm[1].fields.organization_registration_agency.placeholder =
+          translatedData.value[
+            'common.common.select_an_organisation_registration_agency'
+          ];
+        registerForm[1].fields.organization_registration_agency.hover_text =
+          translatedData.value[
+            'public.register.registered_page.register_section.organisation_registration_agency_hover_text'
+          ];
+        registerForm[1].fields.organization_registration_no.label =
+          translatedData.value[
+            'public.register.registered_page.register_section.organisation_registration_number'
+          ];
+        registerForm[1].fields.organization_registration_no.placeholder =
+          translatedData.value[
+            'common.common.type_your_registration_number_here'
+          ];
+        registerForm[1].fields.organization_registration_no.hover_text =
+          translatedData.value[
+            'public.register.registered_page.register_section.organisation_registration_number_hover_text'
+          ];
+        registerForm[1].fields.organization_registration_no.help_text =
+          translatedData.value['common.common.for_example_123456'];
+        registerForm[1].fields.iati_organizational_identifier.label =
+          translatedData.value['common.common.iati_organisation_identifier'];
+        registerForm[1].fields.iati_organizational_identifier.hover_text =
+          translatedData.value[
+            'public.register.registered_page.register_section.iati_organisation_identifier_hover_text'
+          ];
+        registerForm[1].fields.iati_organizational_identifier.help_text =
+          translatedData.value['common.common.this_is_autogenerated'];
+        // Form 2
+        registerForm[2].title =
+          translatedData.value['common.common.administrator_information'];
+        registerForm[2].description =
+          translatedData.value[
+            'public.register.registered_page.register_section.administrator_description'
+          ];
+        registerForm[2].hover_text =
+          translatedData.value[
+            'public.register.registered_page.register_section.administrator_hover_text'
+          ];
+        registerForm[2].fields.full_name.label =
+          translatedData.value['common.common.full_name'];
+        registerForm[2].fields.full_name.placeholder =
+          translatedData.value['common.common.type_your_full_name_here'];
+        registerForm[2].fields.email.label =
+          translatedData.value['common.common.email_address'];
+        registerForm[2].fields.email.placeholder =
+          translatedData.value['common.common.type_valid_email_here'];
+
+        registerForm[2].fields.username.label =
+          translatedData.value['common.common.username'];
+        registerForm[2].fields.username.placeholder =
+          translatedData.value['common.common.type_username_here'];
+        registerForm[2].fields.username.hover_text =
+          translatedData.value[
+            'common.common.you_will_need_this_later_to_login'
+          ];
+        registerForm[2].fields.default_language.label =
+          translatedData.value['elements.label.default_language'];
+        registerForm[2].fields.default_language.placeholder =
+          translatedData.value['common.common.select_your_default_language'];
+        registerForm[2].fields.password.label =
+          translatedData.value['common.common.password'];
+        registerForm[2].fields.password.placeholder =
+          translatedData.value['common.common.type_password_here'];
+        registerForm[2].fields.confirm_password.label =
+          translatedData.value['common.common.confirm_password'];
+        registerForm[2].fields.confirm_password.placeholder =
+          translatedData.value['common.common.type_password_here'];
+        // Form 3
+        registerForm[3].title =
+          translatedData.value[
+            'public.register.registered_page.register_section.heading_three'
+          ];
+        registerForm[3].description =
+          translatedData.value[
+            'common.common.please_verify_and_activate_your_iati_publisher_account'
+          ];
+
+        console.log(
+          translatedData.value[
+            'public.register.registered_page.step_count_out_of_3'
+          ]
+        );
+        translatedStepXOutOf3.value = translatedData.value[
+          'public.register.registered_page.step_count_out_of_3'
+        ].replace(':count', getCurrentStep());
+        console.log(translatedStepXOutOf3.value);
+      }
     });
 
     const registerForm = reactive({
@@ -668,6 +814,14 @@ export default defineComponent({
       step.value -= 1;
     }
 
+    onMounted(() => {
+      LanguageService.getTranslatedData('common,public')
+        .then((response) => {
+          translatedData.value = response.data;
+        })
+        .catch((error) => console.log(error));
+    });
+
     return {
       registerForm,
       formData,
@@ -680,6 +834,8 @@ export default defineComponent({
       checkStep,
       isTextField,
       props,
+      translatedData,
+      translatedStepXOutOf3,
     };
   },
 });
