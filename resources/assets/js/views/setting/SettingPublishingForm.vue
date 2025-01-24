@@ -5,7 +5,7 @@
         {{ translatedData['settings.setting.iati_registry_information'] }}
       </div>
       <div class="mb-4 flex items-center text-xs text-n-50">
-        <button>
+        <button class="text-base">
           <HoverText
             :name="translatedData['settings.setting.iati_registry_information']"
             :hover-text="

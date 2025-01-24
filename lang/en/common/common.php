@@ -380,4 +380,13 @@ return [
     'this_is_taking_longer_than_expected'                                                                                                                             => 'This is taking longer than expected.',
     'cancel_and_start_again'                                                                                                                                          => 'Cancel and start again',
     'error_has_occurred_while_importing_the_file'                                                                                                                     => 'Error has occurred while importing the file.',
+    'iati_tools'                                                                                                                                                      => 'IATI Tools',
+    'about_iati'                                                                                                                                                      => 'About IATI',
+    'use_data'                                                                                                                                                        => 'Use Data',
+    'publish_data'                                                                                                                                                    => 'Publish Data',
+    'contact'                                                                                                                                                         => 'Contact',
+    'menu'                                                                                                                                                            => 'Menu',
+    'choose_your_language'                                                                                                                                            => 'Choose your language',
+    'useful_links'                                                                                                                                                    => 'Useful Links',
+    'additional_information'                                                                                                                                          => 'Additional Information',
 ];

@@ -83,7 +83,7 @@ class BaseFormCreator
         if ($showCancelOrSaveButton) {
             $form->add('buttons', 'buttongroup', [
                 'wrapper' => [
-                    'class' => 'fixed left-0 bottom-0 w-full bg-eggshell py-5 pr-20 xl:pr-40 shadow-dropdown',
+                    'class' => 'fixed left-0 bottom-0 w-full bg-eggshell py-5 pr-20 xl:pr-40 shadow-dropdown z-10',
                 ],
                 'buttons' => [
                     'clear'    => [
@@ -98,7 +98,7 @@ class BaseFormCreator
                         'label'     => trans('common/common.save_and_exit'),
                         'attr'      => [
                             'type'  => empty($additonalInfo) ? 'submit' : 'button',
-                            'class' => 'primary-btn save-btn',
+                            'class' => 'primary-btn save-btn text-sm',
                             'id'    => empty($additonalInfo) ? '' : Arr::get($additonalInfo, 'submitId'),
                         ],
                     ],

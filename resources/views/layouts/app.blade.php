@@ -23,6 +23,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}" media="print" onload="this.media='all'">
+  
 </head>
 <body>
     <div id="app">
@@ -86,5 +87,6 @@
     </div>
     <!-- Scripts -->
     <script  src="{{ mix('js/app.js') }}" defer></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/iati-design-system@3.5.0/dist/js/iati.js"></script>
 </body>
 </html>

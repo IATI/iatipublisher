@@ -35,6 +35,11 @@
      <link rel="icon"
         href="{{ asset('favicon.ico') }}"
         type="image/x-icon" />
+    <link
+        href={{ env('IATI_DESIGN_SYSTEM_URL')}}
+        rel="stylesheet"
+        
+    />
 
 
 
@@ -67,22 +72,25 @@
                  :onboarding="{{ json_encode(Auth::user()->organization ? Auth::user()->organization->onboarding : null) }}"
                 :translated-data="{{json_encode($translatedData)}}"
                 :current-language="{{json_encode($currentLanguage)}}"
-            ></loggedin-header>
-        @endif
-        <main>
-            @yield('content')
-            @stack('scripts')
-        </main>
-        <admin-footer v-bind:super-admin="{{ (int) isSuperAdmin() }}"
-                      :translated-data="{{json_encode($translatedData)}}"
-        >
-        </admin-footer>
+                ></loggedin-header>
+                @endif
+                <main>
+                    @yield('content')
+                    @stack('scripts')
+                </main>
+                <admin-footer 
+                    v-bind:super-admin="{{ (int) isSuperAdmin() }}"
+                    :translated-data="{{json_encode($translatedData)}}"
+                    :current-language="{{json_encode($currentLanguage)}}"
+                >
+                </admin-footer>
     </div>
     <script defer src="{{ mix('/manifest.js') }}"></script>
     <script defer src="{{ mix('/js/vendor.js') }}"></script>
     <script defer src="{{ mix('/js/app.js') }}"></script>
     <script defer src="{{ mix('/js/script.js') }}"></script>
     <script defer src="{{ mix('js/formbuilder.js') }}"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/iati-design-system@3.5.0/dist/js/iati.js"></script>
     <!-- Start of iati Zendesk Widget script -->
     <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=f1df04e0-f01e-4ab5-9091-67b2fddd6e60"> </script>
     <script type="text/javascript">

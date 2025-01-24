@@ -5,7 +5,7 @@
         {{ translatedData['common.common.default_values'] }}
       </div>
       <div class="mb-4 flex items-center text-xs text-n-50">
-        <button>
+        <button class="text-base">
           <HoverText
             :name="translatedData['common.common.default_values']"
             :hover-text="

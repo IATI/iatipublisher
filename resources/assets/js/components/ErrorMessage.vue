@@ -80,7 +80,7 @@
             @click="show = !show"
           >
             {{
-              show
+              !show
                 ? translatedData['common.common.show_more']
                 : translatedData['activity_index.error_message.show_less']
             }}

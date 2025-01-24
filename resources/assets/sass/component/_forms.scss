@@ -72,7 +72,7 @@ form {
   textarea {
     @apply mt-0 h-12 w-full rounded border border-n-30 px-4 py-2.5 text-sm leading-normal outline-none duration-300;
     &::placeholder {
-      @apply text-sm text-n-40;
+      @apply text-sm;
     }
     &:focus {
       @apply border border-n-50 bg-n-10;

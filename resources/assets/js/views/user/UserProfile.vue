@@ -353,7 +353,7 @@
           {{ languagePreference[userData['language_preference']] }}
         </div>
       </div>
-      <div class="flex space-x-2 py-6">
+      <div class="flex items-baseline space-x-2 py-6">
         <div class="text-base font-bold text-n-40">
           {{ toTitleCase(translatedData['common.common.email']) }}
         </div>
