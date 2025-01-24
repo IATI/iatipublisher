@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'importing'            => 'ES_Importing',
-    'multiple_activities'  => 'ES_Multiple activities',
-    'upload_failed'        => 'ES_Upload failed:',
-    'file_upload_complete' => 'ES_File upload complete',
-    'uploading'            => 'ES_Uploading',
+    'importing'            => 'Importando',
+    'multiple_activities'  => 'Múltiples actividades',
+    'upload_failed'        => 'Error al cargar:',
+    'file_upload_complete' => 'Carga de archivos completada',
+    'uploading'            => 'Cargando',
 ];

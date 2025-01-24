@@ -64,7 +64,7 @@
             <div class="actions flex grow justify-end">
               <div class="inline-flex justify-center gap-2">
                 <button
-                  class="rounded bg-n-0 px-4 py-3 text-xs font-bold uppercase text-bluecoral shadow-md"
+                  class="rounded bg-n-0 px-4 py-2 text-xs font-bold uppercase text-bluecoral shadow-md"
                   @click="cancelOngoingImports"
                 >
                   <span><svg-vue class="pt-1.5 text-2xl" icon="cross" /></span>

@@ -65,9 +65,9 @@ class GenerateTranslationLangFiles extends Command
 
                     [$key, $filename, $englishTranslation, $spanishTranslation, $frenchTranslation] = $row;
 
-                    $translations[$filename]['en'][$key] = $englishTranslation;
-                    $translations[$filename]['es'][$key] = $spanishTranslation;
-                    $translations[$filename]['fr'][$key] = $frenchTranslation;
+                    $translations[$filename]['en'][$key] = html_entity_decode($englishTranslation, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                    $translations[$filename]['es'][$key] = html_entity_decode($spanishTranslation, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                    $translations[$filename]['fr'][$key] = html_entity_decode($frenchTranslation, ENT_QUOTES | ENT_HTML5, 'UTF-8');
                 }
 
                 $this->info("Updating language files for {$folderName}");

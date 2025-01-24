@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'publish_selected'                                    => 'ES_Publish Selected ( :count )',
-    'you_can_only_publish_up_to_100_activities_at_a_time' => 'ES_You can only publish 100 activities at a time',
-    'please_remove_activity_from_selection_to_publish'    => 'ES_Please remove :count activity from the selection to publish',
-    'please_remove_activities_from_selection_to_publish'  => 'ES_Please remove :count activities from the selection to publish',
+    'publish_selected'                                    => 'Publicar las seleccionadas ( :count )',
+    'you_can_only_publish_up_to_100_activities_at_a_time' => 'Solo se pueden publicar 100 actividades a la vez',
+    'please_remove_activity_from_selection_to_publish'    => 'Deseleccione :count actividad para publicar',
+    'please_remove_activities_from_selection_to_publish'  => 'Deseleccione :count actividades para publicar',
 ];

@@ -331,17 +331,6 @@ export default defineComponent({
       default_language: '',
     });
 
-    watch(
-      errorData,
-      (newValue) => {
-        console.log(
-          '🚨 Frontend validation errors updated:',
-          JSON.stringify(newValue, null, 2)
-        );
-      },
-      { deep: true }
-    );
-
     const iatiError: ObjectType = reactive({});
 
     const formData: ObjectType = reactive({
@@ -851,7 +840,12 @@ export default defineComponent({
      */
     function updateValidationErrors(errorResponse) {
       cleanValidationErrors();
+      console.log('errorResponse');
+      console.log(errorResponse);
+
       for (const field in errorData) {
+        console.log('field');
+        console.log(field);
         errorData[field] = errorResponse[field] ? errorResponse[field][0] : '';
       }
     }
@@ -873,6 +867,9 @@ export default defineComponent({
         Object.values(errorData).every((value) => value === '') ||
         step.value === 4
       ) {
+        console.log('errorResponse');
+        console.log(errorResponse);
+
         Object.assign(
           iatiError,
           typeof errorResponse === 'string'

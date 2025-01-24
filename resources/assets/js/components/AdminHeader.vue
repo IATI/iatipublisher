@@ -47,26 +47,26 @@
     <div id="nav-list" class="activity-nav-menu flex w-full justify-between">
       <!-- commented to temporarily hide language buttons , remove width later -->
       <nav class="justify-end">
-        <!--              <ul class="flex">-->
-        <!--                <li-->
-        <!--                  v-for="(language, index) in data.languages"-->
-        <!--                  :key="index"-->
-        <!--                  :class="data.languageNavLiClasses"-->
-        <!--                >-->
-        <!--                  <button-->
-        <!--                    type="button"-->
-        <!--                    :class="[-->
-        <!--                      language.language.toLowerCase() == currentLanguage.toLowerCase()-->
-        <!--                        ? 'nav__pointer'-->
-        <!--                        : '',-->
-        <!--                      data.languageNavAnchorClasses,-->
-        <!--                    ]"-->
-        <!--                    @click="changeLanguage(language.language.toLowerCase())"-->
-        <!--                  >-->
-        <!--                    <span>{{ language.language }}</span>-->
-        <!--                  </button>-->
-        <!--                </li>-->
-        <!--              </ul>-->
+        <ul class="flex">
+          <li
+            v-for="(language, index) in data.languages"
+            :key="index"
+            :class="data.languageNavLiClasses"
+          >
+            <button
+              type="button"
+              :class="[
+                language.language.toLowerCase() == currentLanguage.toLowerCase()
+                  ? 'nav__pointer'
+                  : '',
+                data.languageNavAnchorClasses,
+              ]"
+              @click="changeLanguage(language.language.toLowerCase())"
+            >
+              <span>{{ language.language }}</span>
+            </button>
+          </li>
+        </ul>
       </nav>
       <nav>
         <ul class="activity-nav-list -mx-4">

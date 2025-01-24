@@ -19,9 +19,9 @@
           : 'help__text right-0 ' + width,
       ]"
     >
-      <span
-        class="close-help absolute top-4 right-2 z-[50] scale-[2] cursor-pointer"
+      <span class="close-help absolute top-4 right-2 z-[50] cursor-pointer"
         ><svg
+          class="h-6 w-6"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 12 14"
           fill="none"

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'add_activity' => 'ES_Add activity',
+    'add_activity' => 'Añadir actividad',
 ];

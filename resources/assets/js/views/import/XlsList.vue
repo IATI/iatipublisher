@@ -10,7 +10,7 @@
             : status.template
         }}</span>
       </h6>
-      <div class="flex flex-wrap justify-end gap-3">
+      <div class="flex flex-wrap items-center justify-end gap-3">
         <Toast
           v-if="toastVisibility"
           class="toast -bottom-24"
@@ -18,7 +18,7 @@
           :type="toastType"
         />
         <button
-          class="rounded bg-n-0 px-4 py-3 text-xs font-bold uppercase text-bluecoral shadow-md"
+          class="h-[40px] w-fit rounded bg-n-0 px-4 py-2 text-xs font-bold uppercase text-bluecoral shadow-md"
           @click="cancelImport"
         >
           <span><svg-vue class="pt-1.5 text-2xl" icon="cross" /></span>
@@ -28,7 +28,7 @@
         </button>
         <button
           :class="selectedActivities.length === 0 && ' cursor-not-allowed'"
-          class="rounded bg-bluecoral px-4 py-3 text-xs font-bold uppercase text-n-0"
+          class="h-[40px] w-fit rounded bg-bluecoral px-4 py-2 text-xs font-bold uppercase text-n-0"
           @click.once="addActivities"
         >
           <svg-vue class="mr-2 text-sm" icon="up-arrow-outline" />
@@ -69,7 +69,7 @@
               </span>
               <span
                 >{{ status.template }}
-                {{ getTranslatedElement(translatedData, 'title') }}</span
+                {{ translatedData['common.common.activity_title'] }}</span
               >
             </th>
             <th id="status" scope="col">
@@ -141,7 +141,7 @@
     :modal-active="showIdentifierErrorModel && showGlobalError"
     width="583"
   >
-    <div class="mb-5 flex space-x-2.5">
+    <div class="mb-5 flex items-center space-x-2.5">
       <svg-vue class="text-4xl text-crimson-40" icon="warning-fill" />
       <div>
         <h6 class="text-base font-bold">
@@ -210,7 +210,7 @@
     :modal-active="showCriticalErrorModel && !showIdentifierErrorModel"
     width="583"
   >
-    <div class="mb-5 flex space-x-2.5">
+    <div class="mb-5 flex items-center space-x-2.5">
       <svg-vue class="text-4xl text-crimson-40" icon="warning-fill" />
       <div>
         <h6 class="text-base font-bold">

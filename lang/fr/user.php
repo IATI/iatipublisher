@@ -2,9 +2,9 @@
 
 return [
     'user_roles' => [
-        'superadmin'   => 'Super Admin',
-        'iati_admin'   => 'IATI Admin',
-        'admin'        => 'Admin',
-        'general_user' => 'General User',
+        'superadmin'   => 'Administrateur principal',
+        'iati_admin'   => 'Administrateur de l\'IITA',
+        'admin'        => 'Administrateur',
+        'general_user' => 'Utilisateur général',
     ],
 ];

@@ -160,7 +160,6 @@ import {
   onUnmounted,
   watch,
   reactive,
-  watchEffect,
 } from 'vue';
 
 //component
@@ -173,7 +172,7 @@ import { TargetValue, ActualValue } from './elements/Index';
 //composable
 import dateFormat from 'Composable/dateFormat';
 import getActivityTitle from 'Composable/title';
-import { getTranslatedElement, toTitleCase } from '../../../composable/utils';
+import { getTranslatedElement } from 'Composable/utils';
 
 export default defineComponent({
   name: 'PeriodDetail',
@@ -213,6 +212,11 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    currentLanguage: {
+      type: String,
+      required: true,
+      default: 'en',
+    },
   },
   setup(props) {
     const positionY = ref(0);
@@ -241,21 +245,24 @@ export default defineComponent({
     //indicator
     const periodData = period.value.period;
 
+    console.log(props.currentLanguage);
     //titles
     const activityId = activity.value.id,
-      defaultLanguage = activity.value.default_field_values?.default_language,
-      activityTitle = getActivityTitle(activity.value.title, defaultLanguage),
+      activityTitle = getActivityTitle(
+        activity.value.title,
+        props.currentLanguage
+      ),
       activityLink = `/activity/${activityId}`,
       resultId = parentData.value.result.id,
       resultTitle = getActivityTitle(
         parentData.value.result.title,
-        defaultLanguage
+        props.currentLanguage
       ),
       resultLink = `${activityLink}/result/${resultId}`,
       indicatorId = parentData.value.indicator.id,
       indicatorTitle = getActivityTitle(
         parentData.value.indicator.title,
-        defaultLanguage
+        props.currentLanguage
       ),
       indicatorLink = `/result/${resultId}/indicator/${indicatorId}`,
       periodLink = `/indicator/${indicatorId}/period`;

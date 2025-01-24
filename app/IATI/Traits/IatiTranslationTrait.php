@@ -14,7 +14,7 @@ trait IatiTranslationTrait
     public function loadTranslations(): array
     {
         $lang = App::getLocale();
-        $cacheData = false;
+        $cacheData = Cache::get("translated_data_{$lang}");
 
         if (!$cacheData) {
             $cacheData = [];
@@ -46,7 +46,7 @@ trait IatiTranslationTrait
 
             $cacheData['general'] = $outerFileTranslations;
             //  TODO: Remove this
-            //  Cache::put("translated_data_{$lang}", $cacheData, now()->addHours(24));
+            Cache::put("translated_data_{$lang}", $cacheData, now()->addHours(24));
         }
 
         return $cacheData;
@@ -65,7 +65,7 @@ trait IatiTranslationTrait
         return $requiredTranslations;
     }
 
-    public function getPageTranslationDependency(array $folders = ['activity_detail', 'activity_index', 'adminHeader', 'api', 'common', 'elements', 'footer', 'onboarding', 'organisationDetail', 'public', 'register', 'settings', 'user', 'userProfile', 'workflow_backend', 'workflow_frontend']): array
+    public function getPageTranslationDependency(array $folders = ['activity_detail', 'activity_index', 'adminHeader', 'api', 'common', 'elements', 'footer', 'onboarding', 'organisationDetail', 'public', 'register', 'settings', 'user', 'userProfile', 'workflow_backend', 'workflow_frontend', 'custom_pages']): array
     {
         $cacheData = $this->loadTranslations();
         $translatedData = Arr::dot($this->filterTranslations($cacheData, $folders));

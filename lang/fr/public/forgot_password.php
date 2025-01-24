@@ -2,24 +2,24 @@
 
 return [
     'reset_page'          => [
-        'subheading'        => 'FR_Please enter your email address. We will send you a link to reset your password.',
-        'email_placeholder' => 'FR_Enter your email address',
-        'button'            => 'FR_Send password reset link',
+        'subheading'        => 'Veuillez saisir votre adresse électronique. Nous vous enverrons un lien pour réinitialiser votre mot de passe.',
+        'email_placeholder' => 'Saisir votre adresse électronique',
+        'button'            => 'Envoyer le lien de réinitialisation du mot de passe',
     ],
     'confirm_page'        => [
-        'subheading' => 'FR_An email has been sent with further instructions - please check your inbox.',
+        'subheading' => 'Un courriel a été envoyé avec des instructions supplémentaires – veuillez vérifier votre boîte de réception.',
     ],
     'reset_password_page' => [
-        'heading'         => 'FR_Reset Password',
-        'subheading'      => 'FR_Please enter your new password',
-        'token'           => 'FR_token',
+        'heading'         => 'Réinitialiser le mot de passe',
+        'subheading'      => 'Veuillez saisir votre nouveau mot de passe.',
+        'token'           => 'jeton',
         'new_password'    => [
-            'placeholder' => 'FR_Enter a new password',
+            'placeholder' => 'Saisir un nouveau mot de passe',
         ],
         'repeat_password' => [
-            'title'                 => 'FR_Repeat Password',
-            'placeholder'           => 'FR_Re-enter your password',
-            'password_confirmation' => 'FR_password confirmation',
+            'title'                 => 'Resaisir le mot de passe',
+            'placeholder'           => 'Saisissez à nouveau votre mot de passe.',
+            'password_confirmation' => 'confirmation du mot de passe',
         ],
     ],
 ];

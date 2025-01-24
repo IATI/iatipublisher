@@ -71,7 +71,7 @@
                                 fill="#68797E" stroke="#68797E" stroke-width=".667"></path>
                         </svg>
                         <div class="left-0 help__text w-72">
-                            <span class="absolute top-5 right-2 cursor-pointer close-help z-[50] scale-[2]"><svg
+                            <span class="absolute top-5 right-2 cursor-pointer close-help z-[50]"><svg
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 14" fill="none">
                                     <path fill="#2A2F30"
                                         d="M4.588 3.5 7.212.88a.418.418 0 0 0-.591-.592L4 2.913 1.38.288a.418.418 0 1 0-.593.591L3.413 3.5.787 6.12a.417.417 0 0 0 .136.684.417.417 0 0 0 .456-.091L4 4.088l2.62 2.625a.417.417 0 0 0 .684-.136.417.417 0 0 0-.092-.456L4.588 3.5Z" />
