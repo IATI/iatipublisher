@@ -38,18 +38,15 @@
         @apply grid gap-3 sm:gap-6 lg:grid-cols-2;
 
         .tag__correct {
-          @apply absolute right-2 top-10 flex h-5 cursor-pointer items-center justify-center rounded bg-spring-40 text-center text-xs text-white;
-          width: 50px;
+          @apply absolute right-2 top-1/2 flex h-5 w-fit -translate-y-1/2 cursor-pointer items-center justify-center rounded bg-spring-40 px-3 text-center text-xs text-white;
         }
 
         .tag__incorrect {
-          @apply absolute right-2 top-10 flex h-5 cursor-pointer items-center justify-center rounded bg-salmon-50 text-center text-xs text-white;
-          width: 61px;
+          @apply absolute right-2 top-1/2 flex h-5 w-fit -translate-y-1/2 cursor-pointer items-center justify-center rounded bg-salmon-50 px-3 text-center text-xs text-white;
         }
 
         .tag__pending {
-          @apply bg-organeish absolute right-2 top-10 flex h-5 cursor-pointer items-center justify-center rounded text-center text-xs text-white;
-          width: 61px;
+          @apply bg-organeish absolute right-2 top-1/2 flex h-5 w-fit -translate-y-1/2 cursor-pointer items-center justify-center rounded px-3 text-center text-xs text-white;
         }
       }
       .verify-btn {

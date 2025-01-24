@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'indicator_period_created_successfully' => 'FR_Period created successfully',
+    'indicator_period_created_successfully' => 'Période créée avec succès',
 ];

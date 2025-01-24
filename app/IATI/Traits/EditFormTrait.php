@@ -75,7 +75,7 @@ trait EditFormTrait
         ];
     }
 
-    protected function indicatorBreadCrumbInfo(Activity $activity, Result $result, ?Indicator $indicator): array
+    protected function indicatorBreadCrumbInfo(Activity $activity, ?Result $result, ?Indicator $indicator): array
     {
         $activityId = Arr::get($activity, 'id');
         $activityTitle = Arr::get($activity, 'title.0.narrative') ?? $this->getTranslatedUntitledActivity();
@@ -107,8 +107,8 @@ trait EditFormTrait
 
     protected function periodBreadCrumbInfo(
         Activity $activity,
-        Result $result,
-        Indicator $indicator,
+        ?Result $result,
+        ?Indicator $indicator,
         ?Period $period
     ): array {
         $activityId = Arr::get($activity, 'id');

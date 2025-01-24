@@ -264,6 +264,11 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    currentLanguage: {
+      type: String,
+      required: true,
+      default: 'en',
+    },
   },
   setup(props) {
     const linkClasses =
@@ -275,15 +280,17 @@ export default defineComponent({
     let { result, activity } = toRefs(props);
     const hasIndicators = result.value.indicators.length > 0 ? true : false;
     const resultsData = result.value.result;
-    // const deprecationStatusMap = resultsData.deprecation_status_map;
     delete resultsData.deprecation_status_map;
 
     const activityId = activity.value.id,
       activityTitle = activity.value.title,
       activityLink = `/activity/${activityId}`,
-      resultTitle = getActivityTitle(resultsData.title[0].narrative, 'en'),
-      resultLink = `${activityLink}/result/${result.value.id}`,
-      defaultLanguage = activity.value.default_field_values?.language;
+      resultTitle = getActivityTitle(
+        resultsData.title[0].narrative,
+        props.currentLanguage
+      ),
+      resultLink = `${activityLink}/result/${result.value.id}`;
+
     const handleScroll = () => {
       positionY.value = window.scrollY;
     };
@@ -302,7 +309,7 @@ export default defineComponent({
         link: '/activities',
       },
       {
-        title: getActivityTitle(activityTitle, defaultLanguage),
+        title: getActivityTitle(activityTitle, props.currentLanguage),
         link: activityLink,
       },
       {

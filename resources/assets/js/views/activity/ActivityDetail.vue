@@ -365,11 +365,15 @@
                 class="tab-btn !p-0"
               >
                 <a :href="`#${String(key)}`" class="p-2 !pr-0">{{
-                  post.label
+                  translatedData[`activity_detail.element_group.${String(key)}`]
                 }}</a>
                 <span class="hover__text pr-2">
                   <HoverText
-                    :name="post.label"
+                    :name="
+                      translatedData[
+                        `activity_detail.element_group.${String(key)}`
+                      ]
+                    "
                     :hover-text="
                       translatedData[
                         'common.common.you_cannot_publish_an_activity_until_all_the_mandatory_fields_have_been_filled'
@@ -570,6 +574,10 @@ export default defineComponent({
     },
     translatedData: {
       type: Object,
+      required: true,
+    },
+    currentLanguage: {
+      type: String,
       required: true,
     },
   },
@@ -863,6 +871,7 @@ export default defineComponent({
     provide('activities', publishingActivities as Ref);
     provide('refreshToastMsg', refreshToastMsg);
     provide('translatedData', props.translatedData);
+    provide('currentLanguage', props.currentLanguage);
 
     indexStore.dispatch('updateSelectedActivities', [activity.value.id]);
 

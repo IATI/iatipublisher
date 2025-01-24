@@ -337,6 +337,11 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    currentLanguage: {
+      type: String,
+      required: true,
+      default: 'en',
+    },
   },
   setup(props) {
     const linkClasses =
@@ -368,17 +373,19 @@ export default defineComponent({
     const activityId = activity.value.id,
       activityLink = `/activity/${activityId}`,
       resultId = indicator.value.result_id,
-      defaultLanguage = activity.value.default_field_values?.language,
-      activityTitle = getActivityTitle(activity.value.title, defaultLanguage),
+      activityTitle = getActivityTitle(
+        activity.value.title,
+        props.currentLanguage
+      ),
       resultTitled = getActivityTitle(
         resultTitle.value[0].narrative,
-        defaultLanguage
+        props.currentLanguage
       ),
       resultLink = `${activityLink}/result/${resultId}`,
       indicatorLink = `/result/${resultId}/indicator`,
       indicatorTitle = getActivityTitle(
         indicatorData.title[0].narrative,
-        defaultLanguage
+        props.currentLanguage
       );
 
     const calcWidth = (event) => {

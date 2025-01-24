@@ -333,7 +333,7 @@ class IatiRegisterController extends Controller
         $iatiUserErrors = flattenArrayWithKeys($iatiUserErrors);
 
         foreach ($iatiUserErrors as $key => $value) {
-            if ($value === '$Email already exists.') {
+            if ($value === 'Email already exists.') {
                 $translatedMessage = trans('register/iati_register_controller.email_is_already_in_use_in_iati_registry');
                 $value = $translatedMessage;
             }

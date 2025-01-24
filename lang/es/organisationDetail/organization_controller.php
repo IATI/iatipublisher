@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'the_element_element_deleted_successfully' => 'ES_The :element element was deleted successfully',
+    'the_element_element_deleted_successfully' => 'El elemento :element se ha eliminado correctamente',
 ];

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'recipient_country_is_already_added_at_transaction_level' => 'FR_Recipient Country has already been added at transaction level. You can populate Recipient Country at either activity or transaction level, but not both.',
+    'recipient_country_is_already_added_at_transaction_level' => 'Le pays bénéficiaire a déjà été ajouté au niveau de la transaction. Vous pouvez renseigner le pays bénéficiaire au niveau de l\'activité ou de la transaction, mais pas au niveau des deux.',
 ];

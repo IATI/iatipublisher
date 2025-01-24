@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'activity_transaction_created_successfully' => 'ES_Transaction created successfully',
+    'activity_transaction_created_successfully' => 'Transacción creada con éxito',
 ];

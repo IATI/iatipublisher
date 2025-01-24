@@ -70,7 +70,7 @@
           </template>
         </div>
 
-        <div class="mt-2 max-w-[95%] rounded-lg border border-n-30">
+        <div class="mt-2 rounded-lg border border-n-30">
           <p
             class="border-b border-n-30 p-4 text-sm font-bold uppercase text-n-50"
           >
@@ -86,7 +86,7 @@
             </div>
             <span v-if="error" class="error">{{ error }}</span>
             <div
-              class="flex w-[280px] flex-col items-start gap-4 md:w-[400px] md:flex-row md:items-end lg:w-auto lg:justify-between"
+              class="flex w-fit flex-col items-start gap-4 md:w-[400px] md:flex-row md:items-center lg:w-auto lg:justify-between"
             >
               <BtnComponent
                 class="!border-red !border"
