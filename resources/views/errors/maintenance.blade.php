@@ -125,7 +125,7 @@
     </div>
 
     <div class="maintenance-message">
-        <p>@lang('custom_pages/maintenance_mode.iati_publisher_is_temporarily_unavailable')</p>
+        <p>@lang('custom_pages/maintenance_mode.iati_publisher_is_temporarily_unavailable', ['time'=>'08:00 UTC'])</p>
         <br>
         <p>@lang('custom_pages/maintenance_mode.we_appreciate_your_understanding')</p>
     </div>

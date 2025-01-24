@@ -114,12 +114,11 @@
               id="iati-country-switcher"
               v-model="isActive"
               class="iati-country-switcher__control cursor-pointer"
-              disabled
               @change="onLanguageChange"
             >
               <option value="en">English</option>
-              <option value="fr">French</option>
-              <option value="es">Spanish</option>
+              <option value="fr">Français</option>
+              <option value="es">Español</option>
             </select>
           </div>
 
@@ -165,7 +164,6 @@ const props = defineProps({
 });
 
 const isActive = ref(props.currentLanguage);
-
 const onLanguageChange = (event: Event) => {
   const selectedLang = (event.target as HTMLSelectElement).value;
   LanguageService.changeLanguage(selectedLang)

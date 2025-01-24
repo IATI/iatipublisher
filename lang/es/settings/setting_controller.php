@@ -1,15 +1,15 @@
 <?php
 
 return [
-    'publisher_does_not_exist_in_registry'             => 'ES_Publisher does not exist in the IATI Registry',
-    'error_occurred_while_verifying_publisher'         => 'ES_Error verifying publisher',
-    'publisher_setting_stored_successfully'            => 'ES_Publishing settings saved successfully',
-    'error_occurred_while_verifying_data'              => 'ES_Error verifying data',
-    'publisher_id_or_api_token_incorrect'              => 'ES_Publisher ID or API token incorrect',
-    'default_setting_stored_successfully'              => 'ES_Default values saved successfully',
-    'error_occurred_while_storing_setting'             => 'ES_Error saving settings',
-    'setting_status_successfully_retrieved'            => 'ES_Settings status successfully retrieved',
-    'api_token_incorrect_please_enter_valid_api_token' => 'ES_API token incorrect. Please enter a valid token.',
-    'api_token_verified_successfully'                  => 'ES_API token verified successfully',
-    'your_api_token_is_invalid'                        => 'ES_Your API token is invalid',
+    'publisher_does_not_exist_in_registry'             => 'La entidad que publica datos no consta en el Registro de la IATI',
+    'error_occurred_while_verifying_publisher'         => 'Error al verificar la entidad que publica datos',
+    'publisher_setting_stored_successfully'            => 'La configuración de las publicaciones se ha guardado correctamente',
+    'error_occurred_while_verifying_data'              => 'Error al verificar los datos',
+    'publisher_id_or_api_token_incorrect'              => 'Identificador de entidad que publica datos o clave de API incorrectos',
+    'default_setting_stored_successfully'              => 'Valores predeterminados guardados con éxito',
+    'error_occurred_while_storing_setting'             => 'Error al guardar la configuración',
+    'setting_status_successfully_retrieved'            => 'Estado de la configuración recuperado con éxito',
+    'api_token_incorrect_please_enter_valid_api_token' => 'Calve de API incorrecta. Por favor, introduzca una clave válida.',
+    'api_token_verified_successfully'                  => 'Clave de API verificada correctamente',
+    'your_api_token_is_invalid'                        => 'Su clave API no es válida',
 ];

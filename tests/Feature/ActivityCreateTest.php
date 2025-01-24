@@ -115,7 +115,7 @@ class ActivityCreateTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors([
-            'activity_identifier' => 'The activity-identifier must not start with space.',
+            'activity_identifier' => trans('validation.no_leading_white_space_in_activity_identifier'),
         ]);
     }
 
@@ -153,7 +153,7 @@ class ActivityCreateTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors([
-            'activity_identifier' => 'The activity-identifier must only contain letters, numbers, and hyphens, with no spaces or other special characters.',
+            'activity_identifier' => trans('validation.no_spaces_in_between_in_activity_identifier'),
         ]);
     }
 }

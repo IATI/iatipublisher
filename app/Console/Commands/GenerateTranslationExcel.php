@@ -189,7 +189,7 @@ class GenerateTranslationExcel extends Command
                     }
                 }
 
-                $translations[$translationKey][$lang] = $value;
+                $translations[$translationKey][$lang] = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
             }
         }
     }

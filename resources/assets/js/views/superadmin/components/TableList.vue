@@ -54,56 +54,6 @@
         />
       </span>
 
-      <!--Multiselect with search -->
-      <!-- to be implemented -->
-      <!-- <div
-        class="organization multiselect-lookalike"
-        @click="toggleShowMultiSelect($event)"
-      >
-        <div
-          class="flex h-full w-full justify-between align-middle text-xs font-bold uppercase text-bluecoral"
-        >
-          <span>Organisation Type</span>
-          <span class="flex items-center">
-            <span
-              v-if="filter.publisher_type.length"
-              @click="
-                (event) => {
-                  event.stopPropagation();
-                  filter.publisher_type.length = 0;
-                }
-              "
-            >
-              <svg-vue
-                icon="cross"
-                class="mt-2.5 translate-x-1 text-[16px] text-n-30"
-              ></svg-vue>
-            </span>
-            <span
-              :class="rotateClass"
-              class="duration-200"
-              style="height: fit-content; font-size: 20px; margin-top: -2px"
-            >
-              <svg-vue icon="arrow-down"></svg-vue> </span
-          ></span>
-        </div>
-
-        <Teleport to="body">
-          <div
-            v-if="showMultiSelectWithSearch"
-            class="multiselect-lookalike-wrapper"
-            :style="multiselectStyle"
-          >
-            <MultiSelectWithSearch
-              class="relative !z-[1000]"
-              header="Organisation Type"
-              :list-items="publisherTypes"
-              @change-selected-publisher="setSelectedPublisher"
-              @close="showMultiSelectWithSearch = false"
-            ></MultiSelectWithSearch>
-          </div>
-        </Teleport>
-      </div> -->
       <span
         class="multiselect-label-wrapper"
         :style="generateLabel('Organisation Type')"

@@ -1,16 +1,16 @@
 <?php
 
 return [
-    'new_user_successfully_created'              => 'FR_New user successfully created',
-    'error_has_occurred_while_creating_user'     => 'FR_Error creating user',
-    'user_has_been_deleted_successfully'         => 'FR_User has been deleted successfully',
-    'the_user_cannot_be_deleted'                 => 'FR_The user cannot be deleted',
-    'error_has_occurred_while_deleting_user'     => 'FR_Error deleting user',
-    'verification_email_successfully_sent'       => 'FR_Verification email successfully sent',
-    'please_enter_correct_current_password'      => 'FR_Please enter correct password',
-    'error_occurred_while_updating_password'     => 'FR_Error updating password',
-    'error_occurred_while_updating_user_profile' => 'FR_Error updating user profile',
-    'user_has_been_deactivated_successfully'     => 'FR_User has been deactivated successfully',
-    'user_has_been_activated_successfully'       => 'FR_User has been activated successfully',
-    'the_status_of_this_user_cannot_be_changed'  => 'FR_The status of this user cannot be changed',
+    'new_user_successfully_created'              => 'Profil du nouvel utilisateur créé avec succès',
+    'error_has_occurred_while_creating_user'     => 'Erreur lors de la création du profil de l\'utilisateur',
+    'user_has_been_deleted_successfully'         => 'Le profil de l\'utilisateur a été supprimé avec succès.',
+    'the_user_cannot_be_deleted'                 => 'Le profil de l\'\'utilisateur ne peut pas être supprimé.',
+    'error_has_occurred_while_deleting_user'     => 'Erreur lors de la suppression du profil de l\'utilisateur.',
+    'verification_email_successfully_sent'       => 'Le courriel de vérification a été envoyé avec succès.',
+    'please_enter_correct_current_password'      => 'Veuillez saisir le mot de passe correct.',
+    'error_occurred_while_updating_password'     => 'Erreur lors de la mise à jour du mot de passe',
+    'error_occurred_while_updating_user_profile' => 'Erreur lors de la mise à jour du profil utilisateur',
+    'user_has_been_deactivated_successfully'     => 'Le profil de l\'utilisateur a été désactivé avec succès.',
+    'user_has_been_activated_successfully'       => 'Le profil de l\'utilisateur a été activé avec succès.',
+    'the_status_of_this_user_cannot_be_changed'  => 'Le statut de cet utilisateur ne peut pas être modifié.',
 ];

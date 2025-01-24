@@ -105,12 +105,11 @@
               id="iati-country-switcher"
               v-model="isActive"
               class="iati-country-switcher__control cursor-pointer"
-              disabled
               @change="onLanguageChange"
             >
               <option value="en">English</option>
-              <option value="fr">French</option>
-              <option value="es">Spanish</option>
+              <option value="fr">Français</option>
+              <option value="es">Español</option>
             </select>
           </div>
 
@@ -142,7 +141,6 @@
 
 <script setup lang="ts">
 import { defineProps, ref } from 'vue';
-import axios from 'axios';
 import LanguageService from 'Services/language';
 
 const props = defineProps({
@@ -166,25 +164,4 @@ const onLanguageChange = (event: Event) => {
       console.error('Language change failed:', error);
     });
 };
-
-function downloadManual(type: string) {
-  let fileName = {
-    user: 'IATI_Publisher-User_Manual_v1.1.pdf',
-  };
-  let url = window.location.origin + `/Data/Manuals/${fileName[type]}`;
-
-  axios({
-    url: url,
-    method: 'GET',
-    responseType: 'arraybuffer',
-  }).then((response) => {
-    let blob = new Blob([response.data], {
-      type: 'application/pdf',
-    });
-    let link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.download = fileName[type];
-    link.click();
-  });
-}
 </script>

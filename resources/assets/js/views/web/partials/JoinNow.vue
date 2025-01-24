@@ -1,6 +1,6 @@
 <template>
   <div
-    class="right join-now m-auto flex basis-2/4 items-center rounded-l-lg rounded-r-lg bg-white px-5 py-5 sm:px-7 sm:py-10 md:my-0 md:rounded-l-none lg:py-28 xl:px-14"
+    class="right join-now m-auto flex basis-2/4 items-center rounded-l-lg rounded-r-lg bg-white px-5 py-5 sm:px-3 md:my-0 md:rounded-l-none xl:px-14"
   >
     <div class="right__container flex flex-col">
       <h2 class="mb-2 hidden sm:block">

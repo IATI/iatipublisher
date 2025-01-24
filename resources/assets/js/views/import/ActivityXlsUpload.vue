@@ -41,10 +41,10 @@
             ]
           }}
         </h6>
-        <div class="mb-12 flex flex-wrap items-center justify-center gap-6">
+        <div class="mb-12 flex flex-wrap items-stretch justify-center gap-6">
           <div
             :class="uploadType === 'activity' && '!bg-teal-10  '"
-            class="w-[315px] rounded border-2 border-n-30 p-4 text-sm"
+            class="w-[315px] cursor-pointer rounded border-2 border-n-30 p-4 text-sm"
           >
             <label class="cursor-pointer">
               <div class="mb-2 flex items-center justify-between">
@@ -63,7 +63,7 @@
                   name="product"
                 />
               </div>
-              <p class="h-[125px] text-[13px] tracking-normal text-n-40">
+              <p class="text-[13px] tracking-normal text-n-40">
                 {{
                   translatedData[
                     'workflow_frontend.import.download_the_template_all_elements_except_result'
@@ -95,7 +95,7 @@
                   name="product"
                 />
               </div>
-              <p class="h-[120px] text-[13px] tracking-normal text-n-40">
+              <p class="text-[13px] tracking-normal text-n-40">
                 {{
                   translatedData[
                     'workflow_frontend.import.download_the_template_result_except_indicator_and_period'
@@ -125,7 +125,7 @@
                   name="product"
                 />
               </div>
-              <p class="h-[120px] text-[13px] tracking-normal text-n-40">
+              <p class="text-[13px] tracking-normal text-n-40">
                 {{
                   translatedData[
                     'workflow_frontend.import.download_the_template_indicator_except_period'
@@ -153,7 +153,7 @@
                   name="product"
                 />
               </div>
-              <p class="h-[120px] text-[13px] tracking-normal text-n-40">
+              <p class="text-[13px] tracking-normal text-n-40">
                 {{
                   translatedData[
                     'workflow_frontend.import.download_the_template_period'

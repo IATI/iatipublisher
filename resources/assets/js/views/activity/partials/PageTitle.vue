@@ -98,7 +98,6 @@
                   "
                   @click="checkPublish"
                 />
-                <!--TODO: Baki-->
                 <PublishSelected ref="publishRef" />
               </div>
               <div class="flex gap-2">

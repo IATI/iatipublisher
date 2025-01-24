@@ -7,5 +7,7 @@
                     :types="{{ json_encode($types) }}"
                     :toast="{{ json_encode($toast) }}"
                     :translated-data='{{json_encode($translatedData)}}'
+                    :current-language='{{json_encode($currentLanguage)}}'
+
     ></indicator-list>
 @endsection
