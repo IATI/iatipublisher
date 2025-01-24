@@ -1,126 +1,208 @@
 <template>
-  <div class="wrapper smooth relative bg-bluecoral sm:h-72">
-    <div class="mx-3 sm:mx-10 xl:mx-24 xl:px-1">
-      <header class="header relative z-10 grid">
-        <nav
-          class="relative z-10 mt-6 flex items-center justify-between rounded-md bg-white px-3 pt-5 text-xs sm:mt-12 sm:px-10"
+  <div class="iati-mobile-nav js-iati-mobile-nav">
+    <div class="iati-mobile-nav__overlay js-iati-mobile-overlay"></div>
+    <nav class="iati-mobile-nav__menu">
+      <div class="iati-mobile-nav__header">
+        <h2 class="iati-mobile-nav__label text-white">
+          {{ props.translatedData['common.common.menu'] }}
+        </h2>
+        <button
+          class="iati-menu-toggle iati-menu-toggle--close js-iati-menu-toggle-close"
         >
-          <a class="pb-5" href="/">
-            <svg-vue class="w-52 text-6xl sm:w-60" icon="header-logo" />
-          </a>
-          <!-- remove width later -->
-          <div class="languages hidden pt-11 xl:block">
-            <div class="flex">
-              <ul class="flex items-center justify-center">
-                <li class="nav__links">
-                  <a
-                    href="https://docs.publisher.iatistandard.org/en/latest/"
-                    >{{ translatedData['common.common.help_docs'] }}</a
-                  >
-                </li>
-              </ul>
-              <!--              <span class="mr-2 pt-5 pb-5 uppercase xl:pt-0"-->
-              <!--                >{{ translatedData['elements.label.language'] }}:</span-->
-              <!--              >-->
-              <!--              <ul class="flex items-center justify-center">-->
-              <!--                <li class="nav__links">-->
-              <!--                  <button-->
-              <!--                    :class="{-->
-              <!--                      'nav__active links__active': currentLanguage === 'en',-->
-              <!--                    }"-->
-              <!--                    @click="changeLanguage('en')"-->
-              <!--                  >-->
-              <!--                    EN-->
-              <!--                  </button>-->
-              <!--                </li>-->
-              <!--                <li class="nav__links">-->
-              <!--                  <button-->
-              <!--                    :class="{-->
-              <!--                      'nav__active links__active': currentLanguage === 'fr',-->
-              <!--                    }"-->
-              <!--                    @click="changeLanguage('fr')"-->
-              <!--                  >-->
-              <!--                    FR-->
-              <!--                  </button>-->
-              <!--                </li>-->
-              <!--                <li class="nav__links">-->
-              <!--                  <button-->
-              <!--                    :class="{-->
-              <!--                      'nav__active links__active': currentLanguage === 'es',-->
-              <!--                    }"-->
-              <!--                    @click="changeLanguage('es')"-->
-              <!--                  >-->
-              <!--                    ES-->
-              <!--                  </button>-->
-              <!--                </li>-->
-              <!--              </ul>-->
-            </div>
-          </div>
-          <div id="menu-overlay"></div>
-          <div
-            id="hamburger"
-            class="hamburger home-burger-menu mb-4 scale-90 xl:hidden"
-          >
-            <span class="bg-bluecoral" />
-            <span class="bg-bluecoral" />
-            <span class="bg-bluecoral" />
-          </div>
-        </nav>
-        <div
-          class="header__title mt-6 flex flex-wrap items-center justify-between gap-2 border-l-4 border-l-turquoise px-4 py-2 sm:px-6 sm:py-5"
-        >
-          <h1
-            class="text-xl font-bold text-white sm:text-4xl sm:text-heading-2"
-          >
-            {{ title }}
-          </h1>
+          <span>{{ props.translatedData['common.common.close'] }}</span>
+        </button>
+      </div>
+      <ul class="">
+        <li class="iati-mobile-nav__item">
+          <a href="/" class="iati-mobile-nav__link">{{ title }}</a>
+        </li>
+      </ul>
+      <ul class="">
+        <li class="iati-mobile-nav__item">
           <a
-            v-if="auth === '1'"
-            :href="superAdmin ? '/list-organisations' : '/activities'"
-            class="button secondary-btn"
+            href="https://iatistandard.org/en/about/"
+            class="iati-mobile-nav__link"
+            >{{ props.translatedData['common.common.about_iati'] }}</a
           >
-            {{
-              superAdmin ? 'Go to Organisation List' : 'Go to Your Activities'
-            }}
-            <svg-vue class="text-2xl" icon="right-arrow" />
+        </li>
+        <li class="iati-mobile-nav__item">
+          <a
+            href="https://iatistandard.org/en/using-data/"
+            class="iati-mobile-nav__link"
+            >{{ props.translatedData['common.common.use_data'] }}</a
+          >
+        </li>
+        <li class="iati-mobile-nav__item">
+          <a
+            href="https://iatistandard.org/en/guidance/publishing-data/"
+            class="iati-mobile-nav__link"
+          >
+            {{ props.translatedData['common.common.publish_data'] }}
           </a>
-        </div>
-      </header>
-    </div>
+        </li>
+        <li class="iati-mobile-nav__item">
+          <a
+            href="https://iatistandard.org/guidance/get-support/"
+            class="iati-mobile-nav__link"
+          >
+            {{ props.translatedData['common.common.contact'] }}
+          </a>
+        </li>
+        <li class="iati-mobile-nav__item">
+          <a href="#" class="iati-mobile-nav__link">{{
+            translatedData['common.common.help_docs']
+          }}</a>
+        </li>
+      </ul>
+    </nav>
   </div>
+
+  <header class="iati-header">
+    <div class="iati-header__section iati-header__section--first">
+      <div class="iati-header__container">
+        <a href="https://iatistandard.org/" aria-label="Go to IATI homepage">
+          <img
+            class="iati-header__logo"
+            alt=""
+            src="https://iati.github.io/design-system/assets/logo-colour-Bag5CeA4.svg"
+          />
+        </a>
+
+        <nav class="iati-header__general-nav">
+          <ul class="iati-piped-list">
+            <li>
+              <a href="https://iatistandard.org/en/about/">{{
+                props.translatedData['common.common.about_iati']
+              }}</a>
+            </li>
+            <li>
+              <a href="https://iatistandard.org/en/using-data/">{{
+                props.translatedData['common.common.use_data']
+              }}</a>
+            </li>
+            <li>
+              <a href="https://iatistandard.org/en/guidance/publishing-data/">
+                {{ props.translatedData['common.common.publish_data'] }}
+              </a>
+            </li>
+            <li>
+              <a href="https://iatistandard.org/guidance/get-support/">
+                {{ props.translatedData['common.common.contact'] }}
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div
+      class="iati-header__section iati-header__section--last iati-brand-background"
+    >
+      <div class="iati-header__container iati-brand-background__content">
+        <div class="iati-header__actions">
+          <div class="iati-country-switcher">
+            <label
+              for="iati-country-switcher"
+              class="iati-country-switcher__label"
+              >{{
+                props.translatedData['common.common.choose_your_language']
+              }}</label
+            >
+            <select
+              id="iati-country-switcher"
+              v-model="isActive"
+              class="iati-country-switcher__control cursor-pointer"
+              disabled
+              @change="onLanguageChange"
+            >
+              <option value="en">English</option>
+              <option value="fr">French</option>
+              <option value="es">Spanish</option>
+            </select>
+          </div>
+
+          <button
+            class="iati-button iati-button--light hide--mobile-nav"
+            @click="redirectUser"
+          >
+            <span>{{ props.translatedData['common.common.help_docs'] }}</span>
+            <i class="iati-icon iati-icon--info"></i>
+          </button>
+
+          <button
+            class="iati-menu-toggle iati-menu-toggle--open js-iati-menu-toggle-open"
+          >
+            <span class="iati-menu-toggle__label">
+              {{ props.translatedData['common.common.menu'] }}
+            </span>
+          </button>
+        </div>
+
+        <div class="iati-header-title">
+          <p class="iati-header-title__eyebrow">
+            {{ props.translatedData['common.common.iati_tools'] }}
+          </p>
+          <p class="iati-header-title__heading">IATI Publisher</p>
+        </div>
+
+        <div class="iati-header__nav">
+          <nav>
+            <ul class="iati-tool-nav">
+              <li><a href="/" class="iati-tool-nav-link">IATI Publisher</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
 </template>
 
-<script lang="ts">
-import { defineComponent, onUnmounted } from 'vue';
+<script setup lang="ts">
+import { defineProps, ref } from 'vue';
+import axios from 'axios';
 import LanguageService from 'Services/language';
 
-export default defineComponent({
-  components: {},
-  props: {
-    title: { type: String, required: true },
-    auth: { type: String, required: true },
-    superAdmin: { type: Boolean, required: false, default: false },
-    translatedData: { type: Object, required: true },
-    currentLanguage: { type: String, required: true },
+const props = defineProps({
+  translatedData: {
+    type: Object,
+    required: true,
   },
-  setup() {
-    onUnmounted(() => {
-      document.body.classList.remove('no-nav');
-    });
-
-    const changeLanguage = (lang: string) => {
-      LanguageService.changeLanguage(lang)
-        .then(() => {
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-
-    return {
-      changeLanguage,
-    };
+  currentLanguage: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  auth: {
+    type: String,
+    required: true,
+  },
+  superAdmin: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 });
+
+const isActive = ref(props.currentLanguage);
+
+const onLanguageChange = (event: Event) => {
+  const selectedLang = (event.target as HTMLSelectElement).value;
+  LanguageService.changeLanguage(selectedLang)
+    .then(() => {
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.error('Language change failed:', error);
+    });
+};
+
+const redirectUser = () => {
+  window.open(
+    'https://docs.publisher.iatistandard.org/en/latest/',
+    '_blank',
+    'noopener,noreferrer'
+  );
+};
 </script>

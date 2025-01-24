@@ -22,7 +22,7 @@
         <div class="pb-4 text-caption-c1 text-n-40">
           <div>
             <nav aria-label="breadcrumbs" class="rank-math-breadcrumb">
-              <div class="flex">
+              <div class="flex items-center">
                 <a class="whitespace-nowrap font-bold" href="/activities">
                   {{ translatedData['common.common.your_activities'] }}
                 </a>

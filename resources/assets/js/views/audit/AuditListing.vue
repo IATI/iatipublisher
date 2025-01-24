@@ -2,7 +2,7 @@
   <div class="px-6 py-4 md:px-10">
     <Loader v-if="isLoaderVisible" />
     <nav aria-label="breadcrumbs" class="rank-math-breadcrumb">
-      <div class="flex">
+      <div class="flex items-center">
         <a class="whitespace-nowrap font-bold text-n-40" href="/audits">
           Audits
         </a>

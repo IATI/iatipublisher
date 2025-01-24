@@ -3,7 +3,7 @@
     <div class="title grow-0">
       <div class="activity__title mb-4 text-caption-c1 text-n-40">
         <nav aria-label="breadcrumbs" class="rank-math-breadcrumb">
-          <div class="flex ">
+          <div class="flex items-center">
             <a class="whitespace-nowrap font-bold" href="/organisation">{{trans('organisationDetail/organisation_data.your_organisation')}}</a>
             <span class="separator mx-4"> / </span>
             <div class="breadcrumb__title">
