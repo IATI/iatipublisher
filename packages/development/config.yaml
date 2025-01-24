@@ -74,3 +74,5 @@ data:
 
   SENTRY_LARAVEL_DSN: 'https://581da70faf2347c2922a06b4dd3f48eb@o4504529613684736.ingest.sentry.io/4504529613684736'
   SENTRY_TRACES_SAMPLE_RATE: "1.0"
+
+  IATI_DESIGN_SYSTEM_URL: 'https://cdn.jsdelivr.net/npm/iati-design-system@3.13.0/dist/css/iati.min.css'

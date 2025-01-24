@@ -370,4 +370,13 @@ return [
     'iati_identifier_of_all_non_published_activities'                                                                                                                 => 'FR_Iati identifier of all non published activities',
     'reporting_org_of_all_activities'                                                                                                                                 => 'FR_Reporting org of all activities',
     'are_you_sure_you_want_to_save_the_change'                                                                                                                        => 'FR_Are you sure you want to save the change ?',
+    'iati_tools'                                                                                                                                                      => 'FR_IATI Tools',
+    'about_iati'                                                                                                                                                      => 'FR_About IATI',
+    'use_data'                                                                                                                                                        => 'FR_Use Data',
+    'publish_data'                                                                                                                                                    => 'FR_Publish Data',
+    'contact'                                                                                                                                                         => 'FR_Contact',
+    'menu'                                                                                                                                                            => 'FR_Menu',
+    'choose_your_language'                                                                                                                                            => 'FR_Choose your language',
+    'useful_links'                                                                                                                                                    => 'FR_Useful Links',
+    'additional_information'                                                                                                                                          => 'FR_Additional Information',
 ];

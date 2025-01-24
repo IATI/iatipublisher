@@ -3,7 +3,7 @@
     <div class="title grow-0">
       <div class="mb-4 activity__title text-caption-c1 text-n-40">
         <nav aria-label="breadcrumbs" class="rank-math-breadcrumb">
-          <div class="flex">
+          <div class="flex items-center">
             <a class="font-bold whitespace-nowrap" href="/activities">{{trans('common/common.your_activities')}}</a>
             <span class="mx-4 separator"> / </span>
             @php

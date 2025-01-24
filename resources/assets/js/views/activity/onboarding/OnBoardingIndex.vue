@@ -3,7 +3,7 @@
   <Transition name="fade">
     <div
       v-if="modalState"
-      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40"
+      class="fixed inset-0 z-[999999] flex items-center justify-center bg-black bg-opacity-40"
     >
       <div class="relative flex bg-white">
         <!-- Left -->

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-end overflow-x-auto">
+  <div class="flex items-end">
     <span
       :class="{
         'text-[64px]': value[0].amount,

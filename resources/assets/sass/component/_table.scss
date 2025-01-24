@@ -8,7 +8,8 @@
   }
 
   table {
-    @apply table w-full  bg-white;
+    display: table !important;
+    @apply w-full  bg-white;
   }
   tbody {
     tr {
@@ -37,7 +38,10 @@
   }
 
   th {
-    @apply px-6 py-4 align-top text-xs uppercase leading-normal;
+    border: none !important;
+    padding: 16px 24px !important;
+    vertical-align: top !important;
+    @apply text-xs uppercase leading-normal;
 
     svg {
       @apply mr-1 text-xl text-n-30;
@@ -52,7 +56,8 @@
   }
 
   td {
-    @apply relative px-6 py-4 align-top text-sm leading-relaxed;
+    padding: 16px 24px !important;
+    @apply relative align-top text-sm leading-relaxed;
   }
 
   tr.already-published {

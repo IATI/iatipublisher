@@ -370,4 +370,13 @@ return [
     'iati_identifier_of_all_non_published_activities'                                                                                                                 => 'ES_Iati identifier of all non published activities',
     'reporting_org_of_all_activities'                                                                                                                                 => 'ES_Reporting org of all activities',
     'are_you_sure_you_want_to_save_the_change'                                                                                                                        => 'ES_Are you sure you want to save the change ?',
+    'iati_tools'                                                                                                                                                      => 'ES_IATI Tools',
+    'about_iati'                                                                                                                                                      => 'ES_About IATI',
+    'use_data'                                                                                                                                                        => 'ES_Use Data',
+    'publish_data'                                                                                                                                                    => 'ES_Publish Data',
+    'contact'                                                                                                                                                         => 'ES_Contact',
+    'menu'                                                                                                                                                            => 'ES_Menu',
+    'choose_your_language'                                                                                                                                            => 'ES_Choose your language',
+    'useful_links'                                                                                                                                                    => 'ES_Useful Links',
+    'additional_information'                                                                                                                                          => 'ES_Additional Information',
 ];

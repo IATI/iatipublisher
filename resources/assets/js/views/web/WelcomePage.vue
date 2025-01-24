@@ -23,7 +23,7 @@
               }}
             </span>
           </p>
-          <div class="block">
+          <div class="block leading-6">
             <span class="flex flex-wrap">
               {{
                 pageContent === 'Join Now'

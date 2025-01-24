@@ -70,3 +70,5 @@ data:
   SENTRY_TRACES_SAMPLE_RATE: "1.0"
 
   PRODUCTION_TEST_ACC: "young_innovation_production_test"
+
+  IATI_DESIGN_SYSTEM_URL: 'https://cdn.jsdelivr.net/npm/iati-design-system@3.13.0/dist/css/iati.min.css'
