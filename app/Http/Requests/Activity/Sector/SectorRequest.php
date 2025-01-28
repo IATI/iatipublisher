@@ -254,7 +254,7 @@ class SectorRequest extends ActivityBaseRequest
                 '%s.percentage.sector_total_percent',
                 $sectorForm
             )]
-                = trans('validation.activity_sector.sector_total_percent');
+                = trans('validation.activity_sector.percentage.sector_total_percent');
 
             $messageNarratives = $this->getMessagesForNarrative($sector['narrative'], $sectorForm);
 

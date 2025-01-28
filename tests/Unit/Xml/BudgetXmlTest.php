@@ -135,7 +135,6 @@ class BudgetXmlTest extends XmlBaseTest
 
         $this->assertContains('The Budget Period must not be longer than one year', $flattenErrors);
         $this->assertContains('The iso-date field must be date after year 1900.', $flattenErrors);
-        $this->assertContains('The iso-date field must date after year 1900.', $flattenErrors);
     }
 
     /**

@@ -28,6 +28,11 @@ class GenerateTranslationExcel extends Command
      */
     protected $description = 'Generate an Excel file with multiple sheets based on folder names, including existing translations.';
 
+    private array $ignorableFilepath = [
+        'label.php',
+        'name.php',
+    ];
+
     /**
      * @var array
      */
@@ -119,6 +124,10 @@ class GenerateTranslationExcel extends Command
             $translations[$folderName] = $translations[$folderName] ?? [];
 
             foreach (File::allFiles($folder) as $file) {
+                if ($this->shouldIgnoreThisFile($file)) {
+                    continue;
+                }
+
                 $this->extractFileTranslations($file, $folderName, $lang, $translations[$folderName]);
             }
         }
@@ -208,5 +217,14 @@ class GenerateTranslationExcel extends Command
                 Storage::disk('s3')->delete($file);
             }
         }
+    }
+
+    private function shouldIgnoreThisFile(\Symfony\Component\Finder\SplFileInfo $file): bool
+    {
+        if (in_array($file->getRelativePathname(), $this->ignorableFilepath, true)) {
+            return true;
+        }
+
+        return false;
     }
 }

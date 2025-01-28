@@ -273,14 +273,14 @@ class BulkPublishingController extends Controller
             }
 
             if ($this->publishingStatusService->ongoingBulkPublishing($organization->id)) {
-                $pubishingStatus = $this->bulkPublishingService->getOrganisationBulkPublishingStatus();
+                $publishingStatus = $this->bulkPublishingService->getOrganisationBulkPublishingStatus();
                 $translatedMessage = trans('work_flow/bulk_publishing_controller.another_bulk_publishing_is_already_in_progress');
 
                 return response()->json([
                     'success'     => false,
                     'message'     => $translatedMessage,
-                    'data'        => $pubishingStatus['publishingData'],
-                    'in_progress' => $pubishingStatus['inProgress'],
+                    'data'        => $publishingStatus['publishingData'],
+                    'in_progress' => $publishingStatus['inProgress'],
                 ]);
             }
 

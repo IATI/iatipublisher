@@ -347,7 +347,7 @@ class BudgetRequest extends ActivityBaseRequest
             $messages[$budgetForm . '.budget_status.in'] = trans('validation.activity_budget.budget.invalid_status');
             $messages[$budgetForm . '.period_end.0.date.before'] = trans('validation.activity_budget.period_end.before');
             $messages[$budgetForm . '.period_end.0.date.period_start_end'] = trans(
-                'validation.activity_budget.period_end.period_start_end'
+                'activity_budget.date.gt_1900'
             );
         }
 

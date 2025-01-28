@@ -65,15 +65,17 @@
                   >
                     {{
                       organization.name
-                        ? organization.name['0'].narrative ?? 'Untitled'
-                        : 'Untitled'
+                        ? organization.name['0'].narrative ??
+                          translatedData['common.common.untitled']
+                        : translatedData['common.common.untitled']
                     }}
                   </span>
                   <span class="ellipsis__title--hover w-[calc(100%_+_35px)]">
                     {{
                       organization.name
-                        ? organization.name['0'].narrative ?? 'Untitled'
-                        : 'Untitled'
+                        ? organization.name['0'].narrative ??
+                          translatedData['common.common.untitled']
+                        : translatedData['common.common.untitled']
                     }}
                   </span>
                 </h4>

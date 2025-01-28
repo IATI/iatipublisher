@@ -225,7 +225,7 @@ class RecipientRegionCsvTest extends CsvBaseTest
         $this->assertContains('Recipient Country’s percentage is already 100%. The sum of the percentages of Recipient Country and Recipient Region must be 100%', $flattenErrors);
         $this->assertContains('The recipient region vocabulary uri must be a valid url.', $flattenErrors);
         $this->assertContains('The recipient region percentage field must be a number.', $flattenErrors);
-        $this->assertContains('The recipient country percentage must be at least 0. ', $flattenErrors);
+        $this->assertContains('The recipient country percentage must be at least 0.', $flattenErrors);
     }
 
     /**

@@ -326,7 +326,7 @@
                   "type": "text",
                   "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": ""
                 },
@@ -337,7 +337,7 @@
                   "multiselect": false,
                   "choices": "Activity/Currency.json",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
                   "hover_text": "",
                   "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
@@ -348,7 +348,7 @@
                   "type": "date",
                   "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
                   "help_text": ""
                 }
@@ -361,7 +361,7 @@
               "type": "textarea",
               "placeholder": "common/common.description_sub_elements_narrative_placeholder",
               "required": true,
-              "criteria": "",
+              "criteria": "mandatory",
               "add_more": true,
               "form_has_borders": true,
               "label_has_borders": true,
@@ -379,7 +379,7 @@
                   "choices": "Activity/Language.json",
                   "placeholder": "common/common.name_sub_elements_narrative_attributes_lang_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": "common/common.name_sub_elements_narrative_attributes_lang_help_text"
                 }
@@ -602,7 +602,7 @@
                   "type": "text",
                   "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": ""
                 },
@@ -614,7 +614,7 @@
                   "choices": "Activity/Currency.json",
                   "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
                 },
@@ -624,7 +624,7 @@
                   "type": "date",
                   "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
                   "help_text": ""
                 }
@@ -637,7 +637,7 @@
               "type": "textarea",
               "placeholder": "common/common.description_sub_elements_narrative_placeholder",
               "required": true,
-              "criteria": "",
+              "criteria": "mandatory",
               "add_more": true,
               "form_has_borders": true,
               "label_has_borders": true,
@@ -655,7 +655,7 @@
                   "choices": "Activity/Language.json",
                   "placeholder": "common/common.name_sub_elements_narrative_attributes_lang_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": "common/common.name_sub_elements_narrative_attributes_lang_help_text"
                 }
@@ -684,8 +684,8 @@
           "multiselect": false,
           "choices": "Activity/BudgetStatus.json",
           "placeholder": "common/common.budget_attributes_budget_status_placeholder",
-          "required": false,
-          "criteria": "",
+          "required": true,
+          "criteria": "mandatory",
           "hover_text": "common/common.budget_attributes_budget_status_hover_text",
           "help_text": ""
         }
@@ -699,7 +699,7 @@
           "form_has_borders": true,
           "label_has_borders": true,
           "is_collapsable": true,
-          "label_indicator": "required_icon",
+          "label_indicator": "optional_text",
           "element_criteria": "mandatory",
           "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_recipient_region_hover_text",
           "attributes": {
@@ -915,7 +915,7 @@
                   "type": "text",
                   "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": ""
                 },
@@ -927,7 +927,7 @@
                   "choices": "Activity/Currency.json",
                   "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
                 },
@@ -937,7 +937,7 @@
                   "type": "date",
                   "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
                   "help_text": ""
                 }
@@ -950,7 +950,7 @@
               "type": "textarea",
               "placeholder": "common/common.description_sub_elements_narrative_placeholder",
               "required": true,
-              "criteria": "",
+              "criteria": "mandatory",
               "add_more": true,
               "hover_text": "elements/org_json_schema.total_budget_sub_elements_budget_line_sub_elements_narrative_hover_text",
               "help_text": "",
@@ -966,7 +966,7 @@
                   "choices": "Activity/Language.json",
                   "placeholder": "common/common.name_sub_elements_narrative_attributes_lang_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": "common/common.name_sub_elements_narrative_attributes_lang_help_text"
                 }
@@ -1193,7 +1193,7 @@
                   "type": "text",
                   "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": ""
                 },
@@ -1205,7 +1205,7 @@
                   "choices": "Activity/Currency.json",
                   "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
                 },
@@ -1215,7 +1215,7 @@
                   "type": "date",
                   "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
                   "help_text": ""
                 }
@@ -1228,7 +1228,7 @@
               "type": "textarea",
               "placeholder": "common/common.name_sub_elements_narrative_attributes_lang_placeholder",
               "required": true,
-              "criteria": "",
+              "criteria": "mandatory",
               "add_more": true,
               "hover_text": "elements/org_json_schema.total_budget_sub_elements_budget_line_sub_elements_narrative_hover_text",
               "help_text": "",
@@ -1244,7 +1244,7 @@
                   "choices": "Activity/Language.json",
                   "placeholder": "common/common.name_sub_elements_narrative_attributes_lang_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": "common/common.name_sub_elements_narrative_attributes_lang_help_text"
                 }
@@ -1400,7 +1400,7 @@
                   "type": "text",
                   "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": ""
                 },
@@ -1412,7 +1412,7 @@
                   "choices": "Activity/Currency.json",
                   "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
                 },
@@ -1422,7 +1422,7 @@
                   "type": "date",
                   "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
                   "help_text": ""
                 }
@@ -1435,7 +1435,7 @@
               "type": "textarea",
               "placeholder": "common/common.description_sub_elements_narrative_placeholder",
               "required": true,
-              "criteria": "",
+              "criteria": "mandatory",
               "add_more": true,
               "hover_text": "elements/org_json_schema.total_expenditure_sub_elements_expense_line_sub_elements_narrative_hover_text",
               "help_text": "",
@@ -1451,7 +1451,7 @@
                   "choices": "Activity/Language.json",
                   "placeholder": "common/common.name_sub_elements_narrative_attributes_lang_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": "common/common.name_sub_elements_narrative_attributes_lang_help_text"
                 }
@@ -1680,7 +1680,7 @@
               "choices": "Activity/Country.json",
               "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
               "required": true,
-              "criteria": "",
+              "criteria": "mandatory",
               "hover_text": "elements/org_json_schema.document_link_sub_elements_recipient_country_attributes_code_hover_text",
               "help_text": ""
             }
@@ -1692,7 +1692,7 @@
               "type": "textarea",
               "placeholder": "common/common.description_sub_elements_narrative_placeholder",
               "required": true,
-              "criteria": "",
+              "criteria": "mandatory",
               "add_more": true,
               "attr": {
                 "row": 4
@@ -1708,7 +1708,7 @@
                   "choices": "Activity/Language.json",
                   "placeholder": "common/common.name_sub_elements_narrative_attributes_lang_placeholder",
                   "required": true,
-                  "criteria": "",
+                  "criteria": "mandatory",
                   "hover_text": "",
                   "help_text": "common/common.name_sub_elements_narrative_attributes_lang_help_text"
                 }
