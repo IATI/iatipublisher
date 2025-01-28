@@ -337,7 +337,7 @@ class ImportXlsController extends Controller
             );
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('import_activity/import_xls_controller.error_has_occurred_while_opening_import_listing_page');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activities.index')->with('error', $translatedMessage);
         }

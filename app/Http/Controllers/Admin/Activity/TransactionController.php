@@ -193,7 +193,7 @@ class TransactionController extends Controller
             return view('admin.activity.transaction.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e);
-            $translatedMessage = trans('activity_detail/transaction_controller.error_has_occurred_while_rendering_activity_transaction_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.show', $activityId)->with(
                 'error',
@@ -298,7 +298,7 @@ class TransactionController extends Controller
             return view('admin.activity.transaction.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/transaction_controller.error_has_occurred_while_rendering_activity_transaction_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.transaction.index', $activityId)->with(
                 'error',
@@ -320,14 +320,14 @@ class TransactionController extends Controller
     {
         try {
             if (!$this->transactionService->update($transactionId, $request->except(['_method', '_token']))) {
-                $translatedMessage = trans('activity_detail/transaction_controller.error_has_occurred_while_updating_activity_transaction');
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
                 return redirect()->route('admin.activity.transaction.index', $activityId)->with(
                     'error',
                     $translatedMessage
                 );
             }
-            $translatedMessage = trans('activity_detail/transaction_controller.activity_transaction_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.activity.transaction.show', [$activityId, $transactionId])->with(
                 'success',
@@ -335,7 +335,7 @@ class TransactionController extends Controller
             );
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/transaction_controller.error_has_occurred_while_updating_activity_transaction');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.transaction.index', $activityId)->with(
                 'error',

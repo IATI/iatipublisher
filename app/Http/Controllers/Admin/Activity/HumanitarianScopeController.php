@@ -73,7 +73,7 @@ class HumanitarianScopeController extends Controller
             return view('admin.activity.humanitarianScope.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/humanitarian_scope_controller.error_has_occurred_while_rendering_humanitarian_scope_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
@@ -94,17 +94,17 @@ class HumanitarianScopeController extends Controller
     {
         try {
             if ($this->humanitarianScopeService->update($id, $request->except(['_token', '_method']))) {
-                $translatedMessage = trans('activity_detail/humanitarian_scope_controller.humanitarian_scope_updated_successfully');
+                $translatedMessage = trans('common/common.updated_successfully');
 
                 return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
             }
 
-            $translatedMessage = trans('activity_detail/humanitarian_scope_controller.error_has_occurred_while_updating_humanitarian_scope');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/humanitarian_scope_controller.humanitarian_scope_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }

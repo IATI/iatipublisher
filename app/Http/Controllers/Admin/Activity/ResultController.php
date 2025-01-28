@@ -181,7 +181,7 @@ class ResultController extends Controller
             return view('admin.activity.result.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/result_controller.error_has_occurred_while_rendering_activity_result_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.result.index', $id)->with(
                 'error',
@@ -291,7 +291,7 @@ class ResultController extends Controller
             return view('admin.activity.result.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/result_controller.error_has_occurred_while_rendering_activity_result_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.result.index', $activityId)->with(
                 'error',
@@ -315,14 +315,14 @@ class ResultController extends Controller
             $resultData = $request->except(['_method', '_token']);
 
             if (!$this->resultService->update($resultId, ['activity_id' => $activityId, 'result' => $resultData])) {
-                $translatedMessage = trans('activity_detail/result_controller.error_has_occurred_while_updating_activity_result');
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
                 return redirect()->route('admin.activity.result.index', $activityId)->with(
                     'error',
                     $translatedMessage
                 );
             }
-            $translatedMessage = trans('activity_detail/result_controller.activity_result_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.activity.result.show', [$activityId, $resultId])->with(
                 'success',
@@ -330,7 +330,7 @@ class ResultController extends Controller
             );
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/result_controller.error_has_occurred_while_updating_activity_result');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.result.index', $activityId)->with(
                 'error',

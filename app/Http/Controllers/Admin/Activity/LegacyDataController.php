@@ -72,7 +72,7 @@ class LegacyDataController extends Controller
             return view('admin.activity.legacyData.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/legacy_data_controller.error_has_occurred_while_rendering_legacy_data_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
@@ -93,16 +93,16 @@ class LegacyDataController extends Controller
     {
         try {
             if ($this->activityLegacyDataService->update($id, $request->all())) {
-                $translatedMessage = trans('activity_detail/legacy_data_controller.legacy_data_updated_successfully');
+                $translatedMessage = trans('common/common.updated_successfully');
 
                 return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
             }
-            $translatedMessage = trans('activity_detail/legacy_data_controller.error_has_occurred_while_updating_legacy_data');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/legacy_data_controller.error_has_occurred_while_updating_legacy_data');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }

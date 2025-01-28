@@ -97,7 +97,7 @@ class OrganizationController extends Controller
             return view('admin.organisation.index', compact('elements', 'elementGroups', 'progress', 'organization', 'toast', 'types', 'mandatoryCompleted', 'status', 'userRole'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('organisationDetail/organization_controller.error_has_occurred_while_opening_organization_detail_page');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activities.index')->with('error', $translatedMessage);
         }

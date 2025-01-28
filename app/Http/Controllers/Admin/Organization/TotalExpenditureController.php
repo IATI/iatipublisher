@@ -49,7 +49,7 @@ class TotalExpenditureController extends Controller
             return view('admin.organisation.forms.totalExpenditure.totalExpenditure', compact('form', 'organization', 'data'));
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('organisationDetail/total_expenditure_controller.error_has_occurred_while_opening_organization_total_expenditure_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
@@ -66,16 +66,16 @@ class TotalExpenditureController extends Controller
     {
         try {
             if (!$this->totalExpenditureService->update(Auth::user()->organization_id, $request->all())) {
-                $translatedMessage = trans('organisationDetail/total_expenditure_controller.error_has_occurred_while_updating_organization_total_expenditure');
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
                 return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
             }
-            $translatedMessage = trans('organisationDetail/total_expenditure_controller.organization_total_expenditure_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.organisation.index')->with('success', $translatedMessage);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('organisationDetail/total_expenditure_controller.error_has_occurred_while_updating_organization_total_expenditure');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }

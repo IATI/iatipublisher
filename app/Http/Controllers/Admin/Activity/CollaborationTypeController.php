@@ -74,7 +74,7 @@ class CollaborationTypeController extends Controller
             return view('admin.activity.collaborationType.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/collaboration_type_controller.error_has_occurred_while_rendering_activity_collaboration_type_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
@@ -97,16 +97,16 @@ class CollaborationTypeController extends Controller
             $activityCollaborationType = $request->get('collaboration_type') !== null ? (int) $request->get('collaboration_type') : null;
 
             if (!$this->collaborationTypeService->update($id, $activityCollaborationType)) {
-                $translatedMessage = trans('activity_detail/collaboration_type_controller.error_has_occurred_while_updating_activity_collaboration_type');
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
                 return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
             }
-            $translatedMessage = trans('activity_detail/collaboration_type_controller.activity_collaboration_type_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/collaboration_type_controller.error_has_occurred_while_updating_activity_collaboration_type');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }

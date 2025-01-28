@@ -72,7 +72,7 @@ class ScopeController extends Controller
             return view('admin.activity.scope.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/scope_controller.error_has_occurred_while_opening_activity_scope_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
@@ -95,16 +95,16 @@ class ScopeController extends Controller
             $activityScope = $request->get('activity_scope') !== null ? (int) $request->get('activity_scope') : null;
 
             if (!$this->scopeService->update($id, $activityScope)) {
-                $translatedMessage = trans('activity_detail/scope_controller.error_has_occurred_while_updating_activity_scope');
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
                 return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
             }
-            $translatedMessage = trans('activity_detail/scope_controller.activity_scope_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/scope_controller.error_has_occurred_while_updating_activity_scope');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }

@@ -53,7 +53,7 @@ class ActivityDefaultController extends Controller
             );
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/activity_default_controller.error_has_occurred_while_rendering_default_values_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.show', $activityId)->with(
                 'error',
@@ -101,7 +101,7 @@ class ActivityDefaultController extends Controller
 
             DB::commit();
 
-            $translatedMessage = trans('activity_detail/activity_default_controller.activity_default_values_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {

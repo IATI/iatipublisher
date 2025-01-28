@@ -74,7 +74,7 @@ class ContactInfoController extends Controller
             return view('admin.activity.contactInfo.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/contact_info_controller.error_has_occurred_while_rendering_contact_info_controller_item_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
@@ -97,16 +97,16 @@ class ContactInfoController extends Controller
             $activityCountryBudgetItem = $request->except(['_token', '_method']);
 
             if (!$this->contactInfoService->update($id, $activityCountryBudgetItem)) {
-                $translatedMessage = trans('activity_detail/contact_info_controller.error_has_occurred_while_updating_contact_info');
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
                 return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
             }
-            $translatedMessage = trans('activity_detail/contact_info_controller.contact_info_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/contact_info_controller.error_has_occurred_while_updating_contact_info');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }

@@ -51,7 +51,7 @@ class ReportingOrgController extends Controller
             return view('admin.organisation.forms.reportingOrg.reportingOrg', compact('form', 'organization', 'data'));
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('common/common.error_has_occurred_while_opening_organization_reporting_org_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
@@ -70,7 +70,7 @@ class ReportingOrgController extends Controller
             DB::beginTransaction();
 
             if (!$this->reportingOrgService->update(Auth::user()->organization_id, $request->all())) {
-                $translatedMessage = trans('organisationDetail/reporting_org_controller.error_has_occurred_while_updating_organization_reporting_org');
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
                 return $request->expectsJson() ?
                     response()->json(['success' => false, 'error' => $translatedMessage], 500) :
@@ -79,7 +79,7 @@ class ReportingOrgController extends Controller
 
             DB::commit();
 
-            $translatedMessage = trans('organisationDetail/reporting_org_controller.organization_reporting_org_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return $request->expectsJson() ?
                 response()->json(['success' => true, 'message' => $translatedMessage]) :
@@ -87,7 +87,7 @@ class ReportingOrgController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
-            $translatedMessage = trans('organisationDetail/reporting_org_controller.error_has_occurred_while_updating_organization_reporting_org');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return $request->expectsJson() ?
                 response()->json(['success' => false, 'error' => $translatedMessage], 500) :

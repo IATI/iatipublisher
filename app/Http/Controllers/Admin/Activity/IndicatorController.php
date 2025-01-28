@@ -166,7 +166,7 @@ class IndicatorController extends Controller
             return view('admin.activity.indicator.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/indicator_controller.error_has_occurred_while_rendering_indicator_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.result.indicator.index', [$resultId])->with(
                 'error',
@@ -282,7 +282,7 @@ class IndicatorController extends Controller
             return view('admin.activity.indicator.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/indicator_controller.error_has_occurred_while_rendering_indicator_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.result.indicator.index', $resultId)->with(
                 'error',
@@ -308,7 +308,7 @@ class IndicatorController extends Controller
             $result = $indicator->result;
 
             if (!$this->indicatorService->update($indicatorId, ['result_id' => $result->id, 'indicator' => $indicatorData])) {
-                $translatedMessage = trans('activity_detail/indicator_controller.error_has_occurred_while_updating_result_indicator');
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
                 return redirect()->route('admin.result.indicator.index', $resultId)->with(
                     'error',
@@ -316,7 +316,7 @@ class IndicatorController extends Controller
                 );
             }
 
-            $translatedMessage = trans('activity_detail/indicator_controller.indicator_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.result.indicator.show', [$resultId, $indicatorId])->with(
                 'success',
@@ -325,7 +325,7 @@ class IndicatorController extends Controller
         } catch (Exception $e) {
             logger()->error($e->getMessage());
 
-            $translatedMessage = trans('activity_detail/indicator_controller.error_has_occurred_while_updating_indicator');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.result.indicator.index', $resultId)->with(
                 'error',

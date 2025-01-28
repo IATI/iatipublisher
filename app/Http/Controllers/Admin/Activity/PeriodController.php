@@ -168,7 +168,7 @@ class PeriodController extends Controller
             return view('admin.activity.period.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/period_controller.error_has_occurred_while_rendering_indicator_period_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.indicator.period.index', $indicatorId)->with(
                 'error',
@@ -282,7 +282,7 @@ class PeriodController extends Controller
             return view('admin.activity.period.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/period_controller.error_has_occurred_while_rendering_period_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.indicator.period.index', $indicatorId)->with('error', $translatedMessage);
         }
@@ -304,14 +304,14 @@ class PeriodController extends Controller
             $period = $this->periodService->getPeriod($periodId);
 
             if (!$this->periodService->update($periodId, ['indicator_id' => $indicatorId, 'period' => $periodData])) {
-                $translatedMessage = trans('activity_detail/period_controller.error_has_occurred_while_updating_indicator_period');
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
                 return redirect()->route('admin.indicator.period.index', [$indicatorId])->with(
                     'error',
                     $translatedMessage
                 );
             }
-            $translatedMessage = trans('activity_detail/period_controller.indicator_period_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.indicator.period.show', [$indicatorId, $period['id']])->with(
                 'success',
@@ -319,7 +319,7 @@ class PeriodController extends Controller
             );
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/period_controller.error_has_occurred_while_updating_indicator_period');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.indicator.period.show', [$indicatorId, $periodId])->with(
                 'error',

@@ -151,14 +151,14 @@ class UserController extends Controller
             $this->userService->update($id, $formData);
             $this->db->commit();
 
-            $translatedMessage = trans('userProfile/user_controller.user_has_been_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             $this->db->rollback();
             logger()->error($e->getMessage());
 
-            $translatedMessage = trans('userProfile/user_controller.error_has_occurred_while_updating_user');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
@@ -371,7 +371,7 @@ class UserController extends Controller
             }
 
             $this->userService->updatePassword(Auth::user()->id, $formData);
-            $translatedMessage = trans('userProfile/user_controller.password_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return response()->json([
                 'success' => true,
@@ -404,7 +404,7 @@ class UserController extends Controller
             $this->db->beginTransaction();
             $this->userService->update(Auth::user()->id, $formData);
             $this->db->commit();
-            $translatedMessage = trans('userProfile/user_controller.user_profile_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return response()->json([
                 'success' => true,

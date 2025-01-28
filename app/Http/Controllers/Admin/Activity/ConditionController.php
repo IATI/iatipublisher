@@ -73,7 +73,7 @@ class ConditionController extends Controller
             return view('admin.activity.condition.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/condition_controller.error_has_occurred_while_rendering_activity_condition_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
@@ -96,16 +96,16 @@ class ConditionController extends Controller
             $activityCondition = $request->except(['_token', '_method']);
 
             if (!$this->conditionService->update($id, $activityCondition)) {
-                $translatedMessage = trans('activity_detail/condition_controller.error_has_occurred_while_updating_activity_condition');
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
                 return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
             }
-            $translatedMessage = trans('activity_detail/condition_controller.activity_condition_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/condition_controller.error_has_occurred_while_updating_activity_condition');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }

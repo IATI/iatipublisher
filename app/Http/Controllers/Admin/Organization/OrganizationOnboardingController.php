@@ -41,7 +41,7 @@ class OrganizationOnboardingController extends Controller
 
             $this->organizationOnboardingService->updateDontShowAgain(Auth::user()->organization_id, $request->value);
             DB::commit();
-            $translatedMessage = trans('organisationDetail/organisation_onboarding_controller.dont_show_again_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
@@ -64,7 +64,7 @@ class OrganizationOnboardingController extends Controller
             DB::beginTransaction();
             $this->organizationOnboardingService->updateOrganizationOnboardingStepToComplete(Auth::user()->organization_id, OrganizationOnboarding::ACTIVITY, true);
             DB::commit();
-            $translatedMessage = trans('organisationDetail/organisation_onboarding_controller.activity_status_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {

@@ -71,7 +71,7 @@ class CapitalSpendController extends Controller
             return view('admin.activity.capitalSpend.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/capital_spend_controller.error_has_occurred_while_rendering_activity_capital_spend_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
@@ -94,16 +94,16 @@ class CapitalSpendController extends Controller
             $activityCapitalSpend = $request->get('capital_spend') !== null ? (float) $request->get('capital_spend') : null;
 
             if (!$this->capitalSpendService->update($id, $activityCapitalSpend)) {
-                $translatedMessage = trans('activity_detail/capital_spend_controller.error_has_occurred_while_updating_activity_capital_spend');
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
                 return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
             }
-            $translatedMessage = trans('activity_detail/capital_spend_controller.activity_capital_spend_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/capital_spend_controller.error_has_occurred_while_updating_activity_capital_spend');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }

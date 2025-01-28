@@ -73,7 +73,7 @@ class CountryBudgetItemController extends Controller
             return view('admin.activity.countryBudgetItem.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/country_budget_item_controller.error_has_occurred_while_rendering_country_budget_item_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
@@ -96,16 +96,16 @@ class CountryBudgetItemController extends Controller
             $activityCountryBudgetItem = $request->except(['_token', '_method']);
 
             if (!$this->countryBudgetItemService->update($id, $activityCountryBudgetItem)) {
-                $translatedMessage = trans('activity_detail/country_budget_item_controller.error_has_occurred_while_rendering_country_budget_item_form');
+                $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
                 return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
             }
-            $translatedMessage = trans('activity_detail/country_budget_item_controller.country_budget_item_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/country_budget_item_controller.error_has_occurred_while_rendering_country_budget_item_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }

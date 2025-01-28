@@ -74,7 +74,7 @@ class PlannedDisbursementController extends Controller
             return view('admin.activity.plannedDisbursement.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/planned_disbursement_controller.error_has_occurred_while_rendering_planned_disbursement_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
@@ -95,16 +95,16 @@ class PlannedDisbursementController extends Controller
     {
         try {
             if (!$this->plannedDisbursementService->update($id, $request->except(['_token', '_method']))) {
-                $translatedMessage = trans('activity_detail/planned_disbursement_controller.error_has_occurred_while_updating_planned_disbursement');
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
                 return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
             }
-            $translatedMessage = trans('activity_detail/planned_disbursement_controller.planned_disbursement_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/planned_disbursement_controller.error_has_occurred_while_updating_planned_disbursement');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }

@@ -59,7 +59,7 @@ class OrganizationIdentifierController extends Controller
             return view('admin.organisation.forms.organisationIdentifier.edit', compact('form', 'organization', 'data'));
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('organisationDetail/organisation_identifier_controller.error_has_occurred_while_opening_organization_identifier_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activities.show', $id)->with('error', $translatedMessage);
         }
@@ -87,19 +87,19 @@ class OrganizationIdentifierController extends Controller
 
             if ($this->organizationIdentifierService->update($id, $organizationIdentifier)) {
                 DB::commit();
-                $translatedMessage = trans('organisationDetail/organisation_identifier_controller.organisation_identifier_updated_successfully');
+                $translatedMessage = trans('common/common.updated_successfully');
 
                 return redirect()->route('admin.organisation.index')->with('success', $translatedMessage);
             }
 
             DB::rollBack();
-            $translatedMessage = trans('organisationDetail/organisation_identifier_controller.error_has_occurred_while_updating_organisation_identifier');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         } catch (\Exception $e) {
             DB::rollBack();
             logger()->error($e);
-            $translatedMessage = trans('organisationDetail/organisation_identifier_controller.error_has_occurred_while_updating_organisation_identifier');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }

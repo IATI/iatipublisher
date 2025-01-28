@@ -74,7 +74,7 @@ class ReportingOrgController extends Controller
             return view('admin.activity.reportingOrg.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e);
-            $translatedMessage = trans('activity_detail/reporting_org_controller.error_has_occurred_while_opening_activity_reporting_org_form');
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
@@ -97,20 +97,20 @@ class ReportingOrgController extends Controller
             DB::beginTransaction();
 
             if (!$this->reportingOrgService->update($id, $request->all())) {
-                $translatedMessage = trans('activity_detail/reporting_org_controller.error_has_occurred_while_updating_reporting_org');
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
                 return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
             }
 
             DB::commit();
 
-            $translatedMessage = trans('activity_detail/reporting_org_controller.activity_reporting_org_updated_successfully');
+            $translatedMessage = trans('common/common.updated_successfully');
 
             return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/reporting_org_controller.error_has_occurred_while_updating_activity_reporting_org');
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
