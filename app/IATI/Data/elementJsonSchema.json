@@ -47,7 +47,7 @@
     "label_has_borders": true,
     "help_text": "",
     "hover_text": "elements/element_json_schema.reporting_org_hover_text",
-    "helper_text": "Reporting Organisation data is managed via the <strong><a href='/organisation'> Organisation Tab </a></strong> , except for value <strong>Secondary Reporter</strong> which can be managed at each activity.",
+    "helper_text": "elements/element_json_schema.reporting_org_helper_text",
     "attributes": {
       "ref": {
         "name": "ref",
@@ -198,7 +198,7 @@
             "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
             "required": false,
             "criteria": "",
-            "hover_text": "Enter the organisation\u2019s IATI organisation identifier. If you cannot provide an identifier then you must provide the name of the organisation.<br><br><a target='_blank' href='https://iatistandard.org/en/guidance/publishing-data/data-quality-and-visualisation/finding-other-organisations-identifiers/'>Click here for information on how to find other organisations' identifiers</a>. ",
+            "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_attributes_ref_hover_text",
             "help_text": ""
           }
         },
@@ -523,7 +523,7 @@
         "placeholder": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_placeholder",
         "required": false,
         "criteria": "recommended",
-        "hover_text": "If you have selected the vocabulary \u201899 - Reporting Organisation\u2019, provide a link to where this internal list is defined.",
+        "hover_text": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_hover_text",
         "help_text": "",
         "parent": {
           "name": "region_vocabulary",
@@ -602,7 +602,7 @@
         "choices": "Activity/SectorVocabulary.json",
         "required": false,
         "criteria": "recommended",
-        "hover_text": "Choose the codelist that you will select sectors from. IATI recommends using the OECD DAC 5-digit sector codelist. If you want to use your organisation\u2019s own list of internal sector classifications, select the option: \u201899 - Reporting Organisation\u2019. ",
+        "hover_text": "elements/element_json_schema.sector_attributes_sector_vocabulary_hover_text",
         "help_text": ""
       },
       "vocabulary_uri": {
@@ -722,7 +722,7 @@
         "placeholder": "elements/element_json_schema.recipient_region_attributes_percentage_placeholder",
         "required": true,
         "criteria": "recommended",
-        "hover_text": "If you have selected more than one sector (from the same list), each sector must be given a percentage. For example, using the OECD DAC 5-digit sector codelist, you can allocate 50% of the activity's funding to \u2018teacher training\u2019 (11130) and 50% to \u2018primary education\u2019 (11220). The percentage should be a number between 0 and 100 inclusive, with no percentage sign.",
+        "hover_text": "elements/element_json_schema.sector_attributes_percentage_hover_text",
         "help_text": ""
       }
     },
@@ -765,7 +765,7 @@
     "label_has_borders": true,
     "add_more_has_borders": true,
     "do_not_repeat_button": true,
-    "hover_text": "You can provide other useful information about your activity by \u2018tagging\u2019 it using categorisations such as the UN Sustainable Development Goal(s). Unlike categorisations reported in the 'sector' element, tags are not associated with percentage splits on finances.",
+    "hover_text": "elements/element_json_schema.tag_hover_text",
     "help_text": "",
     "dependent_attributes": {
       "goals_tag_code": {},
@@ -783,7 +783,7 @@
         "choices": "Activity/TagVocabulary.json",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "Select the vocabulary or taxonomy used for tag classifications. You may choose to tag your activity according to an internal category list by choosing \u201899 - Reporting Organisation\u2019.",
+        "hover_text": "elements/element_json_schema.tag_attributes_tag_vocabulary_hover_text",
         "help_text": ""
       },
       "goals_tag_code": {
@@ -1013,7 +1013,7 @@
   },
   "collaboration_type": {
     "label": "elements/element_json_schema.collaboration_type_label",
-    "hover_text": "The type of collaboration involved in the activity\u2019s funding disbursements, e.g. \u201cbilateral\u201d or \u201cmultilateral\u201d.<br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/codelists/collaborationtype/'>Click here for more information</a>",
+    "hover_text": "elements/element_json_schema.collaboration_type_hover_text",
     "help_text": "",
     "show_info_in_title": true,
     "attributes": {
@@ -1045,7 +1045,7 @@
         "choices": "Activity/FlowType.json",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "If this activity\u2019s funds can be classified by one of these options, make a selection here. This the default value for all transactions of the activity; it can be overridden for individual transactions if needed. ",
+        "hover_text": "elements/element_json_schema.default_flow_type_attributes_default_flow_type_hover_text",
         "help_text": ""
       }
     },
@@ -1065,7 +1065,7 @@
         "required": true,
         "criteria": "mandatory",
         "choices": "Activity/FinanceType.json",
-        "hover_text": "Select the finance type that best applies to your activity. This the default value for all transactions of the activity; it can be overridden for individual transactions if needed. ",
+        "hover_text": "elements/element_json_schema.default_finance_type_attributes_default_finance_type_hover_text",
         "help_text": ""
       }
     },
@@ -1107,7 +1107,7 @@
         "choices": "Activity/AidType.json",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "Select the aid type most relevant to your activity. This the default value for all transactions of the activity; it can be overridden for individual transactions if needed. ",
+        "hover_text": "elements/element_json_schema.default_aid_type_attributes_default_aid_type_hover_text",
         "help_text": "",
         "parent": {
           "name": "default_aid_type_vocabulary",
@@ -1125,7 +1125,7 @@
         "required": true,
         "criteria": "mandatory",
         "hidden": true,
-        "hover_text": "Select the aid type most relevant to your activity. This the default value for all transactions of the activity; it can be overridden for individual transactions if needed. ",
+        "hover_text": "elements/element_json_schema.default_aid_type_attributes_default_aid_type_hover_text",
         "help_text": "",
         "parent": {
           "name": "default_aid_type_vocabulary",
@@ -1143,7 +1143,7 @@
         "required": true,
         "criteria": "mandatory",
         "hidden": true,
-        "hover_text": "Select the aid type most relevant to your activity. This the default value for all transactions of the activity; it can be overridden for individual transactions if needed. ",
+        "hover_text": "elements/element_json_schema.default_aid_type_attributes_default_aid_type_hover_text",
         "help_text": "",
         "parent": {
           "name": "default_aid_type_vocabulary",
@@ -1161,7 +1161,7 @@
         "required": true,
         "criteria": "mandatory",
         "hidden": true,
-        "hover_text": "Select the aid type most relevant to your activity. This the default value for all transactions of the activity; it can be overridden for individual transactions if needed. ",
+        "hover_text": "elements/element_json_schema.default_aid_type_attributes_default_aid_type_hover_text",
         "help_text": "",
         "parent": {
           "name": "default_aid_type_vocabulary",
@@ -1187,7 +1187,7 @@
         "choices": "Activity/TiedStatus.json",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "Select the tied status most relevant to your activity. This the default value for all transactions of the activity; it can be overridden for individual transactions if needed. ",
+        "hover_text": "elements/element_json_schema.default_aid_type_attributes_default_aid_type_hover_text",
         "help_text": ""
       }
     },
@@ -1197,7 +1197,7 @@
     "name": "country_budget_items",
     "label": "elements/element_json_schema.country_budget_items_label",
     "add_more": true,
-    "hover_text": "Alignment of the activity with the functional and administrative classifications used in the recipient country\u2019s Chart of Accounts.<br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/country-budget-items/'>Click here for more information</a>",
+    "hover_text": "elements/element_json_schema.country_budget_items_hover_text",
     "show_info_in_title": true,
     "attributes": {
       "country_budget_vocabulary": {
@@ -1422,7 +1422,7 @@
     "form_has_borders": true,
     "label_has_borders": true,
     "add_more_has_borders": true,
-    "hover_text": "A separately reported IATI activity that is related to this one. The \u2018type\u2019 attribute describes the type of relationship - e.g. parent, child, multifunded. Please only refer to your own activities here.<br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/related-activity/'>Click here for more information</a>",
+    "hover_text": "elements/element_json_schema.related_activity_hover_text",
     "help_text": "",
     "attributes": {
       "activity_identifier": {
@@ -1469,7 +1469,7 @@
         },
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "Select \u2018True\u2019 if your activity has a condition attached, otherwise 'False'.",
+        "hover_text": "elements/element_json_schema.result_attributes_aggregation_status_hover_text",
         "help_text": ""
       }
     },
@@ -1538,7 +1538,7 @@
     "label_has_borders": true,
     "add_more_attributes": true,
     "add_more_has_borders": true,
-    "hover_text": "You can link this activity to your organisation\u2019s internal data and record which IATI Standard element it relates to.<br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/legacy-data/'>Click here for more information</a>",
+    "hover_text": "elements/element_json_schema.legacy_data_hover_text",
     "help_text": "",
     "attributes": {
       "legacy_name": {
@@ -2470,7 +2470,7 @@
     "form_has_borders": true,
     "label_has_borders": true,
     "add_more_has_borders": true,
-    "hover_text": "Planned disbursements allow you to publish predefined payment schedules. They should be reported for a specific date or period, and should not replace the activity\u2019s budget.",
+    "hover_text": "elements/element_json_schema.planned_disbursement_hover_text",
     "help_text": "",
     "attributes": {
       "planned_disbursement_type": {
@@ -2481,7 +2481,7 @@
         "choices": "Activity/BudgetType.json",
         "required": false,
         "criteria": "",
-        "hover_text": "Specify if this is an \u2018original\u2019 planned disbursement (prepared when the original commitment was made) or has subsequently been \u2018revised\u2019.",
+        "hover_text": "elements/element_json_schema.planned_disbursement_attributes_planned_disbursement_type_hover_text",
         "help_text": ""
       }
     },
@@ -2595,7 +2595,7 @@
             "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
             "required": false,
             "criteria": "",
-            "hover_text": "Enter the organisation\u2019s IATI organisation identifier. If you cannot provide an organisation identifier then you must provide the name of the organisation.<br><br><a target='_blank' href='https://iatistandard.org/en/guidance/publishing-data/data-quality-and-visualisation/finding-other-organisations-identifiers/'>Click here for information on how to find other organisations' identifiers</a>. ",
+            "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_attributes_ref_hover_text",
             "help_text": ""
           },
           "provider_activity_id": {
@@ -2669,7 +2669,7 @@
             "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
             "required": false,
             "criteria": "",
-            "hover_text": "Enter the organisation\u2019s IATI organisation identifier. If you cannot provide an organisation identifier then you must provide the name of the organisation.<br><br><a target='_blank' href='https://iatistandard.org/en/guidance/publishing-data/data-quality-and-visualisation/finding-other-organisations-identifiers/'>Click here for information on how to find other organisations' identifiers</a>. ",
+            "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_attributes_ref_hover_text",
             "help_text": ""
           },
           "receiver_activity_id": {
@@ -2747,7 +2747,7 @@
         "choices": "Organization/OrganisationRole.json",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "Select an option that describes the organisation\u2019s role in the activity.",
+        "hover_text": "elements/element_json_schema.participating_org_attributes_organization_role_hover_text",
         "help_text": ""
       },
       "ref": {
@@ -2757,7 +2757,7 @@
         "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
         "required": false,
         "criteria": "recommended",
-        "hover_text": "Enter the organisation\u2019s IATI organisation identifier. If you cannot provide an organisation identifier then you must provide the name of the organisation.<br><br><a target='_blank' href='https://iatistandard.org/en/guidance/publishing-data/data-quality-and-visualisation/finding-other-organisations-identifiers/'>Click here for information on how to find other organisations' identifiers</a>. ",
+        "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_attributes_ref_hover_text",
         "help_text": ""
       },
       "type": {
@@ -2789,7 +2789,7 @@
         "choices": "Activity/CRSChannelCode.json",
         "required": false,
         "criteria": "",
-        "hover_text": "Under CRS++ Reporting Directives, this code identifies the implementing agency. Codes ending in \u201800\u2019 are generic and are similar to the OrganisationType code. <br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/codelists/crschannelcode/'>Click here for more information</a>",
+        "hover_text": "elements/element_json_schema.participating_org_attributes_crs_channel_code_hover_text",
         "help_text": ""
       }
     },
@@ -2832,7 +2832,7 @@
     "form_has_borders": true,
     "label_has_borders": true,
     "add_more_has_borders": true,
-    "hover_text": "The value of the activity\u2019s budget for each financial quarter or year over the lifetime of the activity.  <br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/budget/'>Click here for more information</a>",
+    "hover_text": "elements/element_json_schema.budget_hover_text",
     "help_text": "",
     "attributes": {
       "budget_status": {
@@ -3664,7 +3664,7 @@
             "choices": "Activity/IndicatorVocabulary.json",
             "required": true,
             "criteria": "",
-            "hover_text": "Select the results framework that your indicator is included in. If the results framework is not listed, select \u201899 - Reporting Organisation\u2019.",
+            "hover_text": "elements/element_json_schema.indicator_sub_elements_reference_attributes_vocabulary_hover_text",
             "help_text": ""
           },
           "code": {
@@ -3709,7 +3709,7 @@
             "placeholder": "elements/element_json_schema.indicator_sub_elements_baseline_attributes_year_placeholder",
             "required": true,
             "criteria": "",
-            "hover_text": "Provide the year when the indicator\u2019s baseline was measured.",
+            "hover_text": "elements/element_json_schema.indicator_sub_elements_baseline_attributes_year_hover_text",
             "help_text": ""
           },
           "date": {
@@ -3719,7 +3719,7 @@
             "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
             "required": false,
             "criteria": "",
-            "hover_text": "Provide the date when the indicator\u2019s baseline was measured.",
+            "hover_text": "elements/element_json_schema.indicator_sub_elements_baseline_attributes_date_hover_text",
             "help_text": ""
           },
           "value": {
@@ -3793,7 +3793,7 @@
                 "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
                 "required": false,
                 "criteria": "",
-                "hover_text": "Enter a description of the category being disaggregated. For example, an activity could declare the dimension\u2019s name as \u2018sex\u2019, with a value of \u2018female\u2019.",
+                "hover_text": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_dimension_attributes_name_hover_text",
                 "help_text": ""
               },
               "value": {
@@ -4172,7 +4172,7 @@
                 "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
                 "required": false,
                 "criteria": "",
-                "hover_text": "Enter a description of the category being disaggregated. For example, an activity could declare the dimension\u2019s name as \u2018sex\u2019, with a value of \u2018female\u2019.",
+                "hover_text": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_dimension_attributes_name_hover_text",
                 "help_text": ""
               },
               "value": {
@@ -4488,7 +4488,7 @@
                 "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
                 "required": false,
                 "criteria": "",
-                "hover_text": "Enter a description of the category being disaggregated. For example, an activity could declare the dimension\u2019s name as \u2018sex\u2019, with a value of \u2018female\u2019.",
+                "hover_text": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_dimension_attributes_name_hover_text",
                 "help_text": ""
               },
               "value": {
@@ -4744,7 +4744,7 @@
         "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
         "required": false,
         "criteria": "",
-        "hover_text": "You can provide a reference that you use to identify this transaction in your organisation\u2019s internal financial management system",
+        "hover_text": "elements/element_json_schema.transactions_attributes_reference_hover_text",
         "help_text": ""
       },
       "humanitarian": {
@@ -4941,7 +4941,7 @@
             "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
             "required": false,
             "criteria": "recommended",
-            "hover_text": "Enter the organisation\u2019s IATI organisation identifier. If you cannot provide an identifier then you must provide the name of the organisation.<br><br><a target='_blank' href='https://iatistandard.org/en/guidance/publishing-data/data-quality-and-visualisation/finding-other-organisations-identifiers/'>Click here for information on how to find other organisations' identifiers</a>. ",
+            "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_attributes_ref_hover_text",
             "help_text": ""
           },
           "provider_activity_id": {
@@ -5125,7 +5125,7 @@
               "choices": "Activity/SectorVocabulary.json",
               "required": false,
               "criteria": "",
-              "hover_text": "Choose the codelist that you will select sectors from. IATI recommends using the OECD DAC 5-digit sector codelist. If you want to use your organisation\u2019s own list of internal sector classifications, select the option: \u201899 - Reporting Organisation\u2019. ",
+              "hover_text": "elements/element_json_schema.sector_attributes_sector_vocabulary_hover_text",
               "help_text": ""
             },
             "vocabulary_uri": {
@@ -5153,7 +5153,7 @@
               "required": false,
               "criteria": "",
               "choices": "Activity/SectorCode.json",
-              "hover_text": "Select the sector that the transaction\u2019s funds are supporting. You must only choose one sector from each list that you use.",
+              "hover_text": "elements/element_json_schema.transactions_sub_elements_sector_attributes_code_hover_text",
               "help_text": "",
               "parent": {
                 "name": "sector_vocabulary",
@@ -5169,7 +5169,7 @@
               "placeholder": "elements/element_json_schema.recipient_region_attributes_custom_code_placeholder",
               "required": false,
               "criteria": "",
-              "hover_text": "Select the sector that the transaction\u2019s funds are supporting. You must only choose one sector from each list that you use.",
+              "hover_text": "elements/element_json_schema.transactions_sub_elements_sector_attributes_code_hover_text",
               "help_text": "",
               "parent": {
                 "name": "sector_vocabulary",
@@ -5193,7 +5193,7 @@
               "choices": "Activity/SectorCategory.json",
               "required": false,
               "criteria": "",
-              "hover_text": "Select the sector that the transaction\u2019s funds are supporting. You must only choose one sector from each list that you use.",
+              "hover_text": "elements/element_json_schema.transactions_sub_elements_sector_attributes_code_hover_text",
               "help_text": "",
               "parent": {
                 "name": "sector_vocabulary",
@@ -5210,7 +5210,7 @@
               "choices": "Activity/UNSDG-Goals.json",
               "required": false,
               "criteria": "",
-              "hover_text": "Select the sector that the transaction\u2019s funds are supporting. You must only choose one sector from each list that you use.",
+              "hover_text": "elements/element_json_schema.transactions_sub_elements_sector_attributes_code_hover_text",
               "help_text": "",
               "parent": {
                 "name": "sector_vocabulary",
@@ -5227,7 +5227,7 @@
               "required": false,
               "criteria": "",
               "choices": "Activity/UNSDG-Targets.json",
-              "hover_text": "Select the sector that the transaction\u2019s funds are supporting. You must only choose one sector from each list that you use.",
+              "hover_text": "elements/element_json_schema.transactions_sub_elements_sector_attributes_code_hover_text",
               "help_text": "",
               "parent": {
                 "name": "sector_vocabulary",
@@ -5387,7 +5387,7 @@
               "placeholder": "common/common.sector_attributes_vocabulary_uri_placeholder",
               "required": false,
               "criteria": "",
-              "hover_text": "If you have selected the vocabulary \u201899 - Reporting Organisation\u2019, provide a link to where this internal list is defined.",
+              "hover_text": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_hover_text",
               "help_text": "",
               "parent": {
                 "name": "region_vocabulary",
@@ -5605,3 +5605,4 @@
     }
   }
 }
+

@@ -176,7 +176,7 @@
       "label_has_borders": true,
       "add_more_has_borders": true,
       "do_not_repeat_button": true,
-      "hover_text": "Provide your organisation\u2019s total expected development and humanitarian spend for the current and (where possible) following three years. Budgets should preferably be entered for each three month (quarter) period. Budget time periods should not overlap or cover a period of more than twelve months. <br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/total-budget/'>Click here for more information</a>",
+      "hover_text": "elements/org_json_schema.total_budget_hover_text",
       "help_text": "",
       "attributes": {
         "status": {
@@ -249,7 +249,7 @@
           "is_collapsable": true,
           "label_indicator": "required_icon",
           "element_criteria": "mandatory",
-          "hover_text": "The total value of the organisation\u2019s budget for this period.",
+          "hover_text": "elements/org_json_schema.total_expenditure_sub_elements_value_hover_text",
           "help_text": "",
           "attributes": {
             "amount": {
@@ -306,7 +306,7 @@
               "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
               "required": false,
               "criteria": "",
-              "hover_text": "You can provide a reference that you use to identify this budget line in your organisation\u2019s financial reporting system.",
+              "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_budget_line_attributes_ref_hover_text",
               "help_text": ""
             }
           },
@@ -583,7 +583,7 @@
               "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
               "required": false,
               "criteria": "",
-              "hover_text": "You can provide a reference that you use to identify this budget line in your organisation\u2019s financial reporting system.",
+              "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_budget_line_attributes_ref_hover_text",
               "help_text": ""
             }
           },
@@ -745,7 +745,7 @@
               "placeholder": "common/common.sector_attributes_vocabulary_uri_placeholder",
               "required": false,
               "criteria": "",
-              "hover_text": "If you have selected the vocabulary \u201899 - Reporting Organisation\u2019, provide the URI where this internal list is defined.",
+              "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_recipient_region_attributes_vocabulary-uri_hover_text",
               "help_text": ""
             }
           },
@@ -895,7 +895,7 @@
               "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
               "required": false,
               "criteria": "",
-              "hover_text": "You can provide a reference that you use to identify this budget line in your organisation\u2019s internal financial management system.",
+              "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_budget_line_attributes_ref_hover_text",
               "help_text": ""
             }
           },
@@ -985,7 +985,7 @@
       "label_has_borders": true,
       "add_more_has_borders": true,
       "do_not_repeat_button": true,
-      "hover_text": "You can provide forward-looking budgets for particular countries that your organisation operates in. <br><br><a target=\u2019_blank\u2019 href=\u2019https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/recipient-country-budget/\u2019>Click here for more information</a>",
+      "hover_text": "elements/org_json_schema.recipient_country_budget_hover_text",
       "help_text": "",
       "attributes": {
         "status": {
@@ -1023,7 +1023,7 @@
               "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
               "required": true,
               "criteria": "mandatory",
-              "hover_text": "Select the country benefitting from this budget. ",
+              "hover_text": "elements/org_json_schema.recipient_country_budget_sub_elements_recipient_country_attributes_code_hover_text",
               "help_text": ""
             }
           },
@@ -1173,7 +1173,7 @@
               "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
               "required": false,
               "criteria": "",
-              "hover_text": "You can provide a reference that you use to identify this budget line in your organisation\u2019s internal financial management system.",
+              "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_budget_line_attributes_ref_hover_text",
               "help_text": ""
             }
           },
@@ -1262,7 +1262,7 @@
       "form_has_borders": true,
       "label_has_borders": true,
       "add_more_has_borders": true,
-      "hover_text": "You can provide information on your organisation's past spending on humanitarian and development work. This is known as \u2018total expenditure\u2019 and IATI recommends, where possible, that your organisation reports its total expenditure for each of the past three years. An expenditure period must not be longer than one year. <br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/total-expenditure/'>Click here for more information</a>",
+      "hover_text": "elements/org_json_schema.total_expenditure_hover_text",
       "help_text": "",
       "attributes": {},
       "sub_elements": {
@@ -1323,7 +1323,7 @@
           "is_collapsable": true,
           "label_indicator": "required_icon",
           "element_criteria": "mandatory",
-          "hover_text": "The total value of your organisation\u2019s humanitarian and development expenditure for this period.",
+          "hover_text": "elements/org_json_schema.total_expenditure_sub_elements_value_hover_text",
           "help_text": "",
           "attributes": {
             "amount": {
@@ -1370,7 +1370,7 @@
           "add_more_has_borders": true,
           "is_collapsable": true,
           "label_indicator": "optional_text",
-          "hover_text": "You can provide further information by breaking your organisation\u2019s expenditure down into expense line(s). The sum of expense lines does not have to equal the total value of expenditure.",
+          "hover_text": "elements/org_json_schema.total_expenditure_sub_elements_expense_line_hover_text",
           "help_text": "",
           "attributes": {
             "ref": {
@@ -1380,7 +1380,7 @@
               "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
               "required": false,
               "criteria": "",
-              "hover_text": "You can provide a reference that you use to identify this expense in your organisation\u2019s financial reporting system.",
+              "hover_text": "elements/org_json_schema.total_expenditure_sub_elements_expense_line_attributes_ref_hover_text",
               "help_text": ""
             }
           },
@@ -1470,7 +1470,7 @@
       "label_has_borders": true,
       "add_more_has_borders": true,
       "do_not_repeat_button": true,
-      "hover_text": "A link to an online, publicly accessible, web page or document. For example, you could provide a link to your organisation\u2019s annual report or a work plan for a particular country. Create additional document elements for each separate document. <br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/document-link/'>Click here for more information</a>",
+      "hover_text": "elements/org_json_schema.document_link_hover_text",
       "help_text": "",
       "attributes": {
         "url": {

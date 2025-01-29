@@ -335,4 +335,5 @@ return array(
     'transactions_sub_elements_aid_type_attributes_aid_type_code_hover_text'                              => 'Select an aid type, if applicable to this transaction. This is only needed if it is different to the default aid type of the activity as a whole.',
     'transactions_sub_elements_tied_status_label'                                                         => 'tied status',
     'transactions_sub_elements_tied_status_attributes_tied_status_code_hover_text'                        => 'Select a tied status, if applicable to this transaction. This is only needed if it is different to the default tied status of the activity as a whole.',
+
 );
