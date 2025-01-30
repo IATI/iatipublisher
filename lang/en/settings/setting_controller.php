@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'settings_fetched_successfully'                     => 'Settings fetched successfully',
     'publisher_does_not_exist_in_registry'              => 'Publisher does not exist in registry.',
     'error_occurred_while_verifying_publisher'          => 'Error occurred while verifying publisher',
     'publisher_setting_stored_successfully'             => 'Publisher setting stored successfully',

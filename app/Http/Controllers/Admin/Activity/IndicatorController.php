@@ -123,9 +123,8 @@ class IndicatorController extends Controller
             ]);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = 'Error occurred while fetching the data.';
 
-            return response()->json(['success' => false, 'message' => $translatedMessage]);
+            return response()->json(['success' => false, 'message' => 'Error occurred while fetching the data.']);
         }
     }
 
@@ -203,11 +202,9 @@ class IndicatorController extends Controller
         } catch (Exception $e) {
             logger()->error($e->getMessage());
 
-            $translatedMessage = trans('activity_detail/indicator_controller.error_has_occurred_while_creating_result_indicator');
-
             return redirect()->route('admin.result.indicator.index', $resultId)->with(
                 'error',
-                $translatedMessage
+                'Error has occurred while creating result indicator.'
             );
         }
     }
@@ -346,7 +343,7 @@ class IndicatorController extends Controller
     {
         try {
             $this->indicatorService->deleteIndicator($indicatorId);
-            $translatedMessage = trans('activity_detail/indicator_controller.indicator_deleted_successfully');
+            $translatedMessage = trans('common/common.deleted_successfully');
             Session::flash('success', $translatedMessage);
 
             return response()->json([
@@ -356,7 +353,7 @@ class IndicatorController extends Controller
             ]);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/indicator_controller.indicator_delete_error');
+            $translatedMessage = trans('common/common.delete_error');
             Session::flash('error', $translatedMessage);
 
             return response()->json([

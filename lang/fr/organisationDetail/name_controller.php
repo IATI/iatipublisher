@@ -1,8 +1,0 @@
-<?php
-
-return [
-    'error_has_occurred_while_opening_organization_name_form' => 'fr_ Error has occurred while opening organization name form.',
-    'error_has_occurred_while_updating_organization_name'     => 'fr_ Error has occurred while updating organization name.',
-    'organization_name_updated_successfully'                  => 'fr_ Organization name updated successfully.',
-];
-

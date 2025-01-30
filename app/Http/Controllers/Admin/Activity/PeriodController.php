@@ -202,11 +202,10 @@ class PeriodController extends Controller
             );
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/period_controller.error_has_occurred_while_creating_indicator_period');
 
             return redirect()->route('admin.indicator.period.index', $indicatorId)->with(
                 'error',
-                $translatedMessage
+                'Error has occurred while creating indicator period.'
             );
         }
     }
@@ -340,7 +339,7 @@ class PeriodController extends Controller
     {
         try {
             $this->periodService->deletePeriod($periodId);
-            $translatedMessage = trans('activity_detail/period_controller.period_deleted_successfully');
+            $translatedMessage = trans('common/common.delete_successfully');
 
             Session::flash('success', $translatedMessage);
 
@@ -351,7 +350,7 @@ class PeriodController extends Controller
             ]);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/period_controller.period_delete_error');
+            $translatedMessage = trans('common/common.delete_error');
 
             Session::flash('error', $translatedMessage);
 

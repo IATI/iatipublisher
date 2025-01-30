@@ -1,8 +1,6 @@
 <?php
 
 return [
-    'reporting_org'                                               => 'Reporting-Organization',
-    'error_has_occurred_while_opening_organization_detail_page'   => 'Error has occurred while opening organization detail page.',
     'organization_deleted_successfully'                           => 'Organisation deleted successfully.',
     'error_occurred_while_deleting_organisation'                  => 'Error occurred while deleting organisation.',
     'filtered_agency_successfully_fetched'                        => 'Filtered Agency successfully fetched.',

@@ -17,6 +17,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -46,9 +47,9 @@ class TransactionController extends Controller
     /**
      * TransactionController Constructor.
      *
-     * @param BaseFormCreator    $baseFormCreator
+     * @param BaseFormCreator $baseFormCreator
      * @param TransactionService $transactionService
-     * @param ActivityService    $activityService
+     * @param ActivityService $activityService
      */
     public function __construct(
         BaseFormCreator $baseFormCreator,
@@ -67,7 +68,8 @@ class TransactionController extends Controller
      *
      * @return Factory|View|RedirectResponse|Application
      */
-    public function index($activityId): Factory|View|RedirectResponse|Application
+    public function index($activityId)
+    : Factory|View|RedirectResponse|Application
     {
         try {
             $activity = $this->activityService->getActivity($activityId);
@@ -75,10 +77,15 @@ class TransactionController extends Controller
             $types = getTransactionTypes();
             $toast = generateToastData();
 
-            return view('admin.activity.transaction.transaction', compact('activity', 'transactions', 'types', 'toast'));
+            return view(
+                'admin.activity.transaction.transaction',
+                compact('activity', 'transactions', 'types', 'toast')
+            );
         } catch (Exception $e) {
             logger()->error($e);
-            $translatedMessage = trans('common/common.error_has_occurred_while_rendering_activity_transactions_listing');
+            $translatedMessage = trans(
+                'common/common.error_has_occurred_while_rendering_activity_transactions_listing'
+            );
 
             return redirect()->route('admin.activity.show', $activityId)->with(
                 'error',
@@ -95,10 +102,15 @@ class TransactionController extends Controller
      *
      * @return JsonResponse
      */
-    public function getPaginatedTransactions(int $activityId, int $page = 1): JsonResponse
+    public function getPaginatedTransactions(int $activityId, int $page = 1)
+    : JsonResponse
     {
         try {
-            $transaction = $this->transactionService->getPaginatedTransactionAndStats($activityId, $page, $this->sanitizeRequest(request()));
+            $transaction = $this->transactionService->getPaginatedTransactionAndStats(
+                $activityId,
+                $page,
+                $this->sanitizeRequest(request())
+            );
             $stats = $this->transactionService->getTransactionCountStats($activityId);
             $translatedMessage = trans('activity_detail/transaction_controller.transactions_fetched_successfully');
 
@@ -118,7 +130,8 @@ class TransactionController extends Controller
         }
     }
 
-    public function sanitizeRequest(\Illuminate\Http\Request $request): array
+    public function sanitizeRequest(Request $request)
+    : array
     {
         $tableConfig = getTableConfig('transaction');
         $transactionTypeMap = [
@@ -157,13 +170,49 @@ class TransactionController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param TransactionRequest $request
+     * @param                    $activityId
+     *
+     * @return RedirectResponse
+     */
+    public function store(TransactionRequest $request, $activityId)
+    : RedirectResponse
+    {
+        try {
+            $transactionData = $request->except('_token');
+            $transaction = $this->transactionService->create([
+                'activity_id' => $activityId,
+                'transaction' => $transactionData,
+            ]);
+            $translatedMessage = trans(
+                'activity_detail/transaction_controller.activity_transaction_created_successfully'
+            );
+
+            return redirect()->route('admin.activity.transaction.show', [$activityId, $transaction['id']])->with(
+                'success',
+                $translatedMessage
+            );
+        } catch (Exception $e) {
+            logger()->error($e->getMessage());
+
+            return redirect()->route('admin.activity.transaction.index', $activityId)->with(
+                'error',
+                'Error has occurred while creating activity transaction.'
+            );
+        }
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @param $activityId
      *
      * @return Factory|View|RedirectResponse|Application
      */
-    public function create($activityId): Factory|View|RedirectResponse|Application
+    public function create($activityId)
+    : Factory|View|RedirectResponse|Application
     {
         try {
             $activity = $this->activityService->getActivity($activityId);
@@ -184,10 +233,11 @@ class TransactionController extends Controller
                 transaction: null
             );
 
-            $data = ['title'            => $element['label'],
-                     'name'             => 'transactions',
-                     'form_header'      => $formHeader,
-                     'bread_crumb_info' => $breadCrumbInfo,
+            $data = [
+                'title'            => $element['label'],
+                'name'             => 'transactions',
+                'form_header'      => $formHeader,
+                'bread_crumb_info' => $breadCrumbInfo,
             ];
 
             return view('admin.activity.transaction.edit', compact('form', 'activity', 'data'));
@@ -203,39 +253,6 @@ class TransactionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param TransactionRequest $request
-     * @param                    $activityId
-     *
-     * @return RedirectResponse
-     */
-    public function store(TransactionRequest $request, $activityId): RedirectResponse
-    {
-        try {
-            $transactionData = $request->except('_token');
-            $transaction = $this->transactionService->create([
-                'activity_id' => $activityId,
-                'transaction' => $transactionData,
-            ]);
-            $translatedMessage = trans('activity_detail/transaction_controller.activity_transaction_created_successfully');
-
-            return redirect()->route('admin.activity.transaction.show', [$activityId, $transaction['id']])->with(
-                'success',
-                $translatedMessage
-            );
-        } catch (Exception $e) {
-            logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/transaction_controller.error_has_occurred_while_creating_activity_transaction');
-
-            return redirect()->route('admin.activity.transaction.index', $activityId)->with(
-                'error',
-                $translatedMessage
-            );
-        }
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param $activityId
@@ -243,7 +260,8 @@ class TransactionController extends Controller
      *
      * @return Factory|View|RedirectResponse|Application
      */
-    public function show($activityId, $transactionId): Factory|View|RedirectResponse|Application
+    public function show($activityId, $transactionId)
+    : Factory|View|RedirectResponse|Application
     {
         try {
             $activity = $this->activityService->getActivity($activityId);
@@ -252,14 +270,16 @@ class TransactionController extends Controller
             $types = getTransactionTypes();
             $toast = generateToastData();
 
-            return view('admin.activity.transaction.detail', compact('transaction', 'activity', 'types', 'toast', 'element'));
+            return view(
+                'admin.activity.transaction.detail',
+                compact('transaction', 'activity', 'types', 'toast', 'element')
+            );
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/transaction_controller.error_has_occurred_while_rendering_transaction_detail_page');
 
             return redirect()->route('admin.activity.transaction.index', $activityId)->with(
                 'error',
-                $translatedMessage
+                'Error has occurred while rendering transaction detail page.'
             );
         }
     }
@@ -272,7 +292,8 @@ class TransactionController extends Controller
      *
      * @return Factory|View|RedirectResponse|Application
      */
-    public function edit($activityId, $transactionId): Factory|View|RedirectResponse|Application
+    public function edit($activityId, $transactionId)
+    : Factory|View|RedirectResponse|Application
     {
         try {
             $activity = $this->activityService->getActivity($activityId);
@@ -289,10 +310,11 @@ class TransactionController extends Controller
                 transaction: null
             );
 
-            $data = ['title'            => $element['label'],
-                     'name'             => 'transactions',
-                     'form_header'      => $formHeader,
-                     'bread_crumb_info' => $breadCrumbInfo,
+            $data = [
+                'title'            => $element['label'],
+                'name'             => 'transactions',
+                'form_header'      => $formHeader,
+                'bread_crumb_info' => $breadCrumbInfo,
             ];
 
             return view('admin.activity.transaction.edit', compact('form', 'activity', 'data'));
@@ -316,7 +338,8 @@ class TransactionController extends Controller
      *
      * @return RedirectResponse
      */
-    public function update(TransactionRequest $request, $activityId, $transactionId): RedirectResponse
+    public function update(TransactionRequest $request, $activityId, $transactionId)
+    : RedirectResponse
     {
         try {
             if (!$this->transactionService->update($transactionId, $request->except(['_method', '_token']))) {
@@ -352,11 +375,12 @@ class TransactionController extends Controller
      *
      * @return JsonResponse
      */
-    public function destroy($id, $transactionId): JsonResponse
+    public function destroy($id, $transactionId)
+    : JsonResponse
     {
         try {
             $this->transactionService->deleteTransaction($transactionId);
-            $translatedMessage = trans('activity_detail/transaction_controller.transaction_deleted_successfully');
+            $translatedMessage = trans('common/common.delete_successfully');
 
             $activity = $this->activityService->getActivity($id);
             Session::flash('success', $translatedMessage);
@@ -368,7 +392,7 @@ class TransactionController extends Controller
             ]);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/transaction_controller.transaction_delete_error');
+            $translatedMessage = trans('common/common.delete_error');
 
             Session::flash('error', $translatedMessage);
 
@@ -388,7 +412,8 @@ class TransactionController extends Controller
      *
      * @return JsonResponse
      */
-    public function bulkDeleteTransactions(BulkDeleteTransactionRequest $request, $id): JsonResponse
+    public function bulkDeleteTransactions(BulkDeleteTransactionRequest $request, $id)
+    : JsonResponse
     {
         try {
             $transactionIds = $request->validated('transaction_ids');
@@ -396,7 +421,7 @@ class TransactionController extends Controller
             DB::beginTransaction();
             $this->transactionService->bulkDeleteTransactions($transactionIds);
             DB::commit();
-            $translatedMessage = trans('activity_detail/transaction_controller.transactions_deleted_successfully');
+            $translatedMessage = trans('common/common.delete_successfully');
 
             return response()->json([
                 'status'      => true,
@@ -406,7 +431,7 @@ class TransactionController extends Controller
         } catch (Exception $e) {
             DB::rollback();
             logger()->error($e);
-            $translatedMessage = trans('activity_detail/transaction_controller.failed_to_bulk_delete_transactions');
+            $translatedMessage = trans('common/common.failed_to_bulk_delete');
 
             return response()->json([
                 'status'      => false,

@@ -87,7 +87,7 @@ class ResultController extends Controller
      *
      * @return JsonResponse
      */
-    public function getPaginatedResults(int $activityId, int $page = 1): JsonResponse
+    public function getPaginatedResults(int $activityId, int $page = 1) : JsonResponse
     {
         try {
             $result = $this->resultService->getPaginatedResult($activityId, $page, $this->sanitizeRequest(request()));
@@ -214,11 +214,10 @@ class ResultController extends Controller
             );
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/result_controller.error_has_occurred_while_creating_activity_result');
 
             return redirect()->route('admin.activity.result.index', $activityId)->with(
                 'error',
-                $translatedMessage
+                'Error has occurred while creating activity result.'
             );
         }
     }
@@ -351,7 +350,7 @@ class ResultController extends Controller
     {
         try {
             $this->resultService->deleteResult($resultId);
-            $translatedMessage = trans('activity_detail/result_controller.results_deleted_successfully');
+            $translatedMessage = trans('common/common.deleted_successfully');
             Session::flash('success', $translatedMessage);
 
             return response()->json([
@@ -361,7 +360,7 @@ class ResultController extends Controller
             ]);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/result_controller.result_delete_error');
+            $translatedMessage = trans('common/common.delete_error');
             Session::flash('error', $translatedMessage);
 
             return response()->json([
@@ -389,7 +388,7 @@ class ResultController extends Controller
             $this->resultService->bulkDeleteResults($resultIds);
             DB::commit();
 
-            $translatedMessage = trans('activity_detail/result_controller.results_deleted_successfully');
+            $translatedMessage = trans('common/common.deleted_successfully');
 
             return response()->json([
                 'status'      => true,
@@ -399,7 +398,7 @@ class ResultController extends Controller
         } catch (Exception $e) {
             DB::rollback();
             logger()->error($e);
-            $translatedMessage = trans('activity_detail/result_controller.failed_to_bulk_delete_results');
+            $translatedMessage = trans('common/common.failed_to_bulk_delete');
 
             return response()->json([
                 'status'      => false,

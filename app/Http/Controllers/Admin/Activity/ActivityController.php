@@ -166,9 +166,8 @@ class ActivityController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
-            $translatedMessage = trans('activity_detail/activity_controller.error_has_occurred_while_fetching_activities');
 
-            return response()->json(['success' => false, 'error' => $translatedMessage]);
+            return response()->json(['success' => false, 'error' => 'Error has occurred while fetching activities']);
         }
     }
 
@@ -198,7 +197,7 @@ class ActivityController extends Controller
             $this->db->beginTransaction();
             $activity = $this->activityService->store($input);
             $this->db->commit();
-            Session::put('success', trans('activity_detail/activity_controller.activity_has_been_created_successfully'));
+            Session::put('success', 'Activity has been created successfully.');
 
             $translatedMessage = trans('activity_detail/activity_controller.activity_created_successfully');
 
