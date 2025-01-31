@@ -49,5 +49,5 @@ return array(
     'document_link_attributes_url_placeholder'                                                      => 'Select url',
     'document_link_sub_elements_recipient_country_hover_text'                                       => 'If a recipient country is the focus of this document or webpage, you can specify it here. You can state more than one country.',
     'document_link_sub_elements_recipient_country_attributes_code_hover_text'                       => 'Select the recipient country that is the focus for this document or webpage.',
-    'document_link_sub_elements_recipient_country_sub_elements_narrative_hover_text'                => 'Add an optional name or description of the country.',
+    'document_link_sub_elements_add_an_optional_name_or_description_of_the_country_benefitting_from_the_activity'                => 'Add an optional name or description of the country.',
 );

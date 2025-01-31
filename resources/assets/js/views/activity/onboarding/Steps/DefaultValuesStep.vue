@@ -170,20 +170,12 @@
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
                   <label for="humanitarian" class="text-[14px]">
-                    {{
-                      translatedData[
-                        'common.common.transactions_attributes_humanitarian_label'
-                      ]
-                    }}
+                    {{ translatedData['common.common.humanitarian'] }}
                   </label>
                   <button>
                     <HoverText
                       width="w-72"
-                      :name="
-                        translatedData[
-                          'common.common.transactions_attributes_humanitarian_label'
-                        ]
-                      "
+                      :name="translatedData['common.common.humanitarian']"
                       :hover-text="
                         translatedData[
                           'onboarding.default_values_step.add_a_humanitarian_flag_to_every_activity'
@@ -212,9 +204,7 @@
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
                   <label for="default-flow-type" class="text-[14px]">{{
-                    translatedData[
-                      'common.common.transactions_attributes_humanitarian_label'
-                    ]
+                    translatedData['common.common.humanitarian']
                   }}</label>
                   <button>
                     <HoverText
@@ -257,9 +247,7 @@
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
                   <label for="default-finance-type" class="text-[14px]">
-                    {{
-                      translatedData['common.common.default_finance_type_label']
-                    }}
+                    {{ translatedData['common.common.default_finance_type'] }}
                   </label>
                   <button>
                     <HoverText

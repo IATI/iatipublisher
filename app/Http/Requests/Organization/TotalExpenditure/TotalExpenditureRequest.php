@@ -196,7 +196,7 @@ class TotalExpenditureRequest extends OrganizationBaseRequest
             $expenseLineForm = sprintf('%s.expense_line.%s', $formBase, $expenseLineIndex);
             $messages[sprintf('%s.expense_line.%s.reference.required', $formBase, $expenseLineIndex)] = trans(
                 'validation.required',
-                ['attribute' => trans('common.common.reporting_org_attributes_ref_label')]
+                ['attribute' => trans('common.common.reference')]
             );
 
             $valueMessages = $this->getMessagesForBudgetOrExpenseLineValue($expenseLine['value'], $expenseLineForm);

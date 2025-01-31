@@ -392,11 +392,7 @@
         class="flex space-x-2 border-b border-n-20 py-6"
       >
         <div class="text-base font-bold text-n-40">
-          {{
-            translatedData[
-              'common.common.participating_org_attributes_organization_role_label'
-            ]
-          }}
+          {{ translatedData['common.common.role'] }}
         </div>
         <div class="text-base">
           {{ userData['user_role'] }}

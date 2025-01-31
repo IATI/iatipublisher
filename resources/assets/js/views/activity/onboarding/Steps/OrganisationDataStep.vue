@@ -111,11 +111,7 @@
                   </label>
                   <button>
                     <HoverText
-                      :name="
-                        translatedData[
-                          'common.common.reporting_org_attributes_ref_label'
-                        ]
-                      "
+                      :name="translatedData['common.common.reference']"
                       :hover-text="
                         translatedData[
                           'onboarding.organisation_data_step.machine_readable_identification_string_for_the_organisation'
@@ -132,11 +128,7 @@
                   class="w-full rounded-[4px] border border-n-20 py-2 pl-4 focus:outline-0 focus-visible:outline-0"
                   :class="{ 'border-crimson-50': hasReferenceError }"
                   type="text"
-                  :placeholder="
-                    translatedData[
-                      'common.common.other_identifier_attributes_reference_placeholder'
-                    ]
-                  "
+                  :placeholder="translatedData['common.common.type_reference']"
                   @keyup="hasReferenceError = false"
                 />
                 <span v-if="hasReferenceError" class="text-danger error">{{
@@ -154,20 +146,12 @@
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
                   <label for="type" class="text-[14px]">
-                    {{
-                      translatedData[
-                        'common.common.reporting_org_attributes_type_label'
-                      ]
-                    }}
+                    {{ translatedData['common.common.type'] }}
                     <span class="required-icon"> *</span>
                   </label>
                   <button>
                     <HoverText
-                      :name="
-                        translatedData[
-                          'common.common.reporting_org_attributes_type_label'
-                        ]
-                      "
+                      :name="translatedData['common.common.type']"
                       :hover-text="
                         translatedData[
                           'onboarding.organisation_data_step.the_type_of_organisation_issuing_the_report'
@@ -181,7 +165,7 @@
                 <Multiselect
                   id="type"
                   class="vue__select"
-                  placeholder="translatedData['common.common.other_identifier_attributes_reference_type_placeholder']"
+                  placeholder="translatedData['common.common.select_type']"
                   :searchable="true"
                   :options="props.organizationTypeOptions"
                   :value="organizationData.type"
@@ -201,20 +185,12 @@
               <div class="w-full max-w-[335px] pt-6">
                 <div class="flex justify-between pb-2">
                   <label for="secondary-reporter" class="text-[14px]">
-                    {{
-                      translatedData[
-                        'common.common.reporting_org_attributes_secondary_reporter_label'
-                      ]
-                    }}
+                    {{ translatedData['common.common.secondary_reporter'] }}
                   </label>
                   <button>
                     <HoverText
                       position="top-left"
-                      :name="
-                        translatedData[
-                          'common.common.reporting_org_attributes_secondary_reporter_label'
-                        ]
-                      "
+                      :name="translatedData['common.common.secondary_reporter']"
                       :hover-text="
                         translatedData[
                           'onboarding.organisation_data_step.a_flag_indicating_that_the_reporting_organisation_of_this_activity'
@@ -229,9 +205,7 @@
                   id="secondary-reporter"
                   class="vue__select"
                   :placeholder="
-                    translatedData[
-                      'common.common.reporting_org_attributes_secondary_reporter_placeholder'
-                    ]
+                    translatedData['common.common.select_secondary_reporter']
                   "
                   :searchable="true"
                   :options="secondaryReporterOptions"
@@ -421,24 +395,21 @@ const translatedData = inject('translatedData') as Ref;
 
 const contentValues = [
   {
-    title: translatedData['common.common.reporting_org_attributes_ref_label'],
+    title: translatedData['common.common.reference'],
     content:
       translatedData[
         'onboarding.organisation_data_step.provide_the_iati_organisation_identifier_of_the_organisation'
       ],
   },
   {
-    title: translatedData['common.common.reporting_org_attributes_type_label'],
+    title: translatedData['common.common.type'],
     content:
       translatedData[
         'onboarding.organisation_data_step.select_the_type_that_best_describes_the_organisation'
       ],
   },
   {
-    title:
-      translatedData[
-        'common.common.reporting_org_attributes_secondary_reporter_label'
-      ],
+    title: translatedData['common.common.secondary_reporter'],
     content:
       translatedData[
         'onboarding.organisation_data_step.are_you_reproducing_the_data_reported_by_another_organisation'

@@ -17,11 +17,7 @@
         <div class="mb-5">
           <div class="form-group-title-container">
             <HoverText
-              :name="
-                translatedData[
-                  'common.common.document_link_sub_elements_title_label'
-                ]
-              "
+              :name="translatedData['common.common.title']"
               :hover-text="
                 translatedData[
                   'activity._index.create_modal.a_short_human_readable_title'
@@ -31,11 +27,7 @@
               :show-iati-reference="true"
             />
             <p class="form-group-title">
-              {{
-                translatedData[
-                  'common.common.document_link_sub_elements_title_label'
-                ]
-              }}
+              {{ translatedData['common.common.title'] }}
             </p>
           </div>
           <div class="form-group">
@@ -43,19 +35,11 @@
               <div>
                 <div class="label-field">
                   <label class="label" for="narrative"
-                    >{{
-                      translatedData[
-                        'common.title_sub_elements_narrative_label.narrative'
-                      ]
-                    }}
+                    >{{ translatedData['common.narrative.narrative'] }}
                     <span class="required-icon"> *</span>
                   </label>
                   <HoverText
-                    :name="
-                      translatedData[
-                        'common.title_sub_elements_narrative_label.narrative'
-                      ]
-                    "
+                    :name="translatedData['common.narrative.narrative']"
                     :hover-text="
                       translatedData[
                         'activity_index.create_modal.the_free_text_name_or_description_of_the_item_being_described'
@@ -128,7 +112,7 @@
                 <span v-else class="text-xs font-normal text-n-40"
                   >{{
                     translatedData[
-                      'common.common.title_sub_elements_narrative_attributes_language_help_text'
+                      'common.common.if_no_language_is_selected_your_default_language_is_assumed'
                     ]
                   }}
                 </span>

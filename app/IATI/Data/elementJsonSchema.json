@@ -1,7 +1,7 @@
 {
   "title": {
     "name": "title",
-    "label": "common/common.document_link_sub_elements_title_label",
+    "label": "common/common.title",
     "multiple": false,
     "add_more": false,
     "hover_text": "elements/element_json_schema.title_hover_text",
@@ -11,7 +11,7 @@
     "sub_elements": {
       "narrative": {
         "name": "narrative",
-        "label": "common/common.title_sub_elements_narrative_label",
+        "label": "common/common.narrative",
         "type": "text",
         "placeholder": "",
         "required": true,
@@ -32,7 +32,7 @@
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "common/common.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -51,31 +51,31 @@
     "attributes": {
       "ref": {
         "name": "ref",
-        "label": "common/common.reporting_org_attributes_ref_label",
+        "label": "common/common.reference",
         "type": "text",
         "placeholder": "",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "common/common.reporting_org_attributes_ref_hover_text",
+        "hover_text": "common/common.provide_your_organisations_iati_identifier_this_was_entered_when_you_registered_with_iati",
         "help_text": "",
         "read_only": true
       },
       "type": {
         "name": "type",
-        "label": "common/common.reporting_org_attributes_type_label",
+        "label": "common/common.type",
         "type": "select",
         "placeholder": "",
         "multiSelect": false,
         "choices": "Organization/OrganizationType.json",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "common/common.reporting_org_attributes_type_hover_text",
+        "hover_text": "common/common.select_the_type_that_best_describes_your_organisation",
         "help_text": "",
         "read_only": true
       },
       "secondary_reporter": {
         "name": "secondary_reporter",
-        "label": "common/common.reporting_org_attributes_secondary_reporter_label",
+        "label": "common/common.secondary_reporter",
         "type": "select",
         "placeholder": "",
         "choices": {
@@ -84,7 +84,7 @@
         },
         "required": false,
         "criteria": "",
-        "hover_text": "common/common.reporting_org_attributes_secondary_reporter_hover_text",
+        "hover_text": "common/common.if_you_are_publishing_data_about_your_own_organisation",
         "help_text": ""
       }
     },
@@ -114,7 +114,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text",
+            "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed",
             "read_only": true
           }
         },
@@ -160,9 +160,9 @@
     "attributes": {
       "reference": {
         "name": "reference",
-        "label": "common/common.reporting_org_attributes_ref_label",
+        "label": "common/common.reference",
         "type": "text",
-        "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+        "placeholder": "common/common.type_reference",
         "required": true,
         "criteria": "mandatory",
         "hover_text": "elements/element_json_schema.other_identifier_attributes_reference_hover_text",
@@ -170,9 +170,9 @@
       },
       "reference_type": {
         "name": "reference_type",
-        "label": "common/common.reporting_org_attributes_type_label",
+        "label": "common/common.type",
         "type": "select",
-        "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+        "placeholder": "common/common.select_type",
         "choices": "Activity/OtherIdentifierType.json",
         "required": true,
         "criteria": "mandatory",
@@ -193,9 +193,9 @@
         "attributes": {
           "ref": {
             "name": "ref",
-            "label": "common/common.reporting_org_attributes_ref_label",
+            "label": "common/common.reference",
             "type": "text",
-            "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+            "placeholder": "common/common.type_reference",
             "required": false,
             "criteria": "",
             "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_attributes_ref_hover_text",
@@ -205,7 +205,7 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
             "placeholder": "",
             "required": false,
@@ -226,7 +226,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -237,7 +237,7 @@
   },
   "description": {
     "name": "description",
-    "label": "common/common.description_label",
+    "label": "common/common.description",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -247,9 +247,9 @@
     "attributes": {
       "type": {
         "name": "type",
-        "label": "common/common.reporting_org_attributes_type_label",
+        "label": "common/common.type",
         "type": "select",
-        "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+        "placeholder": "common/common.select_type",
         "choices": "Activity/DescriptionType.json",
         "required": false,
         "criteria": "",
@@ -260,9 +260,9 @@
     "sub_elements": {
       "narrative": {
         "name": "narrative",
-        "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+        "label": "elements/element_json_schema.narrative",
         "type": "textarea",
-        "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+        "placeholder": "common/common.type_narrative",
         "required": true,
         "criteria": "mandatory",
         "add_more": true,
@@ -281,7 +281,7 @@
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -296,9 +296,9 @@
     "attributes": {
       "activity_status": {
         "name": "activity_status",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/ActivityStatus.json",
         "required": true,
         "criteria": "mandatory",
@@ -320,9 +320,9 @@
     "attributes": {
       "type": {
         "name": "type",
-        "label": "common/common.reporting_org_attributes_type_label",
+        "label": "common/common.type",
         "type": "select",
-        "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+        "placeholder": "common/common.select_type",
         "choices": "Activity/ActivityDateType.json",
         "required": true,
         "criteria": "mandatory",
@@ -343,9 +343,9 @@
     "sub_elements": {
       "narrative": {
         "name": "narrative",
-        "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+        "label": "elements/element_json_schema.narrative",
         "type": "textarea",
-        "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+        "placeholder": "common/common.type_narrative",
         "required": false,
         "criteria": "",
         "add_more": true,
@@ -364,7 +364,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -378,9 +378,9 @@
     "attributes": {
       "activity_scope": {
         "name": "activity_scope",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/ActivityScope.json",
         "required": true,
         "criteria": "mandatory",
@@ -392,7 +392,7 @@
   },
   "recipient_country": {
     "name": "recipient_country",
-    "label": "common/common.recipient_country_label",
+    "label": "common/common.recipient_country",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -403,9 +403,9 @@
     "attributes": {
       "country_code": {
         "name": "country_code",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/Country.json",
         "required": true,
         "criteria": "mandatory",
@@ -426,16 +426,16 @@
     "sub_elements": {
       "narrative": {
         "name": "narrative",
-        "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+        "label": "elements/element_json_schema.narrative",
         "type": "textarea",
-        "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+        "placeholder": "common/common.type_narrative",
         "required": false,
         "criteria": "",
         "add_more": true,
         "attr": {
           "row": 4
         },
-        "hover_text": "common/common.recipient_country_sub_elements_narrative_hover_text",
+        "hover_text": "common/common.add_an_optional_name_or_description_of_the_country_benefitting_from_the_activity",
         "help_text": "",
         "attributes": {
           "language": {
@@ -447,7 +447,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -456,7 +456,7 @@
   },
   "recipient_region": {
     "name": "recipient_region",
-    "label": "common/common.recipient_region_label",
+    "label": "common/common.recipient_region",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -472,18 +472,18 @@
     "attributes": {
       "region_vocabulary": {
         "name": "region_vocabulary",
-        "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+        "label": "common/common.vocabulary",
         "type": "select",
         "placeholder": "elements/element_json_schema.recipient_region_attributes_region_vocabulary_placeholder",
         "choices": "Activity/RegionVocabulary.json",
         "required": false,
         "criteria": "recommended",
-        "hover_text": "common/common.recipient_region_attributes_region_vocabulary_hover_text",
+        "hover_text": "common/common.you_can_select_regions_from_the _oecd_dac_un_or_your_own_internal_codelist",
         "help_text": ""
       },
       "region_code": {
         "name": "region_code",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
         "placeholder": "elements/element_json_schema.recipient_region_attributes_region_code_placeholder",
         "choices": "Activity/Region.json",
@@ -500,7 +500,7 @@
       },
       "custom_code": {
         "name": "custom_code",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "text",
         "placeholder": "elements/element_json_schema.recipient_region_attributes_custom_code_placeholder",
         "required": true,
@@ -546,16 +546,16 @@
     "sub_elements": {
       "narrative": {
         "name": "narrative",
-        "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+        "label": "elements/element_json_schema.narrative",
         "type": "textarea",
-        "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+        "placeholder": "common/common.type_narrative",
         "required": false,
         "criteria": "",
         "add_more": true,
         "attr": {
           "row": 4
         },
-        "hover_text": "common/common.recipient_region_budget_sub_elements_recipient_region_sub_elements_narrative_hover_text",
+        "hover_text": "common/common.add_an_optional_name_or_description_of_the_region_benefitting_from_the_activity",
         "help_text": "",
         "attributes": {
           "language": {
@@ -567,7 +567,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -596,9 +596,9 @@
     "attributes": {
       "sector_vocabulary": {
         "name": "sector_vocabulary",
-        "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+        "label": "common/common.vocabulary",
         "type": "select",
-        "placeholder": "common/common.sector_attributes_sector_vocabulary_placeholder",
+        "placeholder": "common/common.select_vocabulary",
         "choices": "Activity/SectorVocabulary.json",
         "required": false,
         "criteria": "recommended",
@@ -607,9 +607,9 @@
       },
       "vocabulary_uri": {
         "name": "vocabulary_uri",
-        "label": "common/common.sector_attributes_vocabulary_uri_label",
+        "label": "common/common.vocabulary_uri",
         "type": "text",
-        "placeholder": "common/common.sector_attributes_vocabulary_uri_placeholder",
+        "placeholder": "common/common.type_vocabulary_uri",
         "required": false,
         "criteria": "recommended",
         "hover_text": "elements/element_json_schema.sector_attributes_vocabulary_uri_hover_text",
@@ -624,9 +624,9 @@
       },
       "code": {
         "name": "code",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/SectorCode.json",
         "criteria": "mandatory",
         "required": true,
@@ -641,7 +641,7 @@
       },
       "text": {
         "name": "text",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "text",
         "placeholder": "elements/element_json_schema.recipient_region_attributes_custom_code_placeholder",
         "required": true,
@@ -666,9 +666,9 @@
       },
       "category_code": {
         "name": "category_code",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/SectorCategory.json",
         "required": true,
         "criteria": "mandatory",
@@ -683,9 +683,9 @@
       },
       "sdg_goal": {
         "name": "sdg_goal",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/UNSDG-Goals.json",
         "required": true,
         "criteria": "mandatory",
@@ -700,9 +700,9 @@
       },
       "sdg_target": {
         "name": "sdg_target",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/UNSDG-Targets.json",
         "required": true,
         "criteria": "mandatory",
@@ -729,9 +729,9 @@
     "sub_elements": {
       "narrative": {
         "name": "narrative",
-        "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+        "label": "elements/element_json_schema.narrative",
         "type": "textarea",
-        "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+        "placeholder": "common/common.type_narrative",
         "required": false,
         "criteria": "",
         "add_more": true,
@@ -750,7 +750,7 @@
             "required": false,
             "criteria": "",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -777,9 +777,9 @@
     "attributes": {
       "tag_vocabulary": {
         "name": "tag_vocabulary",
-        "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+        "label": "common/common.vocabulary",
         "type": "select",
-        "placeholder": "common/common.sector_attributes_sector_vocabulary_placeholder",
+        "placeholder": "common/common.select_vocabulary",
         "choices": "Activity/TagVocabulary.json",
         "required": true,
         "criteria": "mandatory",
@@ -788,9 +788,9 @@
       },
       "goals_tag_code": {
         "name": "goals_tag_code",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/UNSDG-Goals.json",
         "required": true,
         "criteria": "mandatory",
@@ -806,9 +806,9 @@
       },
       "targets_tag_code": {
         "name": "targets_tag_code",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/UNSDG-Targets.json",
         "required": true,
         "criteria": "mandatory",
@@ -824,7 +824,7 @@
       },
       "tag_text": {
         "name": "tag_text",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "text",
         "placeholder": "elements/element_json_schema.recipient_region_attributes_custom_code_placeholder",
         "required": true,
@@ -844,7 +844,7 @@
         "name": "vocabulary_uri",
         "label": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_label",
         "type": "text",
-        "placeholder": "common/common.sector_attributes_vocabulary_uri_placeholder",
+        "placeholder": "common/common.type_vocabulary_uri",
         "required": false,
         "criteria": "",
         "hidden": true,
@@ -861,9 +861,9 @@
     "sub_elements": {
       "narrative": {
         "name": "narrative",
-        "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+        "label": "elements/element_json_schema.narrative",
         "type": "textarea",
-        "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+        "placeholder": "common/common.type_narrative",
         "required": false,
         "criteria": "",
         "add_more": true,
@@ -882,7 +882,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -908,9 +908,9 @@
     "attributes": {
       "policy_marker_vocabulary": {
         "name": "policy_marker_vocabulary",
-        "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+        "label": "common/common.vocabulary",
         "type": "select",
-        "placeholder": "common/common.sector_attributes_sector_vocabulary_placeholder",
+        "placeholder": "common/common.select_vocabulary",
         "choices": "Activity/PolicyMarkerVocabulary.json",
         "required": false,
         "criteria": "",
@@ -947,9 +947,9 @@
       },
       "policy_marker": {
         "name": "policy_marker",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/PolicyMarker.json",
         "required": true,
         "criteria": "mandatory",
@@ -964,7 +964,7 @@
       },
       "policy_marker_text": {
         "name": "policy_marker_text",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "text",
         "placeholder": "elements/element_json_schema.recipient_region_attributes_custom_code_placeholder",
         "required": true,
@@ -983,9 +983,9 @@
     "sub_elements": {
       "narrative": {
         "name": "narrative",
-        "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+        "label": "elements/element_json_schema.narrative",
         "type": "textarea",
-        "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+        "placeholder": "common/common.type_narrative",
         "required": false,
         "criteria": "",
         "add_more": true,
@@ -1004,7 +1004,7 @@
             "required": false,
             "criteria": "",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -1019,9 +1019,9 @@
     "attributes": {
       "collaboration_type": {
         "name": "collaboration_type",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/CollaborationType.json",
         "required": true,
         "criteria": "mandatory",
@@ -1032,16 +1032,16 @@
     "sub_elements": {}
   },
   "default_flow_type": {
-    "label": "common/common.default_flow_type_label",
+    "label": "common/common.default_flow_type",
     "hover_text": "elements/element_json_schema.default_flow_type_hover_text",
     "help_text": "",
     "show_info_in_title": true,
     "attributes": {
       "default_flow_type": {
         "name": "default_flow_type",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/FlowType.json",
         "required": true,
         "criteria": "mandatory",
@@ -1052,16 +1052,16 @@
     "sub_elements": {}
   },
   "default_finance_type": {
-    "label": "common/common.default_finance_type_label",
+    "label": "common/common.default_finance_type",
     "hover_text": "elements/element_json_schema.default_finance_type_hover_text",
     "help_text": "",
     "show_info_in_title": true,
     "attributes": {
       "default_finance_type": {
         "name": "default_finance_type",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "required": true,
         "criteria": "mandatory",
         "choices": "Activity/FinanceType.json",
@@ -1073,7 +1073,7 @@
   },
   "default_aid_type": {
     "name": "default_aid_type",
-    "label": "common/common.default_aid_type_label",
+    "label": "common/common.default_aid_type",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -1090,9 +1090,9 @@
     "attributes": {
       "default_aid_type_vocabulary": {
         "name": "default_aid_type_vocabulary",
-        "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+        "label": "common/common.vocabulary",
         "type": "select",
-        "placeholder": "common/common.sector_attributes_sector_vocabulary_placeholder",
+        "placeholder": "common/common.select_vocabulary",
         "choices": "Activity/AidTypeVocabulary.json",
         "required": false,
         "criteria": "",
@@ -1101,9 +1101,9 @@
       },
       "default_aid_type": {
         "name": "default_aid_type",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/AidType.json",
         "required": true,
         "criteria": "mandatory",
@@ -1118,9 +1118,9 @@
       },
       "earmarking_category": {
         "name": "earmarking_category",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/EarmarkingCategory.json",
         "required": true,
         "criteria": "mandatory",
@@ -1136,9 +1136,9 @@
       },
       "earmarking_modality": {
         "name": "earmarking_modality",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/EarmarkingModality.json",
         "required": true,
         "criteria": "mandatory",
@@ -1154,9 +1154,9 @@
       },
       "cash_and_voucher_modalities": {
         "name": "cash_and_voucher_modalities",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/CashandVoucherModalities.json",
         "required": true,
         "criteria": "mandatory",
@@ -1174,16 +1174,16 @@
     "sub_elements": {}
   },
   "default_tied_status": {
-    "label": "common/common.default_tied_status_label",
+    "label": "common/common.default_tied_status",
     "hover_text": "elements/element_json_schema.default_tied_status_hover_text",
     "help_text": "",
     "show_info_in_title": true,
     "attributes": {
       "default_tied_status": {
         "name": "default_tied_status",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "select",
-        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+        "placeholder": "common/common.select_code",
         "choices": "Activity/TiedStatus.json",
         "required": true,
         "criteria": "mandatory",
@@ -1202,9 +1202,9 @@
     "attributes": {
       "country_budget_vocabulary": {
         "name": "country_budget_vocabulary",
-        "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+        "label": "common/common.vocabulary",
         "type": "select",
-        "placeholder": "common/common.sector_attributes_sector_vocabulary_placeholder",
+        "placeholder": "common/common.select_vocabulary",
         "choices": "Activity/BudgetIdentifierVocabulary.json",
         "required": true,
         "criteria": "mandatory",
@@ -1225,9 +1225,9 @@
         "attributes": {
           "code": {
             "name": "code",
-            "label": "common/common.activity_status_attributes_activity_status_label",
+            "label": "common/common.code",
             "type": "select",
-            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+            "placeholder": "common/common.select_code",
             "choices": "Activity/BudgetIdentifier.json",
             "required": true,
             "criteria": "mandatory",
@@ -1248,7 +1248,7 @@
         "sub_elements": {
           "description": {
             "name": "description",
-            "label": "common/common.description_label",
+            "label": "common/common.description",
             "add_more": false,
             "form_has_borders": true,
             "label_has_borders": true,
@@ -1259,9 +1259,9 @@
             "sub_elements": {
               "narrative": {
                 "name": "narrative",
-                "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+                "label": "elements/element_json_schema.narrative",
                 "type": "textarea",
-                "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+                "placeholder": "common/common.type_narrative",
                 "required": true,
                 "criteria": "",
                 "add_more": true,
@@ -1280,7 +1280,7 @@
                     "choices": "Activity/Language.json",
                     "criteria": "recommended",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -1308,9 +1308,9 @@
     "attributes": {
       "type": {
         "name": "type",
-        "label": "common/common.reporting_org_attributes_type_label",
+        "label": "common/common.type",
         "type": "select",
-        "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+        "placeholder": "common/common.select_type",
         "choices": "Activity/HumanitarianScopeType.json",
         "required": true,
         "criteria": "mandatory",
@@ -1319,9 +1319,9 @@
       },
       "vocabulary": {
         "name": "vocabulary",
-        "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+        "label": "common/common.vocabulary",
         "type": "select",
-        "placeholder": "common/common.sector_attributes_sector_vocabulary_placeholder",
+        "placeholder": "common/common.select_vocabulary",
         "choices": "Activity/HumanitarianScopeVocabulary.json",
         "required": true,
         "criteria": "mandatory",
@@ -1332,7 +1332,7 @@
         "name": "vocabulary_uri",
         "label": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_label",
         "type": "text",
-        "placeholder": "common/common.sector_attributes_vocabulary_uri_placeholder",
+        "placeholder": "common/common.type_vocabulary_uri",
         "required": false,
         "criteria": "",
         "hidden": true,
@@ -1347,7 +1347,7 @@
       },
       "code": {
         "name": "code",
-        "label": "common/common.activity_status_attributes_activity_status_label",
+        "label": "common/common.code",
         "type": "text",
         "placeholder": "elements/element_json_schema.recipient_region_attributes_custom_code_placeholder",
         "required": true,
@@ -1367,9 +1367,9 @@
     "sub_elements": {
       "narrative": {
         "name": "narrative",
-        "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+        "label": "elements/element_json_schema.narrative",
         "type": "textarea",
-        "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+        "placeholder": "common/common.type_narrative",
         "required": false,
         "criteria": "",
         "add_more": true,
@@ -1388,7 +1388,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -1427,9 +1427,9 @@
     "attributes": {
       "activity_identifier": {
         "name": "activity_identifier",
-        "label": "common/common.reporting_org_attributes_ref_label",
+        "label": "common/common.reference",
         "type": "text",
-        "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+        "placeholder": "common/common.type_reference",
         "required": true,
         "criteria": "mandatory",
         "hover_text": "elements/element_json_schema.related_activity_attributes_activity_identifier_hover_text",
@@ -1437,9 +1437,9 @@
       },
       "relationship_type": {
         "name": "relationship_type",
-        "label": "common/common.reporting_org_attributes_type_label",
+        "label": "common/common.type",
         "type": "select",
-        "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+        "placeholder": "common/common.select_type",
         "choices": "Activity/RelatedActivityType.json",
         "required": true,
         "criteria": "mandatory",
@@ -1487,9 +1487,9 @@
         "attributes": {
           "condition_type": {
             "name": "condition_type",
-            "label": "common/common.reporting_org_attributes_type_label",
+            "label": "common/common.type",
             "type": "select",
-            "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+            "placeholder": "common/common.select_type",
             "choices": "Activity/ConditionType.json",
             "required": true,
             "criteria": "mandatory",
@@ -1500,9 +1500,9 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": true,
             "criteria": "mandatory",
             "add_more": true,
@@ -1521,7 +1521,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1545,7 +1545,7 @@
         "name": "legacy_name",
         "label": "common/common.name",
         "type": "text",
-        "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
+        "placeholder": "common/common.type_name",
         "required": true,
         "criteria": "mandatory",
         "hover_text": "elements/element_json_schema.legacy_data_attributes_legacy_name_hover_text",
@@ -1553,7 +1553,7 @@
       },
       "value": {
         "name": "value",
-        "label": "common/common.legacy_data_attributes_value_label",
+        "label": "common/common.value",
         "type": "text",
         "placeholder": "elements/element_json_schema.legacy_data_attributes_value_placeholder",
         "required": true,
@@ -1576,7 +1576,7 @@
   },
   "document_link": {
     "name": "document_link",
-    "label": "common/common.document_link_label",
+    "label": "common/common.document_link",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -1587,24 +1587,24 @@
     "attributes": {
       "url": {
         "name": "url",
-        "label": "common/common.document_link_attributes_url_label",
+        "label": "common/common.url",
         "type": "text",
         "placeholder": "elements/element_json_schema.document_link_attributes_url_placeholder",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "common/common.document_link_attributes_url_hover_text",
+        "hover_text": "common/common.a_link_to_where_the_document_is_available_online",
         "help_text": "",
         "show_full_help_text": true
       },
       "format": {
         "name": "format",
-        "label": "common/common.document_link_attributes_format_label",
+        "label": "common/common.format",
         "type": "select",
         "placeholder": "elements/element_json_schema.document_link_attributes_format_placeholder",
         "choices": "Activity/FileFormat.json",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "common/common.document_link_attributes_format_hover_text",
+        "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
         "help_text": ""
       },
       "document": {
@@ -1621,7 +1621,7 @@
     "sub_elements": {
       "title": {
         "name": "title",
-        "label": "common/common.document_link_sub_elements_title_label",
+        "label": "common/common.title",
         "element_criteria": "",
         "add_more": false,
         "form_has_borders": true,
@@ -1629,21 +1629,21 @@
         "add_more_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
-        "hover_text": "common/common.document_link_sub_elements_title_hover_text",
+        "hover_text": "common/common.a_short_title_for_the_document",
         "attributes": {},
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": true,
             "criteria": "mandatory",
             "add_more": true,
             "attr": {
               "row": 4
             },
-            "hover_text": "common/common.document_link_sub_elements_title_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
             "help_text": "",
             "attributes": {
               "language": {
@@ -1655,7 +1655,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1664,7 +1664,7 @@
       },
       "category": {
         "name": "category",
-        "label": "common/common.document_link_sub_elements_category_label",
+        "label": "common/common.category",
         "element_criteria": "",
         "add_more": true,
         "wrapper_collection": false,
@@ -1673,18 +1673,18 @@
         "add_more_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
-        "hover_text": "common/common.document_link_sub_elements_category_hover_text",
+        "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
         "help_text": "",
         "attributes": {
           "code": {
             "name": "code",
-            "label": "common/common.activity_status_attributes_activity_status_label",
+            "label": "common/common.code",
             "type": "select",
-            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+            "placeholder": "common/common.select_code",
             "choices": "Activity/DocumentCategory.json",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "common/common.document_link_sub_elements_category_attributes_code_hover_text",
+            "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
             "help_text": ""
           }
         },
@@ -1692,28 +1692,28 @@
       },
       "description": {
         "name": "description",
-        "label": "common/common.description_label",
+        "label": "common/common.description",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "add_more_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "optional_text",
-        "hover_text": "common/common.document_link_sub_elements_description_hover_text",
+        "hover_text": "common/common.a_description_of_the_document_contents_or_guidance_on_where_to_access_relevant_information",
         "attributes": {},
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": true,
             "criteria": "",
             "add_more": true,
             "attr": {
               "row": 4
             },
-            "hover_text": "common/common.document_link_sub_elements_description_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.provide_a_short_description_of_the_document_or_webpage_including_any_instructions",
             "help_text": "",
             "attributes": {
               "language": {
@@ -1725,7 +1725,7 @@
                 "required": false,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1745,13 +1745,13 @@
         "attributes": {
           "code": {
             "name": "code",
-            "label": "common/common.activity_status_attributes_activity_status_label",
+            "label": "common/common.code",
             "type": "select",
-            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+            "placeholder": "common/common.select_code",
             "choices": "Activity/Language.json",
             "required": true,
             "criteria": "",
-            "hover_text": "common/common.document_link_sub_elements_language_attributes_code_hover_text",
+            "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
             "help_text": ""
           }
         },
@@ -1759,23 +1759,23 @@
       },
       "document_date": {
         "name": "document_date",
-        "label": "elements/element_json_schema.document_link_sub_elements_document_date_label",
+        "label": "elements/element_json_schema.document_date",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "add_more_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "optional_text",
-        "hover_text": "common/common.document_link_sub_elements_document_date_hover_text",
+        "hover_text": "common/common.the_publication_date_of_the_document_or_webpage",
         "attributes": {
           "date": {
             "name": "date",
-            "label": "common/common.document_link_sub_elements_document_date_attributes_date_label",
+            "label": "common/common.date",
             "type": "date",
-            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "",
-            "hover_text": "common/common.document_link_sub_elements_document_date_attributes_date_hover_text",
+            "hover_text": "common/common.provide_the_date_of_publication_for_the_document_or_the_date_that_it was_last_updated",
             "help_text": ""
           }
         },
@@ -1795,9 +1795,9 @@
     "attributes": {
       "type": {
         "name": "type",
-        "label": "common/common.reporting_org_attributes_type_label",
+        "label": "common/common.type",
         "type": "select",
-        "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+        "placeholder": "common/common.select_type",
         "choices": "Activity/ContactType.json",
         "required": false,
         "criteria": "",
@@ -1819,9 +1819,9 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": true,
             "criteria": "mandatory",
             "add_more": true,
@@ -1840,7 +1840,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1860,9 +1860,9 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": true,
             "criteria": "mandatory",
             "add_more": true,
@@ -1881,7 +1881,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1901,9 +1901,9 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": false,
             "criteria": "",
             "add_more": true,
@@ -1922,7 +1922,7 @@
                 "required": false,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1942,9 +1942,9 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": true,
             "criteria": "mandatory",
             "add_more": true,
@@ -1963,7 +1963,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -2018,7 +2018,7 @@
       },
       "website": {
         "name": "website",
-        "label": "common/common.contact_info_sub_elements_website_label",
+        "label": "common/common.website",
         "add_more": true,
         "wrapper_collection": false,
         "form_has_borders": true,
@@ -2028,9 +2028,9 @@
         "attributes": {
           "website": {
             "name": "website",
-            "label": "common/common.contact_info_sub_elements_website_label",
+            "label": "common/common.website",
             "type": "text",
-            "placeholder": "common/common.contact_info_sub_elements_website_attributes_website_placeholder",
+            "placeholder": "common/common.type_url",
             "required": false,
             "criteria": "",
             "hover_text": "elements/element_json_schema.contact_info_sub_elements_website_attributes_website_hover_text",
@@ -2053,9 +2053,9 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": true,
             "criteria": "mandatory",
             "add_more": true,
@@ -2074,7 +2074,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -2096,9 +2096,9 @@
     "attributes": {
       "ref": {
         "name": "ref",
-        "label": "common/common.reporting_org_attributes_ref_label",
+        "label": "common/common.reference",
         "type": "text",
-        "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+        "placeholder": "common/common.type_reference",
         "required": false,
         "criteria": "",
         "hover_text": "elements/element_json_schema.location_attributes_ref_hover_text",
@@ -2119,9 +2119,9 @@
         "attributes": {
           "code": {
             "name": "code",
-            "label": "common/common.activity_status_attributes_activity_status_label",
+            "label": "common/common.code",
             "type": "select",
-            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+            "placeholder": "common/common.select_code",
             "choices": "Activity/GeographicLocationReach.json",
             "required": true,
             "criteria": "mandatory",
@@ -2145,9 +2145,9 @@
         "attributes": {
           "vocabulary": {
             "name": "vocabulary",
-            "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+            "label": "common/common.vocabulary",
             "type": "select",
-            "placeholder": "common/common.sector_attributes_sector_vocabulary_placeholder",
+            "placeholder": "common/common.select_vocabulary",
             "choices": "Activity/GeographicVocabulary.json",
             "required": true,
             "criteria": "mandatory",
@@ -2156,7 +2156,7 @@
           },
           "code": {
             "name": "code",
-            "label": "common/common.activity_status_attributes_activity_status_label",
+            "label": "common/common.code",
             "type": "text",
             "placeholder": "elements/element_json_schema.location_sub_elements_location_id_attributes_code_placeholder",
             "required": true,
@@ -2180,7 +2180,7 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
             "placeholder": "common/common.location_sub_elements_name_sub_elements_narrative_placeholder",
             "required": true,
@@ -2201,7 +2201,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -2210,7 +2210,7 @@
       },
       "description": {
         "name": "description",
-        "label": "common/common.description_label",
+        "label": "common/common.description",
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
@@ -2220,7 +2220,7 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
             "placeholder": "common/common.location_sub_elements_name_sub_elements_narrative_placeholder",
             "required": true,
@@ -2241,7 +2241,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -2250,7 +2250,7 @@
       },
       "activity_description": {
         "name": "activity_description",
-        "label": "elements/element_json_schema.location_sub_elements_activity_description_label",
+        "label": "elements/element_json_schema.location_sub_elements_activity_description",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -2261,7 +2261,7 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
             "placeholder": "common/common.location_sub_elements_name_sub_elements_narrative_placeholder",
             "required": true,
@@ -2282,7 +2282,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -2302,9 +2302,9 @@
         "attributes": {
           "vocabulary": {
             "name": "vocabulary",
-            "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+            "label": "common/common.vocabulary",
             "type": "select",
-            "placeholder": "common/common.sector_attributes_sector_vocabulary_placeholder",
+            "placeholder": "common/common.select_vocabulary",
             "choices": "Activity/GeographicVocabulary.json",
             "required": true,
             "criteria": "mandatory",
@@ -2313,9 +2313,9 @@
           },
           "code": {
             "name": "code",
-            "label": "common/common.activity_status_attributes_activity_status_label",
+            "label": "common/common.code",
             "type": "select",
-            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+            "placeholder": "common/common.select_code",
             "choices": "Activity/Country.json",
             "required": true,
             "criteria": "mandatory",
@@ -2401,9 +2401,9 @@
         "attributes": {
           "code": {
             "name": "code",
-            "label": "common/common.activity_status_attributes_activity_status_label",
+            "label": "common/common.code",
             "type": "select",
-            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+            "placeholder": "common/common.select_code",
             "choices": "Activity/GeographicExactness.json",
             "required": true,
             "criteria": "mandatory",
@@ -2425,9 +2425,9 @@
         "attributes": {
           "code": {
             "name": "code",
-            "label": "common/common.activity_status_attributes_activity_status_label",
+            "label": "common/common.code",
             "type": "select",
-            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+            "placeholder": "common/common.select_code",
             "choices": "Activity/GeographicLocationClass.json",
             "required": true,
             "criteria": "mandatory",
@@ -2449,9 +2449,9 @@
         "attributes": {
           "code": {
             "name": "code",
-            "label": "common/common.activity_status_attributes_activity_status_label",
+            "label": "common/common.code",
             "type": "select",
-            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+            "placeholder": "common/common.select_code",
             "choices": "Activity/LocationType.json",
             "required": true,
             "criteria": "mandatory",
@@ -2475,7 +2475,7 @@
     "attributes": {
       "planned_disbursement_type": {
         "name": "planned_disbursement_type",
-        "label": "common/common.reporting_org_attributes_type_label",
+        "label": "common/common.type",
         "type": "select",
         "placeholder": "",
         "choices": "Activity/BudgetType.json",
@@ -2500,7 +2500,7 @@
             "name": "date",
             "label": "elements/element_json_schema.planned_disbursement_sub_elements_period_start_attributes_date_label",
             "type": "date",
-            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -2523,7 +2523,7 @@
             "name": "date",
             "label": "elements/element_json_schema.planned_disbursement_sub_elements_period_start_attributes_date_label",
             "type": "date",
-            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -2534,7 +2534,7 @@
       },
       "value": {
         "name": "value",
-        "label": "common/common.legacy_data_attributes_value_label",
+        "label": "common/common.value",
         "element_criteria": "mandatory",
         "add_more": false,
         "form_has_borders": true,
@@ -2545,7 +2545,7 @@
         "attributes": {
           "amount": {
             "name": "amount",
-            "label": "common/common.legacy_data_attributes_value_label",
+            "label": "common/common.value",
             "type": "text",
             "placeholder": "elements/element_json_schema.legacy_data_attributes_value_placeholder",
             "required": true,
@@ -2555,20 +2555,20 @@
           },
           "currency": {
             "name": "currency",
-            "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",
+            "label": "common/common.currency",
             "type": "select",
-            "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
+            "placeholder": "common/common.select_currency",
             "choices": "Activity/Currency.json",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+            "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"
           },
           "value_date": {
             "name": "value_date",
             "label": "elements/element_json_schema.planned_disbursement_sub_elements_value_attributes_value_date_label",
             "type": "date",
-            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_value_attributes_value_date_hover_text",
@@ -2590,9 +2590,9 @@
         "attributes": {
           "ref": {
             "name": "ref",
-            "label": "common/common.reporting_org_attributes_ref_label",
+            "label": "common/common.reference",
             "type": "text",
-            "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+            "placeholder": "common/common.type_reference",
             "required": false,
             "criteria": "",
             "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_attributes_ref_hover_text",
@@ -2610,9 +2610,9 @@
           },
           "type": {
             "name": "type",
-            "label": "common/common.reporting_org_attributes_type_label",
+            "label": "common/common.type",
             "type": "select",
-            "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+            "placeholder": "common/common.select_type",
             "choices": "Organization/OrganizationType.json",
             "required": false,
             "criteria": "",
@@ -2623,13 +2623,13 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": false,
             "criteria": "",
             "add_more": true,
-            "hover_text": "common/common.planned_disbursement_sub_elements_provider_org_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.enter_the_name_of_the_organisation_this_can_be_repeated_in_multiple_languages",
             "help_text": "",
             "attr": {
               "row": 4
@@ -2644,7 +2644,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -2664,9 +2664,9 @@
         "attributes": {
           "ref": {
             "name": "ref",
-            "label": "common/common.reporting_org_attributes_ref_label",
+            "label": "common/common.reference",
             "type": "text",
-            "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+            "placeholder": "common/common.type_reference",
             "required": false,
             "criteria": "",
             "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_attributes_ref_hover_text",
@@ -2684,9 +2684,9 @@
           },
           "type": {
             "name": "type",
-            "label": "common/common.reporting_org_attributes_type_label",
+            "label": "common/common.type",
             "type": "select",
-            "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+            "placeholder": "common/common.select_type",
             "choices": "Organization/OrganizationType.json",
             "required": false,
             "criteria": "",
@@ -2697,13 +2697,13 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": false,
             "criteria": "",
             "add_more": true,
-            "hover_text": "common/common.planned_disbursement_sub_elements_provider_org_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.enter_the_name_of_the_organisation_this_can_be_repeated_in_multiple_languages",
             "help_text": "",
             "attr": {
               "row": 4
@@ -2718,7 +2718,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -2741,7 +2741,7 @@
     "attributes": {
       "organization_role": {
         "name": "organization_role",
-        "label": "common/common.participating_org_attributes_organization_role_label",
+        "label": "common/common.role",
         "type": "select",
         "placeholder": "elements/element_json_schema.participating_org_attributes_organization_role_placeholder",
         "choices": "Organization/OrganisationRole.json",
@@ -2752,9 +2752,9 @@
       },
       "ref": {
         "name": "ref",
-        "label": "common/common.reporting_org_attributes_ref_label",
+        "label": "common/common.reference",
         "type": "text",
-        "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+        "placeholder": "common/common.type_reference",
         "required": false,
         "criteria": "recommended",
         "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_attributes_ref_hover_text",
@@ -2762,9 +2762,9 @@
       },
       "type": {
         "name": "type",
-        "label": "common/common.reporting_org_attributes_type_label",
+        "label": "common/common.type",
         "type": "select",
-        "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+        "placeholder": "common/common.select_type",
         "choices": "Organization/OrganizationType.json",
         "required": false,
         "criteria": "recommended",
@@ -2798,7 +2798,7 @@
         "name": "narrative",
         "label": "common/common.name",
         "type": "textarea",
-        "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
+        "placeholder": "common/common.type_name",
         "element_criteria": "recommended",
         "required": true,
         "criteria": "mandatory",
@@ -2806,7 +2806,7 @@
         "attr": {
           "row": 4
         },
-        "hover_text": "common/common.planned_disbursement_sub_elements_provider_org_sub_elements_narrative_hover_text",
+        "hover_text": "common/common.enter_the_name_of_the_organisation_this_can_be_repeated_in_multiple_languages",
         "help_text": "",
         "attributes": {
           "language": {
@@ -2818,7 +2818,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -2843,14 +2843,14 @@
         "choices": "Activity/BudgetStatus.json",
         "required": false,
         "criteria": "recommended",
-        "hover_text": "common/common.budget_attributes_budget_status_hover_text",
+        "hover_text": "common/common.select_a_status_that_best_describes_this_budget",
         "help_text": ""
       },
       "budget_type": {
         "name": "budget_type",
-        "label": "common/common.reporting_org_attributes_type_label",
+        "label": "common/common.type",
         "type": "select",
-        "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+        "placeholder": "common/common.select_type",
         "choices": "Activity/BudgetType.json",
         "required": false,
         "criteria": "recommended",
@@ -2861,7 +2861,7 @@
     "sub_elements": {
       "period_start": {
         "name": "period_start",
-        "label": "common/common.budget_sub_elements_period_start_label",
+        "label": "common/common.period_start",
         "element_criteria": "mandatory",
         "add_more": false,
         "form_has_borders": true,
@@ -2886,7 +2886,7 @@
       },
       "period_end": {
         "name": "period_end",
-        "label": "common/common.budget_sub_elements_period_end_label",
+        "label": "common/common.period-end",
         "element_criteria": "mandatory",
         "add_more": false,
         "form_has_borders": true,
@@ -2911,7 +2911,7 @@
       },
       "budget_value": {
         "name": "budget_value",
-        "label": "common/common.legacy_data_attributes_value_label",
+        "label": "common/common.value",
         "element_criteria": "mandatory",
         "add_more": false,
         "form_has_borders": true,
@@ -2924,7 +2924,7 @@
         "attributes": {
           "amount": {
             "name": "amount",
-            "label": "common/common.legacy_data_attributes_value_label",
+            "label": "common/common.value",
             "type": "text",
             "placeholder": "elements/element_json_schema.legacy_data_attributes_value_placeholder",
             "required": true,
@@ -2934,23 +2934,23 @@
           },
           "currency": {
             "name": "currency",
-            "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",
+            "label": "common/common.currency",
             "type": "select",
-            "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
+            "placeholder": "common/common.select_currency",
             "choices": "Activity/Currency.json",
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+            "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"
           },
           "value_date": {
             "name": "value_date",
-            "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",
+            "label": "common/common.value_date",
             "type": "date",
             "placeholder": "elements/element_json_schema.budget_sub_elements_budget_value_attributes_value_date_placeholder",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
+            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
             "help_text": ""
           }
         },
@@ -2968,9 +2968,9 @@
     "attributes": {
       "type": {
         "name": "type",
-        "label": "common/common.reporting_org_attributes_type_label",
+        "label": "common/common.type",
         "type": "select",
-        "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+        "placeholder": "common/common.select_type",
         "choices": "Activity/ResultType.json",
         "required": true,
         "criteria": "mandatory",
@@ -2995,7 +2995,7 @@
     "sub_elements": {
       "title": {
         "name": "title",
-        "label": "common/common.document_link_sub_elements_title_label",
+        "label": "common/common.title",
         "element_criteria": "",
         "add_more": false,
         "form_has_borders": true,
@@ -3007,9 +3007,9 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": true,
             "criteria": "mandatory",
             "add_more": true,
@@ -3028,7 +3028,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -3037,7 +3037,7 @@
       },
       "description": {
         "name": "description",
-        "label": "common/common.description_label",
+        "label": "common/common.description",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -3048,9 +3048,9 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": false,
             "criteria": "",
             "add_more": true,
@@ -3069,7 +3069,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -3078,7 +3078,7 @@
       },
       "document_link": {
         "name": "document_link",
-        "label": "common/common.result_sub_elements_document_link_label",
+        "label": "common/common.document_link",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -3086,55 +3086,55 @@
         "is_collapsable": true,
         "do_not_repeat_button": true,
         "label_indicator": "optional_text",
-        "hover_text": "elements/element_json_schema.result_sub_elements_document_link_hover_text",
+        "hover_text": "elements/element_json_schema.document_link_hover_text",
         "help_text": "",
         "attributes": {
           "url": {
             "name": "url",
-            "label": "common/common.document_link_attributes_url_label",
+            "label": "common/common.url",
             "type": "text",
-            "placeholder": "common/common.contact_info_sub_elements_website_attributes_website_placeholder",
+            "placeholder": "common/common.type_url",
             "required": true,
             "criteria": "",
-            "hover_text": "common/common.document_link_attributes_url_hover_text",
+            "hover_text": "common/common.a_link_to_where_the_document_is_available_online",
             "help_text": ""
           },
           "format": {
             "name": "format",
-            "label": "common/common.document_link_attributes_format_label",
+            "label": "common/common.format",
             "type": "select",
-            "placeholder": "elements/element_json_schema.result_sub_elements_document_link_attributes_format_placeholder",
+            "placeholder": "elements/element_json_schema.document_link_attributes_format_placeholder",
             "choices": "Activity/FileFormat.json",
             "required": true,
             "criteria": "",
-            "hover_text": "common/common.document_link_attributes_format_hover_text",
+            "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
             "help_text": ""
           }
         },
         "sub_elements": {
           "title": {
             "name": "title",
-            "label": "common/common.document_link_sub_elements_title_label",
+            "label": "common/common.title",
             "element_criteria": "",
             "attributes": {},
             "form_has_borders": true,
             "label_has_borders": true,
             "is_collapsable": true,
             "label_indicator": "required_icon",
-            "hover_text": "common/common.document_link_sub_elements_title_hover_text",
+            "hover_text": "common/common.a_short_title_for_the_document",
             "sub_elements": {
               "narrative": {
                 "name": "narrative",
-                "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+                "label": "elements/element_json_schema.narrative",
                 "type": "textarea",
-                "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+                "placeholder": "common/common.type_narrative",
                 "required": true,
                 "criteria": "",
                 "add_more": true,
                 "attr": {
                   "row": 4
                 },
-                "hover_text": "common/common.document_link_sub_elements_title_sub_elements_narrative_hover_text",
+                "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
                 "help_text": "",
                 "attributes": {
                   "language": {
@@ -3146,7 +3146,7 @@
                     "required": true,
                     "criteria": "",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -3155,7 +3155,7 @@
           },
           "category": {
             "name": "category",
-            "label": "common/common.document_link_sub_elements_category_label",
+            "label": "common/common.category",
             "element_criteria": "",
             "add_more": true,
             "form_has_borders": true,
@@ -3163,18 +3163,18 @@
             "is_collapsable": true,
             "label_indicator": "required_icon",
             "wrapper_collection": false,
-            "hover_text": "common/common.document_link_sub_elements_category_hover_text",
+            "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
             "help_text": "",
             "attributes": {
               "code": {
                 "name": "code",
-                "label": "common/common.activity_status_attributes_activity_status_label",
+                "label": "common/common.code",
                 "type": "select",
-                "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+                "placeholder": "common/common.select_code",
                 "choices": "Activity/DocumentCategory.json",
                 "required": true,
                 "criteria": "",
-                "hover_text": "common/common.document_link_sub_elements_category_attributes_code_hover_text",
+                "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
                 "help_text": ""
               }
             },
@@ -3182,26 +3182,26 @@
           },
           "description": {
             "name": "description",
-            "label": "common/common.description_label",
+            "label": "common/common.description",
             "attributes": {},
             "form_has_borders": true,
             "label_has_borders": true,
             "is_collapsable": true,
             "label_indicator": "optional_text",
-            "hover_text": "common/common.document_link_sub_elements_description_hover_text",
+            "hover_text": "common/common.a_description_of_the_document_contents_or_guidance_on_where_to_access_relevant_information",
             "sub_elements": {
               "narrative": {
                 "name": "narrative",
-                "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+                "label": "elements/element_json_schema.narrative",
                 "type": "textarea",
-                "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+                "placeholder": "common/common.type_narrative",
                 "required": true,
                 "criteria": "",
                 "add_more": true,
                 "attr": {
                   "row": 4
                 },
-                "hover_text": "common/common.document_link_sub_elements_description_sub_elements_narrative_hover_text",
+                "hover_text": "common/common.provide_a_short_description_of_the_document_or_webpage_including_any_instructions",
                 "help_text": "",
                 "attributes": {
                   "language": {
@@ -3213,7 +3213,7 @@
                     "required": true,
                     "criteria": "",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -3232,13 +3232,13 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.activity_status_attributes_activity_status_label",
+                "label": "common/common.code",
                 "type": "select",
-                "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+                "placeholder": "common/common.select_code",
                 "choices": "Activity/Language.json",
                 "required": true,
                 "criteria": "",
-                "hover_text": "common/common.document_link_sub_elements_language_attributes_code_hover_text",
+                "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
                 "help_text": ""
               }
             },
@@ -3246,22 +3246,22 @@
           },
           "document_date": {
             "name": "document_date",
-            "label": "common/common.result_sub_elements_document_link_sub_elements_document_date_label",
+            "label": "common/common.document_date",
             "add_more": false,
             "form_has_borders": true,
             "label_has_borders": true,
             "is_collapsable": true,
             "label_indicator": "optional_text",
-            "hover_text": "common/common.document_link_sub_elements_document_date_hover_text",
+            "hover_text": "common/common.the_publication_date_of_the_document_or_webpage",
             "attributes": {
               "date": {
                 "name": "date",
-                "label": "common/common.document_link_sub_elements_document_date_attributes_date_label",
+                "label": "common/common.date",
                 "type": "date",
-                "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+                "placeholder": "common/common.yyyy_mm_dd",
                 "required": true,
                 "criteria": "",
-                "hover_text": "common/common.document_link_sub_elements_document_date_attributes_date_hover_text",
+                "hover_text": "common/common.provide_the_date_of_publication_for_the_document_or_the_date_that_it was_last_updated",
                 "help_text": ""
               }
             },
@@ -3271,7 +3271,7 @@
       },
       "reference": {
         "name": "reference",
-        "label": "common/common.reporting_org_attributes_ref_label",
+        "label": "common/common.reference",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -3284,9 +3284,9 @@
         "attributes": {
           "vocabulary": {
             "name": "vocabulary",
-            "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+            "label": "common/common.vocabulary",
             "type": "select",
-            "placeholder": "common/common.sector_attributes_sector_vocabulary_placeholder",
+            "placeholder": "common/common.select_vocabulary",
             "choices": "Activity/ResultVocabulary.json",
             "required": true,
             "criteria": "",
@@ -3295,7 +3295,7 @@
           },
           "code": {
             "name": "code",
-            "label": "common/common.activity_status_attributes_activity_status_label",
+            "label": "common/common.code",
             "type": "text",
             "placeholder": "elements/element_json_schema.recipient_region_attributes_custom_code_placeholder",
             "required": true,
@@ -3307,7 +3307,7 @@
             "name": "vocabulary_uri",
             "label": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_label",
             "type": "text",
-            "placeholder": "common/common.sector_attributes_vocabulary_uri_placeholder",
+            "placeholder": "common/common.type_vocabulary_uri",
             "required": false,
             "criteria": "",
             "hover_text": "elements/element_json_schema.result_sub_elements_reference_attributes_vocabulary_uri_hover_text",
@@ -3370,7 +3370,7 @@
     "sub_elements": {
       "title": {
         "name": "title",
-        "label": "common/common.document_link_sub_elements_title_label",
+        "label": "common/common.title",
         "element_criteria": "",
         "add_more": false,
         "attributes": {},
@@ -3382,9 +3382,9 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": true,
             "criteria": "mandatory",
             "add_more": true,
@@ -3403,7 +3403,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -3412,7 +3412,7 @@
       },
       "description": {
         "name": "description",
-        "label": "common/common.description_label",
+        "label": "common/common.description",
         "add_more": false,
         "attributes": {},
         "form_has_borders": true,
@@ -3423,9 +3423,9 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": true,
             "criteria": "",
             "add_more": true,
@@ -3444,7 +3444,7 @@
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -3453,62 +3453,62 @@
       },
       "document_link": {
         "name": "document_link",
-        "label": "common/common.document_link_label",
+        "label": "common/common.document_link",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
         "add_more_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "optional_text",
-        "hover_text": "elements/element_json_schema.result_sub_elements_document_link_hover_text",
+        "hover_text": "elements/element_json_schema.document_link_hover_text",
         "help_text": "",
         "attributes": {
           "url": {
             "name": "url",
-            "label": "common/common.document_link_attributes_url_label",
+            "label": "common/common.url",
             "type": "text",
             "placeholder": "elements/element_json_schema.document_link_attributes_url_placeholder",
             "required": true,
             "criteria": "",
-            "hover_text": "common/common.document_link_attributes_url_hover_text",
+            "hover_text": "common/common.a_link_to_where_the_document_is_available_online",
             "help_text": ""
           },
           "format": {
             "name": "format",
-            "label": "common/common.document_link_attributes_format_label",
+            "label": "common/common.format",
             "type": "select",
-            "placeholder": "elements/element_json_schema.result_sub_elements_document_link_attributes_format_placeholder",
+            "placeholder": "elements/element_json_schema.document_link_attributes_format_placeholder",
             "choices": "Activity/FileFormat.json",
             "required": true,
             "criteria": "",
-            "hover_text": "common/common.document_link_attributes_format_hover_text",
+            "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
             "help_text": ""
           }
         },
         "sub_elements": {
           "title": {
             "name": "title",
-            "label": "common/common.document_link_sub_elements_title_label",
+            "label": "common/common.title",
             "element_criteria": "",
             "form_has_borders": true,
             "label_has_borders": true,
             "is_collapsable": true,
             "label_indicator": "required_icon",
-            "hover_text": "common/common.document_link_sub_elements_title_hover_text",
+            "hover_text": "common/common.a_short_title_for_the_document",
             "attributes": {},
             "sub_elements": {
               "narrative": {
                 "name": "narrative",
-                "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+                "label": "elements/element_json_schema.narrative",
                 "type": "textarea",
-                "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+                "placeholder": "common/common.type_narrative",
                 "required": true,
                 "criteria": "",
                 "add_more": true,
                 "attr": {
                   "row": 4
                 },
-                "hover_text": "common/common.document_link_sub_elements_title_sub_elements_narrative_hover_text",
+                "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
                 "help_text": "",
                 "attributes": {
                   "language": {
@@ -3520,7 +3520,7 @@
                     "required": true,
                     "criteria": "",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -3529,7 +3529,7 @@
           },
           "category": {
             "name": "category",
-            "label": "common/common.document_link_sub_elements_category_label",
+            "label": "common/common.category",
             "element_criteria": "",
             "add_more": true,
             "wrapper_collection": false,
@@ -3537,18 +3537,18 @@
             "label_has_borders": true,
             "is_collapsable": true,
             "label_indicator": "required_icon",
-            "hover_text": "common/common.document_link_sub_elements_category_hover_text",
+            "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
             "help_text": "",
             "attributes": {
               "code": {
                 "name": "code",
-                "label": "common/common.activity_status_attributes_activity_status_label",
+                "label": "common/common.code",
                 "type": "select",
-                "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+                "placeholder": "common/common.select_code",
                 "choices": "Activity/DocumentCategory.json",
                 "required": true,
                 "criteria": "",
-                "hover_text": "common/common.document_link_sub_elements_category_attributes_code_hover_text",
+                "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
                 "help_text": ""
               }
             },
@@ -3556,26 +3556,26 @@
           },
           "description": {
             "name": "description",
-            "label": "common/common.description_label",
+            "label": "common/common.description",
             "attributes": {},
             "form_has_borders": true,
             "label_has_borders": true,
             "is_collapsable": true,
             "label_indicator": "optional_text",
-            "hover_text": "common/common.document_link_sub_elements_description_hover_text",
+            "hover_text": "common/common.a_description_of_the_document_contents_or_guidance_on_where_to_access_relevant_information",
             "sub_elements": {
               "narrative": {
                 "name": "narrative",
-                "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+                "label": "elements/element_json_schema.narrative",
                 "type": "textarea",
-                "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+                "placeholder": "common/common.type_narrative",
                 "required": true,
                 "criteria": "",
                 "add_more": true,
                 "attr": {
                   "row": 4
                 },
-                "hover_text": "common/common.document_link_sub_elements_description_sub_elements_narrative_hover_text",
+                "hover_text": "common/common.provide_a_short_description_of_the_document_or_webpage_including_any_instructions",
                 "help_text": "",
                 "attributes": {
                   "language": {
@@ -3587,7 +3587,7 @@
                     "required": true,
                     "criteria": "",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -3606,13 +3606,13 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.activity_status_attributes_activity_status_label",
+                "label": "common/common.code",
                 "type": "select",
-                "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+                "placeholder": "common/common.select_code",
                 "choices": "Activity/Language.json",
                 "required": true,
                 "criteria": "",
-                "hover_text": "common/common.document_link_sub_elements_language_attributes_code_hover_text",
+                "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
                 "help_text": ""
               }
             },
@@ -3620,22 +3620,22 @@
           },
           "document_date": {
             "name": "document_date",
-            "label": "elements/element_json_schema.document_link_sub_elements_document_date_label",
+            "label": "elements/element_json_schema.document_date",
             "add_more": false,
             "form_has_borders": true,
             "label_has_borders": true,
             "is_collapsable": true,
             "label_indicator": "optional_text",
-            "hover_text": "common/common.document_link_sub_elements_document_date_hover_text",
+            "hover_text": "common/common.the_publication_date_of_the_document_or_webpage",
             "attributes": {
               "date": {
                 "name": "date",
-                "label": "common/common.document_link_sub_elements_document_date_attributes_date_label",
+                "label": "common/common.date",
                 "type": "date",
-                "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+                "placeholder": "common/common.yyyy_mm_dd",
                 "required": true,
                 "criteria": "",
-                "hover_text": "common/common.document_link_sub_elements_document_date_attributes_date_hover_text",
+                "hover_text": "common/common.provide_the_date_of_publication_for_the_document_or_the_date_that_it was_last_updated",
                 "help_text": ""
               }
             },
@@ -3645,7 +3645,7 @@
       },
       "reference": {
         "name": "reference",
-        "label": "common/common.reporting_org_attributes_ref_label",
+        "label": "common/common.reference",
         "add_more": true,
         "make_collection": false,
         "form_has_borders": true,
@@ -3658,9 +3658,9 @@
         "attributes": {
           "vocabulary": {
             "name": "vocabulary",
-            "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+            "label": "common/common.vocabulary",
             "type": "select",
-            "placeholder": "common/common.sector_attributes_sector_vocabulary_placeholder",
+            "placeholder": "common/common.select_vocabulary",
             "choices": "Activity/IndicatorVocabulary.json",
             "required": true,
             "criteria": "",
@@ -3669,9 +3669,9 @@
           },
           "code": {
             "name": "code",
-            "label": "common/common.activity_status_attributes_activity_status_label",
+            "label": "common/common.code",
             "type": "text",
-            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+            "placeholder": "common/common.select_code",
             "required": false,
             "criteria": "",
             "hover_text": "elements/element_json_schema.indicator_sub_elements_reference_attributes_code_hover_text",
@@ -3714,9 +3714,9 @@
           },
           "date": {
             "name": "date",
-            "label": "common/common.document_link_sub_elements_document_date_attributes_date_label",
+            "label": "common/common.date",
             "type": "date",
-            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": false,
             "criteria": "",
             "hover_text": "elements/element_json_schema.indicator_sub_elements_baseline_attributes_date_hover_text",
@@ -3724,7 +3724,7 @@
           },
           "value": {
             "name": "value",
-            "label": "common/common.legacy_data_attributes_value_label",
+            "label": "common/common.value",
             "type": "text",
             "placeholder": "elements/element_json_schema.legacy_data_attributes_value_placeholder",
             "required": false,
@@ -3746,9 +3746,9 @@
             "sub_elements": {
               "narrative": {
                 "name": "narrative",
-                "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+                "label": "elements/element_json_schema.narrative",
                 "type": "textarea",
-                "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+                "placeholder": "common/common.type_narrative",
                 "required": true,
                 "criteria": "",
                 "add_more": true,
@@ -3767,7 +3767,7 @@
                     "required": true,
                     "criteria": "",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -3790,7 +3790,7 @@
                 "name": "name",
                 "label": "common/common.name",
                 "type": "text",
-                "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
+                "placeholder": "common/common.type_name",
                 "required": false,
                 "criteria": "",
                 "hover_text": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_dimension_attributes_name_hover_text",
@@ -3798,7 +3798,7 @@
               },
               "value": {
                 "name": "value",
-                "label": "common/common.legacy_data_attributes_value_label",
+                "label": "common/common.value",
                 "type": "text",
                 "placeholder": "elements/element_json_schema.legacy_data_attributes_value_placeholder",
                 "required": false,
@@ -3811,7 +3811,7 @@
           },
           "document_link": {
             "name": "document_link",
-            "label": "common/common.document_link_label",
+            "label": "common/common.document_link",
             "add_more": true,
             "element_criteria": "",
             "form_has_borders": true,
@@ -3819,35 +3819,35 @@
             "add_more_has_borders": true,
             "is_collapsable": true,
             "label_indicator": "optional_text",
-            "hover_text": "elements/element_json_schema.result_sub_elements_document_link_hover_text",
+            "hover_text": "elements/element_json_schema.document_link_hover_text",
             "help_text": "",
             "attributes": {
               "url": {
                 "name": "url",
-                "label": "common/common.document_link_attributes_url_label",
+                "label": "common/common.url",
                 "type": "text",
                 "placeholder": "elements/element_json_schema.document_link_attributes_url_placeholder",
                 "required": true,
                 "criteria": "",
-                "hover_text": "common/common.document_link_attributes_url_hover_text",
+                "hover_text": "common/common.a_link_to_where_the_document_is_available_online",
                 "help_text": ""
               },
               "format": {
                 "name": "format",
-                "label": "common/common.document_link_attributes_format_label",
+                "label": "common/common.format",
                 "type": "select",
                 "placeholder": "elements/element_json_schema.document_link_attributes_format_placeholder",
                 "choices": "Activity/FileFormat.json",
                 "required": true,
                 "criteria": "",
-                "hover_text": "common/common.document_link_attributes_format_hover_text",
+                "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
                 "help_text": ""
               }
             },
             "sub_elements": {
               "title": {
                 "name": "title",
-                "label": "common/common.document_link_sub_elements_title_label",
+                "label": "common/common.title",
                 "element_criteria": "",
                 "add_more": false,
                 "attributes": {},
@@ -3855,32 +3855,32 @@
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "required_icon",
-                "hover_text": "common/common.document_link_sub_elements_title_hover_text",
+                "hover_text": "common/common.a_short_title_for_the_document",
                 "sub_elements": {
                   "narrative": {
                     "name": "narrative",
-                    "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+                    "label": "elements/element_json_schema.narrative",
                     "type": "textarea",
-                    "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+                    "placeholder": "common/common.type_narrative",
                     "required": true,
                     "criteria": "",
                     "add_more": true,
                     "attr": {
                       "row": 4
                     },
-                    "hover_text": "common/common.document_link_sub_elements_title_sub_elements_narrative_hover_text",
+                    "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
                     "help_text": "",
                     "attributes": {
                       "language": {
                         "name": "language",
                         "label": "common/common.language",
                         "type": "select",
-                        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+                        "placeholder": "common/common.select_code",
                         "choices": "Activity/Language.json",
                         "required": true,
                         "criteria": "",
                         "hover_text": "",
-                        "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                        "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                       }
                     },
                     "sub_elements": {}
@@ -3889,7 +3889,7 @@
               },
               "category": {
                 "name": "category",
-                "label": "common/common.document_link_sub_elements_category_label",
+                "label": "common/common.category",
                 "element_criteria": "",
                 "add_more": true,
                 "wrapper_collection": false,
@@ -3897,18 +3897,18 @@
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "required_icon",
-                "hover_text": "common/common.document_link_sub_elements_category_hover_text",
+                "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
                 "help_text": "",
                 "attributes": {
                   "code": {
                     "name": "code",
-                    "label": "common/common.activity_status_attributes_activity_status_label",
+                    "label": "common/common.code",
                     "type": "select",
-                    "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+                    "placeholder": "common/common.select_code",
                     "choices": "Activity/DocumentCategory.json",
                     "required": true,
                     "criteria": "",
-                    "hover_text": "common/common.document_link_sub_elements_category_attributes_code_hover_text",
+                    "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
                     "help_text": ""
                   }
                 },
@@ -3916,27 +3916,27 @@
               },
               "description": {
                 "name": "description",
-                "label": "common/common.description_label",
+                "label": "common/common.description",
                 "add_more": false,
                 "form_has_borders": true,
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "optional_text",
                 "attributes": {},
-                "hover_text": "common/common.document_link_sub_elements_description_hover_text",
+                "hover_text": "common/common.a_description_of_the_document_contents_or_guidance_on_where_to_access_relevant_information",
                 "sub_elements": {
                   "narrative": {
                     "name": "narrative",
-                    "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+                    "label": "elements/element_json_schema.narrative",
                     "type": "textarea",
-                    "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+                    "placeholder": "common/common.type_narrative",
                     "required": true,
                     "criteria": "",
                     "add_more": true,
                     "attr": {
                       "row": 4
                     },
-                    "hover_text": "common/common.document_link_sub_elements_description_sub_elements_narrative_hover_text",
+                    "hover_text": "common/common.provide_a_short_description_of_the_document_or_webpage_including_any_instructions",
                     "help_text": "",
                     "attributes": {
                       "language": {
@@ -3948,7 +3948,7 @@
                         "required": true,
                         "criteria": "",
                         "hover_text": "",
-                        "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                        "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                       }
                     },
                     "sub_elements": {}
@@ -3967,13 +3967,13 @@
                 "attributes": {
                   "language": {
                     "name": "language",
-                    "label": "common/common.activity_status_attributes_activity_status_label",
+                    "label": "common/common.code",
                     "type": "select",
-                    "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+                    "placeholder": "common/common.select_code",
                     "choices": "Activity/Language.json",
                     "required": true,
                     "criteria": "",
-                    "hover_text": "common/common.document_link_sub_elements_language_attributes_code_hover_text",
+                    "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
                     "help_text": ""
                   }
                 },
@@ -3981,22 +3981,22 @@
               },
               "document_date": {
                 "name": "document_date",
-                "label": "elements/element_json_schema.document_link_sub_elements_document_date_label",
+                "label": "elements/element_json_schema.document_date",
                 "add_more": false,
                 "form_has_borders": true,
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "optional_text",
-                "hover_text": "common/common.document_link_sub_elements_document_date_hover_text",
+                "hover_text": "common/common.the_publication_date_of_the_document_or_webpage",
                 "attributes": {
                   "date": {
                     "name": "date",
-                    "label": "common/common.document_link_sub_elements_document_date_attributes_date_label",
+                    "label": "common/common.date",
                     "type": "date",
-                    "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+                    "placeholder": "common/common.yyyy_mm_dd",
                     "required": true,
                     "criteria": "",
-                    "hover_text": "common/common.document_link_sub_elements_document_date_attributes_date_hover_text",
+                    "hover_text": "common/common.provide_the_date_of_publication_for_the_document_or_the_date_that_it was_last_updated",
                     "help_text": ""
                   }
                 },
@@ -4017,9 +4017,9 @@
             "attributes": {
               "reference": {
                 "name": "reference",
-                "label": "common/common.reporting_org_attributes_ref_label",
+                "label": "common/common.reference",
                 "type": "text",
-                "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+                "placeholder": "common/common.type_reference",
                 "required": false,
                 "criteria": "",
                 "hover_text": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_location_attributes_reference_hover_text",
@@ -4057,7 +4057,7 @@
             "name": "date",
             "label": "elements/element_json_schema.activity_date_attributes_date_label",
             "type": "date",
-            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -4081,7 +4081,7 @@
             "name": "date",
             "label": "elements/element_json_schema.activity_date_attributes_date_label",
             "type": "date",
-            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -4104,7 +4104,7 @@
         "attributes": {
           "value": {
             "name": "value",
-            "label": "common/common.legacy_data_attributes_value_label",
+            "label": "common/common.value",
             "type": "text",
             "placeholder": "elements/element_json_schema.legacy_data_attributes_value_placeholder",
             "required": false,
@@ -4127,9 +4127,9 @@
             "sub_elements": {
               "narrative": {
                 "name": "narrative",
-                "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+                "label": "elements/element_json_schema.narrative",
                 "type": "textarea",
-                "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+                "placeholder": "common/common.type_narrative",
                 "required": false,
                 "criteria": "",
                 "add_more": true,
@@ -4148,7 +4148,7 @@
                     "required": false,
                     "criteria": "",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -4169,7 +4169,7 @@
                 "name": "name",
                 "label": "common/common.name",
                 "type": "text",
-                "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
+                "placeholder": "common/common.type_name",
                 "required": false,
                 "criteria": "",
                 "hover_text": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_dimension_attributes_name_hover_text",
@@ -4177,7 +4177,7 @@
               },
               "value": {
                 "name": "value",
-                "label": "common/common.legacy_data_attributes_value_label",
+                "label": "common/common.value",
                 "type": "text",
                 "placeholder": "elements/element_json_schema.legacy_data_attributes_value_placeholder",
                 "required": false,
@@ -4190,62 +4190,62 @@
           },
           "document_link": {
             "name": "document_link",
-            "label": "common/common.document_link_label",
+            "label": "common/common.document_link",
             "add_more": true,
             "form_has_borders": true,
             "label_has_borders": true,
             "add_more_has_borders": true,
             "is_collapsable": true,
             "label_indicator": "optional_text",
-            "hover_text": "elements/element_json_schema.result_sub_elements_document_link_hover_text",
+            "hover_text": "elements/element_json_schema.document_link_hover_text",
             "help_text": "",
             "attributes": {
               "url": {
                 "name": "url",
-                "label": "common/common.document_link_attributes_url_label",
+                "label": "common/common.url",
                 "type": "text",
                 "placeholder": "elements/element_json_schema.document_link_attributes_url_placeholder",
                 "required": true,
                 "criteria": "",
-                "hover_text": "common/common.document_link_attributes_url_hover_text",
+                "hover_text": "common/common.a_link_to_where_the_document_is_available_online",
                 "help_text": ""
               },
               "format": {
                 "name": "format",
-                "label": "common/common.document_link_attributes_format_label",
+                "label": "common/common.format",
                 "type": "select",
-                "placeholder": "elements/element_json_schema.result_sub_elements_document_link_attributes_format_placeholder",
+                "placeholder": "elements/element_json_schema.document_link_attributes_format_placeholder",
                 "choices": "Activity/FileFormat.json",
                 "required": true,
                 "criteria": "",
-                "hover_text": "common/common.document_link_attributes_format_hover_text",
+                "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
                 "help_text": ""
               }
             },
             "sub_elements": {
               "title": {
                 "name": "title",
-                "label": "common/common.document_link_sub_elements_title_label",
+                "label": "common/common.title",
                 "element_criteria": "",
                 "attributes": {},
                 "form_has_borders": true,
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "required_icon",
-                "hover_text": "common/common.document_link_sub_elements_title_hover_text",
+                "hover_text": "common/common.a_short_title_for_the_document",
                 "sub_elements": {
                   "narrative": {
                     "name": "narrative",
-                    "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+                    "label": "elements/element_json_schema.narrative",
                     "type": "textarea",
-                    "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+                    "placeholder": "common/common.type_narrative",
                     "required": true,
                     "criteria": "",
                     "add_more": true,
                     "attr": {
                       "row": 4
                     },
-                    "hover_text": "common/common.document_link_sub_elements_title_sub_elements_narrative_hover_text",
+                    "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
                     "help_text": "",
                     "attributes": {
                       "language": {
@@ -4257,7 +4257,7 @@
                         "required": true,
                         "criteria": "",
                         "hover_text": "",
-                        "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                        "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                       }
                     },
                     "sub_elements": {}
@@ -4266,25 +4266,25 @@
               },
               "category": {
                 "name": "category",
-                "label": "common/common.document_link_sub_elements_category_label",
+                "label": "common/common.category",
                 "add_more": true,
                 "wrapper_collection": false,
                 "form_has_borders": true,
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "required_icon",
-                "hover_text": "common/common.document_link_sub_elements_category_hover_text",
+                "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
                 "help_text": "",
                 "attributes": {
                   "code": {
                     "name": "code",
-                    "label": "common/common.activity_status_attributes_activity_status_label",
+                    "label": "common/common.code",
                     "type": "select",
-                    "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+                    "placeholder": "common/common.select_code",
                     "choices": "Activity/DocumentCategory.json",
                     "required": true,
                     "criteria": "",
-                    "hover_text": "common/common.document_link_sub_elements_category_attributes_code_hover_text",
+                    "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
                     "help_text": ""
                   }
                 },
@@ -4292,26 +4292,26 @@
               },
               "description": {
                 "name": "description",
-                "label": "common/common.description_label",
+                "label": "common/common.description",
                 "attributes": {},
                 "form_has_borders": true,
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "optional_text",
-                "hover_text": "common/common.document_link_sub_elements_description_hover_text",
+                "hover_text": "common/common.a_description_of_the_document_contents_or_guidance_on_where_to_access_relevant_information",
                 "sub_elements": {
                   "narrative": {
                     "name": "narrative",
-                    "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+                    "label": "elements/element_json_schema.narrative",
                     "type": "textarea",
-                    "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+                    "placeholder": "common/common.type_narrative",
                     "required": true,
                     "criteria": "",
                     "add_more": true,
                     "attr": {
                       "row": 4
                     },
-                    "hover_text": "common/common.document_link_sub_elements_description_sub_elements_narrative_hover_text",
+                    "hover_text": "common/common.provide_a_short_description_of_the_document_or_webpage_including_any_instructions",
                     "help_text": "",
                     "attributes": {
                       "language": {
@@ -4323,7 +4323,7 @@
                         "required": true,
                         "criteria": "",
                         "hover_text": "",
-                        "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                        "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                       }
                     },
                     "sub_elements": {}
@@ -4339,13 +4339,13 @@
                 "wrapper_collection": false,
                 "is_collapsable": true,
                 "label_indicator": "optional_text",
-                "hover_text": "common/common.document_link_sub_elements_language_attributes_code_hover_text",
+                "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
                 "attributes": {
                   "language": {
                     "name": "language",
-                    "label": "common/common.activity_status_attributes_activity_status_label",
+                    "label": "common/common.code",
                     "type": "select",
-                    "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+                    "placeholder": "common/common.select_code",
                     "choices": "Activity/Language.json",
                     "required": true,
                     "criteria": "",
@@ -4357,22 +4357,22 @@
               },
               "document_date": {
                 "name": "document_date",
-                "label": "elements/element_json_schema.document_link_sub_elements_document_date_label",
+                "label": "elements/element_json_schema.document_date",
                 "add_more": false,
                 "form_has_borders": true,
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "optional_text",
-                "hover_text": "common/common.document_link_sub_elements_document_date_hover_text",
+                "hover_text": "common/common.the_publication_date_of_the_document_or_webpage",
                 "attributes": {
                   "date": {
                     "name": "date",
                     "label": "elements/element_json_schema.activity_date_attributes_date_label",
                     "type": "date",
-                    "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+                    "placeholder": "common/common.yyyy_mm_dd",
                     "required": true,
                     "criteria": "",
-                    "hover_text": "common/common.document_link_sub_elements_document_date_attributes_date_hover_text",
+                    "hover_text": "common/common.provide_the_date_of_publication_for_the_document_or_the_date_that_it was_last_updated",
                     "help_text": ""
                   }
                 },
@@ -4392,9 +4392,9 @@
             "attributes": {
               "reference": {
                 "name": "reference",
-                "label": "common/common.reporting_org_attributes_ref_label",
+                "label": "common/common.reference",
                 "type": "text",
-                "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+                "placeholder": "common/common.type_reference",
                 "required": false,
                 "criteria": "",
                 "hover_text": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_location_attributes_reference_hover_text",
@@ -4419,7 +4419,7 @@
         "attributes": {
           "value": {
             "name": "value",
-            "label": "common/common.legacy_data_attributes_value_label",
+            "label": "common/common.value",
             "type": "text",
             "placeholder": "elements/element_json_schema.legacy_data_attributes_value_placeholder",
             "required": false,
@@ -4442,9 +4442,9 @@
             "sub_elements": {
               "narrative": {
                 "name": "narrative",
-                "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+                "label": "elements/element_json_schema.narrative",
                 "type": "textarea",
-                "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+                "placeholder": "common/common.type_narrative",
                 "required": true,
                 "criteria": "",
                 "add_more": true,
@@ -4463,7 +4463,7 @@
                     "required": true,
                     "criteria": "",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -4485,7 +4485,7 @@
                 "name": "name",
                 "label": "common/common.name",
                 "type": "text",
-                "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
+                "placeholder": "common/common.type_name",
                 "required": false,
                 "criteria": "",
                 "hover_text": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_dimension_attributes_name_hover_text",
@@ -4493,7 +4493,7 @@
               },
               "value": {
                 "name": "value",
-                "label": "common/common.legacy_data_attributes_value_label",
+                "label": "common/common.value",
                 "type": "text",
                 "placeholder": "elements/element_json_schema.legacy_data_attributes_value_placeholder",
                 "required": false,
@@ -4506,62 +4506,62 @@
           },
           "document_link": {
             "name": "document_link",
-            "label": "common/common.document_link_label",
+            "label": "common/common.document_link",
             "add_more": true,
             "form_has_borders": true,
             "label_has_borders": true,
             "add_more_has_borders": true,
             "is_collapsable": true,
             "label_indicator": "optional_text",
-            "hover_text": "elements/element_json_schema.result_sub_elements_document_link_hover_text",
+            "hover_text": "elements/element_json_schema.document_link_hover_text",
             "help_text": "",
             "attributes": {
               "url": {
                 "name": "url",
-                "label": "common/common.document_link_attributes_url_label",
+                "label": "common/common.url",
                 "type": "text",
                 "placeholder": "elements/element_json_schema.document_link_attributes_url_placeholder",
                 "required": true,
                 "criteria": "",
-                "hover_text": "common/common.document_link_attributes_url_hover_text",
+                "hover_text": "common/common.a_link_to_where_the_document_is_available_online",
                 "help_text": ""
               },
               "format": {
                 "name": "format",
-                "label": "common/common.document_link_attributes_format_label",
+                "label": "common/common.format",
                 "type": "select",
-                "placeholder": "elements/element_json_schema.result_sub_elements_document_link_attributes_format_placeholder",
+                "placeholder": "elements/element_json_schema.document_link_attributes_format_placeholder",
                 "choices": "Activity/FileFormat.json",
                 "required": true,
                 "criteria": "",
-                "hover_text": "common/common.document_link_attributes_format_hover_text",
+                "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
                 "help_text": ""
               }
             },
             "sub_elements": {
               "title": {
                 "name": "title",
-                "label": "common/common.document_link_sub_elements_title_label",
+                "label": "common/common.title",
                 "element_criteria": "",
                 "attributes": {},
                 "form_has_borders": true,
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "required_icon",
-                "hover_text": "common/common.document_link_sub_elements_title_hover_text",
+                "hover_text": "common/common.a_short_title_for_the_document",
                 "sub_elements": {
                   "narrative": {
                     "name": "narrative",
-                    "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+                    "label": "elements/element_json_schema.narrative",
                     "type": "textarea",
-                    "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+                    "placeholder": "common/common.type_narrative",
                     "required": true,
                     "criteria": "",
                     "add_more": true,
                     "attr": {
                       "row": 4
                     },
-                    "hover_text": "common/common.document_link_sub_elements_title_sub_elements_narrative_hover_text",
+                    "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
                     "help_text": "",
                     "attributes": {
                       "language": {
@@ -4573,7 +4573,7 @@
                         "required": true,
                         "criteria": "",
                         "hover_text": "",
-                        "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                        "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                       }
                     },
                     "sub_elements": {}
@@ -4582,7 +4582,7 @@
               },
               "category": {
                 "name": "category",
-                "label": "common/common.document_link_sub_elements_category_label",
+                "label": "common/common.category",
                 "add_more": true,
                 "element_criteria": "",
                 "wrapper_collection": false,
@@ -4590,18 +4590,18 @@
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "required_icon",
-                "hover_text": "common/common.document_link_sub_elements_category_hover_text",
+                "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
                 "help_text": "",
                 "attributes": {
                   "code": {
                     "name": "code",
-                    "label": "common/common.activity_status_attributes_activity_status_label",
+                    "label": "common/common.code",
                     "type": "select",
-                    "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+                    "placeholder": "common/common.select_code",
                     "choices": "Activity/DocumentCategory.json",
                     "required": true,
                     "criteria": "",
-                    "hover_text": "common/common.document_link_sub_elements_category_attributes_code_hover_text",
+                    "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
                     "help_text": ""
                   }
                 },
@@ -4609,26 +4609,26 @@
               },
               "description": {
                 "name": "description",
-                "label": "common/common.description_label",
+                "label": "common/common.description",
                 "attributes": {},
                 "form_has_borders": true,
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "optional_text",
-                "hover_text": "common/common.document_link_sub_elements_description_hover_text",
+                "hover_text": "common/common.a_description_of_the_document_contents_or_guidance_on_where_to_access_relevant_information",
                 "sub_elements": {
                   "narrative": {
                     "name": "narrative",
-                    "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+                    "label": "elements/element_json_schema.narrative",
                     "type": "textarea",
-                    "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+                    "placeholder": "common/common.type_narrative",
                     "required": true,
                     "criteria": "",
                     "add_more": true,
                     "attr": {
                       "row": 4
                     },
-                    "hover_text": "common/common.document_link_sub_elements_description_sub_elements_narrative_hover_text",
+                    "hover_text": "common/common.provide_a_short_description_of_the_document_or_webpage_including_any_instructions",
                     "help_text": "",
                     "attributes": {
                       "language": {
@@ -4640,7 +4640,7 @@
                         "required": true,
                         "criteria": "",
                         "hover_text": "",
-                        "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                        "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                       }
                     },
                     "sub_elements": {}
@@ -4656,13 +4656,13 @@
                 "is_collapsable": true,
                 "label_indicator": "optional_text",
                 "wrapper_collection": false,
-                "hover_text": "common/common.document_link_sub_elements_language_attributes_code_hover_text",
+                "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
                 "attributes": {
                   "language": {
                     "name": "language",
-                    "label": "common/common.activity_status_attributes_activity_status_label",
+                    "label": "common/common.code",
                     "type": "select",
-                    "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+                    "placeholder": "common/common.select_code",
                     "choices": "Activity/Language.json",
                     "required": false,
                     "criteria": "",
@@ -4674,22 +4674,22 @@
               },
               "document_date": {
                 "name": "document_date",
-                "label": "common/common.result_sub_elements_document_link_sub_elements_document_date_label",
+                "label": "common/common.document_date",
                 "add_more": false,
                 "form_has_borders": true,
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "optional_text",
-                "hover_text": "common/common.document_link_sub_elements_document_date_hover_text",
+                "hover_text": "common/common.the_publication_date_of_the_document_or_webpage",
                 "attributes": {
                   "date": {
                     "name": "date",
-                    "label": "common/common.document_link_sub_elements_document_date_attributes_date_label",
+                    "label": "common/common.date",
                     "type": "date",
-                    "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+                    "placeholder": "common/common.yyyy_mm_dd",
                     "required": true,
                     "criteria": "",
-                    "hover_text": "common/common.document_link_sub_elements_document_date_attributes_date_hover_text",
+                    "hover_text": "common/common.provide_the_date_of_publication_for_the_document_or_the_date_that_it was_last_updated",
                     "help_text": ""
                   }
                 },
@@ -4710,9 +4710,9 @@
             "attributes": {
               "reference": {
                 "name": "reference",
-                "label": "common/common.reporting_org_attributes_ref_label",
+                "label": "common/common.reference",
                 "type": "text",
-                "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+                "placeholder": "common/common.type_reference",
                 "required": false,
                 "criteria": "",
                 "hover_text": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_location_attributes_reference_hover_text",
@@ -4739,9 +4739,9 @@
     "attributes": {
       "reference": {
         "name": "reference",
-        "label": "common/common.reporting_org_attributes_ref_label",
+        "label": "common/common.reference",
         "type": "text",
-        "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+        "placeholder": "common/common.type_reference",
         "required": false,
         "criteria": "",
         "hover_text": "elements/element_json_schema.transactions_attributes_reference_hover_text",
@@ -4749,7 +4749,7 @@
       },
       "humanitarian": {
         "name": "humanitarian",
-        "label": "common/common.transactions_attributes_humanitarian_label",
+        "label": "common/common.humanitarian",
         "type": "select",
         "placeholder": "elements/element_json_schema.transactions_attributes_humanitarian_placeholder",
         "choices": {
@@ -4800,9 +4800,9 @@
         "attributes": {
           "transaction_type_code": {
             "name": "transaction_type_code",
-            "label": "common/common.activity_status_attributes_activity_status_label",
+            "label": "common/common.code",
             "type": "select",
-            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+            "placeholder": "common/common.select_code",
             "choices": "Activity/TransactionType.json",
             "required": true,
             "criteria": "mandatory",
@@ -4825,9 +4825,9 @@
         "attributes": {
           "date": {
             "name": "date",
-            "label": "common/common.document_link_sub_elements_document_date_attributes_date_label",
+            "label": "common/common.date",
             "type": "date",
-            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -4838,7 +4838,7 @@
       },
       "value": {
         "name": "value",
-        "label": "common/common.legacy_data_attributes_value_label",
+        "label": "common/common.value",
         "element_criteria": "mandatory",
         "add_more": false,
         "form_has_borders": true,
@@ -4849,7 +4849,7 @@
         "attributes": {
           "amount": {
             "name": "amount",
-            "label": "common/common.legacy_data_attributes_value_label",
+            "label": "common/common.value",
             "type": "text",
             "placeholder": "common/common.type_value_here",
             "required": true,
@@ -4861,29 +4861,29 @@
             "name": "date",
             "label": "elements/element_json_schema.planned_disbursement_sub_elements_value_attributes_value_date_label",
             "type": "date",
-            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
+            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
             "help_text": ""
           },
           "currency": {
             "name": "currency",
-            "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",
+            "label": "common/common.currency",
             "type": "select",
             "placeholder": "elements/element_json_schema.transactions_sub_elements_value_attributes_currency_placeholder",
             "choices": "Activity/Currency.json",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+            "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"
           }
         },
         "sub_elements": {}
       },
       "description": {
         "name": "description",
-        "label": "common/common.description_label",
+        "label": "common/common.description",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -4894,9 +4894,9 @@
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+            "label": "elements/element_json_schema.narrative",
             "type": "textarea",
-            "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+            "placeholder": "common/common.type_narrative",
             "required": false,
             "add_more": true,
             "criteria": "",
@@ -4915,7 +4915,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -4936,9 +4936,9 @@
         "attributes": {
           "organization_identifer_code": {
             "name": "organization_identifier_code",
-            "label": "common/common.reporting_org_attributes_ref_label",
+            "label": "common/common.reference",
             "type": "text",
-            "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+            "placeholder": "common/common.type_reference",
             "required": false,
             "criteria": "recommended",
             "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_attributes_ref_hover_text",
@@ -4957,9 +4957,9 @@
           "type": {
             "type": {
               "name": "type",
-              "label": "common/common.reporting_org_attributes_type_label",
+              "label": "common/common.type",
               "type": "select",
-              "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+              "placeholder": "common/common.select_type",
               "choices": "Organization/OrganizationType.json",
               "required": false,
               "criteria": "recommended",
@@ -4970,16 +4970,16 @@
           "sub_elements": {
             "narrative": {
               "name": "narrative",
-              "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+              "label": "elements/element_json_schema.narrative",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": false,
               "criteria": "recommended",
               "add_more": true,
               "attr": {
                 "row": 4
               },
-              "hover_text": "common/common.planned_disbursement_sub_elements_provider_org_sub_elements_narrative_hover_text",
+              "hover_text": "common/common.enter_the_name_of_the_organisation_this_can_be_repeated_in_multiple_languages",
               "help_text": "",
               "attributes": {
                 "language": {
@@ -4991,7 +4991,7 @@
                   "required": false,
                   "criteria": "recommended",
                   "hover_text": "",
-                  "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                  "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                 }
               },
               "sub_elements": {}
@@ -5012,12 +5012,12 @@
           "attributes": {
             "organization_identifier_code": {
               "name": "organization_identifier_code",
-              "label": "common/common.reporting_org_attributes_ref_label",
+              "label": "common/common.reference",
               "type": "text",
               "placeholder": "elements/element_json_schema.transactions_sub_elements_receiver_organization_attributes_organization_identifier_code_placeholder",
               "required": false,
               "criteria": "recommended",
-              "hover_text": "common/common.other_identifier_sub_elements_owner_org_attributes_ref_hover_text",
+              "hover_text": "common/common.enter_the_organisations_iati_organisation_identifier",
               "help_text": ""
             },
             "receiver_activity_id": {
@@ -5032,9 +5032,9 @@
             },
             "type": {
               "name": "type",
-              "label": "common/common.reporting_org_attributes_type_label",
+              "label": "common/common.type",
               "type": "select",
-              "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+              "placeholder": "common/common.select_type",
               "choices": "Organization/OrganizationType.json",
               "required": false,
               "criteria": "recommended",
@@ -5046,15 +5046,15 @@
             "narrative": {
               "name": "narrative",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": false,
               "add_more": true,
               "criteria": "recommended",
-              "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+              "label": "elements/element_json_schema.narrative",
               "attr": {
                 "row": 4
               },
-              "hover_text": "common/common.planned_disbursement_sub_elements_provider_org_sub_elements_narrative_hover_text",
+              "hover_text": "common/common.enter_the_name_of_the_organisation_this_can_be_repeated_in_multiple_languages",
               "help_text": "",
               "attributes": {
                 "language": {
@@ -5066,7 +5066,7 @@
                   "required": false,
                   "criteria": "recommended",
                   "hover_text": "",
-                  "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                  "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                 }
               },
               "sub_elements": {}
@@ -5086,9 +5086,9 @@
           "attributes": {
             "disbursement_channel_code": {
               "name": "disbursement_channel_code",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "select",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "choices": "Activity/DisbursementChannel.json",
               "required": false,
               "criteria": "",
@@ -5119,9 +5119,9 @@
           "attributes": {
             "sector_vocabulary": {
               "name": "sector_vocabulary",
-              "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+              "label": "common/common.vocabulary",
               "type": "select",
-              "placeholder": "common/common.sector_attributes_sector_vocabulary_placeholder",
+              "placeholder": "common/common.select_vocabulary",
               "choices": "Activity/SectorVocabulary.json",
               "required": false,
               "criteria": "",
@@ -5132,7 +5132,7 @@
               "name": "vocabulary_uri",
               "label": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_label",
               "type": "text",
-              "placeholder": "common/common.sector_attributes_vocabulary_uri_placeholder",
+              "placeholder": "common/common.type_vocabulary_uri",
               "required": false,
               "criteria": "",
               "hover_text": "elements/element_json_schema.sector_attributes_vocabulary_uri_hover_text",
@@ -5147,9 +5147,9 @@
             },
             "code": {
               "name": "code",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "select",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "required": false,
               "criteria": "",
               "choices": "Activity/SectorCode.json",
@@ -5164,7 +5164,7 @@
             },
             "text": {
               "name": "text",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "text",
               "placeholder": "elements/element_json_schema.recipient_region_attributes_custom_code_placeholder",
               "required": false,
@@ -5187,9 +5187,9 @@
             },
             "category_code": {
               "name": "category_code",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "select",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "choices": "Activity/SectorCategory.json",
               "required": false,
               "criteria": "",
@@ -5204,9 +5204,9 @@
             },
             "sdg_goal": {
               "name": "sdg_goal",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "select",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "choices": "Activity/UNSDG-Goals.json",
               "required": false,
               "criteria": "",
@@ -5221,9 +5221,9 @@
             },
             "sdg_target": {
               "name": "sdg_target",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "select",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "required": false,
               "criteria": "",
               "choices": "Activity/UNSDG-Targets.json",
@@ -5240,9 +5240,9 @@
           "sub_elements": {
             "narrative": {
               "name": "narrative",
-              "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+              "label": "elements/element_json_schema.narrative",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": false,
               "criteria": "",
               "element_criteria": "recommended",
@@ -5262,7 +5262,7 @@
                   "required": false,
                   "criteria": "recommended",
                   "hover_text": "",
-                  "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                  "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                 }
               },
               "sub_elements": {}
@@ -5271,7 +5271,7 @@
         },
         "recipient_country": {
           "name": "recipient_country",
-          "label": "elements/element_json_schema.transactions_sub_elements_recipient_country_label",
+          "label": "elements/element_json_schema.transactions_sub_elements_recipient_country",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -5282,9 +5282,9 @@
           "attributes": {
             "country_code": {
               "name": "country_code",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "select",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "choices": "Activity/Country.json",
               "required": false,
               "criteria": "",
@@ -5295,16 +5295,16 @@
           "sub_elements": {
             "narrative": {
               "name": "narrative",
-              "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+              "label": "elements/element_json_schema.narrative",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": false,
               "criteria": "",
               "add_more": true,
               "attr": {
                 "row": 4
               },
-              "hover_text": "common/common.recipient_country_sub_elements_narrative_hover_text",
+              "hover_text": "common/common.add_an_optional_name_or_description_of_the_country_benefitting_from_the_activity",
               "help_text": "",
               "attributes": {
                 "language": {
@@ -5316,7 +5316,7 @@
                   "required": false,
                   "criteria": "recommended",
                   "hover_text": "",
-                  "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                  "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                 }
               },
               "sub_elements": {}
@@ -5325,7 +5325,7 @@
         },
         "recipient_region": {
           "name": "recipient_region",
-          "label": "common/common.recipient_region_label",
+          "label": "common/common.recipient_region",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -5336,20 +5336,20 @@
           "attributes": {
             "region_vocabulary": {
               "name": "region_vocabulary",
-              "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+              "label": "common/common.vocabulary",
               "type": "select",
               "placeholder": "elements/element_json_schema.transactions_sub_elements_recipient_region_attributes_region_vocabulary_placeholder",
               "choices": "Activity/RegionVocabulary.json",
               "required": false,
               "criteria": "",
-              "hover_text": "common/common.recipient_region_attributes_region_vocabulary_hover_text",
+              "hover_text": "common/common.you_can_select_regions_from_the _oecd_dac_un_or_your_own_internal_codelist",
               "help_text": ""
             },
             "region_code": {
               "name": "region_code",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "select",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "choices": "Activity/Region.json",
               "required": false,
               "criteria": "",
@@ -5364,9 +5364,9 @@
             },
             "custom_code": {
               "name": "custom_code",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "text",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "required": false,
               "criteria": "",
               "hover_text": "elements/element_json_schema.recipient_region_attributes_region_code_hover_text",
@@ -5382,9 +5382,9 @@
             },
             "vocabulary_uri": {
               "name": "vocabulary_uri",
-              "label": "common/common.sector_attributes_vocabulary_uri_label",
+              "label": "common/common.vocabulary_uri",
               "type": "text",
-              "placeholder": "common/common.sector_attributes_vocabulary_uri_placeholder",
+              "placeholder": "common/common.type_vocabulary_uri",
               "required": false,
               "criteria": "",
               "hover_text": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_hover_text",
@@ -5400,16 +5400,16 @@
           "sub_elements": {
             "narrative": {
               "name": "narrative",
-              "label": "elements/element_json_schema.title_sub_elements_narrative_label",
+              "label": "elements/element_json_schema.narrative",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": false,
               "criteria": "",
               "add_more": true,
               "attr": {
                 "row": 4
               },
-              "hover_text": "common/common.recipient_region_budget_sub_elements_recipient_region_sub_elements_narrative_hover_text",
+              "hover_text": "common/common.add_an_optional_name_or_description_of_the_region_benefitting_from_the_activity",
               "help_text": "",
               "attributes": {
                 "language": {
@@ -5421,7 +5421,7 @@
                   "required": false,
                   "criteria": "recommended",
                   "hover_text": "",
-                  "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                  "help_text": "elements/element_json_schema.if_no_language_is_selected_your_default_language_is_assumed"
                 }
               },
               "sub_elements": {}
@@ -5441,9 +5441,9 @@
           "attributes": {
             "flow_type": {
               "name": "flow_type",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "select",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "choices": "Activity/FlowType.json",
               "required": false,
               "criteria": "",
@@ -5466,9 +5466,9 @@
           "attributes": {
             "finance_type": {
               "name": "finance_type",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "select",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "choices": "Activity/FinanceType.json",
               "required": false,
               "criteria": "",
@@ -5493,9 +5493,9 @@
           "attributes": {
             "aid_type_vocabulary": {
               "name": "aid_type_vocabulary",
-              "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+              "label": "common/common.vocabulary",
               "type": "select",
-              "placeholder": "common/common.sector_attributes_sector_vocabulary_placeholder",
+              "placeholder": "common/common.select_vocabulary",
               "choices": "Activity/AidTypeVocabulary.json",
               "required": false,
               "criteria": "",
@@ -5504,9 +5504,9 @@
             },
             "aid_type_code": {
               "name": "aid_type_code",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "select",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "choices": "Activity/AidType.json",
               "required": false,
               "criteria": "",
@@ -5521,9 +5521,9 @@
             },
             "earmarking_category": {
               "name": "earmarking_category",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "select",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "choices": "Activity/EarmarkingCategory.json",
               "required": false,
               "criteria": "",
@@ -5539,9 +5539,9 @@
             },
             "earmarking_modality": {
               "name": "earmarking_modality",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "select",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "choices": "Activity/EarmarkingModality.json",
               "required": false,
               "criteria": "",
@@ -5556,10 +5556,10 @@
               }
             },
             "cash_and_voucher_modalities": {
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "name": "cash_and_voucher_modalities",
               "type": "select",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "choices": "Activity/CashandVoucherModalities.json",
               "required": false,
               "criteria": "",
@@ -5589,9 +5589,9 @@
           "attributes": {
             "tied_status_code": {
               "name": "tied_status_code",
-              "label": "common/common.activity_status_attributes_activity_status_label",
+              "label": "common/common.code",
               "type": "select",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "choices": "Activity/TiedStatus.json",
               "required": false,
               "criteria": "",

@@ -161,20 +161,12 @@
         <div>
           <div class="flex justify-between">
             <label for="humanitarian">
-              {{
-                translatedData[
-                  'common.common.transactions_attributes_humanitarian_label'
-                ]
-              }}</label
+              {{ translatedData['common.common.humanitarian'] }}</label
             >
             <button>
               <HoverText
                 width="w-72"
-                :name="
-                  translatedData[
-                    'common.common.transactions_attributes_humanitarian_label'
-                  ]
-                "
+                :name="translatedData['common.common.humanitarian']"
                 :hover-text="
                   translatedData[
                     'settings.setting_default_form.add_a_humanitarian_flag_to_every_activity_that_your_organisation'
@@ -207,7 +199,7 @@
         <div>
           <div class="flex justify-between">
             <label for="default-collaboration-type">{{
-              translatedData['"common.common.default_flow_type_label"']
+              translatedData['"common.common.default_flow_type"']
             }}</label>
             <button>
               <HoverText
@@ -256,7 +248,7 @@
         <div>
           <div class="flex justify-between">
             <label for="default-collaboration-type">{{
-              translatedData['common.common.default_finance_type_label']
+              translatedData['common.common.default_finance_type']
             }}</label>
             <button>
               <HoverText
@@ -305,7 +297,7 @@
         <div>
           <div class="flex justify-between">
             <label for="default-collaboration-type">{{
-              translatedData['common.common.default_aid_type_label']
+              translatedData['common.common.default_aid_type']
             }}</label>
             <button>
               <HoverText
@@ -350,7 +342,7 @@
         <div>
           <div class="flex justify-between">
             <label for="default-tied-status">{{
-              translatedData['common.common.default_tied_status_label']
+              translatedData['common.common.default_tied_status']
             }}</label>
             <button>
               <HoverText

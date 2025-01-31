@@ -480,21 +480,15 @@ export default defineComponent({
             'common.common.select_an_organisation_registration_agency'
           ];
         registerForm[1].fields.registration_agency.hover_text =
-          translatedData.value[
-            'common/common.organisation_identifier_attributes_registration_number_label'
-          ];
+          translatedData.value['common/common.registration_number'];
         registerForm[1].fields.registration_number.label =
-          translatedData.value[
-            'common/common.organisation_identifier_attributes_registration_number_label'
-          ];
+          translatedData.value['common/common.registration_number'];
         registerForm[1].fields.registration_number.placeholder =
           translatedData.value[
             'common.common.type_your_registration_number_here'
           ];
         registerForm[1].fields.registration_number.hover_text =
-          translatedData.value[
-            'common.common.organisation_identifier_attributes_registration_number_label'
-          ];
+          translatedData.value['common.common.registration_number'];
         registerForm[1].fields.registration_number.help_text =
           translatedData.value['common.common.for_example_123456'];
         registerForm[1].fields.identifier.label =
@@ -576,9 +570,7 @@ export default defineComponent({
           ];
 
         registerForm[2].fields.website.label =
-          translatedData.value[
-            'common.common.contact_info_sub_elements_website_label'
-          ];
+          translatedData.value['common.common.website'];
 
         registerForm[2].fields.website.hover_text =
           translatedData.value[

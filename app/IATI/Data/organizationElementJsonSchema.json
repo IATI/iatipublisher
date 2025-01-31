@@ -1,7 +1,7 @@
 {
   "organisation_identifier": {
     "name": "organisation_identifier",
-    "label": "common/common.organisation_identifier_label",
+    "label": "common/common.organisation_identifier",
     "criteria": "mandatory",
     "hover_text": "elements/org_json_schema.organisation_identifier_hover_text",
     "help_text": "",
@@ -29,7 +29,7 @@
         },
         "registration_number": {
           "name": "registration_number",
-          "label": "common/common.organisation_identifier_attributes_registration_number_label",
+          "label": "common/common.registration_number",
           "type": "text",
           "required": true,
           "placeholder": "elements/org_json_schema.organisation_identifier_attributes_registration_number_placeholder",
@@ -39,7 +39,7 @@
         },
         "iati-activity-identifier": {
           "name": "organisation_identifier",
-          "label": "common/common.organisation_identifier_label",
+          "label": "common/common.organisation_identifier",
           "type": "text",
           "required": true,
           "criteria": "mandatory",
@@ -59,7 +59,7 @@
       "sub_elements": {
         "narrative": {
           "name": "narrative",
-          "label": "common/common.title_sub_elements_narrative_label",
+          "label": "common/common.narrative",
           "type": "text",
           "required": true,
           "criteria": "mandatory",
@@ -100,35 +100,35 @@
       "attributes": {
         "ref": {
           "name": "ref",
-          "label": "common/common.reporting_org_attributes_ref_label",
+          "label": "common/common.reference",
           "type": "text",
-          "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+          "placeholder": "common/common.type_reference",
           "required": true,
           "criteria": "mandatory",
-          "hover_text": "common/common.reporting_org_attributes_ref_hover_text",
+          "hover_text": "common/common.provide_your_organisations_iati_identifier_this_was_entered_when_you_registered_with_iati",
           "help_text": ""
         },
         "type": {
           "name": "type",
-          "label": "common/common.reporting_org_attributes_type_label",
+          "label": "common/common.type",
           "type": "select",
           "multiSelect": false,
           "choices": "Organization/OrganizationType.json",
-          "placeholder": "common/common.other_identifier_attributes_reference_type_placeholder",
+          "placeholder": "common/common.select_type",
           "required": true,
           "criteria": "mandatory",
-          "hover_text": "common/common.reporting_org_attributes_type_hover_text",
+          "hover_text": "common/common.select_the_type_that_best_describes_your_organisation",
           "help_text": ""
         },
         "secondary_reporter": {
           "name": "secondary_reporter",
-          "label": "common/common.reporting_org_attributes_secondary_reporter_label",
+          "label": "common/common.secondary_reporter",
           "type": "select",
           "choices": {
             "1": "True",
             "0": "False"
           },
-          "placeholder": "common/common.reporting_org_attributes_secondary_reporter_placeholder",
+          "placeholder": "common/common.select_secondary_reporter",
           "required": false,
           "criteria": "",
           "hover_text": "elements/org_json_schema.common/common.reporting_org_attributes_secondary_reporter_hover_ftext",
@@ -140,7 +140,7 @@
           "name": "narrative",
           "label": "common/common.name",
           "type": "textarea",
-          "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
+          "placeholder": "common/common.type_name",
           "required": true,
           "criteria": "mandatory",
           "element_criteria": "mandatory",
@@ -148,7 +148,7 @@
           "attr": {
             "row": 4
           },
-          "hover_text": "common/common.reporting_org_sub_elements_narrative_hover_text",
+          "hover_text": "common/common.enter_your_organisations_name_this_can_be_repeated_in_multiple_language",
           "help_text": "",
           "attributes": {
             "lang": {
@@ -187,14 +187,14 @@
           "choices": "Activity/BudgetStatus.json",
           "required": false,
           "criteria": "",
-          "hover_text": "common/common.budget_attributes_budget_status_hover_text",
+          "hover_text": "common/common.select_a_status_that_best_describes_this_budget",
           "help_text": ""
         }
       },
       "sub_elements": {
         "period_start": {
           "name": "period_start",
-          "label": "common/common.budget_sub_elements_period_start_label",
+          "label": "common/common.period_start",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -207,7 +207,7 @@
               "name": "date",
               "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -218,7 +218,7 @@
         },
         "period_end": {
           "name": "period_end",
-          "label": "common/common.budget_sub_elements_period_end_label",
+          "label": "common/common.period-end",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -231,7 +231,7 @@
               "name": "date",
               "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -242,7 +242,7 @@
         },
         "value": {
           "name": "value",
-          "label": "common/common.legacy_data_attributes_value_label",
+          "label": "common/common.value",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -254,7 +254,7 @@
           "attributes": {
             "amount": {
               "name": "amount",
-              "label": "common/common.legacy_data_attributes_value_label",
+              "label": "common/common.value",
               "type": "text",
               "placeholder": "common/common.type_value_here",
               "required": true,
@@ -264,24 +264,24 @@
             },
             "currency": {
               "name": "currency",
-              "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",
+              "label": "common/common.currency",
               "type": "select",
               "multiselect": false,
               "choices": "Activity/Currency.json",
-              "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
+              "placeholder": "common/common.select_currency",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
-              "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+              "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"
             },
             "value_date": {
               "name": "value_date",
-              "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",
+              "label": "common/common.value_date",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
-              "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
+              "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
               "help_text": ""
             }
           },
@@ -301,9 +301,9 @@
           "attributes": {
             "ref": {
               "name": "ref",
-              "label": "common/common.reporting_org_attributes_ref_label",
+              "label": "common/common.reference",
               "type": "text",
-              "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+              "placeholder": "common/common.type_reference",
               "required": false,
               "criteria": "",
               "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_budget_line_attributes_ref_hover_text",
@@ -313,7 +313,7 @@
           "sub_elements": {
             "value": {
               "name": "value",
-              "label": "common/common.legacy_data_attributes_value_label",
+              "label": "common/common.value",
               "add_more": false,
               "form_has_borders": true,
               "label_has_borders": true,
@@ -322,7 +322,7 @@
               "attributes": {
                 "amount": {
                   "name": "amount",
-                  "label": "common/common.legacy_data_attributes_value_label",
+                  "label": "common/common.value",
                   "type": "text",
                   "placeholder": "common/common.type_value_here",
                   "required": true,
@@ -332,24 +332,24 @@
                 },
                 "currency": {
                   "name": "currency",
-                  "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",
+                  "label": "common/common.currency",
                   "type": "select",
                   "multiselect": false,
                   "choices": "Activity/Currency.json",
                   "required": true,
                   "criteria": "mandatory",
-                  "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
+                  "placeholder": "common/common.select_currency",
                   "hover_text": "",
-                  "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+                  "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"
                 },
                 "value_date": {
                   "name": "value_date",
-                  "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",
+                  "label": "common/common.value_date",
                   "type": "date",
-                  "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+                  "placeholder": "common/common.yyyy_mm_dd",
                   "required": true,
                   "criteria": "mandatory",
-                  "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
+                  "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                   "help_text": ""
                 }
               },
@@ -359,7 +359,7 @@
               "name": "narrative",
               "label": "elements/org_json_schema.name_sub_elements_narrative_label",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": true,
               "criteria": "mandatory",
               "add_more": true,
@@ -410,7 +410,7 @@
           "placeholder": "common/common.select_status",
           "required": false,
           "criteria": "",
-          "hover_text": "common/common.budget_attributes_budget_status_hover_text",
+          "hover_text": "common/common.select_a_status_that_best_describes_this_budget",
           "help_text": ""
         }
       },
@@ -429,12 +429,12 @@
           "attributes": {
             "ref": {
               "name": "ref",
-              "label": "common/common.reporting_org_attributes_ref_label",
+              "label": "common/common.reference",
               "type": "text",
-              "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+              "placeholder": "common/common.type_reference",
               "required": false,
               "criteria": "",
-              "hover_text": "common/common.other_identifier_sub_elements_owner_org_attributes_ref_hover_text",
+              "hover_text": "common/common.enter_the_organisations_iati_organisation_identifier",
               "help_text": ""
             }
           },
@@ -443,11 +443,11 @@
               "name": "narrative",
               "label": "elements/org_json_schema.name_sub_elements_narrative_label",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": true,
               "criteria": "mandatory",
               "add_more": true,
-              "hover_text": "common/common.planned_disbursement_sub_elements_provider_org_sub_elements_narrative_hover_text",
+              "hover_text": "common/common.enter_the_name_of_the_organisation_this_can_be_repeated_in_multiple_languages",
               "help_text": "",
               "attr": {
                 "row": 4
@@ -472,7 +472,7 @@
         },
         "period_start": {
           "name": "period_start",
-          "label": "common/common.budget_sub_elements_period_start_label",
+          "label": "common/common.period_start",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -485,7 +485,7 @@
               "name": "date",
               "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -496,7 +496,7 @@
         },
         "period_end": {
           "name": "period_end",
-          "label": "common/common.budget_sub_elements_period_end_label",
+          "label": "common/common.period-end",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -509,7 +509,7 @@
               "name": "date",
               "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -520,7 +520,7 @@
         },
         "value": {
           "name": "value",
-          "label": "common/common.legacy_data_attributes_value_label",
+          "label": "common/common.value",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -531,7 +531,7 @@
           "attributes": {
             "amount": {
               "name": "amount",
-              "label": "common/common.legacy_data_attributes_value_label",
+              "label": "common/common.value",
               "type": "text",
               "placeholder": "common/common.type_value_here",
               "required": true,
@@ -541,24 +541,24 @@
             },
             "currency": {
               "name": "currency",
-              "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",
+              "label": "common/common.currency",
               "type": "select",
               "multiselect": false,
               "choices": "Activity/Currency.json",
-              "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
+              "placeholder": "common/common.select_currency",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
-              "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+              "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"
             },
             "value_date": {
               "name": "value_date",
-              "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",
+              "label": "common/common.value_date",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
-              "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
+              "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
               "help_text": ""
             }
           },
@@ -578,9 +578,9 @@
           "attributes": {
             "ref": {
               "name": "ref",
-              "label": "common/common.reporting_org_attributes_ref_label",
+              "label": "common/common.reference",
               "type": "text",
-              "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+              "placeholder": "common/common.type_reference",
               "required": false,
               "criteria": "",
               "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_budget_line_attributes_ref_hover_text",
@@ -590,7 +590,7 @@
           "sub_elements": {
             "value": {
               "name": "value",
-              "label": "common/common.legacy_data_attributes_value_label",
+              "label": "common/common.value",
               "add_more": false,
               "form_has_borders": true,
               "label_has_borders": true,
@@ -598,7 +598,7 @@
               "attributes": {
                 "amount": {
                   "name": "amount",
-                  "label": "common/common.legacy_data_attributes_value_label",
+                  "label": "common/common.value",
                   "type": "text",
                   "placeholder": "common/common.type_value_here",
                   "required": true,
@@ -608,24 +608,24 @@
                 },
                 "currency": {
                   "name": "currency",
-                  "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",
+                  "label": "common/common.currency",
                   "type": "select",
                   "multiselect": false,
                   "choices": "Activity/Currency.json",
-                  "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
+                  "placeholder": "common/common.select_currency",
                   "required": true,
                   "criteria": "mandatory",
                   "hover_text": "",
-                  "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+                  "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"
                 },
                 "value_date": {
                   "name": "value_date",
-                  "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",
+                  "label": "common/common.value_date",
                   "type": "date",
-                  "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+                  "placeholder": "common/common.yyyy_mm_dd",
                   "required": true,
                   "criteria": "mandatory",
-                  "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
+                  "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                   "help_text": ""
                 }
               },
@@ -635,7 +635,7 @@
               "name": "narrative",
               "label": "elements/org_json_schema.name_sub_elements_narrative_label",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": true,
               "criteria": "mandatory",
               "add_more": true,
@@ -686,14 +686,14 @@
           "placeholder": "common/common.select_status",
           "required": true,
           "criteria": "mandatory",
-          "hover_text": "common/common.budget_attributes_budget_status_hover_text",
+          "hover_text": "common/common.select_a_status_that_best_describes_this_budget",
           "help_text": ""
         }
       },
       "sub_elements": {
         "recipient_region": {
           "name": "recipient_region",
-          "label": "common/common.recipient_region_label",
+          "label": "common/common.recipient_region",
           "criteria": "mandatory",
           "add_more": false,
           "form_has_borders": true,
@@ -705,23 +705,23 @@
           "attributes": {
             "vocabulary": {
               "name": "region_vocabulary",
-              "label": "common/common.recipient_region_attributes_region_vocabulary_label",
+              "label": "common/common.vocabulary",
               "type": "select",
               "multiselect": false,
               "choices": "Activity/RegionVocabulary.json",
-              "placeholder": "common/common.sector_attributes_sector_vocabulary_placeholder",
+              "placeholder": "common/common.select_vocabulary",
               "required": false,
               "criteria": "",
-              "hover_text": "common/common.recipient_region_attributes_region_vocabulary_hover_text",
+              "hover_text": "common/common.you_can_select_regions_from_the _oecd_dac_un_or_your_own_internal_codelist",
               "help_text": ""
             },
             "oecd_region_code": {
               "name": "region_code",
-              "label": "elements/org_json_schema.common/common.activity_status_attributes_activity_status_label",
+              "label": "elements/org_json_schema.common/common.code",
               "type": "select",
               "multiselect": false,
               "choices": "Activity/Region.json",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "required": false,
               "criteria": "",
               "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_recipient_region_attributes_oecd_region_code_hover_text",
@@ -729,9 +729,9 @@
             },
             "region_code": {
               "name": "code",
-              "label": "elements/org_json_schema.common/common.activity_status_attributes_activity_status_label",
+              "label": "elements/org_json_schema.common/common.code",
               "type": "text",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "required": false,
               "criteria": "",
               "hidden": true,
@@ -740,9 +740,9 @@
             },
             "vocabulary-uri": {
               "name": "vocabulary_uri",
-              "label": "common/common.sector_attributes_vocabulary_uri_label",
+              "label": "common/common.vocabulary_uri",
               "type": "text",
-              "placeholder": "common/common.sector_attributes_vocabulary_uri_placeholder",
+              "placeholder": "common/common.type_vocabulary_uri",
               "required": false,
               "criteria": "",
               "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_recipient_region_attributes_vocabulary-uri_hover_text",
@@ -754,14 +754,14 @@
               "name": "narrative",
               "label": "elements/org_json_schema.name_sub_elements_narrative_label",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": false,
               "criteria": "",
               "add_more": true,
               "attr": {
                 "row": 4
               },
-              "hover_text": "common/common.recipient_region_budget_sub_elements_recipient_region_sub_elements_narrative_hover_text",
+              "hover_text": "common/common.add_an_optional_name_or_description_of_the_region_benefitting_from_the_activity",
               "help_text": "",
               "attributes": {
                 "lang": {
@@ -783,7 +783,7 @@
         },
         "period_start": {
           "name": "period_start",
-          "label": "common/common.budget_sub_elements_period_start_label",
+          "label": "common/common.period_start",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -796,7 +796,7 @@
               "name": "date",
               "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -807,7 +807,7 @@
         },
         "period_end": {
           "name": "period_end",
-          "label": "common/common.budget_sub_elements_period_end_label",
+          "label": "common/common.period-end",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -820,7 +820,7 @@
               "name": "date",
               "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -831,7 +831,7 @@
         },
         "value": {
           "name": "value",
-          "label": "common/common.legacy_data_attributes_value_label",
+          "label": "common/common.value",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -843,7 +843,7 @@
           "attributes": {
             "amount": {
               "name": "amount",
-              "label": "common/common.legacy_data_attributes_value_label",
+              "label": "common/common.value",
               "type": "text",
               "placeholder": "common/common.type_value_here",
               "required": true,
@@ -853,24 +853,24 @@
             },
             "currency": {
               "name": "currency",
-              "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",
+              "label": "common/common.currency",
               "type": "select",
               "multiselect": false,
               "choices": "Activity/Currency.json",
-              "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
+              "placeholder": "common/common.select_currency",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
-              "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+              "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"
             },
             "value_date": {
               "name": "value_date",
-              "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",
+              "label": "common/common.value_date",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
-              "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
+              "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
               "help_text": ""
             }
           },
@@ -890,9 +890,9 @@
           "attributes": {
             "ref": {
               "name": "ref",
-              "label": "common/common.reporting_org_attributes_ref_label",
+              "label": "common/common.reference",
               "type": "text",
-              "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+              "placeholder": "common/common.type_reference",
               "required": false,
               "criteria": "",
               "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_budget_line_attributes_ref_hover_text",
@@ -902,7 +902,7 @@
           "sub_elements": {
             "value": {
               "name": "value",
-              "label": "common/common.legacy_data_attributes_value_label",
+              "label": "common/common.value",
               "add_more": false,
               "form_has_borders": true,
               "label_has_borders": true,
@@ -911,7 +911,7 @@
               "attributes": {
                 "amount": {
                   "name": "amount",
-                  "label": "common/common.legacy_data_attributes_value_label",
+                  "label": "common/common.value",
                   "type": "text",
                   "placeholder": "common/common.type_value_here",
                   "required": true,
@@ -921,24 +921,24 @@
                 },
                 "currency": {
                   "name": "currency",
-                  "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",
+                  "label": "common/common.currency",
                   "type": "select",
                   "multiselect": false,
                   "choices": "Activity/Currency.json",
-                  "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
+                  "placeholder": "common/common.select_currency",
                   "required": true,
                   "criteria": "mandatory",
                   "hover_text": "",
-                  "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+                  "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"
                 },
                 "value_date": {
                   "name": "value_date",
-                  "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",
+                  "label": "common/common.value_date",
                   "type": "date",
-                  "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+                  "placeholder": "common/common.yyyy_mm_dd",
                   "required": true,
                   "criteria": "mandatory",
-                  "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
+                  "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                   "help_text": ""
                 }
               },
@@ -948,7 +948,7 @@
               "name": "narrative",
               "label": "elements/org_json_schema.name_sub_elements_narrative_label",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": true,
               "criteria": "mandatory",
               "add_more": true,
@@ -997,14 +997,14 @@
           "placeholder": "common/common.select_status",
           "required": false,
           "criteria": "",
-          "hover_text": "common/common.budget_attributes_budget_status_hover_text",
+          "hover_text": "common/common.select_a_status_that_best_describes_this_budget",
           "help_text": ""
         }
       },
       "sub_elements": {
         "recipient_country": {
           "name": "recipient_country",
-          "label": "common/common.recipient_country_label",
+          "label": "common/common.recipient_country",
           "add_more": true,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -1016,11 +1016,11 @@
           "attributes": {
             "code": {
               "name": "code",
-              "label": "elements/org_json_schema.common/common.activity_status_attributes_activity_status_label",
+              "label": "elements/org_json_schema.common/common.code",
               "type": "select",
               "multiselect": false,
               "choices": "Activity/Country.json",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "elements/org_json_schema.recipient_country_budget_sub_elements_recipient_country_attributes_code_hover_text",
@@ -1032,14 +1032,14 @@
               "name": "narrative",
               "label": "elements/org_json_schema.name_sub_elements_narrative_label",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": false,
               "criteria": "",
               "add_more": true,
               "attr": {
                 "row": 4
               },
-              "hover_text": "common/common.recipient_country_sub_elements_narrative_hover_text",
+              "hover_text": "common/common.add_an_optional_name_or_description_of_the_country_benefitting_from_the_activity",
               "help_text": "",
               "attributes": {
                 "lang": {
@@ -1061,7 +1061,7 @@
         },
         "period_start": {
           "name": "period_start",
-          "label": "common/common.budget_sub_elements_period_start_label",
+          "label": "common/common.period_start",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -1074,7 +1074,7 @@
               "name": "date",
               "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -1085,7 +1085,7 @@
         },
         "period_end": {
           "name": "period_end",
-          "label": "common/common.budget_sub_elements_period_end_label",
+          "label": "common/common.period-end",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -1098,7 +1098,7 @@
               "name": "date",
               "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -1109,7 +1109,7 @@
         },
         "value": {
           "name": "value",
-          "label": "common/common.legacy_data_attributes_value_label",
+          "label": "common/common.value",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -1121,7 +1121,7 @@
           "attributes": {
             "amount": {
               "name": "amount",
-              "label": "common/common.legacy_data_attributes_value_label",
+              "label": "common/common.value",
               "type": "text",
               "placeholder": "common/common.type_value_here",
               "required": true,
@@ -1131,24 +1131,24 @@
             },
             "currency": {
               "name": "currency",
-              "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",
+              "label": "common/common.currency",
               "type": "select",
               "multiselect": false,
               "choices": "Activity/Currency.json",
-              "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
+              "placeholder": "common/common.select_currency",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
-              "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+              "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"
             },
             "value_date": {
               "name": "value_date",
-              "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",
+              "label": "common/common.value_date",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
-              "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
+              "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
               "help_text": ""
             }
           },
@@ -1168,9 +1168,9 @@
           "attributes": {
             "ref": {
               "name": "ref",
-              "label": "common/common.reporting_org_attributes_ref_label",
+              "label": "common/common.reference",
               "type": "text",
-              "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+              "placeholder": "common/common.type_reference",
               "required": false,
               "criteria": "",
               "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_budget_line_attributes_ref_hover_text",
@@ -1180,7 +1180,7 @@
           "sub_elements": {
             "value": {
               "name": "value",
-              "label": "common/common.legacy_data_attributes_value_label",
+              "label": "common/common.value",
               "add_more": false,
               "form_has_borders": true,
               "label_has_borders": true,
@@ -1189,7 +1189,7 @@
               "attributes": {
                 "amount": {
                   "name": "amount",
-                  "label": "common/common.legacy_data_attributes_value_label",
+                  "label": "common/common.value",
                   "type": "text",
                   "placeholder": "common/common.type_value_here",
                   "required": true,
@@ -1199,24 +1199,24 @@
                 },
                 "currency": {
                   "name": "currency",
-                  "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",
+                  "label": "common/common.currency",
                   "type": "select",
                   "multiselect": false,
                   "choices": "Activity/Currency.json",
-                  "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
+                  "placeholder": "common/common.select_currency",
                   "required": true,
                   "criteria": "mandatory",
                   "hover_text": "",
-                  "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+                  "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"
                 },
                 "value_date": {
                   "name": "value_date",
-                  "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",
+                  "label": "common/common.value_date",
                   "type": "date",
-                  "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+                  "placeholder": "common/common.yyyy_mm_dd",
                   "required": true,
                   "criteria": "mandatory",
-                  "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
+                  "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                   "help_text": ""
                 }
               },
@@ -1268,7 +1268,7 @@
       "sub_elements": {
         "period_start": {
           "name": "period_start",
-          "label": "common/common.budget_sub_elements_period_start_label",
+          "label": "common/common.period_start",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -1281,7 +1281,7 @@
               "name": "date",
               "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -1292,7 +1292,7 @@
         },
         "period_end": {
           "name": "period_end",
-          "label": "common/common.budget_sub_elements_period_end_label",
+          "label": "common/common.period-end",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -1305,7 +1305,7 @@
               "name": "date",
               "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -1316,7 +1316,7 @@
         },
         "value": {
           "name": "value",
-          "label": "common/common.legacy_data_attributes_value_label",
+          "label": "common/common.value",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -1328,7 +1328,7 @@
           "attributes": {
             "amount": {
               "name": "amount",
-              "label": "common/common.legacy_data_attributes_value_label",
+              "label": "common/common.value",
               "type": "text",
               "placeholder": "common/common.type_value_here",
               "required": true,
@@ -1338,24 +1338,24 @@
             },
             "currency": {
               "name": "currency",
-              "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",
+              "label": "common/common.currency",
               "type": "select",
               "multiselect": false,
               "choices": "Activity/Currency.json",
-              "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
+              "placeholder": "common/common.select_currency",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
-              "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+              "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"
             },
             "value_date": {
               "name": "value_date",
-              "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",
+              "label": "common/common.value_date",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "mandatory",
-              "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
+              "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
               "help_text": ""
             }
           },
@@ -1375,9 +1375,9 @@
           "attributes": {
             "ref": {
               "name": "ref",
-              "label": "common/common.reporting_org_attributes_ref_label",
+              "label": "common/common.reference",
               "type": "text",
-              "placeholder": "common/common.other_identifier_attributes_reference_placeholder",
+              "placeholder": "common/common.type_reference",
               "required": false,
               "criteria": "",
               "hover_text": "elements/org_json_schema.total_expenditure_sub_elements_expense_line_attributes_ref_hover_text",
@@ -1387,7 +1387,7 @@
           "sub_elements": {
             "value": {
               "name": "value",
-              "label": "common/common.legacy_data_attributes_value_label",
+              "label": "common/common.value",
               "add_more": false,
               "form_has_borders": true,
               "label_has_borders": true,
@@ -1396,7 +1396,7 @@
               "attributes": {
                 "amount": {
                   "name": "amount",
-                  "label": "common/common.legacy_data_attributes_value_label",
+                  "label": "common/common.value",
                   "type": "text",
                   "placeholder": "common/common.type_value_here",
                   "required": true,
@@ -1406,24 +1406,24 @@
                 },
                 "currency": {
                   "name": "currency",
-                  "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",
+                  "label": "common/common.currency",
                   "type": "select",
                   "multiselect": false,
                   "choices": "Activity/Currency.json",
-                  "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",
+                  "placeholder": "common/common.select_currency",
                   "required": true,
                   "criteria": "mandatory",
                   "hover_text": "",
-                  "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+                  "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"
                 },
                 "value_date": {
                   "name": "value_date",
-                  "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",
+                  "label": "common/common.value_date",
                   "type": "date",
-                  "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+                  "placeholder": "common/common.yyyy_mm_dd",
                   "required": true,
                   "criteria": "mandatory",
-                  "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",
+                  "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                   "help_text": ""
                 }
               },
@@ -1433,7 +1433,7 @@
               "name": "narrative",
               "label": "elements/org_json_schema.name_sub_elements_narrative_label",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": true,
               "criteria": "mandatory",
               "add_more": true,
@@ -1464,7 +1464,7 @@
     },
     "document_link": {
       "name": "document_link",
-      "label": "common/common.document_link_label",
+      "label": "common/common.document_link",
       "add_more": true,
       "form_has_borders": true,
       "label_has_borders": true,
@@ -1475,52 +1475,52 @@
       "attributes": {
         "url": {
           "name": "url",
-          "label": "common/common.document_link_attributes_url_label",
+          "label": "common/common.url",
           "type": "text",
           "placeholder": "common/common.transactions_sub_elements_tied_status_attributes_tied_status_code_hover_text",
           "required": true,
           "criteria": "mandatory",
-          "hover_text": "common/common.document_link_attributes_url_hover_text",
+          "hover_text": "common/common.a_link_to_where_the_document_is_available_online",
           "help_text": ""
         },
         "format": {
           "name": "format",
-          "label": "common/common.document_link_attributes_format_label",
+          "label": "common/common.format",
           "type": "select",
-          "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+          "placeholder": "common/common.select_code",
           "multiselect": false,
           "choices": "Activity/FileFormat.json",
           "required": true,
           "criteria": "mandatory",
-          "hover_text": "common/common.document_link_attributes_format_hover_text",
+          "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
           "help_text": ""
         }
       },
       "sub_elements": {
         "title": {
           "name": "title",
-          "label": "common/common.document_link_sub_elements_title_label",
+          "label": "common/common.title",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
           "is_collapsable": true,
           "label_indicator": "required_icon",
           "element_criteria": "mandatory",
-          "hover_text": "common/common.document_link_sub_elements_title_hover_text",
+          "hover_text": "common/common.a_short_title_for_the_document",
           "attributes": {},
           "sub_elements": {
             "narrative": {
               "name": "narrative",
               "label": "elements/org_json_schema.name_sub_elements_narrative_label",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": true,
               "criteria": "mandatory",
               "add_more": true,
               "attr": {
                 "row": 4
               },
-              "hover_text": "common/common.document_link_sub_elements_title_sub_elements_narrative_hover_text",
+              "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
               "help_text": "",
               "attributes": {
                 "lang": {
@@ -1542,7 +1542,7 @@
         },
         "category": {
           "name": "category",
-          "label": "common/common.document_link_sub_elements_category_label",
+          "label": "common/common.category",
           "add_more": true,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -1550,19 +1550,19 @@
           "label_indicator": "required_icon",
           "element_criteria": "mandatory",
           "wrapper_collection": false,
-          "hover_text": "common/common.document_link_sub_elements_category_hover_text",
+          "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
           "help_text": "",
           "attributes": {
             "code": {
               "name": "code",
-              "label": "elements/org_json_schema.common/common.activity_status_attributes_activity_status_label",
+              "label": "elements/org_json_schema.common/common.code",
               "type": "select",
               "multiSelect": false,
               "choices": "Organization/DocumentCategory.json",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "required": true,
               "criteria": "mandatory",
-              "hover_text": "common/common.document_link_sub_elements_category_attributes_code_hover_text",
+              "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
               "help_text": ""
             }
           },
@@ -1570,27 +1570,27 @@
         },
         "description": {
           "name": "description",
-          "label": "common/common.description_label",
+          "label": "common/common.description",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
           "is_collapsable": true,
           "label_indicator": "optional_text",
           "attributes": {},
-          "hover_text": "common/common.document_link_sub_elements_description_hover_text",
+          "hover_text": "common/common.a_description_of_the_document_contents_or_guidance_on_where_to_access_relevant_information",
           "sub_elements": {
             "narrative": {
               "name": "narrative",
               "label": "elements/org_json_schema.name_sub_elements_narrative_label",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": true,
               "criteria": "",
               "add_more": true,
               "attr": {
                 "row": 4
               },
-              "hover_text": "common/common.document_link_sub_elements_description_sub_elements_narrative_hover_text",
+              "hover_text": "common/common.provide_a_short_description_of_the_document_or_webpage_including_any_instructions",
               "help_text": "",
               "attributes": {
                 "lang": {
@@ -1619,15 +1619,15 @@
           "is_collapsable": true,
           "label_indicator": "optional_text",
           "wrapper_collection": false,
-          "hover_text": "common/common.document_link_sub_elements_language_attributes_code_hover_text",
+          "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
           "attributes": {
             "code": {
               "name": "language",
-              "label": "elements/org_json_schema.common/common.activity_status_attributes_activity_status_label",
+              "label": "elements/org_json_schema.common/common.code",
               "type": "select",
               "multiSelect": false,
               "choices": "Activity/Language.json",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "required": true,
               "criteria": "",
               "hover_text": "",
@@ -1638,22 +1638,22 @@
         },
         "document_date": {
           "name": "document_date",
-          "label": "common/common.result_sub_elements_document_link_sub_elements_document_date_label",
+          "label": "common/common.document_date",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
           "is_collapsable": true,
           "label_indicator": "optional_text",
-          "hover_text": "common/common.document_link_sub_elements_document_date_hover_text",
+          "hover_text": "common/common.the_publication_date_of_the_document_or_webpage",
           "attributes": {
             "date": {
               "name": "date",
-              "label": "common/common.document_link_sub_elements_document_date_attributes_date_label",
+              "label": "common/common.date",
               "type": "date",
-              "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",
+              "placeholder": "common/common.yyyy_mm_dd",
               "required": true,
               "criteria": "",
-              "hover_text": "common/common.document_link_sub_elements_document_date_attributes_date_hover_text",
+              "hover_text": "common/common.provide_the_date_of_publication_for_the_document_or_the_date_that_it was_last_updated",
               "help_text": ""
             }
           },
@@ -1661,7 +1661,7 @@
         },
         "recipient_country": {
           "name": "recipient_country",
-          "label": "common/common.recipient_country_label",
+          "label": "common/common.recipient_country",
           "criteria": "",
           "add_more": true,
           "form_has_borders": true,
@@ -1674,11 +1674,11 @@
           "attributes": {
             "code": {
               "name": "code",
-              "label": "elements/org_json_schema.common/common.activity_status_attributes_activity_status_label",
+              "label": "elements/org_json_schema.common/common.code",
               "type": "select",
               "multiselect": false,
               "choices": "Activity/Country.json",
-              "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
+              "placeholder": "common/common.select_code",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "elements/org_json_schema.document_link_sub_elements_recipient_country_attributes_code_hover_text",
@@ -1690,14 +1690,14 @@
               "name": "narrative",
               "label": "elements/org_json_schema.name_sub_elements_narrative_label",
               "type": "textarea",
-              "placeholder": "common/common.description_sub_elements_narrative_placeholder",
+              "placeholder": "common/common.type_narrative",
               "required": true,
               "criteria": "mandatory",
               "add_more": true,
               "attr": {
                 "row": 4
               },
-              "hover_text": "elements/org_json_schema.document_link_sub_elements_recipient_country_sub_elements_narrative_hover_text",
+              "hover_text": "elements/org_json_schema.document_link_sub_elements_add_an_optional_name_or_description_of_the_country_benefitting_from_the_activity",
               "help_text": "",
               "attributes": {
                 "lang": {

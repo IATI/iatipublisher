@@ -2,7 +2,7 @@
   [32m{[39m\n
   [32m  "organisation_identifier": {[39m\n
   [32m    "name": "organisation_identifier",[39m\n
-  [32m    "label": "common/common.organisation_identifier_label",[39m\n
+  [32m    "label": "common/common.organisation_identifier",[39m\n
   [32m    "criteria": "mandatory",[39m\n
   [32m    "hover_text": "elements/org_json_schema.organisation_identifier_hover_text",[39m\n
   [32m    "help_text": "",[39m\n
@@ -30,7 +30,7 @@
   [32m      },[39m\n
   [32m      "registration_number": {[39m\n
   [32m        "name": "registration_number",[39m\n
-  [32m        "label": "common/common.organisation_identifier_attributes_registration_number_label",[39m\n
+  [32m        "label": "common/common.registration_number",[39m\n
   [32m        "type": "text",[39m\n
   [32m        "required": true,[39m\n
   [32m        "placeholder": "elements/org_json_schema.organisation_identifier_attributes_registration_number_placeholder",[39m\n
@@ -40,7 +40,7 @@
   [32m      },[39m\n
   [32m      "iati-activity-identifier": {[39m\n
   [32m        "name": "organisation_identifier",[39m\n
-  [32m        "label": "common/common.organisation_identifier_label",[39m\n
+  [32m        "label": "common/common.organisation_identifier",[39m\n
   [32m        "type": "text",[39m\n
   [32m        "required": true,[39m\n
   [32m        "criteria": "mandatory",[39m\n
@@ -60,7 +60,7 @@
   [32m    "sub_elements": {[39m\n
   [32m      "narrative": {[39m\n
   [32m        "name": "narrative",[39m\n
-  [32m        "label": "common/common.title_sub_elements_narrative_label",[39m\n
+  [32m        "label": "common/common.narrative",[39m\n
   [32m        "type": "text",[39m\n
   [32m        "required": true,[39m\n
   [32m        "criteria": "mandatory",[39m\n
@@ -101,35 +101,35 @@
   [32m    "attributes": {[39m\n
   [32m      "ref": {[39m\n
   [32m        "name": "ref",[39m\n
-  [32m        "label": "common/common.reporting_org_attributes_ref_label",[39m\n
+  [32m        "label": "common/common.reference",[39m\n
   [32m        "type": "text",[39m\n
-  [32m        "placeholder": "common/common.other_identifier_attributes_reference_placeholder",[39m\n
+  [32m        "placeholder": "common/common.type_reference",[39m\n
   [32m        "required": true,[39m\n
   [32m        "criteria": "mandatory",[39m\n
-  [32m        "hover_text": "common/common.reporting_org_attributes_ref_hover_text",[39m\n
+  [32m        "hover_text": "common/common.provide_your_organisations_iati_identifier_this_was_entered_when_you_registered_with_iati",[39m\n
   [32m        "help_text": ""[39m\n
   [32m      },[39m\n
   [32m      "type": {[39m\n
   [32m        "name": "type",[39m\n
-  [32m        "label": "common/common.reporting_org_attributes_type_label",[39m\n
+  [32m        "label": "common/common.type",[39m\n
   [32m        "type": "select",[39m\n
   [32m        "multiSelect": false,[39m\n
   [32m        "choices": "Organization/OrganizationType.json",[39m\n
-  [32m        "placeholder":"common/common.other_identifier_attributes_reference_type_placeholder",[39m\n
+  [32m        "placeholder":"common/common.select_type",[39m\n
   [32m        "required": true,[39m\n
   [32m        "criteria": "mandatory",[39m\n
-  [32m        "hover_text": "common/common.reporting_org_attributes_type_hover_text",[39m\n
+  [32m        "hover_text": "common/common.select_the_type_that_best_describes_your_organisation",[39m\n
   [32m        "help_text": ""[39m\n
   [32m      },[39m\n
   [32m      "secondary_reporter": {[39m\n
   [32m        "name": "secondary_reporter",[39m\n
-  [32m        "label": "common/common.reporting_org_attributes_secondary_reporter_label",[39m\n
+  [32m        "label": "common/common.secondary_reporter",[39m\n
   [32m        "type": "select",[39m\n
   [32m        "choices": {[39m\n
   [32m          "1": "True",[39m\n
   [32m          "0": "False"[39m\n
   [32m        },[39m\n
-  [32m        "placeholder": "common/common.reporting_org_attributes_secondary_reporter_placeholder",[39m\n
+  [32m        "placeholder": "common/common.select_secondary_reporter",[39m\n
   [32m        "required": false,[39m\n
   [32m        "criteria": "",[39m\n
   [32m        "hover_text": "elements/org_json_schema.common/common.reporting_org_attributes_secondary_reporter_hover_ftext",[39m\n
@@ -141,7 +141,7 @@
   [32m        "name": "narrative",[39m\n
   [32m        "label": "common/common.name",[39m\n
   [32m        "type": "textarea",[39m\n
-  [32m        "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",[39m\n
+  [32m        "placeholder": "common/common.type_name",[39m\n
   [32m        "required": true,[39m\n
   [32m        "criteria": "mandatory",[39m\n
   [32m        "element_criteria": "mandatory",[39m\n
@@ -149,7 +149,7 @@
   [32m        "attr": {[39m\n
   [32m          "row": 4[39m\n
   [32m        },[39m\n
-  [32m        "hover_text": "common/common.reporting_org_sub_elements_narrative_hover_text",[39m\n
+  [32m        "hover_text": "common/common.enter_your_organisations_name_this_can_be_repeated_in_multiple_language",[39m\n
   [32m        "help_text": "",[39m\n
   [32m        "attributes": {[39m\n
   [32m          "lang": {[39m\n
@@ -188,14 +188,14 @@
   [32m        "choices": "Activity/BudgetStatus.json",[39m\n
   [32m        "required": false,[39m\n
   [32m        "criteria": "",[39m\n
-  [32m        "hover_text": "common/common.budget_attributes_budget_status_hover_text",[39m\n
+  [32m        "hover_text": "common/common.select_a_status_that_best_describes_this_budget",[39m\n
   [32m        "help_text": ""[39m\n
   [32m      }[39m\n
   [32m    },[39m\n
   [32m    "sub_elements": {[39m\n
   [32m      "period_start": {[39m\n
   [32m        "name": "period_start",[39m\n
-  [32m        "label": "common/common.budget_sub_elements_period_start_label",[39m\n
+  [32m        "label": "common/common.period_start",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -208,7 +208,7 @@
   [32m            "name": "date",[39m\n
   [32m            "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -219,7 +219,7 @@
   [32m      },[39m\n
   [32m      "period_end": {[39m\n
   [32m        "name": "period_end",[39m\n
-  [32m        "label": "common/common.budget_sub_elements_period_end_label",[39m\n
+  [32m        "label": "common/common.period-end",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -232,7 +232,7 @@
   [32m            "name": "date",[39m\n
   [32m            "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -243,7 +243,7 @@
   [32m      },[39m\n
   [32m      "value": {[39m\n
   [32m        "name": "value",[39m\n
-  [32m        "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m        "label": "common/common.value",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -255,7 +255,7 @@
   [32m        "attributes": {[39m\n
   [32m          "amount": {[39m\n
   [32m            "name": "amount",[39m\n
-  [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m            "label": "common/common.value",[39m\n
   [32m            "type": "text",[39m\n
   [32m            "placeholder": "common/common.type_value_here",[39m\n
   [32m            "required": true,[39m\n
@@ -265,24 +265,24 @@
   [32m          },[39m\n
   [32m          "currency": {[39m\n
   [32m            "name": "currency",[39m\n
-  [32m            "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",[39m\n
+  [32m            "label": "common/common.currency",[39m\n
   [32m            "type": "select",[39m\n
   [32m            "multiselect": false,[39m\n
   [32m            "choices": "Activity/Currency.json",[39m\n
-  [32m            "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",[39m\n
+  [32m            "placeholder": "common/common.select_currency",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
-  [32m            "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"[39m\n
+  [32m            "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"[39m\n
   [32m          },[39m\n
   [32m          "value_date": {[39m\n
   [32m            "name": "value_date",[39m\n
-  [32m            "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",[39m\n
+  [32m            "label": "common/common.value_date",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
-  [32m            "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",[39m\n
+  [32m            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",[39m\n
   [32m            "help_text": ""[39m\n
   [32m          }[39m\n
   [32m        },[39m\n
@@ -302,9 +302,9 @@
   [32m        "attributes": {[39m\n
   [32m          "ref": {[39m\n
   [32m            "name": "ref",[39m\n
-  [32m            "label": "common/common.reporting_org_attributes_ref_label",[39m\n
+  [32m            "label": "common/common.reference",[39m\n
   [32m            "type": "text",[39m\n
-  [32m            "placeholder": "common/common.other_identifier_attributes_reference_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_reference",[39m\n
   [32m            "required": false,[39m\n
   [32m            "criteria": "",[39m\n
   [32m            "hover_text": "You can provide a reference that you use to identify this budget line in your organisation\u2019s financial reporting system.",[39m\n
@@ -314,7 +314,7 @@
   [32m        "sub_elements": {[39m\n
   [32m          "value": {[39m\n
   [32m            "name": "value",[39m\n
-  [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m            "label": "common/common.value",[39m\n
   [32m            "add_more": false,[39m\n
   [32m            "form_has_borders": true,[39m\n
   [32m            "label_has_borders": true,[39m\n
@@ -323,7 +323,7 @@
   [32m            "attributes": {[39m\n
   [32m              "amount": {[39m\n
   [32m                "name": "amount",[39m\n
-  [32m                "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m                "label": "common/common.value",[39m\n
   [32m                "type": "text",[39m\n
   [32m                "placeholder": "common/common.type_value_here",[39m\n
   [32m                "required": true,[39m\n
@@ -333,24 +333,24 @@
   [32m              },[39m\n
   [32m              "currency": {[39m\n
   [32m                "name": "currency",[39m\n
-  [32m                "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",[39m\n
+  [32m                "label": "common/common.currency",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiselect": false,[39m\n
   [32m                "choices": "Activity/Currency.json",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
-  [32m                "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",[39m\n
+  [32m                "placeholder": "common/common.select_currency",[39m\n
   [32m                "hover_text": "",[39m\n
-  [32m                "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"[39m\n
+  [32m                "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"[39m\n
   [32m              },[39m\n
   [32m              "value_date": {[39m\n
   [32m                "name": "value_date",[39m\n
-  [32m                "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",[39m\n
+  [32m                "label": "common/common.value_date",[39m\n
   [32m                "type": "date",[39m\n
-  [32m                "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m                "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
-  [32m                "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",[39m\n
+  [32m                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",[39m\n
   [32m                "help_text": ""[39m\n
   [32m              }[39m\n
   [32m            },[39m\n
@@ -360,7 +360,7 @@
   [32m            "name": "narrative",[39m\n
   [32m            "label": "elements/org_json_schema.name_sub_elements_narrative_label",[39m\n
   [32m            "type": "textarea",[39m\n
-  [32m            "placeholder": "common/common.description_sub_elements_narrative_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_narrative",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "add_more": true,[39m\n
@@ -411,7 +411,7 @@
   [32m        "placeholder": "common/common.select_status",[39m\n
   [32m        "required": false,[39m\n
   [32m        "criteria": "",[39m\n
-  [32m        "hover_text": "common/common.budget_attributes_budget_status_hover_text",[39m\n
+  [32m        "hover_text": "common/common.select_a_status_that_best_describes_this_budget",[39m\n
   [32m        "help_text": ""[39m\n
   [32m      }[39m\n
   [32m    },[39m\n
@@ -430,12 +430,12 @@
   [32m        "attributes": {[39m\n
   [32m          "ref": {[39m\n
   [32m            "name": "ref",[39m\n
-  [32m            "label": "common/common.reporting_org_attributes_ref_label",[39m\n
+  [32m            "label": "common/common.reference",[39m\n
   [32m            "type": "text",[39m\n
-  [32m            "placeholder": "common/common.other_identifier_attributes_reference_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_reference",[39m\n
   [32m            "required": false,[39m\n
   [32m            "criteria": "",[39m\n
-  [32m            "hover_text": "common/common.other_identifier_sub_elements_owner_org_attributes_ref_hover_text",[39m\n
+  [32m            "hover_text": "common/common.enter_the_organisations_iati_organisation_identifier",[39m\n
   [32m            "help_text": ""[39m\n
   [32m          }[39m\n
   [32m        },[39m\n
@@ -444,11 +444,11 @@
   [32m            "name": "narrative",[39m\n
   [32m            "label": "elements/org_json_schema.name_sub_elements_narrative_label",[39m\n
   [32m            "type": "textarea",[39m\n
-  [32m            "placeholder": "common/common.description_sub_elements_narrative_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_narrative",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "add_more": true,[39m\n
-  [32m            "hover_text": "common/common.planned_disbursement_sub_elements_provider_org_sub_elements_narrative_hover_text",[39m\n
+  [32m            "hover_text": "common/common.enter_the_name_of_the_organisation_this_can_be_repeated_in_multiple_languages",[39m\n
   [32m            "help_text": "",[39m\n
   [32m            "attr": {[39m\n
   [32m              "row": 4[39m\n
@@ -473,7 +473,7 @@
   [32m      },[39m\n
   [32m      "period_start": {[39m\n
   [32m        "name": "period_start",[39m\n
-  [32m        "label": "common/common.budget_sub_elements_period_start_label",[39m\n
+  [32m        "label": "common/common.period_start",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -486,7 +486,7 @@
   [32m            "name": "date",[39m\n
   [32m            "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -497,7 +497,7 @@
   [32m      },[39m\n
   [32m      "period_end": {[39m\n
   [32m        "name": "period_end",[39m\n
-  [32m        "label": "common/common.budget_sub_elements_period_end_label",[39m\n
+  [32m        "label": "common/common.period-end",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -510,7 +510,7 @@
   [32m            "name": "date",[39m\n
   [32m            "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -521,7 +521,7 @@
   [32m      },[39m\n
   [32m      "value": {[39m\n
   [32m        "name": "value",[39m\n
-  [32m        "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m        "label": "common/common.value",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -532,7 +532,7 @@
   [32m        "attributes": {[39m\n
   [32m          "amount": {[39m\n
   [32m            "name": "amount",[39m\n
-  [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m            "label": "common/common.value",[39m\n
   [32m            "type": "text",[39m\n
   [32m            "placeholder": "common/common.type_value_here",[39m\n
   [32m            "required": true,[39m\n
@@ -542,24 +542,24 @@
   [32m          },[39m\n
   [32m          "currency": {[39m\n
   [32m            "name": "currency",[39m\n
-  [32m            "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",[39m\n
+  [32m            "label": "common/common.currency",[39m\n
   [32m            "type": "select",[39m\n
   [32m            "multiselect": false,[39m\n
   [32m            "choices": "Activity/Currency.json",[39m\n
-  [32m            "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",[39m\n
+  [32m            "placeholder": "common/common.select_currency",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
-  [32m            "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"[39m\n
+  [32m            "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"[39m\n
   [32m          },[39m\n
   [32m          "value_date": {[39m\n
   [32m            "name": "value_date",[39m\n
-  [32m            "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",[39m\n
+  [32m            "label": "common/common.value_date",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
-  [32m            "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",[39m\n
+  [32m            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",[39m\n
   [32m            "help_text": ""[39m\n
   [32m          }[39m\n
   [32m        },[39m\n
@@ -579,9 +579,9 @@
   [32m        "attributes": {[39m\n
   [32m          "ref": {[39m\n
   [32m            "name": "ref",[39m\n
-  [32m            "label": "common/common.reporting_org_attributes_ref_label",[39m\n
+  [32m            "label": "common/common.reference",[39m\n
   [32m            "type": "text",[39m\n
-  [32m            "placeholder": "common/common.other_identifier_attributes_reference_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_reference",[39m\n
   [32m            "required": false,[39m\n
   [32m            "criteria": "",[39m\n
   [32m            "hover_text": "You can provide a reference that you use to identify this budget line in your organisation\u2019s financial reporting system.",[39m\n
@@ -591,7 +591,7 @@
   [32m        "sub_elements": {[39m\n
   [32m          "value": {[39m\n
   [32m            "name": "value",[39m\n
-  [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m            "label": "common/common.value",[39m\n
   [32m            "add_more": false,[39m\n
   [32m            "form_has_borders": true,[39m\n
   [32m            "label_has_borders": true,[39m\n
@@ -599,7 +599,7 @@
   [32m            "attributes": {[39m\n
   [32m              "amount": {[39m\n
   [32m                "name": "amount",[39m\n
-  [32m                "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m                "label": "common/common.value",[39m\n
   [32m                "type": "text",[39m\n
   [32m                "placeholder": "common/common.type_value_here",[39m\n
   [32m                "required": true,[39m\n
@@ -609,24 +609,24 @@
   [32m              },[39m\n
   [32m              "currency": {[39m\n
   [32m                "name": "currency",[39m\n
-  [32m                "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",[39m\n
+  [32m                "label": "common/common.currency",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiselect": false,[39m\n
   [32m                "choices": "Activity/Currency.json",[39m\n
-  [32m                "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",[39m\n
+  [32m                "placeholder": "common/common.select_currency",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
   [32m                "hover_text": "",[39m\n
-  [32m                "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"[39m\n
+  [32m                "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"[39m\n
   [32m              },[39m\n
   [32m              "value_date": {[39m\n
   [32m                "name": "value_date",[39m\n
-  [32m                "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",[39m\n
+  [32m                "label": "common/common.value_date",[39m\n
   [32m                "type": "date",[39m\n
-  [32m                "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m                "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
-  [32m                "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",[39m\n
+  [32m                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",[39m\n
   [32m                "help_text": ""[39m\n
   [32m              }[39m\n
   [32m            },[39m\n
@@ -636,7 +636,7 @@
   [32m            "name": "narrative",[39m\n
   [32m            "label": "elements/org_json_schema.name_sub_elements_narrative_label",[39m\n
   [32m            "type": "textarea",[39m\n
-  [32m            "placeholder": "common/common.description_sub_elements_narrative_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_narrative",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "add_more": true,[39m\n
@@ -687,14 +687,14 @@
   [32m        "placeholder": "common/common.select_status",[39m\n
   [32m        "required": true,[39m\n
   [32m        "criteria": "mandatory",[39m\n
-  [32m        "hover_text": "common/common.budget_attributes_budget_status_hover_text",[39m\n
+  [32m        "hover_text": "common/common.select_a_status_that_best_describes_this_budget",[39m\n
   [32m        "help_text": ""[39m\n
   [32m      }[39m\n
   [32m    },[39m\n
   [32m    "sub_elements": {[39m\n
   [32m      "recipient_region": {[39m\n
   [32m        "name": "recipient_region",[39m\n
-  [32m        "label": "common/common.recipient_region_label",[39m\n
+  [32m        "label": "common/common.recipient_region",[39m\n
   [32m        "criteria": "mandatory",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
@@ -706,23 +706,23 @@
   [32m        "attributes": {[39m\n
   [32m          "vocabulary": {[39m\n
   [32m            "name": "region_vocabulary",[39m\n
-  [32m            "label": "common/common.recipient_region_attributes_region_vocabulary_label",[39m\n
+  [32m            "label": "common/common.vocabulary",[39m\n
   [32m            "type": "select",[39m\n
   [32m            "multiselect": false,[39m\n
   [32m            "choices": "Activity/RegionVocabulary.json",[39m\n
-  [32m            "placeholder": "common/common.sector_attributes_sector_vocabulary_placeholder",[39m\n
+  [32m            "placeholder": "common/common.select_vocabulary",[39m\n
   [32m            "required": false,[39m\n
   [32m            "criteria": "",[39m\n
-  [32m            "hover_text": "common/common.recipient_region_attributes_region_vocabulary_hover_text",[39m\n
+  [32m            "hover_text": "common/common.you_can_select_regions_from_the _oecd_dac_un_or_your_own_internal_codelist",[39m\n
   [32m            "help_text": ""[39m\n
   [32m          },[39m\n
   [32m          "oecd_region_code": {[39m\n
   [32m            "name": "region_code",[39m\n
-  [32m            "label": "elements/org_json_schema.common/common.activity_status_attributes_activity_status_label",[39m\n
+  [32m            "label": "elements/org_json_schema.common/common.code",[39m\n
   [32m            "type": "select",[39m\n
   [32m            "multiselect": false,[39m\n
   [32m            "choices": "Activity/Region.json",[39m\n
-  [32m            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",[39m\n
+  [32m            "placeholder": "common/common.select_code",[39m\n
   [32m            "required": false,[39m\n
   [32m            "criteria": "",[39m\n
   [32m            "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_recipient_region_attributes_oecd_region_code_hover_text",[39m\n
@@ -730,9 +730,9 @@
   [32m          },[39m\n
   [32m          "region_code": {[39m\n
   [32m            "name": "code",[39m\n
-  [32m            "label": "elements/org_json_schema.common/common.activity_status_attributes_activity_status_label",[39m\n
+  [32m            "label": "elements/org_json_schema.common/common.code",[39m\n
   [32m            "type": "text",[39m\n
-  [32m            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",[39m\n
+  [32m            "placeholder": "common/common.select_code",[39m\n
   [32m            "required": false,[39m\n
   [32m            "criteria": "",[39m\n
   [32m            "hidden": true,[39m\n
@@ -741,9 +741,9 @@
   [32m          },[39m\n
   [32m          "vocabulary-uri": {[39m\n
   [32m            "name": "vocabulary_uri",[39m\n
-  [32m            "label": "common/common.sector_attributes_vocabulary_uri_label",[39m\n
+  [32m            "label": "common/common.vocabulary_uri",[39m\n
   [32m            "type": "text",[39m\n
-  [32m            "placeholder": "common/common.sector_attributes_vocabulary_uri_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_vocabulary_uri",[39m\n
   [32m            "required": false,[39m\n
   [32m            "criteria": "",[39m\n
   [32m            "hover_text": "If you have selected the vocabulary \u201899 - Reporting Organisation\u2019, provide the URI where this internal list is defined.",[39m\n
@@ -755,14 +755,14 @@
   [32m            "name": "narrative",[39m\n
   [32m            "label": "elements/org_json_schema.name_sub_elements_narrative_label",[39m\n
   [32m            "type": "textarea",[39m\n
-  [32m            "placeholder": "common/common.description_sub_elements_narrative_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_narrative",[39m\n
   [32m            "required": false,[39m\n
   [32m            "criteria": "",[39m\n
   [32m            "add_more": true,[39m\n
   [32m            "attr": {[39m\n
   [32m              "row": 4[39m\n
   [32m            },[39m\n
-  [32m            "hover_text": "common/common.recipient_region_budget_sub_elements_recipient_region_sub_elements_narrative_hover_text",[39m\n
+  [32m            "hover_text": "common/common.add_an_optional_name_or_description_of_the_region_benefitting_from_the_activity",[39m\n
   [32m            "help_text": "",[39m\n
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
@@ -784,7 +784,7 @@
   [32m      },[39m\n
   [32m      "period_start": {[39m\n
   [32m        "name": "period_start",[39m\n
-  [32m        "label": "common/common.budget_sub_elements_period_start_label",[39m\n
+  [32m        "label": "common/common.period_start",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -797,7 +797,7 @@
   [32m            "name": "date",[39m\n
   [32m            "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -808,7 +808,7 @@
   [32m      },[39m\n
   [32m      "period_end": {[39m\n
   [32m        "name": "period_end",[39m\n
-  [32m        "label": "common/common.budget_sub_elements_period_end_label",[39m\n
+  [32m        "label": "common/common.period-end",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -821,7 +821,7 @@
   [32m            "name": "date",[39m\n
   [32m            "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -832,7 +832,7 @@
   [32m      },[39m\n
   [32m      "value": {[39m\n
   [32m        "name": "value",[39m\n
-  [32m        "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m        "label": "common/common.value",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -844,7 +844,7 @@
   [32m        "attributes": {[39m\n
   [32m          "amount": {[39m\n
   [32m            "name": "amount",[39m\n
-  [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m            "label": "common/common.value",[39m\n
   [32m            "type": "text",[39m\n
   [32m            "placeholder": "common/common.type_value_here",[39m\n
   [32m            "required": true,[39m\n
@@ -854,24 +854,24 @@
   [32m          },[39m\n
   [32m          "currency": {[39m\n
   [32m            "name": "currency",[39m\n
-  [32m            "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",[39m\n
+  [32m            "label": "common/common.currency",[39m\n
   [32m            "type": "select",[39m\n
   [32m            "multiselect": false,[39m\n
   [32m            "choices": "Activity/Currency.json",[39m\n
-  [32m            "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",[39m\n
+  [32m            "placeholder": "common/common.select_currency",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
-  [32m            "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"[39m\n
+  [32m            "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"[39m\n
   [32m          },[39m\n
   [32m          "value_date": {[39m\n
   [32m            "name": "value_date",[39m\n
-  [32m            "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",[39m\n
+  [32m            "label": "common/common.value_date",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
-  [32m            "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",[39m\n
+  [32m            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",[39m\n
   [32m            "help_text": ""[39m\n
   [32m          }[39m\n
   [32m        },[39m\n
@@ -891,9 +891,9 @@
   [32m        "attributes": {[39m\n
   [32m          "ref": {[39m\n
   [32m            "name": "ref",[39m\n
-  [32m            "label": "common/common.reporting_org_attributes_ref_label",[39m\n
+  [32m            "label": "common/common.reference",[39m\n
   [32m            "type": "text",[39m\n
-  [32m            "placeholder": "common/common.other_identifier_attributes_reference_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_reference",[39m\n
   [32m            "required": false,[39m\n
   [32m            "criteria": "",[39m\n
   [32m            "hover_text": "You can provide a reference that you use to identify this budget line in your organisation\u2019s internal financial management system.",[39m\n
@@ -903,7 +903,7 @@
   [32m        "sub_elements": {[39m\n
   [32m          "value": {[39m\n
   [32m            "name": "value",[39m\n
-  [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m            "label": "common/common.value",[39m\n
   [32m            "add_more": false,[39m\n
   [32m            "form_has_borders": true,[39m\n
   [32m            "label_has_borders": true,[39m\n
@@ -912,7 +912,7 @@
   [32m            "attributes": {[39m\n
   [32m              "amount": {[39m\n
   [32m                "name": "amount",[39m\n
-  [32m                "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m                "label": "common/common.value",[39m\n
   [32m                "type": "text",[39m\n
   [32m                "placeholder": "common/common.type_value_here",[39m\n
   [32m                "required": true,[39m\n
@@ -922,24 +922,24 @@
   [32m              },[39m\n
   [32m              "currency": {[39m\n
   [32m                "name": "currency",[39m\n
-  [32m                "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",[39m\n
+  [32m                "label": "common/common.currency",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiselect": false,[39m\n
   [32m                "choices": "Activity/Currency.json",[39m\n
-  [32m                "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",[39m\n
+  [32m                "placeholder": "common/common.select_currency",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
   [32m                "hover_text": "",[39m\n
-  [32m                "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"[39m\n
+  [32m                "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"[39m\n
   [32m              },[39m\n
   [32m              "value_date": {[39m\n
   [32m                "name": "value_date",[39m\n
-  [32m                "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",[39m\n
+  [32m                "label": "common/common.value_date",[39m\n
   [32m                "type": "date",[39m\n
-  [32m                "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m                "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
-  [32m                "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",[39m\n
+  [32m                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",[39m\n
   [32m                "help_text": ""[39m\n
   [32m              }[39m\n
   [32m            },[39m\n
@@ -949,7 +949,7 @@
   [32m            "name": "narrative",[39m\n
   [32m            "label": "elements/org_json_schema.name_sub_elements_narrative_label",[39m\n
   [32m            "type": "textarea",[39m\n
-  [32m            "placeholder": "common/common.description_sub_elements_narrative_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_narrative",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "add_more": true,[39m\n
@@ -998,14 +998,14 @@
   [32m        "placeholder": "common/common.select_status",[39m\n
   [32m        "required": false,[39m\n
   [32m        "criteria": "",[39m\n
-  [32m        "hover_text": "common/common.budget_attributes_budget_status_hover_text",[39m\n
+  [32m        "hover_text": "common/common.select_a_status_that_best_describes_this_budget",[39m\n
   [32m        "help_text": ""[39m\n
   [32m      }[39m\n
   [32m    },[39m\n
   [32m    "sub_elements": {[39m\n
   [32m      "recipient_country": {[39m\n
   [32m        "name": "recipient_country",[39m\n
-  [32m        "label": "common/common.recipient_country_label",[39m\n
+  [32m        "label": "common/common.recipient_country",[39m\n
   [32m        "add_more": true,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -1017,11 +1017,11 @@
   [32m        "attributes": {[39m\n
   [32m          "code": {[39m\n
   [32m            "name": "code",[39m\n
-  [32m            "label": "elements/org_json_schema.common/common.activity_status_attributes_activity_status_label",[39m\n
+  [32m            "label": "elements/org_json_schema.common/common.code",[39m\n
   [32m            "type": "select",[39m\n
   [32m            "multiselect": false,[39m\n
   [32m            "choices": "Activity/Country.json",[39m\n
-  [32m            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",[39m\n
+  [32m            "placeholder": "common/common.select_code",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "Select the country benefitting from this budget. ",[39m\n
@@ -1033,14 +1033,14 @@
   [32m            "name": "narrative",[39m\n
   [32m            "label": "elements/org_json_schema.name_sub_elements_narrative_label",[39m\n
   [32m            "type": "textarea",[39m\n
-  [32m            "placeholder": "common/common.description_sub_elements_narrative_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_narrative",[39m\n
   [32m            "required": false,[39m\n
   [32m            "criteria": "",[39m\n
   [32m            "add_more": true,[39m\n
   [32m            "attr": {[39m\n
   [32m              "row": 4[39m\n
   [32m            },[39m\n
-  [32m            "hover_text": "common/common.recipient_country_sub_elements_narrative_hover_text",[39m\n
+  [32m            "hover_text": "common/common.add_an_optional_name_or_description_of_the_country_benefitting_from_the_activity",[39m\n
   [32m            "help_text": "",[39m\n
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
@@ -1062,7 +1062,7 @@
   [32m      },[39m\n
   [32m      "period_start": {[39m\n
   [32m        "name": "period_start",[39m\n
-  [32m        "label": "common/common.budget_sub_elements_period_start_label",[39m\n
+  [32m        "label": "common/common.period_start",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -1075,7 +1075,7 @@
   [32m            "name": "date",[39m\n
   [32m            "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -1086,7 +1086,7 @@
   [32m      },[39m\n
   [32m      "period_end": {[39m\n
   [32m        "name": "period_end",[39m\n
-  [32m        "label": "common/common.budget_sub_elements_period_end_label",[39m\n
+  [32m        "label": "common/common.period-end",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -1099,7 +1099,7 @@
   [32m            "name": "date",[39m\n
   [32m            "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -1110,7 +1110,7 @@
   [32m      },[39m\n
   [32m      "value": {[39m\n
   [32m        "name": "value",[39m\n
-  [32m        "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m        "label": "common/common.value",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -1122,7 +1122,7 @@
   [32m        "attributes": {[39m\n
   [32m          "amount": {[39m\n
   [32m            "name": "amount",[39m\n
-  [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m            "label": "common/common.value",[39m\n
   [32m            "type": "text",[39m\n
   [32m            "placeholder": "common/common.type_value_here",[39m\n
   [32m            "required": true,[39m\n
@@ -1132,24 +1132,24 @@
   [32m          },[39m\n
   [32m          "currency": {[39m\n
   [32m            "name": "currency",[39m\n
-  [32m            "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",[39m\n
+  [32m            "label": "common/common.currency",[39m\n
   [32m            "type": "select",[39m\n
   [32m            "multiselect": false,[39m\n
   [32m            "choices": "Activity/Currency.json",[39m\n
-  [32m            "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",[39m\n
+  [32m            "placeholder": "common/common.select_currency",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
-  [32m            "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"[39m\n
+  [32m            "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"[39m\n
   [32m          },[39m\n
   [32m          "value_date": {[39m\n
   [32m            "name": "value_date",[39m\n
-  [32m            "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",[39m\n
+  [32m            "label": "common/common.value_date",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
-  [32m            "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",[39m\n
+  [32m            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",[39m\n
   [32m            "help_text": ""[39m\n
   [32m          }[39m\n
   [32m        },[39m\n
@@ -1169,9 +1169,9 @@
   [32m        "attributes": {[39m\n
   [32m          "ref": {[39m\n
   [32m            "name": "ref",[39m\n
-  [32m            "label": "common/common.reporting_org_attributes_ref_label",[39m\n
+  [32m            "label": "common/common.reference",[39m\n
   [32m            "type": "text",[39m\n
-  [32m            "placeholder": "common/common.other_identifier_attributes_reference_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_reference",[39m\n
   [32m            "required": false,[39m\n
   [32m            "criteria": "",[39m\n
   [32m            "hover_text": "You can provide a reference that you use to identify this budget line in your organisation\u2019s internal financial management system.",[39m\n
@@ -1181,7 +1181,7 @@
   [32m        "sub_elements": {[39m\n
   [32m          "value": {[39m\n
   [32m            "name": "value",[39m\n
-  [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m            "label": "common/common.value",[39m\n
   [32m            "add_more": false,[39m\n
   [32m            "form_has_borders": true,[39m\n
   [32m            "label_has_borders": true,[39m\n
@@ -1190,7 +1190,7 @@
   [32m            "attributes": {[39m\n
   [32m              "amount": {[39m\n
   [32m                "name": "amount",[39m\n
-  [32m                "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m                "label": "common/common.value",[39m\n
   [32m                "type": "text",[39m\n
   [32m                "placeholder": "common/common.type_value_here",[39m\n
   [32m                "required": true,[39m\n
@@ -1200,24 +1200,24 @@
   [32m              },[39m\n
   [32m              "currency": {[39m\n
   [32m                "name": "currency",[39m\n
-  [32m                "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",[39m\n
+  [32m                "label": "common/common.currency",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiselect": false,[39m\n
   [32m                "choices": "Activity/Currency.json",[39m\n
-  [32m                "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",[39m\n
+  [32m                "placeholder": "common/common.select_currency",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
   [32m                "hover_text": "",[39m\n
-  [32m                "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"[39m\n
+  [32m                "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"[39m\n
   [32m              },[39m\n
   [32m              "value_date": {[39m\n
   [32m                "name": "value_date",[39m\n
-  [32m                "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",[39m\n
+  [32m                "label": "common/common.value_date",[39m\n
   [32m                "type": "date",[39m\n
-  [32m                "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m                "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
-  [32m                "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",[39m\n
+  [32m                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",[39m\n
   [32m                "help_text": ""[39m\n
   [32m              }[39m\n
   [32m            },[39m\n
@@ -1269,7 +1269,7 @@
   [32m    "sub_elements": {[39m\n
   [32m      "period_start": {[39m\n
   [32m        "name": "period_start",[39m\n
-  [32m        "label": "common/common.budget_sub_elements_period_start_label",[39m\n
+  [32m        "label": "common/common.period_start",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -1282,7 +1282,7 @@
   [32m            "name": "date",[39m\n
   [32m            "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -1293,7 +1293,7 @@
   [32m      },[39m\n
   [32m      "period_end": {[39m\n
   [32m        "name": "period_end",[39m\n
-  [32m        "label": "common/common.budget_sub_elements_period_end_label",[39m\n
+  [32m        "label": "common/common.period-end",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -1306,7 +1306,7 @@
   [32m            "name": "date",[39m\n
   [32m            "label": "elements/org_json_schema.total_budget_sub_elements_period_start_attributes_date_label",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -1317,7 +1317,7 @@
   [32m      },[39m\n
   [32m      "value": {[39m\n
   [32m        "name": "value",[39m\n
-  [32m        "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m        "label": "common/common.value",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -1329,7 +1329,7 @@
   [32m        "attributes": {[39m\n
   [32m          "amount": {[39m\n
   [32m            "name": "amount",[39m\n
-  [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m            "label": "common/common.value",[39m\n
   [32m            "type": "text",[39m\n
   [32m            "placeholder": "common/common.type_value_here",[39m\n
   [32m            "required": true,[39m\n
@@ -1339,24 +1339,24 @@
   [32m          },[39m\n
   [32m          "currency": {[39m\n
   [32m            "name": "currency",[39m\n
-  [32m            "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",[39m\n
+  [32m            "label": "common/common.currency",[39m\n
   [32m            "type": "select",[39m\n
   [32m            "multiselect": false,[39m\n
   [32m            "choices": "Activity/Currency.json",[39m\n
-  [32m            "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",[39m\n
+  [32m            "placeholder": "common/common.select_currency",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
-  [32m            "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"[39m\n
+  [32m            "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"[39m\n
   [32m          },[39m\n
   [32m          "value_date": {[39m\n
   [32m            "name": "value_date",[39m\n
-  [32m            "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",[39m\n
+  [32m            "label": "common/common.value_date",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
-  [32m            "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",[39m\n
+  [32m            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",[39m\n
   [32m            "help_text": ""[39m\n
   [32m          }[39m\n
   [32m        },[39m\n
@@ -1376,9 +1376,9 @@
   [32m        "attributes": {[39m\n
   [32m          "ref": {[39m\n
   [32m            "name": "ref",[39m\n
-  [32m            "label": "common/common.reporting_org_attributes_ref_label",[39m\n
+  [32m            "label": "common/common.reference",[39m\n
   [32m            "type": "text",[39m\n
-  [32m            "placeholder": "common/common.other_identifier_attributes_reference_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_reference",[39m\n
   [32m            "required": false,[39m\n
   [32m            "criteria": "",[39m\n
   [32m            "hover_text": "You can provide a reference that you use to identify this expense in your organisation\u2019s financial reporting system.",[39m\n
@@ -1388,7 +1388,7 @@
   [32m        "sub_elements": {[39m\n
   [32m          "value": {[39m\n
   [32m            "name": "value",[39m\n
-  [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m            "label": "common/common.value",[39m\n
   [32m            "add_more": false,[39m\n
   [32m            "form_has_borders": true,[39m\n
   [32m            "label_has_borders": true,[39m\n
@@ -1397,7 +1397,7 @@
   [32m            "attributes": {[39m\n
   [32m              "amount": {[39m\n
   [32m                "name": "amount",[39m\n
-  [32m                "label": "common/common.legacy_data_attributes_value_label",[39m\n
+  [32m                "label": "common/common.value",[39m\n
   [32m                "type": "text",[39m\n
   [32m                "placeholder": "common/common.type_value_here",[39m\n
   [32m                "required": true,[39m\n
@@ -1407,24 +1407,24 @@
   [32m              },[39m\n
   [32m              "currency": {[39m\n
   [32m                "name": "currency",[39m\n
-  [32m                "label": "common/common.planned_disbursement_sub_elements_value_attributes_currency_label",[39m\n
+  [32m                "label": "common/common.currency",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiselect": false,[39m\n
   [32m                "choices": "Activity/Currency.json",[39m\n
-  [32m                "placeholder": "common/common.planned_disbursement_sub_elements_value_attributes_currency_placeholder",[39m\n
+  [32m                "placeholder": "common/common.select_currency",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
   [32m                "hover_text": "",[39m\n
-  [32m                "help_text": "common/common.planned_disbursement_sub_elements_value_attributes_currency_help_text"[39m\n
+  [32m                "help_text": "common/common.if_no_currency_is_selected_ your_default_currency_is_assumed"[39m\n
   [32m              },[39m\n
   [32m              "value_date": {[39m\n
   [32m                "name": "value_date",[39m\n
-  [32m                "label": "common/common.budget_sub_elements_budget_value_attributes_value_date_label",[39m\n
+  [32m                "label": "common/common.value_date",[39m\n
   [32m                "type": "date",[39m\n
-  [32m                "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m                "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
-  [32m                "hover_text": "common/common.budget_sub_elements_budget_value_attributes_value_date_hover_text",[39m\n
+  [32m                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",[39m\n
   [32m                "help_text": ""[39m\n
   [32m              }[39m\n
   [32m            },[39m\n
@@ -1434,7 +1434,7 @@
   [32m            "name": "narrative",[39m\n
   [32m            "label": "elements/org_json_schema.name_sub_elements_narrative_label",[39m\n
   [32m            "type": "textarea",[39m\n
-  [32m            "placeholder": "common/common.description_sub_elements_narrative_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_narrative",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "add_more": true,[39m\n
@@ -1465,7 +1465,7 @@
   [32m  },[39m\n
   [32m  "document_link": {[39m\n
   [32m    "name": "document_link",[39m\n
-  [32m    "label": "common/common.document_link_label",[39m\n
+  [32m    "label": "common/common.document_link",[39m\n
   [32m    "add_more": true,[39m\n
   [32m    "form_has_borders": true,[39m\n
   [32m    "label_has_borders": true,[39m\n
@@ -1476,52 +1476,52 @@
   [32m    "attributes": {[39m\n
   [32m      "url": {[39m\n
   [32m        "name": "url",[39m\n
-  [32m        "label": "common/common.document_link_attributes_url_label",[39m\n
+  [32m        "label": "common/common.url",[39m\n
   [32m        "type": "text",[39m\n
   [32m        "placeholder": "common/common.transactions_sub_elements_tied_status_attributes_tied_status_code_hover_text",[39m\n
   [32m        "required": true,[39m\n
   [32m        "criteria": "mandatory",[39m\n
-  [32m        "hover_text": "common/common.document_link_attributes_url_hover_text",[39m\n
+  [32m        "hover_text": "common/common.a_link_to_where_the_document_is_available_online",[39m\n
   [32m        "help_text": ""[39m\n
   [32m      },[39m\n
   [32m      "format": {[39m\n
   [32m        "name": "format",[39m\n
-  [32m        "label": "common/common.document_link_attributes_format_label",[39m\n
+  [32m        "label": "common/common.format",[39m\n
   [32m        "type": "select",[39m\n
-  [32m        "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",[39m\n
+  [32m        "placeholder": "common/common.select_code",[39m\n
   [32m        "multiselect": false,[39m\n
   [32m        "choices": "Activity/FileFormat.json",[39m\n
   [32m        "required": true,[39m\n
   [32m        "criteria": "mandatory",[39m\n
-  [32m        "hover_text": "common/common.document_link_attributes_format_hover_text",[39m\n
+  [32m        "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",[39m\n
   [32m        "help_text": ""[39m\n
   [32m      }[39m\n
   [32m    },[39m\n
   [32m    "sub_elements": {[39m\n
   [32m      "title": {[39m\n
   [32m        "name": "title",[39m\n
-  [32m        "label": "common/common.document_link_sub_elements_title_label",[39m\n
+  [32m        "label": "common/common.title",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
   [32m        "is_collapsable": true,[39m\n
   [32m        "label_indicator": "required_icon",[39m\n
   [32m        "element_criteria": "mandatory",[39m\n
-  [32m        "hover_text": "common/common.document_link_sub_elements_title_hover_text",[39m\n
+  [32m        "hover_text": "common/common.a_short_title_for_the_document",[39m\n
   [32m        "attributes": {},[39m\n
   [32m        "sub_elements": {[39m\n
   [32m          "narrative": {[39m\n
   [32m            "name": "narrative",[39m\n
   [32m            "label": "elements/org_json_schema.name_sub_elements_narrative_label",[39m\n
   [32m            "type": "textarea",[39m\n
-  [32m            "placeholder": "common/common.description_sub_elements_narrative_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_narrative",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "add_more": true,[39m\n
   [32m            "attr": {[39m\n
   [32m              "row": 4[39m\n
   [32m            },[39m\n
-  [32m            "hover_text": "common/common.document_link_sub_elements_title_sub_elements_narrative_hover_text",[39m\n
+  [32m            "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",[39m\n
   [32m            "help_text": "",[39m\n
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
@@ -1543,7 +1543,7 @@
   [32m      },[39m\n
   [32m      "category": {[39m\n
   [32m        "name": "category",[39m\n
-  [32m        "label": "common/common.document_link_sub_elements_category_label",[39m\n
+  [32m        "label": "common/common.category",[39m\n
   [32m        "add_more": true,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -1551,19 +1551,19 @@
   [32m        "label_indicator": "required_icon",[39m\n
   [32m        "element_criteria": "mandatory",[39m\n
   [32m        "wrapper_collection": false,[39m\n
-  [32m        "hover_text": "common/common.document_link_sub_elements_category_hover_text",[39m\n
+  [32m        "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",[39m\n
   [32m        "help_text": "",[39m\n
   [32m        "attributes": {[39m\n
   [32m          "code": {[39m\n
   [32m            "name": "code",[39m\n
-  [32m            "label": "elements/org_json_schema.common/common.activity_status_attributes_activity_status_label",[39m\n
+  [32m            "label": "elements/org_json_schema.common/common.code",[39m\n
   [32m            "type": "select",[39m\n
   [32m            "multiSelect": false,[39m\n
   [32m            "choices": "Organization/DocumentCategory.json",[39m\n
-  [32m            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",[39m\n
+  [32m            "placeholder": "common/common.select_code",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
-  [32m            "hover_text": "common/common.document_link_sub_elements_category_attributes_code_hover_text",[39m\n
+  [32m            "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",[39m\n
   [32m            "help_text": ""[39m\n
   [32m          }[39m\n
   [32m        },[39m\n
@@ -1571,27 +1571,27 @@
   [32m      },[39m\n
   [32m      "description": {[39m\n
   [32m        "name": "description",[39m\n
-  [32m        "label": "common/common.description_label",[39m\n
+  [32m        "label": "common/common.description",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
   [32m        "is_collapsable": true,[39m\n
   [32m        "label_indicator": "optional_text",[39m\n
   [32m        "attributes": {},[39m\n
-  [32m        "hover_text": "common/common.document_link_sub_elements_description_hover_text",[39m\n
+  [32m        "hover_text": "common/common.a_description_of_the_document_contents_or_guidance_on_where_to_access_relevant_information",[39m\n
   [32m        "sub_elements": {[39m\n
   [32m          "narrative": {[39m\n
   [32m            "name": "narrative",[39m\n
   [32m            "label": "elements/org_json_schema.name_sub_elements_narrative_label",[39m\n
   [32m            "type": "textarea",[39m\n
-  [32m            "placeholder": "common/common.description_sub_elements_narrative_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_narrative",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "",[39m\n
   [32m            "add_more": true,[39m\n
   [32m            "attr": {[39m\n
   [32m              "row": 4[39m\n
   [32m            },[39m\n
-  [32m            "hover_text": "common/common.document_link_sub_elements_description_sub_elements_narrative_hover_text",[39m\n
+  [32m            "hover_text": "common/common.provide_a_short_description_of_the_document_or_webpage_including_any_instructions",[39m\n
   [32m            "help_text": "",[39m\n
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
@@ -1620,15 +1620,15 @@
   [32m        "is_collapsable": true,[39m\n
   [32m        "label_indicator": "optional_text",[39m\n
   [32m        "wrapper_collection": false,[39m\n
-  [32m        "hover_text": "common/common.document_link_sub_elements_language_attributes_code_hover_text",[39m\n
+  [32m        "hover_text": "common/common.select_the_language_that_the_document_is_written_in",[39m\n
   [32m        "attributes": {[39m\n
   [32m          "code": {[39m\n
   [32m            "name": "language",[39m\n
-  [32m            "label": "elements/org_json_schema.common/common.activity_status_attributes_activity_status_label",[39m\n
+  [32m            "label": "elements/org_json_schema.common/common.code",[39m\n
   [32m            "type": "select",[39m\n
   [32m            "multiSelect": false,[39m\n
   [32m            "choices": "Activity/Language.json",[39m\n
-  [32m            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",[39m\n
+  [32m            "placeholder": "common/common.select_code",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -1639,22 +1639,22 @@
   [32m      },[39m\n
   [32m      "document_date": {[39m\n
   [32m        "name": "document_date",[39m\n
-  [32m        "label": "common/common.result_sub_elements_document_link_sub_elements_document_date_label",[39m\n
+  [32m        "label": "common/common.document_date",[39m\n
   [32m        "add_more": false,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
   [32m        "is_collapsable": true,[39m\n
   [32m        "label_indicator": "optional_text",[39m\n
-  [32m        "hover_text": "common/common.document_link_sub_elements_document_date_hover_text",[39m\n
+  [32m        "hover_text": "common/common.the_publication_date_of_the_document_or_webpage",[39m\n
   [32m        "attributes": {[39m\n
   [32m          "date": {[39m\n
   [32m            "name": "date",[39m\n
-  [32m            "label": "common/common.document_link_sub_elements_document_date_attributes_date_label",[39m\n
+  [32m            "label": "common/common.date",[39m\n
   [32m            "type": "date",[39m\n
-  [32m            "placeholder": "common/common.document_link_sub_elements_document_date_attributes_date_placeholder",[39m\n
+  [32m            "placeholder": "common/common.yyyy_mm_dd",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "",[39m\n
-  [32m            "hover_text": "common/common.document_link_sub_elements_document_date_attributes_date_hover_text",[39m\n
+  [32m            "hover_text": "common/common.provide_the_date_of_publication_for_the_document_or_the_date_that_it was_last_updated",[39m\n
   [32m            "help_text": ""[39m\n
   [32m          }[39m\n
   [32m        },[39m\n
@@ -1662,7 +1662,7 @@
   [32m      },[39m\n
   [32m      "recipient_country": {[39m\n
   [32m        "name": "recipient_country",[39m\n
-  [32m        "label": "common/common.recipient_country_label",[39m\n
+  [32m        "label": "common/common.recipient_country",[39m\n
   [32m        "criteria": "",[39m\n
   [32m        "add_more": true,[39m\n
   [32m        "form_has_borders": true,[39m\n
@@ -1675,11 +1675,11 @@
   [32m        "attributes": {[39m\n
   [32m          "code": {[39m\n
   [32m            "name": "code",[39m\n
-  [32m            "label": "elements/org_json_schema.common/common.activity_status_attributes_activity_status_label",[39m\n
+  [32m            "label": "elements/org_json_schema.common/common.code",[39m\n
   [32m            "type": "select",[39m\n
   [32m            "multiselect": false,[39m\n
   [32m            "choices": "Activity/Country.json",[39m\n
-  [32m            "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",[39m\n
+  [32m            "placeholder": "common/common.select_code",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "elements/org_json_schema.document_link_sub_elements_recipient_country_attributes_code_hover_text",[39m\n
@@ -1691,14 +1691,14 @@
   [32m            "name": "narrative",[39m\n
   [32m            "label": "elements/org_json_schema.name_sub_elements_narrative_label",[39m\n
   [32m            "type": "textarea",[39m\n
-  [32m            "placeholder": "common/common.description_sub_elements_narrative_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_narrative",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "add_more": true,[39m\n
   [32m            "attr": {[39m\n
   [32m              "row": 4[39m\n
   [32m            },[39m\n
-  [32m            "hover_text": "elements/org_json_schema.document_link_sub_elements_recipient_country_sub_elements_narrative_hover_text",[39m\n
+  [32m            "hover_text": "elements/org_json_schema.document_link_sub_elements_add_an_optional_name_or_description_of_the_country_benefitting_from_the_activity",[39m\n
   [32m            "help_text": "",[39m\n
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
