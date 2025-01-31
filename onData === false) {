@@ -52,7 +52,7 @@
   [32m  },[39m\n
   [32m  "name": {[39m\n
   [32m    "name": "name",[39m\n
-  [32m    "label": "common/common.reporting_org_sub_elements_narrative_label",[39m\n
+  [32m    "label": "common/common.name",[39m\n
   [32m    "multiple": false,[39m\n
   [32m    "hover_text": "elements/org_json_schema.name_hover_text",[39m\n
   [32m    "show_info_in_title": true,[39m\n
@@ -74,7 +74,7 @@
   [32m        "attributes": {[39m\n
   [32m          "lang": {[39m\n
   [32m            "name": "language",[39m\n
-  [32m            "label": "common/common.title_sub_elements_narrative_attributes_language_label",[39m\n
+  [32m            "label": "common/common.language",[39m\n
   [32m            "type": "select",[39m\n
   [32m            "multiSelect": false,[39m\n
   [32m            "choices": "Activity/Language.json",[39m\n
@@ -139,7 +139,7 @@
   [32m    "sub_elements": {[39m\n
   [32m      "narrative": {[39m\n
   [32m        "name": "narrative",[39m\n
-  [32m        "label": "common/common.reporting_org_sub_elements_narrative_label",[39m\n
+  [32m        "label": "common/common.name",[39m\n
   [32m        "type": "textarea",[39m\n
   [32m        "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",[39m\n
   [32m        "required": true,[39m\n
@@ -154,7 +154,7 @@
   [32m        "attributes": {[39m\n
   [32m          "lang": {[39m\n
   [32m            "name": "language",[39m\n
-  [32m            "label": "common/common.title_sub_elements_narrative_attributes_language_label",[39m\n
+  [32m            "label": "common/common.language",[39m\n
   [32m            "type": "select",[39m\n
   [32m            "multiSelect": false,[39m\n
   [32m            "choices": "Activity/Language.json",[39m\n
@@ -182,7 +182,7 @@
   [32m    "attributes": {[39m\n
   [32m      "status": {[39m\n
   [32m        "name": "total_budget_status",[39m\n
-  [32m        "label": "common/common.budget_attributes_budget_status_label",[39m\n
+  [32m        "label": "common/common.status",[39m\n
   [32m        "type": "select",[39m\n
   [32m        "multiselect": false,[39m\n
   [32m        "choices": "Activity/BudgetStatus.json",[39m\n
@@ -257,7 +257,7 @@
   [32m            "name": "amount",[39m\n
   [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
   [32m            "type": "text",[39m\n
-  [32m            "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_value_here",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -325,7 +325,7 @@
   [32m                "name": "amount",[39m\n
   [32m                "label": "common/common.legacy_data_attributes_value_label",[39m\n
   [32m                "type": "text",[39m\n
-  [32m                "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",[39m\n
+  [32m                "placeholder": "common/common.type_value_here",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
   [32m                "hover_text": "",[39m\n
@@ -374,7 +374,7 @@
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
   [32m                "name": "language",[39m\n
-  [32m                "label": "common/common.title_sub_elements_narrative_attributes_language_label",[39m\n
+  [32m                "label": "common/common.language",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiSelect": false,[39m\n
   [32m                "choices": "Activity/Language.json",[39m\n
@@ -404,11 +404,11 @@
   [32m    "attributes": {[39m\n
   [32m      "status": {[39m\n
   [32m        "name": "status",[39m\n
-  [32m        "label": "common/common.budget_attributes_budget_status_label",[39m\n
+  [32m        "label": "common/common.status",[39m\n
   [32m        "type": "select",[39m\n
   [32m        "multiselect": false,[39m\n
   [32m        "choices": "Activity/BudgetStatus.json",[39m\n
-  [32m        "placeholder": "common/common.budget_attributes_budget_status_placeholder",[39m\n
+  [32m        "placeholder": "common/common.select_status",[39m\n
   [32m        "required": false,[39m\n
   [32m        "criteria": "",[39m\n
   [32m        "hover_text": "common/common.budget_attributes_budget_status_hover_text",[39m\n
@@ -456,7 +456,7 @@
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
   [32m                "name": "language",[39m\n
-  [32m                "label": "common/common.title_sub_elements_narrative_attributes_language_label",[39m\n
+  [32m                "label": "common/common.language",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiSelect": false,[39m\n
   [32m                "choices": "Activity/Language.json",[39m\n
@@ -534,7 +534,7 @@
   [32m            "name": "amount",[39m\n
   [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
   [32m            "type": "text",[39m\n
-  [32m            "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_value_here",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -601,7 +601,7 @@
   [32m                "name": "amount",[39m\n
   [32m                "label": "common/common.legacy_data_attributes_value_label",[39m\n
   [32m                "type": "text",[39m\n
-  [32m                "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",[39m\n
+  [32m                "placeholder": "common/common.type_value_here",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
   [32m                "hover_text": "",[39m\n
@@ -650,7 +650,7 @@
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
   [32m                "name": "language",[39m\n
-  [32m                "label": "common/common.title_sub_elements_narrative_attributes_language_label",[39m\n
+  [32m                "label": "common/common.language",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiSelect": false,[39m\n
   [32m                "choices": "Activity/Language.json",[39m\n
@@ -680,11 +680,11 @@
   [32m    "attributes": {[39m\n
   [32m      "status": {[39m\n
   [32m        "name": "status",[39m\n
-  [32m        "label": "common/common.budget_attributes_budget_status_label",[39m\n
+  [32m        "label": "common/common.status",[39m\n
   [32m        "type": "select",[39m\n
   [32m        "multiselect": false,[39m\n
   [32m        "choices": "Activity/BudgetStatus.json",[39m\n
-  [32m        "placeholder": "common/common.budget_attributes_budget_status_placeholder",[39m\n
+  [32m        "placeholder": "common/common.select_status",[39m\n
   [32m        "required": true,[39m\n
   [32m        "criteria": "mandatory",[39m\n
   [32m        "hover_text": "common/common.budget_attributes_budget_status_hover_text",[39m\n
@@ -767,7 +767,7 @@
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
   [32m                "name": "language",[39m\n
-  [32m                "label": "common/common.title_sub_elements_narrative_attributes_language_label",[39m\n
+  [32m                "label": "common/common.language",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiSelect": false,[39m\n
   [32m                "choices": "Activity/Language.json",[39m\n
@@ -846,7 +846,7 @@
   [32m            "name": "amount",[39m\n
   [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
   [32m            "type": "text",[39m\n
-  [32m            "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_value_here",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -914,7 +914,7 @@
   [32m                "name": "amount",[39m\n
   [32m                "label": "common/common.legacy_data_attributes_value_label",[39m\n
   [32m                "type": "text",[39m\n
-  [32m                "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",[39m\n
+  [32m                "placeholder": "common/common.type_value_here",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
   [32m                "hover_text": "",[39m\n
@@ -961,7 +961,7 @@
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
   [32m                "name": "language",[39m\n
-  [32m                "label": "common/common.title_sub_elements_narrative_attributes_language_label",[39m\n
+  [32m                "label": "common/common.language",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiSelect": false,[39m\n
   [32m                "choices": "Activity/Language.json",[39m\n
@@ -991,11 +991,11 @@
   [32m    "attributes": {[39m\n
   [32m      "status": {[39m\n
   [32m        "name": "status",[39m\n
-  [32m        "label": "common/common.budget_attributes_budget_status_label",[39m\n
+  [32m        "label": "common/common.status",[39m\n
   [32m        "type": "select",[39m\n
   [32m        "multiselect": false,[39m\n
   [32m        "choices": "Activity/BudgetStatus.json",[39m\n
-  [32m        "placeholder": "common/common.budget_attributes_budget_status_placeholder",[39m\n
+  [32m        "placeholder": "common/common.select_status",[39m\n
   [32m        "required": false,[39m\n
   [32m        "criteria": "",[39m\n
   [32m        "hover_text": "common/common.budget_attributes_budget_status_hover_text",[39m\n
@@ -1045,7 +1045,7 @@
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
   [32m                "name": "language",[39m\n
-  [32m                "label": "common/common.title_sub_elements_narrative_attributes_language_label",[39m\n
+  [32m                "label": "common/common.language",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiSelect": false,[39m\n
   [32m                "choices": "Activity/Language.json",[39m\n
@@ -1124,7 +1124,7 @@
   [32m            "name": "amount",[39m\n
   [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
   [32m            "type": "text",[39m\n
-  [32m            "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_value_here",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -1192,7 +1192,7 @@
   [32m                "name": "amount",[39m\n
   [32m                "label": "common/common.legacy_data_attributes_value_label",[39m\n
   [32m                "type": "text",[39m\n
-  [32m                "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",[39m\n
+  [32m                "placeholder": "common/common.type_value_here",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
   [32m                "hover_text": "",[39m\n
@@ -1239,7 +1239,7 @@
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
   [32m                "name": "language",[39m\n
-  [32m                "label": "common/common.title_sub_elements_narrative_attributes_language_label",[39m\n
+  [32m                "label": "common/common.language",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiSelect": false,[39m\n
   [32m                "choices": "Activity/Language.json",[39m\n
@@ -1331,7 +1331,7 @@
   [32m            "name": "amount",[39m\n
   [32m            "label": "common/common.legacy_data_attributes_value_label",[39m\n
   [32m            "type": "text",[39m\n
-  [32m            "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",[39m\n
+  [32m            "placeholder": "common/common.type_value_here",[39m\n
   [32m            "required": true,[39m\n
   [32m            "criteria": "mandatory",[39m\n
   [32m            "hover_text": "",[39m\n
@@ -1399,7 +1399,7 @@
   [32m                "name": "amount",[39m\n
   [32m                "label": "common/common.legacy_data_attributes_value_label",[39m\n
   [32m                "type": "text",[39m\n
-  [32m                "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",[39m\n
+  [32m                "placeholder": "common/common.type_value_here",[39m\n
   [32m                "required": true,[39m\n
   [32m                "criteria": "mandatory",[39m\n
   [32m                "hover_text": "",[39m\n
@@ -1446,7 +1446,7 @@
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
   [32m                "name": "language",[39m\n
-  [32m                "label": "common/common.title_sub_elements_narrative_attributes_language_label",[39m\n
+  [32m                "label": "common/common.language",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiSelect": false,[39m\n
   [32m                "choices": "Activity/Language.json",[39m\n
@@ -1526,7 +1526,7 @@
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
   [32m                "name": "language",[39m\n
-  [32m                "label": "common/common.title_sub_elements_narrative_attributes_language_label",[39m\n
+  [32m                "label": "common/common.language",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiSelect": false,[39m\n
   [32m                "choices": "Activity/Language.json",[39m\n
@@ -1596,7 +1596,7 @@
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
   [32m                "name": "language",[39m\n
-  [32m                "label": "common/common.title_sub_elements_narrative_attributes_language_label",[39m\n
+  [32m                "label": "common/common.language",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiSelect": false,[39m\n
   [32m                "choices": "Activity/Language.json",[39m\n
@@ -1613,7 +1613,7 @@
   [32m      },[39m\n
   [32m      "language": {[39m\n
   [32m        "name": "language",[39m\n
-  [32m        "label": "title_sub_elements_narrative_attributes_language_label",[39m\n
+  [32m        "label": "language",[39m\n
   [32m        "add_more": true,[39m\n
   [32m        "form_has_borders": true,[39m\n
   [32m        "label_has_borders": true,[39m\n
@@ -1703,7 +1703,7 @@
   [32m            "attributes": {[39m\n
   [32m              "lang": {[39m\n
   [32m                "name": "language",[39m\n
-  [32m                "label": "common/common.title_sub_elements_narrative_attributes_language_label",[39m\n
+  [32m                "label": "common/common.language",[39m\n
   [32m                "type": "select",[39m\n
   [32m                "multiSelect": false,[39m\n
   [32m                "choices": "Activity/Language.json",[39m\n

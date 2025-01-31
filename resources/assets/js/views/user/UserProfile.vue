@@ -89,8 +89,8 @@
           </div>
           <div class="mb-5 flex space-x-6">
             <div class="flex w-full flex-col gap-2">
-              <label class="text-sm text-n-50"
-                >{{ translatedData['userProfile.user_profile.new_password'] }}
+              <label class="text-sm text-n-50">
+                {{ translatedData['userProfile.user_profile.new_password'] }}
                 <span class="text-[red]"> * </span>
               </label>
               <span class="relative">
@@ -122,9 +122,9 @@
               </span>
             </div>
             <div class="flex w-full flex-col gap-2">
-              <label class="text-sm text-n-50"
-                >{{ translatedData['common.common.confirm_password']
-                }}<span class="text-[red]"> * </span>
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.confirm_password'] }}
+                <span class="text-[red]"> * </span>
               </label>
               <span class="relative">
                 <svg-vue
@@ -187,10 +187,10 @@
           </div>
           <div class="grid grid-cols-2 gap-6">
             <div class="col-span-2 flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50"
-                >{{ translatedData['common.common.full_name']
-                }}<span class="text-[red]"> * </span></label
-              >
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.full_name'] }}
+                <span class="text-[red]"> * </span>
+              </label>
               <input
                 v-model="formData.full_name"
                 :class="
@@ -210,9 +210,10 @@
               </span>
             </div>
             <div class="flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50"
-                >Username<span class="text-[red]"> * </span></label
-              >
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.username'] }}
+                <span class="text-[red]"> * </span>
+              </label>
               <input
                 v-model="formData.username"
                 :class="
@@ -271,11 +272,7 @@
               <Multiselect
                 v-model="formData.language_preference"
                 :options="languagePreference"
-                :placeholder="
-                  translatedData[
-                    'common.common.title_sub_elements_narrative_attributes_language_placeholder'
-                  ]
-                "
+                :placeholder="translatedData['common.common.select_language']"
                 :searchable="true"
               />
               <span
@@ -322,8 +319,6 @@
                 }
               "
             >
-              <!-- <svg-vue icon=""></svg-vue> -->
-
               {{
                 translatedData['userProfile.user_profile.change_your_password']
               }}
@@ -334,11 +329,7 @@
 
       <div class="flex space-x-2 border-b border-n-20 py-6">
         <div class="text-base font-bold text-n-40">
-          {{
-            translatedData[
-              'common.common.reporting_org_sub_elements_narrative_label'
-            ]
-          }}
+          {{ translatedData['common.common.name'] }}
         </div>
         <div class="max-w-[60vw] overflow-x-hidden text-ellipsis text-base">
           {{ userData['full_name'] }}

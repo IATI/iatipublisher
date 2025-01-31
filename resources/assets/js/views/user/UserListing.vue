@@ -2,7 +2,9 @@
   <div class="px-6 py-4 md:px-10">
     <Loader v-if="isLoaderVisible" />
     <div class="my-4 flex justify-between">
-      <h4 class="mr-4 text-3xl font-bold xl:text-heading-4">Users</h4>
+      <h4 class="mr-4 text-3xl font-bold xl:text-heading-4">
+        {{ translatedData['common.common.users'] }}
+      </h4>
       <div class="inline-flex flex-col items-end justify-end gap-2 md:flex-row">
         <Toast
           v-if="
@@ -20,7 +22,11 @@
           @click="downloadAll"
         >
           <svg-vue icon="download-file" />
-          {{ checklist.length === 0 ? 'Download All' : '' }}
+          {{
+            checklist.length === 0
+              ? translatedData['common.common.download_all']
+              : ''
+          }}
         </button>
         <button
           v-if="userRole !== 'general_user'"
@@ -33,8 +39,8 @@
             }
           "
         >
-          <svg-vue class="text-base" icon="plus-outlined" /> Add a new
-          {{ userRole === 'admin' ? 'user' : 'iati admin' }}
+          <svg-vue class="text-base" icon="plus-outlined" />
+          {{ getTranslatedAddNewUser(userRole) }}
         </button>
       </div>
     </div>
@@ -54,14 +60,18 @@
           @keyup.enter="addUserForm ? createUser() : updateUser()"
         >
           <div class="mb-5 text-2xl font-bold text-bluecoral">
-            {{ addUserForm ? 'Add a new ' : 'Edit ' }}
-            {{ userRole === 'admin' ? 'user' : 'IATI Admin' }}
+            {{
+              addUserForm
+                ? getTranslatedAddNewUser(userRole)
+                : getTranslatedEditUser(userRole)
+            }}
           </div>
           <div class="grid grid-cols-2 gap-6">
             <div class="col-span-2 flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50"
-                >Full Name<span class="text-crimson-50"> * </span></label
-              >
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.full_name'] }}
+                <span class="text-crimson-50"> * </span>
+              </label>
               <input
                 id="full_name"
                 v-model="formData.full_name"
@@ -77,9 +87,10 @@
             </div>
 
             <div class="flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50"
-                >Username<span class="text-crimson-50"> *</span></label
-              >
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.username'] }}
+                <span class="text-crimson-50"> * </span>
+              </label>
               <input
                 id="username"
                 v-model="formData.username"
@@ -94,9 +105,10 @@
               }}</span>
             </div>
             <div class="flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50"
-                >Email<span class="text-crimson-50"> * </span></label
-              >
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.email'] }}
+                <span class="text-crimson-50"> * </span>
+              </label>
               <input
                 id="email"
                 v-model="formData.email"
@@ -116,14 +128,15 @@
               :class="formError['status'] && 'error__multiselect'"
               class="flex flex-col items-start gap-2"
             >
-              <label class="text-sm text-n-50"
-                >Status<span class="text-crimson-50"> * </span></label
-              >
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.status'] }}
+                <span class="text-crimson-50"> * </span>
+              </label>
               <Multiselect
                 id="status"
                 v-model="formData.status"
                 :options="status"
-                placeholder="Select status"
+                :placeholder="translatedData['common.common.select_status']"
                 :searchable="true"
               />
               <span v-if="formError['status']" class="error">{{
@@ -135,14 +148,15 @@
               :class="formError['role_id'] && 'error__multiselect'"
               class="flex flex-col items-start gap-2"
             >
-              <label class="text-sm text-n-50"
-                >Role<span class="text-crimson-50"> * </span></label
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.role'] }}
+                <span class="text-crimson-50"> * </span></label
               >
               <Multiselect
                 id="role"
                 v-model="formData.role_id"
                 :options="roles"
-                placeholder="Select user role"
+                :placeholder="translatedData['common.common.select_user_role']"
                 :searchable="true"
               />
               <span v-if="formError['role_id']" class="error">{{
@@ -151,11 +165,10 @@
             </div>
 
             <div class="flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50"
-                >New password<span v-if="!editUserForm" class="text-crimson-50">
-                  *
-                </span></label
-              >
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.new_password'] }}
+                <span v-if="!editUserForm" class="text-crimson-50"> * </span>
+              </label>
               <input
                 id="password"
                 v-model="formData.password"
@@ -720,7 +733,16 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, reactive, ref, computed, watch, onMounted } from 'vue';
+import {
+  defineProps,
+  reactive,
+  ref,
+  computed,
+  watch,
+  onMounted,
+  inject,
+  Ref,
+} from 'vue';
 import Loader from '../../components/Loader.vue';
 import Toast from 'Components/ToastMessage.vue';
 import axios from 'axios';
@@ -787,6 +809,7 @@ const isSuperadmin = ref(false);
 isSuperadmin.value =
   props.userRole === 'superadmin' || props.userRole === 'iati_admin';
 
+const translatedData = inject('translatedData') as Ref;
 const dropdownRange = {
   created_at: 'User created date',
   last_logged_in: 'Last login date',
@@ -1223,6 +1246,27 @@ const downloadAll = () => {
     link.click();
   });
 };
+
+function getTranslatedAddNewUser(userRole: string): string {
+  const role =
+    userRole === 'admin'
+      ? translatedData['common.common.user']
+      : translatedData['common.common.iati_admin'];
+
+  return translatedData['common.common.add_a_new_user_role'].replaceAll(
+    ':userRole',
+    role
+  );
+}
+
+function getTranslatedEditUser(userRole: string): string {
+  const role =
+    userRole === 'admin'
+      ? translatedData['common.common.user']
+      : translatedData['common.common.iati_admin'];
+
+  return translatedData['common.common.edit'] + ' ' + role;
+}
 </script>
 <style scoped>
 @keyframes spinner {

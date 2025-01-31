@@ -25,9 +25,9 @@
         "attributes": {
           "language": {
             "name": "language",
-            "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+            "label": "common/common.language",
             "type": "select",
-            "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+            "placeholder": "common/common.select_language",
             "choices": "Activity/Language.json",
             "required": true,
             "criteria": "mandatory",
@@ -91,7 +91,7 @@
     "sub_elements": {
       "narrative": {
         "name": "narrative",
-        "label": "common/common.reporting_org_sub_elements_narrative_label",
+        "label": "common/common.name",
         "type": "textarea",
         "placeholder": "",
         "required": true,
@@ -106,9 +106,9 @@
         "attributes": {
           "lang": {
             "name": "language",
-            "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+            "label": "common/common.language",
             "type": "select",
-            "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+            "placeholder": "common/common.select_language",
             "multiSelect": false,
             "choices": "Activity/Language.json",
             "required": false,
@@ -219,9 +219,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": false,
                 "criteria": "recommended",
@@ -274,9 +274,9 @@
         "attributes": {
           "language": {
             "name": "language",
-            "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+            "label": "common/common.language",
             "type": "select",
-            "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+            "placeholder": "common/common.select_language",
             "choices": "Activity/Language.json",
             "required": true,
             "criteria": "mandatory",
@@ -357,9 +357,9 @@
         "attributes": {
           "language": {
             "name": "language",
-            "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+            "label": "common/common.language",
             "type": "select",
-            "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+            "placeholder": "common/common.select_language",
             "choices": "Activity/Language.json",
             "required": false,
             "criteria": "recommended",
@@ -440,9 +440,9 @@
         "attributes": {
           "language": {
             "name": "language",
-            "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+            "label": "common/common.language",
             "type": "select",
-            "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+            "placeholder": "common/common.select_language",
             "choices": "Activity/Language.json",
             "required": false,
             "criteria": "recommended",
@@ -560,9 +560,9 @@
         "attributes": {
           "language": {
             "name": "language",
-            "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+            "label": "common/common.language",
             "type": "select",
-            "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+            "placeholder": "common/common.select_language",
             "choices": "Activity/Language.json",
             "required": false,
             "criteria": "recommended",
@@ -743,9 +743,9 @@
         "attributes": {
           "language": {
             "name": "language",
-            "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+            "label": "common/common.language",
             "type": "select",
-            "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+            "placeholder": "common/common.select_language",
             "choices": "Activity/Language.json",
             "required": false,
             "criteria": "",
@@ -875,9 +875,9 @@
         "attributes": {
           "language": {
             "name": "language",
-            "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+            "label": "common/common.language",
             "type": "select",
-            "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+            "placeholder": "common/common.select_language",
             "choices": "Activity/Language.json",
             "required": false,
             "criteria": "recommended",
@@ -997,9 +997,9 @@
         "attributes": {
           "language": {
             "name": "language",
-            "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+            "label": "common/common.language",
             "type": "select",
-            "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+            "placeholder": "common/common.select_language",
             "choices": "Activity/Language.json",
             "required": false,
             "criteria": "",
@@ -1273,9 +1273,9 @@
                 "attributes": {
                   "language": {
                     "name": "language",
-                    "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                    "label": "common/common.language",
                     "type": "select",
-                    "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                    "placeholder": "common/common.select_language",
                     "required": false,
                     "choices": "Activity/Language.json",
                     "criteria": "recommended",
@@ -1381,9 +1381,9 @@
         "attributes": {
           "language": {
             "name": "language",
-            "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+            "label": "common/common.language",
             "type": "select",
-            "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+            "placeholder": "common/common.select_language",
             "choices": "Activity/Language.json",
             "required": false,
             "criteria": "recommended",
@@ -1514,9 +1514,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": false,
                 "criteria": "recommended",
@@ -1543,7 +1543,7 @@
     "attributes": {
       "legacy_name": {
         "name": "legacy_name",
-        "label": "common/common.reporting_org_sub_elements_narrative_label",
+        "label": "common/common.name",
         "type": "text",
         "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
         "required": true,
@@ -1648,9 +1648,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": false,
                 "criteria": "recommended",
@@ -1718,9 +1718,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": false,
                 "criteria": "",
@@ -1734,7 +1734,7 @@
       },
       "language": {
         "name": "language",
-        "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+        "label": "common/common.language",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -1833,9 +1833,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": true,
                 "criteria": "mandatory",
@@ -1874,9 +1874,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": true,
                 "criteria": "mandatory",
@@ -1915,9 +1915,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": false,
                 "criteria": "",
@@ -1956,9 +1956,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": true,
                 "criteria": "mandatory",
@@ -2067,9 +2067,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": true,
                 "criteria": "mandatory",
@@ -2169,7 +2169,7 @@
       },
       "name": {
         "name": "name",
-        "label": "common/common.reporting_org_sub_elements_narrative_label",
+        "label": "common/common.name",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -2194,9 +2194,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": true,
                 "criteria": "mandatory",
@@ -2234,9 +2234,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": true,
                 "criteria": "mandatory",
@@ -2275,9 +2275,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": true,
                 "criteria": "mandatory",
@@ -2637,9 +2637,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": false,
                 "criteria": "recommended",
@@ -2711,9 +2711,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": false,
                 "criteria": "recommended",
@@ -2796,7 +2796,7 @@
     "sub_elements": {
       "narrative": {
         "name": "narrative",
-        "label": "common/common.reporting_org_sub_elements_narrative_label",
+        "label": "common/common.name",
         "type": "textarea",
         "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
         "element_criteria": "recommended",
@@ -2811,9 +2811,9 @@
         "attributes": {
           "language": {
             "name": "language",
-            "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+            "label": "common/common.language",
             "type": "select",
-            "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+            "placeholder": "common/common.select_language",
             "choices": "Activity/Language.json",
             "required": false,
             "criteria": "recommended",
@@ -2837,9 +2837,9 @@
     "attributes": {
       "budget_status": {
         "name": "budget_status",
-        "label": "common/common.budget_attributes_budget_status_label",
+        "label": "common/common.status",
         "type": "select",
-        "placeholder": "common/common.budget_attributes_budget_status_placeholder",
+        "placeholder": "common/common.select_status",
         "choices": "Activity/BudgetStatus.json",
         "required": false,
         "criteria": "recommended",
@@ -3021,9 +3021,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": false,
                 "criteria": "recommended",
@@ -3062,9 +3062,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": false,
                 "criteria": "recommended",
@@ -3139,9 +3139,9 @@
                 "attributes": {
                   "language": {
                     "name": "language",
-                    "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                    "label": "common/common.language",
                     "type": "select",
-                    "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                    "placeholder": "common/common.select_language",
                     "choices": "Activity/Language.json",
                     "required": true,
                     "criteria": "",
@@ -3206,9 +3206,9 @@
                 "attributes": {
                   "language": {
                     "name": "language",
-                    "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                    "label": "common/common.language",
                     "type": "select",
-                    "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                    "placeholder": "common/common.select_language",
                     "choices": "Activity/Language.json",
                     "required": true,
                     "criteria": "",
@@ -3222,7 +3222,7 @@
           },
           "language": {
             "name": "language",
-            "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+            "label": "common/common.language",
             "add_more": true,
             "form_has_borders": true,
             "label_has_borders": true,
@@ -3396,9 +3396,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": true,
                 "criteria": "mandatory",
@@ -3437,9 +3437,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": true,
                 "criteria": "",
@@ -3513,9 +3513,9 @@
                 "attributes": {
                   "language": {
                     "name": "language",
-                    "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                    "label": "common/common.language",
                     "type": "select",
-                    "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                    "placeholder": "common/common.select_language",
                     "choices": "Activity/Language.json",
                     "required": true,
                     "criteria": "",
@@ -3580,9 +3580,9 @@
                 "attributes": {
                   "language": {
                     "name": "language",
-                    "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                    "label": "common/common.language",
                     "type": "select",
-                    "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                    "placeholder": "common/common.select_language",
                     "choices": "Activity/Language.json",
                     "required": true,
                     "criteria": "",
@@ -3596,7 +3596,7 @@
           },
           "language": {
             "name": "language",
-            "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+            "label": "common/common.language",
             "add_more": true,
             "wrapper_collection": false,
             "form_has_borders": true,
@@ -3760,9 +3760,9 @@
                 "attributes": {
                   "language": {
                     "name": "language",
-                    "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                    "label": "common/common.language",
                     "type": "select",
-                    "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                    "placeholder": "common/common.select_language",
                     "choices": "Activity/Language.json",
                     "required": true,
                     "criteria": "",
@@ -3788,7 +3788,7 @@
             "attributes": {
               "name": {
                 "name": "name",
-                "label": "common/common.reporting_org_sub_elements_narrative_label",
+                "label": "common/common.name",
                 "type": "text",
                 "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
                 "required": false,
@@ -3873,7 +3873,7 @@
                     "attributes": {
                       "language": {
                         "name": "language",
-                        "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                        "label": "common/common.language",
                         "type": "select",
                         "placeholder": "common/common.activity_status_attributes_activity_status_placeholder",
                         "choices": "Activity/Language.json",
@@ -3941,9 +3941,9 @@
                     "attributes": {
                       "language": {
                         "name": "language",
-                        "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                        "label": "common/common.language",
                         "type": "select",
-                        "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                        "placeholder": "common/common.select_language",
                         "choices": "Activity/Language.json",
                         "required": true,
                         "criteria": "",
@@ -3957,7 +3957,7 @@
               },
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "add_more": true,
                 "wrapper_collection": false,
                 "form_has_borders": true,
@@ -4141,9 +4141,9 @@
                 "attributes": {
                   "language": {
                     "name": "language",
-                    "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                    "label": "common/common.language",
                     "type": "select",
-                    "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                    "placeholder": "common/common.select_language",
                     "choices": "Activity/Language.json",
                     "required": false,
                     "criteria": "",
@@ -4167,7 +4167,7 @@
             "attributes": {
               "name": {
                 "name": "name",
-                "label": "common/common.reporting_org_sub_elements_narrative_label",
+                "label": "common/common.name",
                 "type": "text",
                 "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
                 "required": false,
@@ -4250,9 +4250,9 @@
                     "attributes": {
                       "language": {
                         "name": "language",
-                        "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                        "label": "common/common.language",
                         "type": "select",
-                        "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                        "placeholder": "common/common.select_language",
                         "choices": "Activity/Language.json",
                         "required": true,
                         "criteria": "",
@@ -4316,9 +4316,9 @@
                     "attributes": {
                       "language": {
                         "name": "language",
-                        "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                        "label": "common/common.language",
                         "type": "select",
-                        "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                        "placeholder": "common/common.select_language",
                         "choices": "Activity/Language.json",
                         "required": true,
                         "criteria": "",
@@ -4332,7 +4332,7 @@
               },
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "add_more": true,
                 "form_has_borders": true,
                 "label_has_borders": true,
@@ -4456,9 +4456,9 @@
                 "attributes": {
                   "language": {
                     "name": "language",
-                    "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                    "label": "common/common.language",
                     "type": "select",
-                    "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                    "placeholder": "common/common.select_language",
                     "choices": "Activity/Language.json",
                     "required": true,
                     "criteria": "",
@@ -4483,7 +4483,7 @@
             "attributes": {
               "name": {
                 "name": "name",
-                "label": "common/common.reporting_org_sub_elements_narrative_label",
+                "label": "common/common.name",
                 "type": "text",
                 "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
                 "required": false,
@@ -4566,9 +4566,9 @@
                     "attributes": {
                       "language": {
                         "name": "language",
-                        "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                        "label": "common/common.language",
                         "type": "select",
-                        "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                        "placeholder": "common/common.select_language",
                         "choices": "Activity/Language.json",
                         "required": true,
                         "criteria": "",
@@ -4633,9 +4633,9 @@
                     "attributes": {
                       "language": {
                         "name": "language",
-                        "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                        "label": "common/common.language",
                         "type": "select",
-                        "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                        "placeholder": "common/common.select_language",
                         "choices": "Activity/Language.json",
                         "required": true,
                         "criteria": "",
@@ -4649,7 +4649,7 @@
               },
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "add_more": true,
                 "form_has_borders": true,
                 "label_has_borders": true,
@@ -4851,7 +4851,7 @@
             "name": "amount",
             "label": "common/common.legacy_data_attributes_value_label",
             "type": "text",
-            "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
+            "placeholder": "common/common.type_value_here",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -4908,9 +4908,9 @@
             "attributes": {
               "language": {
                 "name": "language",
-                "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                "label": "common/common.language",
                 "type": "select",
-                "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                "placeholder": "common/common.select_language",
                 "choices": "Activity/Language.json",
                 "required": false,
                 "criteria": "recommended",
@@ -4984,9 +4984,9 @@
               "attributes": {
                 "language": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
-                  "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                  "placeholder": "common/common.select_language",
                   "choices": "Activity/Language.json",
                   "required": false,
                   "criteria": "recommended",
@@ -5059,9 +5059,9 @@
               "attributes": {
                 "language": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
-                  "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                  "placeholder": "common/common.select_language",
                   "choices": "Activity/Language.json",
                   "required": false,
                   "criteria": "recommended",
@@ -5255,9 +5255,9 @@
               "attributes": {
                 "language": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
-                  "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                  "placeholder": "common/common.select_language",
                   "choices": "Activity/Language.json",
                   "required": false,
                   "criteria": "recommended",
@@ -5309,9 +5309,9 @@
               "attributes": {
                 "language": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
-                  "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                  "placeholder": "common/common.select_language",
                   "choices": "Activity/Language.json",
                   "required": false,
                   "criteria": "recommended",
@@ -5414,9 +5414,9 @@
               "attributes": {
                 "language": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
-                  "placeholder": "common/common.title_sub_elements_narrative_attributes_language_placeholder",
+                  "placeholder": "common/common.select_language",
                   "choices": "Activity/Language.json",
                   "required": false,
                   "criteria": "recommended",

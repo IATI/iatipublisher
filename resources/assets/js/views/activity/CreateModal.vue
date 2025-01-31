@@ -88,19 +88,11 @@
               <div>
                 <div class="label-field">
                   <label class="label" for="">
-                    {{
-                      translatedData[
-                        'common.common.title_sub_elements_narrative_attributes_language_label'
-                      ]
-                    }}
+                    {{ translatedData['common.common.language'] }}
                     <span class="required-icon"> *</span>
                   </label>
                   <HoverText
-                    :name="
-                      translatedData[
-                        'common.common.title_sub_elements_narrative_attributes_language_label'
-                      ]
-                    "
+                    :name="translatedData['common.common.language']"
                     :hover-text="
                       translatedData[
                         'activity_index.create_modal.a_code_specifying_the_language_of_text_in_this_element'
@@ -121,9 +113,7 @@
                   :options="languages"
                   :placeholder="
                     defaultLanguage ??
-                    translatedData[
-                      'common.common.title_sub_elements_narrative_attributes_language_placeholder'
-                    ]
+                    translatedData['common.common.select_language']
                   "
                 />
 

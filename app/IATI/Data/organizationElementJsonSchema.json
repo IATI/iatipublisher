@@ -51,7 +51,7 @@
     },
     "name": {
       "name": "name",
-      "label": "common/common.reporting_org_sub_elements_narrative_label",
+      "label": "common/common.name",
       "multiple": false,
       "hover_text": "elements/org_json_schema.name_hover_text",
       "show_info_in_title": true,
@@ -73,7 +73,7 @@
           "attributes": {
             "lang": {
               "name": "language",
-              "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+              "label": "common/common.language",
               "type": "select",
               "multiSelect": false,
               "choices": "Activity/Language.json",
@@ -138,7 +138,7 @@
       "sub_elements": {
         "narrative": {
           "name": "narrative",
-          "label": "common/common.reporting_org_sub_elements_narrative_label",
+          "label": "common/common.name",
           "type": "textarea",
           "placeholder": "common/common.legacy_data_attributes_legacy_name_placeholder",
           "required": true,
@@ -153,7 +153,7 @@
           "attributes": {
             "lang": {
               "name": "language",
-              "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+              "label": "common/common.language",
               "type": "select",
               "multiSelect": false,
               "choices": "Activity/Language.json",
@@ -181,7 +181,7 @@
       "attributes": {
         "status": {
           "name": "total_budget_status",
-          "label": "common/common.budget_attributes_budget_status_label",
+          "label": "common/common.status",
           "type": "select",
           "multiselect": false,
           "choices": "Activity/BudgetStatus.json",
@@ -256,7 +256,7 @@
               "name": "amount",
               "label": "common/common.legacy_data_attributes_value_label",
               "type": "text",
-              "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
+              "placeholder": "common/common.type_value_here",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -324,7 +324,7 @@
                   "name": "amount",
                   "label": "common/common.legacy_data_attributes_value_label",
                   "type": "text",
-                  "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
+                  "placeholder": "common/common.type_value_here",
                   "required": true,
                   "criteria": "mandatory",
                   "hover_text": "",
@@ -373,7 +373,7 @@
               "attributes": {
                 "lang": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
                   "multiSelect": false,
                   "choices": "Activity/Language.json",
@@ -403,11 +403,11 @@
       "attributes": {
         "status": {
           "name": "status",
-          "label": "common/common.budget_attributes_budget_status_label",
+          "label": "common/common.status",
           "type": "select",
           "multiselect": false,
           "choices": "Activity/BudgetStatus.json",
-          "placeholder": "common/common.budget_attributes_budget_status_placeholder",
+          "placeholder": "common/common.select_status",
           "required": false,
           "criteria": "",
           "hover_text": "common/common.budget_attributes_budget_status_hover_text",
@@ -455,7 +455,7 @@
               "attributes": {
                 "lang": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
                   "multiSelect": false,
                   "choices": "Activity/Language.json",
@@ -533,7 +533,7 @@
               "name": "amount",
               "label": "common/common.legacy_data_attributes_value_label",
               "type": "text",
-              "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
+              "placeholder": "common/common.type_value_here",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -600,7 +600,7 @@
                   "name": "amount",
                   "label": "common/common.legacy_data_attributes_value_label",
                   "type": "text",
-                  "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
+                  "placeholder": "common/common.type_value_here",
                   "required": true,
                   "criteria": "mandatory",
                   "hover_text": "",
@@ -649,7 +649,7 @@
               "attributes": {
                 "lang": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
                   "multiSelect": false,
                   "choices": "Activity/Language.json",
@@ -679,11 +679,11 @@
       "attributes": {
         "status": {
           "name": "status",
-          "label": "common/common.budget_attributes_budget_status_label",
+          "label": "common/common.status",
           "type": "select",
           "multiselect": false,
           "choices": "Activity/BudgetStatus.json",
-          "placeholder": "common/common.budget_attributes_budget_status_placeholder",
+          "placeholder": "common/common.select_status",
           "required": true,
           "criteria": "mandatory",
           "hover_text": "common/common.budget_attributes_budget_status_hover_text",
@@ -766,7 +766,7 @@
               "attributes": {
                 "lang": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
                   "multiSelect": false,
                   "choices": "Activity/Language.json",
@@ -845,7 +845,7 @@
               "name": "amount",
               "label": "common/common.legacy_data_attributes_value_label",
               "type": "text",
-              "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
+              "placeholder": "common/common.type_value_here",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -913,7 +913,7 @@
                   "name": "amount",
                   "label": "common/common.legacy_data_attributes_value_label",
                   "type": "text",
-                  "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
+                  "placeholder": "common/common.type_value_here",
                   "required": true,
                   "criteria": "mandatory",
                   "hover_text": "",
@@ -960,7 +960,7 @@
               "attributes": {
                 "lang": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
                   "multiSelect": false,
                   "choices": "Activity/Language.json",
@@ -990,11 +990,11 @@
       "attributes": {
         "status": {
           "name": "status",
-          "label": "common/common.budget_attributes_budget_status_label",
+          "label": "common/common.status",
           "type": "select",
           "multiselect": false,
           "choices": "Activity/BudgetStatus.json",
-          "placeholder": "common/common.budget_attributes_budget_status_placeholder",
+          "placeholder": "common/common.select_status",
           "required": false,
           "criteria": "",
           "hover_text": "common/common.budget_attributes_budget_status_hover_text",
@@ -1044,7 +1044,7 @@
               "attributes": {
                 "lang": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
                   "multiSelect": false,
                   "choices": "Activity/Language.json",
@@ -1123,7 +1123,7 @@
               "name": "amount",
               "label": "common/common.legacy_data_attributes_value_label",
               "type": "text",
-              "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
+              "placeholder": "common/common.type_value_here",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -1191,7 +1191,7 @@
                   "name": "amount",
                   "label": "common/common.legacy_data_attributes_value_label",
                   "type": "text",
-                  "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
+                  "placeholder": "common/common.type_value_here",
                   "required": true,
                   "criteria": "mandatory",
                   "hover_text": "",
@@ -1238,7 +1238,7 @@
               "attributes": {
                 "lang": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
                   "multiSelect": false,
                   "choices": "Activity/Language.json",
@@ -1330,7 +1330,7 @@
               "name": "amount",
               "label": "common/common.legacy_data_attributes_value_label",
               "type": "text",
-              "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
+              "placeholder": "common/common.type_value_here",
               "required": true,
               "criteria": "mandatory",
               "hover_text": "",
@@ -1398,7 +1398,7 @@
                   "name": "amount",
                   "label": "common/common.legacy_data_attributes_value_label",
                   "type": "text",
-                  "placeholder": "common/common.transactions_sub_elements_value_attributes_amount_placeholder",
+                  "placeholder": "common/common.type_value_here",
                   "required": true,
                   "criteria": "mandatory",
                   "hover_text": "",
@@ -1445,7 +1445,7 @@
               "attributes": {
                 "lang": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
                   "multiSelect": false,
                   "choices": "Activity/Language.json",
@@ -1525,7 +1525,7 @@
               "attributes": {
                 "lang": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
                   "multiSelect": false,
                   "choices": "Activity/Language.json",
@@ -1595,7 +1595,7 @@
               "attributes": {
                 "lang": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
                   "multiSelect": false,
                   "choices": "Activity/Language.json",
@@ -1612,7 +1612,7 @@
         },
         "language": {
           "name": "language",
-          "label": "title_sub_elements_narrative_attributes_language_label",
+          "label": "language",
           "add_more": true,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -1702,7 +1702,7 @@
               "attributes": {
                 "lang": {
                   "name": "language",
-                  "label": "common/common.title_sub_elements_narrative_attributes_language_label",
+                  "label": "common/common.language",
                   "type": "select",
                   "multiSelect": false,
                   "choices": "Activity/Language.json",

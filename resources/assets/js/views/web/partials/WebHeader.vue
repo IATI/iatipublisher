@@ -61,40 +61,13 @@
                   btn-link="/support"
                 />
               </li>
-
-              <!-- commented to temporarily hide language buttons -->
-
-              <!-- <li class="absolute bottom-4 left-0 right-0  xl:hidden">
-                <div class="flex items-center justify-center">
-                  <span class="mr-2 pt-5 pb-5 uppercase text-white xl:pt-0"
-                    >Language:</span
-                  >
-                  <ul class="languages flex items-center justify-center">
-                    <li class="nav__links">
-                      <a class="nav__active links__active" href="/">EN</a>
-                    </li>
-                    <li class="nav__links">
-                      <a href="/">FR</a>
-                    </li>
-                    <li class="nav__links">
-                      <a href="/">ES</a>
-                    </li>
-                  </ul>
-                </div>
-              </li> -->
             </ul>
           </div>
           <!-- remove width later -->
           <div class="languages hidden pt-11 xl:block">
-            <!-- commented to temporarily hide language buttons -->
-
             <div class="flex">
               <span class="mr-2 pt-5 pb-5 uppercase xl:pt-0"
-                >{{
-                  translatedData[
-                    'common.common.title_sub_elements_narrative_attributes_language_label'
-                  ]
-                }}:</span
+                >{{ translatedData['common.common.language'] }}:</span
               >
               <ul class="flex items-center justify-center">
                 <li class="nav__links">

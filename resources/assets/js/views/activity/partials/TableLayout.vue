@@ -37,9 +37,7 @@
           </th>
           <th id="status" scope="col">
             <span class="hidden">{{
-              translatedData[
-                'common.common.budget_attributes_budget_status_label'
-              ]
+              translatedData['common.common.status']
             }}</span>
           </th>
           <th id="publish" scope="col">

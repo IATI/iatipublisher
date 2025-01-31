@@ -89,11 +89,7 @@
               error__input: defaultError.default_language,
             }"
             :disabled="userRole !== 'admin' ? true : false"
-            :placeholder="
-              translatedData[
-                'common.common.title_sub_elements_narrative_attributes_language_placeholder'
-              ]
-            "
+            :placeholder="translatedData['common.common.select_language']"
             :searchable="true"
             :options="props.languages"
             @click="updateStore('default_language')"
