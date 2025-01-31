@@ -86,11 +86,7 @@
                 <BtnComponent
                   v-if="store.state.selectedActivities.length > 0"
                   type="secondary"
-                  :text="
-                    getPublishedSelectedMessage(
-                      store.state.selectedActivities.length
-                    )
-                  "
+                  :text="publishedSelectedMessage"
                   icon="approved-cloud"
                   :disabled="
                     store.state.selectedActivities.length === 0 ||
@@ -124,7 +120,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject, ref, Ref, defineProps } from 'vue';
+import { inject, ref, Ref, defineProps, computed } from 'vue';
 import DownloadActivityButton from './DownloadActivityButton.vue';
 import AddActivityButton from './AddActivityButton.vue';
 import Toast from 'Components/ToastMessage.vue';
@@ -164,6 +160,20 @@ const checkPublish = () => {
   }
 };
 
+// Computed property for the published selected message
+const publishedSelectedMessage = computed(() => {
+  const length = store.state.selectedActivities.length;
+  let baseMessage =
+    translatedData.value['activity_index.page_title.publish_selected'];
+  baseMessage = replaceCountPlaceHolderWithCount(baseMessage, length);
+
+  return baseMessage;
+});
+
+function replaceCountPlaceHolderWithCount(text: string, count: number) {
+  return text?.replace(':count', count.toString());
+}
+
 function getYouCanOnlyPublish100ActivitiesAtATimeMessage(length: number) {
   const baseMessage =
     translatedData.value[
@@ -184,17 +194,5 @@ function getYouCanOnlyPublish100ActivitiesAtATimeMessage(length: number) {
   dynamicMessage = replaceCountPlaceHolderWithCount(dynamicMessage, length);
 
   return `${baseMessage} ${dynamicMessage}`;
-}
-
-function getPublishedSelectedMessage(length: number) {
-  let baseMessage =
-    translatedData.value['activity.page_title.publish_selected'];
-  baseMessage = replaceCountPlaceHolderWithCount(baseMessage, length);
-
-  return baseMessage;
-}
-
-function replaceCountPlaceHolderWithCount(text: string, count: number) {
-  return text.replace(':count', count.toString());
 }
 </script>

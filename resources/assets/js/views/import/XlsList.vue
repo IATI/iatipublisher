@@ -40,75 +40,6 @@
           upload them again.</b
         >
       </p>
-      <!-- <div v-if="globalError" class="relative mt-4">
-        <div
-          v-if="!showGLobalError"
-          class="flex w-[250px] justify-between rounded-l-lg border border-crimson-20 bg-crimson-10 p-4"
-        >
-          <div class="flex">
-            <svg-vue
-              class="mr-1 -mt-1.5 text-2xl text-crimson-50"
-              icon="warning-fill"
-            />
-            <span class="text-sm font-bold">
-              {{ globalError.length }} global errors found
-            </span>
-          </div>
-          <button
-            class="cursor-pointer text-xs uppercase text-bluecoral"
-            @click="showGLobalError = true"
-          >
-            show
-          </button>
-        </div>
-        <div
-          v-else
-          class="absolute -top-4 right-0 z-[100] w-[450px] rounded-l-lg bg-white p-4"
-        >
-          <div class="mb-4 flex justify-between">
-            <div class="flex">
-              <div class="text-sm font-bold">
-                {{ globalError.length }} global errors found
-              </div>
-            </div>
-
-            <button
-              class="cursor-pointer text-xs uppercase text-bluecoral"
-              @click="showGLobalError = false"
-            >
-              hide
-            </button>
-          </div>
-          <div class="border-l border-crimson-40 bg-rose p-4">
-            <div class="my-2 flex items-center justify-between">
-              <div class="flex items-center">
-                <svg-vue
-                  class="mr-1 -mt-1.5 text-2xl text-crimson-50"
-                  icon="alert"
-                />
-                <div class="text-sm font-bold capitalize">
-                  {{ globalError.length }} global errors
-                </div>
-              </div>
-              <svg-vue
-                class="mr-1 -mt-1.5 cursor-pointer text-[7px] duration-200"
-                icon="dropdown-arrow"
-                :class="showGlobalErrorList && ' rotate-180'"
-                @click="showGlobalErrorList = !showGlobalErrorList"
-              />
-            </div>
-            <ul v-if="showGlobalErrorList">
-              <li
-                v-for="error in globalError"
-                :key="error"
-                class="border-b border-n-20 p-4 text-sm"
-              >
-                {{ error }}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div> -->
     </div>
     <div class="iati-list-table upload-list-table mt-4">
       <table>
@@ -176,7 +107,6 @@
                 :value="index"
               />
             </td>
-            <!-- <td>{{ activity[index].data.title[0] }}</td> -->
           </tr>
         </tbody>
       </table>

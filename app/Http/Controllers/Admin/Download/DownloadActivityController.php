@@ -135,7 +135,7 @@ class DownloadActivityController extends Controller
             $status = $this->downloadXlsService->getDownloadStatusByUserId($userId)?->toArray();
 
             if (!empty($status)) {
-                $translatedMessage = trans('download/download_activity_controller.previous_download_on_process');
+                $translatedMessage = trans('workflow_backend/download_activity_controller.previous_download_on_process');
 
                 return response()->json(['success' => false, 'message' => $translatedMessage]);
             }
@@ -157,16 +157,16 @@ class DownloadActivityController extends Controller
             }
 
             $status = $this->downloadXlsService->storeStatus($userId, $activityIds);
-            awsUploadFile("Xls/$userId/" . $status['id'] . '/status.json', json_encode(['success' => true, 'message' => trans('download/download_activity_controller.processing')], JSON_THROW_ON_ERROR));
+            awsUploadFile("Xls/$userId/" . $status['id'] . '/status.json', json_encode(['success' => true, 'message' => trans('workflow_backend/download_activity_controller.processing')], JSON_THROW_ON_ERROR));
             $this->downloadXlsService->processXlsExportJobs($request, $status['id']);
-            $translatedMessage = trans('download/download_activity_controller.xls_export_on_process');
+            $translatedMessage = trans('workflow_backend/download_activity_controller.xls_export_on_process');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
             $this->downloadXlsService->deleteDownloadStatus(auth()->user()->id);
             $this->cancelXlsDownload();
-            $translatedMessage = trans('download/download_activity_controller.error_has_occurred_while_downloading_activity_xls');
+            $translatedMessage = trans('workflow_backend/download_activity_controller.error_has_occurred_while_downloading_activity_xls');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
@@ -203,12 +203,12 @@ class DownloadActivityController extends Controller
     {
         try {
             [$status, $fileCount, $url] = $this->downloadXlsService->getDownloadStatus();
-            $translatedMessage = trans('download/download_activity_controller.download_status_accessed_successfully');
+            $translatedMessage = trans('workflow_backend/download_activity_controller.download_status_accessed_successfully');
 
             return response()->json(['success' => true, 'message' => $translatedMessage, 'status' => $status, 'file_count' => $fileCount, 'url' => $url ?? null]);
         } catch (\Exception $e) {
             logger()->error($e);
-            $translatedMessage = trans('download/download_activity_controller.error_has_occurred_while_trying_to_check_download_status');
+            $translatedMessage = trans('workflow_backend/download_activity_controller.error_has_occurred_while_trying_to_check_download_status');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
@@ -236,7 +236,7 @@ class DownloadActivityController extends Controller
             }
         } catch (\Exception $e) {
             logger()->error($e);
-            $translatedMessage = trans('download/download_activity_controller.error_has_occurred_while_trying_to_retry_download');
+            $translatedMessage = trans('workflow_backend/download_activity_controller.error_has_occurred_while_trying_to_retry_download');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
@@ -254,14 +254,14 @@ class DownloadActivityController extends Controller
             $userId = auth()->user()->id;
             $status = $this->downloadXlsService->getDownloadStatusByUserId($userId)?->toArray();
             $this->downloadXlsService->clearPreviousXlsFilesOnS3($userId, $status['id']);
-            awsUploadFile("Xls/$userId/" . $status['id'] . '/cancelStatus.json', json_encode(['success' => true, 'message' => trans('download/download_activity_controller.cancelled')], JSON_THROW_ON_ERROR));
+            awsUploadFile("Xls/$userId/" . $status['id'] . '/cancelStatus.json', json_encode(['success' => true, 'message' => trans('workflow_backend/download_activity_controller.cancelled')], JSON_THROW_ON_ERROR));
             $this->downloadXlsService->deleteDownloadStatus($userId, $status['id']);
-            $translatedMessage = trans('download/download_activity_controller.cancelled_successfully');
+            $translatedMessage = trans('workflow_backend/download_activity_controller.cancelled_successfully');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('download/download_activity_controller.error_has_occurred_while_trying_to_cancel_download');
+            $translatedMessage = trans('workflow_backend/download_activity_controller.error_has_occurred_while_trying_to_cancel_download');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }

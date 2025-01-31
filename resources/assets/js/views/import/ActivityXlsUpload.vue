@@ -33,7 +33,11 @@
     >
       <div>
         <h6 class="my-8 text-center text-2xl font-bold text-bluecoral">
-          Please select one to proceed
+          {{
+            translatedData[
+              'workflow_frontend.import.please_select_one_to_proceed'
+            ]
+          }}
         </h6>
         <div class="mb-12 flex flex-wrap items-center justify-center gap-6">
           <div
@@ -44,9 +48,13 @@
               <div class="mb-2 flex items-center justify-between">
                 <div class="flex items-center space-x-1">
                   <svg-vue icon="export" />
-                  <span class="font-bold text-bluecoral"
-                    >Basic Activity Elements</span
-                  >
+                  <span class="font-bold text-bluecoral">
+                    {{
+                      translatedData[
+                        'workflow_frontend.import.basic_activity_elements'
+                      ]
+                    }}
+                  </span>
                 </div>
                 <input
                   v-model="uploadType"
@@ -56,9 +64,11 @@
                 />
               </div>
               <p class="h-[120px] text-[13px] tracking-normal text-n-40">
-                Download the template 'All elements except result.xls. Fill the
-                data for multiple activities except for 'Result' element and
-                upload the XLS file to add the activity data in the publisher.
+                {{
+                  translatedData[
+                    'workflow_frontend.import.download_the_template_all_elements_except_result'
+                  ]
+                }}
               </p>
             </label>
           </div>
@@ -70,9 +80,13 @@
               <div class="mb-2 flex items-center justify-between">
                 <div class="flex items-center space-x-1">
                   <svg-vue icon="result-icon" />
-                  <span class="font-bold text-bluecoral"
-                    >Result except Indicator and Period</span
-                  >
+                  <span class="font-bold text-bluecoral">
+                    {{
+                      translatedData[
+                        'workflow_frontend.import.result_except_indicator_and_period'
+                      ]
+                    }}
+                  </span>
                 </div>
                 <input
                   v-model="uploadType"
@@ -82,11 +96,11 @@
                 />
               </div>
               <p class="h-[120px] text-[13px] tracking-normal text-n-40">
-                Download the template ‘Result except indicator and period.xls'.
-                Fill the data for multiple results of multiple activities except
-                for the indicator and period sub-elements. Upload the XLS file
-                to add result elements in specific activities already present in
-                the IATI Publisher
+                {{
+                  translatedData[
+                    'workflow_frontend.import.download_the_template_result_except_indicator_and_period'
+                  ]
+                }}
               </p>
             </label>
           </div>
@@ -98,9 +112,13 @@
               <div class="mb-2 flex items-center justify-between">
                 <div class="flex items-center space-x-1">
                   <svg-vue icon="indicator-icon" />
-                  <span class="font-bold text-bluecoral"
-                    >Indicators except Period</span
-                  >
+                  <span class="font-bold text-bluecoral">
+                    {{
+                      translatedData[
+                        'workflow_frontend.import.indicators_except_period'
+                      ]
+                    }}
+                  </span>
                 </div>
                 <input
                   v-model="uploadType"
@@ -110,11 +128,11 @@
                 />
               </div>
               <p class="h-[120px] text-[13px] tracking-normal text-n-40">
-                Download the template 'Indicator except period.xls'. Fill the
-                data for multiple indicators of multiple results except for the
-                period sub-elements. Upload the XLS file to add indicator
-                elements in specific results already present in the IATI
-                Publisher.
+                {{
+                  translatedData[
+                    'workflow_frontend.import.download_the_template_indicator_except_period'
+                  ]
+                }}
               </p>
             </label>
           </div>
@@ -136,10 +154,11 @@
                 />
               </div>
               <p class="h-[120px] text-[13px] tracking-normal text-n-40">
-                Download the template 'Period.xls'. Fill the data for multiple
-                periods of multiple indicators. Upload the XLS file to add
-                period sub-elements in specific indicators already present in
-                the IATI Publisher.
+                {{
+                  translatedData[
+                    'workflow_frontend.import.download_the_template_period'
+                  ]
+                }}
               </p>
             </label>
           </div>
@@ -150,25 +169,17 @@
             v-if="hasOngoingImportWarning"
             class="border-orangeish my-2 flex max-w-[95%] items-center space-x-2 rounded-md bg-eggshell px-4 py-6 align-middle text-xs font-normal text-n-50"
           >
-            Cannot import.
+            {{ translatedData['workflow_frontend.import.cannot_import'] }}
             <template v-if="ongoingImportType === ''">
               {{ ongoingImportType }}
-              <a href="#" class="px-1 font-bold" @click="openZendeskLauncher"
-                >Contact support</a
-              >
+              <a href="#" class="px-1 font-bold" @click="openZendeskLauncher">
+                {{ translatedData['common.common.contact_support'] }}
+              </a>
             </template>
             <template v-else>
-              Another import is in progress. Please try again later or
-              <a
-                :href="
-                  ongoingImportType === 'xls'
-                    ? '/import/xls/list'
-                    : '/import/list'
-                "
-                class="px-1 font-bold"
-              >
-                view import list </a
-              >.
+              <span
+                v-html="getTranslatedAnotherImportInProgress(ongoingImportType)"
+              ></span>
             </template>
           </div>
         </div>
@@ -179,10 +190,11 @@
               <svg-vue class="mr-2.5 text-[20px]" icon="alert-outline" />
             </div>
             <p class="max-w-[520px] text-sm text-n-40">
-              Downloading identifier provides you code that uniquely identifies
-              result, indicator, and period on the IATI Publishers, and allows
-              you to update or create new results, indicator and period based on
-              them.
+              {{
+                translatedData[
+                  'workflow_frontend.import.downloading_identifier_provides_you_code'
+                ]
+              }}
             </p>
           </div>
           <div class="mt-2 flex justify-end">
@@ -190,7 +202,11 @@
               class="text-sm text-bluecoral underline"
               @click="showDownloadCode = true"
             >
-              Download Identifier Code
+              {{
+                translatedData[
+                  'workflow_frontend.import.download_identifier_code'
+                ]
+              }}
             </button>
           </div>
         </div>
@@ -206,7 +222,7 @@
             <BtnComponent
               class="!border-red h-10 !border"
               type="primary"
-              text="Upload file"
+              :text="translatedData['workflow_frontend.import.upload_file']"
               icon="upload-file"
               :activity-length="activityLength"
               @click="checkOngoingImports"
@@ -217,18 +233,23 @@
           </div>
         </div>
         <p class="mt-6 text-center text-n-50">
-          Please make sure to read the instructions before beginning this
-          process.
+          {{
+            translatedData[
+              'workflow_frontend.import.please_make_sure_to_read_the_instructions'
+            ]
+          }}
         </p>
         <div
           class="mb-12 mt-5 flex items-center justify-center gap-4 space-x-3"
         >
           <a
             href="/files/Manuals/IATI_Publisher-Import_manual.pdf"
-            download="Import Manual"
+            :download="translatedData['workflow_frontend.import.import_manual']"
             class="flex items-center space-x-1 text-bluecoral"
           >
-            <span class="mx-1.5">Read our import manual</span>
+            <span class="mx-1.5">{{
+              translatedData['workflow_frontend.import.read_our_import_manual']
+            }}</span>
             <svg-vue class="mr-1" icon="export" />
           </a>
           <span class="text-n-20">|</span>
@@ -237,10 +258,20 @@
             @click="showDownloadDropdown = !showDownloadDropdown"
           >
             <button class="relative text-sm text-bluecoral">
-              <span>Download .XLS activity Template</span>
+              <span>
+                {{
+                  translatedData[
+                    'workflow_frontend.import.download_xls_activity_template'
+                  ]
+                }}
+              </span>
             </button>
             <HoverText
-              hover-text="This template contains all the elements that you have to fill as per the IATI Standard before uploading in IATI Publisher. Please make sure that you follow the structure and format of the template."
+              :hover-text="
+                translatedData[
+                  'workflow_frontend.import.this_template_contains_all_the_elements'
+                ]
+              "
               name=""
               class="hover-text import-activity"
               position="right"
@@ -260,20 +291,34 @@
               >
                 <a
                   href="/files/Templates/ActivityXLS.xlsx"
-                  download="Activity Template"
+                  :download="
+                    translatedData['workflow_frontend.import.activity_template']
+                  "
                   class="block w-full p-2.5 text-n-40 group-hover:text-n-50"
-                  >Basic Activity Elements.xls</a
                 >
+                  {{
+                    translatedData[
+                      'workflow_frontend.import.basic_activity_elements'
+                    ]
+                  }}.xls
+                </a>
               </li>
               <li
                 class="group cursor-pointer whitespace-nowrap rounded-sm text-[10px] font-bold text-n-40 hover:bg-teal-10"
               >
                 <a
                   href="/files/Templates/ResultXLS.xlsx"
-                  download="Result Template"
+                  :download="
+                    translatedData['workflow_frontend.import.result_template']
+                  "
                   class="block w-full p-2.5 text-n-40 group-hover:text-n-50"
-                  >Result except Indicator and Period.xls</a
                 >
+                  {{
+                    translatedData[
+                      'workflow_frontend.import.result_except_indicators_and_period'
+                    ]
+                  }}.xls
+                </a>
               </li>
               <li
                 class="group cursor-pointer rounded-sm text-[10px] font-bold text-n-40 hover:bg-teal-10"
@@ -290,7 +335,9 @@
               >
                 <a
                   href="/files/Templates/PeriodXLS.xlsx"
-                  download="Period Template"
+                  :download="
+                    translatedData['workflow_frontend.import.period_template']
+                  "
                   class="block w-full p-2.5 text-n-40 group-hover:text-n-50"
                   >Period.xls</a
                 >
@@ -324,15 +371,20 @@
       <div class="flex justify-between">
         <div>
           <div class="flex items-center space-x-2">
-            <h6 class="text-2xl">Activities</h6>
+            <h6 class="text-2xl">
+              {{ translatedData['common.common.activities'] }}
+            </h6>
             <span
               class="rounded-full bg-mint px-2 py-2 text-[10px] font-bold text-spring-50"
               >{{ activities['total'] }} activities</span
             >
           </div>
           <p class="text-xs text-n-40">
-            Please choose the activities for which you would like to download
-            the identifier codes.
+            {{
+              translatedData[
+                'workflow_frontend.import.please_choose_the_activities_for_which'
+              ]
+            }}
           </p>
         </div>
         <button @click="showDownloadCode = false">
@@ -351,7 +403,9 @@
           v-model="searchValue"
           class="search__input mr-3.5 !rounded-full"
           type="text"
-          placeholder="Search activity..."
+          :placeholder="
+            translatedData['workflow_frontend.import.search_activity']
+          "
           @keyup.enter="fetchActivities(1)"
         />
       </div>
@@ -359,8 +413,8 @@
         type="primary"
         :text="
           store.state.selectedActivities.length > 0
-            ? 'Download Selected'
-            : 'Download All'
+            ? translatedData['workflow_frontend.import.download_selected']
+            : translatedData['workflow_frontend.import.download_all']
         "
         icon="download"
         @click="downloadCode"
@@ -520,6 +574,7 @@ import {
   watch,
   Ref,
   onUnmounted,
+  inject,
 } from 'vue';
 import BtnComponent from 'Components/ButtonComponent.vue';
 import HoverText from 'Components/HoverText.vue';
@@ -584,6 +639,7 @@ const direction = ref('');
 const processing = ref();
 const hasOngoingImportWarning = ref(false);
 const ongoingImportType = ref('');
+const translatedData = inject('translatedData') as Ref;
 
 const sortingDirection = () => {
   direction.value === 'asc'
@@ -611,13 +667,19 @@ watch(
 const mapActivityName = (name) => {
   switch (name) {
     case 'activity':
-      return 'Basic Activity Elements';
+      return translatedData.value[
+        'workflow_frontend.import.basic_activity_elements'
+      ];
     case 'period':
       return 'Period';
     case 'indicator':
-      return 'Indicators except Period';
+      return translatedData.value[
+        'workflow_frontend.import.indicators_except_period'
+      ];
     case 'result':
-      return 'Result except Indicators and Period';
+      return translatedData.value[
+        'workflow_frontend.import.result_except_indicators_and_period'
+      ];
     default:
       return name;
   }
@@ -784,7 +846,7 @@ function uploadFile() {
       .post('/import/xls', data, config)
       .then((res) => {
         if (file.value.files.length && res?.data?.success) {
-          checkXlsstatus();
+          checkXlsStatus();
         } else {
           error.value =
             res.data.errors && Object.values(res.data.errors).join(' ');
@@ -870,7 +932,7 @@ const pollingForXlsStatus = () => {
   }, 2500);
 };
 
-const checkXlsstatus = () => {
+const checkXlsStatus = () => {
   axios.get('/import/xls/poll-import-progress-status').then((res) => {
     uploadComplete.value = false;
     activityName.value = res?.data?.status?.template;
@@ -897,6 +959,34 @@ const checkXlsstatus = () => {
   });
 };
 
+const getTranslatedAnotherImportInProgress = (ongoingImportType: string) => {
+  let message =
+    translatedData.value['workflow_frontend.import.another_import_in_progress'];
+
+  const url = ongoingImportType === 'xls' ? '/import/xls/list' : '/import/list';
+
+  message = message.replace(
+    ':link',
+    `<a href="${url}" class="px-1 font-bold">view import list</a>`
+  );
+
+  return message;
+};
+
+function openZendeskLauncher() {
+  if (window.zE && window.zE.activate) {
+    window.zE.activate();
+  }
+}
+
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    zE: any;
+  }
+}
+
 provide('xlsFailedMessage', xlsFailedMessage);
 provide('activityLength', activityLength);
 provide('completed', uploadComplete);
@@ -918,7 +1008,7 @@ onUnmounted(() => {
 
 onMounted(() => {
   fetchActivities(1);
-  checkXlsstatus();
+  checkXlsStatus();
   checkDownloadStatus();
   publishingActivities.value =
     pa.value.publishingActivities && Object.keys(pa.value.publishingActivities);

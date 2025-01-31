@@ -7,7 +7,11 @@
   >
     <div class="bulk-head flex items-center justify-between bg-eggshell p-4">
       <div class="grow text-sm font-bold leading-normal">
-        Publishing {{ activities && Object.keys(activities).length }} activities
+        {{
+          translatedData[
+            'publish.bulk_publish.publishing_count_activities'
+          ].replace(':count', activities && Object.keys(activities).length)
+        }}
       </div>
       <div class="flex shrink-0">
         <div
@@ -15,7 +19,9 @@
           @click="retryPublishing"
         >
           <svg-vue class="mr-1" icon="redo" />
-          <span class="text-xs uppercase">Retry</span>
+          <span class="text-xs uppercase">
+            {{ translatedData['common.common.retry'] }}
+          </span>
         </div>
         <div
           v-if="completed === 'completed'"
@@ -63,6 +69,7 @@ import {
   inject,
   onUnmounted,
   defineEmits,
+  Ref,
 } from 'vue';
 import axios from 'axios';
 import { detailStore } from 'Store/activities/show';
@@ -81,6 +88,7 @@ interface RefreshToastMsgTypeface {
   refreshMessage: string;
 }
 
+let translatedData = inject('translatedData') as Ref;
 let refreshToastMsg = inject('refreshToastMsg') as RefreshToastMsgTypeface;
 
 interface paInterface {

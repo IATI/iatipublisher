@@ -155,7 +155,7 @@ class ImportActivityController extends Controller
                 }
             } else {
                 if ($this->importCsvService->isCsvFileEmpty($file)) {
-                    $translatedMessage = trans('import_activity.import_activity_controller.the_file_is_empty_please_upload_file_with_activities');
+                    $translatedMessage = trans('import_activity/import_activity_controller.the_file_is_empty_please_upload_file_with_activities');
 
                     $response = ['success' => false, 'errors' =>['activity' => $translatedMessage]];
 
@@ -208,7 +208,7 @@ class ImportActivityController extends Controller
             $filetype = Session::get('import_filetype') ?? ImportCacheHelper::getSessionConsistentFiletype($orgId);
 
             if (!ImportCacheHelper::organisationHasCompletedValidatingData($orgId)) {
-                $translatedMessage = trans('import_activity.import_activity_controller.no_data_to_import');
+                $translatedMessage = trans('import_activity/import_activity_controller.no_data_to_import');
 
                 return response()->json(['success' => false, 'message' => $translatedMessage, 'type' => $filetype]);
             }
@@ -231,11 +231,11 @@ class ImportActivityController extends Controller
             Session::forget('import_filetype');
             Session::forget('error');
 
-            Session::put('success', trans('import_activity.import_activity_controller.imported_data_successfully'));
+            Session::put('success', trans('import_activity/import_activity_controller.imported_data_successfully'));
 
             ImportCacheHelper::clearImportCache($orgId);
 
-            $translatedMessage = trans('import_activity.import_activity_controller.imported_successfully');
+            $translatedMessage = trans('import_activity/import_activity_controller.imported_successfully');
 
             return response()->json(['success' => true, 'message' => $translatedMessage, 'type' => $filetype]);
         } catch (Exception $e) {
@@ -276,7 +276,7 @@ class ImportActivityController extends Controller
             $schema_error = awsGetFile(sprintf('%s/%s/%s/%s', $filetype === 'xml' ? $this->xml_data_storage_path : $this->csv_data_storage_path, $orgId, $userId, 'schema_error.log'));
 
             if (!$status) {
-                $translatedMessage = trans('import_activity.import_activity_controller.status_json_file_not_present_in_aws_please_try_again');
+                $translatedMessage = trans('import_activity/import_activity_controller.status_json_file_not_present_in_aws_please_try_again');
 
                 Session::put('error', $translatedMessage);
                 $this->importStatusService->deleteOngoingImports($orgId);
@@ -304,7 +304,7 @@ class ImportActivityController extends Controller
             return view('admin.import.list');
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('import_activity.import_activity_controller.error_has_occurred_while_checking_the_status');
+            $translatedMessage = trans('import_activity/import_activity_controller.error_has_occurred_while_checking_the_status');
 
             return redirect()->route('admin.activities.index')->withResponse(['success' => false, 'error' => $translatedMessage]);
         }
@@ -322,7 +322,7 @@ class ImportActivityController extends Controller
             $filetype = Session::get('import_filetype') ?? ImportCacheHelper::getSessionConsistentFiletype($orgId);
 
             if (!$filetype) {
-                $translatedMessage = trans('import_activity.import_activity_controller.please_upload_csv_or_xml_file_to_import_activity');
+                $translatedMessage = trans('import_activity/import_activity_controller.please_upload_csv_or_xml_file_to_import_activity');
 
                 Session::put('error', $translatedMessage);
 
@@ -340,7 +340,7 @@ class ImportActivityController extends Controller
             $status = strcasecmp($result->message, 'Complete') === 0;
 
             if (!$data) {
-                $translatedMessage = trans('import_activity.import_activity_controller.error_has_occurred_while_importing_activities');
+                $translatedMessage = trans('import_activity/import_activity_controller.error_has_occurred_while_importing_activities');
 
                 Session::put('error', $translatedMessage);
             }
@@ -419,8 +419,8 @@ class ImportActivityController extends Controller
 
         $hasOngoingImport = !empty($status);
         $message = $hasOngoingImport
-            ? trans('import_activity.import_activity_controller.ongoing_import_in_progress_for_this_organisation')
-            : trans('import_activity.import_activity_controller.no_import_in_progress_for_this_organisation');
+            ? trans('import_activity/import_activity_controller.ongoing_import_in_progress_for_this_organisation')
+            : trans('import_activity/import_activity_controller.no_import_in_progress_for_this_organisation');
 
         return response()->json([
             'success' => true,
@@ -443,7 +443,7 @@ class ImportActivityController extends Controller
             $this->importStatusService->deleteOngoingImports(Auth::user()->organization_id);
 
             DB::commit();
-            $translatedMessage = trans('import_activity.import_activity_controller.deleted_ongoing_imports');
+            $translatedMessage = trans('import_activity/import_activity_controller.deleted_ongoing_imports');
 
             return response()->json([
                 'success' => true,
@@ -456,7 +456,7 @@ class ImportActivityController extends Controller
         } catch (Exception $e) {
             logger($e);
             DB::rollBack();
-            $translatedMessage = trans('import_activity.import_activity_controller.failed_to_delete_ongoing_imports');
+            $translatedMessage = trans('import_activity/import_activity_controller.failed_to_delete_ongoing_imports');
 
             return response()->json([
                 'success' => false,

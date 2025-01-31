@@ -12,20 +12,7 @@
           class="wizard-step__header__title pb-3 text-xs font-bold leading-[22px] tracking-normal text-n-50"
         >
           <span class="inline-block -translate-x-1/2">
-            {{
-              step.name == 'Validating'
-                ? completedSteps.includes(step.id)
-                  ? 'Validated'
-                  : 'Validating'
-                : completedSteps.includes(step.id)
-                ? store.state.bulkActivityPublishStatus.publishing
-                    .hasFailedActivities.ids.length > 0
-                  ? 'Failed'
-                  : 'Published'
-                : completedSteps.length == 0
-                ? 'Publish'
-                : 'Publishing'
-            }}
+            {{ getStepStatus }}
           </span>
         </div>
         <div
@@ -104,26 +91,42 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue';
-import { useStore } from 'Store/activities/index';
+import { computed, defineProps, inject, Ref } from 'vue';
+import { useStore } from 'Store/activities';
+
 const store = useStore();
 const steps = [
-  {
-    name: 'Validating',
-    id: 1,
-  },
-  {
-    name: 'Publish',
-    id: 2,
-  },
+  { name: 'Validating', id: 1 },
+  { name: 'Publish', id: 2 },
 ];
 
-defineProps({
-  completedSteps: {
-    type: Array,
-    default: () => [],
-  },
+// Define props correctly
+const props = defineProps<{
+  completedSteps: number[];
+  step: { name: string; id: number };
+}>();
+
+const translatedData = inject('translatedData') as Ref<Record<string, string>>;
+
+const getStepStatus = computed(() => {
+  if (props.step.name === 'Validating') {
+    return props.completedSteps.includes(props.step.id)
+      ? translatedData.value['common.common.validated']
+      : translatedData.value['common.common.validating'];
+  }
+
+  if (props.completedSteps.includes(props.step.id)) {
+    if (
+      store.state.bulkActivityPublishStatus.publishing.hasFailedActivities.ids
+        .length > 0
+    ) {
+      return translatedData.value['common.common.failed'];
+    }
+    return translatedData.value['common.common.published'];
+  }
+
+  return props.completedSteps.length === 0
+    ? translatedData.value['common.common.publish']
+    : translatedData.value['common.common.publishing'];
 });
 </script>
-
-<style lang="scss" scoped></style>

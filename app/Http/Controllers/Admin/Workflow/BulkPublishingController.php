@@ -100,7 +100,7 @@ class BulkPublishingController extends Controller
 
             if ($this->publishingStatusService->ongoingBulkPublishing(auth()->user()->organization->id)) {
                 $pubishingStatus = $this->bulkPublishingService->getOrganisationBulkPublishingStatus();
-                $translatedMessage = trans('work_flow/bulk_publishing_controller.another_bulk_publishing_is_already_in_progress');
+                $translatedMessage = trans('workflow_backend/bulk_publishing_controller.another_bulk_publishing_is_already_in_progress');
 
                 return response()->json([
                     'success'     => false,
@@ -132,7 +132,7 @@ class BulkPublishingController extends Controller
                 );
 
                 DB::commit();
-                $translatedMessage = trans('work_flow/bulk_publishing_controller.retrieved_data_successfully');
+                $translatedMessage = trans('workflow_backend/bulk_publishing_controller.retrieved_data_successfully');
 
                 return response()->json([
                     'success' => true,
@@ -178,7 +178,7 @@ class BulkPublishingController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.error_has_occurred_while_checking_core_elements_completed');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.error_has_occurred_while_checking_core_elements_completed');
 
             return response()->json(
                 ['success' => false, 'message' => $translatedMessage]
@@ -212,7 +212,7 @@ class BulkPublishingController extends Controller
 
             if (!empty($activityIds)) {
                 if ($hasUploadedCache || count($this->bulkPublishingService->checkOngoingValidationStatus())) {
-                    $translatedMessage = trans('work_flow/bulk_publishing_controller.another_activity_validation_already_in_progress');
+                    $translatedMessage = trans('workflow_backend/bulk_publishing_controller.another_activity_validation_already_in_progress');
 
                     return response()->json([
                         'success' => false,
@@ -241,7 +241,7 @@ class BulkPublishingController extends Controller
             DB::rollBack();
             logger()->error($e->getMessage());
             logger()->error($e);
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.error_has_occurred_while_validating_activities');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.error_has_occurred_while_validating_activities');
 
             return response()->json(
                 ['success' => false, 'message' => $translatedMessage]
@@ -274,7 +274,7 @@ class BulkPublishingController extends Controller
 
             if ($this->publishingStatusService->ongoingBulkPublishing($organization->id)) {
                 $publishingStatus = $this->bulkPublishingService->getOrganisationBulkPublishingStatus();
-                $translatedMessage = trans('work_flow/bulk_publishing_controller.another_bulk_publishing_is_already_in_progress');
+                $translatedMessage = trans('workflow_backend/bulk_publishing_controller.another_bulk_publishing_is_already_in_progress');
 
                 return response()->json([
                     'success'     => false,
@@ -327,7 +327,7 @@ class BulkPublishingController extends Controller
                 $this->bulkPublishingService->deleteValidationResponses();
 
                 DB::commit();
-                $translatedMessage = trans('work_flow/bulk_publishing_controller.bulk_publishing_started');
+                $translatedMessage = trans('workflow_backend/bulk_publishing_controller.bulk_publishing_started');
 
                 return response()->json(
                     ['success' => true, 'message' => $translatedMessage, 'data' => $response]
@@ -339,7 +339,7 @@ class BulkPublishingController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             logger()->error($e);
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.bulk_publishing_failed');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.bulk_publishing_failed');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
@@ -378,19 +378,19 @@ class BulkPublishingController extends Controller
                     );
                 }
             }
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.no_bulk_publishing_in_progress');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.no_bulk_publishing_in_progress');
 
             return response()->json(
                 ['success' => false, 'message' => $translatedMessage, 'publishing' => false]
             );
         } catch (Exception $e) {
             logger()->error($e);
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.status_generation_failed');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.status_generation_failed');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         } catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
             logger()->error($e);
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.request_error');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.request_error');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
@@ -413,7 +413,7 @@ class BulkPublishingController extends Controller
 
             if ($deletedIds) {
                 DB::commit();
-                $translatedMessage = trans('work_flow/bulk_publishing_controller.bulk_publish_of_numberofdeletedrows_activities_canceled');
+                $translatedMessage = trans('workflow_backend/bulk_publishing_controller.bulk_publish_of_numberofdeletedrows_activities_canceled');
 
                 return response()->json(
                     [
@@ -423,7 +423,7 @@ class BulkPublishingController extends Controller
                     ]
                 );
             }
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.no_bulk_publish_were_cancelled');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.no_bulk_publish_were_cancelled');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (Exception $e) {
@@ -431,7 +431,7 @@ class BulkPublishingController extends Controller
             BulkPublishCacheHelper::clearBulkPublishCache(auth()->user()->organization_id);
             logger()->error($e->getMessage());
             logger()->error($e);
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.failed_to_stop_bulk_publishing');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.failed_to_stop_bulk_publishing');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
@@ -453,7 +453,7 @@ class BulkPublishingController extends Controller
 
             if ($this->publishingStatusService->ongoingBulkPublishing(auth()->user()->organization->id)) {
                 $pubishingStatus = $this->bulkPublishingService->getOrganisationBulkPublishingStatus();
-                $translatedMessage = trans('work_flow/bulk_publishing_controller.another_bulk_publishing_is_already_in_progress');
+                $translatedMessage = trans('workflow_backend/bulk_publishing_controller.another_bulk_publishing_is_already_in_progress');
 
                 return response()->json([
                     'success'     => false,
@@ -488,7 +488,7 @@ class BulkPublishingController extends Controller
             $ongoingValidationActivities = $this->bulkPublishingService->checkOngoingValidationStatus();
 
             if ($hasUploadedCache || count($ongoingValidationActivities)) {
-                $translatedMessage = trans('work_flow/bulk_publishing_controller.another_bulk_validation_is_already_in_progress');
+                $translatedMessage = trans('workflow_backend/bulk_publishing_controller.another_bulk_validation_is_already_in_progress');
 
                 return response()->json([
                     'success'    => false,
@@ -498,7 +498,7 @@ class BulkPublishingController extends Controller
                     ) : null,
                 ]);
             }
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.activities_are_ready_to_validate');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.activities_are_ready_to_validate');
 
             return response()->json(
                 ['success' => true, 'message' => $translatedMessage, 'status' => 'completed']
@@ -525,14 +525,14 @@ class BulkPublishingController extends Controller
             DB::beginTransaction();
             $this->publishingStatusService->deleteBulkPublishingStatus(Auth::user()->organization->id);
             DB::commit();
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.bulk_publishing_status_successfully_deleted');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.bulk_publishing_status_successfully_deleted');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
             logger()->error($e);
             DB::rollBack();
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.failed_to_delete_bulk_publishing_status');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.failed_to_delete_bulk_publishing_status');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
@@ -563,12 +563,12 @@ class BulkPublishingController extends Controller
 
                 return response()->json(['success' => !$hasFailedStatus, 'data' => $response]);
             }
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.activity_not_selected');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.activity_not_selected');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         } catch (Exception|\Throwable $e) {
             logger()->error($e);
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.error_has_occurred_while_fetching_validation_status');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.error_has_occurred_while_fetching_validation_status');
 
             return response()->json(
                 ['success' => false, 'message' => $translatedMessage]
@@ -593,12 +593,12 @@ class BulkPublishingController extends Controller
 
                 return response()->json(['success' => true, 'data' => $response]);
             }
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.activity_not_selected');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.activity_not_selected');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         } catch (Exception|\Throwable $exception) {
             logger()->error($exception);
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.error_has_occurred_while_fetching_validation_response');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.error_has_occurred_while_fetching_validation_response');
 
             return response()->json(
                 ['success' => false, 'message' => $translatedMessage]
@@ -618,12 +618,12 @@ class BulkPublishingController extends Controller
             Cache::put('activity-validation-delete', true);
             Cache::forget('activity-validation-' . auth()->user()->id);
             BulkPublishCacheHelper::clearBulkPublishCache(auth()->user()->organization_id);
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.successfully_deleted');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.successfully_deleted');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (Exception|\Throwable $exception) {
             logger()->error($exception);
-            $translatedMessage = trans('work_flow/bulk_publishing_controller.error_has_occurred_while_deleting_validation_status');
+            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.error_has_occurred_while_deleting_validation_status');
 
             return response()->json(
                 ['success' => false, 'message' => $translatedMessage]

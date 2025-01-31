@@ -203,5 +203,20 @@ return [
     'deleted_successfully'                                                                    => 'Deleted successfully',
     'delete_error'                                                                            => 'Error deleting',
     'failed_to_bulk_delete'                                                                   => 'Failed to bulk delete.',
-];
+    'validated'                                                                               => 'Validated',
+    'validating'                                                                              => 'Validating',
+    'failed'                                                                                  => 'Failed',
+    'published'                                                                               => 'Published',
+    'publishing'                                                                              => 'Publishing',
+    'show_more'                                                                               => 'Show more',
+    'retry'                                                                                   => 'Retry',
+    'condition_not_attached'                                                                  => 'Condition not Attached',
+    'revalidate'                                                                              => 'Revalidate',
+    'delete_element'                                                                          => 'Delete element',
+    'are_you_sure_you_want_to_delete_this_element'                                            => 'Are you sure you want to delete this element?',
+    'add_transaction'                                                                         => 'Add Transaction',
+    'show_full_transaction_list'                                                              => 'Show full transaction list',
+    'edit'                                                                                    => 'Edit',
+    'another_import_in_progress'=>'Another import is in progress. Please try again later or :link.'
 
+];

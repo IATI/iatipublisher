@@ -37,9 +37,11 @@
           />
         </svg>
         <span>
-          Try again or write to
-          <a href="mailto:support@iatistandard.org">support@iatistandard.org</a>
-          for further assistance.
+          {{
+            translatedData[
+              'publish.bulk_publish.try_again_or_write_to_support_for_further_assistance'
+            ]
+          }}
         </span>
       </div>
     </div>
@@ -52,7 +54,7 @@ type Tab = {
   name: string;
 };
 
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref, defineProps, defineEmits, inject, Ref } from 'vue';
 const props = defineProps({
   tabs: {
     type: Array as () => Tab[],
@@ -65,7 +67,10 @@ const props = defineProps({
     default: false,
   },
 });
+
+const translatedData = inject('translatedData') as Ref;
 const activeTab = ref(1);
+
 const emit = defineEmits(['activeTab']);
 const handleActiveTab = (value: number) => {
   activeTab.value = value;

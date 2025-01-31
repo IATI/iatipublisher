@@ -74,7 +74,7 @@ class ActivityWorkflowController extends Controller
             DB::beginTransaction();
             $this->activityWorkflowService->publishActivity($activity);
             DB::commit();
-            $translatedMessage = trans('work_flow/activity_workflow_controller.activity_has_been_published_successfully');
+            $translatedMessage = trans('workflow_backend/activity_workflow_controller.activity_has_been_published_successfully');
             Session::put('success', $translatedMessage);
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
@@ -87,7 +87,7 @@ class ActivityWorkflowController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
-            $translatedMessage = trans('work_flow/activity_workflow_controller.error_has_occurred_while_publishing_activity');
+            $translatedMessage = trans('workflow_backend/activity_workflow_controller.error_has_occurred_while_publishing_activity');
 
             Session::put('error', $translatedMessage);
 
@@ -109,7 +109,7 @@ class ActivityWorkflowController extends Controller
             $activity = $this->activityWorkflowService->findActivity($id);
 
             if (!$activity->linked_to_iati) {
-                $translatedMessage = trans('work_flow/activity_workflow_controller.this_activity_has_not_been_published_to_un_publish');
+                $translatedMessage = trans('workflow_backend/activity_workflow_controller.this_activity_has_not_been_published_to_un_publish');
 
                 Session::put('error', $translatedMessage);
 
@@ -119,14 +119,14 @@ class ActivityWorkflowController extends Controller
             $this->activityWorkflowService->unpublishActivity($activity);
             DB::commit();
             $this->activityWorkflowService->deletePublishedFile($activity);
-            $translatedMessage = trans('work_flow/activity_workflow_controller.activity_has_been_un_published_successfully');
+            $translatedMessage = trans('workflow_backend/activity_workflow_controller.activity_has_been_un_published_successfully');
             Session::put('success', $translatedMessage);
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             DB::rollBack();
             logger()->error($e);
-            $translatedMessage = trans('work_flow/activity_workflow_controller.error_has_occurred_while_un_publishing_activity');
+            $translatedMessage = trans('workflow_backend/activity_workflow_controller.error_has_occurred_while_un_publishing_activity');
             Session::put('error', $translatedMessage);
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
@@ -154,12 +154,12 @@ class ActivityWorkflowController extends Controller
             }
 
             RegistryValidatorJob::dispatch($activity, $user);
-            $translatedMessage = trans('work_flow/activity_workflow_controller.validating_activities');
+            $translatedMessage = trans('workflow_backend/activity_workflow_controller.validating_activities');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             logger()->error($e);
-            $translatedMessage = trans('work_flow/activity_workflow_controller.error_has_occurred_while_validating_activity');
+            $translatedMessage = trans('workflow_backend/activity_workflow_controller.error_has_occurred_while_validating_activity');
 
             return response()->json(['success' => false, 'error' => $translatedMessage]);
         }

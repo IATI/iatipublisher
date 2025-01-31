@@ -63,7 +63,7 @@ class OrganizationWorkflowController extends Controller
             $this->organizationWorkflowService->publishOrganization($organization);
             $this->organizationOnboardingService->updateOrganizationOnboardingStepToComplete($organization->id, OrganizationOnboarding::ORGANIZATION_DATA, true);
             DB::commit();
-            $translatedMessage = trans('work_flow/organization_workflow_controller.organization_has_been_published_successfully');
+            $translatedMessage = trans('workflow_backend/organization_workflow_controller.organization_has_been_published_successfully');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (PublisherNotFound $message) {
@@ -74,7 +74,7 @@ class OrganizationWorkflowController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
-            $translatedMessage = trans('work_flow/organization_workflow_controller.error_has_occurred_while_publishing_organization');
+            $translatedMessage = trans('workflow_backend/organization_workflow_controller.error_has_occurred_while_publishing_organization');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
@@ -92,7 +92,7 @@ class OrganizationWorkflowController extends Controller
             $organization = Auth::user()->organization;
 
             if (!$organization->is_published && $organization->status === 'draft') {
-                $translatedMessage = trans('work_flow/organization_workflow_controller.this_organization_has_not_been_published_to_un_publish');
+                $translatedMessage = trans('workflow_backend/organization_workflow_controller.this_organization_has_not_been_published_to_un_publish');
 
                 return redirect()->route('admin.activities.index')->with('error', $translatedMessage);
             }
@@ -100,13 +100,13 @@ class OrganizationWorkflowController extends Controller
             $this->organizationWorkflowService->unpublishOrganization($organization);
             $this->organizationOnboardingService->updateOrganizationOnboardingStepToComplete($organization->id, OrganizationOnboarding::ORGANIZATION_DATA, false);
             DB::commit();
-            $translatedMessage = trans('work_flow/organization_workflow_controller.organization_has_been_un_published_successfully');
+            $translatedMessage = trans('workflow_backend/organization_workflow_controller.organization_has_been_un_published_successfully');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
-            $translatedMessage = trans('work_flow/organization_workflow_controller.error_has_occurred_while_un_publishing_organization');
+            $translatedMessage = trans('workflow_backend/organization_workflow_controller.error_has_occurred_while_un_publishing_organization');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
@@ -120,7 +120,7 @@ class OrganizationWorkflowController extends Controller
     public function checksForOrganizationPublish(): JsonResponse
     {
         $message = $this->activityWorkflowService->getPublishErrorMessage(auth()->user()->organization, 'organization');
-        $translatedMessage = trans('work_flow/organization_workflow_controller.organization_is_ready_to_be_published');
+        $translatedMessage = trans('workflow_backend/organization_workflow_controller.organization_is_ready_to_be_published');
 
         return !empty($message) ? response()->json(['success' => false, 'message' => $message]) : response()->json(['success' => true, 'message' => $translatedMessage]);
     }
