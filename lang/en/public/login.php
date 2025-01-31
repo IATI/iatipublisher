@@ -13,7 +13,6 @@ return [
         'my_organisation_has_registered_label' => 'My organisation has registered with IATI',
         'my_organisation_has_registered_text'  => 'Use this option if your organisation has already registered on the <a href="https://www.iatiregistry.org/" target="_blank">IATI Registry</a>, but is new to using IATI Publisher',
         'information_text'                     => 'If you are a new user of an organisation already using IATI Publisher, an admin user from your organisation can create an account for you. If you need help, or are not sure which option to select, please ',
-        'contact_support_label'                => 'Contact Support.',
     ],
     'sign_in_section'              => [
         'welcome_back_label'    => 'Welcome back! Please enter your details.',

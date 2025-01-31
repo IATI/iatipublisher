@@ -221,5 +221,15 @@ return [
     'add_a_new_user_role'                                                                        => 'Add a new :userRole',
     'user'                                                                                       => 'user',
     'iati_admin'                                                                                 => 'IATI Admin',
-    'select_user_role'                                                                           => 'Select user role'
+    'select_user_role'                                                                           => 'Select user role',
+    'download_all'                                                                               => 'Download All',
+    'another_activity_is_currently_being_published'                                              => 'Another Activity is currently being published',
+    'please_wait_for_previous_bulk_publish_to_complete_or_cancel_previous_bulk_publish'          => 'Please wait for previous bulk publish to complete or cancel previous bulk publish to continue this bulk publish.',
+    'cancel_previous_bulk_publish'                                                               => 'Cancel Previous Bulk publish',
+    'wait_for_completion'                                                                        => 'Wait for completion',
+    'basic_activity_elements'                                                                    => 'Basic Activity Elements',
+    'indicators_except_period'                                                                   => 'Indicators except Period',
+    'result_except_indicators_and_period'                                                        => 'Result except Indicators and Period',
+    'activity'                                                                                   => 'activity',
+    'contact_support_label'                                                                      => 'Contact Support.',
 ];

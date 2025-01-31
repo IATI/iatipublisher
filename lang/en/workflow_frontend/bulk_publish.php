@@ -7,7 +7,6 @@ return [
     'validation_incomplete'                                          => 'Validation incomplete',
     'activities_could_only_be_validated_due_to_server_error'         => '<b class="text-[18px]">:count / :totalCount </b> activities could only be validated due to server error. Would you like to publish the validated files?',
     'exceeded_max_publish_size'                                      => 'Exceeded max publish size.',
-    'contact_support'                                                => 'Contact Support.',
     'data_checking_complete_click_continue_to_publish'               => 'Data checking complete. Click continue to publish',
     'activities_marked_with_this_symbol_have_data_quality_issues'    => 'Activities marked with this symbol have data quality issues',
     'the_activity_contains_critical_errors_and_cannot_be_published'  => 'The activity contains critical errors and cannot be published.',
@@ -23,12 +22,7 @@ return [
     'try_again_or_write_to_support_for_further_assistance'           => 'Try again or write to <a href="mailto:support@iatistandard.org">support@iatistandard.org</a> for further assistance.',
     'publishing_count_activities'                                    => 'Publishing :count activities',
     'view_the_errors_and_warnings_in_detail'                         => 'View the errors and warnings in detail',
-    'another_activity_is_currently_being_published'                  => 'Another Activity is currently being published',
-    'please_wait_for_previous_bulk_publish_to_complete'              => 'Please wait for previous bulk publish to complete or cancel previous bulk publish to continue this bulk publish.',
-    'cancel_previous_bulk_publish'                                   => 'Cancel Previous Bulk publish',
-    'wait_for_completion'                                            => 'Wait for completion',
-    'publishing_completed'=>'Publishing Completed',
-    'activity'=>'Activity',
-    'some_activities_have_failed_to_publish'=>'Some activities have failed to publish.',
-    'changes_have_been_detected_in_your_activity_data'=>'Changes have been detected in your activity data. Please revalidate before continuing.'
-    ];
+    'publishing_completed'                                           => 'Publishing Completed',
+    'some_activities_have_failed_to_publish'                         => 'Some activities have failed to publish.',
+    'changes_have_been_detected_in_your_activity_data'               => 'Changes have been detected in your activity data. Please revalidate before continuing.'
+];

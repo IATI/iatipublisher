@@ -86,9 +86,7 @@
           >
             <svg-vue class="mr-0.5 text-base" icon="edit"></svg-vue>
             <span class="hidden text-[10px] lg:block">{{
-              translatedData[
-                'organisationDetail.organisation_elements_detail.edit'
-              ]
+              translatedData['common.common.edit']
             }}</span>
           </a>
 

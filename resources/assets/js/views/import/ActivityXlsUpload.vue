@@ -50,9 +50,7 @@
                   <svg-vue icon="export" />
                   <span class="font-bold text-bluecoral">
                     {{
-                      translatedData[
-                        'workflow_frontend.import.basic_activity_elements'
-                      ]
+                      translatedData['common.common.basic_activity_elements']
                     }}
                   </span>
                 </div>
@@ -83,7 +81,7 @@
                   <span class="font-bold text-bluecoral">
                     {{
                       translatedData[
-                        'workflow_frontend.import.result_except_indicator_and_period'
+                        'common.common.result_except_indicators_and_period'
                       ]
                     }}
                   </span>
@@ -114,9 +112,7 @@
                   <svg-vue icon="indicator-icon" />
                   <span class="font-bold text-bluecoral">
                     {{
-                      translatedData[
-                        'workflow_frontend.import.indicators_except_period'
-                      ]
+                      translatedData['common.common.indicators_except_period']
                     }}
                   </span>
                 </div>
@@ -297,9 +293,7 @@
                   class="block w-full p-2.5 text-n-40 group-hover:text-n-50"
                 >
                   {{
-                    translatedData[
-                      'workflow_frontend.import.basic_activity_elements'
-                    ]
+                    translatedData['common.common.basic_activity_elements']
                   }}.xls
                 </a>
               </li>
@@ -315,7 +309,7 @@
                 >
                   {{
                     translatedData[
-                      'workflow_frontend.import.result_except_indicators_and_period'
+                      'common.common.result_except_indicators_and_period'
                     ]
                   }}.xls
                 </a>
@@ -414,7 +408,7 @@
         :text="
           store.state.selectedActivities.length > 0
             ? translatedData['workflow_frontend.import.download_selected']
-            : translatedData['workflow_frontend.import.download_all']
+            : translatedData['common.common.download_all']
         "
         icon="download"
         @click="downloadCode"
@@ -667,18 +661,14 @@ watch(
 const mapActivityName = (name) => {
   switch (name) {
     case 'activity':
-      return translatedData.value[
-        'workflow_frontend.import.basic_activity_elements'
-      ];
+      return translatedData.value['common.common.basic_activity_elements'];
     case 'period':
       return 'Period';
     case 'indicator':
-      return translatedData.value[
-        'workflow_frontend.import.indicators_except_period'
-      ];
+      return translatedData.value['common.common.indicators_except_period'];
     case 'result':
       return translatedData.value[
-        'workflow_frontend.import.result_except_indicators_and_period'
+        'common.common.result_except_indicators_and_period'
       ];
     default:
       return name;
@@ -961,7 +951,7 @@ const checkXlsStatus = () => {
 
 const getTranslatedAnotherImportInProgress = (ongoingImportType: string) => {
   let message =
-    translatedData.value['workflow_frontend.import.another_import_in_progress'];
+    translatedData.value['common.common.another_import_in_progress'];
 
   const url = ongoingImportType === 'xls' ? '/import/xls/list' : '/import/list';
 

@@ -8,7 +8,7 @@
           <b>
             {{
               translatedData[
-                'publish.bulk_publish.another_activity_is_currently_being_published'
+                'common.common.another_activity_is_currently_being_published'
               ]
             }}
           </b>
@@ -17,7 +17,7 @@
           <div class="text-sm leading-normal">
             {{
               translatedData[
-                'publish.bulk_publish.please_wait_for_previous_bulk_publish_to_complete'
+                'common.common.please_wait_for_previous_bulk_publish_to_complete'
               ]
             }}
           </div>
@@ -26,15 +26,13 @@
       <div class="flex justify-between space-x-2">
         <BtnComponent
           class="bg-white px-6 uppercase"
-          :text="
-            translatedData['publish.bulk_publish.cancel_previous_bulk_publish']
-          "
+          :text="translatedData['common.common.cancel_previous_bulk_publish']"
           type=""
           @click="startNewPublishing"
         />
         <BtnComponent
           class="bg-white px-6 uppercase"
-          :text="translatedData['publish.bulk_publish.wait_for_completion']"
+          :text="translatedData['common.common.wait_for_completion']"
           type="primary"
           @click="showExistingProcessModal = false"
         />

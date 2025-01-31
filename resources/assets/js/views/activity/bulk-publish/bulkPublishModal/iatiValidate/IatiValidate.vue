@@ -42,7 +42,7 @@
             href="mailto:support@iatistandard.org"
             target="_blank"
           >
-            {{ translatedData['publish.bulk_publish.contact_support'] }}
+            {{ translatedData['common.common.contact_support_label'] }}
           </a>
         </b>
       </h6>

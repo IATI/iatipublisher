@@ -5,7 +5,6 @@ return [
     'account_not_verified'                                 => 'Account not verified',
     'complete_your_setup'                                  => 'Complete your setup',
     'publisher_is_inactive'                                => 'Publisher is Inactive',
-    'show_more'                                            => 'Show more',
     'show_less'                                            => 'Show less',
     'email_not_verified'                                   => 'Email not verified',
     'please_check_for_the_verification_email_sent_to_you'  => 'Please check for the verification email sent to you when you registered (<span><a class="cursor-pointer border-b-2 border-b-bluecoral font-bold text-bluecoral hover:border-b-spring-50" @click="resendVerificationEmail()">click here to resend the verification email</a>). </span>Contact<span><a target="_blank" href="mailto:support@iatistandard.org">support@iatistandard.org</a></span>for further assistance.',

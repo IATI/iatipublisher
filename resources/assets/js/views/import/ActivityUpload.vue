@@ -60,11 +60,7 @@
           v-if="hasOngoingImportWarning"
           class="border-orangeish my-2 flex max-w-[95%] items-center space-x-2 rounded-md bg-eggshell px-4 py-6 align-middle text-xs font-normal text-n-50"
         >
-          {{
-            translatedData[
-              'workflow_frontend.import.another_import_in_progress'
-            ]
-          }}
+          {{ translatedData['common.common.another_import_in_progress'] }}
           <template v-if="ongoingImportType === ''">
             {{ ongoingImportType }}
             <a href="#" class="px-1 font-bold" @click="openZendeskLauncher">
@@ -82,11 +78,7 @@
           <p
             class="border-b border-n-30 p-4 text-sm font-bold uppercase text-n-50"
           >
-            {{
-              translatedData[
-                'workflow_frontend.import.another_import_in_progress'
-              ]
-            }}
+            {{ translatedData['common.common.another_import_in_progress'] }}
           </p>
           <div class="p-6">
             <div class="mb-4 rounded border border-n-30 px-4 py-3">
@@ -242,7 +234,7 @@ function openZendeskLauncher() {
 
 const getTranslatedAnotherImportInProgress = (ongoingImportType: string) => {
   let message =
-    translatedData.value['workflow_frontend.import.another_import_in_progress'];
+    translatedData.value['common.common.another_import_in_progress'];
 
   const url = ongoingImportType === 'xls' ? '/import/xls/list' : '/import/list';
 

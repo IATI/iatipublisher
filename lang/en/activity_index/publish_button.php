@@ -1,10 +1,6 @@
 <?php
 
 return [
-    'another_activity_is_currently_being_published'                                             => 'Another Activity is currently being published',
-    'please_wait_for_previous_bulk_publish_to_complete_or_cancel_previous_bulk_publish'         => 'Please wait for previous bulk publish to complete or cancel previous bulk publish to continue this bulk publish.',
-    'cancel_previous_bulk_publish'                                                              => 'Cancel Previous Bulk publish',
-    'wait_for_completion'                                                                       => 'Wait for completion',
     'some_elements_use_deprecated_codelist_values'                                              => 'Some elements use deprecated codelist values',
     'certain_elements_in_this_activity_use_deprecated_code_list_values'                         => 'Certain elements in this activity use deprecated code list values, which we do not recommend. Using these outdated values can undermine data quality.',
     'add_missing_data'                                                                          => 'Add Missing Data',

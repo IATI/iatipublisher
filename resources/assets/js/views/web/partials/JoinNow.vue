@@ -57,11 +57,7 @@
           class="border-b-2 border-b-transparent font-bold text-bluecoral hover:border-b-2 hover:border-b-turquoise hover:text-bluecoral"
           href="mailto:support@iatistandard.org"
           target="_blank"
-          >{{
-            translatedData[
-              'public.login.join_now_section.contact_support_label'
-            ]
-          }}</a
+          >{{ translatedData['common.common.contact_support_label'] }}</a
         ></span
       >
     </div>

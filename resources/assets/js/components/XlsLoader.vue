@@ -62,7 +62,7 @@
           class="text-xs font-bold uppercase text-crimson-50 hover:text-spring-50"
           @click="retry"
         >
-          {{ translatedData['activity_index.xls_loader.retry'] }}
+          {{ translatedData['common.common.retry'] }}
         </button>
       </div>
       <div v-else class="flex justify-between space-x-5">
@@ -134,18 +134,14 @@ const props = defineProps({
 const mapActivityName = (name) => {
   switch (name) {
     case 'activity':
-      return translatedData.value[
-        'activity.xls_loader.basic_activity_elements'
-      ];
+      return translatedData.value['common.common.basic_activity_elements'];
     case 'period':
       return 'Period';
     case 'indicator':
-      return translatedData.value[
-        'activity.xls_loader.indicators_except_period'
-      ];
+      return translatedData.value['common.common.indicators_except_period'];
     case 'result':
       return translatedData.value[
-        'activity.xls_loader.result_except_indicators_and_period'
+        'common.common.result_except_indicators_and_period'
       ];
     default:
       return name;

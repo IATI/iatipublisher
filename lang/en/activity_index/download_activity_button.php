@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'download_all'                                               => 'Download All',
     'download_csv'                                               => 'Download CSV',
     'download_xml'                                               => 'Download XML',
     'download_xls'                                               => 'Download XLS',

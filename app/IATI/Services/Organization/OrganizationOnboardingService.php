@@ -240,7 +240,7 @@ class OrganizationOnboardingService
                 1 => Str::title(trans('common/common.publishing_settings')),
                 2 => Str::title(trans('onboarding/organisation_data_step.default_values')),
                 3 => Str::title(trans('onboarding/organisation_data_step.organization_data')),
-                4 => Str::title(trans('onboarding/organisation_data_step.activity')),
+                4 => Str::title(trans('common.common.activity')),
             };
         }
 

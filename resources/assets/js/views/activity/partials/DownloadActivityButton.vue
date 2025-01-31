@@ -7,9 +7,7 @@
       @click="toggle"
     >
       <svg-vue icon="download-file" />
-      {{
-        translatedData['activity_index.download_activity_button.download_all']
-      }}
+      {{ translatedData['common.common.download_all'] }}
       <svg-vue icon="dropdown-arrow" class="text-blue-coral !text-[6px]" />
     </button>
     <button

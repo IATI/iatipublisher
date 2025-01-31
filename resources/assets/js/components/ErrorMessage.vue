@@ -81,7 +81,7 @@
           >
             {{
               show
-                ? translatedData['activity_index.error_message.show_more']
+                ? translatedData['common.common.show_more']
                 : translatedData['activity_index.error_message.show_less']
             }}
           </button>

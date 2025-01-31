@@ -546,10 +546,8 @@ watchEffect(() => {
     data.org_menus[2].name = translatedData.value['common.common.settings'];
     data.org_menus[3].name =
       translatedData.value['adminHeader.admin_header.add_import_activity'];
-    data.org_menus[4].name =
-      translatedData.value['adminHeader.admin_header.users'];
-    data.superadmin_menus[2].name =
-      translatedData.value['adminHeader.admin_header.users'];
+    data.org_menus[4].name = translatedData.value['common.common.users'];
+    data.superadmin_menus[2].name = translatedData.value['common.common.users'];
   }
 });
 
