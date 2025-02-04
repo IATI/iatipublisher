@@ -123,11 +123,11 @@
     }
   },
   "iati_identifier": {
-    "label": "elements/element_json_schema.iati_identifier_label",
+    "label": "common/common.iati_identifier_label",
     "attributes": {
       "activity_identifier": {
         "name": "activity_identifier",
-        "label": "elements/element_json_schema.iati_identifier_attributes_activity_identifier_label",
+        "label": "common/common.iati_identifier_attributes_activity_identifier_label",
         "type": "text",
         "placeholder": "elements/element_json_schema.iati_identifier_attributes_activity_identifier_placeholder",
         "required": true,
@@ -137,7 +137,7 @@
       },
       "iati_identifier_text": {
         "name": "iati_identifier_text",
-        "label": "elements/element_json_schema.iati_identifier_label",
+        "label": "common/common.iati_identifier_label",
         "type": "text",
         "placeholder": "",
         "required": false,
@@ -151,7 +151,7 @@
   },
   "other_identifier": {
     "name": "other_identifier",
-    "label": "elements/element_json_schema.other_identifier_label",
+    "label": "common/common.other_identifier_label",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -183,7 +183,7 @@
     "sub_elements": {
       "owner_org": {
         "name": "owner_org",
-        "label": "elements/element_json_schema.other_identifier_sub_elements_owner_org_label",
+        "label": "common/common.other_identifier_sub_elements_owner_org_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -289,7 +289,7 @@
     }
   },
   "activity_status": {
-    "label": "elements/element_json_schema.activity_status_label",
+    "label": "common/common.activity_status_label",
     "help_text": "",
     "hover_text": "elements/element_json_schema.activity_status_hover_text",
     "show_info_in_title": true,
@@ -310,7 +310,7 @@
   },
   "activity_date": {
     "name": "activity_date",
-    "label": "elements/element_json_schema.activity_date_label",
+    "label": "common/common.activity_date_label",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -331,7 +331,7 @@
       },
       "date": {
         "name": "date",
-        "label": "elements/element_json_schema.activity_date_attributes_date_label",
+        "label": "common/common.activity_date_attributes_date_label",
         "type": "date",
         "placeholder": "elements/element_json_schema.activity_date_attributes_date_placeholder",
         "required": true,
@@ -372,7 +372,7 @@
     }
   },
   "activity_scope": {
-    "label": "elements/element_json_schema.activity_scope_label",
+    "label": "common/common.activity_scope_label",
     "hover_text": "elements/element_json_schema.activity_scope_hover_text",
     "show_info_in_title": true,
     "attributes": {
@@ -414,7 +414,7 @@
       },
       "percentage": {
         "name": "percentage",
-        "label": "elements/element_json_schema.recipient_country_attributes_percentage_label",
+        "label": "common/common.recipient_country_attributes_percentage_label",
         "type": "text",
         "placeholder": "elements/element_json_schema.recipient_country_attributes_percentage_placeholder",
         "required": true,
@@ -518,7 +518,7 @@
       },
       "vocabulary_uri": {
         "name": "vocabulary_uri",
-        "label": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_label",
+        "label": "common/common.recipient_region_attributes_vocabulary_uri_label",
         "type": "text",
         "placeholder": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_placeholder",
         "required": false,
@@ -534,7 +534,7 @@
       },
       "percentage": {
         "name": "percentage",
-        "label": "elements/element_json_schema.recipient_country_attributes_percentage_label",
+        "label": "common/common.recipient_country_attributes_percentage_label",
         "type": "text",
         "placeholder": "elements/element_json_schema.recipient_region_attributes_percentage_placeholder",
         "required": true,
@@ -575,7 +575,7 @@
     }
   },
   "sector": {
-    "label": "elements/element_json_schema.sector_label",
+    "label": "common/common.sector_label",
     "name": "sector",
     "add_more": true,
     "form_has_borders": true,
@@ -717,7 +717,7 @@
       },
       "percentage": {
         "name": "percentage",
-        "label": "elements/element_json_schema.recipient_country_attributes_percentage_label",
+        "label": "common/common.recipient_country_attributes_percentage_label",
         "type": "text",
         "placeholder": "elements/element_json_schema.recipient_region_attributes_percentage_placeholder",
         "required": true,
@@ -759,7 +759,7 @@
   },
   "tag": {
     "name": "tag",
-    "label": "elements/element_json_schema.tag_label",
+    "label": "common/common.tag_label",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -842,7 +842,7 @@
       },
       "vocabulary_uri": {
         "name": "vocabulary_uri",
-        "label": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_label",
+        "label": "common/common.recipient_region_attributes_vocabulary_uri_label",
         "type": "text",
         "placeholder": "common/common.type_vocabulary_uri",
         "required": false,
@@ -891,7 +891,7 @@
   },
   "policy_marker": {
     "name": "policy_marker",
-    "label": "elements/element_json_schema.policy_marker_label",
+    "label": "common/common.policy_marker_label",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -919,7 +919,7 @@
       },
       "vocabulary_uri": {
         "name": "vocabulary_uri",
-        "label": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_label",
+        "label": "common/common.recipient_region_attributes_vocabulary_uri_label",
         "type": "text",
         "placeholder": "elements/element_json_schema.policy_marker_attributes_vocabulary_uri_placeholder",
         "required": false,
@@ -936,7 +936,7 @@
       },
       "significance": {
         "name": "significance",
-        "label": "elements/element_json_schema.policy_marker_attributes_significance_label",
+        "label": "common/common.policy_marker_attributes_significance_label",
         "type": "select",
         "placeholder": "elements/element_json_schema.policy_marker_attributes_significance_placeholder",
         "choices": "Activity/PolicySignificance.json",
@@ -1012,7 +1012,7 @@
     }
   },
   "collaboration_type": {
-    "label": "elements/element_json_schema.collaboration_type_label",
+    "label": "common/common.collaboration_type_label",
     "hover_text": "elements/element_json_schema.collaboration_type_hover_text",
     "help_text": "",
     "show_info_in_title": true,
@@ -1195,7 +1195,7 @@
   },
   "country_budget_items": {
     "name": "country_budget_items",
-    "label": "elements/element_json_schema.country_budget_items_label",
+    "label": "common/common.country_budget_items_label",
     "add_more": true,
     "hover_text": "elements/element_json_schema.country_budget_items_hover_text",
     "show_info_in_title": true,
@@ -1215,7 +1215,7 @@
     "sub_elements": {
       "budget_item": {
         "name": "budget_item",
-        "label": "elements/element_json_schema.country_budget_items_sub_elements_budget_item_label",
+        "label": "common/common.country_budget_items_sub_elements_budget_item_label",
         "element_criteria": "mandatory",
         "add_more": true,
         "form_has_borders": true,
@@ -1236,7 +1236,7 @@
           },
           "percentage": {
             "name": "percentage",
-            "label": "elements/element_json_schema.recipient_country_attributes_percentage_label",
+            "label": "common/common.recipient_country_attributes_percentage_label",
             "type": "text",
             "placeholder": "elements/element_json_schema.recipient_region_attributes_percentage_placeholder",
             "required": true,
@@ -1293,7 +1293,7 @@
   },
   "humanitarian_scope": {
     "name": "humanitarian_scope",
-    "label": "elements/element_json_schema.humanitarian_scope_label",
+    "label": "common/common.humanitarian_scope_label",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -1330,7 +1330,7 @@
       },
       "vocabulary_uri": {
         "name": "vocabulary_uri",
-        "label": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_label",
+        "label": "common/common.recipient_region_attributes_vocabulary_uri_label",
         "type": "text",
         "placeholder": "common/common.type_vocabulary_uri",
         "required": false,
@@ -1396,14 +1396,14 @@
     }
   },
   "capital_spend": {
-    "label": "elements/element_json_schema.capital_spend_label",
+    "label": "common/common.capital_spend_label",
     "hover_text": "elements/element_json_schema.capital_spend_hover_text",
     "help_text": "",
     "show_info_in_title": true,
     "attributes": {
       "capital_spend": {
         "name": "capital_spend",
-        "label": "elements/element_json_schema.recipient_country_attributes_percentage_label",
+        "label": "common/common.recipient_country_attributes_percentage_label",
         "type": "text",
         "placeholder": "elements/element_json_schema.recipient_region_attributes_percentage_placeholder",
         "required": true,
@@ -1416,7 +1416,7 @@
   },
   "related_activity": {
     "name": "related_activity",
-    "label": "elements/element_json_schema.related_activity_label",
+    "label": "common/common.related_activity_label",
     "add_more": true,
     "add_more_attributes": true,
     "form_has_borders": true,
@@ -1451,7 +1451,7 @@
   },
   "conditions": {
     "name": "conditions",
-    "label": "elements/element_json_schema.conditions_label",
+    "label": "common/common.conditions_label",
     "add_more": true,
     "do_not_repeat_button": true,
     "hover_text": "elements/element_json_schema.conditions_hover_text",
@@ -1460,7 +1460,7 @@
     "attributes": {
       "condition_attached": {
         "name": "condition_attached",
-        "label": "elements/element_json_schema.conditions_attributes_condition_attached_label",
+        "label": "common/common.conditions_attributes_condition_attached_label",
         "type": "select",
         "placeholder": "elements/element_json_schema.conditions_attributes_condition_attached_placeholder",
         "choices": {
@@ -1476,7 +1476,7 @@
     "sub_elements": {
       "condition": {
         "name": "condition",
-        "label": "elements/element_json_schema.conditions_sub_elements_condition_label",
+        "label": "common/common.conditions_sub_elements_condition_label",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -1532,7 +1532,7 @@
   },
   "legacy_data": {
     "name": "legacy_data",
-    "label": "elements/element_json_schema.legacy_data_label",
+    "label": "common/common.legacy_data_label",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -1563,7 +1563,7 @@
       },
       "iati_equivalent": {
         "name": "iati_equivalent",
-        "label": "elements/element_json_schema.legacy_data_attributes_iati_equivalent_label",
+        "label": "common/common.legacy_data_attributes_iati_equivalent_label",
         "type": "text",
         "placeholder": "elements/element_json_schema.legacy_data_attributes_iati_equivalent_placeholder",
         "required": false,
@@ -1609,7 +1609,7 @@
       },
       "document": {
         "name": "document",
-        "label": "elements/element_json_schema.document_link_attributes_document_label",
+        "label": "common/common.document_link_attributes_document_label",
         "type": "file",
         "placeholder": "",
         "required": false,
@@ -1785,7 +1785,7 @@
   },
   "contact_info": {
     "name": "contact_info",
-    "label": "elements/element_json_schema.contact_info_label",
+    "label": "common/common.contact_info_label",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -1808,7 +1808,7 @@
     "sub_elements": {
       "organisation": {
         "name": "organisation",
-        "label": "elements/element_json_schema.contact_info_sub_elements_organisation_label",
+        "label": "common/common.contact_info_sub_elements_organisation_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -1849,7 +1849,7 @@
       },
       "department": {
         "name": "department",
-        "label": "elements/element_json_schema.contact_info_sub_elements_department_label",
+        "label": "common/common.contact_info_sub_elements_department_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -1890,7 +1890,7 @@
       },
       "person_name": {
         "name": "person_name",
-        "label": "elements/element_json_schema.contact_info_sub_elements_person_name_label",
+        "label": "common/common.contact_info_sub_elements_person_name_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -1931,7 +1931,7 @@
       },
       "job_title": {
         "name": "job_title",
-        "label": "elements/element_json_schema.contact_info_sub_elements_job_title_label",
+        "label": "common/common.contact_info_sub_elements_job_title_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -1972,7 +1972,7 @@
       },
       "telephone": {
         "name": "telephone",
-        "label": "elements/element_json_schema.contact_info_sub_elements_telephone_label",
+        "label": "common/common.contact_info_sub_elements_telephone_label",
         "add_more": true,
         "wrapper_collection": false,
         "form_has_borders": true,
@@ -1982,7 +1982,7 @@
         "attributes": {
           "telephone": {
             "name": "telephone",
-            "label": "elements/element_json_schema.contact_info_sub_elements_telephone_label",
+            "label": "common/common.contact_info_sub_elements_telephone_label",
             "type": "text",
             "placeholder": "elements/element_json_schema.contact_info_sub_elements_telephone_attributes_telephone_placeholder",
             "required": false,
@@ -1995,7 +1995,7 @@
       },
       "email": {
         "name": "email",
-        "label": "elements/element_json_schema.contact_info_sub_elements_email_label",
+        "label": "common/common.contact_info_sub_elements_email_label",
         "add_more": true,
         "wrapper_collection": false,
         "form_has_borders": true,
@@ -2005,7 +2005,7 @@
         "attributes": {
           "email": {
             "name": "email",
-            "label": "elements/element_json_schema.contact_info_sub_elements_email_label",
+            "label": "common/common.contact_info_sub_elements_email_label",
             "type": "text",
             "placeholder": "elements/element_json_schema.contact_info_sub_elements_email_attributes_email_placeholder",
             "required": false,
@@ -2041,7 +2041,7 @@
       },
       "mailing_address": {
         "name": "mailing_address",
-        "label": "elements/element_json_schema.contact_info_sub_elements_mailing_address_label",
+        "label": "common/common.contact_info_sub_elements_mailing_address_label",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -2085,7 +2085,7 @@
   },
   "location": {
     "name": "location",
-    "label": "elements/element_json_schema.location_label",
+    "label": "common/common.location_label",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -2108,7 +2108,7 @@
     "sub_elements": {
       "location_reach": {
         "name": "location_reach",
-        "label": "elements/element_json_schema.location_sub_elements_location_reach_label",
+        "label": "common/common.location_sub_elements_location_reach_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -2133,7 +2133,7 @@
       },
       "location_id": {
         "name": "location_id",
-        "label": "elements/element_json_schema.location_sub_elements_location_id_label",
+        "label": "common/common.location_sub_elements_location_id_label",
         "add_more": true,
         "wrapper_collection": false,
         "form_has_borders": true,
@@ -2291,7 +2291,7 @@
       },
       "administrative": {
         "name": "administrative",
-        "label": "elements/element_json_schema.location_sub_elements_administrative_label",
+        "label": "common/common.location_sub_elements_administrative_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -2324,7 +2324,7 @@
           },
           "level": {
             "name": "level",
-            "label": "elements/element_json_schema.location_sub_elements_administrative_attributes_level_label",
+            "label": "common/common.location_sub_elements_administrative_attributes_level_label",
             "type": "text",
             "placeholder": "elements/element_json_schema.location_sub_elements_administrative_attributes_level_placeholder",
             "required": false,
@@ -2337,7 +2337,7 @@
       },
       "point": {
         "name": "point",
-        "label": "elements/element_json_schema.location_sub_elements_point_label",
+        "label": "common/common.location_sub_elements_point_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -2348,7 +2348,7 @@
         "attributes": {
           "srs_name": {
             "name": "srs_name",
-            "label": "elements/element_json_schema.location_sub_elements_point_attributes_srs_name_label",
+            "label": "common/common.location_sub_elements_point_attributes_srs_name_label",
             "type": "text",
             "placeholder": "elements/element_json_schema.location_sub_elements_point_attributes_srs_name_placeholder",
             "required": true,
@@ -2366,7 +2366,7 @@
             "attributes": {
               "latitude": {
                 "name": "latitude",
-                "label": "elements/element_json_schema.location_sub_elements_point_sub_elements_pos_attributes_latitude_label",
+                "label": "common/common.location_sub_elements_point_sub_elements_pos_attributes_latitude_label",
                 "type": "text",
                 "placeholder": "elements/element_json_schema.location_sub_elements_point_sub_elements_pos_attributes_latitude_placeholder",
                 "required": true,
@@ -2378,7 +2378,7 @@
                 "name": "longitude",
                 "label": "elements/element_json_schema.location_sub_elements_point_sub_elements_pos_attributes_longitude_label",
                 "type": "text",
-                "placeholder": "elements/element_json_schema.location_sub_elements_point_sub_elements_pos_attributes_longitude_placeholder",
+                "placeholder": "common/common.location_sub_elements_point_sub_elements_pos_attributes_longitude_placeholder",
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
@@ -2391,7 +2391,7 @@
       },
       "exactness": {
         "name": "exactness",
-        "label": "elements/element_json_schema.location_sub_elements_exactness_label",
+        "label": "common/common.location_sub_elements_exactness_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -2415,7 +2415,7 @@
       },
       "location_class": {
         "name": "location_class",
-        "label": "elements/element_json_schema.location_sub_elements_location_class_label",
+        "label": "common/common.location_sub_elements_location_class_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -2439,7 +2439,7 @@
       },
       "feature_designation": {
         "name": "feature_designation",
-        "label": "elements/element_json_schema.location_sub_elements_feature_designation_label",
+        "label": "common/common.location_sub_elements_feature_designation_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -2465,7 +2465,7 @@
   },
   "planned_disbursement": {
     "name": "planned_disbursement",
-    "label": "elements/element_json_schema.planned_disbursement_label",
+    "label": "common/common.planned_disbursement_label",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -2488,7 +2488,7 @@
     "sub_elements": {
       "period_start": {
         "name": "period_start",
-        "label": "elements/element_json_schema.planned_disbursement_sub_elements_period_start_label",
+        "label": "common/common.planned_disbursement_sub_elements_period_start_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -2498,7 +2498,7 @@
         "attributes": {
           "date": {
             "name": "date",
-            "label": "elements/element_json_schema.planned_disbursement_sub_elements_period_start_attributes_date_label",
+            "label": "common/common.planned_disbursement_sub_elements_period_start_attributes_date_label",
             "type": "date",
             "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
@@ -2511,7 +2511,7 @@
       },
       "period_end": {
         "name": "period_end",
-        "label": "elements/element_json_schema.planned_disbursement_sub_elements_period_end_label",
+        "label": "common/common.planned_disbursement_sub_elements_period_end_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -2521,7 +2521,7 @@
         "attributes": {
           "date": {
             "name": "date",
-            "label": "elements/element_json_schema.planned_disbursement_sub_elements_period_start_attributes_date_label",
+            "label": "common/common.planned_disbursement_sub_elements_period_start_attributes_date_label",
             "type": "date",
             "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
@@ -2566,7 +2566,7 @@
           },
           "value_date": {
             "name": "value_date",
-            "label": "elements/element_json_schema.planned_disbursement_sub_elements_value_attributes_value_date_label",
+            "label": "common/common.planned_disbursement_sub_elements_value_attributes_value_date_label",
             "type": "date",
             "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
@@ -2579,7 +2579,7 @@
       },
       "provider_org": {
         "name": "provider_org",
-        "label": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_label",
+        "label": "common/common.planned_disbursement_sub_elements_provider_org_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -2600,7 +2600,7 @@
           },
           "provider_activity_id": {
             "name": "provider_activity_id",
-            "label": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_attributes_provider_activity_id_label",
+            "label": "common/common.planned_disbursement_sub_elements_provider_org_attributes_provider_activity_id_label",
             "type": "text",
             "placeholder": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_attributes_provider_activity_id_placeholder",
             "required": false,
@@ -2653,7 +2653,7 @@
       },
       "receiver_org": {
         "name": "receiver_org",
-        "label": "elements/element_json_schema.planned_disbursement_sub_elements_receiver_org_label",
+        "label": "common/common.planned_disbursement_sub_elements_receiver_org_label",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -2674,7 +2674,7 @@
           },
           "receiver_activity_id": {
             "name": "receiver_activity_id",
-            "label": "elements/element_json_schema.planned_disbursement_sub_elements_receiver_org_attributes_receiver_activity_id_label",
+            "label": "common/common.planned_disbursement_sub_elements_receiver_org_attributes_receiver_activity_id_label",
             "type": "text",
             "placeholder": "elements/element_json_schema.planned_disbursement_sub_elements_receiver_org_attributes_receiver_activity_id_placeholder",
             "required": false,
@@ -2729,7 +2729,7 @@
   },
   "participating_org": {
     "name": "participating_org",
-    "label": "elements/element_json_schema.participating_org_label",
+    "label": "common/common.participating_org_label",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -2773,7 +2773,7 @@
       },
       "identifier": {
         "name": "identifier",
-        "label": "elements/element_json_schema.participating_org_attributes_identifier_label",
+        "label": "common/common.participating_org_attributes_identifier_label",
         "type": "text",
         "placeholder": "elements/element_json_schema.participating_org_attributes_identifier_placeholder",
         "required": false,
@@ -2783,7 +2783,7 @@
       },
       "crs_channel_code": {
         "name": "crs_channel_code",
-        "label": "elements/element_json_schema.participating_org_attributes_crs_channel_code_label",
+        "label": "common/common.participating_org_attributes_crs_channel_code_label",
         "type": "select",
         "placeholder": "elements/element_json_schema.participating_org_attributes_crs_channel_code_placeholder",
         "choices": "Activity/CRSChannelCode.json",
@@ -2827,7 +2827,7 @@
   },
   "budget": {
     "name": "budget",
-    "label": "elements/element_json_schema.budget_label",
+    "label": "common/common.budget_label",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -2873,7 +2873,7 @@
         "attributes": {
           "date": {
             "name": "date",
-            "label": "elements/element_json_schema.activity_date_attributes_date_label",
+            "label": "common/common.activity_date_attributes_date_label",
             "type": "date",
             "placeholder": "elements/element_json_schema.budget_sub_elements_period_start_attributes_date_placeholder",
             "required": true,
@@ -2898,7 +2898,7 @@
         "attributes": {
           "date": {
             "name": "date",
-            "label": "elements/element_json_schema.activity_date_attributes_date_label",
+            "label": "common/common.activity_date_attributes_date_label",
             "type": "date",
             "placeholder": "elements/element_json_schema.activity_date_attributes_date_placeholder",
             "required": true,
@@ -2960,7 +2960,7 @@
   },
   "result": {
     "name": "result",
-    "label": "elements/element_json_schema.result_label",
+    "label": "common/common.result_label",
     "add_more": false,
     "hover_text": "elements/element_json_schema.result_hover_text",
     "help_text": "",
@@ -2979,7 +2979,7 @@
       },
       "aggregation_status": {
         "name": "aggregation_status",
-        "label": "elements/element_json_schema.result_attributes_aggregation_status_label",
+        "label": "common/common.result_attributes_aggregation_status_label",
         "type": "select",
         "placeholder": "elements/element_json_schema.result_attributes_aggregation_status_placeholder",
         "choices": {
@@ -3305,7 +3305,7 @@
           },
           "vocabulary_uri": {
             "name": "vocabulary_uri",
-            "label": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_label",
+            "label": "common/common.recipient_region_attributes_vocabulary_uri_label",
             "type": "text",
             "placeholder": "common/common.type_vocabulary_uri",
             "required": false,
@@ -3320,7 +3320,7 @@
   },
   "indicator": {
     "name": "indicator",
-    "label": "elements/element_json_schema.indicator_label",
+    "label": "common/common.indicator_label",
     "add_more": false,
     "do_not_repeat_button": true,
     "hover_text": "elements/element_json_schema.indicator_hover_text",
@@ -3329,7 +3329,7 @@
     "attributes": {
       "measure": {
         "name": "measure",
-        "label": "elements/element_json_schema.indicator_attributes_measure_label",
+        "label": "common/common.indicator_attributes_measure_label",
         "type": "select",
         "placeholder": "elements/element_json_schema.indicator_attributes_measure_placeholder",
         "choices": "Activity/IndicatorMeasure.json",
@@ -3340,7 +3340,7 @@
       },
       "ascending": {
         "name": "ascending",
-        "label": "elements/element_json_schema.indicator_attributes_ascending_label",
+        "label": "common/common.indicator_attributes_ascending_label",
         "type": "select",
         "placeholder": "elements/element_json_schema.indicator_attributes_ascending_placeholder",
         "choices": {
@@ -3354,7 +3354,7 @@
       },
       "aggregation_status": {
         "name": "aggregation_status",
-        "label": "elements/element_json_schema.indicator_attributes_aggregation_status_label",
+        "label": "common/common.indicator_attributes_aggregation_status_label",
         "type": "select",
         "placeholder": "elements/element_json_schema.result_attributes_aggregation_status_placeholder",
         "choices": {
@@ -3679,7 +3679,7 @@
           },
           "indicator_uri": {
             "name": "indicator_uri",
-            "label": "elements/element_json_schema.indicator_sub_elements_reference_attributes_indicator_uri_label",
+            "label": "common/common.indicator_sub_elements_reference_attributes_indicator_uri_label",
             "type": "text",
             "placeholder": "elements/element_json_schema.indicator_sub_elements_reference_attributes_indicator_uri_placeholder",
             "required": false,
@@ -3692,7 +3692,7 @@
       },
       "baseline": {
         "name": "baseline",
-        "label": "elements/element_json_schema.indicator_sub_elements_baseline_label",
+        "label": "common/common.indicator_sub_elements_baseline_label",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -3704,7 +3704,7 @@
         "attributes": {
           "year": {
             "name": "year",
-            "label": "elements/element_json_schema.indicator_sub_elements_baseline_attributes_year_label",
+            "label": "common/common.indicator_sub_elements_baseline_attributes_year_label",
             "type": "text",
             "placeholder": "elements/element_json_schema.indicator_sub_elements_baseline_attributes_year_placeholder",
             "required": true,
@@ -3736,7 +3736,7 @@
         "sub_elements": {
           "comment": {
             "name": "comment",
-            "label": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_comment_label",
+            "label": "common/common.indicator_sub_elements_baseline_sub_elements_comment_label",
             "attributes": {},
             "form_has_borders": true,
             "label_has_borders": true,
@@ -3776,7 +3776,7 @@
           },
           "dimension": {
             "name": "dimension",
-            "label": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_dimension_label",
+            "label": "common/common.indicator_sub_elements_baseline_sub_elements_dimension_label",
             "add_more": true,
             "wrapper_collection": false,
             "form_has_borders": true,
@@ -4006,7 +4006,7 @@
           },
           "location": {
             "name": "location",
-            "label": "elements/element_json_schema.location_label",
+            "label": "common/common.location_label",
             "add_more": "true",
             "form_has_borders": true,
             "label_has_borders": true,
@@ -4034,7 +4034,7 @@
   },
   "period": {
     "name": "period",
-    "label": "elements/element_json_schema.period_label",
+    "label": "common/common.period_label",
     "add_more": false,
     "do_not_repeat_button": true,
     "hover_text": "elements/element_json_schema.period_hover_text",
@@ -4044,7 +4044,7 @@
     "sub_elements": {
       "period_start": {
         "name": "period_start",
-        "label": "elements/element_json_schema.planned_disbursement_sub_elements_period_start_label",
+        "label": "common/common.planned_disbursement_sub_elements_period_start_label",
         "element_criteria": "",
         "add_more": false,
         "form_has_borders": true,
@@ -4055,7 +4055,7 @@
         "attributes": {
           "date": {
             "name": "date",
-            "label": "elements/element_json_schema.activity_date_attributes_date_label",
+            "label": "common/common.activity_date_attributes_date_label",
             "type": "date",
             "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
@@ -4068,7 +4068,7 @@
       },
       "period_end": {
         "name": "period_end",
-        "label": "elements/element_json_schema.planned_disbursement_sub_elements_period_end_label",
+        "label": "common/common.planned_disbursement_sub_elements_period_end_label",
         "element_criteria": "",
         "add_more": false,
         "form_has_borders": true,
@@ -4079,7 +4079,7 @@
         "attributes": {
           "date": {
             "name": "date",
-            "label": "elements/element_json_schema.activity_date_attributes_date_label",
+            "label": "common/common.activity_date_attributes_date_label",
             "type": "date",
             "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
@@ -4092,7 +4092,7 @@
       },
       "target": {
         "name": "target",
-        "label": "elements/element_json_schema.period_sub_elements_target_label",
+        "label": "common/common.period_sub_elements_target_label",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -4116,7 +4116,7 @@
         "sub_elements": {
           "comment": {
             "name": "comment",
-            "label": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_comment_label",
+            "label": "common/common.indicator_sub_elements_baseline_sub_elements_comment_label",
             "hover_text": "elements/element_json_schema.period_sub_elements_target_sub_elements_comment_hover_text",
             "help_text": "",
             "attributes": {},
@@ -4157,7 +4157,7 @@
           },
           "dimension": {
             "name": "dimension",
-            "label": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_dimension_label",
+            "label": "common/common.indicator_sub_elements_baseline_sub_elements_dimension_label",
             "add_more": true,
             "form_has_borders": true,
             "label_has_borders": true,
@@ -4367,7 +4367,7 @@
                 "attributes": {
                   "date": {
                     "name": "date",
-                    "label": "elements/element_json_schema.activity_date_attributes_date_label",
+                    "label": "common/common.activity_date_attributes_date_label",
                     "type": "date",
                     "placeholder": "common/common.yyyy_mm_dd",
                     "required": true,
@@ -4382,7 +4382,7 @@
           },
           "location": {
             "name": "location",
-            "label": "elements/element_json_schema.location_label",
+            "label": "common/common.location_label",
             "add_more": "true",
             "form_has_borders": true,
             "label_has_borders": true,
@@ -4407,7 +4407,7 @@
       },
       "actual": {
         "name": "actual",
-        "label": "elements/element_json_schema.period_sub_elements_actual_label",
+        "label": "common/common.period_sub_elements_actual_label",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -4431,7 +4431,7 @@
         "sub_elements": {
           "comment": {
             "name": "comment",
-            "label": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_comment_label",
+            "label": "common/common.indicator_sub_elements_baseline_sub_elements_comment_label",
             "form_has_borders": true,
             "label_has_borders": true,
             "is_collapsable": true,
@@ -4472,7 +4472,7 @@
           },
           "dimension": {
             "name": "dimension",
-            "label": "elements/element_json_schema.indicator_sub_elements_baseline_sub_elements_dimension_label",
+            "label": "common/common.indicator_sub_elements_baseline_sub_elements_dimension_label",
             "add_more": true,
             "form_has_borders": true,
             "label_has_borders": true,
@@ -4699,7 +4699,7 @@
           },
           "location": {
             "name": "location",
-            "label": "elements/element_json_schema.location_label",
+            "label": "common/common.location_label",
             "add_more": "true",
             "form_has_borders": true,
             "label_has_borders": true,
@@ -4727,7 +4727,7 @@
   },
   "transactions": {
     "name": "transaction",
-    "label": "elements/element_json_schema.transactions_label",
+    "label": "common/common.transactions_label",
     "add_more": false,
     "form_has_borders": true,
     "label_has_borders": true,
@@ -4788,7 +4788,7 @@
     "sub_elements": {
       "transaction_type": {
         "name": "transaction_type",
-        "label": "elements/element_json_schema.transactions_sub_elements_transaction_type_label",
+        "label": "common/common.transactions_sub_elements_transaction_type_label",
         "element_criteria": "mandatory",
         "add_more": false,
         "form_has_borders": true,
@@ -4814,7 +4814,7 @@
       },
       "transaction_date": {
         "name": "transaction_date",
-        "label": "elements/element_json_schema.transactions_sub_elements_transaction_date_label",
+        "label": "common/common.transactions_sub_elements_transaction_date_label",
         "element_criteria": "mandatory",
         "add_more": false,
         "form_has_borders": true,
@@ -4859,7 +4859,7 @@
           },
           "date": {
             "name": "date",
-            "label": "elements/element_json_schema.planned_disbursement_sub_elements_value_attributes_value_date_label",
+            "label": "common/common.planned_disbursement_sub_elements_value_attributes_value_date_label",
             "type": "date",
             "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
@@ -4924,7 +4924,7 @@
       },
       "provider_organization": {
         "name": "provider_organization",
-        "label": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_label",
+        "label": "common/common.planned_disbursement_sub_elements_provider_org_label",
         "element_criteria": "",
         "add_more": false,
         "form_has_borders": true,
@@ -4946,7 +4946,7 @@
           },
           "provider_activity_id": {
             "name": "provider_activity_id",
-            "label": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_attributes_provider_activity_id_label",
+            "label": "common/common.planned_disbursement_sub_elements_provider_org_attributes_provider_activity_id_label",
             "type": "text",
             "placeholder": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_attributes_provider_activity_id_placeholder",
             "required": false,
@@ -5000,7 +5000,7 @@
         },
         "receiver_organization": {
           "name": "receiver_organization",
-          "label": "elements/element_json_schema.transactions_sub_elements_receiver_organization_label",
+          "label": "common/common.transactions_sub_elements_receiver_organization_label",
           "element_criteria": "",
           "add_more": false,
           "form_has_borders": true,
@@ -5022,7 +5022,7 @@
             },
             "receiver_activity_id": {
               "name": "receiver_activity_id",
-              "label": "elements/element_json_schema.planned_disbursement_sub_elements_receiver_org_attributes_receiver_activity_id_label",
+              "label": "common/common.planned_disbursement_sub_elements_receiver_org_attributes_receiver_activity_id_label",
               "type": "text",
               "placeholder": "elements/element_json_schema.transactions_sub_elements_receiver_organization_attributes_receiver_activity_id_placeholder",
               "required": false,
@@ -5075,7 +5075,7 @@
         },
         "disbursement_channel": {
           "name": "disbursement_channel",
-          "label": "elements/element_json_schema.transactions_sub_elements_disbursement_channel_label",
+          "label": "common/common.transactions_sub_elements_disbursement_channel_label",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -5099,7 +5099,7 @@
           "sub_elements": {}
         },
         "sector": {
-          "label": "elements/element_json_schema.sector_label",
+          "label": "common/common.sector_label",
           "name": "sector",
           "add_more": true,
           "form_has_borders": true,
@@ -5130,7 +5130,7 @@
             },
             "vocabulary_uri": {
               "name": "vocabulary_uri",
-              "label": "elements/element_json_schema.recipient_region_attributes_vocabulary_uri_label",
+              "label": "common/common.recipient_region_attributes_vocabulary_uri_label",
               "type": "text",
               "placeholder": "common/common.type_vocabulary_uri",
               "required": false,
@@ -5430,7 +5430,7 @@
         },
         "flow_type": {
           "name": "flow_type",
-          "label": "elements/element_json_schema.transactions_sub_elements_flow_type_label",
+          "label": "common/common.transactions_sub_elements_flow_type_label",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -5455,7 +5455,7 @@
         },
         "finance_type": {
           "name": "finance_type",
-          "label": "elements/element_json_schema.transactions_sub_elements_finance_type_label",
+          "label": "common/common.transactions_sub_elements_finance_type_label",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
@@ -5480,7 +5480,7 @@
         },
         "aid_type": {
           "name": "aid_type",
-          "label": "elements/element_json_schema.transactions_sub_elements_aid_type_label",
+          "label": "common/common.transactions_sub_elements_aid_type_label",
           "add_more": false,
           "add_more_attributes": true,
           "wrapper_collection": false,
@@ -5578,7 +5578,7 @@
         },
         "tied_status": {
           "name": "tied_status",
-          "label": "elements/element_json_schema.transactions_sub_elements_tied_status_label",
+          "label": "common/common.transactions_sub_elements_tied_status_label",
           "add_more": false,
           "form_has_borders": true,
           "label_has_borders": true,
