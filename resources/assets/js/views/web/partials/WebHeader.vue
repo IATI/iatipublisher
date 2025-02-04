@@ -67,7 +67,7 @@
           <div class="languages hidden pt-11 xl:block">
             <div class="flex">
               <span class="mr-2 pt-5 pb-5 uppercase xl:pt-0"
-                >{{ translatedData['common.common.language'] }}:</span
+                >{{ translatedData['elements.label.language'] }}:</span
               >
               <ul class="flex items-center justify-center">
                 <li class="nav__links">

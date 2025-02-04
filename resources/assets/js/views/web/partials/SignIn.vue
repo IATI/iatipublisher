@@ -173,7 +173,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      LanguageService.getTranslatedData('common,public,common')
+      LanguageService.getTranslatedData('common,public')
         .then((response) => {
           translatedData.value = response.data;
         })

@@ -443,7 +443,7 @@ export default defineComponent({
           ];
         registerForm[1].fields.organization_registration_agency.label =
           translatedData.value[
-            'common.common.organisation_registration_agency'
+            'elements.label.organisation_registration_agency'
           ];
         registerForm[1].fields.organization_registration_agency.placeholder =
           translatedData.value[

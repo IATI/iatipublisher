@@ -9,11 +9,15 @@
         <span v-if="identifier.reference_type">{{
           types.otherIdentifierType[identifier.reference_type]
         }}</span>
-        <span v-else class="italic">Type Missing</span>
+        <span v-else class="italic">{{
+          getTranslatedMissing(translatedData, 'type')
+        }}</span>
       </div>
       <div class="text-sm">
         <span v-if="identifier.reference">{{ identifier.reference }}</span>
-        <span v-else class="italic">Reference Missing</span>
+        <span v-else class="italic">{{
+          getTranslatedMissing(translatedData, 'reference')
+        }}</span>
       </div>
       <div>
         <div class="tb-content ml-5">
@@ -27,7 +31,9 @@
                 <tr>
                   <td>Owner Organisation Reference</td>
                   <td v-if="post.ref">{{ post.ref }}</td>
-                  <td v-else class="italic">Missing</td>
+                  <td v-else class="italic">
+                    {{ getTranslatedMissing(translatedData) }}
+                  </td>
                 </tr>
                 <tr>
                   <td>Owner Organisation Narrative</td>
@@ -46,7 +52,9 @@
                           n.narrative
                         }}</span>
                       </div>
-                      <span v-else class="italic">Missing</span>
+                      <span v-else class="italic">{{
+                        getTranslatedMissing(translatedData)
+                      }}</span>
                     </div>
                   </td>
                 </tr>
@@ -61,9 +69,11 @@
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
+import { getTranslatedMissing } from '../../../composable/utils';
 
 export default defineComponent({
   name: 'OtherIdentifier',
+  methods: { getTranslatedMissing },
   props: {
     data: {
       type: Object,

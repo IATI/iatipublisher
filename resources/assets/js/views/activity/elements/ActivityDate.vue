@@ -26,7 +26,7 @@
     >
       <table class="ml-5">
         <tr class="multiline">
-          <td>Narrative</td>
+          <td>{{ getTranslatedElement(translatedData, 'narrative') }}</td>
           <td>
             <div v-if="item.narrative" class="flex flex-col">
               <span v-if="item.language" class="language top">

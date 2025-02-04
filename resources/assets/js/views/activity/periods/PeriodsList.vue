@@ -64,7 +64,7 @@
                 <a class="mr-6 text-n-40" :href="`${periodLink}/${pe.id}/edit`">
                   <svg-vue icon="edit" class="text-xl"></svg-vue>
                 </a>
-                <DeleteAction item-type="period" :item-id="pe.id" />
+                <DeleteAction :item-id="pe.id" item-type="period" />
               </div>
             </td>
           </tr>

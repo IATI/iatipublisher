@@ -146,7 +146,7 @@ class IndicatorController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : true,
                 elementName: 'indicator',
-                parentTitle: Arr::get($result, 'result.title.0.narrative.0.narrative', 'Untitled')
+                parentTitle: Arr::get($result, 'result.title.0.narrative.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->indicatorBreadCrumbInfo(
                 activity : $activity,
@@ -261,7 +261,7 @@ class IndicatorController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : true,
                 elementName: 'indicator',
-                parentTitle: Arr::get($result, 'result.title.0.narrative.0.narrative', 'Untitled')
+                parentTitle: Arr::get($result, 'result.title.0.narrative.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->indicatorBreadCrumbInfo(
                 activity : $activity,

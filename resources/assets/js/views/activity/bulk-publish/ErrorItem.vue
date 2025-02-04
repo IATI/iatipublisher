@@ -104,8 +104,7 @@ const accordionToggle = (e: Event) => {
 const errorCount = (errors) => {
   let errorCount = '';
   if (errors?.warning) {
-    errorCount = `${errors?.error} errors and ${errors?.warning} warnings
-     were found.`;
+    errorCount = `${errors?.error} errors and ${errors?.warning} warnings were found.`;
   } else {
     errorCount = `${errors?.critical} critical errors were found.`;
   }

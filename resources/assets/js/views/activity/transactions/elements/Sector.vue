@@ -12,7 +12,7 @@
         <span>{{
           sec.sector_vocabulary
             ? type.sectorVocabulary[sec.sector_vocabulary]
-            : 'Vocabulary Missing'
+            : getTranslatedMissing(translatedData, 'vocabulary')
         }}</span>
       </div>
       <div class="ml-4">

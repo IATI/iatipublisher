@@ -102,16 +102,13 @@ import {
 
 import { useStorage } from '@vueuse/core';
 import axios from 'axios';
-
-//component
 import BtnComponent from 'Components/ButtonComponent.vue';
 import Modal from 'Components/PopupModal.vue';
 import Loader from 'Components/sections/ProgressLoader.vue';
 import PageLoader from 'Components/Loader.vue';
 import BulkPublishingModal from './bulkPublishModal/BulkPublish.vue';
 import { useSharedMinimize } from 'Composable/useSharedLocalStorage';
-// Vuex Store
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
 import { ErrorInterface } from 'Interfaces/ErrorInterface';
 
 defineProps({

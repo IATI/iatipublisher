@@ -5,7 +5,7 @@
       class="mb-4 flex items-center gap-1 border-b border-n-20 pb-2 text-sm font-bold"
     >
       <span>
-        {{ translatedData['publish.bulk_publish.publishing_activity'] }}
+        {{ translatedData['workflow_frontend.publish.publishing_activity'] }}
       </span>
       <span
         class="inline-block rounded-full bg-lagoon-10 px-2 py-1 text-xs font-[500] text-spring-50"
@@ -132,7 +132,7 @@
         @click="handleMinimize()"
       >
         <span>
-          {{ translatedData['publish.bulk_publish.minimize_screen'] }}
+          {{ translatedData['workflow_frontend.publish.minimize_screen'] }}
         </span>
         <svg-vue icon="open-link" class="rotate-90 text-[10px] text-n-40" />
       </button>
@@ -152,7 +152,9 @@
             class="bg-white px-6 uppercase"
             type="primary"
             :text="
-              translatedData['publish.bulk_publish.continue_publishing_anyway']
+              translatedData[
+                'workflow_frontend.publish.continue_publishing_anyway'
+              ]
             "
             @click="validateActivities()"
           />
@@ -164,7 +166,7 @@
           <BtnComponent
             class="bg-white px-6 uppercase"
             type="primary"
-            :text="`${translatedData['publish.bulk_publish.continue_publishing']} (${newSelectedActivities.length})`"
+            :text="`${translatedData['workflow_frontend.publish.continue_publishing']} (${newSelectedActivities.length})`"
             :disabled="newSelectedActivities.length === 0"
             @click="startBulkPublish()"
           />

@@ -226,7 +226,7 @@ class TransactionController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : false,
                 elementName: 'transaction',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->transactionBreadCrumbInfo(
                 activity   : $activity,
@@ -303,7 +303,7 @@ class TransactionController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : false,
                 elementName: 'transaction',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->transactionBreadCrumbInfo(
                 activity   : $activity,

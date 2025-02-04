@@ -143,67 +143,6 @@
             </span>
 
             <div
-              v-if="menu.name === 'Logs'"
-              class="button__dropdown invisible absolute left-4 top-full z-10 w-56 -translate-y-3 bg-white p-2 text-left opacity-0 shadow-dropdown outline transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
-            >
-              <ul class="flex-col">
-                <li>
-                  <a href="#" :class="liClass">User Logs</a>
-                </li>
-                <li>
-                  <a href="#" :class="liClass">API Logs</a>
-                </li>
-                <li>
-                  <a href="/log-viewer" :class="liClass">Error Logs</a>
-                </li>
-                <li>
-                  <a href="/import" :class="liClass">System Details</a>
-                </li>
-              </ul>
-            </div>
-
-            <span
-              v-if="menu.name === 'Logs'"
-              :class="[
-                { nav__pointer: menu.active },
-                data.menuNavAnchorClasses,
-              ]"
-            >
-              <span class="add-import"
-                >{{ menu.name }}
-                <div
-                  v-if="menu.name === 'Logs'"
-                  class="button__dropdown add-import-dropdown absolute top-full z-10 w-56 -translate-y-3 bg-white p-2 text-left shadow-dropdown transition-all duration-300"
-                >
-                  <ul class="flex-col">
-                    <li>
-                      <a href="#" class="cursor-pointer" :class="liClass">{{
-                        translatedData['adminHeader.admin_header.user_logs']
-                      }}</a>
-                    </li>
-                    <li>
-                      <a href="#" :class="liClass">{{
-                        translatedData['adminHeader.admin_header.api_logs']
-                      }}</a>
-                    </li>
-                    <li>
-                      <a href="/log-viewer" :class="liClass">{{
-                        translatedData['adminHeader.admin_header.error_logs']
-                      }}</a>
-                    </li>
-                    <li>
-                      <a href="/system-version" :class="liClass">{{
-                        translatedData[
-                          'adminHeader.admin_header.system_details'
-                        ]
-                      }}</a>
-                    </li>
-                  </ul>
-                </div>
-              </span>
-            </span>
-
-            <div
               v-if="menu.name === 'Add / Import Activities'"
               class="button__dropdown invisible absolute left-4 top-full z-10 w-56 -translate-y-3 bg-white p-2 text-left opacity-0 shadow-dropdown outline transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
             >

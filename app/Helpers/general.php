@@ -1572,6 +1572,11 @@ function regroupResponseForAllActivity(array $response, array $uniqueIdentifiers
     return $groupedResponses;
 }
 
+function getTranslatedUntitled(): string
+{
+    return trans('common/common.untitled');
+}
+
 /**
  * Returns array of activity element names in snake case.
  * Making this instead of using $activity->getAttributes() method that laravel has because:

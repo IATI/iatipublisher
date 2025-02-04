@@ -12,7 +12,7 @@ class ElementJsonTranslation extends Command
      *
      * @var string
      */
-    protected $signature = 'json-translation';
+    protected $signature = 'command:ElementJsonTranslation';
     /**
      * @var string
      */
@@ -85,7 +85,7 @@ class ElementJsonTranslation extends Command
     public function formatDataForLangFile($array, string $path = ''): string
     {
         $output = '';
-        $keys = ['label', 'placeholder', 'hover_text', 'help_text'];
+        $keys = ['label', 'placeholder', 'hover_text', 'help_text', 'helper_text'];
 
         foreach ($array as $key => $value) {
             $currentPath = $path === '' ? "$key" : "$path" . '_' . "$key";
@@ -110,7 +110,7 @@ class ElementJsonTranslation extends Command
     public function useProperEscapeCharacters(string $value): string
     {
         $value = trim($value);
-        $value = str_replace('’', "'", $value);
+        $value = str_replace('\u2019', "'", $value);
 
         return str_replace("'", "\'", $value);
     }
@@ -126,12 +126,22 @@ class ElementJsonTranslation extends Command
         file_put_contents($filePath, $fileContent);
     }
 
-    public function removeDuplicateValueInTransFile($transFilePath)
-    : void
+    public function removeDuplicateValueInTransFile($transFilePath): void
     {
         $array = include $transFilePath;
-        $findDuplicate = array_unique($array);
-        $phpCode = "<?php\n\nreturn " . var_export($findDuplicate, true) . ";\n";
+
+        $normalizedArray = array_map(function ($value) {
+            return \Normalizer::normalize($value, \Normalizer::FORM_C);
+        }, $array);
+
+        $findDuplicate = array_unique($normalizedArray);
+
+        $uniqueArray = [];
+        foreach ($findDuplicate as $key => $value) {
+            $uniqueArray[$key] = $array[$key];
+        }
+
+        $phpCode = "<?php\n\nreturn " . var_export($uniqueArray, true) . ";\n";
 
         file_put_contents($transFilePath, $phpCode);
 

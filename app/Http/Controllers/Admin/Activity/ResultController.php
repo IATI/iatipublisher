@@ -164,7 +164,7 @@ class ResultController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : false,
                 elementName: 'result',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->resultBreadCrumbInfo(
                 activity: $activity,
@@ -273,7 +273,7 @@ class ResultController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : true,
                 elementName: 'result',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->resultBreadCrumbInfo(
                 activity: $activity,

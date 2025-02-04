@@ -52,7 +52,7 @@
           class="multiline"
           :class="{ 'mb-4': k !== post.narrative.length - 1 }"
         >
-          <td>Narrative</td>
+          <td>{{ getTranslatedElement(translatedData, 'narrative') }}</td>
           <td>
             <div v-for="(narrative, k) in post.narrative" :key="k">
               <div v-if="narrative.narrative" class="flex flex-col">

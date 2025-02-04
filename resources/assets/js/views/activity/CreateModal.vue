@@ -17,7 +17,7 @@
         <div class="mb-5">
           <div class="form-group-title-container">
             <HoverText
-              :name="translatedData['common.common.title']"
+              :name="translatedData['elements.label.title']"
               :hover-text="
                 translatedData[
                   'activity._index.create_modal.a_short_human_readable_title'
@@ -27,7 +27,7 @@
               :show-iati-reference="true"
             />
             <p class="form-group-title">
-              {{ translatedData['common.common.title'] }}
+              {{ translatedData['elements.label.title'] }}
             </p>
           </div>
           <div class="form-group">
@@ -35,11 +35,11 @@
               <div>
                 <div class="label-field">
                   <label class="label" for="narrative"
-                    >{{ translatedData['common.narrative.narrative'] }}
+                    >{{ translatedData['elements.label.narrative'] }}
                     <span class="required-icon"> *</span>
                   </label>
                   <HoverText
-                    :name="translatedData['common.narrative.narrative']"
+                    :name="translatedData['elements.label.narrative']"
                     :hover-text="
                       translatedData[
                         'activity_index.create_modal.the_free_text_name_or_description_of_the_item_being_described'
@@ -72,11 +72,11 @@
               <div>
                 <div class="label-field">
                   <label class="label" for="">
-                    {{ translatedData['common.common.language'] }}
+                    {{ translatedData['elements.label.language'] }}
                     <span class="required-icon"> *</span>
                   </label>
                   <HoverText
-                    :name="translatedData['common.common.language']"
+                    :name="translatedData['elements.label.language']"
                     :hover-text="
                       translatedData[
                         'activity_index.create_modal.a_code_specifying_the_language_of_text_in_this_element'

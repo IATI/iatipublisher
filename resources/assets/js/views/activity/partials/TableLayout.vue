@@ -4,12 +4,10 @@
       <thead>
         <tr class="bg-n-10">
           <th id="sn" scope="col">
-            <span>{{ translatedData['activity_index.table_layout.s_n'] }}</span>
+            <span>{{ translatedData['common.common.s_n'] }}</span>
           </th>
           <th id="title" scope="col">
-            <span>{{
-              translatedData['activity_index.table_layout.activity_title']
-            }}</span>
+            <span>{{ translatedData['common.common.activity_title'] }}</span>
           </th>
           <th id="publishing-progress" scope="col" class="progress-bar-header">
             <a
@@ -30,9 +28,7 @@
               <span class="sorting-indicator" :class="sortingDirection()">
                 <svg-vue :icon="`${sortingDirection()}-arrow`" />
               </span>
-              <span>{{
-                translatedData['activity_index.table_layout.updated_on']
-              }}</span>
+              <span>{{ translatedData['common.common.updated_on'] }}</span>
             </a>
           </th>
           <th id="status" scope="col">
@@ -194,9 +190,7 @@
           <div colspan="5" class="spin"></div>
         </td>
         <td v-else colspan="5" class="text-center">
-          {{
-            translatedData['activity_index.table_layout.activities_not_found']
-          }}
+          {{ translatedData['common.common.activities_not_found'] }}
         </td>
       </tbody>
     </table>

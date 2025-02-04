@@ -17,7 +17,9 @@
           <div v-if="post.condition_type">
             {{ types.conditionType[post.condition_type] }}
           </div>
-          <span v-else class="italic">Type Missing</span>
+          <span v-else class="italic">
+            {{ getTranslatedMissing(translatedData, 'type') }}
+          </span>
         </div>
         <table class="ml-5">
           <tbody>
@@ -27,7 +29,7 @@
               class="multiline"
               :class="{ 'mb-4': i !== post.narrative.length - 1 }"
             >
-              <td>Narrative</td>
+              <td>{{ getTranslatedElement(translatedData, 'narrative') }}</td>
               <td>
                 <div v-if="item.narrative" class="flex flex-col">
                   <span v-if="item.language" class="language top"
@@ -37,7 +39,9 @@
                     item.narrative
                   }}</span>
                 </div>
-                <span v-else class="italic">Missing</span>
+                <span v-else class="italic">
+                  {{ getTranslatedMissing(translatedData) }}
+                </span>
               </td>
             </tr>
           </tbody>
@@ -51,9 +55,11 @@
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
 import dateFormat from 'Composable/dateFormat';
+import { getTranslatedMissing } from '../../../composable/utils';
 
 export default defineComponent({
   name: 'ActivityConditions',
+  methods: { getTranslatedMissing },
   props: {
     data: {
       type: Object,

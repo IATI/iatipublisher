@@ -111,7 +111,7 @@
                   </label>
                   <button>
                     <HoverText
-                      :name="translatedData['common.common.reference']"
+                      :name="translatedData['elements.label.reference']"
                       :hover-text="
                         translatedData[
                           'onboarding.organisation_data_step.machine_readable_identification_string_for_the_organisation'
@@ -146,12 +146,12 @@
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
                   <label for="type" class="text-[14px]">
-                    {{ translatedData['common.common.type'] }}
+                    {{ translatedData['elements.label.reference'] }}
                     <span class="required-icon"> *</span>
                   </label>
                   <button>
                     <HoverText
-                      :name="translatedData['common.common.type']"
+                      :name="translatedData['elements.label.reference']"
                       :hover-text="
                         translatedData[
                           'onboarding.organisation_data_step.the_type_of_organisation_issuing_the_report'
@@ -185,12 +185,14 @@
               <div class="w-full max-w-[335px] pt-6">
                 <div class="flex justify-between pb-2">
                   <label for="secondary-reporter" class="text-[14px]">
-                    {{ translatedData['common.common.secondary_reporter'] }}
+                    {{ translatedData['elements.label.secondary_reporter'] }}
                   </label>
                   <button>
                     <HoverText
                       position="top-left"
-                      :name="translatedData['common.common.secondary_reporter']"
+                      :name="
+                        translatedData['elements.label.secondary_reporter']
+                      "
                       :hover-text="
                         translatedData[
                           'onboarding.organisation_data_step.a_flag_indicating_that_the_reporting_organisation_of_this_activity'
@@ -395,21 +397,21 @@ const translatedData = inject('translatedData') as Ref;
 
 const contentValues = [
   {
-    title: translatedData['common.common.reference'],
+    title: translatedData['elements.label.reference'],
     content:
       translatedData[
         'onboarding.organisation_data_step.provide_the_iati_organisation_identifier_of_the_organisation'
       ],
   },
   {
-    title: translatedData['common.common.type'],
+    title: translatedData['elements.label.reference'],
     content:
       translatedData[
         'onboarding.organisation_data_step.select_the_type_that_best_describes_the_organisation'
       ],
   },
   {
-    title: translatedData['common.common.secondary_reporter'],
+    title: translatedData['elements.label.secondary_reporter'],
     content:
       translatedData[
         'onboarding.organisation_data_step.are_you_reproducing_the_data_reported_by_another_organisation'

@@ -29,15 +29,22 @@
     <div class="container">
       <div class="error-container">
         <div v-if="index === 'error'" class="pl-3 text-xs italic">
-          (The fields with errors are not uploaded to our system during import.
-          Please edit the corresponding elements to fill these fields with the
-          correct data)
+          (
+          {{
+            translatedData[
+              'common.common.the_fields_with_errors_are_not_uploaded_to_our_system_during_import'
+            ]
+          }}
+          )
         </div>
         <div v-else class="pl-3 text-xs italic">
-          (The fields with warnings are stored in our system. They contain data
-          that are against the IATI validator and will throw errors on
-          publishing. Please open the edit form of the corresponding elements
-          and correct these data.)
+          (
+          {{
+            translatedData[
+              'common.common.the_fields_with_warnings_are_stored_in_our_system'
+            ]
+          }}
+          )
         </div>
 
         <div

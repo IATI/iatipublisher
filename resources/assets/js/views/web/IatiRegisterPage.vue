@@ -473,7 +473,7 @@ export default defineComponent({
           ];
         registerForm[1].fields.registration_agency.label =
           translatedData.value[
-            'common.common.organisation_registration_agency'
+            'elements.label.organisation_registration_agency'
           ];
         registerForm[1].fields.registration_agency.placeholder =
           translatedData.value[
@@ -570,7 +570,7 @@ export default defineComponent({
           ];
 
         registerForm[2].fields.website.label =
-          translatedData.value['common.common.website'];
+          translatedData.value['elements.label.website'];
 
         registerForm[2].fields.website.hover_text =
           translatedData.value[

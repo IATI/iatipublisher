@@ -28,7 +28,6 @@ import PeriodsDetail from './views/activity/periods/PeriodsDetail.vue';
 import PeriodsList from './views/activity/periods/PeriodsList.vue';
 import TransactionList from './views/activity/transactions/TransactionList.vue';
 import TransactionDetail from './views/activity/transactions/TransactionDetail.vue';
-import StaticDescriptionForm from './components/DescriptionForm.vue';
 import ElementsNote from './views/activity/partials/ElementsNote.vue';
 import Activity from './views/activity/ActivityIndex.vue';
 import LoggedInHeader from './components/AdminHeader.vue';
@@ -119,7 +118,6 @@ app
   .component('ActivityTemplate', Activity)
   .component('LoggedinHeader', LoggedInHeader)
   .component('ActivitiesDetail', ActivitiesDetail)
-  .component('DescriptionForm', StaticDescriptionForm)
   .component('ElementsNote', ElementsNote)
   .component('ResultDetail', ResultDetail)
   .component('ResultList', ResultList)

@@ -165,7 +165,7 @@ import Loader from 'Components/sections/ProgressLoader.vue';
 
 // Vuex Store
 import { detailStore } from 'Store/activities/show';
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
 
 const props = defineProps({
   type: { type: String, default: 'primary' },

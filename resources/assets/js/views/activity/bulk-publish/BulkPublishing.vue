@@ -73,7 +73,8 @@ import {
 } from 'vue';
 import axios from 'axios';
 import { detailStore } from 'Store/activities/show';
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
+
 const singleStore = useStore();
 const emit = defineEmits(['close']);
 const store = detailStore();
@@ -309,7 +310,9 @@ const failedActivities = (nestedObject: actElements) => {
     hasFailedActivities.data = failedActivitiesData as actElements;
     refreshToastMsg.refreshMessageType = false;
     refreshToastMsg.refreshMessage =
-      'Some activities have failed to publish. Refresh to see changes.';
+      translatedData.value[
+        'workflow_frontend.bulk_publish.some_activities_have_failed_to_publish_refresh_to_see_changes'
+      ];
   } else {
     hasFailedActivities.status = false;
     hasFailedActivities.ids = [];

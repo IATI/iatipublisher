@@ -149,7 +149,7 @@ class PeriodController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : false,
                 elementName: 'indicator',
-                parentTitle: Arr::get($indicator, 'indicator.title.0.narrative.0.narrative', 'Untitled')
+                parentTitle: Arr::get($indicator, 'indicator.title.0.narrative.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->periodBreadCrumbInfo(
                 activity : $activity,
@@ -268,7 +268,7 @@ class PeriodController extends Controller
             $activity = $indicator->result->activity;
             $form = $this->periodService->editFormGenerator($indicatorId, $periodId);
 
-            $formHeader = $this->getFormHeader(true, 'indicator', Arr::get($indicator, 'indicator.title.0.narrative.0.narrative', 'Untitled'));
+            $formHeader = $this->getFormHeader(true, 'indicator', Arr::get($indicator, 'indicator.title.0.narrative.0.narrative', getTranslatedUntitled()));
             $breadCrumbInfo = $this->periodBreadCrumbInfo(
                 activity : $activity,
                 result   : $this->resultService->getResult($indicator->result_id),

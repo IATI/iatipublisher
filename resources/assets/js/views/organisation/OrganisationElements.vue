@@ -127,11 +127,11 @@
 import {
   computed,
   defineProps,
-  reactive,
-  onMounted,
-  ref,
-  Ref,
   inject,
+  onMounted,
+  reactive,
+  Ref,
+  ref,
 } from 'vue';
 import { useToggle } from '@vueuse/core';
 import { orgMandatoryElements } from 'Composable/coreElements';
@@ -195,8 +195,7 @@ const filteredElements = computed(() => {
     }
   });
 
-  const justStrings = Object.fromEntries(filtered);
-  return justStrings;
+  return Object.fromEntries(filtered);
 });
 
 onMounted(() => {

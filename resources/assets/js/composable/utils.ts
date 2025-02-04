@@ -113,3 +113,46 @@ export function isEveryValueNull(data): boolean {
     return data === null;
   }
 }
+
+export function getTranslatedUntitled(translatedData): string {
+  return translatedData['common.common.untitled'];
+}
+
+export function getTranslatedMissing(translatedData, element = ''): string {
+  let returnValue = translatedData['common.common.missing'];
+
+  if (element) {
+    returnValue =
+      getTranslatedElement(translatedData, element) ??
+      element + ' ' + translatedData['common.common.missing'];
+  }
+
+  return toTitleCase(returnValue);
+}
+
+export function getTranslatedLanguage(translatedData): string {
+  return translatedData['elements.label.language'];
+}
+
+export function getTranslatedDeleteElement(translatedData, element = '') {
+  let returnValue = translatedData['common.common.delete'];
+
+  if (element) {
+    returnValue =
+      translatedData['common.common.delete'] +
+        ' ' +
+        getTranslatedElement(translatedData, element) ?? element;
+  }
+
+  return toTitleCase(returnValue);
+}
+export function getTranslatedElement(translatedData, element: string): string {
+  return translatedData[`element.label.${element}`] ?? '';
+}
+
+export function toTitleCase(word: string): string {
+  return word.replace(
+    /\w\S*/g,
+    (txt) => txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase()
+  );
+}

@@ -10,7 +10,9 @@
       class="mt-2.5 rounded-lg bg-paper p-4 text-sm leading-[22px] tracking-normal text-n-50"
     >
       {{
-        translatedData['publish.bulk_publish.this_process_may_take_some_time']
+        translatedData[
+          'workflow_frontend.publish.this_process_may_take_some_time'
+        ]
       }}
     </p>
   </div>
@@ -20,7 +22,9 @@
       <div class="flex items-center gap-1">
         <svg-vue class="text-xl text-crimson-50" icon="warninig-activity-red" />
         <h3 class="text-sm font-bold uppercase text-bluecoral">
-          {{ translatedData['publish.bulk_publish.validation_incomplete'] }}
+          {{
+            translatedData['workflow_frontend.publish.validation_incomplete']
+          }}
         </h3>
       </div>
       <h6
@@ -36,7 +40,11 @@
 
       <h6 v-if="errorType === 'max_merge_size_exception'" class="my-2 text-sm">
         <b class="text-[16px] text-crimson-50">
-          {{ translatedData['publish.bulk_publish.exceeded_max_publish_size'] }}
+          {{
+            translatedData[
+              'workflow_frontend.publish.exceeded_max_publish_size'
+            ]
+          }}
           <a
             class="border-b-2 border-b-transparent font-bold text-bluecoral hover:border-b-2 hover:border-b-turquoise hover:text-bluecoral"
             href="mailto:support@iatistandard.org"
@@ -131,7 +139,9 @@
                   target="_blank"
                   class="flex items-center gap-[2px]"
                 >
-                  {{ translatedData['publish.bulk_publish.open_in_new_tab'] }}
+                  {{
+                    translatedData['workflow_frontend.publish.open_in_new_tab']
+                  }}
                   <svg-vue class="text-base" icon="open-link-small" />
                 </a>
               </div>
@@ -161,7 +171,7 @@
         <span
           class="inline-block pl-3 pt-1 text-xs font-bold uppercase leading-[18px]"
         >
-          {{ translatedData['publish.bulk_publish.select_all'] }}
+          {{ translatedData['workflow_frontend.publish.select_all'] }}
         </span>
         <input
           id="selectAll"
@@ -189,7 +199,7 @@ import {
   watchEffect,
 } from 'vue';
 
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
 import RollingLoader from '../RollingLoaderComponent.vue';
 
 const store = useStore();

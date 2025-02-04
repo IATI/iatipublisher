@@ -45,7 +45,7 @@
           <Multiselect
             id="default-currency"
             v-model="defaultForm.default_currency"
-            :disabled="userRole !== 'admin' ? true : false"
+            :disabled="userRole !== 'admin'"
             class="vue__select"
             :placeholder="translatedData['common.common.select_from_dropdown']"
             :options="props.currencies"
@@ -88,7 +88,7 @@
             :class="{
               error__input: defaultError.default_language,
             }"
-            :disabled="userRole !== 'admin' ? true : false"
+            :disabled="userRole !== 'admin'"
             :placeholder="translatedData['common.common.select_language']"
             :searchable="true"
             :options="props.languages"
@@ -138,7 +138,7 @@
           <input
             id="default-hierarchy"
             v-model="defaultForm.hierarchy"
-            :disabled="userRole !== 'admin' ? true : false"
+            :disabled="userRole !== 'admin'"
             class="register__input mb-2"
             type="text"
             placeholder="Type default hierarchy here"
@@ -161,12 +161,12 @@
         <div>
           <div class="flex justify-between">
             <label for="humanitarian">
-              {{ translatedData['common.common.humanitarian'] }}</label
+              {{ translatedData['elements.label.humanitarian'] }}</label
             >
             <button>
               <HoverText
                 width="w-72"
-                :name="translatedData['common.common.humanitarian']"
+                :name="translatedData['elements.label.humanitarian']"
                 :hover-text="
                   translatedData[
                     'settings.setting_default_form.add_a_humanitarian_flag_to_every_activity_that_your_organisation'
@@ -179,7 +179,7 @@
           <Multiselect
             id="humanitarian"
             v-model="defaultForm.humanitarian"
-            :disabled="userRole !== 'admin' ? true : false"
+            :disabled="userRole !== 'admin'"
             class="vue__select"
             :class="{ error__input: defaultError.humanitarian }"
             :placeholder="
@@ -199,7 +199,7 @@
         <div>
           <div class="flex justify-between">
             <label for="default-collaboration-type">{{
-              translatedData['"common.common.default_flow_type"']
+              translatedData['"elements.label.default_flow_type"']
             }}</label>
             <button>
               <HoverText
@@ -217,7 +217,7 @@
           <Multiselect
             id="default-flow-type"
             v-model="defaultForm.default_flow_type"
-            :disabled="userRole !== 'admin' ? true : false"
+            :disabled="userRole !== 'admin'"
             class="vue__select"
             :class="{ error__input: defaultError.default_flow_type }"
             :placeholder="
@@ -248,7 +248,7 @@
         <div>
           <div class="flex justify-between">
             <label for="default-collaboration-type">{{
-              translatedData['common.common.default_finance_type']
+              translatedData['elements.label.default_finance_type']
             }}</label>
             <button>
               <HoverText
@@ -266,7 +266,7 @@
           <Multiselect
             id="default-finance-type"
             v-model="defaultForm.default_finance_type"
-            :disabled="userRole !== 'admin' ? true : false"
+            :disabled="userRole !== 'admin'"
             class="vue__select"
             :class="{ error__input: defaultError.default_finance_type }"
             :placeholder="
@@ -297,7 +297,7 @@
         <div>
           <div class="flex justify-between">
             <label for="default-collaboration-type">{{
-              translatedData['common.common.default_aid_type']
+              translatedData['elements.label.default_aid_type']
             }}</label>
             <button>
               <HoverText
@@ -315,7 +315,7 @@
           <Multiselect
             id="default-aid-type"
             v-model="defaultForm.default_aid_type"
-            :disabled="userRole !== 'admin' ? true : false"
+            :disabled="userRole !== 'admin'"
             class="vue__select"
             :class="{ error__input: defaultError.default_aid_type }"
             :placeholder="
@@ -342,7 +342,7 @@
         <div>
           <div class="flex justify-between">
             <label for="default-tied-status">{{
-              translatedData['common.common.default_tied_status']
+              translatedData['elements.label.default_tied_status']
             }}</label>
             <button>
               <HoverText
@@ -360,7 +360,7 @@
           <Multiselect
             id="default-tied-status"
             v-model="defaultForm.default_tied_status"
-            :disabled="userRole !== 'admin' ? true : false"
+            :disabled="userRole !== 'admin'"
             class="vue__select"
             :class="{ error__input: defaultError.default_tied_status }"
             :placeholder="
@@ -417,7 +417,7 @@
           <Multiselect
             id="budget_not_provided"
             v-model="defaultForm.budget_not_provided"
-            :disabled="userRole !== 'admin' ? true : false"
+            :disabled="userRole !== 'admin'"
             class="vue__select"
             :class="{ error__input: defaultError.budget_not_provided }"
             :placeholder="
@@ -461,7 +461,7 @@
           <input
             id="linked-data-uri"
             v-model="defaultForm.linked_data_uri"
-            :disabled="userRole !== 'admin' ? true : false"
+            :disabled="userRole !== 'admin'"
             class="register__input mb-2"
             type="text"
             :placeholder="
@@ -499,7 +499,7 @@
           <Multiselect
             id="collaboration-type"
             v-model="defaultForm.default_collaboration_type"
-            :disabled="userRole !== 'admin' ? true : false"
+            :disabled="userRole !== 'admin'"
             class="vue__select"
             :class="{ error__input: defaultError.default_collaboration_type }"
             :placeholder="

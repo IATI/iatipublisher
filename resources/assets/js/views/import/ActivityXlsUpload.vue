@@ -140,7 +140,9 @@
               <div class="mb-2 flex items-center justify-between">
                 <div class="flex items-center space-x-1">
                   <svg-vue icon="period-icon" />
-                  <span class="font-bold text-bluecoral">Period</span>
+                  <span class="font-bold text-bluecoral">{{
+                    getTranslatedElement(translatedData, 'period')
+                  }}</span>
                 </div>
                 <input
                   v-model="uploadType"
@@ -319,9 +321,15 @@
               >
                 <a
                   href="/files/Templates/IndicatorXLS.xlsx"
-                  download="Indicator Template"
+                  :download="
+                    translatedData[
+                      'workflow_frontend.import.indicator_template'
+                    ]
+                  "
                   class="block w-full p-2.5 text-n-40 group-hover:text-n-50"
-                  >Indicators except Period.xls</a
+                  >{{
+                    translatedData['common.common.indicators_except_period']
+                  }}.xls</a
                 >
               </li>
               <li
@@ -333,7 +341,7 @@
                     translatedData['workflow_frontend.import.period_template']
                   "
                   class="block w-full p-2.5 text-n-40 group-hover:text-n-50"
-                  >Period.xls</a
+                  >{{ getTranslatedElement(translatedData, 'period') }}.xls</a
                 >
               </li>
             </ul>
@@ -370,7 +378,8 @@
             </h6>
             <span
               class="rounded-full bg-mint px-2 py-2 text-[10px] font-bold text-spring-50"
-              >{{ activities['total'] }} activities</span
+              >{{ activities['total'] }}
+              {{ translatedData['common.common.activities'] }}</span
             >
           </div>
           <p class="text-xs text-n-40">
@@ -418,7 +427,9 @@
       <table class="w-full text-xs text-n-40">
         <thead>
           <tr class="border-b border-n-20 text-left">
-            <th class="w-[600px] px-6 py-4">Activity Title</th>
+            <th class="w-[600px] px-6 py-4">
+              {{ translatedData['common.common.activity_title'] }}
+            </th>
             <th class="px-6 py-4">
               <div
                 class="flex cursor-pointer text-n-50 transition duration-500 hover:text-spring-50"
@@ -433,10 +444,12 @@
                     "
                   />
                 </span>
-                <span>Updated On</span>
+                <span>{{ translatedData['common.common.updated_on'] }}</span>
               </div>
             </th>
-            <th class="px-6 py-4">Status</th>
+            <th class="px-6 py-4">
+              {{ getTranslatedElement(translatedData, 'status') }}
+            </th>
             <th class="px-6 py-4 text-left">
               <button class="cursor-pointer" @click="selectAll">
                 <svg-vue class="text-base" icon="checkbox" />
@@ -504,7 +517,9 @@
         </tbody>
       </table>
       <div v-if="activities['total'] === 0" class="mx-auto h-[200px] w-full">
-        <p class="my-8 text-center text-lg text-n-40">No activites found</p>
+        <p class="my-8 text-center text-lg text-n-40">
+          {{ translatedData['common.common.activities_not_found'] }}
+        </p>
       </div>
       <div v-if="!isEmpty" class="mx-6 my-4">
         <Pagination
@@ -519,17 +534,27 @@
     <div>
       <div class="mb-6 flex items-center space-x-1">
         <svg-vue class="text-crimson-40" icon="warning-fill" />
-        <h6 class="text-sm font-bold">Upload in progress</h6>
+        <h6 class="text-sm font-bold">
+          {{ translatedData['workflow_frontend.import.upload_in_progress'] }}
+        </h6>
       </div>
 
       <div class="rounded-sm bg-rose p-4">
         <p class="text-sm text-n-50">
-          We are in the process of uploading '{{
-            mapActivityName(activityName)
-          }}' file. Please wait for the completion of previous import
           {{
-            uploadComplete || xlsFailed ? 'or click on "Import Anyway"' : ''
-          }}.
+            translatedData[
+              'workflow_frontend.import.we_are_in_the_process_of_uploading'
+            ].replace(':activityTitle', mapActivityName(activityName))
+          }}
+          {{
+            uploadComplete || xlsFailed
+              ? translatedData[
+                  'workflow_frontend.import.please_wait_for_the_completion_of_previous_import'
+                ]
+              : translatedData[
+                  'workflow_frontend.import.please_wait_for_the_completion_of_previous_import_or_click_import_anyway'
+                ]
+          }}
         </p>
       </div>
 
@@ -549,7 +574,7 @@
         </button>
         <BtnComponent
           v-if="uploadComplete || xlsFailed"
-          text="Import Anyway"
+          :text="translatedData['common.common.import_anyway']"
           type="primary"
           @click="importAnyway"
         />
@@ -579,9 +604,11 @@ import Modal from 'Components/PopupModal.vue';
 import Toast from 'Components/ToastMessage.vue';
 import dateFormat from 'Composable/dateFormat';
 import Pagination from 'Components/TablePagination.vue';
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
 import { useStorage } from '@vueuse/core';
 import PublishSelected from 'Activity/bulk-publish/PublishSelected.vue';
+import { getTranslatedElement } from 'Composable/utils';
+import { tr } from 'date-fns/locale';
 
 interface ActivitiesInterface {
   last_page: number;

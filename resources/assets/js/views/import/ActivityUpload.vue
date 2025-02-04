@@ -21,9 +21,7 @@
                 <button class="">
                   <svg-vue icon="question-mark" />
                   <span>{{
-                    translatedData[
-                      'activity_index.page_title.what_is_an_activity'
-                    ]
+                    translatedData['common.common.what_is_an_activity']
                   }}</span>
                 </button>
                 <div class="tooltip-btn__content z-[1]">
@@ -31,16 +29,12 @@
                     <div
                       class="mb-1.5 text-caption-c1 font-bold text-bluecoral"
                     >
-                      {{
-                        translatedData[
-                          'activity_index.page_title.what_is_an_activity'
-                        ]
-                      }}
+                      {{ translatedData['common.common.what_is_an_activity'] }}
                     </div>
                     <p>
                       {{
                         translatedData[
-                          'activity_index.page_title.what_is_an_activity_description'
+                          'common.common.what_is_an_activity_description'
                         ]
                       }}
                     </p>
@@ -158,7 +152,7 @@ async function checkOngoingImports() {
     if (hasOngoingImport(response.data.data)) {
       showHasOngoingImportWarning(response.data.data.import_type);
     } else {
-      uploadFile();
+      uploadFile().then();
     }
   } catch (e) {
     console.log(e);

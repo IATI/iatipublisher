@@ -25,7 +25,7 @@
       :title="`${
         transactionData.reference && transactionData.reference !== ''
           ? transactionData.reference
-          : 'Untitled'
+          : getTranslatedUntitled(translatedData)
       } - Transaction detail`"
       :back-link="`${activityLink}/transaction`"
     >
@@ -158,9 +158,11 @@ import Toast from 'Components/ToastMessage.vue';
 import dateFormat from 'Composable/dateFormat';
 import getActivityTitle from 'Composable/title';
 import TransactionElement from './TransactionElement.vue';
+import { getTranslatedUntitled } from 'Composable/utils';
 
 export default defineComponent({
   name: 'TransactionDetail',
+  methods: { getTranslatedUntitled },
   components: {
     TransactionElement,
     Btn,

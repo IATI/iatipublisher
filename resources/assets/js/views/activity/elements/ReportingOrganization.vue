@@ -55,7 +55,10 @@
                   }})
                 </div>
                 <div class="w-[500px] max-w-full">
-                  {{ narrative.narrative ?? 'Narrative Missing' }}
+                  {{
+                    narrative.narrative ??
+                    getTranslatedMissing(translatedData, 'narrative')
+                  }}
                 </div>
               </div>
             </td>

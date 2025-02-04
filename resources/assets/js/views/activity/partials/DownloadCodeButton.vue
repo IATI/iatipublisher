@@ -6,7 +6,7 @@
     >
       <svg-vue icon="download-file" />
       <div class="pt-0.5 font-bold">
-        {{ translatedData['workflow_frontend.download_code.download_code'] }}
+        {{ translatedData['workflow_frontend.download.download_code'] }}
       </div>
       <div class="group relative">
         <svg-vue class="text-[4px] text-n-30" icon="question-mark" />
@@ -14,12 +14,12 @@
           class="invisible absolute -bottom-6 -left-[148px] z-50 w-[352px] translate-y-full rounded bg-eggshell p-4 text-left normal-case opacity-0 duration-200 group-hover:visible group-hover:opacity-100"
         >
           <p class="mb-2 font-bold text-bluecoral">
-            {{ translatedData['workflow_frontend.download_code.what_is_code'] }}
+            {{ translatedData['workflow_frontend.download.what_is_code'] }}
           </p>
           <p class="mb-1.5 text-n-50">
             {{
               translatedData[
-                'workflow_frontend.download_code.codes_are_basically_identifiers_for_activity'
+                'workflow_frontend.download.codes_are_basically_identifiers_for_activity'
               ]
             }}
           </p>

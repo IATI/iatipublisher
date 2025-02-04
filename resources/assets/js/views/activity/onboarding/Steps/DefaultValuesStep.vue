@@ -170,12 +170,12 @@
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
                   <label for="humanitarian" class="text-[14px]">
-                    {{ translatedData['common.common.humanitarian'] }}
+                    {{ translatedData['elements.label.humanitarian'] }}
                   </label>
                   <button>
                     <HoverText
                       width="w-72"
-                      :name="translatedData['common.common.humanitarian']"
+                      :name="translatedData['elements.label.humanitarian']"
                       :hover-text="
                         translatedData[
                           'onboarding.default_values_step.add_a_humanitarian_flag_to_every_activity'
@@ -204,7 +204,7 @@
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
                   <label for="default-flow-type" class="text-[14px]">{{
-                    translatedData['common.common.humanitarian']
+                    translatedData['elements.label.humanitarian']
                   }}</label>
                   <button>
                     <HoverText
@@ -247,7 +247,7 @@
               <div class="w-full max-w-[335px]">
                 <div class="flex justify-between pb-2">
                   <label for="default-finance-type" class="text-[14px]">
-                    {{ translatedData['common.common.default_finance_type'] }}
+                    {{ translatedData['elements.label.default_finance_type'] }}
                   </label>
                   <button>
                     <HoverText

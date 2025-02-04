@@ -24,5 +24,8 @@ return [
     'view_the_errors_and_warnings_in_detail'                         => 'View the errors and warnings in detail',
     'publishing_completed'                                           => 'Publishing Completed',
     'some_activities_have_failed_to_publish'                         => 'Some activities have failed to publish.',
-    'changes_have_been_detected_in_your_activity_data'               => 'Changes have been detected in your activity data. Please revalidate before continuing.'
+    'changes_have_been_detected_in_your_activity_data'               => 'Changes have been detected in your activity data. Please revalidate before continuing.',
+    'publishing_activities'                                          => 'Publishing Activities',
+    'some_activities_have_failed_to_publish_refresh_to_see_changes'  => 'Some activities have failed to publish. Refresh to see changes.',
+    'this_element_uses_deprecated_codelist_values'                   => 'This element uses deprecated codelist values.',
 ];

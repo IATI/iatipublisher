@@ -28,7 +28,9 @@
         }"
       >
         <div class="flex space-x-2">
-          <div class="text-base font-bold text-blue-50">Ongoing Tasks</div>
+          <div class="text-base font-bold text-blue-50">
+            {{ translatedData['common.common.ongoing_tasks'] }}
+          </div>
           <div
             class="flex items-center justify-center rounded-full bg-lagoon-10 px-2 py-1 text-xs text-spring-50"
           >
@@ -121,7 +123,7 @@ import {
   watchEffect,
 } from 'vue';
 import axios from 'axios';
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
 const store = useStore();
 const showXlsStatus = ref(true);
 
@@ -274,14 +276,6 @@ watch(
   },
   { deep: true }
 );
-// watch(
-//   () => showValidationPopup.value,
-//   (value) => {
-//     if (value) {
-//       showBulkpublish.value = false;
-//     }
-//   }
-// );
 
 const checkValidationStatus = () => {
   const poll = () => {

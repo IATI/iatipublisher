@@ -30,7 +30,7 @@
             </td>
           </tr>
           <tr>
-            <td>Value Date</td>
+            <td>{{ getTranslatedElement(translatedData, 'value_date') }}</td>
             <td>
               {{
                 post.value[0].value_date
@@ -95,7 +95,7 @@
             </td>
           </tr>
           <tr>
-            <td>Narrative</td>
+            <td>{{ getTranslatedElement(translatedData, 'narrative') }}</td>
             <td>
               <div
                 v-for="(narrative, k) in post.provider_org[0].narrative"
@@ -151,7 +151,7 @@
             </td>
           </tr>
           <tr>
-            <td>Narrative</td>
+            <td>{{ getTranslatedElement(translatedData, 'narrative') }}</td>
             <td>
               <div
                 v-for="(narrative, k) in post.receiver_org[0].narrative"
