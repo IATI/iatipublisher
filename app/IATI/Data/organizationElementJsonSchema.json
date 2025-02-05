@@ -31,7 +31,7 @@
         "label": "elements/label.registration_number",
         "type": "text",
         "required": true,
-        "placeholder": "elements/org_json_schema.organisation_identifier_attributes_registration_number_placeholder",
+        "placeholder": "common/common.for_example_123456",
         "criteria": "mandatory",
         "hover_text": "elements/org_json_schema.organisation_identifier_attributes_registration_number_hover_text",
         "help_text": ""

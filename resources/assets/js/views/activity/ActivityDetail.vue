@@ -41,9 +41,7 @@
                     {{
                       pageTitle
                         ? pageTitle
-                        : translatedData[
-                            'activity_detail.activity_detail.untitled'
-                          ]
+                        : getTranslatedUntitled(translatedData)
                     }}
                   </span>
                 </div>
@@ -66,18 +64,14 @@
                     {{
                       pageTitle
                         ? pageTitle
-                        : translatedData[
-                            'activity_detail.activity_detail.untitled'
-                          ]
+                        : getTranslatedUntitled(translatedData)
                     }}
                   </span>
                   <span class="ellipsis__title--hover">
                     {{
                       pageTitle
                         ? pageTitle
-                        : translatedData[
-                            'activity_detail.activity_detail.untitled'
-                          ]
+                        : getTranslatedUntitled(translatedData)
                     }}
                   </span>
                 </h4>
@@ -501,8 +495,11 @@ import PreviouslyPublished from 'Components/status/PreviouslyPublished.vue';
 
 // Vuex Store
 import { detailStore } from 'Store/activities/show';
-import { useStore } from 'Store/activities/index';
-import { onlyDeprecatedStatusMap } from 'Composable/utils';
+import { useStore } from 'Store/activities';
+import {
+  getTranslatedUntitled,
+  onlyDeprecatedStatusMap,
+} from 'Composable/utils';
 import LanguageService from 'Services/language';
 
 export default defineComponent({
@@ -947,6 +944,6 @@ export default defineComponent({
       translatedData,
     };
   },
-  methods: { onlyDeprecatedStatusMap },
+  methods: { getTranslatedUntitled, onlyDeprecatedStatusMap },
 });
 </script>

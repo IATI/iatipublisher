@@ -140,7 +140,7 @@ import Pagination from 'Components/TablePagination.vue';
 import PageTitle from './partials/PageTitle.vue';
 import Loader from 'Components/Loader.vue';
 import ErrorMessage from 'Components/ErrorMessage.vue';
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
 import { detailStore } from 'Store/activities/show';
 import { useStorage } from '@vueuse/core';
 import Language from 'Services/language';

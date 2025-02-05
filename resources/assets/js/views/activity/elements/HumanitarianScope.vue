@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, inject } from 'vue';
+import { defineProps, inject, Ref } from 'vue';
 import {
   getTranslatedElement,
   getTranslatedLanguage,
@@ -102,4 +102,5 @@ interface Types {
 }
 
 const types = inject('types') as Types;
+const translatedData = inject('translatedData') as Ref;
 </script>

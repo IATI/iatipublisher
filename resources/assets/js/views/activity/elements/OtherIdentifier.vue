@@ -29,14 +29,28 @@
             <table>
               <tbody>
                 <tr>
-                  <td>Owner Organisation Reference</td>
+                  <td>
+                    {{
+                      getTranslatedElement(
+                        translatedData,
+                        'owner_organisation_reference'
+                      )
+                    }}
+                  </td>
                   <td v-if="post.ref">{{ post.ref }}</td>
                   <td v-else class="italic">
                     {{ getTranslatedMissing(translatedData) }}
                   </td>
                 </tr>
                 <tr>
-                  <td>Owner Organisation Narrative</td>
+                  <td>
+                    {{
+                      getTranslatedElement(
+                        translatedData,
+                        'owner_organisation_narrative'
+                      )
+                    }}
+                  </td>
                   <td>
                     <div
                       v-for="(n, k) in post.narrative"
@@ -46,7 +60,8 @@
                     >
                       <div v-if="n.narrative" class="flex flex-col">
                         <span v-if="n.language" class="language top"
-                          >(Language: {{ types.languages[n.language] }})</span
+                          >({{ getTranslatedLanguage(translatedData) }} :
+                          {{ types.languages[n.language] }})</span
                         >
                         <span v-if="n.narrative" class="description">{{
                           n.narrative
@@ -68,12 +83,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
-import { getTranslatedMissing } from '../../../composable/utils';
+import { defineComponent, inject, Ref } from 'vue';
+import {
+  getTranslatedElement,
+  getTranslatedLanguage,
+  getTranslatedMissing,
+} from 'Composable/utils';
 
 export default defineComponent({
   name: 'OtherIdentifier',
-  methods: { getTranslatedMissing },
+  methods: {
+    getTranslatedLanguage,
+    getTranslatedElement,
+    getTranslatedMissing,
+  },
   props: {
     data: {
       type: Object,
@@ -86,7 +109,9 @@ export default defineComponent({
       languages: [];
     }
     const types = inject('types') as Types;
-    return { types };
+    const translatedData = inject('translatedData') as Ref;
+
+    return { types, translatedData };
   },
 });
 </script>

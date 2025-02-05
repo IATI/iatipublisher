@@ -8,7 +8,6 @@ return [
     'title_sub_elements_narrative_attributes_language_label'                                              => 'language',
     'title_sub_elements_narrative_attributes_language_placeholder'                                        => 'Select language',
     'title_sub_elements_narrative_attributes_language_help_text'                                          => 'If no language is selected, your default language is assumed.',
-    'reporting_org_label'                                                                                 => 'reporting org',
     'reporting_org_hover_text'                                                                            => 'The organisation that is publishing data. If a primary reporter, the organisation is publishing data about itself. If a secondary reporter, it is publishing on the activities of another organisation.<br><br><a target=\'_blank\' href=\'https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/reporting-org/\'>Click here for more information</a>',
     'reporting_org_attributes_ref_label'                                                                  => 'reference',
     'reporting_org_attributes_ref_hover_text'                                                             => 'Provide your organisation\'s IATI identifier. This was entered when you registered with IATI.',
@@ -153,7 +152,6 @@ return [
     'legacy_data_attributes_value_label'                                                                  => 'value',
     'legacy_data_attributes_value_placeholder'                                                            => 'Type value',
     'legacy_data_attributes_value_hover_text'                                                             => 'The original value in the reporting organisation\'s system',
-    'legacy_data_attributes_iati_equivalent_label'                                                        => 'iati-equivalent',
     'legacy_data_attributes_iati_equivalent_placeholder'                                                  => 'Type iati_equivalent',
     'legacy_data_attributes_iati_equivalent_hover_text'                                                   => 'The name of the equivalent IATI element.',
     'document_link_label'                                                                                 => 'document link',
@@ -206,7 +204,6 @@ return [
     'contact_info_sub_elements_mailing_address_label'                                                     => 'mailing address',
     'contact_info_sub_elements_mailing_address_hover_text'                                                => 'A contact mailing address for the activity.',
     'contact_info_sub_elements_mailing_address_sub_elements_narrative_hover_text'                         => 'Enter a physical address.',
-    'location_label'                                                                                      => 'location',
     'location_hover_text'                                                                                 => 'The sub-national location of an activity, if known and safe to disclose. You can provide geographic coordinates, an administrative area, or general description. Multiple locations may be reported.<br><br><a target=\'_blank\' href=\'https://iatistandard.org/en/iati-standard/203/activity-standard/iati-activities/iati-activity/location/\'>Click here for more information</a>',
     'location_attributes_ref_hover_text'                                                                  => 'You can provide an internal reference used by your organisation to describe the location.',
     'location_sub_elements_location_reach_label'                                                          => 'location reach',
@@ -412,5 +409,4 @@ return [
     'reporting_org_helper_text'                                                                           => 'Reporting Organisation data is managed via the <strong><a href=\'/organisation\'> Organisation Tab </a></strong> , except for value <strong>Secondary Reporter</strong> which can be managed at each activity.',
     'transactions_sub_elements_sector_attributes_sector_vocabulary_hover_text'                            => 'Choose the codelist that you will select sectors from. IATI recommends using the OECD DAC 5-digit sector codelist. If you want to use your organisation\'s own list of internal sector classifications, select the option: \'99 - Reporting Organisation\'. ',
     'transactions_sub_elements_provider_organization_attributes_organization_identifer_code_hover_text'   => 'Enter the organisation\'s IATI organisation identifier. If you cannot provide an identifier then you must provide the name of the organisation.<br><br><a target=\'_blank\' href=\'https://iatistandard.org/en/guidance/publishing-data/data-quality-and-visualisation/finding-other-organisations-identifiers/\'>Click here for information on how to find other organisations\' identifiers</a>. ',
-
 ];

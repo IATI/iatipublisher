@@ -33,7 +33,8 @@
               <td>
                 <div v-if="item.narrative" class="flex flex-col">
                   <span v-if="item.language" class="language top"
-                    >(Language: {{ types.languages[item.language] }})</span
+                    >({{ getTranslatedLanguage(translatedData) }} :
+                    {{ types.languages[item.language] }})</span
                   >
                   <span v-if="item.narrative" class="description">{{
                     item.narrative
@@ -48,18 +49,28 @@
         </table>
       </div>
     </div>
-    <span v-else class="text-sm italic">Condition not Attached</span>
+    <span v-else class="text-sm italic">{{
+      getTranslatedElement(translatedData, 'conditions_not_attached')
+    }}</span>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent, inject, Ref } from 'vue';
 import dateFormat from 'Composable/dateFormat';
-import { getTranslatedMissing } from '../../../composable/utils';
+import {
+  getTranslatedElement,
+  getTranslatedLanguage,
+  getTranslatedMissing,
+} from 'Composable/utils';
 
 export default defineComponent({
   name: 'ActivityConditions',
-  methods: { getTranslatedMissing },
+  methods: {
+    getTranslatedLanguage,
+    getTranslatedElement,
+    getTranslatedMissing,
+  },
   props: {
     data: {
       type: Object,
@@ -73,8 +84,9 @@ export default defineComponent({
     }
 
     const types = inject('types') as Types;
+    const translatedData = inject('translatedData') as Ref;
 
-    return { types, dateFormat };
+    return { types, dateFormat, translatedData };
   },
 });
 </script>

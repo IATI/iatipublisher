@@ -10,12 +10,7 @@
         types.regionVocabulary[post.region_vocabulary]
       }}</span>
       <span v-else>
-        {{
-          getTranslatedMissing(
-            translatedData,
-            translatedData['element.label.vocabulary']
-          )
-        }}
+        {{ getTranslatedMissing(translatedData, 'vocabulary') }}
       </span>
     </div>
     <div class="ml-5">

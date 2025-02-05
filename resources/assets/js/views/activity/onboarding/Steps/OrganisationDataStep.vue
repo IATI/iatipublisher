@@ -75,7 +75,7 @@
                 icon="organisation-elements/building"
               ></svg-vue>
               <span class="ml-1 mr-[10px]">{{
-                translatedData['common.common.reporting_org_label']
+                translatedData['elements.label.reporting_org']
               }}</span>
               <svg-vue class="text-base text-camel-50" icon="core"></svg-vue>
             </p>

@@ -188,12 +188,8 @@ export default defineComponent({
       [key: string]: string;
     }
 
-    function getLanguages(language: Entry[]) {
-      return language.map((entry) => entry.language).join(', ');
-    }
     return {
       elementData,
-      getLanguages,
       dateFormat,
     };
   },

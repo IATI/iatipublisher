@@ -4,7 +4,14 @@
       <table class="mb-3">
         <tbody>
           <tr>
-            <td>Organisation Identifier Code</td>
+            <td>
+              {{
+                getTranslatedElement(
+                  translatedData,
+                  'organisation_identifier_code'
+                )
+              }}
+            </td>
             <td>
               <div class="text-sm">
                 {{ PoData[0].organization_identifier_code ?? '' }}
@@ -17,7 +24,7 @@
             </td>
           </tr>
           <tr>
-            <td>Description</td>
+            <td>{{ getTranslatedElement(translatedData, 'description') }}</td>
             <td>
               <div
                 v-for="(po, i) in PoData[0].narrative"
@@ -30,8 +37,10 @@
                 <div v-if="po.narrative" class="language subtle-darker mb-1.5">
                   ({{
                     po.language
-                      ? `Language: ${type.languages[po.language]}`
-                      : 'Language: N/A'
+                      ? `${getTranslatedLanguage(translatedData)} : ${
+                          type.languages[po.language]
+                        }`
+                      : `${getTranslatedLanguage(translatedData)} : N/A`
                   }})
                 </div>
                 <div class="text-sm">
@@ -46,7 +55,9 @@
             </td>
           </tr>
           <tr>
-            <td>Receiver Activity ID</td>
+            <td>
+              {{ getTranslatedElement(translatedData, 'receiver_activity_id') }}
+            </td>
             <td>
               <div class="text-sm">
                 {{ PoData[0].receiver_activity_id ?? '' }}
@@ -59,7 +70,7 @@
             </td>
           </tr>
           <tr>
-            <td>Type</td>
+            <td>{{ getTranslatedElement(translatedData, 'type') }}</td>
             <td>
               <div class="text-sm">
                 {{
@@ -80,10 +91,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, inject } from 'vue';
+import { defineComponent, toRefs, inject, Ref } from 'vue';
+import { getTranslatedElement, getTranslatedLanguage } from 'Composable/utils';
 
 export default defineComponent({
   name: 'TransactionReceiverOrganisation',
+  methods: { getTranslatedLanguage, getTranslatedElement },
   components: {},
   props: {
     data: {
@@ -103,8 +116,11 @@ export default defineComponent({
       };
     }
     const PoData = data.value as ArrayObject;
+
     const type = inject('types');
-    return { PoData, type };
+    const translatedData = inject('translatedData') as Ref;
+
+    return { PoData, type, translatedData };
   },
 });
 </script>
