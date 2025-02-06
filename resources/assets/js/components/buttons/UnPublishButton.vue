@@ -1,7 +1,7 @@
 <template>
   <BtnComponent
     class=""
-    :text="translatedData['activity_index.unpublish_button.unpublish']"
+    :text="translatedData['common.common.unpublish']"
     :type="type"
     icon="cancel-cloud"
     @click="unpublishValue = true"
@@ -35,7 +35,7 @@
         />
         <BtnComponent
           class="space"
-          :text="translatedData['activity_index.unpublish_button.unpublish']"
+          :text="translatedData['common.common.unpublish']"
           type="primary"
           @click="unPublishFunction"
         />
@@ -118,7 +118,7 @@ const unPublishFunction = () => {
     loader.value = true;
   }, 500);
 
-  loader.text = translatedData['activity_index.unpublish_button.unpublishing'];
+  loader.text = translatedData['common.common.unpublishing'];
 
   axios.post(`/activity/${id}/unpublish`).then((res) => {
     const response = res.data;

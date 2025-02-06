@@ -14,7 +14,6 @@ return [
     'subheading'      => 'Please enter your new password',
     'token'           => 'token',
     'new_password'    => [
-      'title'       => 'New Password',
       'placeholder' => 'Enter a new password',
     ],
     'repeat_password' => [
@@ -25,3 +24,6 @@ return [
   ],
 ];
 ?>
+
+
+

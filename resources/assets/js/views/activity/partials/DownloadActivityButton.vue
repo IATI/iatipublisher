@@ -137,7 +137,7 @@
           <svg-vue icon="warning-fill" class="text-camel-50"></svg-vue>
           <span class="text-sm font-bold text-n-50">{{
             translatedData[
-              'activity.download_activity_button.preparing_activities_for_download'
+              'workflow_frontend.download.preparing_activities_for_download'
             ]
           }}</span>
         </div>
@@ -172,9 +172,7 @@
             class="primary-btn"
             @click="downloadXls(store.state.selectedActivities.length)"
           >
-            {{
-              translatedData['activity_index.download_activity_button.continue']
-            }}
+            {{ translatedData['common.common.continue'] }}
           </button>
         </div>
       </div>

@@ -236,9 +236,7 @@
                               >,
                             </span>
                             <span>
-                              {{
-                                getTranslatedElement(translatedData, 'code')
-                              }}
+                              {{ getTranslatedElement(translatedData, 'code') }}
                               : {{ ref.code ? ref.code : '' }}
                               <span
                                 v-if="!ref.code"
@@ -528,9 +526,7 @@
                       <tr>
                         <td>
                           <div class="category">
-                            {{
-                              getTranslatedElement(translatedData, 'period')
-                            }}
+                            {{ getTranslatedElement(translatedData, 'period') }}
                             {{ Number(key) + 1 }}
                           </div>
                         </td>

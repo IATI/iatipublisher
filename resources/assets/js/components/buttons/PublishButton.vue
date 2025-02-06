@@ -119,9 +119,7 @@
           <BtnComponent
             v-if="publishStep == 0"
             class="space"
-            :text="
-              translatedData['activity_index.publish_button.add_missing_data']
-            "
+            :text="translatedData['common.common.add_missing_data']"
             type="primary"
             @click="publishValue = false"
           />
