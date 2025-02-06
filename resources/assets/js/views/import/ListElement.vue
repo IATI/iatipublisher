@@ -6,7 +6,7 @@
         >{{
           activity['data']['title'][0]['narrative']
             ? activity['data']['title'][0]['narrative']
-            : 'Missing'
+            : getTranslatedMissing(translatedData)
         }}</span
       >
 
@@ -231,7 +231,16 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, watch, reactive } from 'vue';
+import {
+  defineProps,
+  defineEmits,
+  ref,
+  watch,
+  reactive,
+  inject,
+  Ref,
+} from 'vue';
+import { getTranslatedMissing } from 'Composable/utils';
 
 const props = defineProps({
   activity: {
@@ -249,6 +258,7 @@ const props = defineProps({
   },
 });
 
+const translatedData = inject('translatedData') as Ref;
 const emit = defineEmits(['selectElement']);
 
 const active = ref(false);

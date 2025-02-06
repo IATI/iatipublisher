@@ -8,7 +8,8 @@
     }"
   >
     <div v-if="post.narrative" class="language subtle-darker mb-1.5">
-      (Language: {{ type[post.language] ? type[post.language] : 'N/A' }})
+      ({{ getTranslatedLanguage(translatedData) }}:
+      {{ type[post.language] ? type[post.language] : 'N/A' }})
     </div>
     <div v-else>
       <span class="text-xs italic text-light-gray">N/A</span>
@@ -20,10 +21,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs } from 'vue';
+import { defineComponent, inject, Ref, toRefs } from 'vue';
+import { getTranslatedLanguage } from 'Composable/utils';
 
 export default defineComponent({
   name: 'ResultTD',
+  methods: { getTranslatedLanguage },
   components: {},
   props: {
     data: {
@@ -51,7 +54,9 @@ export default defineComponent({
 
     let { data } = toRefs(props);
     const tdData = data.value as Narratives;
-    return { tdData };
+    const translatedData = inject('translatedData') as Ref;
+
+    return { tdData, translatedData };
   },
 });
 </script>

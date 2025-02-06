@@ -20,7 +20,7 @@
             N/A
           </span>
         </div>
-        <div clas="ml-4">
+        <div class="ml-4">
           <table class="mb-3">
             <tr>
               <td>{{ getTranslatedElement(translatedData, 'code') }}</td>

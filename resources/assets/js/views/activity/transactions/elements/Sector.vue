@@ -179,8 +179,8 @@ export default defineComponent({
       vocabulary_uri: string;
     }
 
-    const sector = data.value as ArrayObject[];
     const { data } = toRefs(props);
+    const sector = data.value as ArrayObject[];
 
     const type = inject('types') as Sector;
     const translatedData = inject('translatedData') as Ref;

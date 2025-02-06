@@ -118,8 +118,8 @@ export default defineComponent({
       languages: [];
     }
 
-    const country = data.value as ArrayObject;
     const { data } = toRefs(props);
+    const country = data.value as ArrayObject;
 
     const type = inject('types') as TypesInterface;
     const translatedData = inject('translatedData') as Ref;
