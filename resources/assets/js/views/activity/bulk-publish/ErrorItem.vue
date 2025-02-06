@@ -20,7 +20,9 @@
         class="mr-2 flex shrink-0 cursor-pointer"
         @click="accordionToggle"
       >
-        <span class="text-xs">Show more</span>
+        <span class="text-xs">{{
+          translatedData['common.common.show_more']
+        }}</span>
         <span>
           <svg-vue
             class="text-xl text-blue-50 transition-transform duration-500"
@@ -49,7 +51,9 @@
           target="_blank"
           class="inline-flex items-center"
         >
-          <span class="mr-1 grow">View the errors and warnings in detail</span>
+          <span class="mr-1 grow">{{
+            translatedData['common.common.show_more']
+          }}</span>
           <svg-vue class="shrink-0" icon="external"></svg-vue>
         </a>
       </div>
@@ -57,13 +61,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, inject, ref } from 'vue';
+import { defineProps, inject, Ref, ref } from 'vue';
 
 defineProps({
   data: { type: Object, required: true },
   message: { type: String, default: '' },
 });
 
+const translatedData = inject('translatedData') as Ref;
 const selectedActivities = inject('selectedActivities') as number[];
 
 const toggle = ref(false);
@@ -99,8 +104,7 @@ const accordionToggle = (e: Event) => {
 const errorCount = (errors) => {
   let errorCount = '';
   if (errors?.warning) {
-    errorCount = `${errors?.error} errors and ${errors?.warning} warnings
-     were found.`;
+    errorCount = `${errors?.error} errors and ${errors?.warning} warnings were found.`;
   } else {
     errorCount = `${errors?.critical} critical errors were found.`;
   }

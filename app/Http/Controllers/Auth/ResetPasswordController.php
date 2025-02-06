@@ -45,7 +45,7 @@ class ResetPasswordController extends Controller
      *
      * If no token is present, display the link request form.
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -61,8 +61,8 @@ class ResetPasswordController extends Controller
     /**
      * Get the response for a successful password reset.
      *
-     * @param Request $request
-     * @param string                   $response
+     * @param  Request  $request
+     * @param  string  $response
      *
      * @return \Illuminate\Http\RedirectResponse|JsonResponse
      */
@@ -140,4 +140,29 @@ class ResetPasswordController extends Controller
 
         event(new PasswordReset($user));
     }
+
+    // Todo: Remove this
+//    /**
+//     * Get the password reset validation messages.
+//     *
+//     * @return array
+//     */
+//    protected function validationErrorMessages(): array
+//    {
+//        return [
+//            'token.required'                 => trans(
+//                'validation.required', ['attribute' => trans('public/forgot_password.reset_password_page.token')]
+//            ),
+//            'email.required'                 => trans('validation.required'),
+//            'email.email'                    => trans('validation.email'),
+//            'password.required'              => trans('validation.required'),
+//            'password.confirmed'             => trans('validation.confirmed'),
+//            'password.string'                => trans('validation.string'),
+//            'password.min'                   => trans('validation.min'),
+//            'password.max'                   => trans('validation.max'),
+//            'password_confirmation.required' => trans('validation.required'),
+//            'password_confirmation.min'      => trans('validation.min'),
+//            'password_confirmation.max'      => trans('validation.max'),
+//        ];
+//    }
 }

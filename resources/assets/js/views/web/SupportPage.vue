@@ -3,11 +3,12 @@
     <div class="mx-auto max-w-[700px]">
       <section class="rounded bg-white py-4 shadow-textbox sm:py-8">
         <article class="px-6 py-4 sm:px-12 sm:py-6">
-          <h3 class="text-2xl font-bold text-bluecoral">Support</h3>
+          <h3 class="text-2xl font-bold text-bluecoral">
+            {{ translatedData['common.common.support'] }}
+          </h3>
 
           <p class="mt-4 text-base">
-            If your organisation needs support to use IATI Publisher or has
-            questions about what data to publish please contact IATI’s Helpdesk:
+            {{ translatedData['public.support.paragraph_one'] }}
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -15,25 +16,27 @@
               >support@iatistandard.org.</a
             >
           </p>
-          <p class="mt-4 text-base">
-            You may also join IATI’s online community at
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://iaticonnect.org/"
-            >
-              IATI Connect
-            </a>
-            , where you can post messages about IATI publishing in the
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://iaticonnect.org/data-publishing-cop/about"
-              >Data Publishing Community of Practice.</a
-            >
-          </p>
+          <p
+            class="mt-4 text-base"
+            v-html="translatedData['public.support.paragraph_two']"
+          ></p>
         </article>
       </section>
     </div>
   </div>
 </template>
+<script lang="ts" setup>
+import { onMounted, ref } from 'vue';
+import LanguageService from 'Services/language';
+
+const translatedData = ref({});
+
+onMounted(() => {
+  LanguageService.getTranslatedData('common,public')
+    .then((response) => {
+      translatedData.value = response.data;
+      console.log(translatedData.value);
+    })
+    .catch((error) => console.log(error));
+});
+</script>

@@ -30,9 +30,11 @@ class GeneralController extends Controller
             $mimeType = '';
 
             if (empty($fileUrl)) {
+                $translatedMessage = trans('api/general_controller.please_enter_file_url_to_get_mimetype');
+
                 return response()->json([
                     'success' => false,
-                    'message' => 'Please enter file url to get mimetype.',
+                    'message' => $translatedMessage,
                     'data' => [
                         'mimetype' => $mimeType,
                         'type' => $type,
@@ -72,9 +74,11 @@ class GeneralController extends Controller
                         $mimeType = explode(';', $curlInfo['content_type'])[0];
                     }
                 } else {
+                    $translatedMessage = trans('api/general_controller.please_ensure_that_url_is_correct_and_is_publicly_accessible');
+
                     return response()->json([
                         'success' => false,
-                        'message' => 'Please ensure that url is correct and is publicly accessible.',
+                        'message' => $translatedMessage,
                         'data' => [
                             'mimetype' => $mimeType,
                         ],
@@ -85,18 +89,20 @@ class GeneralController extends Controller
             if (!array_key_exists($mimeType, $fileFormat)) {
                 $mimeType = '';
             }
+            $translatedMessage = trans('api/general_controller.mimetype_fetched_successfully');
 
             return response()->json([
                 'success' => true,
-                'message' => 'Mimetype fetched successfully',
+                'message' => $translatedMessage,
                 'data' => [
                     'mimetype' => $mimeType,
                 ],
             ]);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('api/general_controller.error_occurred_while_mapping_the_file_extension');
 
-            return response()->json(['success' => false, 'message' => 'Error occurred while mapping the file extension']);
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
     }
 }

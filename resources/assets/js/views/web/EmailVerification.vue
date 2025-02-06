@@ -3,18 +3,29 @@
     <div class="grid justify-items-center gap-6 tracking-normal xl:px-2">
       <div class="space-y-4 sm:space-y-6">
         <p class="text-center text-xl font-bold text-n-50 sm:text-2xl">
-          Please verify your account
+          {{
+            translatedData[
+              'public.register.not_registered_page.verification_email.please_verify_your_account'
+            ]
+          }}
         </p>
         <p class="text-sm text-n-40 sm:text-base">
-          A verification email has been sent to
-          <span class="font-bold text-n-50"> {{ props.email }}</span
-          >. Please click on the link in the email to verify and activate your
-          new IATI publisher account.
+          {{
+            translatedData[
+              'public.register.not_registered_page.verification_email.verification_email_sent_to'
+            ]
+          }}
+          <span class="font-bold text-n-50"> {{ props.email }}. </span>
+          {{
+            translatedData[
+              'public.register.not_registered_page.verification_email.please_click_link_to_verify'
+            ]
+          }}
         </p>
       </div>
       <svg-vue class="verification" icon="ic-verification" />
       <a href="/activities" class="btn btn-next get-started-btn">
-        Get started
+        {{ translatedData['common.common.get_started'] }}
         <svg-vue class="text-2xl" icon="right-arrow" />
       </a>
     </div>
@@ -22,7 +33,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import LanguageService from 'Services/language';
+import { defineComponent, onMounted, ref } from 'vue';
 
 export default defineComponent({
   props: {
@@ -30,8 +42,19 @@ export default defineComponent({
   },
 
   setup(props) {
+    const translatedData = ref({});
+
+    onMounted(() => {
+      LanguageService.getTranslatedData('common,public')
+        .then((response) => {
+          translatedData.value = response.data;
+        })
+        .catch((error) => console.log(error));
+    });
+
     return {
       props,
+      translatedData,
     };
   },
 });

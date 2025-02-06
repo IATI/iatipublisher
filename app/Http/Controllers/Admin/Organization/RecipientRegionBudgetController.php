@@ -49,8 +49,9 @@ class RecipientRegionBudgetController extends Controller
             return view('admin.organisation.forms.recipientRegionBudget.recipientRegionBudget', compact('form', 'organization', 'data'));
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
-            return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while opening organization recipient-region-budget form.');
+            return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
     }
 
@@ -65,14 +66,18 @@ class RecipientRegionBudgetController extends Controller
     {
         try {
             if (!$this->recipientRegionBudgetService->update(Auth::user()->organization_id, $request->all())) {
-                return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while updating organization recipient-region-budget.');
-            }
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.organisation.index')->with('success', 'Organization recipient-region-budget updated successfully.');
+                return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return redirect()->route('admin.organisation.index')->with('success', $translatedMessage);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while updating organization recipient-region-budget.');
+            return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
     }
 }

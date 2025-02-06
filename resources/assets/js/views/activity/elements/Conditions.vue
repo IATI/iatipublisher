@@ -17,7 +17,9 @@
           <div v-if="post.condition_type">
             {{ types.conditionType[post.condition_type] }}
           </div>
-          <span v-else class="italic">Type Missing</span>
+          <span v-else class="italic">
+            {{ getTranslatedMissing(translatedData, 'type') }}
+          </span>
         </div>
         <table class="ml-5">
           <tbody>
@@ -27,33 +29,48 @@
               class="multiline"
               :class="{ 'mb-4': i !== post.narrative.length - 1 }"
             >
-              <td>Narrative</td>
+              <td>{{ getTranslatedElement(translatedData, 'narrative') }}</td>
               <td>
                 <div v-if="item.narrative" class="flex flex-col">
                   <span v-if="item.language" class="language top"
-                    >(Language: {{ types.languages[item.language] }})</span
+                    >({{ getTranslatedLanguage(translatedData) }} :
+                    {{ types.languages[item.language] }})</span
                   >
                   <span v-if="item.narrative" class="description">{{
                     item.narrative
                   }}</span>
                 </div>
-                <span v-else class="italic">Missing</span>
+                <span v-else class="italic">
+                  {{ getTranslatedMissing(translatedData) }}
+                </span>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <span v-else class="text-sm italic">Condition not Attached</span>
+    <span v-else class="text-sm italic">{{
+      getTranslatedElement(translatedData, 'conditions_not_attached')
+    }}</span>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent, inject, Ref } from 'vue';
 import dateFormat from 'Composable/dateFormat';
+import {
+  getTranslatedElement,
+  getTranslatedLanguage,
+  getTranslatedMissing,
+} from 'Composable/utils';
 
 export default defineComponent({
   name: 'ActivityConditions',
+  methods: {
+    getTranslatedLanguage,
+    getTranslatedElement,
+    getTranslatedMissing,
+  },
   props: {
     data: {
       type: Object,
@@ -67,8 +84,9 @@ export default defineComponent({
     }
 
     const types = inject('types') as Types;
+    const translatedData = inject('translatedData') as Ref;
 
-    return { types, dateFormat };
+    return { types, dateFormat, translatedData };
   },
 });
 </script>

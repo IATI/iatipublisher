@@ -77,18 +77,42 @@ class LocationRequest extends ActivityBaseRequest
         foreach ($formFields as $locationIndex => $location) {
             $locationForm = 'location.' . $locationIndex;
             $rules[sprintf('%s.ref', $locationForm)] = ['nullable', 'not_regex:/(&|!|\/|\||\?)/'];
-            $rules[sprintf('%s.location_reach.0.code', $locationForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('GeographicLocationReach', 'Activity', false)
-            ));
-            $rules[sprintf('%s.exactness.0.code', $locationForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('GeographicExactness', 'Activity', false)
-            ));
-            $rules[sprintf('%s.location_class.0.code', $locationForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('GeographicLocationClass', 'Activity', false)
-            ));
-            $rules[sprintf('%s.feature_designation.0.code', $locationForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('LocationType', 'Activity', false)
-            ));
+            $rules[sprintf('%s.location_reach.0.code', $locationForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles(
+                        'GeographicLocationReach',
+                        'Activity',
+                        false
+                    )
+                )
+            );
+            $rules[sprintf('%s.exactness.0.code', $locationForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles(
+                        'GeographicExactness',
+                        'Activity',
+                        false
+                    )
+                )
+            );
+            $rules[sprintf('%s.location_class.0.code', $locationForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles(
+                        'GeographicLocationClass',
+                        'Activity',
+                        false
+                    )
+                )
+            );
+            $rules[sprintf('%s.feature_designation.0.code', $locationForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles('LocationType', 'Activity', false)
+                )
+            );
 
             $tempRules = [
                 $this->getWarningForLocationId($location['location_id'], $locationForm),
@@ -120,11 +144,25 @@ class LocationRequest extends ActivityBaseRequest
 
         foreach ($formFields as $locationIndex => $location) {
             $locationForm = 'location.' . $locationIndex;
-            $messages[sprintf('%s.ref.not_regex', $locationForm)] = 'The location reference field shouldn\'t contain the symbols /, &, | or ?.';
-            $messages[sprintf('%s.location_reach.0.code.in', $locationForm)] = 'The location reach code is invalid.';
-            $messages[sprintf('%s.exactness.0.code.in', $locationForm)] = 'The location exactness is invalid.';
-            $messages[sprintf('%s.location_class.0.code.in', $locationForm)] = 'The location class is invalid.';
-            $messages[sprintf('%s.feature_designation.0.code.in', $locationForm)] = 'The location feature designation is invalid.';
+            $messages[sprintf(
+                '%s.ref.not_regex',
+                $locationForm
+            )]
+                = 'The location reference field shouldn\'t contain the symbols /, &, | or ?.';
+            $messages[sprintf('%s.location_reach.0.code.in', $locationForm)] = trans(
+                'validation.activity_location.invalid_reach_code'
+            );
+            $messages[sprintf('%s.exactness.0.code.in', $locationForm)] = trans(
+                'validation.activity_location.invalid_location_exactness'
+            );
+            $messages[sprintf('%s.location_class.0.code.in', $locationForm)] = trans(
+                'validation.activity_location.invalid_location_class'
+            );
+            $messages[sprintf(
+                '%s.feature_designation.0.code.in',
+                $locationForm
+            )]
+                = trans('validation.activity_location.invalid_feature_designation');
             $tempMessages = [
                 $this->getMessagesForLocationId($location['location_id'], $locationForm),
                 $this->getMessagesForName($location['name'], $locationForm),
@@ -158,9 +196,16 @@ class LocationRequest extends ActivityBaseRequest
 
         foreach ($formFields as $locationIdIndex => $locationId) {
             $locationIdForm = sprintf('%s.location_id.%s', $formBase, $locationIdIndex);
-            $rules[sprintf('%s.vocabulary', $locationIdForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('GeographicVocabulary', 'Activity', false)
-            ));
+            $rules[sprintf('%s.vocabulary', $locationIdForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles(
+                        'GeographicVocabulary',
+                        'Activity',
+                        false
+                    )
+                )
+            );
         }
 
         return $rules;
@@ -180,7 +225,9 @@ class LocationRequest extends ActivityBaseRequest
 
         foreach ($formFields as $locationIdIndex => $locationId) {
             $locationIdForm = sprintf('%s.location_id.%s', $formBase, $locationIdIndex);
-            $messages[sprintf('%s.vocabulary.in', $locationIdForm)] = 'The location id vocabulary is invalid.';
+            $messages[sprintf('%s.vocabulary.in', $locationIdForm)] = trans(
+                'validation.activity_location.invalid_vocabulary'
+            );
         }
 
         return $messages;
@@ -201,7 +248,12 @@ class LocationRequest extends ActivityBaseRequest
         foreach ($formFields as $nameIndex => $name) {
             $narrativeForm = sprintf('%s.name.%s', $formBase, $nameIndex);
 
-            foreach ($this->getWarningForNarrative($name['narrative'], $narrativeForm) as $locationNameIndex => $locationNameNarrativeRules) {
+            foreach (
+                $this->getWarningForNarrative(
+                    $name['narrative'],
+                    $narrativeForm
+                ) as $locationNameIndex => $locationNameNarrativeRules
+            ) {
                 $rules[$locationNameIndex] = $locationNameNarrativeRules;
             }
         }
@@ -224,7 +276,12 @@ class LocationRequest extends ActivityBaseRequest
         foreach ($formFields as $nameIndex => $name) {
             $narrativeForm = sprintf('%s.name.%s', $formBase, $nameIndex);
 
-            foreach ($this->getErrorsForNarrative($name['narrative'], $narrativeForm) as $locationNameIndex => $locationNameNarrativeRules) {
+            foreach (
+                $this->getErrorsForNarrative(
+                    $name['narrative'],
+                    $narrativeForm
+                ) as $locationNameIndex => $locationNameNarrativeRules
+            ) {
                 $rules[$locationNameIndex] = $locationNameNarrativeRules;
             }
         }
@@ -246,7 +303,12 @@ class LocationRequest extends ActivityBaseRequest
         foreach ($formFields as $nameIndex => $name) {
             $narrativeForm = sprintf('%s.name.%s', $formBase, $nameIndex);
 
-            foreach ($this->getMessagesForNarrative($name['narrative'], $narrativeForm) as $locationNameIndex => $locationNameNarrativeMessages) {
+            foreach (
+                $this->getMessagesForNarrative(
+                    $name['narrative'],
+                    $narrativeForm
+                ) as $locationNameIndex => $locationNameNarrativeMessages
+            ) {
                 $messages[$locationNameIndex] = $locationNameNarrativeMessages;
             }
         }
@@ -269,7 +331,12 @@ class LocationRequest extends ActivityBaseRequest
         foreach ($formFields as $descriptionIndex => $description) {
             $narrativeForm = sprintf('%s.description.%s', $formBase, $descriptionIndex);
 
-            foreach ($this->getWarningForNarrative($description['narrative'], $narrativeForm) as $locationDescriptionIndex => $locationDescriptionNarrativeRules) {
+            foreach (
+                $this->getWarningForNarrative(
+                    $description['narrative'],
+                    $narrativeForm
+                ) as $locationDescriptionIndex => $locationDescriptionNarrativeRules
+            ) {
                 $rules[$locationDescriptionIndex] = $locationDescriptionNarrativeRules;
             }
         }
@@ -292,7 +359,12 @@ class LocationRequest extends ActivityBaseRequest
         foreach ($formFields as $descriptionIndex => $description) {
             $narrativeForm = sprintf('%s.description.%s', $formBase, $descriptionIndex);
 
-            foreach ($this->getErrorsForNarrative($description['narrative'], $narrativeForm) as $locationDescriptionIndex => $locationDescriptionNarrativeRules) {
+            foreach (
+                $this->getErrorsForNarrative(
+                    $description['narrative'],
+                    $narrativeForm
+                ) as $locationDescriptionIndex => $locationDescriptionNarrativeRules
+            ) {
                 $rules[$locationDescriptionIndex] = $locationDescriptionNarrativeRules;
             }
         }
@@ -315,7 +387,12 @@ class LocationRequest extends ActivityBaseRequest
         foreach ($formFields as $descriptionIndex => $description) {
             $narrativeForm = sprintf('%s.description.%s', $formBase, $descriptionIndex);
 
-            foreach ($this->getMessagesForNarrative($description['narrative'], $narrativeForm) as $locationDescriptionIndex => $locationDescriptionNarrativeMessages) {
+            foreach (
+                $this->getMessagesForNarrative(
+                    $description['narrative'],
+                    $narrativeForm
+                ) as $locationDescriptionIndex => $locationDescriptionNarrativeMessages
+            ) {
                 $messages[$locationDescriptionIndex] = $locationDescriptionNarrativeMessages;
             }
         }
@@ -338,7 +415,12 @@ class LocationRequest extends ActivityBaseRequest
         foreach ($formFields as $descriptionIndex => $description) {
             $narrativeForm = sprintf('%s.activity_description.%s', $formBase, $descriptionIndex);
 
-            foreach ($this->getWarningForNarrative($description['narrative'], $narrativeForm) as $locationActivityDescriptionIndex => $locationActivityDescriptionNarrativeRules) {
+            foreach (
+                $this->getWarningForNarrative(
+                    $description['narrative'],
+                    $narrativeForm
+                ) as $locationActivityDescriptionIndex => $locationActivityDescriptionNarrativeRules
+            ) {
                 $rules[$locationActivityDescriptionIndex] = $locationActivityDescriptionNarrativeRules;
             }
         }
@@ -361,7 +443,12 @@ class LocationRequest extends ActivityBaseRequest
         foreach ($formFields as $descriptionIndex => $description) {
             $narrativeForm = sprintf('%s.activity_description.%s', $formBase, $descriptionIndex);
 
-            foreach ($this->getErrorsForNarrative($description['narrative'], $narrativeForm) as $locationActivityDescriptionIndex => $locationActivityDescriptionNarrativeRules) {
+            foreach (
+                $this->getErrorsForNarrative(
+                    $description['narrative'],
+                    $narrativeForm
+                ) as $locationActivityDescriptionIndex => $locationActivityDescriptionNarrativeRules
+            ) {
                 $rules[$locationActivityDescriptionIndex] = $locationActivityDescriptionNarrativeRules;
             }
         }
@@ -384,7 +471,12 @@ class LocationRequest extends ActivityBaseRequest
         foreach ($formFields as $descriptionIndex => $description) {
             $narrativeForm = sprintf('%s.activity_description.%s', $formBase, $descriptionIndex);
 
-            foreach ($this->getMessagesForNarrative($description['narrative'], $narrativeForm) as $locationActivityDescriptionIndex => $locationActivityDescriptionNarrativeMessages) {
+            foreach (
+                $this->getMessagesForNarrative(
+                    $description['narrative'],
+                    $narrativeForm
+                ) as $locationActivityDescriptionIndex => $locationActivityDescriptionNarrativeMessages
+            ) {
                 $messages[$locationActivityDescriptionIndex] = $locationActivityDescriptionNarrativeMessages;
             }
         }
@@ -406,12 +498,22 @@ class LocationRequest extends ActivityBaseRequest
 
         foreach ($formFields as $administrativeIndex => $administrative) {
             $administrativeForm = sprintf('%s.administrative.%s', $formBase, $administrativeIndex);
-            $rules[sprintf('%s.vocabulary', $administrativeForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('GeographicVocabulary', 'Activity', false)
-            ));
-            $rules[sprintf('%s.code', $administrativeForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('Country', 'Activity', false)
-            ));
+            $rules[sprintf('%s.vocabulary', $administrativeForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles(
+                        'GeographicVocabulary',
+                        'Activity',
+                        false
+                    )
+                )
+            );
+            $rules[sprintf('%s.code', $administrativeForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles('Country', 'Activity', false)
+                )
+            );
             $rules[sprintf('%s.level', $administrativeForm)] = 'nullable|min:0|integer';
         }
 
@@ -432,10 +534,24 @@ class LocationRequest extends ActivityBaseRequest
 
         foreach ($formFields as $administrativeIndex => $administrative) {
             $administrativeForm = sprintf('%s.administrative.%s', $formBase, $administrativeIndex);
-            $messages[sprintf('%s.vocabulary.in', $administrativeForm)] = 'The location administrative vocabulary is invalid.';
-            $messages[sprintf('%s.code.in', $administrativeForm)] = 'The location administrative code is invalid.';
-            $messages[sprintf('%s.level.min', $administrativeForm)] = 'The location administrative level must not have negative value.';
-            $messages[sprintf('%s.level.integer', $administrativeForm)] = 'The location administrative level must be an integer.';
+            $messages[sprintf(
+                '%s.vocabulary.in',
+                $administrativeForm
+            )]
+                = trans('validation.activity_location.administrative.invalid_vocabulary');
+            $messages[sprintf('%s.code.in', $administrativeForm)] = trans(
+                'validation.activity_location.administrative.invalid_code'
+            );
+            $messages[sprintf(
+                '%s.level.min',
+                $administrativeForm
+            )]
+                = trans('validation.activity_location.administrative.level_min');
+            $messages[sprintf(
+                '%s.level.integer',
+                $administrativeForm
+            )]
+                = trans('validation.activity_location.administrative.level_int');
         }
 
         return $messages;
@@ -476,8 +592,12 @@ class LocationRequest extends ActivityBaseRequest
 
         $pointForm = sprintf('%s.point.0', $formBase);
         $positionForm = sprintf('%s.pos.0', $pointForm);
-        $messages[sprintf('%s.latitude.numeric', $positionForm)] = 'The pos latitude must be numeric';
-        $messages[sprintf('%s.longitude.numeric', $positionForm)] = 'The pos longitude must be numeric';
+        $messages[sprintf('%s.latitude.numeric', $positionForm)] = trans(
+            'validation.activity_location.point.latitude_numeric'
+        );
+        $messages[sprintf('%s.longitude.numeric', $positionForm)] = trans(
+            'validation.activity_location.point.longitude_numeric'
+        );
 
         return $messages;
     }

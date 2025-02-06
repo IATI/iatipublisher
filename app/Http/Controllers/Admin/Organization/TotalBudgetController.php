@@ -45,8 +45,9 @@ class TotalBudgetController extends Controller
             return view('admin.organisation.forms.totalBudget.totalBudget', compact('form', 'organization', 'data'));
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_has_occurred_while_opening_form');
 
-            return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while opening organization reporting_org form.');
+            return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
     }
 
@@ -61,14 +62,18 @@ class TotalBudgetController extends Controller
     {
         try {
             if (!$this->totalBudgetService->update(Auth::user()->organization_id, $request->all())) {
-                return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while updating organization total-budget.');
-            }
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.organisation.index')->with('success', 'Organization total-budget updated successfully.');
+                return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return redirect()->route('admin.organisation.index')->with('success', $translatedMessage);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while updating organization total-budget.');
+            return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
     }
 }

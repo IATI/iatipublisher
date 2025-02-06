@@ -25,8 +25,8 @@
       :title="`${
         transactionData.reference && transactionData.reference !== ''
           ? transactionData.reference
-          : 'Untitled'
-      } - Transaction detail`"
+          : getTranslatedUntitled(translatedData)
+      } - ${translatedData['common.common.transaction_detail']}`"
       :back-link="`${activityLink}/transaction`"
     >
       <div class="flex items-center space-x-3">
@@ -37,7 +37,7 @@
           class="mr-3"
         />
         <Btn
-          text="Edit Transaction"
+          :text="translatedData['common.common.edit_transaction']"
           :link="`${activityLink}/transaction/${transaction.id}/edit`"
           icon="edit"
         />
@@ -149,6 +149,8 @@ import {
   computed,
   ref,
   reactive,
+  inject,
+  Ref,
 } from 'vue';
 //components
 import Btn from 'Components/buttons/Link.vue';
@@ -158,9 +160,11 @@ import Toast from 'Components/ToastMessage.vue';
 import dateFormat from 'Composable/dateFormat';
 import getActivityTitle from 'Composable/title';
 import TransactionElement from './TransactionElement.vue';
+import { getTranslatedUntitled } from 'Composable/utils';
 
 export default defineComponent({
   name: 'TransactionDetail',
+  methods: { getTranslatedUntitled },
   components: {
     TransactionElement,
     Btn,
@@ -191,6 +195,8 @@ export default defineComponent({
   },
   setup(props) {
     const { activity, transaction } = toRefs(props);
+    const translatedData = inject('translatedData') as Ref;
+
     const linkClasses =
       'flex items-center w-full bg-white rounded p-2 text-sm text-n-50 font-bold leading-relaxed mb-2 shadow-default';
     const showSidebar = ref(false);
@@ -230,6 +236,7 @@ export default defineComponent({
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', calcWidth);
     });
+
     watch(
       () => showSidebar.value,
       (sidebar) => {
@@ -240,27 +247,28 @@ export default defineComponent({
         }
       }
     );
+
     /**
      * Breadcrumb data
      */
-    const breadcrumbData = [
+    const breadcrumbData = computed(() => [
       {
-        title: 'Your Activities',
+        title: translatedData?.value['common.common.your_activities'],
         link: '/activity',
       },
       {
-        title: activityTitle,
-        link: activityLink,
+        title: activityTitle.value,
+        link: activityLink.value,
       },
       {
-        title: 'Transaction List',
-        link: `/activity/${activityId}/transaction`,
+        title: translatedData?.value['common.common.transaction_list'],
+        link: `/activity/${activityId.value}/transaction`,
       },
       {
-        title: 'Transaction',
+        title: translatedData?.value['common.common.transaction'],
         link: '',
       },
-    ];
+    ]);
 
     onMounted(() => {
       window.addEventListener('scroll', handleScroll);
@@ -297,6 +305,7 @@ export default defineComponent({
       isMandatoryIcon,
       showSidebar,
       istopVisible,
+      translatedData,
     };
   },
 });

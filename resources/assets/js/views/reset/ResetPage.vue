@@ -3,22 +3,23 @@
     <Loader v-if="loaderVisibility" />
     <div class="reset" @keyup.enter="reset">
       <div class="mb-4 flex flex-col sm:mb-8">
-        <h2>Password Recovery</h2>
+        <h2>
+          {{ translatedData['common.common.password_recovery'] }}
+        </h2>
         <p>
-          Please enter your email, we will send you a link to reset your
-          password
+          {{ translatedData['public.forgot_password.reset_page.subheading'] }}
         </p>
       </div>
 
       <div class="reset__content">
-        <label class="text-sm font-bold text-bluecoral" for="email"
-          >Email</label
-        >
+        <label class="text-sm font-bold text-bluecoral" for="email">{{
+          translatedData['common.common.email']
+        }}</label>
         <input
           id="email"
           v-model="formData.email"
           type="email"
-          placeholder="Enter your email address"
+          :placeholder="translatedData['common.common.type_valid_email_here']"
           class="input"
           :class="{
             error__input: emailError != '',
@@ -30,16 +31,17 @@
         </span>
       </div>
       <button type="submit" class="btn reset-btn" @click="reset()">
-        Send password reset link
+        {{ translatedData['public.forgot_password.reset_page.button'] }}
       </button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from 'vue';
+import { defineComponent, ref, reactive, onMounted } from 'vue';
 import Loader from '../../components/Loader.vue';
 import axios from 'axios';
+import LanguageService from 'Services/language';
 
 export default defineComponent({
   components: {
@@ -51,6 +53,7 @@ export default defineComponent({
     });
     const emailError = ref('');
     const loaderVisibility = ref(false);
+    const translatedData = ref({});
 
     function reset() {
       loaderVisibility.value = true;
@@ -82,11 +85,20 @@ export default defineComponent({
         });
     }
 
+    onMounted(() => {
+      LanguageService.getTranslatedData('common,public')
+        .then((response) => {
+          translatedData.value = response.data;
+        })
+        .catch((error) => console.log(error));
+    });
+
     return {
       formData,
       loaderVisibility,
       emailError,
       reset,
+      translatedData,
     };
   },
 });

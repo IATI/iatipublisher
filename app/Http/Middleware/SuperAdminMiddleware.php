@@ -19,8 +19,8 @@ class SuperAdminMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param Request                                        $request
-     * @param \Closure(Request): (Response|RedirectResponse) $next
+     * @param  Request  $request
+     * @param  Closure(Request): (Response|RedirectResponse)  $next
      *
      * @return mixed
      * @throws ContainerExceptionInterface
@@ -38,7 +38,7 @@ class SuperAdminMiddleware
 
         return redirect()->route('admin.activities.index')->with(
             'error',
-            'You need to be superadmin to use this route.'
+            trans('validation.must_be_superadmin')
         );
     }
 }

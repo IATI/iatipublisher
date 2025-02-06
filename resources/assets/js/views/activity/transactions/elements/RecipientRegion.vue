@@ -15,12 +15,12 @@
         <table class="mb-3">
           <tbody>
             <tr>
-              <td>Code</td>
+              <td>{{ getTranslatedElement(translatedData, 'code') }}</td>
               <td>
                 <span v-if="cou.region_vocabulary === '1'">{{
                   cou.region_code
                     ? type.regionCode[cou.region_code]
-                    : 'Code Missing'
+                    : getTranslatedMissing(translatedData, 'code')
                 }}</span>
                 <span v-else
                   >{{ cou.custom_code ?? '' }}
@@ -33,7 +33,9 @@
               </td>
             </tr>
             <tr v-if="cou.vocabulary_uri">
-              <td>Vocabulary URI</td>
+              <td>
+                {{ getTranslatedElement(translatedData, 'vocabulary_uri') }}
+              </td>
               <td>
                 <a target="_blank" :href="cou.vocabulary_uri">{{
                   cou.vocabulary_uri
@@ -41,7 +43,7 @@
               </td>
             </tr>
             <tr>
-              <td>Description</td>
+              <td>{{ getTranslatedElement(translatedData, 'description') }}</td>
               <td>
                 <div
                   v-for="(sd, i) in cou.narrative"
@@ -54,8 +56,10 @@
                   <div v-if="sd.narrative" class="language mb-1.5">
                     ({{
                       sd.language
-                        ? `Language: ${type.languages[sd.language]}`
-                        : 'Language N/A'
+                        ? `${getTranslatedLanguage(translatedData)} : ${
+                            type.languages[sd.language]
+                          }`
+                        : `${getTranslatedLanguage(translatedData)} : N/A`
                     }})
                   </div>
                   <div class="text-sm">
@@ -77,10 +81,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, inject } from 'vue';
+import { defineComponent, toRefs, inject, Ref } from 'vue';
+import {
+  getTranslatedElement,
+  getTranslatedLanguage,
+  getTranslatedMissing,
+} from 'Composable/utils';
 
 export default defineComponent({
   name: 'TransactionRecipientRegion',
+  methods: {
+    getTranslatedLanguage,
+    getTranslatedElement,
+    getTranslatedMissing,
+  },
   components: {},
   props: {
     data: {
@@ -89,8 +103,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { data } = toRefs(props);
-
     interface ArrayObject {
       [index: number]: {
         region_vocabulary: number;
@@ -100,15 +112,19 @@ export default defineComponent({
         narrative: [{ language: string; narrative: string }];
       };
     }
-    const country = data.value as ArrayObject;
 
     interface TypesInterface {
       regionCode: [];
       languages: [];
     }
 
+    const { data } = toRefs(props);
+    const country = data.value as ArrayObject;
+
     const type = inject('types') as TypesInterface;
-    return { country, type };
+    const translatedData = inject('translatedData') as Ref;
+
+    return { country, type, translatedData };
   },
 });
 </script>

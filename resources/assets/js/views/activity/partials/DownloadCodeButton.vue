@@ -5,39 +5,48 @@
       @click="downloadCode"
     >
       <svg-vue icon="download-file" />
-      <div class="pt-0.5 font-bold">Download code</div>
+      <div class="pt-0.5 font-bold">
+        {{ translatedData['workflow_frontend.download.download_code'] }}
+      </div>
       <div class="group relative">
         <svg-vue class="text-[4px] text-n-30" icon="question-mark" />
         <div
           class="invisible absolute -bottom-6 -left-[148px] z-50 w-[352px] translate-y-full rounded bg-eggshell p-4 text-left normal-case opacity-0 duration-200 group-hover:visible group-hover:opacity-100"
         >
-          <p class="mb-2 font-bold text-bluecoral">What is code?</p>
+          <p class="mb-2 font-bold text-bluecoral">
+            {{ translatedData['workflow_frontend.download.what_is_code'] }}
+          </p>
           <p class="mb-1.5 text-n-50">
-            Codes are basically identifiers for activity, results, indicator and
-            period which the IATI system generates automatically to map the
-            respective activity.
+            {{
+              translatedData[
+                'workflow_frontend.download.codes_are_basically_identifiers_for_activity'
+              ]
+            }}
           </p>
         </div>
       </div>
     </button>
     <Toast
       v-if="toastVisibility"
-      :type="toastmessageType"
+      :type="toastMessageType"
       class="toast"
       :message="toastMessage"
     />
   </div>
 </template>
+
 <script setup lang="ts">
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
 import Toast from '../../../components/ToastMessage.vue';
-import { ref } from 'vue';
+import { inject, Ref, ref } from 'vue';
 
 import axios from 'axios';
+
 const store = useStore();
 const toastVisibility = ref(false);
 const toastMessage = ref('');
-const toastmessageType = ref(false);
+const toastMessageType = ref(false);
+const translatedData = inject('translatedData') as Ref;
 
 const downloadCode = async () => {
   let apiUrl = '/activities/download-codes/?activities=all';

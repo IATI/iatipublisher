@@ -12,21 +12,24 @@
           <div class="mt-4 flex items-center gap-1 bg-n-10 p-4 text-sm">
             <svg-vue class="text-xl" icon="warning-activity" />
             <span>
-              Changes have been detected in your activity data. Please
-              revalidate before continuing.
+              {{
+                translatedData[
+                  'publish.bulk_publish.changes_have_been_detected_in_your_activity_data'
+                ]
+              }}
             </span>
           </div>
           <div class="mt-4 flex items-center justify-end">
             <ButtonComponent
               class="mx-3 bg-white px-3 uppercase"
               type=""
-              text="Cancel"
+              :text="translatedData['common.common.cancel']"
               @click="emit('cancel')"
             />
             <div class="flex items-center gap-4">
               <ButtonComponent
                 type="primary"
-                text="Revalidate"
+                :text="translatedData['common.common.revalidate']"
                 @click="emit('reverify')"
               />
             </div>
@@ -38,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, inject, Ref } from 'vue';
 import ButtonComponent from './ButtonComponent.vue';
 
 defineProps({
@@ -53,6 +56,7 @@ defineProps({
 });
 
 const emit = defineEmits(['cancel', 'reverify']);
+const translatedData = inject('translatedData') as Ref;
 </script>
 
 <style scoped>

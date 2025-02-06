@@ -49,21 +49,25 @@ class ActivityController extends Controller
     {
         try {
             if (!$this->activityService->deleteElement($id, $element)) {
-                return response(['status' => false, 'message' => 'Error has occurred while deleting activity element.']);
+                $translatedMessage = trans('api/activity_controller.error_has_occurred_while_deleting_activity_element');
+
+                return response(['status' => false, 'message' => $translatedMessage]);
             }
 
             if ($element === 'recipient_country' || $element === 'recipient_region') {
                 $this->elementCompleteService->refreshElementStatus($this->activityService->getActivity($id));
             }
+            $translatedMessage = trans('api/activity_controller.the_s_element_deleted_successfully');
 
-            $message = sprintf('The %s element deleted successfully.', str_replace('_', '-', $element));
+            $message = sprintf($translatedMessage, str_replace('_', '-', $element));
             Session::put('success', $message);
 
             return response(['status' => true, 'message' => $message]);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('api/activity_controller.error_has_occurred_while_deleting_activity_element');
 
-            return response(['status' => false, 'message' => 'Error has occurred while deleting activity element.']);
+            return response(['status' => false, 'message' => $translatedMessage]);
         }
     }
 }

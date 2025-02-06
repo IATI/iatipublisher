@@ -18,7 +18,10 @@ class CapitalSpendRequest extends ActivityBaseRequest
      */
     public function rules($capital_spend = null): array
     {
-        $totalRules = [$this->getErrorsForCapitalSpend($capital_spend), $this->getWarningForCapitalSpend($capital_spend)];
+        $totalRules = [
+            $this->getErrorsForCapitalSpend($capital_spend),
+            $this->getWarningForCapitalSpend($capital_spend),
+        ];
 
         return mergeRules($totalRules);
     }
@@ -63,9 +66,9 @@ class CapitalSpendRequest extends ActivityBaseRequest
     public function messages(): array
     {
         return [
-            'numeric' => 'The capital spend must be a number',
-            'between' => 'The capital spend must be a number between 0 and 100',
-            'size'    => 'The capital spend cannot have more than one value.',
+            'numeric' => trans('validation.activity_capital_spend.numeric'),
+            'between' => trans('validation.activity_capital_spend.between'),
+            'size'    => trans('validation.activity_capital_spend.size'),
         ];
     }
 }

@@ -2,7 +2,9 @@
   <div class="px-6 py-4 md:px-10">
     <Loader v-if="isLoaderVisible" />
     <div class="my-4 flex justify-between">
-      <h4 class="mr-4 text-3xl font-bold xl:text-heading-4">Users</h4>
+      <h4 class="mr-4 text-3xl font-bold xl:text-heading-4">
+        {{ translatedData['common.common.users'] }}
+      </h4>
       <div class="inline-flex flex-col items-end justify-end gap-2 md:flex-row">
         <Toast
           v-if="
@@ -20,7 +22,11 @@
           @click="downloadAll"
         >
           <svg-vue icon="download-file" />
-          {{ checklist.length === 0 ? 'Download All' : '' }}
+          {{
+            checklist.length === 0
+              ? translatedData['common.common.download_all']
+              : ''
+          }}
         </button>
         <button
           v-if="userRole !== 'general_user'"
@@ -33,8 +39,8 @@
             }
           "
         >
-          <svg-vue class="text-base" icon="plus-outlined" /> Add a new
-          {{ userRole === 'admin' ? 'user' : 'iati admin' }}
+          <svg-vue class="text-base" icon="plus-outlined" />
+          {{ getTranslatedAddNewUser(userRole, translatedData) }}
         </button>
       </div>
     </div>
@@ -54,14 +60,18 @@
           @keyup.enter="addUserForm ? createUser() : updateUser()"
         >
           <div class="mb-5 text-2xl font-bold text-bluecoral">
-            {{ addUserForm ? 'Add a new ' : 'Edit ' }}
-            {{ userRole === 'admin' ? 'user' : 'IATI Admin' }}
+            {{
+              addUserForm
+                ? getTranslatedAddNewUser(userRole, translatedData)
+                : getTranslatedEditUser(userRole, translatedData)
+            }}
           </div>
           <div class="grid grid-cols-2 gap-6">
             <div class="col-span-2 flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50"
-                >Full Name<span class="text-crimson-50"> * </span></label
-              >
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.full_name'] }}
+                <span class="text-crimson-50"> * </span>
+              </label>
               <input
                 id="full_name"
                 v-model="formData.full_name"
@@ -77,9 +87,10 @@
             </div>
 
             <div class="flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50"
-                >Username<span class="text-crimson-50"> *</span></label
-              >
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.username'] }}
+                <span class="text-crimson-50"> * </span>
+              </label>
               <input
                 id="username"
                 v-model="formData.username"
@@ -94,9 +105,10 @@
               }}</span>
             </div>
             <div class="flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50"
-                >Email<span class="text-crimson-50"> * </span></label
-              >
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.email_address'] }}
+                <span class="text-crimson-50"> * </span>
+              </label>
               <input
                 id="email"
                 v-model="formData.email"
@@ -116,14 +128,15 @@
               :class="formError['status'] && 'error__multiselect'"
               class="flex flex-col items-start gap-2"
             >
-              <label class="text-sm text-n-50"
-                >Status<span class="text-crimson-50"> * </span></label
-              >
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.status'] }}
+                <span class="text-crimson-50"> * </span>
+              </label>
               <Multiselect
                 id="status"
                 v-model="formData.status"
                 :options="status"
-                placeholder="Select status"
+                :placeholder="translatedData['common.common.select_status']"
                 :searchable="true"
               />
               <span v-if="formError['status']" class="error">{{
@@ -135,14 +148,15 @@
               :class="formError['role_id'] && 'error__multiselect'"
               class="flex flex-col items-start gap-2"
             >
-              <label class="text-sm text-n-50"
-                >Role<span class="text-crimson-50"> * </span></label
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.role'] }}
+                <span class="text-crimson-50"> * </span></label
               >
               <Multiselect
                 id="role"
                 v-model="formData.role_id"
                 :options="roles"
-                placeholder="Select user role"
+                :placeholder="translatedData['common.common.select_user_role']"
                 :searchable="true"
               />
               <span v-if="formError['role_id']" class="error">{{
@@ -151,11 +165,10 @@
             </div>
 
             <div class="flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50"
-                >New password<span v-if="!editUserForm" class="text-crimson-50">
-                  *
-                </span></label
-              >
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.new_password'] }}
+                <span v-if="!editUserForm" class="text-crimson-50"> * </span>
+              </label>
               <input
                 id="password"
                 v-model="formData.password"
@@ -172,20 +185,15 @@
               }}</span>
             </div>
             <div class="flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50"
-                >Confirm Password<span
-                  v-if="!editUserForm"
-                  class="text-crimson-50"
-                >
-                  *
-                </span></label
-              >
-
+              <label class="text-sm text-n-50">
+                {{ translatedData['common.common.confirm_password'] }}
+                <span v-if="!editUserForm" class="text-crimson-50"> * </span>
+              </label>
               <input
                 id="password-confirmation"
                 v-model="formData.password_confirmation"
                 autocomplete="one-time-code"
-                placeholder="Confirm password"
+                :placeholder="translatedData['common.common.confirm_password']"
                 :class="
                   formError['password_confirmation']
                     ? 'border-crimson-50'
@@ -210,13 +218,13 @@
                 }
               "
             >
-              Cancel
+              {{ translatedData['common.common.cancel'] }}
             </button>
             <button
               class="primary-btn !px-10"
               @click="addUserForm ? createUser() : updateUser()"
             >
-              Save
+              {{ translatedData['common.common.save'] }}
             </button>
           </div>
         </div>
@@ -231,12 +239,16 @@
       >
         <div class="title mb-6 flex">
           <svg-vue class="mr-1 mt-0.5 text-lg text-crimson-40" icon="delete" />
-          <b>Delete user</b>
+          <b>
+            {{ translatedData['common.common.delete_user'] }}
+          </b>
         </div>
-        <p class="rounded-lg bg-rose p-4">
-          Are you sure you want to delete <b> {{ deleteUsername }}</b
-          >?
-        </p>
+        <p
+          class="rounded-lg bg-rose p-4"
+          v-html="
+            getTranslatedDeleteConfirmation(deleteUsername, translatedData)
+          "
+        ></p>
         <div class="mt-6 flex justify-end space-x-2">
           <button
             class="secondary-btn font-bold"
@@ -246,10 +258,10 @@
               }
             "
           >
-            Cancel
+            {{ translatedData['common.common.cancel'] }}
           </button>
           <button class="primary-btn !px-10" @click="deleteUser(deleteId)">
-            Delete
+            {{ translatedData['common.common.delete'] }}
           </button>
         </div>
       </PopupModal>
@@ -263,12 +275,16 @@
         "
       >
         <div class="title mb-6 flex">
-          <b>Make user {{ statusValue ? 'Inactive' : 'Active' }}</b>
+          <b>
+            {{ getTranslatedMakeUser(statusValue, translatedData) }}
+          </b>
         </div>
-        <p class="rounded-lg bg-rose p-4">
-          Are you sure you want to make <b> {{ statusUsername }}</b>
-          {{ statusValue ? 'Inactive' : 'Active' }} ?
-        </p>
+        <p
+          class="rounded-lg bg-rose p-4"
+          v-html="
+            getTranslatedMakeUserConfirmation(statusValue, translatedData)
+          "
+        ></p>
         <div class="mt-6 flex justify-end space-x-2">
           <button
             class="secondary-btn font-bold"
@@ -278,13 +294,13 @@
               }
             "
           >
-            Cancel
+            {{ translatedData['common.common.cancel'] }}
           </button>
           <button
             class="primary-btn !px-10"
             @click="toggleUserStatus(statusId)"
           >
-            Yes
+            {{ translatedData['common.common.yes'] }}
           </button>
         </div>
       </PopupModal>
@@ -300,7 +316,9 @@
               id="organization-filter"
               v-model="filter.organization"
               :options="organizations"
-              placeholder="ORGANISATION"
+              :placeholder="
+                translatedData['common.common.organisation']?.toUpperCase()
+              "
               :searchable="true"
               mode="multiple"
               :taggable="true"
@@ -319,18 +337,14 @@
               id="role-filter"
               v-model="filter.roles"
               :options="roles"
-              placeholder="ROLE"
+              :placeholder="translatedData['common.common.role']?.toUpperCase()"
               :searchable="true"
               mode="multiple"
               :close-on-select="false"
               :clear-on-select="false"
-              :hide-selected="false"
-            />
-            <span v-if="filter.roles.length > 0" class="status">
-              <!-- placeholder -->
-              <!-- role -->
-            </span></span
-          >
+              :hide-selected="false" />
+            <span v-if="filter.roles.length > 0" class="status"> </span
+          ></span>
           <span
             class="multiselect-label-wrapper"
             :style="generateLabel('status')"
@@ -338,7 +352,9 @@
               id="status-filter"
               v-model="filter.status"
               :options="status"
-              placeholder="STATUS"
+              :placeholder="
+                translatedData['common.common.status']?.toUpperCase()
+              "
               :searchable="true"
             />
           </span>
@@ -368,7 +384,7 @@
             <input
               v-model="filter.q"
               type="text"
-              placeholder="Search for users"
+              :placeholder="translatedData['common.common.search_for_users']"
             />
           </div>
         </div>
@@ -378,7 +394,9 @@
         v-if="isFilterApplied"
         class="mb-4 flex max-w-full flex-wrap items-center gap-2"
       >
-        <span class="text-sm font-bold uppercase text-n-40">filtered by: </span>
+        <span class="text-sm font-bold uppercase text-n-40">
+          {{ translatedData['common.common.filtered_by'] }}
+        </span>
 
         <span
           v-if="filter.organization.length"
@@ -389,11 +407,14 @@
             :key="index"
             class="flex items-center space-x-1 rounded-full border border-n-30 px-2 py-1 text-xs"
           >
-            <span class="text-n-40">Org:</span
-            ><span
+            <span class="text-n-40">
+              {{ translatedData['common.common.org'] }}:
+            </span>
+            <span
               class="max-w-[500px] overflow-x-hidden text-ellipsis whitespace-nowrap"
-              >{{ textBubbledata(item, 'org') }}</span
             >
+              {{ textBubbledata(item, 'org') }}
+            </span>
             <svg-vue
               class="mx-2 mt-1 cursor-pointer text-xs"
               icon="cross"
@@ -407,8 +428,10 @@
             :key="index"
             class="flex items-center space-x-1 rounded-full border border-n-30 px-2 py-1 text-xs"
           >
-            <span class="text-n-40">Roles:</span
-            ><span>{{ textBubbledata(item, 'roles') }}</span>
+            <span class="text-n-40">
+              {{ translatedData['common.common.roles'] }}:
+            </span>
+            <span>{{ textBubbledata(item, 'roles') }}</span>
             <svg-vue
               class="mx-2 mt-1 cursor-pointer text-xs"
               icon="cross"
@@ -422,8 +445,10 @@
             :key="index"
             class="flex items-center space-x-1 rounded-full border border-n-30 px-2 py-1 text-xs"
           >
-            <span class="text-n-40">Status:</span
-            ><span>{{ textBubbledata(item, 'status') }}</span>
+            <span class="text-n-40">
+              {{ translatedData['common.common.status'] }}:
+            </span>
+            <span>{{ textBubbledata(item, 'status') }}</span>
             <svg-vue
               class="mx-2 mt-1 cursor-pointer text-xs"
               icon="cross"
@@ -442,8 +467,10 @@
           <span
             class="flex items-center space-x-1 rounded-full border border-n-30 px-2 py-1 text-xs"
           >
-            <span class="text-n-40">Date:</span
-            ><span>{{
+            <span class="text-n-40">
+              {{ translatedData['common.common.date'] }}:
+            </span>
+            <span>{{
               textBubbledata(
                 filter.selected_date_filter,
                 filter.selected_date_filter
@@ -468,10 +495,12 @@
             }
           "
         >
-          Clear Filter
+          {{ translatedData['common.common.clear_filter'] }}
         </button>
       </div>
-      <p class="py-1">Total Number of Users: {{ totalUser }}</p>
+      <p class="py-1">
+        {{ getTranslatedTotalNumberOfUsers(totalUser, translatedData) }}
+      </p>
       <div class="iati-list-table user-list-table text-n-40">
         <table>
           <thead>
@@ -502,7 +531,7 @@
                 </span>
               </th>
               <th id="measure" scope="col" style="width: 210px">
-                <span>Email</span>
+                <span>{{ translatedData['common.common.email'] }}</span>
               </th>
 
               <th v-if="isSuperadmin" id="title" scope="col">
@@ -527,15 +556,17 @@
                     />
                   </span>
 
-                  <span>Organisation name</span>
+                  <span>{{
+                    translatedData['common.common.organisation_name']
+                  }}</span>
                 </span>
               </th>
 
               <th id="title" scope="col">
-                <span>User Role</span>
+                <span>{{ translatedData['common.common.user_role'] }}</span>
               </th>
               <th>
-                <span>Status</span>
+                <span>{{ translatedData['common.common.status'] }}</span>
               </th>
               <th
                 id="aggregation_status"
@@ -563,7 +594,9 @@
                     @click="sort('last_logged_in')"
                   />
                 </span>
-                <span class="whitespace-nowrap">Last Login</span>
+                <span class="whitespace-nowrap">
+                  {{ translatedData['common.common.last_login'] }}
+                </span>
               </th>
               <th
                 v-if="userRole !== 'general_user'"
@@ -571,7 +604,9 @@
                 scope="col"
                 width="190px"
               >
-                <span>Action</span>
+                <span>
+                  {{ translatedData['common.common.action'] }}
+                </span>
               </th>
               <th id="cb" scope="col">
                 <span class="cursor-pointer">
@@ -582,7 +617,9 @@
           </thead>
           <tbody v-if="usersData?.data.length > 0 || fetchingTableData">
             <tr v-if="fetchingTableData">
-              <td colspan="4">Fetching Data...</td>
+              <td colspan="4">
+                {{ translatedData['common.common.fetching_data'] }}
+              </td>
             </tr>
             <tr v-for="(user, index) in usersData?.data" v-else :key="index">
               <td>
@@ -640,13 +677,17 @@
                 {{ roles[user['role_id']] }}
               </td>
               <td :class="user['status'] ? 'text-spring-50' : 'text-n-40'">
-                {{ user['status'] ? 'Active' : 'Inactive' }}
+                {{
+                  user['status']
+                    ? translatedData['common.common.active']
+                    : translatedData['common.common.inactive']
+                }}
               </td>
               <td>
                 {{
                   user['last_logged_in']
                     ? formatDate(user['last_logged_in'])
-                    : 'Not available'
+                    : translatedData['common.common.not_available']
                 }}
               </td>
               <td
@@ -704,7 +745,9 @@
             <td v-if="loader" colspan="5" class="text-center">
               <div colspan="5" class="spin"></div>
             </td>
-            <td v-else colspan="8" class="text-center">Users not found</td>
+            <td v-else colspan="8" class="text-center">
+              {{ translatedData['common.common.users_not_found'] }}
+            </td>
           </tbody>
         </table>
       </div>
@@ -720,18 +763,26 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, reactive, ref, computed, watch, onMounted } from 'vue';
+import {
+  defineProps,
+  reactive,
+  ref,
+  computed,
+  watch,
+  onMounted,
+  provide,
+} from 'vue';
 import Loader from '../../components/Loader.vue';
 import Toast from 'Components/ToastMessage.vue';
 import axios from 'axios';
 import PopupModal from 'Components/PopupModal.vue';
-
 import Multiselect from '@vueform/multiselect';
 import moment from 'moment';
 import Pagination from 'Components/TablePagination.vue';
 import { watchIgnorable } from '@vueuse/core';
 import DateRangeWidget from 'Components/DateRangeWidget.vue';
 import { generateUsername, kebabCaseToSnakecase } from 'Composable/utils';
+import LanguageService from 'Services/language';
 
 const props = defineProps({
   organizations: { type: Object, required: true },
@@ -787,10 +838,12 @@ const isSuperadmin = ref(false);
 isSuperadmin.value =
   props.userRole === 'superadmin' || props.userRole === 'iati_admin';
 
-const dropdownRange = {
+const translatedData = ref({});
+
+const dropdownRange = ref({
   created_at: 'User created date',
   last_logged_in: 'Last login date',
-};
+});
 
 const formData = reactive({
   username: '',
@@ -852,7 +905,17 @@ const clearDateFilter = () => {
   clearDateRangeFilter();
 };
 
-onMounted(() => {
+onMounted(async () => {
+  const response = await LanguageService.getTranslatedData(
+    'common,user,userProfile'
+  );
+  translatedData.value = response.data;
+  dropdownRange.value.created_at =
+    translatedData.value['common.common.user_created_date'];
+  dropdownRange.value.last_logged_in =
+    translatedData.value['common.common.last_login_date'];
+  dateType.value = translatedData.value['common.common.all_time'];
+
   let filterParams = getFilterParamsFromPreviousPage();
   if (filterParams) {
     for (let i = 0; i < filterParams.length; i++) {
@@ -1223,6 +1286,111 @@ const downloadAll = () => {
     link.click();
   });
 };
+
+/**
+ * Returns the text : Add a new User  || Add a new IATI Admin
+ *
+ * @param userRole
+ * @param transData
+ *
+ */
+function getTranslatedAddNewUser(userRole: string, transData): string {
+  const role =
+    userRole === 'admin'
+      ? transData['common.common.user']
+      : transData['common.common.iati_admin'];
+
+  return transData['common.common.add_a_new_user_role']?.replace(
+    ':userRole',
+    role
+  );
+}
+
+/**
+ * Returns the text : Edit User || Edit IATI Admin
+ *
+ * @param userRole
+ * @param transData
+ */
+function getTranslatedEditUser(userRole: string, transData): string {
+  const role =
+    userRole === 'admin'
+      ? transData['common.common.user']
+      : transData['common.common.iati_admin'];
+
+  return transData['common.common.edit'] + ' ' + role;
+}
+
+/**
+ * Returns the text : Are you sure you want to delete xyz ?
+ *
+ * @param deleteUsername
+ * @param transData
+ */
+function getTranslatedDeleteConfirmation(
+  deleteUsername: string,
+  transData
+): string {
+  return transData['common.common.are_you_sure_you_want_to_delete']?.replace(
+    ':deleteUsername',
+    deleteUsername
+  );
+}
+
+/**
+ * Returns the text : Make user active || Make user inactive
+ *
+ * @param statusValue
+ * @param transData
+ */
+function getTranslatedMakeUser(statusValue: string, transData): string {
+  return transData['common.common.make_user']?.replace(
+    ':statusValue',
+    statusValue
+      ? transData['common.common.active']
+      : transData['common.common.inactive']
+  );
+}
+
+/**
+ * Returns the text :
+ * Are you sure you want to make user active ?
+ * Are you sure you want to make user inactive ?
+ *
+ * @param statusValue
+ * @param transData
+ */
+function getTranslatedMakeUserConfirmation(
+  statusValue: string,
+  transData
+): string {
+  return transData['common.common.make_user_confirmation']?.replace(
+    ':statusValue',
+    statusValue
+      ? transData['common.common.active']
+      : transData['common.common.inactive']
+  );
+}
+
+/**
+ * Returns the text :
+ *
+ * Total Number of Users: 1
+ *
+ * @param totalCount
+ * @param transData
+ */
+function getTranslatedTotalNumberOfUsers(
+  totalCount: number,
+  transData
+): string {
+  return transData['common.common.total_number_of_users']?.replace(
+    ':totalUser',
+    totalCount
+  );
+}
+
+provide('translatedData', translatedData);
 </script>
 <style scoped>
 @keyframes spinner {
