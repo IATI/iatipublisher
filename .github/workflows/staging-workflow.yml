@@ -264,11 +264,11 @@ jobs:
       - name: update k8s
         run: |
           cd packages/staging
-          kustomize edit set image ghcr.io/${{ github.repository }}/cli:${{ github.sha }}
-          kustomize edit set image ghcr.io/${{ github.repository }}/fpm_server:${{ github.sha }}
-          kustomize edit set image ghcr.io/${{ github.repository }}/web_server:${{ github.sha }}
-          kustomize edit set image ghcr.io/${{ github.repository }}/cron:${{ github.sha }}
-          kustomize edit set image ghcr.io/${{ github.repository }}/horizon:${{ github.sha }}
+          kustomize edit set image ghcr.io/iati/iatipublisher/cli:${{ github.sha }}
+          kustomize edit set image ghcr.io/iati/iatipublisher/fpm_server:${{ github.sha }}
+          kustomize edit set image ghcr.io/iati/iatipublisher/web_server:${{ github.sha }}
+          kustomize edit set image ghcr.io/iati/iatipublisher/cron:${{ github.sha }}
+          kustomize edit set image ghcr.io/iati/iatipublisher/horizon:${{ github.sha }}
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
