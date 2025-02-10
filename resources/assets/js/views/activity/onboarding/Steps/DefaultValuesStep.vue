@@ -178,7 +178,7 @@
                       :name="translatedData['elements.label.humanitarian']"
                       :hover-text="
                         translatedData[
-                          'onboarding.default_values_step.add_a_humanitarian_flag_to_every_activity'
+                          'common.common.add_a_humanitarian_flag_to_every_activity'
                         ]
                       "
                       :show-iati-reference="true"

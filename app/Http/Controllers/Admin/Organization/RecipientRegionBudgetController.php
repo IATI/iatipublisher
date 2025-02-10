@@ -41,7 +41,7 @@ class RecipientRegionBudgetController extends Controller
     {
         try {
             $id = Auth::user()->organization_id;
-            $element = json_decode(file_get_contents(app_path('IATI/Data/organizationElementJsonSchema.json')), true, 512, JSON_THROW_ON_ERROR);
+            $element = readOrganizationElementJsonSchema();
             $organization = $this->recipientRegionBudgetService->getOrganizationData($id);
             $form = $this->recipientRegionBudgetService->formGenerator($id, Arr::get($organization->deprecation_status_map, 'recipient_region_budget', []));
             $data = ['title' => $element['recipient_region_budget']['label'], 'name' => 'recipient_region_budget'];

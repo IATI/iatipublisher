@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'error_has_occurred_while_rendering_user_listing_page'  => 'Error has occurred while rendering user listing page',
     'new_user_successfully_created'                         => 'New user successfully created.',
     'error_has_occurred_while_creating_user'                => 'Error has occurred while creating user.',
     'user_has_been_deleted_successfully'                    => 'User has been deleted successfully.',
@@ -14,6 +13,4 @@ return [
     'user_has_been_deactivated_successfully'                => 'User has been deactivated successfully.',
     'user_has_been_activated_successfully'                  => 'User has been activated successfully.',
     'the_status_of_this_user_cannot_be_changed'             => 'The status of this user cannot be changed.',
-    'error_has_occurred_while_trying_to_toggle_user_status' => 'Error has occurred while trying to toggle user status',
-    'user_status_successfully_retrieved'                    => 'User status successfully retrieved.',
 ];

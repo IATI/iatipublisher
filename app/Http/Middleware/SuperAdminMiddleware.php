@@ -36,9 +36,6 @@ class SuperAdminMiddleware
             return $next($request);
         }
 
-        return redirect()->route('admin.activities.index')->with(
-            'error',
-            trans('validation.must_be_superadmin')
-        );
+        return redirect()->route('admin.activities.index')->with('error', 'You need to be superadmin to use this route.');
     }
 }

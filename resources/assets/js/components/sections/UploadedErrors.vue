@@ -67,7 +67,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { defineProps, inject, Ref, ref } from 'vue';
 
 const active = ref(false);
 const props = defineProps({
@@ -80,6 +80,7 @@ const props = defineProps({
     required: true,
   },
 });
+const translatedData = inject('translatedData') as Ref;
 const toggle = ref(false);
 const errorLength = (currentError) => {
   let count = 0;

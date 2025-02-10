@@ -31,7 +31,7 @@
             <button @click="filterByPublishStatus('published')">
               <svg-vue icon="approved-cloud" />
               <span>
-                {{ translatedData['activity_index.activity_index.published'] }}
+                {{ translatedData['common.common.published'] }}
                 ({{ allPublishStatusCountMap.published }})
               </span>
             </button>
@@ -440,7 +440,7 @@ export default defineComponent({
     onMounted(async () => {
       translatedData.value = (
         await Language.getTranslatedData(
-          'common,activity_index,onboarding,elements'
+          'workflow_frontend,common,activity_index,onboarding,elements'
         )
       ).data;
 
@@ -471,7 +471,7 @@ export default defineComponent({
         }
       });
 
-      // LanguageService.getTranslatedData('common,activity')
+      // LanguageService.getTranslatedData('workflow_frontend,common,activity')
       //   .then((response) => {
       //     translatedData.value = response.data;
       //   })

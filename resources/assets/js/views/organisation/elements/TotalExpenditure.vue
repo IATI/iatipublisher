@@ -136,7 +136,11 @@
 <script setup lang="ts">
 import { defineProps, inject, Ref } from 'vue';
 import moment from 'moment';
-import { getTranslatedElement, getTranslatedMissing } from 'Composable/utils';
+import {
+  getTranslatedElement,
+  getTranslatedLanguage,
+  getTranslatedMissing,
+} from 'Composable/utils';
 
 defineProps({
   content: { type: Object, required: true },

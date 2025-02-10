@@ -189,7 +189,7 @@ class ImportXlsController extends Controller
             $this->db->commit();
 
             ImportCacheHelper::clearImportCache(Auth::user()->organization_id);
-            $translatedMessage = trans('workflow_backend/import_xls_controller.xls_file_with_xlstype_imported_successfully');
+            $translatedMessage = trans('workflow_backend/import_xls_controller.xls_file_with_xlstype_imported_successfully', ['xlsType'=>$xlsType]);
 
             Session::put('success', $translatedMessage);
 

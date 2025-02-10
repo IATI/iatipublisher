@@ -489,7 +489,7 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
         foreach ($formFields as $periodStartKey => $periodStartVal) {
             $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = trans(
                 'validation.required',
-                ['attribute' => trans('elementForm.period_start')]
+                ['attribute' => trans(' elements/label.period_start')]
             );
             $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date'] = trans(
                 'validation.activity_planned_disbursement.period_end.date'

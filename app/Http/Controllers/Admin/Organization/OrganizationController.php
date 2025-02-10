@@ -82,7 +82,7 @@ class OrganizationController extends Controller
         try {
             $toast['message'] = Session::has('error') ? Session::get('error') : (Session::get('success') ? Session::get('success') : '');
             $toast['type'] = Session::has('error') ? 'error' : 'success';
-            $elements = json_decode(file_get_contents(app_path('IATI/Data/organizationElementJsonSchema.json')), true, 512, JSON_THROW_ON_ERROR);
+            $elements = readOrganizationElementJsonSchema();
             $completePath = 'AppData/Data/Organization/OrganisationElementsGroup.json';
             $jsonContent = getJsonFromSource($completePath);
             $elementGroups = json_decode($jsonContent, true, 512, JSON_THROW_ON_ERROR);
@@ -250,7 +250,7 @@ class OrganizationController extends Controller
         $filtered_agency = [];
 
         if (!$country_code) {
-            $translatedMessage = trans('organisationDetail/organization_controller.filtered_agency_successfully_fetched');
+            $translatedMessage = 'Filtered Agency Successfully Fetched';
 
             return ['message' => $translatedMessage, 'data' => $registration_agency];
         }
@@ -262,7 +262,7 @@ class OrganizationController extends Controller
                 $filtered_agency[$key] = $value;
             }
         }
-        $translatedMessage = trans('organisationDetail/organization_controller.filtered_agency_successfully_fetched');
+        $translatedMessage = 'Filtered Agency Successfully Fetched';
 
         return ['message' => $translatedMessage, 'data' => $filtered_agency];
     }
@@ -277,7 +277,7 @@ class OrganizationController extends Controller
         try {
             $publisher_id = Auth::user()->organization->publisher_id;
             $status = $this->organizationService->isPublisherStateActive($publisher_id);
-            $translatedMessage = trans('organisationDetail/organization_controller.publisher_status_successfully_retrieved');
+            $translatedMessage = 'Publisher Status Successfully Retrieved';
 
             return response()->json([
                 'success' => true,
@@ -286,7 +286,7 @@ class OrganizationController extends Controller
             ]);
         } catch (Exception $e) {
             logger()->error($e);
-            $translatedMessage = trans('organisationDetail/organization_controller.encountered_issue_when_checking_publisher_state_on_registry');
+            $translatedMessage = 'Encountered Issue When Checking Publisher State On Registry';
 
             return response()->json([
                 'success' => false,
@@ -309,10 +309,7 @@ class OrganizationController extends Controller
             $notDeletableElements = ['organisation_identifier', 'name', 'reporting_org'];
 
             if (in_array($element, $notDeletableElements)) {
-                $translatedMessage = trans(
-                    'organisationDetail/organization_controller.the_element_element_cannot_be_deleted',
-                    ['element' => $element]
-                );
+                $translatedMessage = 'The Element Element Cannot Be Deleted.';
 
                 return response(['status' => false, 'message' => $translatedMessage]);
             }
@@ -320,7 +317,7 @@ class OrganizationController extends Controller
             DB::beginTransaction();
 
             if (!$this->organizationService->deleteElement(auth()->user()?->organization_id, $element)) {
-                $translatedMessage = trans('organisationDetail/organization_controller.error_has_occurred_while_deleting_organisation_element');
+                $translatedMessage = 'Error Has Occurred While Deleting Organisation Element.';
 
                 return response(['status' => false, 'message' => $translatedMessage]);
             }
@@ -339,7 +336,7 @@ class OrganizationController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
-            $translatedMessage = trans('organisationDetail/organization_controller.error_has_occurred_while_deleting_organisation_element');
+            $translatedMessage = 'Error Has Occurred While Deleting Organisation Element.';
 
             return response(['status' => false, 'message' => $translatedMessage]);
         }

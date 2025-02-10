@@ -57,12 +57,15 @@ class ActivityController extends Controller
             if ($element === 'recipient_country' || $element === 'recipient_region') {
                 $this->elementCompleteService->refreshElementStatus($this->activityService->getActivity($id));
             }
-            $translatedMessage = trans('api/activity_controller.the_s_element_deleted_successfully');
 
-            $message = sprintf($translatedMessage, str_replace('_', '-', $element));
-            Session::put('success', $message);
+            $translatedMessage = trans(
+                'api/activity_controller.the_element_element_deleted_successfully',
+                ['element'=> str_replace('_', '-', $element)]
+            );
 
-            return response(['status' => true, 'message' => $message]);
+            Session::put('success', $translatedMessage);
+
+            return response(['status' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
             $translatedMessage = trans('api/activity_controller.error_has_occurred_while_deleting_activity_element');

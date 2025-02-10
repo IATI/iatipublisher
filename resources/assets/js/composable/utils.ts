@@ -115,11 +115,19 @@ export function isEveryValueNull(data): boolean {
 }
 
 export function getTranslatedUntitled(translatedData): string {
-  return translatedData['common.common.untitled'];
+  return translatedData ? translatedData['common.common.untitled'] : 'Untitled';
 }
 
 export function getTranslatedMissing(translatedData, element = ''): string {
+  console.log('this called');
+  if (!translatedData) {
+    return toTitleCase(element) + ' ' + 'Missing';
+  }
+
   let returnValue = translatedData['common.common.missing'];
+
+  console.log('element');
+  console.log(element);
 
   if (element) {
     returnValue =
@@ -127,11 +135,15 @@ export function getTranslatedMissing(translatedData, element = ''): string {
       element + ' ' + translatedData['common.common.missing'];
   }
 
+  console.log('returnValue');
+  console.log(returnValue);
   return toTitleCase(returnValue);
 }
 
 export function getTranslatedLanguage(translatedData): string {
-  return translatedData['elements.label.language'];
+  return translatedData
+    ? toTitleCase(translatedData['elements.label.language'])
+    : 'Language';
 }
 
 export function getTranslatedDeleteElement(translatedData, element = '') {
@@ -147,12 +159,22 @@ export function getTranslatedDeleteElement(translatedData, element = '') {
   return toTitleCase(returnValue);
 }
 export function getTranslatedElement(translatedData, element: string): string {
-  return translatedData[`element.label.${element}`] ?? '';
+  console.log('called');
+  console.log(element);
+  if (!translatedData) {
+    return toTitleCase(element);
+  }
+
+  return toTitleCase(translatedData[`elements.label.${element}`] ?? '');
 }
 
 export function toTitleCase(word: string): string {
-  return word.replace(
+  return word?.replace(
     /\w\S*/g,
     (txt) => txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase()
   );
+}
+
+export function toKebabCase(word: string): string {
+  return word.replace('_', '-').toLowerCase();
 }

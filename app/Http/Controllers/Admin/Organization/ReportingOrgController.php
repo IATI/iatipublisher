@@ -43,7 +43,7 @@ class ReportingOrgController extends Controller
     {
         try {
             $id = Auth::user()->organization_id;
-            $element = json_decode(file_get_contents(app_path('IATI/Data/organizationElementJsonSchema.json')), true, 512, JSON_THROW_ON_ERROR);
+            $element = readOrganizationElementJsonSchema();
             $organization = $this->reportingOrgService->getOrganizationData($id);
             $form = $this->reportingOrgService->formGenerator($id, Arr::get($organization->deprecation_status_map, 'reporting_org', []));
             $data = ['title'=> $element['reporting_org']['label'], 'name'=>'reporting-org'];

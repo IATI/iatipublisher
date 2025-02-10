@@ -96,7 +96,7 @@ class UserController extends Controller
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
 
-            $translatedMessage = trans('userProfile/user_controller.error_has_occurred_while_rendering_user_listing_page');
+            $translatedMessage = 'Error Has Occurred While Rendering User Listing Page';
 
             return redirect()->back()->with('error', $translatedMessage);
         }
@@ -200,7 +200,7 @@ class UserController extends Controller
     {
         try {
             $status = $this->userService->getStatus();
-            $translatedMessage = trans('userProfile/user_controller.user_status_successfully_retrieved');
+            $translatedMessage = 'User status successfully retrieved.';
 
             return response()->json([
                 'success' => true,
@@ -446,7 +446,7 @@ class UserController extends Controller
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
-            $translatedMessage = trans('userProfile/user_controller.error_has_occurred_while_trying_to_toggle_user_status');
+            $translatedMessage = 'Error has occurred while trying to toggle user status';
 
             return response()->json([
                 'success' => false,

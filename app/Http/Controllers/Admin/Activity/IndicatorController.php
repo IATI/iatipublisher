@@ -114,7 +114,7 @@ class IndicatorController extends Controller
     {
         try {
             $indicator = $this->indicatorService->getPaginatedIndicator($resultId, $page);
-            $translatedMessage = trans('activity_detail/indicator_controller.indicators_fetched_successfully');
+            $translatedMessage = 'Indicators Fetched Successfully';
 
             return response()->json([
                 'success' => true,

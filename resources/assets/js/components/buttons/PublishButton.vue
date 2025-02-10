@@ -54,33 +54,6 @@
     @reset="resetPublishStep"
   >
     <div class="popup mb-4">
-      <div class="">
-        <div class="title mb-6 flex items-center text-sm">
-          <svg-vue
-            class="mr-1 text-lg"
-            :class="{
-              'text-spring-50': publishStateChange.alertState,
-              'text-crimson-40': !publishStateChange.alertState,
-            }"
-            :icon="publishStateChange.icon"
-          />
-          <b>{{ publishStateChange.title }} </b>
-        </div>
-        <div
-          class="rounded-lg bg-mint p-4"
-          :class="{
-            'bg-mint': publishStateChange.alertState,
-            'bg-[#FFF1F0]': !publishStateChange.alertState && publishStep !== 1,
-            '!bg-eggshell': !publishStateChange.alertState && publishStep === 1,
-          }"
-        >
-          <div
-            class="text-sm leading-normal"
-            v-html="publishStateChange.description"
-          ></div>
-        </div>
-      </div>
-
       <div v-if="hasDeprecatedValueInUse && publishStep === 0" class="my-6">
         <div class="title mb-4 flex h-5 items-center text-sm">
           <svg-vue
@@ -330,18 +303,6 @@ const publishStateChange = computed(() => {
 
   return publishState;
 });
-
-// // increment and decrement function
-// const stepPlusOne = () => {
-//   if (publishStep.value >= 0 && publishStep.value < 4) {
-//     publishStep.value++;
-//   }
-// };
-// const stepMinusOne = () => {
-//   if (publishStep.value > 0 && publishStep.value <= 4) {
-//     publishStep.value--;
-//   }
-// };
 
 // reactive variable for errors number
 interface Err {

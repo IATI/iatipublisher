@@ -154,7 +154,7 @@ class ActivityWorkflowController extends Controller
             }
 
             RegistryValidatorJob::dispatch($activity, $user);
-            $translatedMessage = trans('workflow_backend/activity_workflow_controller.validating_activities');
+            $translatedMessage = 'Validating Activities';
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {

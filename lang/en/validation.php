@@ -518,5 +518,6 @@ return [
     'transaction_not_exist'            => 'Transaction does not exist',
     'indicator_not_exist'              => 'Indicator does not exist',
     'period_not_exist'                 => 'Period does not exist',
-    'must_be_superadmin'               => 'You need to be superadmin to use this route.',
+    'these_credentials_do_not_match_our_records'=>'These credentials do not match our records.',
+    'your_account_is_inactive'=>'Your account is inactive. Please contact your admin or superadmin for further information.'
 ];

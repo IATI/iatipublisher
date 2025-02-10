@@ -9,7 +9,7 @@
       <div class="grow text-sm font-bold leading-normal">
         {{
           translatedData[
-            'publish.bulk_publish.publishing_count_activities'
+            'workflow_frontend.bulk_publish.publishing_count_activities'
           ].replace(':count', activities && Object.keys(activities).length)
         }}
       </div>

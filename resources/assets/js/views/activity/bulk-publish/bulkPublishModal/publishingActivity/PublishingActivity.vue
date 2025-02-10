@@ -6,7 +6,9 @@
     "
   >
     <h3 class="mt-6 pb-2 text-sm font-bold text-bluecoral">
-      {{ translatedData['workflow_frontend.publish.publishing_completed'] }}
+      {{
+        translatedData['workflow_frontend.bulk_publish.publishing_completed']
+      }}
     </h3>
     <div class="rounded-lg border border-n-20">
       <div
@@ -54,7 +56,7 @@
         <div class="text-sm font-medium text-crimson-50">
           {{
             translatedData[
-              'publish.bulk_publish.some_activities_have_failed_to_publish'
+              'workflow_frontend.bulk_publish.some_activities_have_failed_to_publish'
             ]
           }}
         </div>
@@ -73,7 +75,7 @@
   <div v-else>
     <RollingLoader
       :header="
-        translatedData['workflow_frontend.publish.publishing_activities']
+        translatedData['workflow_frontend.bulk_publish.publishing_activities']
       "
     />
     <p
@@ -81,7 +83,7 @@
     >
       {{
         translatedData[
-          'workflow_frontend.publish.this_process_may_take_some_time'
+          'workflow_frontend.bulk_publish.this_process_may_take_some_time'
         ]
       }}
     </p>

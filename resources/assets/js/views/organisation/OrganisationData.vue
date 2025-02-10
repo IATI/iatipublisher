@@ -453,7 +453,9 @@ export default defineComponent({
     onMounted(() => {
       window.addEventListener('resize', calcWidth);
 
-      LanguageService.getTranslatedData('common,organisationDetail,elements')
+      LanguageService.getTranslatedData(
+        'workflow_frontend,common,organisationDetail,elements'
+      )
         .then((response) => {
           translatedData.value = response.data;
           console.log(translatedData.value);

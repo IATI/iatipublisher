@@ -123,7 +123,7 @@ class RecipientOrgBudgetRequest extends OrganizationBaseRequest
             );
             $messages[$narrativeField] = trans(
                 'validation.required_without',
-                ['attribute' => trans('elementForm.narrative'), 'values' => trans('elementForm.ref')]
+                ['attribute' => trans('elements/label.narrative'), 'values' => trans('elements/label.ref')]
             );
 
             $periodStartMessages = $this->getMessagesForPeriodStart(

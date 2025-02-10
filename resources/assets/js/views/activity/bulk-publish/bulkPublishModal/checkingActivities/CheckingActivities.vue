@@ -5,19 +5,20 @@
       <p class="text-sm font-bold text-n-50">
         {{
           translatedData[
-            'publish.bulk_publish.core_elements_not_complete_in_count_activities'
+            'workflow_frontend.bulk_publish.core_elements_not_complete_in_count_activities'
           ]?.replace(':count', coreInCompletedActivities.length)
         }}
       </p>
     </div>
     <div class="mt-[10px] rounded-lg bg-paper p-4">
-      <p class="text-sm text-n-50">
-        {{
+      <p
+        class="text-sm text-n-50"
+        v-html="
           translatedData[
-            'publish.bulk_publish.review_the_core_completeness_percentage'
+            'workflow_frontend.bulk_publish.review_the_core_completeness_percentage'
           ]
-        }}
-      </p>
+        "
+      ></p>
       <p>
         <svg-vue class="h-full w-full" icon="core-completeness" />
       </p>

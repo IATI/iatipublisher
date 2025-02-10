@@ -207,7 +207,7 @@ class RecipientRegionBudgetRequest extends OrganizationBaseRequest
             $messages[sprintf('%s.recipient_region.%s.code.required', $formBase, $recipientRegionIndex)]
                 = trans(
                     'validation.required',
-                    ['attribute' => trans('elementForm.code')]
+                    ['attribute' => trans('elements/label.code')]
                 );
             $narrativeMessages = $this->getMessagesForNarrative($recipientRegion['narrative'], $recipientRegionForm);
 

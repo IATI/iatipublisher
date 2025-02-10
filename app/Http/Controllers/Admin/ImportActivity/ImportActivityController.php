@@ -235,7 +235,7 @@ class ImportActivityController extends Controller
 
             ImportCacheHelper::clearImportCache($orgId);
 
-            $translatedMessage = trans('import_activity/import_activity_controller.imported_successfully');
+            $translatedMessage = trans('import_activity/import_activity_controller..imported_data_successfully');
 
             return response()->json(['success' => true, 'message' => $translatedMessage, 'type' => $filetype]);
         } catch (Exception $e) {

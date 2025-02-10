@@ -14,7 +14,7 @@
             <span>
               {{
                 translatedData[
-                  'publish.bulk_publish.changes_have_been_detected_in_your_activity_data'
+                  'workflow_frontend.bulk_publish.changes_have_been_detected_in_your_activity_data'
                 ]
               }}
             </span>

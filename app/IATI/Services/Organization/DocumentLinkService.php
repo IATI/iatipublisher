@@ -76,7 +76,7 @@ class DocumentLinkService
      */
     public function update($id, $documentLink): bool
     {
-        $element = json_decode(file_get_contents(app_path('IATI/Data/organizationElementJsonSchema.json')), true)['document_link'];
+        $element = readOrganizationElementJsonSchema()['document_link'];
 
         foreach ($documentLink['document_link'] as $key => $document) {
             foreach (array_keys($element['sub_elements']) as $subelement) {
@@ -105,7 +105,7 @@ class DocumentLinkService
      */
     public function formGenerator($id, $deprecationStatusMap = []): Form
     {
-        $element = json_decode(file_get_contents(app_path('IATI/Data/organizationElementJsonSchema.json')), true);
+        $element = readOrganizationElementJsonSchema();
         $model['document_link'] = $this->getDocumentLinkData($id) ?? [];
 
         $this->parentCollectionFormCreator->url = route('admin.organisation.document-link.update', [$id]);

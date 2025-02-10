@@ -6,7 +6,6 @@ return [
     'result_template'                                                          => 'Result Template',
     'activity_template'                                                        => 'Activity Template',
     'indicator_template'                                                       => 'Indicator Template',
-    'element_template'                                                         => ':element Template',
     'import_csv_xml_file'                                                      => 'Import .CSV/.XML file',
     'upload_file'                                                              => 'Upload file',
     'download_xls_activity_template'                                           => 'Download .XLS activity Template',

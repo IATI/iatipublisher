@@ -149,7 +149,7 @@ class ParticipatingOrganizationRequest extends ActivityBaseRequest
             $participatingOrgForm = 'participating_org.' . $participatingOrgIndex;
             $messages[$participatingOrgForm . '.organization_role.required'] = trans(
                 'validation.required',
-                ['attribute' => trans('elementForm.organisation_role')]
+                ['attribute' => trans(' elements/label.organisation_role')]
             );
             $identifier = $participatingOrgForm . '.identifier';
             $messages[$identifier . '.exclude_operators'] = trans(

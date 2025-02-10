@@ -10,7 +10,6 @@ return [
     'bulk_publishing_failed'                                    => 'Bulk publishing failed.',
     'no_bulk_publishing_in_progress'                            => 'No bulk publishing in progress',
     'status_generation_failed'                                  => 'Status generation failed.',
-    'request_error'                                             => 'Request error',
     'no_bulk_publish_were_cancelled'                            => 'No bulk publish were cancelled.',
     'failed_to_stop_bulk_publishing'                            => 'Failed to stop bulk publishing',
     'another_bulk_validation_is_already_in_progress'            => 'Another bulk validation is already in progress.',

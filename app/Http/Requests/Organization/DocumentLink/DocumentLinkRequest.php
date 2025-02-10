@@ -106,20 +106,17 @@ class DocumentLinkRequest extends OrganizationBaseRequest
             );
             $messages[sprintf('document_link.%s.url.required', $documentLinkIndex)] = trans(
                 'validation.required',
-                ['attribute' => trans('elementForm.url')]
+                ['attribute' => trans(' elements/label.url')]
             );
-            $messages[sprintf(
-                'document_link.%s.url.url',
-                $documentLinkIndex
-            )]
-                = trans('validation.url');
+            $messages[sprintf('document_link.%s.url.url', $documentLinkIndex)]
+                = trans('validation.url', ['attribute' => trans(' elements/label.url')]);
             $messages[sprintf('document_link.%s.format.required', $documentLinkIndex)] = trans(
                 'validation.required',
-                ['attribute' => trans('elementForm.format')]
+                ['attribute' => trans(' elements/label.format')]
             );
             $messages[sprintf('document_link.%s.document_date.0.date.date', $documentLinkIndex)] = trans(
                 'validation.date',
-                ['attribute' => trans('elementForm.date')]
+                ['attribute' => trans(' elements/label.date')]
             );
             $messages = array_merge(
                 $messages,

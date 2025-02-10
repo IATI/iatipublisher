@@ -73,7 +73,7 @@ class ActivityDefaultController extends Controller
     {
         try {
             $setting = $this->activityDefaultService->getActivityDefaultValues($activityId);
-            $translatedMessage = trans('activity_detail/activity_default_controller.default_values_fetched_successfully');
+            $translatedMessage = 'Default Values Fetched Successfully';
 
             return response()->json(['success' => true, 'message' => $translatedMessage, 'data' => $setting]);
         } catch (\Exception $e) {

@@ -148,7 +148,7 @@ class BulkPublishingController extends Controller
                     ],
                 ]);
             }
-            $translatedMessage = trans('common.common.no_activities_selected');
+            $translatedMessage = trans('common/common.no_activities_selected');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         } catch (MaxBatchSizeExceededException $e) {
@@ -234,7 +234,7 @@ class BulkPublishingController extends Controller
                     ]
                 );
             }
-            $translatedMessage = trans('common.common.no_activities_selected');
+            $translatedMessage = trans('common/common.no_activities_selected');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         } catch (Exception $e) {
@@ -301,7 +301,7 @@ class BulkPublishingController extends Controller
                 }
 
                 $activities = $this->activityService->getActivitiesHavingIds($filteredActivityIds);
-                $translatedMessage = trans('common.common.no_activities_selected');
+                $translatedMessage = trans('common/common.no_activities_selected');
 
                 if (!count($activities)) {
                     return response()->json(['success' => false, 'message' => $translatedMessage]);
@@ -333,7 +333,7 @@ class BulkPublishingController extends Controller
                     ['success' => true, 'message' => $translatedMessage, 'data' => $response]
                 );
             }
-            $translatedMessage = trans('common.common.no_activities_selected');
+            $translatedMessage = trans('common/common.no_activities_selected');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         } catch (Exception $e) {
@@ -385,12 +385,12 @@ class BulkPublishingController extends Controller
             );
         } catch (Exception $e) {
             logger()->error($e);
-            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.status_generation_failed');
+            $translatedMessage = 'Status Generation Failed';
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         } catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
             logger()->error($e);
-            $translatedMessage = trans('workflow_backend/bulk_publishing_controller.request_error');
+            $translatedMessage = 'Request error';
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
@@ -413,7 +413,7 @@ class BulkPublishingController extends Controller
 
             if ($deletedIds) {
                 DB::commit();
-                $translatedMessage = trans('workflow_backend/bulk_publishing_controller.bulk_publish_of_numberofdeletedrows_activities_canceled');
+                $translatedMessage = trans('workflow_backend/bulk_publishing_controller.bulk_publish_of_numberofdeletedrows_activities_canceled', ['numberOfDeletedRows'=>$numberOfDeletedRows]);
 
                 return response()->json(
                     [

@@ -85,9 +85,11 @@
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
+import { getTranslatedElement } from '../../../composable/utils';
 
 export default defineComponent({
   name: 'ActivitySector',
+  methods: { getTranslatedElement },
   props: {
     data: {
       type: Object,

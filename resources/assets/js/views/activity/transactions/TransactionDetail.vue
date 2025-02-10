@@ -90,7 +90,7 @@
           <ul class="text-sm font-bold leading-relaxed">
             <li v-for="(rData, r, ri) in transactionData" :key="ri">
               <a v-smooth-scroll :href="`#${String(r)}`" :class="linkClasses">
-                <span>{{ r }}</span>
+                <span>{{ toKebabCase(r) }}</span>
                 <span v-if="isMandatoryIcon(r)" class="required-icon px-1"
                   >*</span
                 >
@@ -151,6 +151,7 @@ import {
   reactive,
   inject,
   Ref,
+  provide,
 } from 'vue';
 //components
 import Btn from 'Components/buttons/Link.vue';
@@ -160,11 +161,16 @@ import Toast from 'Components/ToastMessage.vue';
 import dateFormat from 'Composable/dateFormat';
 import getActivityTitle from 'Composable/title';
 import TransactionElement from './TransactionElement.vue';
-import { getTranslatedUntitled } from 'Composable/utils';
+import {
+  getTranslatedElement,
+  getTranslatedUntitled,
+  toKebabCase,
+} from 'Composable/utils';
+import LanguageService from 'Services/language';
 
 export default defineComponent({
   name: 'TransactionDetail',
-  methods: { getTranslatedUntitled },
+  methods: { toKebabCase, getTranslatedElement, getTranslatedUntitled },
   components: {
     TransactionElement,
     Btn,
@@ -195,7 +201,15 @@ export default defineComponent({
   },
   setup(props) {
     const { activity, transaction } = toRefs(props);
-    const translatedData = inject('translatedData') as Ref;
+    const translatedData = ref({});
+
+    LanguageService.getTranslatedData(
+      'workflow_frontend,common,activity_detail,activity_index,elements'
+    )
+      .then((response) => {
+        translatedData.value = response.data;
+      })
+      .catch((error) => console.log(error));
 
     const linkClasses =
       'flex items-center w-full bg-white rounded p-2 text-sm text-n-50 font-bold leading-relaxed mb-2 shadow-default';
@@ -257,8 +271,8 @@ export default defineComponent({
         link: '/activity',
       },
       {
-        title: activityTitle.value,
-        link: activityLink.value,
+        title: activityTitle,
+        link: activityLink,
       },
       {
         title: translatedData?.value['common.common.transaction_list'],
@@ -292,6 +306,8 @@ export default defineComponent({
         r.toString() === 'transaction_date'
       );
     };
+
+    provide('translatedData', translatedData);
 
     return {
       activityTitle,

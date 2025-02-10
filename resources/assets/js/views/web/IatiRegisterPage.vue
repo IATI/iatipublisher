@@ -1219,7 +1219,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      LanguageService.getTranslatedData('common,public')
+      LanguageService.getTranslatedData('workflow_frontend,common,public')
         .then((response) => {
           translatedData.value = response.data;
         })
@@ -1253,6 +1253,7 @@ export default defineComponent({
 
 <style lang="scss">
 .label {
+  text-transform: capitalize;
   @apply text-sm font-normal text-n-50;
 }
 

@@ -321,7 +321,7 @@ class RecipientCountryBudgetRequest extends OrganizationBaseRequest
             $recipientCountryForm = sprintf('%s.recipient_country.%s', $formBase, $recipientCountryIndex);
             $messages[sprintf('%s.code.required', $recipientCountryForm)] = trans(
                 'validation.required',
-                ['attribute' => trans('elementForm.code')]
+                ['attribute' => trans(' elements/label.code')]
             );
             $narrativeMessages = $this->getMessagesForNarrative($recipientCountry['narrative'], $recipientCountryForm);
 

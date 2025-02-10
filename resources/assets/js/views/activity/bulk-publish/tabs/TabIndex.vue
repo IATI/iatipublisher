@@ -39,7 +39,7 @@
         <span>
           {{
             translatedData[
-              'publish.bulk_publish.try_again_or_write_to_support_for_further_assistance'
+              'workflow_frontend.bulk_publish.try_again_or_write_to_support_for_further_assistance'
             ]
           }}
         </span>

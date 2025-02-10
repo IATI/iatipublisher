@@ -92,7 +92,7 @@ class ResultController extends Controller
         try {
             $result = $this->resultService->getPaginatedResult($activityId, $page, $this->sanitizeRequest(request()));
             $stats = $this->resultService->getResultCountStats($activityId);
-            $translatedMessage = trans('activity_detail/result_controller.results_fetched_successfully');
+            $translatedMessage = 'Results Fetched Successfully';
 
             return response()->json([
                 'success' => true,

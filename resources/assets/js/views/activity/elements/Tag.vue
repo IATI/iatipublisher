@@ -82,13 +82,18 @@
 import { defineComponent, inject, Ref } from 'vue';
 import dateFormat from 'Composable/dateFormat';
 import {
+  getTranslatedElement,
   getTranslatedLanguage,
   getTranslatedMissing,
 } from '../../../composable/utils';
 
 export default defineComponent({
   name: 'ActivityTag',
-  methods: { getTranslatedLanguage, getTranslatedMissing },
+  methods: {
+    getTranslatedElement,
+    getTranslatedLanguage,
+    getTranslatedMissing,
+  },
   props: {
     data: {
       type: Object,

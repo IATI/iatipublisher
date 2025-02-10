@@ -578,7 +578,7 @@ const updateProfile = () => {
 const translatedData = ref({});
 
 onMounted(() => {
-  LanguageService.getTranslatedData('common,userProfile')
+  LanguageService.getTranslatedData('workflow_frontend,common,userProfile')
     .then((response) => {
       translatedData.value = response.data;
     })

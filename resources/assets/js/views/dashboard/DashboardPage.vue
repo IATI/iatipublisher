@@ -78,6 +78,7 @@ import ButtonComponent from 'Components/ButtonComponent.vue';
 import axios from 'axios';
 import moment from 'moment';
 import { kebabCaseToSnakecase } from 'Composable/utils';
+import LanguageService from 'Services/language';
 interface tableDaypeteType {
   data?: object;
   codeList?: object;
@@ -107,7 +108,15 @@ const dateLabel = {
 const currentView = ref('publisher');
 const completeNess = ref();
 const registrationType = ref();
+const translatedData = ref({});
 
+LanguageService.getTranslatedData(
+  'workflow_frontend,common,activity_detail,activity_index'
+)
+  .then((response) => {
+    translatedData.value = response.data;
+  })
+  .catch((error) => console.log(error));
 const handleChangeTableNav = (item, filter, page, tabChange = true) => {
   if (tabChange) {
     filter.value.orderBy = '';
@@ -273,4 +282,5 @@ provide('graphTotal', graphTotal);
 provide('showTableLoader', showTableLoader);
 provide('showGraphLoader', showGraphLoader);
 provide('currentView', currentView);
+provide('translatedData', translatedData);
 </script>

@@ -586,7 +586,9 @@ export default defineComponent({
     }
 
     const translatedData = ref({});
-    LanguageService.getTranslatedData('common,activity_detail,activity_index')
+    LanguageService.getTranslatedData(
+      'workflow_frontend,common,activity_detail,activity_index,elements'
+    )
       .then((response) => {
         translatedData.value = response.data;
       })

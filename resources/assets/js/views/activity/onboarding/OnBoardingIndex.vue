@@ -250,34 +250,6 @@ if (isForceOpenModal) {
 ) {
   modalState.value = false;
 }
-// console.log(
-//   props.organizationOnboarding.completed_onboarding,
-//   props.organizationOnboarding.dont_show_again,
-//   isModelCloseClicked.value,
-//   'Status'
-// );
-
-// if (
-//   !props.organizationOnboarding.completed_onboarding ||
-//   !props.organizationOnboarding.dont_show_again ||
-//   !isModelCloseClicked.value
-// ) {
-//   modalState.value = true;
-// }
-
-// if(props.)
-
-// watchEffect(() => {
-//   if (
-//     props.organizationOnboarding.completed_onboarding ||
-//     props.organizationOnboarding.dont_show_again ||
-//     isModelCloseClicked.value
-//   ) {
-//     modalState.value = false;
-//   } else if (store.state.getStartedButton) {
-//     modalState.value = true;
-//   }
-// });
 
 watchEffect(() => {
   if (modalState.value) {

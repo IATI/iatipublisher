@@ -12,7 +12,20 @@
           class="wizard-step__header__title pb-3 text-xs font-bold leading-[22px] tracking-normal text-n-50"
         >
           <span class="inline-block -translate-x-1/2">
-            {{ getStepStatus }}
+            {{
+              step.name == 'Validating'
+                ? completedSteps.includes(step.id)
+                  ? translatedData['common.common.validated']
+                  : translatedData['common.common.validating']
+                : completedSteps.includes(step.id)
+                ? store.state.bulkActivityPublishStatus.publishing
+                    .hasFailedActivities.ids.length > 0
+                  ? translatedData['common.common.failed']
+                  : translatedData['common.common.published']
+                : completedSteps.length == 0
+                ? translatedData['common.common.publish']
+                : translatedData['common.common.publishing']
+            }}
           </span>
         </div>
         <div
@@ -91,42 +104,26 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineProps, inject, Ref } from 'vue';
+import { defineProps, inject, Ref } from 'vue';
 import { useStore } from 'Store/activities';
 
+const translatedData = inject('translatedData') as Ref;
 const store = useStore();
 const steps = [
-  { name: 'Validating', id: 1 },
-  { name: 'Publish', id: 2 },
+  {
+    name: 'Validating',
+    id: 1,
+  },
+  {
+    name: 'Publish',
+    id: 2,
+  },
 ];
 
-// Define props correctly
-const props = defineProps<{
-  completedSteps: number[];
-  step: { name: string; id: number };
-}>();
-
-const translatedData = inject('translatedData') as Ref<Record<string, string>>;
-
-const getStepStatus = computed(() => {
-  if (props.step.name === 'Validating') {
-    return props.completedSteps.includes(props.step.id)
-      ? translatedData.value['common.common.validated']
-      : translatedData.value['common.common.validating'];
-  }
-
-  if (props.completedSteps.includes(props.step.id)) {
-    if (
-      store.state.bulkActivityPublishStatus.publishing.hasFailedActivities.ids
-        .length > 0
-    ) {
-      return translatedData.value['common.common.failed'];
-    }
-    return translatedData.value['common.common.published'];
-  }
-
-  return props.completedSteps.length === 0
-    ? translatedData.value['common.common.publish']
-    : translatedData.value['common.common.publishing'];
+defineProps({
+  completedSteps: {
+    type: Array,
+    default: () => [],
+  },
 });
 </script>

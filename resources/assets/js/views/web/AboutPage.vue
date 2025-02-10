@@ -79,7 +79,7 @@ export default defineComponent({
     const translatedData = ref({});
 
     onMounted(() => {
-      LanguageService.getTranslatedData('common,public')
+      LanguageService.getTranslatedData('workflow_frontend,common,public')
         .then((response) => {
           translatedData.value = response.data;
         })

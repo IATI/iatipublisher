@@ -260,7 +260,9 @@ export default defineComponent({
           }
         }
 
-        LanguageService.getTranslatedData('common,settings,common')
+        LanguageService.getTranslatedData(
+          'workflow_frontend,common,settings,common'
+        )
           .then((response) => {
             translatedData.value = response.data;
           })

@@ -159,7 +159,7 @@ export default defineComponent({
 
       currentLanguage.value = await LanguageService.getLanguage();
 
-      LanguageService.getTranslatedData('common,public')
+      LanguageService.getTranslatedData('workflow_frontend,common,public')
         .then((response) => {
           translatedData.value = response.data;
         })

@@ -95,7 +95,7 @@
       >
         {{
           translatedData[
-            'publish.bulk_publish.activity_has_been_published_successfully'
+            'workflow_frontend.bulk_publish.activity_has_been_published_successfully'
           ]
         }}
       </p>
@@ -132,7 +132,7 @@
         @click="handleMinimize()"
       >
         <span>
-          {{ translatedData['workflow_frontend.publish.minimize_screen'] }}
+          {{ translatedData['workflow_frontend.bulk_publish.minimize_screen'] }}
         </span>
         <svg-vue icon="open-link" class="rotate-90 text-[10px] text-n-40" />
       </button>
@@ -153,7 +153,7 @@
             type="primary"
             :text="
               translatedData[
-                'workflow_frontend.publish.continue_publishing_anyway'
+                'workflow_frontend.bulk_publish.continue_publishing_anyway'
               ]
             "
             @click="validateActivities()"
@@ -166,7 +166,7 @@
           <BtnComponent
             class="bg-white px-6 uppercase"
             type="primary"
-            :text="`${translatedData['workflow_frontend.publish.continue_publishing']} (${newSelectedActivities.length})`"
+            :text="`${translatedData['workflow_frontend.bulk_publish.continue_publishing']} (${newSelectedActivities.length})`"
             :disabled="newSelectedActivities.length === 0"
             @click="startBulkPublish()"
           />

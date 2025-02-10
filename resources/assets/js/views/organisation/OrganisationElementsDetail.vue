@@ -130,16 +130,15 @@
           <div v-for="(post, i) in data.content" :key="i" class="title-content">
             <div v-if="post.narrative" class="flex flex-col">
               <span v-if="post.language" class="language mb-1.5">
-                (Language: {{ types?.languages[post.language] }})
+                ({{ getTranslatedLanguage(translatedData) }}:
+                {{ types?.languages[post.language] }})
               </span>
               <span v-if="post.narrative" class="max-w-[887px] text-sm">
                 {{ post.narrative }}
               </span>
             </div>
             <span v-else class="text-sm italic">{{
-              translatedData[
-                'organisationDetail.organisation_elements_detail.title_missing'
-              ]
+              getTranslatedMissing(translatedData, 'title')
             }}</span>
             <div v-if="i !== data.content.length - 1" class="mb-4"></div>
           </div>
@@ -199,6 +198,7 @@ import Modal from 'Components/PopupModal.vue';
 import { useToggle } from '@vueuse/core';
 import axios from 'axios';
 import HelperText from 'Components/HelperText.vue';
+import { getTranslatedLanguage, getTranslatedMissing } from 'Composable/utils';
 
 const props = defineProps({
   data: {

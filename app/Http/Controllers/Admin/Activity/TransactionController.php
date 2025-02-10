@@ -112,7 +112,7 @@ class TransactionController extends Controller
                 $this->sanitizeRequest(request())
             );
             $stats = $this->transactionService->getTransactionCountStats($activityId);
-            $translatedMessage = trans('activity_detail/transaction_controller.transactions_fetched_successfully');
+            $translatedMessage = 'Transactions Fetched Successfully';
 
             return response()->json([
                 'success' => true,

@@ -173,7 +173,7 @@ function downloadManual(type: string) {
 const translatedData = ref({});
 
 onMounted(() => {
-  LanguageService.getTranslatedData('common,footer')
+  LanguageService.getTranslatedData('workflow_frontend,common,footer')
     .then((response) => {
       translatedData.value = response.data;
       console.log(translatedData.value);

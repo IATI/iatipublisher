@@ -11,7 +11,7 @@
     >
       {{
         translatedData[
-          'workflow_frontend.publish.this_process_may_take_some_time'
+          'workflow_frontend.bulk_publish.this_process_may_take_some_time'
         ]
       }}
     </p>
@@ -23,7 +23,9 @@
         <svg-vue class="text-xl text-crimson-50" icon="warninig-activity-red" />
         <h3 class="text-sm font-bold uppercase text-bluecoral">
           {{
-            translatedData['workflow_frontend.publish.validation_incomplete']
+            translatedData[
+              'workflow_frontend.bulk_publish.validation_incomplete'
+            ]
           }}
         </h3>
       </div>
@@ -42,7 +44,7 @@
         <b class="text-[16px] text-crimson-50">
           {{
             translatedData[
-              'workflow_frontend.publish.exceeded_max_publish_size'
+              'workflow_frontend.bulk_publish.exceeded_max_publish_size'
             ]
           }}
           <a
@@ -59,7 +61,7 @@
       <h6 class="text-sm font-bold text-bluecoral">
         {{
           translatedData[
-            'publish.bulk_publish.data_checking_complete_click_continue_to_publish'
+            'workflow_frontend.bulk_publish.data_checking_complete_click_continue_to_publish'
           ]
         }}
       </h6>
@@ -72,7 +74,7 @@
         <span class="text-xs font-bold">
           {{
             translatedData[
-              'publish.bulk_publish.activities_marked_with_this_symbol_have_data_quality_issues'
+              'workflow_frontend.bulk_publish.activities_marked_with_this_symbol_have_data_quality_issues'
             ]
           }}
         </span>
@@ -114,7 +116,7 @@
                   <span class="text-xs italic text-crimson-50">
                     ({{
                       translatedData[
-                        'publish.bulk_publish.the_activity_contains_critical_errors_and_cannot_be_published'
+                        'workflow_frontend.bulk_publish.the_activity_contains_critical_errors_and_cannot_be_published'
                       ]
                     }})
                   </span>
@@ -140,7 +142,9 @@
                   class="flex items-center gap-[2px]"
                 >
                   {{
-                    translatedData['workflow_frontend.publish.open_in_new_tab']
+                    translatedData[
+                      'workflow_frontend.bulk_publish.open_in_new_tab'
+                    ]
                   }}
                   <svg-vue class="text-base" icon="open-link-small" />
                 </a>
@@ -152,7 +156,7 @@
           <li class="pt-4 text-sm leading-[22px] tracking-normal text-n-50">
             {{
               translatedData[
-                'publish.bulk_publish.no_activities_are_ready_to_publish'
+                'workflow_frontend.bulk_publish.no_activities_are_ready_to_publish'
               ]
             }}
           </li>
@@ -171,7 +175,7 @@
         <span
           class="inline-block pl-3 pt-1 text-xs font-bold uppercase leading-[18px]"
         >
-          {{ translatedData['workflow_frontend.publish.select_all'] }}
+          {{ translatedData['workflow_frontend.bulk_publish.select_all'] }}
         </span>
         <input
           id="selectAll"
@@ -306,7 +310,7 @@ function getTranslatedValidationIncompleteMessage(
   totalCount: number
 ): string {
   return translatedData[
-    'publish.bulk_publish.activities_could_only_be_validated_due_to_server_error'
+    'workflow_frontend.bulk_publish.activities_could_only_be_validated_due_to_server_error'
   ]
     .replace(':count', String(count))
     .replace(':totalCount', String(totalCount));

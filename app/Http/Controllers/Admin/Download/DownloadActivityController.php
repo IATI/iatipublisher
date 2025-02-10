@@ -94,7 +94,7 @@ class DownloadActivityController extends Controller
             }
 
             if (!isset($activities) || !count($activities)) {
-                $translatedMessage = trans('common.common.no_activities_selected');
+                $translatedMessage = trans('common/common.no_activities_selected');
 
                 return response()->json(['success' => false, 'message' => $translatedMessage]);
             }
@@ -112,7 +112,7 @@ class DownloadActivityController extends Controller
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
             $this->auditService->auditEvent(null, 'download', 'csv');
-            $translatedMessage = trans('common.common.error_has_occurred_while_downloading_activity_csv');
+            $translatedMessage = trans('common/common.error_has_occurred_while_downloading_activity_csv');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
@@ -151,7 +151,7 @@ class DownloadActivityController extends Controller
             }
 
             if (!isset($activities) || !$activities->count()) {
-                $translatedMessage = trans('common.common.no_activities_selected');
+                $translatedMessage = trans('common/common.no_activities_selected');
 
                 return response()->json(['success' => false, 'message' => $translatedMessage]);
             }
@@ -289,7 +289,7 @@ class DownloadActivityController extends Controller
             }
 
             if (!isset($activities) || !count($activities)) {
-                $translatedMessage = trans('common.common.no_activities_selected');
+                $translatedMessage = trans('common/common.no_activities_selected');
 
                 return response()->json(['success' => false, 'message' => $translatedMessage]);
             }
@@ -313,7 +313,7 @@ class DownloadActivityController extends Controller
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
             $this->auditService->auditEvent(null, 'download', 'xml');
-            $translatedMessage = trans('common.common.error_has_occurred_while_downloading_activity_csv');
+            $translatedMessage = trans('common/common.error_has_occurred_while_downloading_activity_csv');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }

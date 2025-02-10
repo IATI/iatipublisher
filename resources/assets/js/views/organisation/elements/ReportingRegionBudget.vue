@@ -202,7 +202,7 @@
                         }"
                       >
                         <div class="language mb-1.5">
-                          c ({{
+                          ({{
                             narrative.language
                               ? `${getTranslatedLanguage(translatedData)} : ${
                                   types?.languages[narrative.language]

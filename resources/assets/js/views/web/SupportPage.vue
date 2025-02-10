@@ -32,7 +32,7 @@ import LanguageService from 'Services/language';
 const translatedData = ref({});
 
 onMounted(() => {
-  LanguageService.getTranslatedData('common,public')
+  LanguageService.getTranslatedData('workflow_frontend,common,public')
     .then((response) => {
       translatedData.value = response.data;
       console.log(translatedData.value);

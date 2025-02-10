@@ -15,7 +15,7 @@
               icon="organisation-elements/org_identifier"
             ></svg-vue
             ><span
-              >A{{
+              >{{
                 translatedData[
                   'onboarding.activity_step.add_your_first_activity'
                 ]

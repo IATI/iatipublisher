@@ -79,7 +79,7 @@ class PeriodController extends Controller
     {
         try {
             $period = $this->periodService->getPaginatedPeriod($indicatorId, $page);
-            $translatedMessage = trans('activity_detail/period_controller.period_fetched_successfully');
+            $translatedMessage = 'Period Fetched Successfully';
 
             return response()->json([
                 'success' => true,
