@@ -2,7 +2,7 @@
   <div class="relative w-[365px] bg-n-10">
     <div class="flex justify-between">
       <h6 class="mb-2 font-bold">
-        {{ translatedData['workflow_frontend.validation.publishing_activity'] }}
+        {{ translatedData['common.common.publishing_activity'] }}
         <span
           class="inline-block rounded-full bg-[#CDF8FA] py-1 px-2 text-xs font-medium text-bluecoral"
         >
@@ -39,7 +39,7 @@
           <div v-else class="text-sm text-n-50">
             {{
               translatedData[
-                'workflow_frontend.validation.checking_your_data_before_publication'
+                'common.common.checking_your_data_before_publication'
               ]
             }}
           </div>

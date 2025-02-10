@@ -32,7 +32,7 @@
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -84,7 +84,7 @@
         },
         "required": false,
         "criteria": "",
-        "hover_text": "elements/element_json_schema.reporting_org_attributes_secondary_reporter_hover_text",
+        "hover_text": "common/common.if_you_are_publishing_data_about_your_own_organisation",
         "help_text": ""
       }
     },
@@ -100,7 +100,7 @@
         "attr": {
           "row": 4
         },
-        "hover_text": "elements/element_json_schema.reporting_org_sub_elements_narrative_hover_text",
+        "hover_text": "common/common.enter_your_organisations_name_this_can_be_repeated_in_multiple_language",
         "help_text": "",
         "read_only": true,
         "attributes": {
@@ -114,7 +114,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text",
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed",
             "read_only": true
           }
         },
@@ -226,7 +226,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -281,7 +281,7 @@
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -364,7 +364,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -435,7 +435,7 @@
         "attr": {
           "row": 4
         },
-        "hover_text": "elements/element_json_schema.recipient_country_sub_elements_narrative_hover_text",
+        "hover_text": "common/common.add_an_optional_name_or_description_of_the_country_benefitting_from_the_activity",
         "help_text": "",
         "attributes": {
           "language": {
@@ -447,7 +447,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -478,7 +478,7 @@
         "choices": "Activity/RegionVocabulary.json",
         "required": false,
         "criteria": "recommended",
-        "hover_text": "elements/element_json_schema.recipient_region_attributes_region_vocabulary_hover_text",
+        "hover_text": "common/common.you_can_select_regions_from_the_oecd_dac_un_or_your_own_internal_codelist",
         "help_text": ""
       },
       "region_code": {
@@ -555,7 +555,7 @@
         "attr": {
           "row": 4
         },
-        "hover_text": "elements/element_json_schema.recipient_region_sub_elements_narrative_hover_text",
+        "hover_text": "common/common.add_an_optional_name_or_description_of_the_region_benefitting_from_the_activity",
         "help_text": "",
         "attributes": {
           "language": {
@@ -567,7 +567,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -750,7 +750,7 @@
             "required": false,
             "criteria": "",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -882,7 +882,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -1004,7 +1004,7 @@
             "required": false,
             "criteria": "",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -1280,7 +1280,7 @@
                     "choices": "Activity/Language.json",
                     "criteria": "recommended",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -1388,7 +1388,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -1521,7 +1521,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1604,7 +1604,7 @@
         "choices": "Activity/FileFormat.json",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "elements/element_json_schema.document_link_attributes_format_hover_text",
+        "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
         "help_text": ""
       },
       "document": {
@@ -1643,7 +1643,7 @@
             "attr": {
               "row": 4
             },
-            "hover_text": "elements/element_json_schema.document_link_sub_elements_title_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
             "help_text": "",
             "attributes": {
               "language": {
@@ -1655,7 +1655,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1673,7 +1673,7 @@
         "add_more_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
-        "hover_text": "elements/element_json_schema.document_link_sub_elements_category_hover_text",
+        "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
         "help_text": "",
         "attributes": {
           "code": {
@@ -1684,7 +1684,7 @@
             "choices": "Activity/DocumentCategory.json",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "elements/element_json_schema.document_link_sub_elements_category_attributes_code_hover_text",
+            "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
             "help_text": ""
           }
         },
@@ -1725,7 +1725,7 @@
                 "required": false,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1751,7 +1751,7 @@
             "choices": "Activity/Language.json",
             "required": true,
             "criteria": "",
-            "hover_text": "elements/element_json_schema.document_link_sub_elements_language_attributes_code_hover_text",
+            "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
             "help_text": ""
           }
         },
@@ -1840,7 +1840,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1881,7 +1881,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1922,7 +1922,7 @@
                 "required": false,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1963,7 +1963,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -2030,7 +2030,7 @@
             "name": "website",
             "label": "elements/label.website",
             "type": "text",
-            "placeholder": "elements/element_json_schema.contact_info_sub_elements_website_attributes_website_placeholder",
+            "placeholder": "common/common.type_url",
             "required": false,
             "criteria": "",
             "hover_text": "elements/element_json_schema.contact_info_sub_elements_website_attributes_website_hover_text",
@@ -2074,7 +2074,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -2201,7 +2201,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -2241,7 +2241,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -2282,7 +2282,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -2378,7 +2378,7 @@
                 "name": "longitude",
                 "label": "elements/label.longitude",
                 "type": "text",
-                "placeholder": "elements/element_json_schema.location_sub_elements_point_sub_elements_pos_attributes_longitude_placeholder",
+                "placeholder": "common/common.location_sub_elements_point_sub_elements_pos_attributes_longitude_placeholder",
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
@@ -2562,7 +2562,7 @@
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+            "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
           },
           "value_date": {
             "name": "value_date",
@@ -2629,7 +2629,7 @@
             "required": false,
             "criteria": "",
             "add_more": true,
-            "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.enter_the_name_of_the_organisation_this_can_be_repeated_in_multiple_languages",
             "help_text": "",
             "attr": {
               "row": 4
@@ -2644,7 +2644,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -2659,7 +2659,7 @@
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "optional_text",
-        "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_receiver_org_hover_text",
+        "hover_text": "common/common.planned_disbursement_sub_elements_receiver_org_hover_text",
         "help_text": "",
         "attributes": {
           "ref": {
@@ -2703,7 +2703,7 @@
             "required": false,
             "criteria": "",
             "add_more": true,
-            "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.enter_the_name_of_the_organisation_this_can_be_repeated_in_multiple_languages",
             "help_text": "",
             "attr": {
               "row": 4
@@ -2718,7 +2718,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -2806,7 +2806,7 @@
         "attr": {
           "row": 4
         },
-        "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_sub_elements_narrative_hover_text",
+        "hover_text": "common/common.enter_the_name_of_the_organisation_this_can_be_repeated_in_multiple_languages",
         "help_text": "",
         "attributes": {
           "language": {
@@ -2818,7 +2818,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -2941,7 +2941,7 @@
             "required": false,
             "criteria": "recommended",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+            "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
           },
           "value_date": {
             "name": "value_date",
@@ -2950,7 +2950,7 @@
             "placeholder": "elements/element_json_schema.budget_sub_elements_budget_value_attributes_value_date_placeholder",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "elements/element_json_schema.budget_sub_elements_budget_value_attributes_value_date_hover_text",
+            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
             "help_text": ""
           }
         },
@@ -3028,7 +3028,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -3069,7 +3069,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -3107,7 +3107,7 @@
             "choices": "Activity/FileFormat.json",
             "required": true,
             "criteria": "",
-            "hover_text": "elements/element_json_schema.document_link_attributes_format_hover_text",
+            "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
             "help_text": ""
           }
         },
@@ -3134,7 +3134,7 @@
                 "attr": {
                   "row": 4
                 },
-                "hover_text": "elements/element_json_schema.document_link_sub_elements_title_sub_elements_narrative_hover_text",
+                "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
                 "help_text": "",
                 "attributes": {
                   "language": {
@@ -3146,7 +3146,7 @@
                     "required": true,
                     "criteria": "",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -3163,7 +3163,7 @@
             "is_collapsable": true,
             "label_indicator": "required_icon",
             "wrapper_collection": false,
-            "hover_text": "elements/element_json_schema.document_link_sub_elements_category_hover_text",
+            "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
             "help_text": "",
             "attributes": {
               "code": {
@@ -3174,7 +3174,7 @@
                 "choices": "Activity/DocumentCategory.json",
                 "required": true,
                 "criteria": "",
-                "hover_text": "elements/element_json_schema.document_link_sub_elements_category_attributes_code_hover_text",
+                "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
                 "help_text": ""
               }
             },
@@ -3213,7 +3213,7 @@
                     "required": true,
                     "criteria": "",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -3238,7 +3238,7 @@
                 "choices": "Activity/Language.json",
                 "required": true,
                 "criteria": "",
-                "hover_text": "elements/element_json_schema.document_link_sub_elements_language_attributes_code_hover_text",
+                "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
                 "help_text": ""
               }
             },
@@ -3403,7 +3403,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -3444,7 +3444,7 @@
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -3481,7 +3481,7 @@
             "choices": "Activity/FileFormat.json",
             "required": true,
             "criteria": "",
-            "hover_text": "elements/element_json_schema.document_link_attributes_format_hover_text",
+            "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
             "help_text": ""
           }
         },
@@ -3508,7 +3508,7 @@
                 "attr": {
                   "row": 4
                 },
-                "hover_text": "elements/element_json_schema.document_link_sub_elements_title_sub_elements_narrative_hover_text",
+                "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
                 "help_text": "",
                 "attributes": {
                   "language": {
@@ -3520,7 +3520,7 @@
                     "required": true,
                     "criteria": "",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -3537,7 +3537,7 @@
             "label_has_borders": true,
             "is_collapsable": true,
             "label_indicator": "required_icon",
-            "hover_text": "elements/element_json_schema.document_link_sub_elements_category_hover_text",
+            "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
             "help_text": "",
             "attributes": {
               "code": {
@@ -3548,7 +3548,7 @@
                 "choices": "Activity/DocumentCategory.json",
                 "required": true,
                 "criteria": "",
-                "hover_text": "elements/element_json_schema.document_link_sub_elements_category_attributes_code_hover_text",
+                "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
                 "help_text": ""
               }
             },
@@ -3587,7 +3587,7 @@
                     "required": true,
                     "criteria": "",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -3612,7 +3612,7 @@
                 "choices": "Activity/Language.json",
                 "required": true,
                 "criteria": "",
-                "hover_text": "elements/element_json_schema.document_link_sub_elements_language_attributes_code_hover_text",
+                "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
                 "help_text": ""
               }
             },
@@ -3767,7 +3767,7 @@
                     "required": true,
                     "criteria": "",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -3840,7 +3840,7 @@
                 "choices": "Activity/FileFormat.json",
                 "required": true,
                 "criteria": "",
-                "hover_text": "elements/element_json_schema.document_link_attributes_format_hover_text",
+                "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
                 "help_text": ""
               }
             },
@@ -3868,7 +3868,7 @@
                     "attr": {
                       "row": 4
                     },
-                    "hover_text": "elements/element_json_schema.document_link_sub_elements_title_sub_elements_narrative_hover_text",
+                    "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
                     "help_text": "",
                     "attributes": {
                       "language": {
@@ -3880,7 +3880,7 @@
                         "required": true,
                         "criteria": "",
                         "hover_text": "",
-                        "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                        "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
                       }
                     },
                     "sub_elements": {}
@@ -3897,7 +3897,7 @@
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "required_icon",
-                "hover_text": "elements/element_json_schema.document_link_sub_elements_category_hover_text",
+                "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
                 "help_text": "",
                 "attributes": {
                   "code": {
@@ -3908,7 +3908,7 @@
                     "choices": "Activity/DocumentCategory.json",
                     "required": true,
                     "criteria": "",
-                    "hover_text": "elements/element_json_schema.document_link_sub_elements_category_attributes_code_hover_text",
+                    "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
                     "help_text": ""
                   }
                 },
@@ -3948,7 +3948,7 @@
                         "required": true,
                         "criteria": "",
                         "hover_text": "",
-                        "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                        "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
                       }
                     },
                     "sub_elements": {}
@@ -3973,7 +3973,7 @@
                     "choices": "Activity/Language.json",
                     "required": true,
                     "criteria": "",
-                    "hover_text": "elements/element_json_schema.document_link_sub_elements_language_attributes_code_hover_text",
+                    "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
                     "help_text": ""
                   }
                 },
@@ -4148,7 +4148,7 @@
                     "required": false,
                     "criteria": "",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -4218,7 +4218,7 @@
                 "choices": "Activity/FileFormat.json",
                 "required": true,
                 "criteria": "",
-                "hover_text": "elements/element_json_schema.document_link_attributes_format_hover_text",
+                "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
                 "help_text": ""
               }
             },
@@ -4245,7 +4245,7 @@
                     "attr": {
                       "row": 4
                     },
-                    "hover_text": "elements/element_json_schema.document_link_sub_elements_title_sub_elements_narrative_hover_text",
+                    "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
                     "help_text": "",
                     "attributes": {
                       "language": {
@@ -4257,7 +4257,7 @@
                         "required": true,
                         "criteria": "",
                         "hover_text": "",
-                        "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                        "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
                       }
                     },
                     "sub_elements": {}
@@ -4273,7 +4273,7 @@
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "required_icon",
-                "hover_text": "elements/element_json_schema.document_link_sub_elements_category_hover_text",
+                "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
                 "help_text": "",
                 "attributes": {
                   "code": {
@@ -4284,7 +4284,7 @@
                     "choices": "Activity/DocumentCategory.json",
                     "required": true,
                     "criteria": "",
-                    "hover_text": "elements/element_json_schema.document_link_sub_elements_category_attributes_code_hover_text",
+                    "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
                     "help_text": ""
                   }
                 },
@@ -4323,7 +4323,7 @@
                         "required": true,
                         "criteria": "",
                         "hover_text": "",
-                        "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                        "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
                       }
                     },
                     "sub_elements": {}
@@ -4339,7 +4339,7 @@
                 "wrapper_collection": false,
                 "is_collapsable": true,
                 "label_indicator": "optional_text",
-                "hover_text": "elements/element_json_schema.document_link_sub_elements_language_attributes_code_hover_text",
+                "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
                 "attributes": {
                   "language": {
                     "name": "language",
@@ -4463,7 +4463,7 @@
                     "required": true,
                     "criteria": "",
                     "hover_text": "",
-                    "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                    "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
                   }
                 },
                 "sub_elements": {}
@@ -4534,7 +4534,7 @@
                 "choices": "Activity/FileFormat.json",
                 "required": true,
                 "criteria": "",
-                "hover_text": "elements/element_json_schema.document_link_attributes_format_hover_text",
+                "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
                 "help_text": ""
               }
             },
@@ -4561,7 +4561,7 @@
                     "attr": {
                       "row": 4
                     },
-                    "hover_text": "elements/element_json_schema.document_link_sub_elements_title_sub_elements_narrative_hover_text",
+                    "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
                     "help_text": "",
                     "attributes": {
                       "language": {
@@ -4573,7 +4573,7 @@
                         "required": true,
                         "criteria": "",
                         "hover_text": "",
-                        "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                        "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
                       }
                     },
                     "sub_elements": {}
@@ -4590,7 +4590,7 @@
                 "label_has_borders": true,
                 "is_collapsable": true,
                 "label_indicator": "required_icon",
-                "hover_text": "elements/element_json_schema.document_link_sub_elements_category_hover_text",
+                "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
                 "help_text": "",
                 "attributes": {
                   "code": {
@@ -4601,7 +4601,7 @@
                     "choices": "Activity/DocumentCategory.json",
                     "required": true,
                     "criteria": "",
-                    "hover_text": "elements/element_json_schema.document_link_sub_elements_category_attributes_code_hover_text",
+                    "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
                     "help_text": ""
                   }
                 },
@@ -4640,7 +4640,7 @@
                         "required": true,
                         "criteria": "",
                         "hover_text": "",
-                        "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                        "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
                       }
                     },
                     "sub_elements": {}
@@ -4656,7 +4656,7 @@
                 "is_collapsable": true,
                 "label_indicator": "optional_text",
                 "wrapper_collection": false,
-                "hover_text": "elements/element_json_schema.document_link_sub_elements_language_attributes_code_hover_text",
+                "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
                 "attributes": {
                   "language": {
                     "name": "language",
@@ -4864,7 +4864,7 @@
             "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "elements/element_json_schema.budget_sub_elements_budget_value_attributes_value_date_hover_text",
+            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
             "help_text": ""
           },
           "currency": {
@@ -4876,7 +4876,7 @@
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "elements/element_json_schema.planned_disbursement_sub_elements_value_attributes_currency_help_text"
+            "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
           }
         },
         "sub_elements": {}
@@ -4915,7 +4915,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -4978,7 +4978,7 @@
             "attr": {
               "row": 4
             },
-            "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.enter_the_name_of_the_organisation_this_can_be_repeated_in_multiple_languages",
             "help_text": "",
             "attributes": {
               "language": {
@@ -4990,7 +4990,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -5053,7 +5053,7 @@
             "attr": {
               "row": 4
             },
-            "hover_text": "elements/element_json_schema.planned_disbursement_sub_elements_provider_org_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.enter_the_name_of_the_organisation_this_can_be_repeated_in_multiple_languages",
             "help_text": "",
             "attributes": {
               "language": {
@@ -5065,7 +5065,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -5261,7 +5261,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -5303,7 +5303,7 @@
             "attr": {
               "row": 4
             },
-            "hover_text": "elements/element_json_schema.recipient_country_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.add_an_optional_name_or_description_of_the_country_benefitting_from_the_activity",
             "help_text": "",
             "attributes": {
               "language": {
@@ -5315,7 +5315,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -5341,7 +5341,7 @@
             "choices": "Activity/RegionVocabulary.json",
             "required": false,
             "criteria": "",
-            "hover_text": "elements/element_json_schema.recipient_region_attributes_region_vocabulary_hover_text",
+            "hover_text": "common/common.you_can_select_regions_from_the_oecd_dac_un_or_your_own_internal_codelist",
             "help_text": ""
           },
           "region_code": {
@@ -5408,7 +5408,7 @@
             "attr": {
               "row": 4
             },
-            "hover_text": "elements/element_json_schema.recipient_region_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.add_an_optional_name_or_description_of_the_region_benefitting_from_the_activity",
             "help_text": "",
             "attributes": {
               "language": {
@@ -5420,7 +5420,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/element_json_schema.title_sub_elements_narrative_attributes_language_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}

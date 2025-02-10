@@ -80,7 +80,7 @@
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "elements/org_json_schema.name_sub_elements_narrative_attributes_lang_help_text"
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -116,7 +116,7 @@
         "placeholder": "common/common.select_type",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "elements/org_json_schema.reporting_org_attributes_type_hover_text",
+        "hover_text": "common/common.select_the_type_that_best_describes_your_organisation",
         "help_text": ""
       },
       "secondary_reporter": {
@@ -130,7 +130,7 @@
         "placeholder": "common/common.select_secondary_reporter",
         "required": false,
         "criteria": "",
-        "hover_text": "elements/org_json_schema.reporting_org_attributes_secondary_reporter_hover_text",
+        "hover_text": "common/common.if_you_are_publishing_data_about_your_own_organisation",
         "help_text": ""
       }
     },
@@ -147,7 +147,7 @@
         "attr": {
           "row": 4
         },
-        "hover_text": "elements/org_json_schema.reporting_org_sub_elements_narrative_hover_text",
+        "hover_text": "common/common.enter_your_organisations_name_this_can_be_repeated_in_multiple_language",
         "help_text": "",
         "attributes": {
           "lang": {
@@ -160,7 +160,7 @@
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "elements/org_json_schema.name_sub_elements_narrative_attributes_lang_help_text"
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -271,7 +271,7 @@
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_currency_help_text"
+            "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
           },
           "value_date": {
             "name": "value_date",
@@ -280,7 +280,7 @@
             "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_value_date_hover_text",
+            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
             "help_text": ""
           }
         },
@@ -339,7 +339,7 @@
                 "criteria": "mandatory",
                 "placeholder": "common/common.select_currency",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_currency_help_text"
+                "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
               },
               "value_date": {
                 "name": "value_date",
@@ -348,7 +348,7 @@
                 "placeholder": "common/common.yyyy_mm_dd",
                 "required": true,
                 "criteria": "mandatory",
-                "hover_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_value_date_hover_text",
+                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                 "help_text": ""
               }
             },
@@ -380,7 +380,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.name_sub_elements_narrative_attributes_lang_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -423,7 +423,7 @@
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "elements/org_json_schema.recipient_org_budget_sub_elements_recipient_org_hover_text",
+        "hover_text": "common/common.planned_disbursement_sub_elements_receiver_org_hover_text",
         "help_text": "",
         "attributes": {
           "ref": {
@@ -446,7 +446,7 @@
             "required": true,
             "criteria": "mandatory",
             "add_more": true,
-            "hover_text": "elements/org_json_schema.recipient_org_budget_sub_elements_recipient_org_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.enter_the_name_of_the_organisation_this_can_be_repeated_in_multiple_languages",
             "help_text": "",
             "attr": {
               "row": 4
@@ -462,7 +462,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.name_sub_elements_narrative_attributes_lang_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -548,7 +548,7 @@
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_currency_help_text"
+            "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
           },
           "value_date": {
             "name": "value_date",
@@ -557,7 +557,7 @@
             "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_value_date_hover_text",
+            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
             "help_text": ""
           }
         },
@@ -615,7 +615,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_currency_help_text"
+                "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
               },
               "value_date": {
                 "name": "value_date",
@@ -624,7 +624,7 @@
                 "placeholder": "common/common.yyyy_mm_dd",
                 "required": true,
                 "criteria": "mandatory",
-                "hover_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_value_date_hover_text",
+                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                 "help_text": ""
               }
             },
@@ -656,7 +656,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.name_sub_elements_narrative_attributes_lang_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -711,7 +711,7 @@
             "placeholder": "common/common.select_vocabulary",
             "required": false,
             "criteria": "",
-            "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_recipient_region_attributes_vocabulary_hover_text",
+            "hover_text": "common/common.you_can_select_regions_from_the_oecd_dac_un_or_your_own_internal_codelist",
             "help_text": ""
           },
           "oecd_region_code": {
@@ -760,7 +760,7 @@
             "attr": {
               "row": 4
             },
-            "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_recipient_region_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.add_an_optional_name_or_description_of_the_region_benefitting_from_the_activity",
             "help_text": "",
             "attributes": {
               "lang": {
@@ -773,7 +773,7 @@
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.name_sub_elements_narrative_attributes_lang_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -860,7 +860,7 @@
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_currency_help_text"
+            "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
           },
           "value_date": {
             "name": "value_date",
@@ -869,7 +869,7 @@
             "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_value_date_hover_text",
+            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
             "help_text": ""
           }
         },
@@ -928,7 +928,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_currency_help_text"
+                "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
               },
               "value_date": {
                 "name": "value_date",
@@ -937,7 +937,7 @@
                 "placeholder": "common/common.yyyy_mm_dd",
                 "required": true,
                 "criteria": "mandatory",
-                "hover_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_value_date_hover_text",
+                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                 "help_text": ""
               }
             },
@@ -967,7 +967,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.name_sub_elements_narrative_attributes_lang_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1038,7 +1038,7 @@
             "attr": {
               "row": 4
             },
-            "hover_text": "elements/org_json_schema.recipient_country_budget_sub_elements_recipient_country_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.add_an_optional_name_or_description_of_the_country_benefitting_from_the_activity",
             "help_text": "",
             "attributes": {
               "lang": {
@@ -1051,7 +1051,7 @@
                 "required": false,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.name_sub_elements_narrative_attributes_lang_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1138,7 +1138,7 @@
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_currency_help_text"
+            "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
           },
           "value_date": {
             "name": "value_date",
@@ -1147,7 +1147,7 @@
             "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_value_date_hover_text",
+            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
             "help_text": ""
           }
         },
@@ -1206,7 +1206,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_currency_help_text"
+                "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
               },
               "value_date": {
                 "name": "value_date",
@@ -1215,7 +1215,7 @@
                 "placeholder": "common/common.yyyy_mm_dd",
                 "required": true,
                 "criteria": "mandatory",
-                "hover_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_value_date_hover_text",
+                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                 "help_text": ""
               }
             },
@@ -1245,7 +1245,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.name_sub_elements_narrative_attributes_lang_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1345,7 +1345,7 @@
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_currency_help_text"
+            "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
           },
           "value_date": {
             "name": "value_date",
@@ -1354,7 +1354,7 @@
             "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_value_date_hover_text",
+            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
             "help_text": ""
           }
         },
@@ -1413,7 +1413,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_currency_help_text"
+                "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
               },
               "value_date": {
                 "name": "value_date",
@@ -1422,7 +1422,7 @@
                 "placeholder": "common/common.yyyy_mm_dd",
                 "required": true,
                 "criteria": "mandatory",
-                "hover_text": "elements/org_json_schema.total_budget_sub_elements_value_attributes_value_date_hover_text",
+                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                 "help_text": ""
               }
             },
@@ -1452,7 +1452,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.name_sub_elements_narrative_attributes_lang_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1491,7 +1491,7 @@
         "choices": "Activity/FileFormat.json",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "elements/org_json_schema.document_link_attributes_format_hover_text",
+        "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
         "help_text": ""
       }
     },
@@ -1519,7 +1519,7 @@
             "attr": {
               "row": 4
             },
-            "hover_text": "elements/org_json_schema.document_link_sub_elements_title_sub_elements_narrative_hover_text",
+            "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
             "help_text": "",
             "attributes": {
               "lang": {
@@ -1532,7 +1532,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.name_sub_elements_narrative_attributes_lang_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1549,7 +1549,7 @@
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
         "wrapper_collection": false,
-        "hover_text": "elements/org_json_schema.document_link_sub_elements_category_hover_text",
+        "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
         "help_text": "",
         "attributes": {
           "code": {
@@ -1561,7 +1561,7 @@
             "placeholder": "common/common.select_code",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "elements/org_json_schema.document_link_sub_elements_category_attributes_code_hover_text",
+            "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
             "help_text": ""
           }
         },
@@ -1602,7 +1602,7 @@
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.name_sub_elements_narrative_attributes_lang_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1618,7 +1618,7 @@
         "is_collapsable": true,
         "label_indicator": "optional_text",
         "wrapper_collection": false,
-        "hover_text": "elements/org_json_schema.document_link_sub_elements_language_hover_text",
+        "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
         "attributes": {
           "code": {
             "name": "language",
@@ -1709,7 +1709,7 @@
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "elements/org_json_schema.name_sub_elements_narrative_attributes_lang_help_text"
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}

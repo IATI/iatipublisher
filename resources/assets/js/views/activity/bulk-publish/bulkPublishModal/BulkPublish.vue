@@ -5,7 +5,7 @@
       class="mb-4 flex items-center gap-1 border-b border-n-20 pb-2 text-sm font-bold"
     >
       <span>
-        {{ translatedData['workflow_frontend.publish.publishing_activity'] }}
+        {{ translatedData['common.common.publishing_activity'] }}
       </span>
       <span
         class="inline-block rounded-full bg-lagoon-10 px-2 py-1 text-xs font-[500] text-spring-50"
@@ -53,7 +53,7 @@
           v-else
           :header="
             translatedData[
-              'publish.bulk_publish.checking_your_data_before_publication'
+              'common.common.checking_your_data_before_publication'
             ]
           "
         />

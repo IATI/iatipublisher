@@ -13,8 +13,6 @@ return [
     'open_in_new_tab'                                                => 'Open in new tab',
     'no_activities_are_ready_to_publish'                             => 'No activities are ready to publish',
     'select_all'                                                     => 'Select all',
-    'publishing_activity'                                            => 'Publishing Activity',
-    'checking_your_data_before_publication'                          => 'Checking your data before publication',
     'activity_has_been_published_successfully,_close_to_see_changes' => 'Activity has been published successfully, Close to see changes.',
     'minimize_screen'                                                => 'Minimize screen',
     'continue_publishing_anyway'                                     => 'Continue publishing Anyway',

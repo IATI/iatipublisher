@@ -311,5 +311,7 @@ return [
     'indicator_list'                                                                             => 'Indicator List',
     'indicator_number'                                                                           => 'Indicator number',
     'action'                                                                                     => 'Action',
+    'publishing_activity'                                            => 'Publishing Activity',
+    'checking_your_data_before_publication' => 'Checking your data before publication',
 ];
 
