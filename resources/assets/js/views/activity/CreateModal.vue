@@ -145,13 +145,7 @@
                   class="form__input"
                   type="text"
                   placeholder=""
-                  :value="
-                    formData.activity_identifier
-                      ? organization.identifier +
-                        '-' +
-                        formData.activity_identifier
-                      : ''
-                  "
+                  :value="iatiIdentifierText"
                   disabled="true"
                 />
 
@@ -192,7 +186,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, onMounted, inject } from 'vue';
+import {
+  defineComponent,
+  reactive,
+  ref,
+  onMounted,
+  inject,
+  computed,
+} from 'vue';
 import Modal from '../../components/PopupModal.vue';
 import BtnComponent from '../../components/ButtonComponent.vue';
 import Multiselect from '@vueform/multiselect';
@@ -225,12 +226,19 @@ export default defineComponent({
       narrative: '',
       language: '',
       activity_identifier: '',
+      iati_identifier_text: '',
     });
 
     const errorData: ObjectType = reactive({
       narrative: '',
       language: '',
       activity_identifier: '',
+    });
+
+    const iatiIdentifierText = computed(() => {
+      return formData.activity_identifier
+        ? organization.identifier + '-' + formData.activity_identifier
+        : '';
     });
 
     const loaderVisibility = ref(false);
@@ -252,6 +260,7 @@ export default defineComponent({
 
     function storeActivity() {
       loaderVisibility.value = true;
+      formData.iati_identifier_text = iatiIdentifierText.value;
 
       axios
         .post('/activity', formData)
@@ -289,6 +298,7 @@ export default defineComponent({
       closeModal,
       storeActivity,
       defaultLanguage,
+      iatiIdentifierText,
     };
   },
 });

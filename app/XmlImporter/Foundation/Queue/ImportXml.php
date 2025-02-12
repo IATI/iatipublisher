@@ -25,7 +25,7 @@ class ImportXml extends Job
     /**
      * @var
      */
-    protected $userId;
+    protected $authUser;
     /**
      * @var
      */
@@ -42,17 +42,17 @@ class ImportXml extends Job
      *
      * @param $organizationId
      * @param $orgRef
-     * @param $userId
+     * @param $authUser
      * @param $filename
      * @param $iatiIdentifiers
      * @param $organizationReportingOrg
      */
-    public function __construct($organizationId, $orgRef, $userId, $filename, $iatiIdentifiers, $organizationReportingOrg)
+    public function __construct($organizationId, $orgRef, $authUser, $filename, $iatiIdentifiers, $organizationReportingOrg)
     {
         $this->organizationId = $organizationId;
         $this->orgRef = $orgRef;
         $this->filename = $filename;
-        $this->userId = $userId;
+        $this->authUser = $authUser;
         $this->iatiIdentifiers = $iatiIdentifiers;
         $this->organizationReportingOrg = $organizationReportingOrg;
         $this->importStatusRepository = app(ImportStatusRepository::class);
@@ -65,7 +65,7 @@ class ImportXml extends Job
     {
         try {
             $xmlImportQueue = app()->make(XmlQueueProcessor::class);
-            $xmlImportQueue->import($this->filename, $this->organizationId, $this->orgRef, $this->userId, $this->iatiIdentifiers, $this->organizationReportingOrg);
+            $xmlImportQueue->import($this->filename, $this->organizationId, $this->orgRef, $this->authUser, $this->iatiIdentifiers, $this->organizationReportingOrg);
 
             $this->delete();
         } catch (\Exception $e) {

@@ -91,10 +91,12 @@ class XmlQueueWriter
      */
     protected $organizationReportingOrg;
 
+    private $authUser;
+
     /**
      * XmlQueueWriter constructor.
      *
-     * @param                        $userId
+     * @param                        $authUser
      * @param                        $orgId
      * @param                        $orgRef
      * @param                        $dbIatiIdentifiers
@@ -106,7 +108,7 @@ class XmlQueueWriter
      * @param DocumentLinkRepository $documentLinkRepo
      */
     public function __construct(
-        $userId,
+        $authUser,
         $orgId,
         $orgRef,
         $dbIatiIdentifiers,
@@ -117,11 +119,12 @@ class XmlQueueWriter
         ResultRepository $resultRepo,
         DocumentLinkRepository $documentLinkRepo
     ) {
+        $this->authUser = $authUser;
         $this->activityRepo = $activityRepo;
         $this->transactionRepo = $transactionRepo;
         $this->resultRepo = $resultRepo;
         $this->documentLinkRepo = $documentLinkRepo;
-        $this->userId = $userId;
+        $this->userId = $authUser->id;
         $this->orgId = $orgId;
         $this->orgRef = $orgRef;
         $this->dbIatiIdentifiers = $dbIatiIdentifiers;
@@ -137,6 +140,7 @@ class XmlQueueWriter
      *
      * @return bool
      * @throws \JsonException
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function save($mappedActivity): bool
     {
@@ -148,12 +152,15 @@ class XmlQueueWriter
 
         ImportCacheHelper::appendActivityIdentifiersToCache($this->orgId, $activityIdentifier);
 
-        $xmlValidator = (app(XmlValidator::class))->reportingOrganisationInOrganisation($this->organizationReportingOrg);
+        /** @var $xmlValidator XmlValidator */
+        $xmlValidator = app(XmlValidator::class);
         $existence = $this->activityAlreadyExists($activityIdentifier);
         $duplicate = $this->activityIsDuplicate(Arr::get($mappedActivity, 'iati_identifier.iati_identifier_text'));
         $isIdentifierValid = $this->isIdentifierValid(Arr::get($mappedActivity, 'iati_identifier.iati_identifier_text'));
 
-        $errors = $xmlValidator->init($mappedActivity)->validateActivity($duplicate, $isIdentifierValid);
+        $errors = $xmlValidator->init($mappedActivity)
+            ->prepareDependencies($this->authUser, $this->organizationReportingOrg)
+            ->validateActivity($duplicate, $isIdentifierValid);
 
         $mappedActivity['org_id'] = $this->orgId;
         $this->success++;
