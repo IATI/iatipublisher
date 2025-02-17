@@ -23,7 +23,7 @@ class ValidPhoneNumber implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        if (!preg_match('/^\+?(\(\d{1,3}\)|\d{1,4})?[-.\s]?\(?\d{1,20}\)?[-.\s]?\d{1,20}[-.\s]?\d{1,20}$/', $value)) {
+        if (!preg_match('/^[0-9()+\-\s]+$/', $value)) {
             return false;
         }
 
