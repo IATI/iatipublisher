@@ -77,7 +77,7 @@ class IdentifierRequest extends FormRequest
         }
 
         return [
-            'activity_identifier' => ['required', Rule::notIn($activityIdentifiers), 'not_regex:/(&|!|\/|\||\?)/', new NoSpacesInBetweenInActivityIdentifier(), new NoLeadingWhiteSpaceInActivityIdentifier(request()->get('iati_identifier_text'), $authUser->organization->identifier)],
+            'activity_identifier' => ['required', Rule::notIn($activityIdentifiers), new NoSpacesInBetweenInActivityIdentifier(), new NoLeadingWhiteSpaceInActivityIdentifier(request()->get('iati_identifier_text'), $authUser->organization->identifier)],
         ];
     }
 

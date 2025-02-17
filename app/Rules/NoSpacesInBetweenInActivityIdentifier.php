@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Illuminate\Support\Str;
 
 /**
  * @class NoSpacesInBetween
@@ -32,7 +31,9 @@ class NoSpacesInBetweenInActivityIdentifier implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        return !Str::contains(trim($value), ' ');
+        $trimmedValue = trim($value);
+
+        return (bool) preg_match('/^[a-zA-Z0-9-]+$/', $trimmedValue) && !preg_match('/[&!\/|?]/', $trimmedValue);
     }
 
     /**
@@ -42,6 +43,6 @@ class NoSpacesInBetweenInActivityIdentifier implements Rule
      */
     public function message(): string
     {
-        return 'The activity-identifier must not contain spaces.';
+        return 'The activity-identifier must only contain letters, numbers, and hyphens, with no spaces or other special characters.';
     }
 }
