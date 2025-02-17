@@ -1158,17 +1158,7 @@ if (!function_exists('arrayToLowercase')) {
 if (!function_exists('flattenArrayWithKeys')) {
     function flattenArrayWithKeys($array, $prefix = ''): array
     {
-        $result = [];
-
-        foreach ($array as $key => $value) {
-            if (is_array($value)) {
-                $result = array_merge($result, flattenArrayWithKeys($value, $prefix . $key . '.'));
-            } else {
-                $result[$prefix . $key] = $value;
-            }
-        }
-
-        return $result;
+        return Arr::dot($array);
     }
 }
 
@@ -1375,13 +1365,7 @@ if (!function_exists('changeEmptySpaceValueToNullValue')) {
 if (!function_exists('convertDotKeysToNestedArray')) {
     function convertDotKeysToNestedArray(array $array): array
     {
-        $result = [];
-
-        foreach ($array as $key => $value) {
-            Arr::set($result, $key, $value);
-        }
-
-        return $result;
+        return Arr::undot($array);
     }
 }
 

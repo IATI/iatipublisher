@@ -142,7 +142,7 @@ trait DownloadActivitySimpleElementTrait
     public function getActivityDescriptionGeneral($activityArray, $rowIndex): ?string
     {
         $type = '1';
-        $activityDescription = Arr::get($activityArray, 'description', []);
+        $activityDescription = (Arr::get($activityArray, 'description')) ?? [];
         $defaultLanguage = Arr::get($activityArray, 'default_field_values.default_language', '');
         $generalDescription = $this->getDescriptionText($activityDescription, $defaultLanguage, $type);
 
@@ -167,7 +167,7 @@ trait DownloadActivitySimpleElementTrait
     public function getActivityDescriptionObjectives($activityArray, $rowIndex): ?string
     {
         $type = '2';
-        $activityDescription = Arr::get($activityArray, 'description', []);
+        $activityDescription = (Arr::get($activityArray, 'description')) ?? [];
         $defaultLanguage = Arr::get($activityArray, 'default_field_values.default_language', '');
         $objectiveDescription = $this->getDescriptionText($activityDescription, $defaultLanguage, $type);
 
@@ -192,7 +192,7 @@ trait DownloadActivitySimpleElementTrait
     public function getActivityDescriptionTargetGroups($activityArray, $rowIndex): ?string
     {
         $type = '3';
-        $activityDescription = Arr::get($activityArray, 'description', []);
+        $activityDescription = (Arr::get($activityArray, 'description')) ?? [];
         $defaultLanguage = Arr::get($activityArray, 'default_field_values.default_language', '');
         $targetGroupDescription = $this->getDescriptionText($activityDescription, $defaultLanguage, $type);
 
@@ -217,7 +217,7 @@ trait DownloadActivitySimpleElementTrait
     public function getActivityDescriptionOthers($activityArray, $rowIndex): ?string
     {
         $type = '4';
-        $activityDescription = Arr::get($activityArray, 'description', []);
+        $activityDescription = (Arr::get($activityArray, 'description')) ?? [];
         $defaultLanguage = Arr::get($activityArray, 'default_field_values.default_language', '');
         $otherDescription = $this->getDescriptionText($activityDescription, $defaultLanguage, $type);
 

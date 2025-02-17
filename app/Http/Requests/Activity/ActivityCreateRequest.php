@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Requests\Activity;
 
 use App\IATI\Services\Activity\ActivityService;
+use App\Rules\NoLeadingWhiteSpaceInActivityIdentifier;
+use App\Rules\NoSpacesInBetweenInActivityIdentifier;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -16,7 +18,7 @@ class ActivityCreateRequest extends FormRequest
     /**
      * @var ActivityService
      */
-    protected $activityService;
+    protected ActivityService $activityService;
 
     /**
      * ActivityCreateRequest constructor.
@@ -46,8 +48,9 @@ class ActivityCreateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $authUser = auth()->user();
         $activityIdentifiers = [];
-        $organizationActivityIdentifiers = $this->activityService->getActivityIdentifiersForOrganization(auth()->user()->organization->id);
+        $organizationActivityIdentifiers = $this->activityService->getActivityIdentifiersForOrganization($authUser->organization->id);
 
         if (count($organizationActivityIdentifiers)) {
             foreach ($organizationActivityIdentifiers as $identifier) {
@@ -55,9 +58,17 @@ class ActivityCreateRequest extends FormRequest
             }
         }
 
+        $iatiIdentifierText = $this->request->get('iati_identifier_text', '');
+        $organisationIdentifier = $authUser->organization->identifier;
+
         return [
             'narrative'            => ['required'],
-            'activity_identifier'  => ['required', Rule::notIn($activityIdentifiers), 'not_regex:/(&|!|\/|\||\?)/'],
+            'activity_identifier'  => [
+                'required',
+                Rule::notIn($activityIdentifiers),
+                new NoSpacesInBetweenInActivityIdentifier(),
+                new NoLeadingWhiteSpaceInActivityIdentifier($iatiIdentifierText, $organisationIdentifier),
+            ],
             'iati_identifier_text' => ['sometimes'],
         ];
     }

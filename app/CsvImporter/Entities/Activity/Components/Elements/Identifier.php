@@ -124,7 +124,7 @@ class Identifier extends Element
      */
     public function criticalRules(): array
     {
-        return $this->request->getErrorsForIdentifier(true);
+        return $this->request->getErrorsForIdentifier(null, true);
     }
 
     /**

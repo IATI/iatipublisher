@@ -32,7 +32,7 @@ class IdentifierCsvTest extends CsvBaseTest
         }
 
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('The activity identifier format is invalid.', $flattenErrors);
+        $this->assertContains('The activity-identifier must only contain letters, numbers, and hyphens, with no spaces or other special characters.', $flattenErrors);
         $this->assertContains('The activity identifier field is required.', $flattenErrors);
     }
 
@@ -85,8 +85,8 @@ class IdentifierCsvTest extends CsvBaseTest
     public function identifier_valid_data(): array
     {
         $data = $this->completeData;
-        $data[0]['activity_identifier'] = ['valid reference'];
-        $data[1]['activity_identifier'] = ['another valid reference'];
+        $data[0]['activity_identifier'] = ['valid-reference'];
+        $data[1]['activity_identifier'] = ['another-valid-reference'];
 
         return $data;
     }

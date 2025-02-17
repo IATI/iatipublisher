@@ -24,7 +24,7 @@ class ActivityCreateTest extends TestCase
         $role = Role::factory()->create();
         $org = Organization::factory()->has(User::factory(['role_id' => $role->id]))->create();
         Activity::factory()->create([
-            'org_id' => $org->id,
+            'org_id'     => $org->id,
             'created_by' => $org->user->id,
             'updated_by' => $org->user->id,
         ]);
@@ -51,7 +51,7 @@ class ActivityCreateTest extends TestCase
             'narrative' => 'Test text',
             'language' => 'en',
             'activity_identifier' => 'SYRZ000041',
-            'iati_identifier_text' => 'CR-NP-SYRZ000042',
+            'iati_identifier_text' => 'NP-SWC-0987-SYRZ000042',
 
         ])
             ->assertStatus(302)
@@ -72,12 +72,88 @@ class ActivityCreateTest extends TestCase
             'narrative'            => Str::random(5),
             'language'             => 'en',
             'activity_identifier'  => '11111',
-            'iati_identifier_text' => 'CR-NP-11111',
+            'iati_identifier_text' => 'NP-SWC-0987-11111',
             'org_id'               => $org['id'],
             'created_by'           => $org->user->id,
             'updated_by'           => $org->user->id,
         ])
             ->assertStatus(200)
             ->assertJsonStructure(['success', 'message', 'data']);
+    }
+
+    public function test_can_normally_create_activity_if_no_leading_whitespace_in_activity_identifier(): void
+    {
+        $role = Role::factory()->create();
+        $org = Organization::factory()->has(User::factory(['role_id' => $role->id]))->create();
+
+        $response = $this->actingAs($org->user)->post('/activity', [
+            'narrative'            => Str::random(5),
+            'language'             => 'en',
+            'activity_identifier'  => '11111',
+            'iati_identifier_text' => 'NP-SWC-0987-11111',
+            'org_id'               => $org['id'],
+            'created_by'           => $org->user->id,
+            'updated_by'           => $org->user->id,
+        ]);
+
+        $response->assertStatus(200);
+    }
+
+    public function test_throws_error_when_identifier_has_leading_space(): void
+    {
+        $role = Role::factory()->create();
+        $org = Organization::factory()->has(User::factory(['role_id' => $role->id]))->create();
+
+        $response = $this->actingAs($org->user)->post('/activity', [
+            'narrative'            => Str::random(5),
+            'language'             => 'en',
+            'activity_identifier'  => ' 11111',
+            'iati_identifier_text' => 'NP-SWC-0987- 11111',
+            'org_id'               => $org['id'],
+            'created_by'           => $org->user->id,
+            'updated_by'           => $org->user->id,
+        ]);
+
+        $response->assertSessionHasErrors([
+            'activity_identifier' => 'The activity-identifier must not start with space.',
+        ]);
+    }
+
+    public function test_can_normally_create_activity_if_no_spaces_in_between_activity_identifier(): void
+    {
+        $role = Role::factory()->create();
+        $org = Organization::factory()->has(User::factory(['role_id' => $role->id]))->create();
+
+        $response = $this->actingAs($org->user)->post('/activity', [
+            'narrative'            => Str::random(5),
+            'language'             => 'en',
+            'activity_identifier'  => '11-111',
+            'iati_identifier_text' => 'NP-SWC-0987-11-111',
+            'org_id'               => $org['id'],
+            'created_by'           => $org->user->id,
+            'updated_by'           => $org->user->id,
+        ]);
+
+        $response->assertStatus(200);
+    }
+
+    public function test_throws_error_when_identifier_has_between(): void
+    {
+        $role = Role::factory()->create();
+        $org = Organization::factory()->has(User::factory(['role_id' => $role->id]))->create();
+
+        $response = $this->actingAs($org->user)->post('/activity', [
+            'narrative'            => Str::random(5),
+            'language'             => 'en',
+            'activity_identifier'  => '11 111',
+            'iati_identifier_text' => 'NP-SWC-0987-11 111',
+            'org_id'               => $org['id'],
+            'created_by'           => $org->user->id,
+            'updated_by'           => $org->user->id,
+        ]);
+
+        $response->assertSessionHasErrors([
+            'activity_identifier' => 'The activity-identifier must only contain letters, numbers, and hyphens, with no spaces or other special characters.',
+        ]);
     }
 }
