@@ -160,7 +160,7 @@ class ActivityValidator implements ValidatorInterface
         $rules = [];
         $tempRules = [
             (new TitleRequest())->getCriticalErrorsForTitle('title', Arr::get($activity, 'title', [])),
-            (new IdentifierRequest())->getErrorsForIdentifier(true, 'iati_identifier'),
+            (new IdentifierRequest())->getErrorsForIdentifier(null, true, 'iati_identifier'),
             $this->getCriticalErrorsForTransactions($activity),
         ];
 

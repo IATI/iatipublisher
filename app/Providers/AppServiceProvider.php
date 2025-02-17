@@ -37,11 +37,9 @@ class AppServiceProvider extends ServiceProvider
 
         if (config('app.env') === 'production' || config('app.env') === 'staging') {
             URL::forceScheme('https');
-            // return true;
         }
 
         Horizon::auth(function ($request) {
-            // Always show admin if local development
             if (env('APP_ENV') === 'local') {
                 return true;
             }

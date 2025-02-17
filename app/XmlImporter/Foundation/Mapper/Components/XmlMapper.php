@@ -122,18 +122,21 @@ class XmlMapper
      *
      * @param array $activities
      * @param       $template
-     * @param       $userId
+     * @param       $authUser
      * @param       $orgId
+     * @param       $orgRef
      * @param       $dbIatiIdentifiers
+     * @param       $organizationReportingOrg
      *
      * @return $this
+     * @throws \App\Exceptions\InvalidTag
      * @throws BindingResolutionException
      */
-    public function map(array $activities, $template, $userId, $orgId, $orgRef, $dbIatiIdentifiers, $organizationReportingOrg): static
+    public function map(array $activities, $template, $authUser, $orgId, $orgRef, $dbIatiIdentifiers, $organizationReportingOrg): static
     {
         $xmlActivityIdentifiers = $this->xmlActivityIdentifiers($activities);
         $xmlQueueWriter = app()->makeWith(XmlQueueWriter::class, [
-            'userId'                   => $userId,
+            'authUser'                 => $authUser,
             'orgId'                    => $orgId,
             'orgRef'                   => $orgRef,
             'dbIatiIdentifiers'        => $dbIatiIdentifiers,

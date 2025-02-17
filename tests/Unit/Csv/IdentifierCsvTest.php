@@ -85,8 +85,8 @@ class IdentifierCsvTest extends CsvBaseTest
     public function identifier_valid_data(): array
     {
         $data = $this->completeData;
-        $data[0]['activity_identifier'] = ['valid reference'];
-        $data[1]['activity_identifier'] = ['another valid reference'];
+        $data[0]['activity_identifier'] = ['valid-reference'];
+        $data[1]['activity_identifier'] = ['another-valid-reference'];
 
         return $data;
     }

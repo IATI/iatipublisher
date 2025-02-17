@@ -229,6 +229,9 @@ return [
         ],
     ],
     'not_in_spam_emails' => 'This email has been flagged as spam and cannot be used.',
+    'no_leading_white_space' => 'The activity-identifier must not start with space.',
+    'no_spaces_in_between' => 'The activity-identifier must not contain spaces.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes

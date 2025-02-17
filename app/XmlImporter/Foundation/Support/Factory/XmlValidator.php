@@ -11,6 +11,7 @@ use App\XmlImporter\Foundation\Support\Factory\Traits\CriticalErrorValidationRul
 use App\XmlImporter\Foundation\Support\Factory\Traits\ErrorValidationRules;
 use App\XmlImporter\Foundation\Support\Factory\Traits\ValidationMessages;
 use App\XmlImporter\Foundation\Support\Factory\Traits\WarningValidationRules;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use JsonException;
@@ -29,6 +30,8 @@ class XmlValidator
      * @var bool|array
      */
     public bool|array $organizationReportingOrg = false;
+
+    public ?Authenticatable $authUser = null;
 
     /**
      * @var
@@ -162,6 +165,7 @@ class XmlValidator
      * @return array
      *
      * @throws JsonException
+     * @throws BindingResolutionException
      */
     public function criticalRules(): array
     {
@@ -170,9 +174,11 @@ class XmlValidator
         $reportingOrgRequest = new ReportingOrgRequest();
         $reportingOrgRequest->reportingOrganisationInOrganisation($this->organizationReportingOrg);
 
+        $iatiIdentifierText = Arr::get($activity, 'iati_identifier.iati_identifier_text');
+
         $tempRules = [
             (new TitleRequest())->getCriticalErrorsForTitle('title'),
-            (new IdentifierRequest())->getErrorsForIdentifier(true, 'identifier'),
+            (new IdentifierRequest())->getErrorsForIdentifier($this->authUser, true, 'identifier', 'xml', $iatiIdentifierText),
             $reportingOrgRequest->getCriticalErrorsForReportingOrganization(Arr::get($activity, 'reporting_org')),
             $this->getCriticalErrorsForTransactions($activity),
         ];
@@ -239,7 +245,7 @@ class XmlValidator
         return $messages;
     }
 
-    public function init($activity)
+    public function init($activity): static
     {
         $this->activity = $activity;
         $tempFlattened = flattenArrayWithKeys($this->activity);
@@ -247,6 +253,20 @@ class XmlValidator
         $tempFlattened = trimStringValueInArray($tempFlattened);
 
         $this->activity = convertDotKeysToNestedArray($tempFlattened);
+
+        return $this;
+    }
+
+    /**
+     * @param $authUser
+     * @param $organizationReportingOrg
+     *
+     * @return $this
+     */
+    public function prepareDependencies($authUser, $organizationReportingOrg): static
+    {
+        $this->authUser = $authUser;
+        $this->organizationReportingOrg = $organizationReportingOrg;
 
         return $this;
     }
@@ -345,19 +365,5 @@ class XmlValidator
         }
 
         return $messages;
-    }
-
-    /**
-     * Sets Organization reporting org.
-     *
-     * @param $organizationReportingOrg
-     *
-     * @return $this
-     */
-    public function reportingOrganisationInOrganisation($organizationReportingOrg): static
-    {
-        $this->organizationReportingOrg = $organizationReportingOrg;
-
-        return $this;
     }
 }
