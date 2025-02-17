@@ -30,7 +30,7 @@ class IdentifierRequest extends FormRequest
      */
     public function rules(bool $fileUpload = false): array
     {
-        $totalRules = [$this->getWarningForIdentifier(), $this->getErrorsForIdentifier()];
+        $totalRules = [$this->getWarningForIdentifier(), $this->getErrorsForIdentifier(auth()->user())];
 
         return mergeRules($totalRules);
     }
