@@ -453,8 +453,8 @@ class DownloadActivityService
     /**
      * Returns the first narrative text of the first description that matches given description type.
      *
-     * @param array  $descriptions
-     * @param string $type
+     * @param array $descriptions
+     * @param string     $type
      *
      * @return string
      */
