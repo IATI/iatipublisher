@@ -66,7 +66,6 @@ class ActivityCreateRequest extends FormRequest
             'activity_identifier'  => [
                 'required',
                 Rule::notIn($activityIdentifiers),
-                'not_regex:/(&|!|\/|\||\?)/',
                 new NoSpacesInBetweenInActivityIdentifier(),
                 new NoLeadingWhiteSpaceInActivityIdentifier($iatiIdentifierText, $organisationIdentifier),
             ],
