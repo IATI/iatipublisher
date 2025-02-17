@@ -98,7 +98,6 @@ class IdentifierRequest extends FormRequest
         $rules = [
             $ruleKey => [
                 'required',
-                'not_regex:/(&|!|\/|\||\?)/',
                 new NoSpacesInBetweenInActivityIdentifier(),
             ],
         ];

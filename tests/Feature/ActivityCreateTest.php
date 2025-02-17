@@ -153,7 +153,7 @@ class ActivityCreateTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors([
-            'activity_identifier' => 'The activity-identifier must not contain spaces.',
+            'activity_identifier' => 'The activity-identifier must only contain letters, numbers, and hyphens, with no spaces or other special characters.',
         ]);
     }
 }
