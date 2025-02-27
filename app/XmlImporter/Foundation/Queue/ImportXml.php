@@ -65,7 +65,7 @@ class ImportXml extends Job
     {
         try {
             $xmlImportQueue = app()->make(XmlQueueProcessor::class);
-            $xmlImportQueue->import($this->filename, $this->organizationId, $this->orgRef, $this->authUser, $this->iatiIdentifiers, $this->organizationReportingOrg);
+            $xmlImportQueue->import($this->filename, $this->organizationId, $this->orgRef, $this->authUser, $this->iatiIdentifiers, $this->organizationReportingOrg, $this->importStatusRepository);
 
             $this->delete();
         } catch (\Exception $e) {

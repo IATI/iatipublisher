@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\XmlImporter\Foundation;
 
 use App\Exceptions\InvalidTag;
+use App\Helpers\ImportCacheHelper;
 use App\IATI\Repositories\Activity\ActivityRepository;
+use App\IATI\Repositories\Import\ImportStatusRepository;
 use App\XmlImporter\Foundation\Support\Providers\XmlServiceProvider;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\DatabaseManager;
@@ -71,20 +73,24 @@ class XmlQueueProcessor
      */
     private string $xml_data_storage_path;
 
+    private ImportStatusRepository $importStatusRepository;
+
     /**
      * XmlQueueProcessor constructor.
      *
-     * @param XmlServiceProvider $xmlServiceProvider
-     * @param XmlProcessor       $xmlProcessor
-     * @param ActivityRepository $activityRepo
-     * @param DatabaseManager    $databaseManager
+     * @param XmlServiceProvider     $xmlServiceProvider
+     * @param XmlProcessor           $xmlProcessor
+     * @param ActivityRepository     $activityRepo
+     * @param DatabaseManager        $databaseManager
+     * @param ImportStatusRepository $importStatusRepository
      */
-    public function __construct(XmlServiceProvider $xmlServiceProvider, XmlProcessor $xmlProcessor, ActivityRepository $activityRepo, DatabaseManager $databaseManager)
+    public function __construct(XmlServiceProvider $xmlServiceProvider, XmlProcessor $xmlProcessor, ActivityRepository $activityRepo, DatabaseManager $databaseManager, ImportStatusRepository $importStatusRepository)
     {
         $this->xmlServiceProvider = $xmlServiceProvider;
         $this->xmlProcessor = $xmlProcessor;
         $this->activityRepo = $activityRepo;
         $this->databaseManager = $databaseManager;
+        $this->importStatusRepository = $importStatusRepository;
         $this->xml_file_storage_path = env('XML_FILE_STORAGE_PATH ', 'XmlImporter/file');
         $this->xml_data_storage_path = env('XML_DATA_STORAGE_PATH ', 'XmlImporter/tmp');
     }
@@ -142,6 +148,10 @@ class XmlQueueProcessor
             throw $e;
         } catch (\Exception $e) {
             logger($e);
+
+            ImportCacheHelper::clearImportCache($orgId);
+            $this->importStatusRepository->deleteOngoingImports($orgId);
+
             awsUploadFile(sprintf('%s/%s/%s/%s', $this->xml_data_storage_path, $orgId, $userId, 'status.json'), json_encode(['success' => false, 'message' => 'Error has occurred while importing the file.'], JSON_THROW_ON_ERROR));
 
             throw  $e;
