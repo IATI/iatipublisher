@@ -14,10 +14,10 @@
             <div class="flex justify-end">
                 <div class="inline-flex">
                     <button class="relative px-6 font-bold uppercase bg-white cancel-popup button text-n-40">
-                        <span>{{trans('common/common.go_back')}}</span>
+                        <span>Go Back</span>
                     </button>
                     <button class="relative font-bold delete-confirm button text-n-40 primary-btn space">
-                        <span>{{trans('common/common.delete')}}</span>
+                        <span>Delete</span>
                     </button>
                 </div>
             </div>
@@ -77,7 +77,7 @@
             </div> --}}
         </div>
         <div class="flex icons">
-            <span class="text-xs"><span class="required-icon">*</span> {{ trans('common/common.mandatory_fields') }}</span>
+            <span class="text-xs"><span class="required-icon">*</span> Mandatory fields</span>
         </div>
     </div>
     <div class="w-full h-px mb-4 divider bg-n-20"></div>
