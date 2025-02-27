@@ -21,19 +21,20 @@ trait XmlHelper
      */
     protected function latAndLong($values): array
     {
-        $narrative = $this->value($values, 'point');
         $data = ['latitude' => '', 'longitude' => ''];
-        foreach ($narrative as $latLong) {
-            $narrative = $latLong['narrative'];
+        $index = array_search('{}point', array_column($values, 'name'));
 
-            if ($narrative !== '') {
-                $text = explode(' ', $latLong['narrative']);
+        if ($index === false || $index === '') {
+            return $data;
+        }
 
-                if (count($text) === 2) {
-                    $data['latitude'] = $text[0];
-                    $data['longitude'] = $text[1];
-                }
-            }
+        $pointData = Arr::get($values, "$index.value", []);
+        $latLongData = Arr::get($pointData, '0.value', '');
+        $text = explode(' ', $latLongData);
+
+        if (count($text) === 2) {
+            $data['latitude'] = $text[0];
+            $data['longitude'] = $text[1];
         }
 
         return $data;
