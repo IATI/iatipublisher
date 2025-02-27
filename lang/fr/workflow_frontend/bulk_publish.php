@@ -5,7 +5,7 @@ return [
     'review_the_core_completeness_percentage'                        => 'fr_ Review the \'<b>Core Completeness</b>\' column in your activity list to ensure mandatory and recommended elements are populated. A higher percentage indicates better data completeness.',
     'this_process_may_take_some_time'                                => 'fr_ This process may take some time. You can minimise this tab and continue working on other tasks.',
     'validation_incomplete'                                          => 'fr_ Validation incomplete',
-    'activities_could_only_be_validated_due_to_server_error'         => 'fr_ <b class=\"text-[18px]\">:count / :totalCount </b> activities could only be validated due to server error. Would you like to still publish these activities?',
+    'activities_could_only_be_validated_due_to_server_error'         => 'fr_ <b class="text-[18px]">:count / :totalCount </b> activities could only be validated due to server error. Would you like to still publish these activities?',
     'exceeded_max_publish_size'                                      => 'fr_ Maximum file size to publish exceeded.',
     'data_checking_complete_click_continue_to_publish'               => 'fr_ Data checking complete. Click continue to publish',
     'activities_marked_with_this_symbol_have_data_quality_issues'    => 'fr_ Activities marked with this symbol have data validation issues',
@@ -17,7 +17,7 @@ return [
     'minimize_screen'                                                => 'fr_ Minimise screen',
     'continue_publishing_anyway'                                     => 'fr_ Continue publishing anyway',
     'continue_publishing'                                            => 'fr_ Continue publishing',
-    'try_again_or_write_to_support_for_further_assistance'           => 'fr_ Try again or <a target=\"_blank\" href=\"https://iatistandard.org/en/guidance/get-support/\">Contact support</a> for further assistance.',
+    'try_again_or_write_to_support_for_further_assistance'           => 'fr_ Try again or <a target="_blank" href="https://iatistandard.org/en/guidance/get-support/">Contact support</a> for further assistance.',
     'publishing_count_activities'                                    => 'fr_ Publishing :count activities',
     'view_the_errors_and_warnings_in_detail'                         => 'fr_ View more detail on the data validation errors and warnings',
     'publishing_completed'                                           => 'fr_ Publishing Completed',
@@ -26,4 +26,5 @@ return [
     'publishing_activities'                                          => 'fr_ Publishing Activities',
     'some_activities_have_failed_to_publish_refresh_to_see_changes'  => 'fr_ Some activities failed to publish. Refresh to see changes.',
     'this_element_uses_deprecated_codelist_values'                   => 'fr_ This element uses deprecated codelist values.',
+    'validating_your_data_before_publication'                        => 'fr_ Validating your data before publication',
 ];

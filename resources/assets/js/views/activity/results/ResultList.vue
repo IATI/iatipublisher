@@ -290,14 +290,6 @@ export default defineComponent({
   },
   setup(props) {
     const { activity } = toRefs(props);
-    // const translatedData = ref({});
-    // LanguageService.getTranslatedData(
-    //   'workflow_frontend,common,activity_detail,activity_index,elements'
-    // )
-    //   .then((response) => {
-    //    props.translatedData = response.data;
-    //   })
-    //   .catch((error) => console.log(error));
 
     const activityId = activity.value.id,
       activityTitle = activity.value.title,
@@ -355,7 +347,7 @@ export default defineComponent({
     /**
      * Breadcrumb data
      */
-    const breadcrumbData = reactive([
+    const breadcrumbData = [
       {
         title: props.translatedData['common.common.your_activities'],
         link: '/activities',
@@ -368,19 +360,7 @@ export default defineComponent({
         title: props.translatedData['common.common.result_list'],
         link: '',
       },
-    ]);
-
-    /**
-     * Using Translated Breadcrumb titles
-     */
-    watchEffect(() => {
-      if (props.translatedData) {
-        breadcrumbData[0].title =
-          props.translatedData['common.common.your_activities'];
-        breadcrumbData[2].title =
-          props.translatedData['common.common.result_list'];
-      }
-    });
+    ];
 
     const titles = computed(() => [
       { title: 'All', searchTerm: 'all', count: countData.value.all },

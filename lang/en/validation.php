@@ -230,7 +230,7 @@ return [
     'activity_planned_disbursement'                        => [
         'invalid_type' => 'Disbursement type is invalid.',
         'value'        => [
-            'date'   => [
+            'date' => [
                 'required' => 'Value date is a required field',
             ],
         ],

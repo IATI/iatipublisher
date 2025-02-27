@@ -839,8 +839,8 @@ isSuperadmin.value =
   props.userRole === 'superadmin' || props.userRole === 'iati_admin';
 
 const dropdownRange = ref({
-  created_at: 'User created date',
-  last_logged_in: 'Last login date',
+  created_at: props.translatedData['common.common.user_created_date'],
+  last_logged_in: props.translatedData['common.common.last_login_date'],
 });
 
 const formData = reactive({

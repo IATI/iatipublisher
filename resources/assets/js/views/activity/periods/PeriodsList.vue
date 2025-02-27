@@ -195,7 +195,7 @@ export default defineComponent({
     /**
      * Breadcrumb data
      */
-    const breadcrumbData = reactive([
+    const breadcrumbData = [
       {
         title: props.translatedData['common.common.your_activities'],
         link: '/activity',
@@ -224,7 +224,7 @@ export default defineComponent({
         title: props.translatedData['common.common.period_list'],
         link: '',
       },
-    ]);
+    ];
 
     onMounted(async () => {
       axios.get(`/indicator/${indicatorId}/periods/page/1`).then((res) => {

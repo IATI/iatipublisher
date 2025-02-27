@@ -401,9 +401,9 @@ export default defineComponent({
     /**
      * Breadcrumb data
      */
-    const breadcrumbData = reactive([
+    const breadcrumbData = [
       {
-        title: 'Your Activities',
+        title: props.translatedData['common.common.your_activities'],
         link: '/activities',
       },
       {
@@ -411,7 +411,7 @@ export default defineComponent({
         link: activityLink,
       },
       {
-        title: 'Result List',
+        title: props.translatedData['common.common.result_list'],
         link: `/activity/${activityId}/result`,
       },
       {
@@ -419,28 +419,14 @@ export default defineComponent({
         link: resultLink,
       },
       {
-        title: 'Indicator List',
+        title: props.translatedData['common.common.indicator_list'],
         link: `/result/${resultId}/indicator`,
       },
       {
         title: indicatorTitle,
         link: '',
       },
-    ]);
-
-    /**
-     * Using Translated Breadcrumb titles
-     */
-    watchEffect(() => {
-      if (props.translatedData) {
-        breadcrumbData[0].title =
-          props.translatedData['common.common.your_activities'];
-        breadcrumbData[2].title =
-          props.translatedData['common.common.result_list'];
-        breadcrumbData[4].title =
-          props.translatedData['common.common.indicator_list'];
-      }
-    });
+    ];
 
     const handleScroll = () => {
       positionY.value = window.scrollY;

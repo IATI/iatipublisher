@@ -263,9 +263,9 @@ export default defineComponent({
     /**
      * Breadcrumb data
      */
-    const breadcrumbData = reactive([
+    const breadcrumbData = [
       {
-        title: 'Your activities',
+        title: props.translatedData['common.common.your_activities'],
         link: '/activities',
       },
       {
@@ -273,7 +273,7 @@ export default defineComponent({
         link: activityLink,
       },
       {
-        title: 'Result List',
+        title: props.translatedData['common.common.result_list'],
         link: `/activity/${activityId}/result`,
       },
       {
@@ -281,7 +281,7 @@ export default defineComponent({
         link: resultLink,
       },
       {
-        title: 'Indicator List',
+        title: props.translatedData['common.common.indicator_list'],
         link: `/result/${resultId}/indicator`,
       },
       {
@@ -289,33 +289,14 @@ export default defineComponent({
         link: indicatorLink,
       },
       {
-        title: 'Period List',
+        title: props.translatedData['common.common.period_list'],
         link: `/indicator/${indicatorId}/period`,
       },
       {
-        title: 'period',
+        title: props.translatedData['elements.label.period'],
         link: '',
       },
-    ]);
-
-    /**
-     * Using Translated Breadcrumb titles
-     */
-    watchEffect(() => {
-      if (props.translatedData) {
-        breadcrumbData[0].title =
-          props.translatedData['common.common.your_activities'];
-        breadcrumbData[2].title =
-          props.translatedData['common.common.result_list'];
-        breadcrumbData[4].title =
-          props.translatedData['common.common.indicator_list'];
-        breadcrumbData[6].title =
-          props.translatedData['common.common.period_list'];
-        breadcrumbData[7].title = toTitleCase(
-          props.translatedData['elements.label.period']
-        );
-      }
-    });
+    ];
 
     const calcWidth = (event) => {
       screenWidth.value = event.target.innerWidth;

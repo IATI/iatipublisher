@@ -419,12 +419,12 @@ const publishStatus = reactive({
 
 const btnText = computed(() => {
   if (publishStatus.linked_to_iati && publishStatus.status === 'draft') {
-    return 'Republish';
+    return translatedData['common.common.republish'];
   } else if (
     !publishStatus.linked_to_iati &&
     publishStatus.status === 'draft'
   ) {
-    return 'Publish';
+    return translatedData['common.common.publish'];
   } else {
     return '';
   }

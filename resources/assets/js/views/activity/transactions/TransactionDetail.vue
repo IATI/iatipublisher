@@ -204,15 +204,6 @@ export default defineComponent({
   setup(props) {
     const { activity, transaction } = toRefs(props);
 
-    // const translatedData = ref({});
-    // LanguageService.getTranslatedData(
-    //   'workflow_frontend,common,activity_detail,activity_index,elements'
-    // )
-    //   .then((response) => {
-    //    props.translatedData = response.data;
-    //   })
-    //   .catch((error) => console.log(error));
-
     const linkClasses =
       'flex items-center w-full bg-white rounded p-2 text-sm text-n-50 font-bold leading-relaxed mb-2 shadow-default';
     const showSidebar = ref(false);
@@ -266,9 +257,9 @@ export default defineComponent({
     /**
      * Breadcrumb data
      */
-    const breadcrumbData = reactive([
+    const breadcrumbData = [
       {
-        title: 'Youxr Activities',
+        title: props.translatedData['common.common.your_activities'],
         link: '/activity',
       },
       {
@@ -276,29 +267,14 @@ export default defineComponent({
         link: activityLink,
       },
       {
-        title: 'Transaction List',
+        title: props.translatedData['common.common.transaction_list'],
         link: `/activity/${activityId}/transaction`,
       },
       {
-        title: 'Transaction',
+        title: props.translatedData['elements.label.transaction'],
         link: '',
       },
-    ]);
-
-    /**
-     * Using Translated Breadcrumb titles
-     */
-    watchEffect(() => {
-      if (props.translatedData) {
-        breadcrumbData[0].title =
-          props.translatedData['common.common.your_activities'];
-        breadcrumbData[2].title =
-          props.translatedData['common.common.transaction_list'];
-        breadcrumbData[3].title = toTitleCase(
-          props.translatedData['elements.label.transaction']
-        );
-      }
-    });
+    ];
 
     onMounted(() => {
       window.addEventListener('scroll', handleScroll);

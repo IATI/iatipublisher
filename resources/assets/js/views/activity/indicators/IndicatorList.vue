@@ -233,9 +233,9 @@ export default defineComponent({
     /**
      * Breadcrumb data
      */
-    const breadcrumbData = reactive([
+    const breadcrumbData = [
       {
-        title: 'Your activities',
+        title: props.translatedData['common.common.your_activities'],
         link: '/activities',
       },
       {
@@ -243,7 +243,7 @@ export default defineComponent({
         link: `/activity/${activityId}`,
       },
       {
-        title: 'Result List',
+        title: props.translatedData['common.common.result_list'],
         link: `/activity/${activityId}/result`,
       },
       {
@@ -251,24 +251,10 @@ export default defineComponent({
         link: `/activity/${activityId}/result/${resultId}`,
       },
       {
-        title: 'Indicator List',
+        title: props.translatedData['common.common.indicator_list'],
         link: '',
       },
-    ]);
-
-    /**
-     * Using Translated Breadcrumb titles
-     */
-    watchEffect(() => {
-      if (props.translatedData) {
-        breadcrumbData[0].title =
-          props.translatedData['common.common.your_activities'];
-        breadcrumbData[2].title =
-          props.translatedData['common.common.result_list'];
-        breadcrumbData[4].title =
-          props.translatedData['common.common.indicator_list'];
-      }
-    });
+    ];
 
     onMounted(async () => {
       axios.get(`/result/${resultId}/indicators/page/1`).then((res) => {

@@ -448,7 +448,10 @@
               </div>
             </th>
             <th class="px-6 py-4">
-              {{ getTranslatedElement(translatedData, 'status') }}
+              {{
+                translatedData['common.common.status'].charAt(0).toUpperCase() +
+                translatedData['common.common.status'].slice(1)
+              }}
             </th>
             <th class="px-6 py-4 text-left">
               <button class="cursor-pointer" @click="selectAll">
@@ -608,6 +611,7 @@ import { useStorage } from '@vueuse/core';
 import PublishSelected from 'Activity/bulk-publish/PublishSelected.vue';
 import { getTranslatedElement } from 'Composable/utils';
 import { defineProps } from 'vue';
+import transactionDate from 'Activity/transactions/elements/TransactionDate.vue';
 
 interface ActivitiesInterface {
   last_page: number;
@@ -849,7 +853,7 @@ const selectAll = () => {
 function uploadFile() {
   if (!xlsData.value) {
     loader.value = true;
-    loaderText.value = 'Fetching .xls file';
+    loaderText.value = props.translatedData['common.common.fetching_xls_file'];
 
     let activity = file.value.files.length ? file.value.files[0] : '';
 
@@ -1012,6 +1016,7 @@ provide('xlsFailedMessage', xlsFailedMessage);
 provide('activityLength', activityLength);
 provide('completed', uploadComplete);
 provide('processing', processing);
+provide('translatedData', props.translatedData);
 watch(
   () => store.state.completeXlsDownload,
   (value) => {

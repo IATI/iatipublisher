@@ -663,7 +663,7 @@ export default defineComponent({
     /**
      * Breadcrumb data
      */
-    const breadcrumbData = reactive([
+    const breadcrumbData = [
       {
         title: props.translatedData['common.common.your_activities'],
         link: '/activities',
@@ -676,19 +676,7 @@ export default defineComponent({
         title: props.translatedData['common.common.transaction_list'],
         link: '',
       },
-    ]);
-
-    /**
-     * Using Translated Breadcrumb titles
-     */
-    watchEffect(() => {
-      if (props.translatedData) {
-        breadcrumbData[0].title =
-          props.translatedData['common.common.your_activities'];
-        breadcrumbData[2].title =
-          props.translatedData['common.common.transaction_list'];
-      }
-    });
+    ];
 
     provide('parentItemId', activityId);
 

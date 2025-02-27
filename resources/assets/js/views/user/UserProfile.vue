@@ -385,7 +385,7 @@
         class="flex space-x-2 border-b border-n-20 py-6"
       >
         <div class="text-base font-bold text-n-40">
-          {{ toTitleCase(translatedData['common.common.organization']) }}
+          {{ toTitleCase(translatedData['elements.label.organisation']) }}
         </div>
         <div class="text-base">
           {{ userData['organization_name'] }}

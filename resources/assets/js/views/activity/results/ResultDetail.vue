@@ -266,15 +266,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    // const translatedData = ref({});
-    // LanguageService.getTranslatedData(
-    //   'workflow_frontend,common,activity_detail,activity_index,elements'
-    // )
-    //   .then((response) => {
-    //     props.translatedData = response.data;
-    //   })
-    //   .catch((error) => console.log(error));
-
     const linkClasses =
       'flex items-center w-full bg-white rounded p-2 text-sm text-n-50 font-bold leading-normal mb-2 shadow-default';
     const positionY = ref(0);
@@ -305,9 +296,9 @@ export default defineComponent({
     /**
      * Breadcrumb data
      */
-    const breadcrumbData = reactive([
+    const breadcrumbData = [
       {
-        title: 'Your Activities',
+        title: props.translatedData['common.common.your_activities'],
         link: '/activities',
       },
       {
@@ -318,7 +309,7 @@ export default defineComponent({
         title: resultTitle,
         link: '',
       },
-    ]);
+    ];
 
     /**
      * Using Translated Breadcrumb titles

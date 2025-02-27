@@ -46,7 +46,7 @@
               <svg-vue class="mr-1 text-lg" icon="box"></svg-vue>
               <span>{{
                 translatedData[
-                  'organisationDetail.organisation_elements.all_element'
+                  'organisationDetail.organisation_elements.all_elements'
                 ]
               }}</span>
             </li>

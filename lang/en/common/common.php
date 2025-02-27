@@ -324,5 +324,8 @@ return [
     'hello'                                                                                                                                                           => 'Hello ',
     'welcome_to_iati_publisher_your_email_has_been_used_to_create_a_new_account_here_please_click_the_button_below_to_verify_that_you_have_created_the_account_in_it' => 'Welcome to IATI Publisher. Your email has been used to create a new account here. Please click the button below to verify that you have created the account in it.',
     'welcome_to_iati_publisher_your_email_has_been_used_to_create_a_new_account_here_please_click_the_button_below_to_update_the_password_of_your_account'            => 'Welcome to IATI Publisher. Your email has been used to create a new account here. Please click the button below to update the password of your account.',
-    'core_completeness'=>'Core completeness'
+    'core_completeness'                                                                                                                                               => 'Core completeness',
+    'are_you_sure_you_want_to_delete_this_item'                                                                                                                       => 'Are you sure you want to delete this item?',
+    'delete_alert'                                                                                                                                                    => 'Delete alert',
+    'fetching_xls_file'                                                                                                                                               => 'Fetching .xls file',
 ];

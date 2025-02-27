@@ -30,7 +30,7 @@ return [
     'the_activity_contains_critical_errors'                                    => 'Activities with critical errors cannot be imported. Please review your data and re-upload.',
     'the_field_with_warnings_will_be_uploaded_to_our_system'                   => 'Activities with warnings can be imported into IATI Publisher.',
     'the_activity_with_the_errors_will_be_uploaded_to_our_system'              => 'Activities with errors can still be imported, but fields containing errors may be removed. We recommending reviewing errors and re-uploading your data.',
-    'Upload in progress'                                                       => 'Import in progress',
+    'upload_in_progress'                                                       => 'Import in progress',
     'we_are_in_the_process_of_uploading'                                       => 'Import of file :activityTitle in progress. ',
     'please_wait_for_the_completion_of_previous_import'                        => 'Please wait for previous import to complete.',
     'please_wait_for_the_completion_of_previous_import_or_click_import_anyway' => 'Please wait for previous import to complete or click "Import Anyway".',

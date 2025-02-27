@@ -53,7 +53,7 @@
                 @endphp
               </div>
               <div class="icons flex">
-                <span class="text-xs"><sup class="text-salmon-50">*</sup> Mandatory fields</span>
+                <span class="text-xs"><sup class="text-salmon-50">*</sup> {{ trans('common/common.mandatory_fields') }}</span>
                 <hover-text hoverText="tooltip" class="ml-1" />
               </div>
             </div>

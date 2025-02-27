@@ -5,7 +5,13 @@
       store.state.bulkActivityPublishStatus.iatiValidatorLoader
     "
   >
-    <RollingLoader header="Validating your data before publication" />
+    <RollingLoader
+      :header="
+        translatedData[
+          'workflow_frontend.bulk_publish.validating_your_data_before_publication'
+        ]
+      "
+    />
     <p
       class="mt-2.5 rounded-lg bg-paper p-4 text-sm leading-[22px] tracking-normal text-n-50"
     >
