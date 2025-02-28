@@ -46,7 +46,7 @@ trait IatiTranslationTrait
 
             $cacheData['general'] = $outerFileTranslations;
 
-            Cache::put("translated_data_{$lang}", $cacheData, now()->addHours(24));
+//           Cache::put("translated_data_{$lang}", $cacheData, now()->addHours(24));
         }
 
         return $cacheData;

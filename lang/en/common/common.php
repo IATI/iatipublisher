@@ -330,4 +330,11 @@ return [
     'delete_alert'                                                                                                                                                    => 'Delete Alert',
     'are_you_sure_you_want_to_delete_this_item'                                                                                                                       => 'Are you sure you want to delete this item?',
     'fetching_xls_file'                                                                                                                                               => 'Fetching .xls file',
-];
+    'the_sector_percentage_field_must_be_a_number'                                                                                                                    => 'The sector percentage field must be a number.',
+    'add_new_result'                                                                                                                                                  => 'Add New Result',
+    'show_full_result_list' => 'Show full result list',
+    'view_result' => 'View Result',
+    'you_havent_added_any_indicator_yet_indicators_are_required_to_complete_result' => 'You haven\'t added any Indicator yet. Indicator(s) are required to complete Result.',
+'description' => 'Description',
+
+    ];

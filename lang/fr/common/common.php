@@ -324,11 +324,17 @@ return [
     'hello'                                                                                                                                                           => 'fr_ Hello ',
     'welcome_to_iati_publisher_your_email_has_been_used_to_create_a_new_account_here_please_click_the_button_below_to_verify_that_you_have_created_the_account_in_it' => 'fr_ Welcome to IATI Publisher. Your email has been used to create a new account here. Please click the button below to verify that you have created the account in it.',
     'welcome_to_iati_publisher_your_email_has_been_used_to_create_a_new_account_here_please_click_the_button_below_to_update_the_password_of_your_account'            => 'fr_ Welcome to IATI Publisher. Your email has been used to create a new account here. Please click the button below to update the password of your account.',
-    'core_completeness'=>'Core completeness',
+    'core_completeness'                                                                                                                                               => 'Core completeness',
     'all_elements'                                                                                                                                                    => '  fr_ All elements',
     'help'                                                                                                                                                            => '  fr_ Help',
     'delete_alert'                                                                                                                                                    => '  fr_ Delete Alert',
     'are_you_sure_you_want_to_delete_this_item'                                                                                                                       => '  fr_ Are you sure you want to delete this item?',
     'fetching_xls_file'                                                                                                                                               => 'fr_ Fetching .xls file',
+    'the_sector_percentage_field_must_be_a_number'                                                                                                                    => 'fr_ The sector percentage field must be a number.',
+    'add_new_result'                                                                                                                                                  => 'fr_ Add New Result',
+    'show_full_result_list'                                                                                                                                           => 'fr_ Show full result list',
+    'view_result'                                                                                                                                                     => 'fr_ View Result',
+    'you_havent_added_any_indicator_yet_indicators_are_required_to_complete_result'                                                                                   => 'fr_ You haven\'t added any Indicator yet. Indicator(s) are required to complete Result.',
+    'description' => 'fr_ Description',
 
 ];
