@@ -60,7 +60,7 @@ class ReportingOrgController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : $hasData,
                 elementName: 'reporting_org',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->basicBreadCrumbInfo($activity, 'reporting_org');
 
@@ -74,10 +74,11 @@ class ReportingOrgController extends Controller
             return view('admin.activity.reportingOrg.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e);
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while opening activity reporting_org form.'
+                $translatedMessage
             );
         }
     }
@@ -96,17 +97,22 @@ class ReportingOrgController extends Controller
             DB::beginTransaction();
 
             if (!$this->reportingOrgService->update($id, $request->all())) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating reporting-org.');
+                $translatedMessage = trans('common/common.failed_to_update_data');
+
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
             }
 
             DB::commit();
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Activity reporting-org updated successfully.');
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity reporting-org.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

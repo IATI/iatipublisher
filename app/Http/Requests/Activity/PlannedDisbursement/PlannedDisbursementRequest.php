@@ -41,7 +41,7 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
     /**
      * Generates planned disbursement rules.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -60,8 +60,16 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
             }
 
             $tempRules = [
-                $this->getPlannedDisbursementRulesForPeriodStart($plannedDisbursement['period_start'], $plannedDisbursementForm, $diff),
-                $this->getPlannedDisbursementRulesForPeriodEnd($plannedDisbursement['period_end'], $plannedDisbursementForm, $diff),
+                $this->getPlannedDisbursementRulesForPeriodStart(
+                    $plannedDisbursement['period_start'],
+                    $plannedDisbursementForm,
+                    $diff
+                ),
+                $this->getPlannedDisbursementRulesForPeriodEnd(
+                    $plannedDisbursement['period_end'],
+                    $plannedDisbursementForm,
+                    $diff
+                ),
                 $this->getWarningForValue($plannedDisbursement['value'], $plannedDisbursementForm),
                 $this->getWarningForProviderOrg($plannedDisbursement['provider_org'], $plannedDisbursementForm),
                 $this->getWarningForReceiverOrg($plannedDisbursement['receiver_org'], $plannedDisbursementForm),
@@ -80,7 +88,7 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
     /**
      * Generates planned disbursement rules.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -90,13 +98,22 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
 
         foreach ($formFields as $plannedDisbursementIndex => $plannedDisbursement) {
             $plannedDisbursementForm = sprintf('planned_disbursement.%s', $plannedDisbursementIndex);
-            $rules[sprintf('%s.planned_disbursement_type', $plannedDisbursementForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('BudgetType', 'Activity', false)
-            ));
+            $rules[sprintf('%s.planned_disbursement_type', $plannedDisbursementForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles('BudgetType', 'Activity', false)
+                )
+            );
 
             $tempRules = [
-                $this->getCriticalPlannedDisbursementRulesForPeriodStart($plannedDisbursement['period_start'], $plannedDisbursementForm),
-                $this->getCriticalPlannedDisbursementRulesForPeriodEnd($plannedDisbursement['period_end'], $plannedDisbursementForm),
+                $this->getCriticalPlannedDisbursementRulesForPeriodStart(
+                    $plannedDisbursement['period_start'],
+                    $plannedDisbursementForm
+                ),
+                $this->getCriticalPlannedDisbursementRulesForPeriodEnd(
+                    $plannedDisbursement['period_end'],
+                    $plannedDisbursementForm
+                ),
                 $this->getErrorsForValue($plannedDisbursement['value'], $plannedDisbursementForm),
                 $this->getErrorsForProviderOrg($plannedDisbursement['provider_org'], $plannedDisbursementForm),
                 $this->getErrorsForReceiverOrg($plannedDisbursement['receiver_org'], $plannedDisbursementForm),
@@ -115,7 +132,7 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
     /**
      * Generates custom error message.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -125,15 +142,25 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
 
         foreach ($formFields as $plannedDisbursementIndex => $plannedDisbursement) {
             $plannedDisbursementForm = sprintf('planned_disbursement.%s', $plannedDisbursementIndex);
-            $messages[sprintf('%s.planned_disbursement_type.in', $plannedDisbursementForm)] = 'The planned disbursement type is invalid.';
+            $messages[sprintf(
+                '%s.planned_disbursement_type.in',
+                $plannedDisbursementForm
+            )]
+                = trans('validation.activity_planned_disbursement.invalid_type');
 
-            $periodStartMessages = $this->getMessagesForPeriodStart($plannedDisbursement['period_start'], $plannedDisbursementForm);
+            $periodStartMessages = $this->getMessagesForPeriodStart(
+                $plannedDisbursement['period_start'],
+                $plannedDisbursementForm
+            );
 
             foreach ($periodStartMessages as $key => $periodStartMessage) {
                 $messages[$key] = $periodStartMessage;
             }
 
-            $periodEndMessages = $this->getMessagesForPeriodEnd($plannedDisbursement['period_end'], $plannedDisbursementForm);
+            $periodEndMessages = $this->getMessagesForPeriodEnd(
+                $plannedDisbursement['period_end'],
+                $plannedDisbursementForm
+            );
 
             foreach ($periodEndMessages as $key => $periodEndMessage) {
                 $messages[$key] = $periodEndMessage;
@@ -145,13 +172,19 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
                 $messages[$key] = $valueMessage;
             }
 
-            $providerOrgMessages = $this->getMessagesForProviderOrg($plannedDisbursement['provider_org'], $plannedDisbursementForm);
+            $providerOrgMessages = $this->getMessagesForProviderOrg(
+                $plannedDisbursement['provider_org'],
+                $plannedDisbursementForm
+            );
 
             foreach ($providerOrgMessages as $key => $providerOrgMessage) {
                 $messages[$key] = $providerOrgMessage;
             }
 
-            $receiverOrgMessages = $this->getMessagesForReceiverOrg($plannedDisbursement['receiver_org'], $plannedDisbursementForm);
+            $receiverOrgMessages = $this->getMessagesForReceiverOrg(
+                $plannedDisbursement['receiver_org'],
+                $plannedDisbursementForm
+            );
 
             foreach ($receiverOrgMessages as $key => $receiverOrgMessage) {
                 $messages[$key] = $receiverOrgMessage;
@@ -164,7 +197,7 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
     /**
      * Rules for provider org.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      * @param       $formBase
      *
      * @return array
@@ -177,7 +210,12 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
             $providerOrgForm = sprintf('%s.provider_org.%s', $formBase, $providerOrgIndex);
             $rules[sprintf('%s.ref', $providerOrgForm)] = ['nullable', 'not_regex:/(&|!|\/|\||\?)/'];
 
-            foreach ($this->getWarningForNarrative($providerOrg['narrative'], $providerOrgForm) as $providerOrgNarrativeIndex => $providerOrgNarrativeRules) {
+            foreach (
+                $this->getWarningForNarrative(
+                    $providerOrg['narrative'],
+                    $providerOrgForm
+                ) as $providerOrgNarrativeIndex => $providerOrgNarrativeRules
+            ) {
                 $rules[$providerOrgNarrativeIndex] = $providerOrgNarrativeRules;
             }
         }
@@ -188,7 +226,7 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
     /**
      * Critical rules for provider org.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      * @param       $formBase
      *
      * @return array
@@ -199,11 +237,19 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
 
         foreach ($formFields as $providerOrgIndex => $providerOrg) {
             $providerOrgForm = sprintf('%s.provider_org.%s', $formBase, $providerOrgIndex);
-            $rules[sprintf('%s.type', $providerOrgForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('OrganizationType', 'Organization', false)
-            ));
+            $rules[sprintf('%s.type', $providerOrgForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles('OrganizationType', 'Organization', false)
+                )
+            );
 
-            foreach ($this->getErrorsForNarrative($providerOrg['narrative'], $providerOrgForm) as $providerOrgNarrativeIndex => $providerOrgNarrativeRules) {
+            foreach (
+                $this->getErrorsForNarrative(
+                    $providerOrg['narrative'],
+                    $providerOrgForm
+                ) as $providerOrgNarrativeIndex => $providerOrgNarrativeRules
+            ) {
                 $rules[$providerOrgNarrativeIndex] = $providerOrgNarrativeRules;
             }
         }
@@ -214,7 +260,7 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
     /**
      * Messages for provider org.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      * @param       $formBase
      *
      * @return array
@@ -225,10 +271,23 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
 
         foreach ($formFields as $providerOrgIndex => $providerOrg) {
             $providerOrgForm = sprintf('%s.provider_org.%s', $formBase, $providerOrgIndex);
-            $message[sprintf('%s.type.in', $providerOrgForm)] = 'The planned disbursement provider org type is invalid.';
-            $message[sprintf('%s.ref.not_regex', $providerOrgForm)] = 'The planned disbursement provider org ref shouldn\'t contain the symbols /, &, | or ?.';
+            $message[sprintf(
+                '%s.type.in',
+                $providerOrgForm
+            )]
+                = trans('validation.organisation_type_is_invalid');
+            $message[sprintf(
+                '%s.ref.not_regex',
+                $providerOrgForm
+            )]
+                = trans('validation.reference_should_not_contain_symbol');
 
-            foreach ($this->getMessagesForNarrative($providerOrg['narrative'], $providerOrgForm) as $providerOrgNarrativeIndex => $providerOrgNarrativeMessages) {
+            foreach (
+                $this->getMessagesForNarrative(
+                    $providerOrg['narrative'],
+                    $providerOrgForm
+                ) as $providerOrgNarrativeIndex => $providerOrgNarrativeMessages
+            ) {
                 $message[$providerOrgNarrativeIndex] = $providerOrgNarrativeMessages;
             }
         }
@@ -239,7 +298,7 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
     /**
      * Rules for receiver org.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      * @param       $formBase
      *
      * @return array
@@ -252,7 +311,12 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
             $receiverOrgForm = sprintf('%s.receiver_org.%s', $formBase, $receiverOrgIndex);
             $rules[sprintf('%s.ref', $receiverOrgForm)] = ['nullable', 'not_regex:/(&|!|\/|\||\?)/'];
 
-            foreach ($this->getWarningForNarrative($receiverOrg['narrative'], $receiverOrgForm) as $receiverOrgNarrativeIndex => $receiverOrgNarrativeRules) {
+            foreach (
+                $this->getWarningForNarrative(
+                    $receiverOrg['narrative'],
+                    $receiverOrgForm
+                ) as $receiverOrgNarrativeIndex => $receiverOrgNarrativeRules
+            ) {
                 $rules[$receiverOrgNarrativeIndex] = $receiverOrgNarrativeRules;
             }
         }
@@ -263,7 +327,7 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
     /**
      * Critical rules for receiver org.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      * @param       $formBase
      *
      * @return array
@@ -274,11 +338,23 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
 
         foreach ($formFields as $receiverOrgIndex => $receiverOrg) {
             $receiverOrgForm = sprintf('%s.receiver_org.%s', $formBase, $receiverOrgIndex);
-            $rules[sprintf('%s.type', $receiverOrgForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('OrganizationType', 'Organization', false)
-            ));
+            $rules[sprintf('%s.type', $receiverOrgForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles(
+                        'OrganizationType',
+                        'Organization',
+                        false
+                    )
+                )
+            );
 
-            foreach ($this->getErrorsForNarrative($receiverOrg['narrative'], $receiverOrgForm) as $receiverOrgNarrativeIndex => $receiverOrgNarrativeRules) {
+            foreach (
+                $this->getErrorsForNarrative(
+                    $receiverOrg['narrative'],
+                    $receiverOrgForm
+                ) as $receiverOrgNarrativeIndex => $receiverOrgNarrativeRules
+            ) {
                 $rules[$receiverOrgNarrativeIndex] = $receiverOrgNarrativeRules;
             }
         }
@@ -289,7 +365,7 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
     /**
      * Messages for receiver org.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      * @param       $formBase
      *
      * @return array
@@ -300,10 +376,23 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
 
         foreach ($formFields as $receiverOrgIndex => $receiverOrg) {
             $receiverOrgForm = sprintf('%s.receiver_org.%s', $formBase, $receiverOrgIndex);
-            $message[sprintf('%s.type.in', $receiverOrgForm)] = 'The planned disbursement receiver org type is invalid.';
-            $message[sprintf('%s.ref.not_regex', $receiverOrgForm)] = 'The planned disbursement receiver org ref shouldn\'t contain the symbols /, &, | or ?.';
+            $message[sprintf(
+                '%s.type.in',
+                $receiverOrgForm
+            )]
+                = trans('validation.organisation_type_is_invalid');
+            $message[sprintf(
+                '%s.ref.not_regex',
+                $receiverOrgForm
+            )]
+                = trans('validation.reference_should_not_contain_symbol');
 
-            foreach ($this->getMessagesForNarrative($receiverOrg['narrative'], $receiverOrgForm) as $receiverOrgNarrativeIndex => $receiverOrgNarrativeMessages) {
+            foreach (
+                $this->getMessagesForNarrative(
+                    $receiverOrg['narrative'],
+                    $receiverOrgForm
+                ) as $receiverOrgNarrativeIndex => $receiverOrgNarrativeMessages
+            ) {
                 $message[$receiverOrgNarrativeIndex] = $receiverOrgNarrativeMessages;
             }
         }
@@ -325,12 +414,24 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
 
         foreach ($formFields as $valueIndex => $value) {
             $valueForm = sprintf('%s.value.%s', $formBase, $valueIndex);
-            $messages[sprintf('%s.amount.required', $valueForm)] = 'Amount field is required';
-            $messages[sprintf('%s.amount.numeric', $valueForm)] = 'Amount field must be a number';
-            $messages[sprintf('%s.amount.min', $valueForm)] = 'Amount field must not be in negative.';
-            $messages[sprintf('%s.currency.in', $valueForm)] = 'The value currency is invalid.';
-            $messages[sprintf('%s.value_date.required', $valueForm)] = 'Value date is a required field';
-            $messages[sprintf('%s.value_date.date', $valueForm)] = 'The Value Date must be a valid Date';
+            $messages[sprintf('%s.amount.required', $valueForm)] = trans(
+                'validation.amount_required'
+            );
+            $messages[sprintf('%s.amount.numeric', $valueForm)] = trans(
+                'validation.amount_number'
+            );
+            $messages[sprintf('%s.amount.min', $valueForm)] = trans(
+                'validation.amount_negative'
+            );
+            $messages[sprintf('%s.currency.in', $valueForm)] = trans(
+                'validation.invalid_currency'
+            );
+            $messages[sprintf('%s.value_date.required', $valueForm)] = trans(
+                'validation.amount_required'
+            );
+            $messages[sprintf('%s.value_date.date', $valueForm)] = trans(
+                'validation.date_is_invalid'
+            );
         }
 
         return $messages;
@@ -386,11 +487,22 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
     {
         $messages = [];
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = trans('validation.required', ['attribute' => trans('elementForm.period_start')]);
-            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date'] = 'Period end must be a date.';
-            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date_greater_than'] = 'Period end date must be date greater than year 1900.';
-            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.period_start_end'] = 'The Planned Disbursement Period must not be longer than three months';
-            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.date'] = 'Period Start must be a date.';
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = trans(
+                'validation.required',
+                ['attribute' => trans(' elements/label.period_start')]
+            );
+            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date'] = trans(
+                'validation.date_is_invalid'
+            );
+            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date_greater_than'] = trans(
+                'validation.date_must_be_after_1900'
+            );
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.period_start_end'] = trans(
+                'validation.activity_planned_disbursement.date.period_start_end'
+            );
+            $messages[$formBase . '.period_start.' . $periodStartKey . '.date.date'] = trans(
+                'validation.date_is_invalid'
+            );
         }
 
         return $messages;
@@ -454,11 +566,21 @@ class PlannedDisbursementRequest extends ActivityBaseRequest
         $messages = [];
 
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = 'Period end is a required field';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date'] = 'Period end must be a date field';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after_or_equal'] = 'Period end must be a date after period';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date_greater_than'] = 'Period end date must be date greater than year 1900.';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.period_start_end'] = 'The Planned Disbursement Period must not be longer than three months';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = trans(
+                'validation.period_end_required'
+            );
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date'] = trans(
+                'validation.date_is_invalid'
+            );
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after_or_equal'] = trans(
+                'validation.period_end_after'
+            );
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date_greater_than'] = trans(
+                'validation.date_must_be_after_1900'
+            );
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.period_start_end'] = trans(
+                'validation.activity_planned_disbursement.date.period_start_end'
+            );
         }
 
         return $messages;

@@ -20,7 +20,10 @@ class CollaborationTypeRequest extends ActivityBaseRequest
      */
     public function rules($collaboration = null): array
     {
-        $totalRules = [$this->getWarningForCollaborationType($collaboration), $this->getErrorsForCollaborationType($collaboration)];
+        $totalRules = [
+            $this->getWarningForCollaborationType($collaboration),
+            $this->getErrorsForCollaborationType($collaboration),
+        ];
 
         return mergeRules($totalRules);
     }
@@ -53,9 +56,19 @@ class CollaborationTypeRequest extends ActivityBaseRequest
         }
 
         return [
-            'collaboration_type' => sprintf('nullable|in:%s', implode(',', array_keys(
-                $this->getCodeListForRequestFiles('CollaborationType', 'Activity', false)
-            ))),
+            'collaboration_type' => sprintf(
+                'nullable|in:%s',
+                implode(
+                    ',',
+                    array_keys(
+                        $this->getCodeListForRequestFiles(
+                            'CollaborationType',
+                            'Activity',
+                            false
+                        )
+                    )
+                )
+            ),
         ];
     }
 
@@ -67,8 +80,8 @@ class CollaborationTypeRequest extends ActivityBaseRequest
     public function messages(): array
     {
         return [
-            'in'   => 'The collaboration type does not exist.',
-            'size' => 'The collaboration type cannot have more than one value.',
+            'in'   => trans('validation.activity_collaboration_type.in'),
+            'size' => trans('validation.activity_collaboration_type.size'),
         ];
     }
 }

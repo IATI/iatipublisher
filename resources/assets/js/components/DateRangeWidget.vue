@@ -78,13 +78,13 @@
                 class="font-neutral mx-2 w-fit p-2 font-bold uppercase"
                 @click="closeCalendar"
               >
-                Cancel
+                {{ translatedData['common.common.cancel'] }}
               </button>
               <button
                 class="font-spring mx-2 w-fit p-2 font-bold uppercase"
                 @click="selectDate"
               >
-                Apply
+                {{ translatedData['common.common.apply'] }}
               </button>
             </div>
           </template>
@@ -111,6 +111,7 @@ import {
   defineProps,
   onMounted,
   computed,
+  inject,
 } from 'vue';
 import {
   subDays,
@@ -175,6 +176,9 @@ const dateRangeMain: Ref<Element | null> = ref(null);
 const dateType = ref('');
 const dateDropdown = ref();
 const dateTypeName = ref(props.dateName);
+
+const translatedData = inject('translatedData') as Record<string, string>;
+
 dateType.value = props.dropdownRange && Object.values(props.dropdownRange)[0];
 
 const dateTypeKey = ref('');
@@ -293,31 +297,31 @@ const presetRanges = computed(() => [
     range: [startOfDay(new Date()), endOfDay(new Date())],
   },
   {
-    label: 'This week',
+    label: 'This Week',
     range: [startOfWeek(new Date()), endOfDay(new Date())],
   },
   {
-    label: 'Last 7 days',
+    label: 'Last 7 Days',
     range: [subDays(new Date(), 6), endOfDay(new Date())],
   },
   {
-    label: 'This month',
+    label: 'This Month',
     range: [startOfMonth(new Date()), endOfMonth(new Date())],
   },
   {
-    label: 'Last 6 month',
+    label: 'Last 6 Month',
     range: [startOfMonth(subMonths(new Date(), 6)), endOfMonth(new Date())],
   },
   {
-    label: 'This year',
+    label: 'This Year',
     range: [startOfYear(new Date()), endOfDay(new Date())],
   },
   {
-    label: 'Last 12 months',
+    label: 'Last 12 Months',
     range: [startOfMonth(subMonths(new Date(), 12)), endOfDay(new Date())],
   },
   {
-    label: 'All time',
+    label: 'All Time',
     range: [new Date(initialDate.value), endOfDay(new Date())],
   },
 ]);

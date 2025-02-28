@@ -67,8 +67,8 @@ class StatusRequest extends ActivityBaseRequest
     public function messages(): array
     {
         return [
-            'in'   => 'The activity status does not exist.',
-            'size' => 'The activity status cannot have more than one value.',
+            'in'   => trans('validation.activity_status.in'),
+            'size' => trans('validation.activity_status.size'),
         ];
     }
 }

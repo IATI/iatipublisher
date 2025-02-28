@@ -18,7 +18,7 @@ class PlannedDisbursementXmlTest extends XmlBaseTest
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
         $this->assertContains('Period Start must be a date.', $flattenErrors);
-        $this->assertContains('Period end must be a date field', $flattenErrors);
+        $this->assertContains('Period end must be a date', $flattenErrors);
         $this->assertContains('Period end must be a date after period', $flattenErrors);
         $this->assertContains('The Planned Disbursement Period must not be longer than three months', $flattenErrors);
         $this->assertContains('Amount field must be a number', $flattenErrors);

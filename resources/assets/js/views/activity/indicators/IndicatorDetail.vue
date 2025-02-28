@@ -88,7 +88,7 @@
           <li v-for="(rData, r, ri) in indicatorData" :key="ri">
             <a v-smooth-scroll :href="`#${String(r)}`" :class="linkClasses">
               <!-- <svg-vue icon="core" class="mr-2 text-base"></svg-vue> -->
-              {{ r }}
+              {{ toKebabCase(r) }}
             </a>
           </li>
 
@@ -118,7 +118,7 @@
             <li v-for="(rData, r, ri) in indicatorData" :key="ri">
               <a v-smooth-scroll :href="`#${String(r)}`" :class="linkClasses">
                 <!-- <svg-vue icon="core" class="mr-2 text-base"></svg-vue> -->
-                {{ r }}
+                {{ toKebabCase(r) }}
                 <span
                   v-if="isMandatoryForIndicator(r)"
                   class="required-icon px-1"
@@ -257,6 +257,7 @@ import {
   watch,
   computed,
   onUnmounted,
+  watchEffect,
 } from 'vue';
 
 //component
@@ -265,7 +266,11 @@ import PageTitle from 'Components/sections/PageTitle.vue';
 import Toast from 'Components/ToastMessage.vue';
 
 //helper
-import { countDocumentLink, isEveryValueNull } from 'Composable/utils';
+import {
+  countDocumentLink,
+  isEveryValueNull,
+  toKebabCase,
+} from 'Composable/utils';
 
 import {
   TitleElement,
@@ -327,8 +332,20 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    translatedData: {
+      type: Object,
+      required: true,
+    },
   },
   setup(props) {
+    // const translatedData = ref({});
+    // LanguageService.getTranslatedData(
+    //   'workflow_frontend,common,activity_detail,activity_index,elements'
+    // )
+    //   .then((response) => {
+    //     props.translatedData = response.data;
+    //   })
+    //   .catch((error) => console.log(error));
     const linkClasses =
       'flex items-center w-full bg-white rounded p-2 text-sm text-n-50 font-bold leading-normal mb-2 shadow-default';
 
@@ -386,7 +403,7 @@ export default defineComponent({
      */
     const breadcrumbData = [
       {
-        title: 'Your Activities',
+        title: props.translatedData['common.common.your_activities'],
         link: '/activities',
       },
       {
@@ -394,7 +411,7 @@ export default defineComponent({
         link: activityLink,
       },
       {
-        title: 'Result List',
+        title: props.translatedData['common.common.result_list'],
         link: `/activity/${activityId}/result`,
       },
       {
@@ -402,7 +419,7 @@ export default defineComponent({
         link: resultLink,
       },
       {
-        title: 'Indicator List',
+        title: props.translatedData['common.common.indicator_list'],
         link: `/result/${resultId}/indicator`,
       },
       {
@@ -410,6 +427,7 @@ export default defineComponent({
         link: '',
       },
     ];
+
     const handleScroll = () => {
       positionY.value = window.scrollY;
     };
@@ -442,6 +460,7 @@ export default defineComponent({
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', calcWidth);
     });
+
     watch(
       () => showSidebar.value,
       (sidebar) => {
@@ -450,6 +469,8 @@ export default defineComponent({
         } else document.documentElement.style.overflow = 'auto';
       }
     );
+
+    provide('translatedData', props.translatedData);
 
     return {
       linkClasses,
@@ -468,5 +489,6 @@ export default defineComponent({
       isEveryValueNull,
     };
   },
+  methods: { toKebabCase },
 });
 </script>

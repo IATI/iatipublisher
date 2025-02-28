@@ -36,6 +36,7 @@ import { reactive, provide, defineProps } from 'vue';
 import Loader from 'Components/sections/ProgressLoader.vue';
 import Toast from 'Components/ToastMessage.vue';
 import TableList from './components/TableList.vue';
+import transactionDate from 'Activity/transactions/elements/TransactionDate.vue';
 
 const props = defineProps({
   countries: { type: Object, required: true },
@@ -45,6 +46,10 @@ const props = defineProps({
   dataLicenses: { type: Object, required: true },
   oldestDates: {
     type: String,
+    required: true,
+  },
+  translatedData: {
+    type: Object,
     required: true,
   },
 });
@@ -63,4 +68,5 @@ const toastMessage = reactive({
 // provide
 provide('loader', loader);
 provide('toastData', toastMessage);
+provide('translatedData', props.translatedData);
 </script>

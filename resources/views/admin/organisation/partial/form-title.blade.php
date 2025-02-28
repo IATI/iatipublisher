@@ -7,9 +7,9 @@
             <div class="mb-4">
                 <div class="flex mb-6 title">
                     <svg-vue icon="alert" class="mr-2 mt-0.5 text-lg text-crimson-40"></svg-vue>
-                    <b>Delete Alert</b>
+                    <b>{{ trans('common/common.delete_alert') }}</b>
                 </div>
-                <div class="p-4 rounded-lg bg-rose">Are you sure you want to delete this item?</div>
+                <div class="p-4 rounded-lg bg-rose">{{ trans('common/common.are_you_sure_you_want_to_delete_this_item') }}</div>
             </div>
             <div class="flex justify-end">
                 <div class="inline-flex">
@@ -30,7 +30,7 @@
             <span class="text-bluecoral text-xl mr-1.5">
                 <svg-vue icon="organisation-elements/{{ str_replace('-', '_', $data['name']) }}"></svg-vue>
             </span>
-            <div class="text-sm font-bold title"> {{ str_replace(' ', '-', strtolower($data['title'])) }}</div>
+            <div class="text-sm font-bold title"> {{ trans(str_replace(' ', '-', strtolower($data['title']))) }}</div>
 
             @if ($data['name'] === 'name' || $data['name'] === 'reporting-org')
                 <svg-vue icon="core"></svg-vue>
