@@ -22,7 +22,7 @@
     </div>
     <PageTitle
       :breadcrumb-data="breadcrumbData"
-      :title="`${indicatorTitle} - Indicator Detail`"
+      :title="`${indicatorTitle} - ${translatedData['common.common.indicator_detail']}`"
       :back-link="`${indicatorLink}`"
     >
       <div class="flex justify-end">
@@ -34,25 +34,26 @@
         />
         <!-- <Status class="mr-2.5" :data="false" /> -->
         <Btn
-          text="Add Indicator"
+          :text="translatedData['common.common.add_indicator']"
           icon="add"
           :link="`${indicatorLink}/create`"
           class="mr-2.5"
         />
         <Btn
-          text="Add Period"
+          :text="translatedData['common.common.add_period']"
           icon="add"
           :link="`/indicator/${indicator.id}/period/create`"
           class="mr-2.5"
         />
         <Btn
-          text="Edit Indicator"
+          :text="translatedData['common.common.edit_indicator']"
           :link="`${indicatorLink}/${indicator.id}/edit`"
         />
       </div>
     </PageTitle>
     <div class="-mt-6 mb-8 ml-[26px] text-n-40">
-      Indicator number: {{ indicator.indicator_code }}
+      {{ translatedData['common.common.indicator_number'] }} :
+      {{ indicator.indicator_code }}
     </div>
     <div
       class="sidebar-open-icon"
@@ -88,7 +89,7 @@
           <li v-for="(rData, r, ri) in indicatorData" :key="ri">
             <a v-smooth-scroll :href="`#${String(r)}`" :class="linkClasses">
               <!-- <svg-vue icon="core" class="mr-2 text-base"></svg-vue> -->
-              {{ r }}
+              {{ toKebabCase(r) }}
             </a>
           </li>
 
@@ -118,7 +119,7 @@
             <li v-for="(rData, r, ri) in indicatorData" :key="ri">
               <a v-smooth-scroll :href="`#${String(r)}`" :class="linkClasses">
                 <!-- <svg-vue icon="core" class="mr-2 text-base"></svg-vue> -->
-                {{ r }}
+                {{ toKebabCase(r) }}
                 <span
                   v-if="isMandatoryForIndicator(r)"
                   class="required-icon px-1"
@@ -257,6 +258,7 @@ import {
   watch,
   computed,
   onUnmounted,
+  watchEffect,
 } from 'vue';
 
 //component
@@ -265,7 +267,11 @@ import PageTitle from 'Components/sections/PageTitle.vue';
 import Toast from 'Components/ToastMessage.vue';
 
 //helper
-import { countDocumentLink, isEveryValueNull } from 'Composable/utils';
+import {
+  countDocumentLink,
+  isEveryValueNull,
+  toKebabCase,
+} from 'Composable/utils';
 
 import {
   TitleElement,
@@ -324,6 +330,10 @@ export default defineComponent({
       required: true,
     },
     element: {
+      type: Object,
+      required: true,
+    },
+    translatedData: {
       type: Object,
       required: true,
     },
@@ -386,7 +396,7 @@ export default defineComponent({
      */
     const breadcrumbData = [
       {
-        title: 'Your Activities',
+        title: props.translatedData['common.common.your_activities'],
         link: '/activities',
       },
       {
@@ -394,7 +404,7 @@ export default defineComponent({
         link: activityLink,
       },
       {
-        title: 'Result List',
+        title: props.translatedData['common.common.result_list'],
         link: `/activity/${activityId}/result`,
       },
       {
@@ -402,7 +412,7 @@ export default defineComponent({
         link: resultLink,
       },
       {
-        title: 'Indicator List',
+        title: props.translatedData['common.common.indicator_list'],
         link: `/result/${resultId}/indicator`,
       },
       {
@@ -410,6 +420,7 @@ export default defineComponent({
         link: '',
       },
     ];
+
     const handleScroll = () => {
       positionY.value = window.scrollY;
     };
@@ -442,6 +453,7 @@ export default defineComponent({
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', calcWidth);
     });
+
     watch(
       () => showSidebar.value,
       (sidebar) => {
@@ -450,6 +462,8 @@ export default defineComponent({
         } else document.documentElement.style.overflow = 'auto';
       }
     );
+
+    provide('translatedData', props.translatedData);
 
     return {
       linkClasses,
@@ -468,5 +482,6 @@ export default defineComponent({
       isEveryValueNull,
     };
   },
+  methods: { toKebabCase },
 });
 </script>

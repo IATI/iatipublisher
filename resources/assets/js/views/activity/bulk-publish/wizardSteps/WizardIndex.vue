@@ -15,16 +15,16 @@
             {{
               step.name == 'Validating'
                 ? completedSteps.includes(step.id)
-                  ? 'Validated'
-                  : 'Validating'
+                  ? translatedData['common.common.validated']
+                  : translatedData['common.common.validating']
                 : completedSteps.includes(step.id)
                 ? store.state.bulkActivityPublishStatus.publishing
                     .hasFailedActivities.ids.length > 0
-                  ? 'Failed'
-                  : 'Published'
+                  ? translatedData['common.common.failed']
+                  : translatedData['common.common.published']
                 : completedSteps.length == 0
-                ? 'Publish'
-                : 'Publishing'
+                ? translatedData['common.common.publish']
+                : translatedData['common.common.publishing']
             }}
           </span>
         </div>
@@ -104,8 +104,10 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue';
-import { useStore } from 'Store/activities/index';
+import { defineProps, inject } from 'vue';
+import { useStore } from 'Store/activities';
+
+const translatedData = inject('translatedData') as Record<string, string>;
 const store = useStore();
 const steps = [
   {
@@ -125,5 +127,3 @@ defineProps({
   },
 });
 </script>
-
-<style lang="scss" scoped></style>

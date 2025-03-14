@@ -252,7 +252,8 @@ class TransactionXmlTest extends XmlBaseTest
     {
         $rows = $this->sector_activity_transaction_level_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('Sector has already been declared at activity level. You can’t declare a sector at the transaction level. To declare at transaction level, you need to remove sector at activity level.', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_transactions.sector_in_activity'), $flattenErrors);
     }
 
     /**
@@ -400,7 +401,8 @@ class TransactionXmlTest extends XmlBaseTest
     {
         $rows = $this->sector_at_one_transaction_empty_at_another_transaction_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('You have declared sector at transaction level so you must declare sector for all the transactions.', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_transactions.sector.required'), $flattenErrors);
     }
 
     /**
@@ -682,19 +684,19 @@ class TransactionXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The transaction type is invalid.', $flattenErrors);
-        $this->assertContains('The @amount field must be a number.', $flattenErrors);
-        $this->assertContains('The transaction provider org type is invalid.', $flattenErrors);
-        $this->assertContains('The transaction receiver org type is invalid.', $flattenErrors);
-        $this->assertContains('The @iso-date field must be a valid date.', $flattenErrors);
-        $this->assertContains('The @value-date field must be a valid date.', $flattenErrors);
-        $this->assertContains('The @iso-date must not be in future.', $flattenErrors);
-        $this->assertContains('The @value-date must not be in future.', $flattenErrors);
-        $this->assertContains('validation.exclude_operators', $flattenErrors);
-        $this->assertContains('The transaction sector vocabulary is invalid.', $flattenErrors);
-        $this->assertContains('The transaction recipient country code is invalid.', $flattenErrors);
-        $this->assertContains('The transaction sector code is invalid.', $flattenErrors);
-        $this->assertContains('The transaction sector vocabulary-uri field must be a valid url.', $flattenErrors);
+        $this->assertContains(trans('validation.type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.amount_number'), $flattenErrors);
+        $this->assertContains(trans('validation.organisation_type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.organisation_type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.date_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.date_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.future_date'), $flattenErrors);
+        $this->assertContains(trans('validation.future_date'), $flattenErrors);
+        $this->assertContains(trans('validation.vocabulary_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.exclude_operators'), $flattenErrors);
+        $this->assertContains(trans('validation.country_code'), $flattenErrors);
+        $this->assertContains(trans('validation.sector_code_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.url_valid'), $flattenErrors);
     }
 
     /**
@@ -973,7 +975,8 @@ class TransactionXmlTest extends XmlBaseTest
     {
         $rows = $this->country_already_at_activity_level_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('Recipient Region or Recipient Country is already added at activity level. You can add a Recipient Region and or Recipient Country either at activity level or at transaction level.', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_transactions.country_region_in_activity'), $flattenErrors);
     }
 
     /**
@@ -1009,7 +1012,8 @@ class TransactionXmlTest extends XmlBaseTest
     {
         $rows = $this->region_already_at_activity_level_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('Recipient Region or Recipient Country is already added at activity level. You can add a Recipient Region and or Recipient Country either at activity level or at transaction level.', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_transactions.country_region_in_activity'), $flattenErrors);
     }
 
     /**
@@ -1048,7 +1052,8 @@ class TransactionXmlTest extends XmlBaseTest
     {
         $rows = $this->both_region_and_country_at_transaction_level_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('You must add either recipient country or recipient region.', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_transactions.country_or_region'), $flattenErrors);
     }
 
     /**
@@ -1100,7 +1105,8 @@ class TransactionXmlTest extends XmlBaseTest
     {
         $rows = $this->region_or_country_at_one_transaction_empty_at_another_transaction_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('You must add either recipient country or recipient region.', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_transactions.country_or_region'), $flattenErrors);
     }
 
     /**

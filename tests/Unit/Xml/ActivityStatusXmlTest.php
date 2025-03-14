@@ -17,8 +17,9 @@ class ActivityStatusXmlTest extends XmlBaseTest
     {
         $rows = $this->activity_status_invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The activity status does not exist.', $flattenErrors);
-        $this->assertContains('The activity status must be 1 characters.', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_status.in'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_status.size'), $flattenErrors);
     }
 
     /**

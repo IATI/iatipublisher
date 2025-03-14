@@ -18,58 +18,100 @@
           </div>
 
           <div class="footer__links">
-            <span class="font-bold text-n-10">IATI Publisher</span>
+            <span class="font-bold text-n-10">{{
+              translatedData['footer.footer.iati_publisher']
+            }}</span>
             <ul class="mt-2 flex flex-col">
               <li>
-                <a :href="superAdmin ? '/list-organisations' : '/activities'">{{
-                  superAdmin ? 'Organisation List' : 'Your Activities'
-                }}</a>
+                <a :href="superAdmin ? '/list-organisations' : '/activities'">
+                  {{
+                    superAdmin
+                      ? translatedData['common.common.organisation_list']
+                      : translatedData['common.common.your_activities']
+                  }}
+                </a>
               </li>
-              <li><a href="/about">About</a></li>
+              <li>
+                <a href="/about">{{ translatedData['common.common.about'] }}</a>
+              </li>
               <li>
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
                   class="cursor-pointer"
                   @click="downloadManual('user')"
-                  >User Manual v1.1</a
+                  >{{ translatedData['footer.footer.user_manual_v1'] }}</a
                 >
               </li>
             </ul>
           </div>
           <div class="footer__links">
-            <span class="font-bold text-n-10">IATI Standard</span>
+            <span class="font-bold text-n-10">{{
+              translatedData['common.common.iati_standard']
+            }}</span>
             <ul class="mt-2 flex flex-col">
-              <li><a href="/iati-standard">IATI Standard</a></li>
-              <li><a href="/publishing-checklist">Publishing Checklist</a></li>
-              <li><a href="/support">Support</a></li>
+              <li>
+                <a href="/iati-standard">{{
+                  translatedData['common.common.iati_standard']
+                }}</a>
+              </li>
+              <li>
+                <a href="/publishing-checklist">{{
+                  translatedData['common.common.publishing_checklist']
+                }}</a>
+              </li>
+              <li>
+                <a href="/support">{{
+                  translatedData['common.common.support']
+                }}</a>
+              </li>
               <li>
                 <a
                   href="https://iatistandard.org/en/privacy-policy/"
                   target="_blank"
-                  >Privacy Policy</a
+                  >{{ translatedData['footer.footer.privacy_policy'] }}</a
                 >
               </li>
             </ul>
           </div>
           <div class="footer__links lg:justify-self-end">
             <div class="text-xs leading-5">
-              <p>Part of the IATI Unified Platform</p>
-              <p>Code licensed under the GNU AGPL.</p>
-              <p>Documentation licensed under CC BY 3.0</p>
+              <p>
+                {{
+                  translatedData[
+                    'footer.footer.part_of_the_iati_unified_platform'
+                  ]
+                }}
+              </p>
+              <p>
+                {{
+                  translatedData[
+                    'footer.footer.code_licensed_under_the_gnu_agpl'
+                  ]
+                }}
+              </p>
+              <p>
+                {{
+                  translatedData[
+                    'footer.footer.documentation_licensed_under_cc_by3'
+                  ]
+                }}
+              </p>
             </div>
             <div class="my-5 flex items-center space-x-2 text-n-10">
               <svg-vue class="text-2xl" icon="headphone" />
-              <span class="text-xs font-bold uppercase"
-                >Any questions? Contact Support</span
-              >
+              <span class="text-xs font-bold uppercase">{{
+                translatedData['footer.footer.any_questions_contact_support']
+              }}</span>
             </div>
             <ul>
               <li>
                 <a
                   class="text-sm text-n-10"
                   href="mailto:support@iatistandard.org"
-                  >support@iatistandard.org</a
+                  >{{
+                    translatedData['footer.footer.support_iati_standard_org']
+                  }}</a
                 >
               </li>
             </ul>
@@ -81,7 +123,11 @@
       <div class="footer__container grid gap-3 sm:grid-cols-2">
         <span class="flex items-center text-n-30">
           <svg-vue class="mr-1 text-base" icon="copyright" />
-          Copyright IATI 2022. All rights reserved.</span
+          {{
+            translatedData[
+              'footer.footer.copyright_iati_2022_all_rights_reserved'
+            ]
+          }}</span
         >
         <div class="flex sm:justify-end">
           <a
@@ -105,6 +151,7 @@ import axios from 'axios';
 
 defineProps({
   superAdmin: { type: Boolean, required: false, default: false },
+  translatedData: { type: Object, required: true },
 });
 
 function downloadManual(type: string) {

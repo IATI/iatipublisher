@@ -51,7 +51,7 @@ class OrganizationIdentifierController extends Controller
     {
         try {
             $id = Auth::user()->organization_id;
-            $element = json_decode(file_get_contents(app_path('IATI/Data/organizationElementJsonSchema.json')), true, 512, JSON_THROW_ON_ERROR);
+            $element = readOrganizationElementJsonSchema();
             $organization = $this->organizationIdentifierService->getOrganizationData($id);
             $form = $this->organizationIdentifierService->formGenerator($id, deprecationStatusMap: Arr::get($organization->deprecation_status_map, 'organization_identifier', []));
             $data = ['title' => $element['organisation_identifier']['label'], 'name' => 'organisation-identifier'];
@@ -59,8 +59,9 @@ class OrganizationIdentifierController extends Controller
             return view('admin.organisation.forms.organisationIdentifier.edit', compact('form', 'organization', 'data'));
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
-            return redirect()->route('admin.activities.show', $id)->with('error', 'Error has occurred while opening organization identifier form.');
+            return redirect()->route('admin.activities.show', $id)->with('error', $translatedMessage);
         }
     }
 
@@ -86,18 +87,21 @@ class OrganizationIdentifierController extends Controller
 
             if ($this->organizationIdentifierService->update($id, $organizationIdentifier)) {
                 DB::commit();
+                $translatedMessage = trans('common/common.updated_successfully');
 
-                return redirect()->route('admin.organisation.index')->with('success', 'Organisation identifier updated successfully.');
+                return redirect()->route('admin.organisation.index')->with('success', $translatedMessage);
             }
 
             DB::rollBack();
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while updating organisation identifier.');
+            return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         } catch (\Exception $e) {
             DB::rollBack();
             logger()->error($e);
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while updating organisation identifier.');
+            return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
     }
 

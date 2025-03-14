@@ -44,8 +44,8 @@ class DefaultFlowTypeCsvTest extends CsvBaseTest
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
 
-        $this->assertContains('The default flow type does not exist.', $flattenErrors);
-        $this->assertContains('The default flow type cannot have more than one value.', $flattenErrors);
+        $this->assertContains(trans('validation.activity_default_flow_type.in'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_default_flow_type.size'), $flattenErrors);
     }
 
     /**

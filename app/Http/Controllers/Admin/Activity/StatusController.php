@@ -58,7 +58,7 @@ class StatusController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : $hasData,
                 elementName: 'activity_status',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->basicBreadCrumbInfo($activity, 'activity_status');
 
@@ -72,10 +72,11 @@ class StatusController extends Controller
             return view('admin.activity.status.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while opening activity title form.'
+                $translatedMessage
             );
         }
     }
@@ -94,15 +95,19 @@ class StatusController extends Controller
             $activityStatus = $request->get('activity_status') !== null ? (int) $request->get('activity_status') : null;
 
             if (!$this->statusService->update($id, $activityStatus)) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity status.');
-            }
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Activity status updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return response()->json(
-                ['success' => false, 'error' => 'Error has occurred while updating activity status.']
+                ['success' => false, 'error' => $translatedMessage]
             );
         }
     }

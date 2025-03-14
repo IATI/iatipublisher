@@ -33,8 +33,8 @@ class ActivityScopeCsvTest extends CsvBaseTest
         }
 
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('The activity scope cannot have more than one value.', $flattenErrors);
-        $this->assertContains('The activity scope does not exist.', $flattenErrors);
+        $this->assertContains(trans('validation.activity_scope.size'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_scope.in'), $flattenErrors);
     }
 
     /**

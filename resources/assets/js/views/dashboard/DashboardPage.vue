@@ -130,6 +130,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  translatedData: {
+    type: Object,
+    required: true,
+  },
 });
 
 const downloadReport = () => {
@@ -273,4 +277,5 @@ provide('graphTotal', graphTotal);
 provide('showTableLoader', showTableLoader);
 provide('showGraphLoader', showGraphLoader);
 provide('currentView', currentView);
+provide('translatedData', props.translatedData);
 </script>

@@ -88,7 +88,7 @@ class ReportingOrgService
      */
     public function formGenerator($id, $activityDefaultFieldValues, $deprecationStatusMap = []): Form
     {
-        $element = json_decode(file_get_contents(app_path('IATI/Data/elementJsonSchema.json')), true, 512, JSON_THROW_ON_ERROR);
+        $element = readElementJsonSchema();
         $model['reporting_org'] = $this->getReportingOrgData($id) ?? [];
         $this->parentCollectionFormCreator->url = route('admin.activity.reporting-org.update', [$id]);
 

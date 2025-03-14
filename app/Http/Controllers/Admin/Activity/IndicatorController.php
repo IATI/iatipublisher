@@ -93,9 +93,11 @@ class IndicatorController extends Controller
         } catch (Exception $e) {
             logger()->error($e->getMessage());
 
+            $translatedMessage = trans('common/common.error_has_occurred_while_rendering_activity_transactions_listing');
+
             return redirect()->route('admin.activity.result.index', $resultId)->with(
                 'error',
-                'Error has occurred while rendering activity transactions listing.'
+                $translatedMessage
             );
         }
     }
@@ -112,16 +114,17 @@ class IndicatorController extends Controller
     {
         try {
             $indicator = $this->indicatorService->getPaginatedIndicator($resultId, $page);
+            $translatedMessage = 'Indicators Fetched Successfully';
 
             return response()->json([
                 'success' => true,
-                'message' => 'Indicators fetched successfully',
+                'message' => $translatedMessage,
                 'data'    => $indicator,
             ]);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
 
-            return response()->json(['success' => false, 'message' => 'Error occurred while fetching the data']);
+            return response()->json(['success' => false, 'message' => 'Error occurred while fetching the data.']);
         }
     }
 
@@ -143,7 +146,7 @@ class IndicatorController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : true,
                 elementName: 'indicator',
-                parentTitle: Arr::get($result, 'result.title.0.narrative.0.narrative', 'Untitled')
+                parentTitle: Arr::get($result, 'result.title.0.narrative.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->indicatorBreadCrumbInfo(
                 activity : $activity,
@@ -162,10 +165,11 @@ class IndicatorController extends Controller
             return view('admin.activity.indicator.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.result.indicator.index', [$resultId])->with(
                 'error',
-                'Error has occurred while rendering indicator form.'
+                $translatedMessage
             );
         }
     }
@@ -189,9 +193,11 @@ class IndicatorController extends Controller
                 'default_field_values'=>$result->activity->default_field_values,
             ]);
 
+            $translatedMessage = trans('activity_detail/indicator_controller.result_indicator_created_successfully');
+
             return redirect()->route('admin.result.indicator.show', [$resultId, $indicator['id']])->with(
                 'success',
-                'Result indicator created successfully.'
+                $translatedMessage
             );
         } catch (Exception $e) {
             logger()->error($e->getMessage());
@@ -226,10 +232,11 @@ class IndicatorController extends Controller
             return view('admin.activity.indicator.detail', compact('activity', 'resultTitle', 'indicator', 'period', 'types', 'toast', 'element'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_has_occurred_while_rending_result_detail_page');
 
             return redirect()->route('admin.result.indicator.index', $resultId)->with(
                 'error',
-                'Error has occurred while rending result detail page.'
+                $translatedMessage
             );
         }
     }
@@ -254,7 +261,7 @@ class IndicatorController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : true,
                 elementName: 'indicator',
-                parentTitle: Arr::get($result, 'result.title.0.narrative.0.narrative', 'Untitled')
+                parentTitle: Arr::get($result, 'result.title.0.narrative.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->indicatorBreadCrumbInfo(
                 activity : $activity,
@@ -272,10 +279,11 @@ class IndicatorController extends Controller
             return view('admin.activity.indicator.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.result.indicator.index', $resultId)->with(
                 'error',
-                'Error has occurred while rendering indicator form.'
+                $translatedMessage
             );
         }
     }
@@ -297,22 +305,28 @@ class IndicatorController extends Controller
             $result = $indicator->result;
 
             if (!$this->indicatorService->update($indicatorId, ['result_id' => $result->id, 'indicator' => $indicatorData])) {
+                $translatedMessage = trans('common/common.failed_to_update_data');
+
                 return redirect()->route('admin.result.indicator.index', $resultId)->with(
                     'error',
-                    'Error has occurred while updating result indicator.'
+                    $translatedMessage
                 );
             }
 
+            $translatedMessage = trans('common/common.updated_successfully');
+
             return redirect()->route('admin.result.indicator.show', [$resultId, $indicatorId])->with(
                 'success',
-                'Indicator updated successfully.'
+                $translatedMessage
             );
         } catch (Exception $e) {
             logger()->error($e->getMessage());
 
+            $translatedMessage = trans('common/common.failed_to_update_data');
+
             return redirect()->route('admin.result.indicator.index', $resultId)->with(
                 'error',
-                'Error has occurred while updating indicator.'
+                $translatedMessage
             );
         }
     }
@@ -329,20 +343,22 @@ class IndicatorController extends Controller
     {
         try {
             $this->indicatorService->deleteIndicator($indicatorId);
-            Session::flash('success', 'Indicator Deleted Successfully');
+            $translatedMessage = trans('common/common.deleted_successfully');
+            Session::flash('success', $translatedMessage);
 
             return response()->json([
                 'status'    => true,
-                'msg'       => 'Indicator Deleted Successfully',
+                'msg'       => $translatedMessage,
                 'result_id' => $id,
             ]);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
-            Session::flash('error', 'Indicator Delete Error');
+            $translatedMessage = trans('common/common.delete_error');
+            Session::flash('error', $translatedMessage);
 
             return response()->json([
                 'status'    => true,
-                'msg'       => 'Indicator Delete Error',
+                'msg'       => $translatedMessage,
                 'result_id' => $id,
             ], 400);
         }

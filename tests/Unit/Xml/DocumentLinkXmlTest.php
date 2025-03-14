@@ -17,16 +17,17 @@ class DocumentLinkXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The document link format is invalid', $flattenErrors);
-        $this->assertContains('The @url field must be a valid url.', $flattenErrors);
-        $this->assertContains('The @iso-date field must be a proper date.', $flattenErrors);
-        $this->assertContains('The @iso-date field must be a greater than 1900.', $flattenErrors);
-        $this->assertContains('The document link category code field must be a unique.', $flattenErrors);
-        $this->assertContains('The document link category code is invalid.', $flattenErrors);
-        $this->assertContains('The document link language code field must be a unique.', $flattenErrors);
-        $this->assertContains('The document link language code is invalid.', $flattenErrors);
-        $this->assertContains('The @xml:lang field is invalid.', $flattenErrors);
-        $this->assertContains('The narrative field is required with @xml:lang field.', $flattenErrors);
+
+        $this->assertContains(trans('validation.document_link_format_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.url_valid'), $flattenErrors);
+        $this->assertContains(trans('validation.this_must_be_a_valid_date'), $flattenErrors);
+        $this->assertContains(trans('validation.date_must_be_after_1900'), $flattenErrors);
+        $this->assertContains(trans('validation.document_link_category_unique'), $flattenErrors);
+        $this->assertContains(trans('validation.document_link_category_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.document_link_language_unique'), $flattenErrors);
+        $this->assertContains(trans('validation.language_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.language_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.narrative_is_required_when_language_is_populated'), $flattenErrors);
     }
 
     /**

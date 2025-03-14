@@ -10,6 +10,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -62,11 +63,11 @@ class ResetPasswordController extends Controller
      * Get the response for a successful password reset.
      *
      * @param Request $request
-     * @param string                   $response
+     * @param string  $response
      *
-     * @return \Illuminate\Http\RedirectResponse|JsonResponse
+     * @return RedirectResponse|JsonResponse
      */
-    protected function sendResetResponse(Request $request, $response): JsonResponse|\Illuminate\Http\RedirectResponse
+    protected function sendResetResponse(Request $request, $response): JsonResponse|RedirectResponse
     {
         if ($request->wantsJson()) {
             return new JsonResponse(['success' => true, 'message' => trans($response)], 200);
@@ -86,7 +87,14 @@ class ResetPasswordController extends Controller
         return [
             'token'                 => 'required',
             'email'                 => 'required|email',
-            'password'              => ['required', 'confirmed', 'string', 'min:8', 'max:255', Rules\Password::defaults()],
+            'password'              => [
+                'required',
+                'confirmed',
+                'string',
+                'min:8',
+                'max:255',
+                Rules\Password::defaults(),
+            ],
             'password_confirmation' => ['required', 'string', 'min:8', 'max:255'],
         ];
     }
@@ -94,10 +102,12 @@ class ResetPasswordController extends Controller
     /**
      * Reset the given user's password.
      *
-     * @param  Request  $request
-     * @return \Illuminate\Http\RedirectResponse|JsonResponse
+     * @param Request $request
+     *
+     * @return RedirectResponse|JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function reset(Request $request)
+    public function reset(Request $request): JsonResponse|RedirectResponse
     {
         $request->validate($this->rules(), $this->validationErrorMessages());
 
@@ -120,13 +130,12 @@ class ResetPasswordController extends Controller
     }
 
     /**
-     * Reset the given user's password.
+     * @param $user
+     * @param $password
      *
-     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
-     * @param  string  $password
      * @return void
      */
-    protected function resetPassword($user, $password)
+    protected function resetPassword($user, $password): void
     {
         $this->setUserPassword($user, $password);
 

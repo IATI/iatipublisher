@@ -53,13 +53,23 @@ class TotalExpenditureRequest extends OrganizationBaseRequest
 
             $totalExpenditureForm = sprintf('total_expenditure.%s', $totalExpenditureIndex);
 
-            $periodStartRules = $this->getWarningForPeriodStart($totalExpenditure['period_start'], $totalExpenditureForm, $diff, 365);
+            $periodStartRules = $this->getWarningForPeriodStart(
+                $totalExpenditure['period_start'],
+                $totalExpenditureForm,
+                $diff,
+                365
+            );
 
             foreach ($periodStartRules as $key => $periodStartRule) {
                 $rules[$key] = $periodStartRule;
             }
 
-            $periodEndRules = $this->getWarningForPeriodEnd($totalExpenditure['period_end'], $totalExpenditureForm, $diff, 365);
+            $periodEndRules = $this->getWarningForPeriodEnd(
+                $totalExpenditure['period_end'],
+                $totalExpenditureForm,
+                $diff,
+                365
+            );
 
             foreach ($periodEndRules as $key => $periodEndRule) {
                 $rules[$key] = $periodEndRule;
@@ -71,7 +81,10 @@ class TotalExpenditureRequest extends OrganizationBaseRequest
                 $rules[$key] = $valueRule;
             }
 
-            $expenseLineRules = $this->getWarningForExpenseLine($totalExpenditure['expense_line'], $totalExpenditureForm);
+            $expenseLineRules = $this->getWarningForExpenseLine(
+                $totalExpenditure['expense_line'],
+                $totalExpenditureForm
+            );
 
             foreach ($expenseLineRules as $key => $expenseLineRule) {
                 $rules[$key] = $expenseLineRule;
@@ -95,13 +108,19 @@ class TotalExpenditureRequest extends OrganizationBaseRequest
         foreach ($formFields as $totalExpenditureIndex => $totalExpenditure) {
             $totalExpenditureForm = sprintf('total_expenditure.%s', $totalExpenditureIndex);
 
-            $periodStartMessages = $this->getMessagesForPeriodStart($totalExpenditure['period_start'], $totalExpenditureForm);
+            $periodStartMessages = $this->getMessagesForPeriodStart(
+                $totalExpenditure['period_start'],
+                $totalExpenditureForm
+            );
 
             foreach ($periodStartMessages as $key => $periodStartMessage) {
                 $messages[$key] = $periodStartMessage;
             }
 
-            $periodEndMessages = $this->getMessagesForPeriodEnd($totalExpenditure['period_end'], $totalExpenditureForm);
+            $periodEndMessages = $this->getMessagesForPeriodEnd(
+                $totalExpenditure['period_end'],
+                $totalExpenditureForm
+            );
 
             foreach ($periodEndMessages as $key => $periodEndMessage) {
                 $messages[$key] = $periodEndMessage;
@@ -113,7 +132,10 @@ class TotalExpenditureRequest extends OrganizationBaseRequest
                 $messages[$key] = $valueMessage;
             }
 
-            $expenseLineMessages = $this->getMessagesForExpenseLine($totalExpenditure['expense_line'], $totalExpenditureForm);
+            $expenseLineMessages = $this->getMessagesForExpenseLine(
+                $totalExpenditure['expense_line'],
+                $totalExpenditureForm
+            );
 
             foreach ($expenseLineMessages as $key => $expenseLineMessage) {
                 $messages[$key] = $expenseLineMessage;
@@ -138,7 +160,11 @@ class TotalExpenditureRequest extends OrganizationBaseRequest
         foreach ($formFields as $expenseLineIndex => $expenseLine) {
             $expenseLineForm = sprintf('%s.expense_line.%s', $formBase, $expenseLineIndex);
 
-            $valueRules = $this->getWarningForBudgetOrExpenseLineValue($expenseLine['value'], $expenseLineForm, $formBase);
+            $valueRules = $this->getWarningForBudgetOrExpenseLineValue(
+                $expenseLine['value'],
+                $expenseLineForm,
+                $formBase
+            );
 
             foreach ($valueRules as $key => $valueRule) {
                 $rules[$key] = $valueRule;
@@ -168,7 +194,10 @@ class TotalExpenditureRequest extends OrganizationBaseRequest
 
         foreach ($formFields as $expenseLineIndex => $expenseLine) {
             $expenseLineForm = sprintf('%s.expense_line.%s', $formBase, $expenseLineIndex);
-            $messages[sprintf('%s.expense_line.%s.reference.required', $formBase, $expenseLineIndex)] = trans('validation.required', ['attribute' => trans('elementForm.reference')]);
+            $messages[sprintf('%s.expense_line.%s.reference.required', $formBase, $expenseLineIndex)] = trans(
+                'validation.required',
+                ['attribute' => trans('elements/label.reference')]
+            );
 
             $valueMessages = $this->getMessagesForBudgetOrExpenseLineValue($expenseLine['value'], $expenseLineForm);
 
@@ -176,7 +205,10 @@ class TotalExpenditureRequest extends OrganizationBaseRequest
                 $messages[$key] = $valueMessage;
             }
 
-            $narrativeMessages = $this->getMessagesForBudgetOrExpenseLineNarrative($expenseLine['narrative'], $expenseLineForm);
+            $narrativeMessages = $this->getMessagesForBudgetOrExpenseLineNarrative(
+                $expenseLine['narrative'],
+                $expenseLineForm
+            );
 
             foreach ($narrativeMessages as $key => $narrativeMessage) {
                 $messages[$key] = $narrativeMessage;

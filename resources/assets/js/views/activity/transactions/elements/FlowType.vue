@@ -20,13 +20,16 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { data } = toRefs(props);
-
     interface ArrayObject {
       [index: number]: { flow_type: string };
     }
+
+    const { data } = toRefs(props);
+
     const flowData = data.value as ArrayObject;
+
     const type = inject('types');
+
     return { flowData, type };
   },
 });

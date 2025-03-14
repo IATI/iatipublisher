@@ -19,16 +19,19 @@
         <div v-if="narrative.narrative" class="flex flex-col-reverse space-x-1">
           <span>{{ narrative.narrative }}</span>
           <span v-if="narrative.language" class="italic text-n-30"
-            >(Language: {{ types.languages[narrative.language] }})</span
+            >({{ getTranslatedLanguage(translatedData) }}:
+            {{ types.languages[narrative.language] }})</span
           >
         </div>
-        <span v-else class="text-xs italic text-light-gray">Name N/A</span>
+        <span v-else class="text-xs italic text-light-gray"
+          >{{ getTranslatedElement(translatedData, 'name') }} N/A</span
+        >
       </div>
     </div>
     <div class="ml-5">
       <table>
         <tr>
-          <td>Reference</td>
+          <td>{{ getTranslatedElement(translatedData, 'reference') }}</td>
           <td class="text-sm">
             <span v-if="post.ref">{{ post.ref }}</span>
             <span v-else class="text-xs italic text-light-gray">N/A</span>
@@ -44,7 +47,7 @@
     >
       <table>
         <tr>
-          <td>Location Reach</td>
+          <td>{{ getTranslatedElement(translatedData, 'location_reach') }}</td>
           <td>
             <span v-if="item.code">{{
               types.geographicLocationReach[item.code]
@@ -62,7 +65,7 @@
       >
         <table class="w-full">
           <tr>
-            <td>Location Id</td>
+            <td>{{ getTranslatedElement(translatedData, 'location_id') }}</td>
             <td v-if="!isEveryValueNull(item)">
               <div class="flex space-x-1">
                 <div class="value">
@@ -70,13 +73,19 @@
                     >{{ types.geographicVocabulary[item.vocabulary] }},
                   </span>
                   <span v-else class="text-xs italic text-light-gray"
-                    >(Vocabulary N/A)</span
+                    >({{
+                      getTranslatedElement(translatedData, 'vocabulary')
+                    }}
+                    N/A)</span
                   >
                 </div>
                 <div>
                   <span v-if="item.code">code {{ item.code }}</span>
                   <span v-else class="text-xs italic text-light-gray"
-                    >(Code N/A)</span
+                    >({{
+                      getTranslatedElement(translatedData, 'code')
+                    }}
+                    N/A)</span
                   >
                 </div>
               </div>
@@ -99,13 +108,14 @@
         >
           <table class="w-full">
             <tr class="multiline">
-              <td>Description</td>
+              <td>{{ getTranslatedElement(translatedData, 'description') }}</td>
               <td>
                 <div v-if="narrative.narrative" class="flex flex-col">
                   <span
                     v-if="narrative.language"
                     class="language top subtle-darker"
-                    >(Language: {{ types.languages[narrative.language] }})</span
+                    >({{ getTranslatedLanguage(translatedData) }}:
+                    {{ types.languages[narrative.language] }})</span
                   >
                   <span class="description">{{ narrative.narrative }}</span>
                 </div>
@@ -127,13 +137,18 @@
         >
           <table class="w-full">
             <tr class="multiline">
-              <td>Activity Description</td>
+              <td>
+                {{
+                  getTranslatedElement(translatedData, 'activity_description')
+                }}
+              </td>
               <td>
                 <div v-if="narrative.narrative" class="flex flex-col">
                   <span
                     v-if="narrative.language"
                     class="language top subtle-darker"
-                    >(Language: {{ types.languages[narrative.language] }})</span
+                    >({{ getTranslatedLanguage(translatedData) }}:
+                    {{ types.languages[narrative.language] }})</span
                   >
                   <span class="description">{{ narrative.narrative }}</span>
                 </div>
@@ -151,7 +166,9 @@
       >
         <table class="w-full">
           <tr>
-            <td>Administrative</td>
+            <td>
+              {{ getTranslatedElement(translatedData, 'administrative') }}
+            </td>
             <td v-if="!isEveryValueNull(item)">
               <div class="flex">
                 <div>
@@ -160,7 +177,10 @@
                     {{ types.geographicVocabulary[item.vocabulary] }}
                   </span>
                   <span v-else class="text-xs italic text-light-gray"
-                    >(Vocabulary N/A)</span
+                    >({{
+                      getTranslatedElement(translatedData, 'vocabulary')
+                    }}
+                    N/A)</span
                   >
                 </div>
                 <div>
@@ -168,13 +188,19 @@
                     >, code {{ types.country[item.code] }}</span
                   >
                   <span v-else class="ml-1 text-xs italic text-light-gray">
-                    (Code N/A)</span
+                    ({{
+                      getTranslatedElement(translatedData, 'code')
+                    }}
+                    N/A)</span
                   >
                 </div>
                 <div>
                   <span v-if="item.level">, level {{ item.level }}</span>
                   <span v-else class="ml-1 text-xs italic text-light-gray">
-                    (Level N/A)</span
+                    ({{
+                      getTranslatedElement(translatedData, 'level')
+                    }}
+                    N/A)</span
                   >
                 </div>
               </div>
@@ -193,13 +219,16 @@
       >
         <table class="w-full">
           <tr>
-            <td>Point</td>
+            <td>{{ getTranslatedElement(translatedData, 'point') }}</td>
             <td v-if="!isEveryValueNull(item)">
               <div class="flex space-x-1">
                 <div>
                   <span v-if="item.srs_name">({{ item.srs_name }})</span>
                   <span v-else class="text-xs italic text-light-gray">
-                    (SRS Name N/A)</span
+                    ({{
+                      getTranslatedElement(translatedData, 'srs_name')
+                    }}
+                    N/A)</span
                   >
                 </div>
                 <div>
@@ -207,7 +236,10 @@
                     latitude {{ item.pos[0].latitude }},
                   </span>
                   <span v-else class="text-xs italic text-light-gray">
-                    (Latitude N/A)</span
+                    ({{
+                      getTranslatedElement(translatedData, 'latitude')
+                    }}
+                    N/A)</span
                   >
                 </div>
                 <div>
@@ -215,7 +247,10 @@
                     >longitude {{ item.pos[0].longitude }}</span
                   >
                   <span v-else class="text-xs italic text-light-gray">
-                    (Longitude N/A)</span
+                    ({{
+                      getTranslatedElement(translatedData, 'longitude')
+                    }}
+                    N/A)</span
                   >
                 </div>
               </div>
@@ -233,7 +268,7 @@
       >
         <table class="w-full">
           <tr>
-            <td>Exactness</td>
+            <td>{{ getTranslatedElement(translatedData, 'exactness') }}</td>
             <td>
               <span v-if="item.code">{{
                 types.geographicExactness[item.code]
@@ -250,7 +285,9 @@
       >
         <table class="w-full">
           <tr>
-            <td>Location Class</td>
+            <td>
+              {{ getTranslatedElement(translatedData, 'location_class') }}
+            </td>
             <td>
               <span v-if="item.code">{{
                 types.geographicLocationClass[item.code]
@@ -267,7 +304,9 @@
       >
         <table class="w-full">
           <tr>
-            <td>Feature Designation</td>
+            <td>
+              {{ getTranslatedElement(translatedData, 'feature_designation') }}
+            </td>
             <td>
               <span v-if="item.code">{{ types.locationType[item.code] }}</span>
               <span v-else class="text-xs italic text-light-gray">N/A</span>
@@ -280,7 +319,11 @@
 </template>
 
 <script lang="ts">
-import { isEveryValueNull } from 'Composable/utils';
+import {
+  getTranslatedElement,
+  getTranslatedLanguage,
+  isEveryValueNull,
+} from 'Composable/utils';
 import { defineComponent, inject } from 'vue';
 
 export default defineComponent({
@@ -303,7 +346,10 @@ export default defineComponent({
       languages: [];
     }
     const types = inject('types') as Types;
-    return { types, isEveryValueNull };
+    const translatedData = inject('translatedData') as Record<string, string>;
+
+    return { types, isEveryValueNull, translatedData };
   },
+  methods: { getTranslatedElement, getTranslatedLanguage },
 });
 </script>

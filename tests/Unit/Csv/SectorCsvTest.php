@@ -107,7 +107,8 @@ class SectorCsvTest extends CsvBaseTest
         $rows = $this->vocabulary_same_empty_percentage_data();
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('The sum of percentages of same vocabulary must be equal to 100%', $flattenErrors);
+
+        $this->assertContains(trans('validation.sum'), $flattenErrors);
     }
 
     /**
@@ -162,7 +163,8 @@ class SectorCsvTest extends CsvBaseTest
         $rows = $this->narrative_empty_vocabulary_98_or_99();
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('The Narrative field is required.', $flattenErrors);
+
+        $this->assertContains(trans('validation.narrative_is_required'), $flattenErrors);
     }
 
     /**
@@ -202,9 +204,9 @@ class SectorCsvTest extends CsvBaseTest
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
 
-        $this->assertContains('The sector code is invalid.', $flattenErrors);
-        $this->assertContains('The sector vocabulary-uri field must be a valid url.', $flattenErrors);
-        $this->assertContains('The sector vocabulary is invalid.', $flattenErrors);
+        $this->assertContains(trans('validation.sector_code_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.url_valid'), $flattenErrors);
+        $this->assertContains(trans('validation.vocabulary_is_invalid'), $flattenErrors);
     }
 
     /**

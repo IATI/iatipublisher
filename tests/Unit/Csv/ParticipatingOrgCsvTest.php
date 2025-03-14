@@ -88,10 +88,10 @@ class ParticipatingOrgCsvTest extends CsvBaseTest
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
 
-        $this->assertContains('The identifier must not contain symbols or blank space', $flattenErrors);
-        $this->assertContains('The participating organisation role is invalid.', $flattenErrors);
-        $this->assertContains('The participating organisation type is invalid.', $flattenErrors);
-        $this->assertContains('The Crs Channel Code is invalid.', $flattenErrors);
+        $this->assertContains(trans('validation.activity_participating_org.invalid_identifier'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_participating_org.invalid_role'), $flattenErrors);
+        $this->assertContains(trans('validation.organisation_type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_participating_org.invalid_crs_channel_code'), $flattenErrors);
     }
 
     /**

@@ -31,7 +31,8 @@ class MultilevelSubElementFormCreator
     /**
      * MultilevelSubElementFormCreator constructor.
      *
-     * @param FormBuilder $formBuilder
+     * @param FormBuilder                               $formBuilder
+     * @param SettingService $settingService
      */
     public function __construct(FormBuilder $formBuilder, SettingService $settingService)
     {
@@ -42,10 +43,12 @@ class MultilevelSubElementFormCreator
     /**
      * Returns activity title edit form.
      *
-     * @param array $model
-     * @param       $formData
-     * @param       $method
-     * @param       $parent_url
+     * @param array  $model
+     * @param        $formData
+     * @param        $method
+     * @param string $parent_url
+     * @param array  $overRideDefaultFieldValue
+     * @param array  $deprecationStatusMap
      *
      * @return Form
      */
@@ -79,7 +82,7 @@ class MultilevelSubElementFormCreator
             ],
             'buttons' => [
                 'clear'    => [
-                    'label'     => 'Cancel',
+                    'label'     => trans('common/common.cancel'),
                     'attr'      => [
                         'type'      => 'anchor',
                         'class'     => 'ghost-btn mr-8',
@@ -87,7 +90,7 @@ class MultilevelSubElementFormCreator
                     ],
                 ],
                 'submit'    => [
-                    'label'     => 'Save and Exit',
+                    'label'     => trans('common/common.save_and_exit'),
                     'attr'      => [
                         'type'      => 'submit',
                         'class'     => 'primary-btn save-btn',

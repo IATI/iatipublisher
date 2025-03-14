@@ -5,7 +5,9 @@
       <div>
         <NotYet
           :link="`/indicator/${id.indicator}/period/create`"
-          description="You haven't added any periods yet."
+          :description="
+            translatedData['common.common.you_havent_added_any_periods_yet']
+          "
           btn-text="Add period"
           class="max-w-[442px]"
         />
@@ -42,7 +44,7 @@
             </div>
             <div class="ml-2">
               <Btn
-                text="Edit"
+                :text="translatedData['common.common.edit']"
                 icon="edit"
                 :link="`/indicator/${id.indicator}/period/${item.id}/edit`"
               />
@@ -51,7 +53,7 @@
         </div>
         <div class="shrink-0">
           <Btn
-            text="Show full period list"
+            :text="translatedData['common.common.show_full_period_list']"
             icon=""
             design="bgText"
             :link="`/indicator/${id.indicator}/period`"
@@ -87,7 +89,8 @@ export default defineComponent({
       indicator: string;
     }
     const id = inject('parentData') as ParentData;
-    return { id, dateFormat };
+    const translatedData = inject('translatedData') as Record<string, string>;
+    return { id, dateFormat, translatedData };
   },
 });
 </script>

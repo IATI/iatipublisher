@@ -59,7 +59,7 @@ class IdentifierController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : $hasData,
                 elementName: 'IATI_identifier',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->basicBreadCrumbInfo($activity, 'IATI_identifier');
 
@@ -73,10 +73,11 @@ class IdentifierController extends Controller
             return view('admin.activity.identifier.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while opening activity title form.'
+                $translatedMessage
             );
         }
     }
@@ -95,18 +96,24 @@ class IdentifierController extends Controller
             DB::beginTransaction();
 
             if (!$this->identifierService->update($id, $request->except(['_method', '_token']))) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating iati-identifier.');
+                $translatedMessage = trans('common/common.failed_to_update_data');
+
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
             }
 
             DB::commit();
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Iati-identifier updated successfully.');
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
 
+            $translatedMessage = trans('common/common.failed_to_update_data');
+
             return response()->json(
-                ['success' => false, 'error' => 'Error has occurred while updating iati-identifier.']
+                ['success' => false, 'error' => $translatedMessage]
             );
         }
     }

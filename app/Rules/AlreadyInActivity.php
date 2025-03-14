@@ -44,9 +44,9 @@ class AlreadyInActivity implements Rule
     public function message(): string
     {
         if (str_contains($this->attribute, 'recipient_region') || str_contains($this->attribute, 'recipient_country')) {
-            return 'Recipient Region or Recipient Country is already added at activity level. You can add a Recipient Region and or Recipient Country either at activity level or at transaction level.';
+            return trans('validation.activity_transactions.country_region_in_activity');
         }
 
-        return 'Sector has already been declared at activity level. You can’t declare a sector at the transaction level. To declare at transaction level, you need to remove sector at activity level.';
+        return trans('validation.activity_transactions.sector_in_activity');
     }
 }

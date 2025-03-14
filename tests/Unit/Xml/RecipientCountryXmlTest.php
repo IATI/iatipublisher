@@ -40,12 +40,11 @@ class RecipientCountryXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-
-        $this->assertContains('The recipient country code is invalid.', $flattenErrors);
-        $this->assertContains('The Country Code cannot be redundant.', $flattenErrors);
-        $this->assertContains('The recipient country percentage must be a number.', $flattenErrors);
-        $this->assertContains('The sum of recipient country percentage cannot be greater than 100', $flattenErrors);
-        $this->assertContains('The recipient country percentage must be at least 0.', $flattenErrors);
+        $this->assertContains(trans('validation.percentage_must_be_a_number'), $flattenErrors);
+        $this->assertContains(trans('validation.percentage_must_be_at_least_0'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_recipient_country.duplicate_country_code'), $flattenErrors);
+        $this->assertContains(trans('validation.recipient_country_region_percentage_sum'), $flattenErrors);
+        $this->assertContains(trans('validation.country_code'), $flattenErrors);
     }
 
     /**
@@ -131,7 +130,8 @@ class RecipientCountryXmlTest extends XmlBaseTest
     {
         $rows = $this->country_at_transaction_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('Recipient Region or Recipient Country is already added at activity level. You can add a Recipient Region and or Recipient Country either at activity level or at transaction level.', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_transactions.country_region_in_activity'), $flattenErrors);
     }
 
     /**
@@ -166,10 +166,10 @@ class RecipientCountryXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_percentage_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The recipient country percentage must be at least 0.', $flattenErrors);
-        $this->assertContains('The Country Code cannot be redundant.', $flattenErrors);
-        $this->assertContains('The recipient country code is invalid.', $flattenErrors);
-        $this->assertContains('The sum of recipient country percentage cannot be greater than 100', $flattenErrors);
+        $this->assertContains(trans('validation.percentage_must_be_at_least_0'), $flattenErrors);
+        $this->assertContains(trans('validation.country_code'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_recipient_country.duplicate_country_code'), $flattenErrors);
+        $this->assertContains(trans('validation.recipient_country_region_percentage_sum'), $flattenErrors);
     }
 
     /**
@@ -242,7 +242,8 @@ class RecipientCountryXmlTest extends XmlBaseTest
     {
         $rows = $this->country_region_100_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('Recipient Country’s percentage is already 100%. The sum of the percentages of Recipient Country and Recipient Region must be 100%', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_recipient_region.percentage.country_percentage_complete'), $flattenErrors);
     }
 
     /**

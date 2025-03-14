@@ -7,14 +7,16 @@
   >
     <div class="category text-sm font-bold">
       <span v-if="post.type">{{ types.contactType[post.type] }}</span>
-      <span v-else class="italic">Type Missing</span>
+      <span v-else class="italic">{{
+        getTranslatedMissing(translatedData, 'type')
+      }}</span>
     </div>
 
     <div class="ml-5">
       <table>
         <tbody>
           <tr>
-            <td>Organization</td>
+            <td>{{ getTranslatedElement(translatedData, 'organization') }}</td>
             <td>
               <div
                 v-for="(narrative, k) in post.organisation[0].narrative"
@@ -25,21 +27,23 @@
                 }"
               >
                 <div class="language mb-1.5">
-                  (Language:
+                  ({{ getTranslatedLanguage(translatedData) }}:
                   {{
                     narrative.language
                       ? types.languages[narrative.language]
-                      : 'Missing'
+                      : getTranslatedMissing(translatedData)
                   }})
                 </div>
                 <div class="w-[500px] max-w-full">
-                  {{ narrative.narrative ?? 'Missing' }}
+                  {{
+                    narrative.narrative ?? getTranslatedMissing(translatedData)
+                  }}
                 </div>
               </div>
             </td>
           </tr>
           <tr>
-            <td>Person Name</td>
+            <td>{{ getTranslatedElement(translatedData, 'person_name') }}</td>
             <td>
               <div
                 v-for="(narrative, k) in post.person_name[0].narrative"
@@ -50,22 +54,24 @@
                 }"
               >
                 <div class="language mb-1.5">
-                  (Language:
+                  ({{ getTranslatedLanguage(translatedData) }}:
                   {{
                     narrative.language
                       ? types.languages[narrative.language]
-                      : 'Missing'
+                      : getTranslatedMissing(translatedData)
                   }})
                 </div>
                 <div class="w-[500px] max-w-full">
-                  {{ narrative.narrative ?? 'Missing' }}
+                  {{
+                    narrative.narrative ?? getTranslatedMissing(translatedData)
+                  }}
                 </div>
               </div>
             </td>
           </tr>
 
           <tr>
-            <td>Department</td>
+            <td>{{ getTranslatedElement(translatedData, 'department') }}</td>
             <td>
               <div
                 v-for="(narrative, k) in post.department[0].narrative"
@@ -76,21 +82,23 @@
                 }"
               >
                 <div class="language mb-1.5">
-                  (Language:
+                  ({{ getTranslatedLanguage(translatedData) }}:
                   {{
                     narrative.language
                       ? types.languages[narrative.language]
-                      : 'Missing'
+                      : getTranslatedMissing(translatedData)
                   }})
                 </div>
                 <div class="w-[500px] max-w-full">
-                  {{ narrative.narrative ?? 'Missing' }}
+                  {{
+                    narrative.narrative ?? getTranslatedMissing(translatedData)
+                  }}
                 </div>
               </div>
             </td>
           </tr>
           <tr>
-            <td>Job Title</td>
+            <td>{{ getTranslatedElement(translatedData, 'job_title') }}</td>
             <td>
               <div
                 v-for="(narrative, k) in post.job_title[0].narrative"
@@ -101,21 +109,23 @@
                 }"
               >
                 <div class="language mb-1.5">
-                  (Language:
+                  ({{ getTranslatedLanguage(translatedData) }}:
                   {{
                     narrative.language
                       ? types.languages[narrative.language]
-                      : 'Missing'
+                      : getTranslatedMissing(translatedData)
                   }})
                 </div>
                 <div class="w-[500px] max-w-full">
-                  {{ narrative.narrative ?? 'Missing' }}
+                  {{
+                    narrative.narrative ?? getTranslatedMissing(translatedData)
+                  }}
                 </div>
               </div>
             </td>
           </tr>
           <tr>
-            <td>Email</td>
+            <td>{{ getTranslatedElement(translatedData, 'email') }}</td>
             <td>
               <div
                 v-for="(email_value, k) in post.email"
@@ -126,13 +136,15 @@
                 }"
               >
                 <div class="w-[500px] max-w-full">
-                  {{ email_value.email ?? 'Missing' }}
+                  {{
+                    email_value.email ?? getTranslatedMissing(translatedData)
+                  }}
                 </div>
               </div>
             </td>
           </tr>
           <tr>
-            <td>Telephone</td>
+            <td>{{ getTranslatedElement(translatedData, 'telephone') }}</td>
             <td>
               <div
                 v-for="(tel, k) in post.telephone"
@@ -143,13 +155,13 @@
                 }"
               >
                 <div class="w-[500px] max-w-full">
-                  {{ tel.telephone ?? 'Missing' }}
+                  {{ tel.telephone ?? getTranslatedMissing(translatedData) }}
                 </div>
               </div>
             </td>
           </tr>
           <tr>
-            <td>Website</td>
+            <td>{{ getTranslatedElement(translatedData, 'website') }}</td>
             <td>
               <div
                 v-for="(w, k) in post.website"
@@ -160,13 +172,15 @@
                 }"
               >
                 <div class="w-[500px] max-w-full">
-                  {{ w.website ?? 'Missing' }}
+                  {{ w.website ?? getTranslatedMissing(translatedData) }}
                 </div>
               </div>
             </td>
           </tr>
           <tr>
-            <td>Mailing Address</td>
+            <td>
+              {{ getTranslatedElement(translatedData, 'mailing_address') }}
+            </td>
             <td>
               <div
                 v-for="(address, address_index) in post.mailing_address"
@@ -181,15 +195,18 @@
                   class="description-content"
                 >
                   <div class="language mb-1.5">
-                    (Language:
+                    ({{ getTranslatedLanguage(translatedData) }}:
                     {{
                       narrative.language
                         ? types.languages[narrative.language]
-                        : 'Missing'
+                        : getTranslatedMissing(translatedData)
                     }})
                   </div>
                   <div class="w-[500px] max-w-full">
-                    {{ narrative.narrative ?? 'Missing' }}
+                    {{
+                      narrative.narrative ??
+                      getTranslatedMissing(translatedData)
+                    }}
                   </div>
                 </div>
               </div>
@@ -203,6 +220,11 @@
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
+import {
+  getTranslatedElement,
+  getTranslatedLanguage,
+  getTranslatedMissing,
+} from 'Composable/utils';
 
 export default defineComponent({
   name: 'ActivityContactInfo',
@@ -219,8 +241,14 @@ export default defineComponent({
       languages: [];
     }
     const types = inject('types') as Types;
+    const translatedData = inject('translatedData') as Record<string, string>;
 
-    return { types };
+    return { types, translatedData };
+  },
+  methods: {
+    getTranslatedElement,
+    getTranslatedMissing,
+    getTranslatedLanguage,
   },
 });
 </script>

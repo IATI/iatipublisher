@@ -59,7 +59,7 @@ class TagController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : $hasData,
                 elementName: 'tag',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->basicBreadCrumbInfo($activity, 'tag');
 
@@ -73,10 +73,11 @@ class TagController extends Controller
             return view('admin.activity.tag.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while opening tag form.'
+                $translatedMessage
             );
         }
     }
@@ -93,14 +94,18 @@ class TagController extends Controller
     {
         try {
             if (!$this->tagService->update($id, $request->all())) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating tag.');
-            }
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Tag updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating tag.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

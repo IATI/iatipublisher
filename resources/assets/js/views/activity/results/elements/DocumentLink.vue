@@ -11,7 +11,7 @@
           <table class="mb-3">
             <tbody>
               <tr>
-                <td>Title</td>
+                <td>{{ getTranslatedElement(translatedData, 'title') }}</td>
                 <td>
                   <template v-for="(na, n) in post.title[0].narrative" :key="n">
                     <div class="title-content mb-1.5">
@@ -19,7 +19,7 @@
                         v-if="na.narrative"
                         class="language subtle-darker mb-1"
                       >
-                        (Language:
+                        ({{ getTranslatedLanguage(translatedData) }}:
                         {{
                           type.language[na.language]
                             ? type.language[na.language]
@@ -40,7 +40,9 @@
               </tr>
 
               <tr v-if="post.url">
-                <td>Document Link</td>
+                <td>
+                  {{ getTranslatedElement(translatedData, 'document_link') }}
+                </td>
                 <td>
                   <a
                     class="w-[800px] !max-w-[50%] overflow-x-hidden text-ellipsis whitespace-nowrap"
@@ -52,7 +54,7 @@
               </tr>
 
               <tr>
-                <td>Format</td>
+                <td>{{ getTranslatedElement(translatedData, 'format') }}</td>
                 <td>
                   {{ post.format ? post.format : '' }}
                   <span
@@ -64,7 +66,9 @@
               </tr>
 
               <tr>
-                <td>Description</td>
+                <td>
+                  {{ getTranslatedElement(translatedData, 'description') }}
+                </td>
                 <td>
                   <template
                     v-for="(na, n) in post.description[0].narrative"
@@ -75,7 +79,7 @@
                         v-if="na.narrative"
                         class="language subtle-darker mb-1"
                       >
-                        (Language:
+                        ({{ getTranslatedLanguage(translatedData) }} :
                         {{
                           type.language[na.language]
                             ? type.language[na.language]
@@ -94,7 +98,7 @@
               </tr>
 
               <tr>
-                <td>Category</td>
+                <td>{{ getTranslatedElement(translatedData, 'category') }}</td>
                 <td>
                   <template v-for="(cat, c) in post.category" :key="c">
                     <div class="mb-1 text-xs">
@@ -114,7 +118,7 @@
               </tr>
 
               <tr v-if="post.language.length > 0">
-                <td>Language</td>
+                <td>{{ getTranslatedLanguage(translatedData) }}</td>
                 <td>
                   <div class="text-xs">
                     {{
@@ -134,7 +138,9 @@
               </tr>
 
               <tr>
-                <td>Document Date</td>
+                <td>
+                  {{ getTranslatedElement(translatedData, 'document_date') }}
+                </td>
                 <td>
                   <div class="text-xs">
                     {{
@@ -162,8 +168,12 @@
 </template>
 
 <script lang="ts">
-import { isEveryValueNull } from 'Composable/utils';
-import { defineComponent, toRefs } from 'vue';
+import {
+  getTranslatedElement,
+  getTranslatedLanguage,
+  isEveryValueNull,
+} from 'Composable/utils';
+import { defineComponent, inject, toRefs } from 'vue';
 
 export default defineComponent({
   name: 'ResultDocumentLink',
@@ -180,9 +190,11 @@ export default defineComponent({
   },
   setup(props) {
     let { data } = toRefs(props);
+    const translatedData = inject('translatedData') as Record<string, string>;
     const dlData = data.value;
 
-    return { dlData, isEveryValueNull };
+    return { dlData, isEveryValueNull, translatedData };
   },
+  methods: { getTranslatedElement, getTranslatedLanguage },
 });
 </script>

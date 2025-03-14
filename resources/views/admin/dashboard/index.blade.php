@@ -14,7 +14,9 @@
                     @endif
 
                     <dashboard-page
-                        :oldest-dates="{{ json_encode($oldestDates) }}">
+                        :oldest-dates="{{ json_encode($oldestDates) }}"
+                        :translated-data='{{json_encode($translatedData)}}'
+                    >
                     </dashboard-page>
                 </div>
             </div>

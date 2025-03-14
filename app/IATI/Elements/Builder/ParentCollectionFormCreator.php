@@ -80,7 +80,7 @@ class ParentCollectionFormCreator
             ],
             'buttons' => [
                 'clear'    => [
-                    'label'     => 'Cancel',
+                    'label'     => trans('common/common.cancel'),
                     'attr'      => [
                         'type'      => 'anchor',
                         'class'     => 'ghost-btn mr-8',
@@ -88,7 +88,7 @@ class ParentCollectionFormCreator
                     ],
                 ],
                 'submit'    => [
-                    'label'     => 'Save and Exit',
+                    'label'     => trans('common/common.save_and_exit'),
                     'attr'      => [
                         'type'      => 'submit',
                         'class'     => 'primary-btn save-btn',

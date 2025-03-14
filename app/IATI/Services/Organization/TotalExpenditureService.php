@@ -102,7 +102,7 @@ class TotalExpenditureService
      */
     public function formGenerator($id, $deprecationStatusMap = []): Form
     {
-        $element = json_decode(file_get_contents(app_path('IATI/Data/organizationElementJsonSchema.json')), true);
+        $element = readOrganizationElementJsonSchema();
         $model['total_expenditure'] = $this->getTotalExpenditureData($id) ?? [];
         $this->parentCollectionFormCreator->url = route('admin.organisation.total-expenditure.update', [$id]);
 

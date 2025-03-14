@@ -3,23 +3,29 @@
     <div class="mb-4">
       <div class="title mb-6 flex">
         <svg-vue class="mr-1 mt-0.5 text-lg text-crimson-40" icon="delete" />
-        <b>Delete element</b>
+        <b>
+          {{ translatedData['common.common.delete_element'] }}
+        </b>
       </div>
       <div class="rounded-lg bg-rose p-4">
-        Are you sure you want to delete this element?
+        {{
+          translatedData[
+            'common.common.are_you_sure_you_want_to_delete_this_element'
+          ]
+        }}
       </div>
     </div>
     <div class="flex justify-end">
       <div class="inline-flex">
         <BtnComponent
           class="bg-white px-6 uppercase"
-          text="Go Back"
+          :text="translatedData['common.common.go_back']"
           type=""
           @click="deleteValue = false"
         />
         <BtnComponent
           class="space"
-          text="Delete"
+          :text="translatedData['common.common.delete']"
           type="primary"
           @click="deleteElement(activityId, title)"
         />
@@ -65,13 +71,13 @@
         <div class="icons flex items-center">
           <template v-if="title == 'transactions'">
             <Btn
-              text="Add Transaction"
+              :text="translatedData['common.common.add_transaction']"
               icon="add"
               :link="`/activity/${activityId}/transaction/create`"
               class="mr-2.5"
             />
             <Btn
-              text="Show full transaction list"
+              :text="translatedData['common.common.show_full_transaction_list']"
               icon=""
               design="bgText"
               :link="`/activity/${activityId}/transaction`"
@@ -81,7 +87,7 @@
           <div v-else class="mr-2.5 flex gap-2.5">
             <Btn
               v-if="!(title === 'iati_identifier' && hasEverBeenPublished)"
-              text="Edit"
+              :text="translatedData['common.common.edit']"
               :link="`/activity/${activityId}/${title}`"
               class="edit-button"
             />
@@ -91,7 +97,7 @@
                 title !== 'iati_identifier' &&
                 title !== 'reporting_org'
               "
-              text="Delete"
+              :text="translatedData['common.common.delete']"
               class="delete-button"
               icon="delete"
               @click="deleteActivityElement"
@@ -700,6 +706,7 @@ interface ToastDataTypeface {
   type: boolean;
   visibility: boolean;
 }
+const translatedData = inject('translatedData') as Record<string, string>;
 const toastData = inject('toastData') as ToastDataTypeface;
 const elements = inject('elements') as object;
 
