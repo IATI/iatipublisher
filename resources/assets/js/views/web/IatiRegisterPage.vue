@@ -513,7 +513,7 @@ export default defineComponent({
           registration_agency: {
             label:
               props.translatedData[
-                'elements.org_json_schema.common.common.organisation_registration_agency'
+                'common.common.organisation_registration_agency'
               ],
             name: 'registration_agency',
             placeholder: props.translatedData['common.common.select_an_option'],
