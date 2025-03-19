@@ -138,7 +138,7 @@
                               :link="`/${title}/${result.id}/indicator/create`"
                               :description="
                                 translatedData[
-                                  'common.common.you_havent_added_any_indicator_yet_indicators_are_required_to_complete_result'
+                                  'common.common.you_havent_added_any_indicator_yet'
                                 ]
                               "
                               :btn-text="

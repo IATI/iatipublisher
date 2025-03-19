@@ -44,7 +44,7 @@
                         <div class="pb-3">
                             <p class="text-sm"><?= trans('common/common.updating_the_organisation_identifier_will_update_the_following_elements')?></p>
                             <ul class="list-disc px-3 ml-2 text-n-50">
-                                <li class="text-sm"><?= trans('common/common.iati_identifier_of_all_non_published_activities')?></li>
+                                <li class="text-sm"><?= trans('common/common.iati_idezntifier_of_all_non_published_activities')?></li>
                                 <li class="text-sm"><?= trans('common/common.reporting_org_of_all_activities')?></li>
                             </ul>
                         </div>

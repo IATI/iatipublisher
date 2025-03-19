@@ -3,7 +3,6 @@
 return [
     'organisation_identifier_hover_text'                                                           => 'A unique code for your organisation, which was entered when you registered with IATI. It is generated from your organisation registration agency and number.<br><br><a target=\'_blank\' href=\'https://iatistandard.org/en/guidance/publishing-data/registering-and-managing-your-organisation-account/how-to-create-your-iati-organisation-identifier/\'>Click here for more information</a>',
     'organisation_identifier_attributes_organization_country_hover_text'                           => 'Select the country that your organisation is registered in.',
-    'organisation_identifier_attributes_organization_registration_agency_label'                    => 'Organisation Registration Agency',
     'organisation_identifier_attributes_organization_registration_agency_hover_text'               => 'Select an agency that your organisation is registered with. If you need help, please <a target=\'_blank\' href=\'https://iatistandard.org/en/guidance/get-support/\'>Contact support</a>',
     'organisation_identifier_attributes_registration_number_hover_text'                            => 'Enter your organisation\'s registration number with the registration agency that you have selected.',
     'organisation_identifier_attributes_iati-activity-identifier_hover_text'                       => 'The organisation identifier is a unique code for your organisation, which is generated from your organisation registration agency and number.',

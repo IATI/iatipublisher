@@ -332,14 +332,12 @@ return [
     'add_new_result'                                                                                                                                                  => 'Add New Result',
     'show_full_result_list'                                                                                                                                           => 'Show full result list',
     'view_result'                                                                                                                                                     => 'View Result',
-    'you_havent_added_any_indicator_yet_indicators_are_required_to_complete_result'                                                                                   => 'You haven\'t added any indicators yet. At least one indicator is required to publish this result.',
     'description'                                                                                                                                                     => 'Description',
     'add_additional'                                                                                                                                                  => 'Add additional',
     'you_havent_added_any_period_yet'                                                                                                                                 => 'You haven\'t added any periods yet.',
     'show_full_period_list'                                                                                                                                           => 'Show full period list',
     'transaction_sector_form_info_text'                                                                                                                               => 'Sector has already been populated at activity level. You can\'t also populate it at transaction level.',
     'transaction_recipient_region_form_info_text'                                                                                                                     => 'Recipient Region and/or Recipient Country have already been added at activity level. You can populate these at either activity or transaction level, but not at both.',
-    'transaction_recipient_country_sector_form_info_text'                                                                                                             => 'Recipient Region and/or Recipient Country have already been added at activity level. You can populate these at either activity or transaction level, but not at both.',
     'save_and_exit'                                                                                                                                                   => 'Save and Exit',
     'delete_this'                                                                                                                                                     => 'delete_this_',
     'default_language'                                                                                                                                                => 'Default Language',
@@ -366,5 +364,10 @@ return [
     'publishing_additional_information'                                                                                                                               => 'Publishing Additional Information',
     'period'                                                                                                                                                          => 'period',
     'enter_new_password'                                                                                                                                              => 'Enter new password',
-    'help_docs'                                                                                                                                                       => 'Help Docs'
+    'help_docs'                                                                                                                                                       => 'Help Docs',
+    'organisation_identifier_has_changed'                                                                                                                             => 'Organisation identifier has changed',
+    'updating_the_organisation_identifier_will_update_the_following_elements'                                                                                         => 'Updating the organisation identifier will update the following elements',
+    'iati_identifier_of_all_non_published_activities'                                                                                                                 => 'Iati identifier of all non published activities',
+    'reporting_org_of_all_activities'                                                                                                                                 => 'Reporting org of all activities',
+    'are_you_sure_you_want_to_save_the_change'                                                                                                                        => 'Are you sure you want to save the change ?'
 ];

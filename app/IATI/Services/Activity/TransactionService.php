@@ -565,7 +565,7 @@ class TransactionService
             $element['sub_elements']['recipient_region']['freeze'] = true;
             $element['sub_elements']['recipient_region']['info_text'] = trans('common/common.transaction_recipient_region_form_info_text');
             $element['sub_elements']['recipient_country']['freeze'] = true;
-            $element['sub_elements']['recipient_country']['info_text'] = trans('common/common.transaction_recipient_country_sector_form_info_text');
+            $element['sub_elements']['recipient_country']['info_text'] = trans('common/common.transaction_recipient_region_form_info_text');
         }
 
         if ($transactionId) {
