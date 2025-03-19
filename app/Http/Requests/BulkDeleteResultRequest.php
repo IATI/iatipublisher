@@ -59,7 +59,7 @@ class BulkDeleteResultRequest extends FormRequest
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Collection<Transaction> $transactions
+     * @param Collection<Transaction> $transactions
      *
      * @return bool
      */
