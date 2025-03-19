@@ -20,7 +20,7 @@ class SuperAdminMiddleware
      * Handle an incoming request.
      *
      * @param Request                                        $request
-     * @param \Closure(Request): (Response|RedirectResponse) $next
+     * @param Closure(Request): (Response|RedirectResponse) $next
      *
      * @return mixed
      * @throws ContainerExceptionInterface

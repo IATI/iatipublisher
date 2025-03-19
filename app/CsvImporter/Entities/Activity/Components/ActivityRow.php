@@ -263,7 +263,7 @@ class ActivityRow extends Row
      */
     public function keep(): void
     {
-        $activityIdentifier = Arr::get($this->data(), 'identifier.activity_identifier');
+        $activityIdentifier = (string) Arr::get($this->data(), 'identifier.activity_identifier');
 
         if (ImportCacheHelper::activityAlreadyBeingImported($this->organizationId, $activityIdentifier)) {
             return;

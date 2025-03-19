@@ -294,6 +294,7 @@ class Activity
         $this->totalCount = count($this->activities);
 
         foreach ($this->activities as $activityIdentifier => $activity) {
+            $activityIdentifier = (string) $activityIdentifier;
             $errors = $activityValidator
                 ->init($activity)
                 ->validateData();
