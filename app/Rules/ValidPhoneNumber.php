@@ -49,6 +49,6 @@ class ValidPhoneNumber implements Rule
      */
     public function message() :string
     {
-        return 'The contact info telephone number is invalid.';
+        return trans('validation.contact_info_telephone_is_invalid');
     }
 }

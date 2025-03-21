@@ -259,7 +259,11 @@ class ActivityBaseRequest extends FormRequest
                 }
 
                 if (count($languages) === count(array_unique($languages))) {
-                    if ((in_array('', $languages, true) || in_array(null, $languages, true)) && in_array($defaultLanguage, $languages, true)) {
+                    if ((in_array('', $languages, true) || in_array(null, $languages, true)) && in_array(
+                        $defaultLanguage,
+                        $languages,
+                        true
+                    )) {
                         $check = false;
                     }
                 }
@@ -311,7 +315,7 @@ class ActivityBaseRequest extends FormRequest
     public function getMessagesForRequiredNarrative($formFields, $formBase): array
     {
         $messages = [];
-        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'The @xml:lang field must be unique.';
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = trans('validation.narrative_language_unique');
 
         return $messages;
     }
@@ -332,7 +336,12 @@ class ActivityBaseRequest extends FormRequest
 
         foreach ($formFields as $narrativeIndex => $narrative) {
             if (!empty(Arr::get($narrative, 'language', ''))) {
-                $rules[sprintf('%s.narrative.%s.narrative', $formBase, $narrativeIndex)][] = 'required_with_language:' . $narrative['narrative'];
+                $rules[sprintf(
+                    '%s.narrative.%s.narrative',
+                    $formBase,
+                    $narrativeIndex
+                )][]
+                    = 'required_with_language:' . $narrative['narrative'];
             }
         }
 
@@ -352,13 +361,19 @@ class ActivityBaseRequest extends FormRequest
     public function getErrorsForNarrative($formFields, $formBase): array
     {
         $rules = [];
-        $validLanguages = implode(',', array_keys(
-            $this->getCodeListForRequestFiles('Language', 'Activity', false, false)
-        ));
+        $validLanguages = implode(
+            ',',
+            array_keys(
+                $this->getCodeListForRequestFiles('Language', 'Activity', false, false)
+            )
+        );
 
         foreach ($formFields as $narrativeIndex => $narrative) {
             $rules[sprintf('%s.narrative.%s.language', $formBase, $narrativeIndex)][] = 'nullable';
-            $rules[sprintf('%s.narrative.%s.language', $formBase, $narrativeIndex)][] = sprintf('in:%s', $validLanguages);
+            $rules[sprintf('%s.narrative.%s.language', $formBase, $narrativeIndex)][] = sprintf(
+                'in:%s',
+                $validLanguages
+            );
         }
 
         return $rules;
@@ -375,8 +390,10 @@ class ActivityBaseRequest extends FormRequest
     public function getMessagesForNarrative($formFields, $formBase): array
     {
         $messages = [];
-        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = 'The narrative language field must be unique.';
-        $messages[sprintf('%s.narrative.unique_default_lang', $formBase)] = 'The narrative language field must be unique.';
+        $messages[sprintf('%s.narrative.unique_lang', $formBase)] = trans('validation.narrative_language_unique');
+        $messages[sprintf('%s.narrative.unique_default_lang', $formBase)] = trans(
+            'validation.narrative_language_unique'
+        );
 
         foreach ($formFields as $narrativeIndex => $narrative) {
             $messages[sprintf(
@@ -384,19 +401,19 @@ class ActivityBaseRequest extends FormRequest
                 $formBase,
                 $narrativeIndex
             )]
-                = 'The narrative field is required with @xml:lang field.';
+                = trans('validation.narrative_is_required_when_language_is_populated');
             $messages[sprintf(
                 '%s.narrative.%s.language.in',
                 $formBase,
                 $narrativeIndex
             )]
-                = 'The @xml:lang field is invalid.';
+                = trans('validation.language_is_invalid');
             $messages[sprintf(
                 '%s.narrative.%s.narrative.required',
                 $formBase,
                 $narrativeIndex
             )]
-                = 'The Narrative field is required.';
+                = trans('validation.narrative_is_required');
         }
 
         return $messages;
@@ -434,8 +451,10 @@ class ActivityBaseRequest extends FormRequest
         $messages = [];
 
         foreach ($formFields as $periodStartKey => $periodStartVal) {
-            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date'] = 'Period end must be a date.';
-            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date_greater_than'] = 'Period end date must be date greater than year 1900.';
+            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date'] = trans('validation.this_must_be_a_valid_date');
+            $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date_greater_than'] = trans(
+                'validation.date_must_be_after_1900'
+            );
         }
 
         return $messages;
@@ -477,10 +496,18 @@ class ActivityBaseRequest extends FormRequest
         $messages = [];
 
         foreach ($formFields as $periodEndKey => $periodEndVal) {
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = 'Period end is a required field';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date'] = 'Period end must be a date field';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after'] = 'Period end must be a date after period';
-            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date_greater_than'] = 'Period end date must be date greater than year 1900.';
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = trans(
+                'validation.period_end_required'
+            );
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date'] = trans(
+                'validation.date_must_be_after_1900'
+            );
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after'] = trans(
+                'validation.period_end_after'
+            );
+            $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date_greater_than'] = trans(
+                'validation.date_must_be_after_1900'
+            );
         }
 
         return $messages;
@@ -499,7 +526,11 @@ class ActivityBaseRequest extends FormRequest
         $rules = [];
 
         foreach ($formFields as $documentLinkIndex => $documentLink) {
-            $documentLinkForm = $formBase ? sprintf('%s.document_link.%s', $formBase, $documentLinkIndex) : sprintf('document_link.%s', $documentLinkIndex);
+            $documentLinkForm = $formBase ? sprintf('%s.document_link.%s', $formBase, $documentLinkIndex) :
+                sprintf(
+                    'document_link.%s',
+                    $documentLinkIndex
+                );
 
             if (Arr::get($documentLink, 'document_date', null) !== '') {
                 $docDateRules = $this->getWarningForDocumentDate($documentLink['document_date'], $documentLinkForm);
@@ -512,13 +543,19 @@ class ActivityBaseRequest extends FormRequest
             $rules[sprintf('%s.category', $documentLinkForm)][] = 'unique_category';
             $rules[sprintf('%s.language', $documentLinkForm)][] = 'unique_language';
 
-            $narrativeTitleRules = $this->getWarningForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm));
+            $narrativeTitleRules = $this->getWarningForNarrative(
+                $documentLink['title'][0]['narrative'],
+                sprintf('%s.title.0', $documentLinkForm)
+            );
 
             foreach ($narrativeTitleRules as $key => $item) {
                 $rules[$key] = $item;
             }
 
-            $narrativeDesRules = $this->getWarningForNarrative($documentLink['description'][0]['narrative'], sprintf('%s.description.0', $documentLinkForm));
+            $narrativeDesRules = $this->getWarningForNarrative(
+                $documentLink['description'][0]['narrative'],
+                sprintf('%s.description.0', $documentLinkForm)
+            );
 
             foreach ($narrativeDesRules as $key => $item) {
                 $rules[$key] = $item;
@@ -543,10 +580,17 @@ class ActivityBaseRequest extends FormRequest
 
         if (!empty($formFields)) {
             foreach ($formFields as $documentLinkIndex => $documentLink) {
-                $documentLinkForm = $formBase ? sprintf('%s.document_link.%s', $formBase, $documentLinkIndex) : sprintf('document_link.%s', $documentLinkIndex);
-                $rules[sprintf('%s.format', $documentLinkForm)] = 'nullable|in:' . implode(',', array_keys(
-                    $this->getCodeListForRequestFiles('FileFormat', 'Activity', false)
-                ));
+                $documentLinkForm = $formBase ? sprintf('%s.document_link.%s', $formBase, $documentLinkIndex) :
+                    sprintf(
+                        'document_link.%s',
+                        $documentLinkIndex
+                    );
+                $rules[sprintf('%s.format', $documentLinkForm)] = 'nullable|in:' . implode(
+                    ',',
+                    array_keys(
+                        $this->getCodeListForRequestFiles('FileFormat', 'Activity', false)
+                    )
+                );
 
                 if (Arr::get($documentLink, 'url', null) !== '') {
                     $rules[sprintf('%s.url', $documentLinkForm)] = 'nullable|url';
@@ -561,27 +605,57 @@ class ActivityBaseRequest extends FormRequest
                 }
 
                 foreach (array_keys($documentLink['category']) as $index) {
-                    $rules[sprintf('%s.category.%s.code', $documentLinkForm, $index)] = 'nullable|in:' . implode(',', array_keys(
-                        $this->getCodeListForRequestFiles('DocumentCategory', 'Activity', false)
-                    ));
+                    $rules[sprintf('%s.category.%s.code', $documentLinkForm, $index)] = 'nullable|in:' . implode(
+                        ',',
+                        array_keys(
+                            $this->getCodeListForRequestFiles(
+                                'DocumentCategory',
+                                'Activity',
+                                false
+                            )
+                        )
+                    );
                 }
 
                 foreach (array_keys($documentLink['language']) as $index) {
-                    $rules[sprintf('%s.language.%s.language', $documentLinkForm, $index)] = 'nullable|in:' . implode(',', array_keys(
-                        $this->getCodeListForRequestFiles('Language', 'Activity', false, false)
-                    ));
-                    $rules[sprintf('%s.language.%s.code', $documentLinkForm, $index)] = 'nullable|in:' . implode(',', array_keys(
-                        $this->getCodeListForRequestFiles('Language', 'Activity', false, false)
-                    ));
+                    $rules[sprintf('%s.language.%s.language', $documentLinkForm, $index)] = 'nullable|in:' .
+                        implode(
+                            ',',
+                            array_keys(
+                                $this->getCodeListForRequestFiles(
+                                    'Language',
+                                    'Activity',
+                                    false,
+                                    false
+                                )
+                            )
+                        );
+                    $rules[sprintf('%s.language.%s.code', $documentLinkForm, $index)] = 'nullable|in:' . implode(
+                        ',',
+                        array_keys(
+                            $this->getCodeListForRequestFiles(
+                                'Language',
+                                'Activity',
+                                false,
+                                false
+                            )
+                        )
+                    );
                 }
 
-                $narrativeTitleRules = $this->getErrorsForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm));
+                $narrativeTitleRules = $this->getErrorsForNarrative(
+                    $documentLink['title'][0]['narrative'],
+                    sprintf('%s.title.0', $documentLinkForm)
+                );
 
                 foreach ($narrativeTitleRules as $key => $item) {
                     $rules[$key] = $item;
                 }
 
-                $narrativeDesRules = $this->getErrorsForNarrative($documentLink['description'][0]['narrative'], sprintf('%s.description.0', $documentLinkForm));
+                $narrativeDesRules = $this->getErrorsForNarrative(
+                    $documentLink['description'][0]['narrative'],
+                    sprintf('%s.description.0', $documentLinkForm)
+                );
 
                 foreach ($narrativeDesRules as $key => $item) {
                     $rules[$key] = $item;
@@ -605,7 +679,10 @@ class ActivityBaseRequest extends FormRequest
         $rules = [];
 
         foreach ($formFields as $documentCategoryIndex => $documentCategory) {
-            $rules[sprintf('%s.document_date.%s.date', $formIndex, $documentCategoryIndex)] = ['nullable', 'date_greater_than:1900'];
+            $rules[sprintf('%s.document_date.%s.date', $formIndex, $documentCategoryIndex)] = [
+                'nullable',
+                'date_greater_than:1900',
+            ];
         }
 
         return $rules;
@@ -649,10 +726,12 @@ class ActivityBaseRequest extends FormRequest
                 $documentLinkForm = sprintf('document_link.%s', $documentLinkIndex);
             }
 
-            $messages[sprintf('%s.format', $documentLinkForm)] = 'The document link format is invalid';
+            $messages[sprintf('%s.format', $documentLinkForm)] = trans(
+                'validation.document_link_format_invalid'
+            );
 
             if (Arr::get($documentLink, 'url', null) !== '') {
-                $messages[sprintf('%s.url.url', $documentLinkForm)] = 'The @url field must be a valid url.';
+                $messages[sprintf('%s.url.url', $documentLinkForm)] = trans('validation.url_valid');
             }
 
             if (Arr::get($documentLink, 'document_date', null) !== '') {
@@ -663,17 +742,39 @@ class ActivityBaseRequest extends FormRequest
                 }
             }
 
-            $messages[sprintf('%s.category.unique_category', $documentLinkForm)] = 'The document link category code field must be a unique.';
-            $messages[sprintf('%s.category.0.code.in', $documentLinkForm)] = 'The document link category code is invalid.';
-            $messages[sprintf('%s.language.unique_language', $documentLinkForm)] = 'The document link language code field must be a unique.';
-            $messages[sprintf('%s.language.0.code.in', $documentLinkForm)] = 'The document link language code is invalid.';
-            $narrativeTitleMessages = $this->getMessagesForNarrative($documentLink['title'][0]['narrative'], sprintf('%s.title.0', $documentLinkForm));
+            $messages[sprintf(
+                '%s.category.unique_category',
+                $documentLinkForm
+            )]
+                = trans('validation.document_link_category_unique');
+            $messages[sprintf(
+                '%s.category.0.code.in',
+                $documentLinkForm
+            )]
+                = trans('validation.document_link_category_invalid');
+            $messages[sprintf(
+                '%s.language.unique_language',
+                $documentLinkForm
+            )]
+                = trans('validation.document_link_language_unique');
+            $messages[sprintf(
+                '%s.language.0.code.in',
+                $documentLinkForm
+            )]
+                = trans('validation.language_is_invalid');
+            $narrativeTitleMessages = $this->getMessagesForNarrative(
+                $documentLink['title'][0]['narrative'],
+                sprintf('%s.title.0', $documentLinkForm)
+            );
 
             foreach ($narrativeTitleMessages as $key => $item) {
                 $messages[$key] = $item;
             }
 
-            $narrativeDesMessages = $this->getMessagesForNarrative($documentLink['description'][0]['narrative'], sprintf('%s.description.0', $documentLinkForm));
+            $narrativeDesMessages = $this->getMessagesForNarrative(
+                $documentLink['description'][0]['narrative'],
+                sprintf('%s.description.0', $documentLinkForm)
+            );
 
             foreach ($narrativeDesMessages as $key => $item) {
                 $messages[$key] = $item;
@@ -697,9 +798,9 @@ class ActivityBaseRequest extends FormRequest
 
         foreach ($formFields as $documentCategoryIndex => $documentCategory) {
             $messages[sprintf('%s.document_date.%s.date.date', $formIndex, $documentCategoryIndex)]
-                = 'The @iso-date field must be a proper date.';
+                = trans('validation.this_must_be_a_valid_date');
             $messages[sprintf('%s.document_date.%s.date.date_greater_than', $formIndex, $documentCategoryIndex)]
-                = 'The @iso-date field must be a greater than 1900.';
+                = trans('validation.date_must_be_after_1900');
         }
 
         return $messages;
@@ -741,9 +842,12 @@ class ActivityBaseRequest extends FormRequest
         foreach ($formFields as $valueIndex => $value) {
             $valueForm = sprintf('%s.value.%s', $formBase, $valueIndex);
             $rules[sprintf('%s.amount', $valueForm)] = 'nullable|numeric|min:0';
-            $rules[sprintf('%s.currency', $valueForm)] = 'nullable|in:' . implode(',', array_keys(
-                $this->getCodeListForRequestFiles('Currency', 'Activity', false)
-            ));
+            $rules[sprintf('%s.currency', $valueForm)] = 'nullable|in:' . implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles('Currency', 'Activity', false)
+                )
+            );
             $rules[sprintf('%s.value_date', $valueForm)] = 'nullable|date';
         }
 
@@ -788,6 +892,12 @@ class ActivityBaseRequest extends FormRequest
      */
     protected function getCodeListForRequestFiles($listName, $listType, bool $code = true): array
     {
-        return getCodeList($listName, $listType, $code, filterDeprecated: true, deprecationStatusMap: $this->getDeprecatedStatusMap());
+        return getCodeList(
+            $listName,
+            $listType,
+            $code,
+            filterDeprecated: true,
+            deprecationStatusMap: $this->getDeprecatedStatusMap()
+        );
     }
 }

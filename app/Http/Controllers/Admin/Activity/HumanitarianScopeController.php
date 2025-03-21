@@ -59,7 +59,7 @@ class HumanitarianScopeController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : $hasData,
                 elementName: 'humanitarian_scope',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->basicBreadCrumbInfo($activity, 'humanitarian_scope');
 
@@ -73,10 +73,11 @@ class HumanitarianScopeController extends Controller
             return view('admin.activity.humanitarianScope.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while rendering humanitarian-scope form.'
+                $translatedMessage
             );
         }
     }
@@ -93,14 +94,19 @@ class HumanitarianScopeController extends Controller
     {
         try {
             if ($this->humanitarianScopeService->update($id, $request->except(['_token', '_method']))) {
-                return redirect()->route('admin.activity.show', $id)->with('success', 'Humanitarian-scope updated successfully.');
+                $translatedMessage = trans('common/common.updated_successfully');
+
+                return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
             }
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating humanitarian-scope.');
+            $translatedMessage = trans('common/common.failed_to_update_data');
+
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.updated_successfully');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating humanitarian-scope.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

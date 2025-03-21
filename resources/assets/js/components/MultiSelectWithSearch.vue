@@ -10,7 +10,7 @@
           v-model="searchInput"
           class="search__input mr-3.5"
           type="text"
-          :placeholder="`Search ${props.header}...`"
+          :placeholder="`${translatedData['common.common.search']} ${props.header}...`"
           style="width: 100%; height: 40px"
           @input="updateArrayBySearch()"
         />
@@ -19,7 +19,7 @@
 
       <div class="my-1">
         <div v-if="showNoDataComponent" class="p-5 text-center capitalize">
-          no data found
+          {{ translatedData['common.common.no_data_found'] }}
         </div>
         <ul v-else class="max-h-[350px] overflow-y-scroll">
           <li v-for="item in tempListItems" :key="item.key">
@@ -44,7 +44,7 @@
     <div class="footer-ribbon" style="">
       <BtnComponent
         class="space"
-        text="Apply"
+        :text="translatedData['common.common.apply']"
         type="primary"
         @click="applyFilter"
       />
@@ -59,6 +59,7 @@ import {
   onMounted,
   onBeforeUnmount,
   computed,
+  inject,
 } from 'vue';
 import BtnComponent from 'Components/ButtonComponent.vue';
 
@@ -77,6 +78,8 @@ interface TempItem {
   label: string;
   show: boolean;
 }
+
+const translatedData = inject('translatedData') as Record<string, string>;
 
 let tempListItems = ref<TempItem[]>([]);
 const publisherTypeMultiselect = ref();

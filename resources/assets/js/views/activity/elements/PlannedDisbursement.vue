@@ -7,58 +7,61 @@
   >
     <div class="category">
       <span>
-        {{ types.budgetType[post.planned_disbursement_type] ?? 'Type Missing' }}
+        {{
+          types.budgetType[post.planned_disbursement_type] ??
+          getTranslatedMissing(translatedData, 'type')
+        }}
       </span>
     </div>
 
     <div class="mb-4 ml-5">
       <div class="category">
-        <span>Value</span>
+        <span>{{ getTranslatedElement(translatedData, 'value') }}</span>
       </div>
       <table class="ml-5">
         <tbody>
           <tr>
-            <td>Value Amount</td>
+            <td>{{ getTranslatedElement(translatedData, 'value_amount') }}</td>
             <td>
               {{
                 post.value[0].amount
                   ? Number(post.value[0].amount).toLocaleString() +
                     ' ' +
                     types.currency[post.value[0].currency]
-                  : 'Missing'
+                  : getTranslatedMissing(translatedData)
               }}
             </td>
           </tr>
           <tr>
-            <td>Value Date</td>
+            <td>{{ getTranslatedElement(translatedData, 'value_date') }}</td>
             <td>
               {{
                 post.value[0].value_date
                   ? formatDate(post.value[0].value_date)
-                  : 'Missing'
+                  : getTranslatedMissing(translatedData)
               }}
             </td>
           </tr>
           <tr>
-            <td>Period Start</td>
+            <td>{{ getTranslatedElement(translatedData, 'period_start') }}</td>
             <td>
               <span>
                 {{
                   post.period_start[0].date
                     ? formatDate(post.period_start[0].date)
-                    : 'Date Missing'
+                    : getTranslatedMissing(translatedData, 'date')
                 }}
               </span>
             </td>
           </tr>
           <tr>
-            <td>Period End</td>
+            <td>{{ getTranslatedElement(translatedData, 'period_end') }}</td>
             <td>
               <span>
                 {{
                   post.period_end[0].date
                     ? formatDate(post.period_end[0].date)
-                    : 'Date Missing'
+                    : getTranslatedMissing(translatedData, 'date')
                 }}
               </span>
             </td>
@@ -68,34 +71,41 @@
     </div>
     <div v-if="post.provider_org" class="mb-4 ml-5">
       <div class="category">
-        <span>Provider org</span>
+        <span>{{ getTranslatedElement(translatedData, 'provider_org') }}</span>
       </div>
       <table class="ml-5">
         <tbody>
           <tr>
-            <td>Type</td>
+            <td>{{ getTranslatedElement(translatedData, 'type') }}</td>
             <td>
               {{
                 post.provider_org[0].type
                   ? types.organizationType[post.provider_org[0].type]
-                  : 'Missing'
+                  : getTranslatedMissing(translatedData)
               }}
             </td>
           </tr>
           <tr>
-            <td>Provider Activity ID</td>
             <td>
-              {{ post.provider_org[0].provider_activity_id ?? 'Missing' }}
+              {{ getTranslatedElement(translatedData, 'provider_activity_id') }}
+            </td>
+            <td>
+              {{
+                post.provider_org[0].provider_activity_id ??
+                getTranslatedMissing(translatedData)
+              }}
             </td>
           </tr>
           <tr>
-            <td>Reference</td>
+            <td>{{ getTranslatedElement(translatedData, 'reference') }}</td>
             <td>
-              {{ post.provider_org[0].ref ?? 'Missing' }}
+              {{
+                post.provider_org[0].ref ?? getTranslatedMissing(translatedData)
+              }}
             </td>
           </tr>
           <tr>
-            <td>Narrative</td>
+            <td>{{ getTranslatedElement(translatedData, 'narrative') }}</td>
             <td>
               <div
                 v-for="(narrative, k) in post.provider_org[0].narrative"
@@ -110,11 +120,13 @@
                   {{
                     narrative.language
                       ? types.languages[narrative.language]
-                      : 'Missing'
+                      : getTranslatedMissing(translatedData)
                   }})
                 </div>
                 <div class="w-[500px] max-w-full">
-                  {{ narrative.narrative ?? 'Missing' }}
+                  {{
+                    narrative.narrative ?? getTranslatedMissing(translatedData)
+                  }}
                 </div>
               </div>
             </td>
@@ -124,34 +136,41 @@
     </div>
     <div v-if="post.receiver_org" class="ml-5">
       <div class="category">
-        <span>Receiver org</span>
+        <span>{{ getTranslatedElement(translatedData, 'receiver_org') }}</span>
       </div>
       <table class="ml-5">
         <tbody>
           <tr>
-            <td>Type</td>
+            <td>{{ getTranslatedElement(translatedData, 'type') }}</td>
             <td>
               {{
                 post.receiver_org[0].type
                   ? types.organizationType[post.receiver_org[0].type]
-                  : 'Missing'
+                  : getTranslatedMissing(translatedData)
               }}
             </td>
           </tr>
           <tr>
-            <td>Receiver Activity ID</td>
             <td>
-              {{ post.receiver_org[0].receiver_activity_id ?? 'Missing' }}
+              {{ getTranslatedElement(translatedData, 'receiver_activity_id') }}
+            </td>
+            <td>
+              {{
+                post.receiver_org[0].receiver_activity_id ??
+                getTranslatedMissing(translatedData)
+              }}
             </td>
           </tr>
           <tr>
-            <td>Reference</td>
+            <td>{{ getTranslatedElement(translatedData, 'reference') }}</td>
             <td>
-              {{ post.receiver_org[0].ref ?? 'Missing' }}
+              {{
+                post.receiver_org[0].ref ?? getTranslatedMissing(translatedData)
+              }}
             </td>
           </tr>
           <tr>
-            <td>Narrative</td>
+            <td>{{ getTranslatedElement(translatedData, 'narrative') }}</td>
             <td>
               <div
                 v-for="(narrative, k) in post.receiver_org[0].narrative"
@@ -162,15 +181,17 @@
                 }"
               >
                 <div class="language mb-1.5">
-                  (Language:
+                  ({{ getTranslatedLanguage(translatedData) }}:
                   {{
                     narrative.language
                       ? types.languages[narrative.language]
-                      : 'Missing'
+                      : getTranslatedMissing(translatedData)
                   }})
                 </div>
                 <div class="w-[500px] max-w-full">
-                  {{ narrative.narrative ?? 'Missing' }}
+                  {{
+                    narrative.narrative ?? getTranslatedMissing(translatedData)
+                  }}
                 </div>
               </div>
             </td>
@@ -184,6 +205,11 @@
 <script setup lang="ts">
 import { defineProps, inject } from 'vue';
 import moment from 'moment';
+import {
+  getTranslatedElement,
+  getTranslatedLanguage,
+  getTranslatedMissing,
+} from 'Composable/utils';
 
 defineProps({
   data: {
@@ -204,4 +230,5 @@ function formatDate(date: Date) {
 }
 
 const types = inject('types') as Types;
+const translatedData = inject('translatedData') as Record<string, string>;
 </script>

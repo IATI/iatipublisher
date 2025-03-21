@@ -7,17 +7,17 @@
             <div class="mb-4">
                 <div class="flex mb-6 title">
                     <svg-vue icon="alert" class="mr-2 mt-0.5 text-lg text-crimson-40"></svg-vue>
-                    <b>Delete Alert</b>
+                    <b>{{ trans('common/common.delete_alert') }}</b>
                 </div>
-                <div class="p-4 rounded-lg bg-rose">Are you sure you want to delete this item?</div>
+                <div class="p-4 rounded-lg bg-rose">{{ trans('common/common.are_you_sure_you_want_to_delete_this_item') }}</div>
             </div>
             <div class="flex justify-end">
                 <div class="inline-flex">
                     <button class="relative px-6 font-bold uppercase bg-white cancel-popup button text-n-40">
-                        <span>Go Back</span>
+                        <span>{{trans('common/common.go_back')}}</span>
                     </button>
                     <button class="relative font-bold delete-confirm button text-n-40 primary-btn space">
-                        <span>Delete</span>
+                        <span>{{trans('common/common.delete')}}</span>
                     </button>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                     <svg-vue icon="activity-elements/{{ $data['name'] }}"></svg-vue>
                 @endif
             </span>
-            <div class="text-sm font-bold title"> {{ str_replace(' ', '-', strtolower($data['title'])) }}
+            <div class="text-sm font-bold title"> {{ trans(str_replace(' ', '-', strtolower($data['title']))) }}
             </div>
             @if (isCoreElement($data['name']))
                 <svg-vue icon="core" class="ml-2"></svg-vue>
@@ -84,7 +84,7 @@
             @endif
         </div>
         <div class="flex icons">
-            <span class="text-xs"><span class="required-icon">*</span> Mandatory fields</span>
+            <span class="text-xs"><span class="required-icon">*</span> {{ trans('common/common.mandatory_fields') }}</span>
         </div>
     </div>
     <div class="w-full h-px mb-4 divider bg-n-20"></div>

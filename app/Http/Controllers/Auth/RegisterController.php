@@ -137,7 +137,7 @@ class RegisterController extends Controller
                     'success'         => false,
                     'publisher_error' => true,
                     'errors'          => [
-                        'publisher_id' => ['Publisher ID doesn\'t exist in IATI Registry.'],
+                        'publisher_id' => [trans('common/common.publisher_id_doesnt_exist_in_iati_registry')],
                     ],
                 ]);
             }
@@ -146,11 +146,11 @@ class RegisterController extends Controller
             $response = json_decode($res->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR)->result;
 
             if ($postData['publisher_name'] !== $response->title) {
-                $errors['publisher_name'] = ['Publisher Name doesn\'t match your IATI Registry information'];
+                $errors['publisher_name'] = [trans('register/register_controller.publisher_name_doesnt_match_your_iati_registry_information')];
             }
 
             if ($postData['registration_agency'] . '-' . $postData['registration_number'] !== $response->publisher_iati_id) {
-                $errors['identifier'] = ['Publisher IATI ID doesn\'t match your IATI Registry information'];
+                $errors['identifier'] = [trans('common/common.publisher_id_doesnt_match_your_iati_registry_information')];
             }
 
             if (!empty($errors)) {
@@ -161,7 +161,9 @@ class RegisterController extends Controller
                 ]);
             }
 
-            return response()->json(['success' => true, 'message' => 'Publisher verified successfully', 'data' => $response]);
+            $translatedMessage = trans('common/common.publisher_verified_successfully');
+
+            return response()->json(['success' => true, 'message' => $translatedMessage, 'data' => $response]);
         } catch (ClientException $e) {
             logger()->error($e->getMessage());
 
@@ -169,15 +171,17 @@ class RegisterController extends Controller
                 [
                     'success' => false,
                     'errors'  => [
-                        'publisher_name' => ['Publisher Name doesn\'t match your IATI Registry information'],
-                        'publisher_id'   => ['Publisher ID doesn\'t match with your IATI Registry information'],
+                        'publisher_name' => [trans('common/common.publisher_id_doesnt_exist_in_iati_registry')],
+                        'publisher_id'   => [trans('register/register_controller.publisher_name_doesnt_match_your_iati_registry_information')],
                     ],
                 ]
             );
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
 
-            return response()->json(['success' => false, 'error' => 'Error has occurred while verifying the publisher.']);
+            $translatedMessage = trans('common/common.error_has_occurred_while_verifying_the_publisher');
+
+            return response()->json(['success' => false, 'error' => $translatedMessage]);
         }
     }
 
@@ -224,8 +228,8 @@ class RegisterController extends Controller
         ]);
 
         $validator->setCustomMessages([
-            'username.regex' => 'The username is invalid. Username must be purely lowercase alphabets followed by alphanumeric(ascii) characters and these symbols:-_',
-            'email.unique'   => 'Email is already in use in IATI Publisher.',
+            'username.regex' => trans('common/common.the_username_is_invalid'),
+            'email.unique'   => trans('common/common.email_is_already_in_use_in_iati_publisher'),
         ]);
 
         if ($validator->fails()) {
@@ -236,7 +240,9 @@ class RegisterController extends Controller
         event(new Registered($user));
         Session::put('role_id', app(Role::class)->getOrganizationAdminId());
 
-        return response()->json(['success' => true, 'message' => 'User registered successfully']);
+        $translatedMessage = trans('common/common.user_registered_successfully');
+
+        return response()->json(['success' => true, 'message' => $translatedMessage]);
     }
 
     /**

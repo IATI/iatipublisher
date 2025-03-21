@@ -9,7 +9,11 @@
         <input
           v-model="elements.search"
           class="panel__input"
-          placeholder="Search elements to add/edit"
+          :placeholder="
+            translatedData[
+              'organisationDetail.organisation_elements.search_elements_to_add_edit'
+            ]
+          "
           type="text"
         />
       </div>
@@ -40,28 +44,28 @@
               @click="dropdownFilter('')"
             >
               <svg-vue class="mr-1 text-lg" icon="box"></svg-vue>
-              <span>All Elements</span>
+              <span>{{ translatedData['common.common.all_elements'] }}</span>
             </li>
             <li
               class="flex px-3.5 py-1.5 hover:bg-white"
               @click="dropdownFilter('core')"
             >
               <svg-vue class="mr-1 text-lg" icon="core"></svg-vue>
-              <span>Core</span>
+              <span>{{ translatedData['common.common.core'] }}</span>
             </li>
             <li
               class="flex px-3.5 py-1.5 hover:bg-white"
               @click="dropdownFilter('completed')"
             >
               <svg-vue class="mr-1 text-lg" icon="double-tick"></svg-vue>
-              <span>Completed</span>
+              <span>{{ translatedData['common.common.completed'] }}</span>
             </li>
             <li
               class="flex px-3.5 py-1.5 hover:bg-white"
               @click="dropdownFilter('not_completed')"
             >
               <svg-vue class="!mr-1.5 ml-1" icon="red-cross"></svg-vue>
-              <span>Not Completed</span>
+              <span>{{ translatedData['common.common.not_completed'] }}</span>
             </li>
           </ul>
         </div>
@@ -116,7 +120,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, reactive, onMounted, ref, inject } from 'vue';
+import { computed, defineProps, inject, onMounted, reactive, ref } from 'vue';
 import { useToggle } from '@vueuse/core';
 import { orgMandatoryElements } from 'Composable/coreElements';
 
@@ -143,6 +147,7 @@ const [searchBtnValue, searchBtnToggle] = useToggle();
 const dropdown = ref();
 const dropdownBtn = ref();
 const userRole = inject('userRole');
+const translatedData = inject('translatedData') as Record<string, string>;
 
 /**
  * Search functionality
@@ -178,8 +183,7 @@ const filteredElements = computed(() => {
     }
   });
 
-  const justStrings = Object.fromEntries(filtered);
-  return justStrings;
+  return Object.fromEntries(filtered);
 });
 
 onMounted(() => {

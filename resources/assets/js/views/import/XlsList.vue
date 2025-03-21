@@ -2,7 +2,12 @@
   <div class="px-10 py-8">
     <div class="flex flex-wrap justify-between">
       <h6 class="text-3xl font-bold text-n-50">
-        Add/Update All <span class="capitalize">{{ status.template }}</span>
+        {{ translatedData['workflow_frontend.import.add_update_all'] }}
+        <span class="capitalize">{{
+          status.template?.toLowerCase() === 'activity'
+            ? 'activities'
+            : status.template
+        }}</span>
       </h6>
       <div class="flex flex-wrap justify-end gap-3">
         <Toast
@@ -16,7 +21,9 @@
           @click="cancelImport"
         >
           <span><svg-vue class="pt-1.5 text-2xl" icon="cross" /></span>
-          <span>cancel this import</span>
+          <span>{{
+            translatedData['workflow_frontend.import.cancel_this_import']
+          }}</span>
         </button>
         <button
           :class="selectedActivities.length === 0 && ' cursor-not-allowed'"
@@ -24,91 +31,28 @@
           @click.once="addActivities"
         >
           <svg-vue class="mr-2 text-sm" icon="up-arrow-outline" />
-          <span class="mr-2">add </span> ({{ selectedActivities.length }} /
-          {{ activitiesLength ?? 0 }})
+          <span class="mr-2">{{ translatedData['common.common.add'] }} </span>
+          ({{ selectedActivities.length }} / {{ activitiesLength ?? 0 }})
         </button>
       </div>
     </div>
     <div class="flex items-center justify-between space-x-4">
-      <p class="mt-4 text-sm text-n-40">
-        Select from the list below to add {{ status.template }} to the
-        publisher. Make your selection and follow the on-screen prompts to
-        successfully add/update your selected {{ status.template }}
-        <b>
-          Please note that you must re-upload any unselected
-          {{ status.template }}, and if the import is canceled, you will need to
-          upload them again.</b
-        >
-      </p>
-      <!-- <div v-if="globalError" class="relative mt-4">
-        <div
-          v-if="!showGLobalError"
-          class="flex w-[250px] justify-between rounded-l-lg border border-crimson-20 bg-crimson-10 p-4"
-        >
-          <div class="flex">
-            <svg-vue
-              class="mr-1 -mt-1.5 text-2xl text-crimson-50"
-              icon="warning-fill"
-            />
-            <span class="text-sm font-bold">
-              {{ globalError.length }} global errors found
-            </span>
-          </div>
-          <button
-            class="cursor-pointer text-xs uppercase text-bluecoral"
-            @click="showGLobalError = true"
-          >
-            show
-          </button>
-        </div>
-        <div
-          v-else
-          class="absolute -top-4 right-0 z-[100] w-[450px] rounded-l-lg bg-white p-4"
-        >
-          <div class="mb-4 flex justify-between">
-            <div class="flex">
-              <div class="text-sm font-bold">
-                {{ globalError.length }} global errors found
-              </div>
-            </div>
-
-            <button
-              class="cursor-pointer text-xs uppercase text-bluecoral"
-              @click="showGLobalError = false"
-            >
-              hide
-            </button>
-          </div>
-          <div class="border-l border-crimson-40 bg-rose p-4">
-            <div class="my-2 flex items-center justify-between">
-              <div class="flex items-center">
-                <svg-vue
-                  class="mr-1 -mt-1.5 text-2xl text-crimson-50"
-                  icon="alert"
-                />
-                <div class="text-sm font-bold capitalize">
-                  {{ globalError.length }} global errors
-                </div>
-              </div>
-              <svg-vue
-                class="mr-1 -mt-1.5 cursor-pointer text-[7px] duration-200"
-                icon="dropdown-arrow"
-                :class="showGlobalErrorList && ' rotate-180'"
-                @click="showGlobalErrorList = !showGlobalErrorList"
-              />
-            </div>
-            <ul v-if="showGlobalErrorList">
-              <li
-                v-for="error in globalError"
-                :key="error"
-                class="border-b border-n-20 p-4 text-sm"
-              >
-                {{ error }}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div> -->
+      <p
+        class="mt-4 text-sm text-n-40"
+        v-html="
+          translatedData[
+            'workflow_frontend.import.select_from_the_list_below_to_add'
+          ]
+            .replace(
+              ':statusTemplate',
+              status.template === 'activity' ? 'activities' : status.template
+            )
+            .replace(
+              ':statusTemplate',
+              status.template === 'activity' ? 'activities' : status.template
+            )
+        "
+      ></p>
     </div>
     <div class="iati-list-table upload-list-table mt-4">
       <table>
@@ -122,10 +66,15 @@
                   class="pt-1 text-[5px]"
                 />
               </span>
-              <span>{{ status.template }} Title</span>
+              <span
+                >{{ status.template }}
+                {{ getTranslatedElement(translatedData, 'title') }}</span
+              >
             </th>
             <th id="status" scope="col">
-              <span class="block text-left">Status</span>
+              <span class="block text-left">{{
+                translatedData['common.common.status']
+              }}</span>
             </th>
             <th id="cb" scope="col">
               <span class="cursor-pointer">
@@ -136,7 +85,9 @@
         </thead>
         <tbody>
           <tr v-if="!importData.length">
-            <div class="p-4 text-center">No data found for import</div>
+            <div class="p-4 text-center">
+              {{ translatedData['common.common.no_data_found'] }}
+            </div>
           </tr>
           <tr
             v-for="(activity, index) in importData"
@@ -157,11 +108,14 @@
                 :index="index"
                 :import-data="importData"
                 :status="status"
+                :translated-data="props.translatedData"
               />
             </td>
             <td :class="countErrors(index) > 0 && ' xls-error'">
               <span class="text-sm text-n-40">{{
-                activity.existing ? 'Existing' : 'New'
+                activity.existing
+                  ? translatedData['common.common.existing']
+                  : translatedData['common.common.new']
               }}</span>
             </td>
             <td
@@ -176,7 +130,6 @@
                 :value="index"
               />
             </td>
-            <!-- <td>{{ activity[index].data.title[0] }}</td> -->
           </tr>
         </tbody>
       </table>
@@ -185,18 +138,25 @@
   <Loader
     v-if="loader"
     :text="loaderText"
+    :translated-data="translatedData"
     :class="{ 'animate-loader': loader }"
   />
   <Modal
-    :modal-active="showIdentifierErrorModel && showGLobalError"
+    :modal-active="showIdentifierErrorModel && showGlobalError"
     width="583"
   >
     <div class="mb-5 flex space-x-2.5">
       <svg-vue class="text-4xl text-crimson-40" icon="warning-fill" />
       <div>
-        <h6 class="text-base font-bold">Errors Detected</h6>
+        <h6 class="text-base font-bold">
+          {{ translatedData['workflow_frontend.import.errors_detected'] }}
+        </h6>
         <p class="text-sm text-n-40">
-          We detected some errors in the uploaded file.
+          {{
+            translatedData[
+              'workflow_frontend.import.we_detected_some_errors_in_the_uploaded_file'
+            ]
+          }}
         </p>
       </div>
     </div>
@@ -204,10 +164,15 @@
     <div
       class="mb-6 rounded-sm border-crimson-20 bg-rose p-4 text-sm text-n-50"
     >
-      <h6 class="mb-2 text-sm font-bold">Identifier Errors</h6>
+      <h6 class="mb-2 text-sm font-bold">
+        {{ translatedData['workflow_frontend.import.identifier_errors'] }}
+      </h6>
       <p class="text-sm text-n-40">
-        We have found some identifier errors in the imported file. You cannot
-        import data until all the identifier errors are resolved.
+        {{
+          translatedData[
+            'workflow_frontend.import.we_have_found_some_identifier_errors_in_the_imported_file'
+          ]
+        }}
       </p>
       <ul class="max-h-[250px] overflow-y-scroll">
         <li
@@ -223,15 +188,22 @@
       v-if="errorCount.critical + errorCount.error + errorCount.warning > 0"
       class="text-sm text-n-40"
     >
-      Additionally, there are {{ errorCount.critical }} critical error,
-      {{ errorCount.error }} errors and {{ errorCount.warning }} warning in the
-      file
+      {{
+        translatedData['workflow_frontend.import.additionally_there_are']
+          .replace(':countCritical', errorCount.critical)
+          .replace(':countError', errorCount.error)
+          .replace(':countWarning', errorCount.warning)
+      }}
     </p>
     <div class="flex justify-end space-x-3">
-      <button class="ghost-btn" @click="cancelImport">Cancel Import</button>
+      <button class="ghost-btn" @click="cancelImport">
+        {{ translatedData['workflow_frontend.import.cancel_import'] }}
+      </button>
       <BtnComponent
         class=""
-        text="download identifier errors"
+        :text="
+          translatedData['workflow_frontend.import.download_identifier_errors']
+        "
         type="primary"
         icon="download"
         @click="downloadIdentifierError"
@@ -245,9 +217,15 @@
     <div class="mb-5 flex space-x-2.5">
       <svg-vue class="text-4xl text-crimson-40" icon="warning-fill" />
       <div>
-        <h6 class="text-base font-bold">Errors Detected</h6>
+        <h6 class="text-base font-bold">
+          {{ translatedData['workflow_frontend.import.errors_detected'] }}
+        </h6>
         <p class="text-sm text-n-40">
-          We detected some errors in the uploaded file.
+          {{
+            translatedData[
+              'workflow_frontend.import.we_detected_some_errors_in_the_uploaded_file'
+            ]
+          }}
         </p>
       </div>
     </div>
@@ -255,18 +233,25 @@
       class="mb-6 rounded-sm border border-crimson-20 bg-rose p-4 text-sm text-n-50"
     >
       <div v-if="showCriticalErrorMessage" class="mb-6">
-        <h6 class="mb-2 text-sm font-bold">Critical Errors</h6>
-        <p class="text-sm text-n-40">
-          Some of the {{ status.template }} contain critical errors and thus,
-          cannot be uploaded to IATI Publisher. Please review the errors and
-          follow the instructions provided in the user manual.
-        </p>
+        <h6 class="mb-2 text-sm font-bold">
+          {{ translatedData['common.common.critical_errors'] }}
+        </h6>
+        <p
+          class="text-sm text-n-40"
+          v-html="
+            translatedData[
+              'workflow_frontend.import.some_of_the_template_contain_errors'
+            ].replace(':statusTemplate', status.template)
+          "
+        ></p>
       </div>
     </div>
     <div class="flex justify-end space-x-3">
-      <button class="ghost-btn" @click="cancelImport">Cancel Import</button>
+      <button class="ghost-btn" @click="cancelImport">
+        {{ translatedData['workflow_frontend.import.cancel_import'] }}
+      </button>
       <BtnComponent
-        text="Review errors"
+        :text="translatedData['workflow_frontend.import.review_errors']"
         type="primary"
         @click="showCriticalErrorModel = false"
       />
@@ -281,9 +266,11 @@ import Toast from 'Components/ToastMessage.vue';
 import { defineProps, onMounted, ref, nextTick, onUnmounted } from 'vue';
 import Loader from 'Components/sections/ProgressLoader.vue';
 import BtnComponent from 'Components/ButtonComponent.vue';
+import { getTranslatedElement } from 'Composable/utils';
 
+// const translatedData = inject('translatedData') as Record<string, string>;
 const selectAll = ref(false);
-const sortOrder = ref('asceding');
+const sortOrder = ref('ascending');
 
 const tableRow = ref({});
 const showCriticalErrorModel = ref(false);
@@ -291,8 +278,9 @@ const showIdentifierErrorModel = ref(false);
 
 const loader = ref(false),
   loaderText = ref('Adding activities');
+
 const showCriticalErrorMessage = ref(false);
-const showGLobalError = ref(true);
+const showGlobalError = ref(true);
 const selectedCount = ref(0);
 const activitiesLength = ref(0);
 const selectedActivities = ref<string[]>([]);
@@ -319,11 +307,19 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  translatedData: {
+    type: Object,
+    required: true,
+  },
 });
 const getDimensions = async () => {
   await nextTick();
   tableWidth.value = tableRow?.value['0']?.clientWidth;
 };
+
+loaderText.value = props.translatedData[
+  'common.common.adding_template'
+].replace(':template', props.status.template);
 
 const sort = () => {
   sortOrder.value === 'ascending'
@@ -393,12 +389,14 @@ onMounted(() => {
     showIdentifierErrorModel.value = true;
   }
   activitiesLength.value = props.importData.length;
-  loaderText.value = `Adding ${props.status.template}`;
+  loaderText.value = props.translatedData[
+    'common.common.adding_template'
+  ].replace(':template', props.status.template);
 });
 
 const cancelImport = () => {
   showCriticalErrorModel.value = false;
-  showGLobalError.value = false;
+  showGlobalError.value = false;
   axios.delete(`/import/xls`).then((res) => {
     const response = res.data;
     toastVisibility.value = true;

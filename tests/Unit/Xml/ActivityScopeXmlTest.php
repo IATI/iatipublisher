@@ -17,8 +17,9 @@ class ActivityScopeXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_activity_scope_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The activity scope does not exist.', $flattenErrors);
-        $this->assertContains('The activity scope must be 1 characters.', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_scope.in'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_scope.size'), $flattenErrors);
     }
 
     /**

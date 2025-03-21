@@ -1,12 +1,18 @@
 <template>
   <div>
     <div class="registry__info">
-      <div class="mb-4 text-sm font-bold text-n-50">Registry Information</div>
+      <div class="mb-4 text-sm font-bold text-n-50">
+        {{ translatedData['settings.setting.iati_registry_information'] }}
+      </div>
       <div class="mb-4 flex items-center text-xs text-n-50">
         <button>
           <HoverText
-            name="IATI Registry Information"
-            hover-text="IATI Publisher needs to add your organisation's data to the IATI Registry (iatiregistry.org). To do this, we need to access your organisation's IATI Registry Publisher Account. Please provide your organisation's credentials from the IATI Registry."
+            :name="translatedData['settings.setting.iati_registry_information']"
+            :hover-text="
+              translatedData[
+                'settings.setting_publishing_form.iati_publisher_needs_to_add_your_organisations'
+              ]
+            "
           />
         </button>
       </div>
@@ -16,12 +22,18 @@
         <div>
           <div class="relative">
             <div class="flex justify-between">
-              <label for="publisher-id">Publisher ID </label>
+              <label for="publisher-id"
+                >{{ translatedData['common.common.publisher_id'] }}
+              </label>
               <button>
                 <HoverText
                   width="w-72"
-                  name="Publisher ID"
-                  hover-text="This is the unique ID for your organisation that you created when you set up your IATI Registry Publisher Account. It is a shortened version of your organisation's name, which will include lowercase letters and may include numbers and also - (dash) and _ (underscore). For example nef_mali' for Near East Foundation Mali."
+                  :name="translatedData['common.common.publisher_id']"
+                  :hover-text="
+                    translatedData[
+                      'common.common.this_is_the_unique_id_for_your_organisation'
+                    ]
+                  "
                   :show-iati-reference="true"
                 />
               </button>
@@ -35,7 +47,9 @@
                 'hover:cursor-not-allowed': !isSuperadmin,
               }"
               type="text"
-              placeholder="Type Publisher ID here"
+              :placeholder="
+                translatedData['common.common.type_your_publisher_id_here']
+              "
               :disabled="!isSuperadmin"
               @input="updateStore('publisher_id')"
             />
@@ -47,11 +61,17 @@
         <div>
           <div class="relative">
             <div class="flex justify-between">
-              <label for="api-token">API Token </label>
+              <label for="api-token"
+                >{{ translatedData['common.common.api_token'] }}
+              </label>
               <button>
                 <HoverText
-                  name="API Token"
-                  hover-text="The API token is a unique key that is generated from your organisation's IATI Registry Publisher Account. It is required to give IATI Publisher permission to add data to the IATI Registry on your behalf. Generate a Token in the 'My Account' tab by <a href='https://www.iatiregistry.org/user/login' target='_blank' target='_blank'>logging</a> into to the IATI Registry."
+                  :name="translatedData['common.common.api_token']"
+                  :hover-text="
+                    translatedData[
+                      'common.common.the_api_token_is_a_unique_key_that_is_generated_from_your_organisation'
+                    ]
+                  "
                   :show-iati-reference="true"
                 />
               </button>
@@ -67,7 +87,9 @@
                 }"
                 :disabled="userRole !== 'admin'"
                 type="text"
-                placeholder="Type API Token here"
+                :placeholder="
+                  translatedData['common.common.enter_api_token_here']
+                "
                 @input="updateStore('api_token')"
               />
               <ShimmerLoading
@@ -83,7 +105,15 @@
                 tag__incorrect: publishingForm.token_status === 'Incorrect',
               }"
             >
-              {{ publishingForm.token_status }}
+              {{
+                translatedData[
+                  publishingForm.token_status === 'Correct'
+                    ? 'common.common.correct'
+                    : publishingForm.token_status === 'Pending'
+                    ? 'common.common.pending'
+                    : 'common.common.incorrect'
+                ]
+              }}
             </span>
           </div>
           <span v-if="publishingError.api_token" class="error" role="alert">
@@ -96,7 +126,7 @@
         class="primary-btn verify-btn"
         @click="submitPublishing"
       >
-        Verify
+        {{ translatedData['common.common.verify'] }}
       </button>
     </div>
   </div>
@@ -130,6 +160,7 @@ export default defineComponent({
   emits: ['submitPublishing'],
 
   setup(props, { emit }) {
+    const translatedData = inject('translatedData') as Record<string, string>;
     const tab = ref('publish');
     const store = useStore();
     const userRole = inject('userRole');
@@ -193,6 +224,7 @@ export default defineComponent({
       autoVerify,
       isSuperadmin,
       publisherId,
+      translatedData,
     };
   },
 });

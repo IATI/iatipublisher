@@ -138,23 +138,23 @@ class ReportingOrgRequest extends ActivityBaseRequest
     public function getMessagesForReportingOrganization(array $formFields): array
     {
         $messages = [];
-        $messages['reporting_org.size'] = 'The reporting organisation should not have multiple values or narratives.';
+        $messages['reporting_org.size'] = trans('validation.the_reporting_organisation_should_not_have_multiple_values_or_narratives');
         $reportingOrganization = $formFields[0];
         $reportingOrganizationIndex = 0;
         $reportingOrganizationForm = sprintf('reporting_org.%s', $reportingOrganizationIndex);
 
-        $messages[$reportingOrganizationForm . '.ref.must_match'] = 'The reference of reporting-org must match reference of reporting-org in organisation';
-        $messages[$reportingOrganizationForm . '.ref.not_regex'] = 'The reference format for reporting organisation is invalid.';
+        $messages[$reportingOrganizationForm . '.ref.must_match'] = trans('validation.the_reference_of_reporting_org_must_match_reference_of_reporting_org_in_organisation');
+        $messages[$reportingOrganizationForm . '.ref.not_regex'] = trans('validation.the_reference_format_for_reporting_organisation_is_invalid');
 
-        $messages[$reportingOrganizationForm . '.type.must_match'] = 'The type of reporting-org must match type of reporting-org in organisation';
-        $messages[$reportingOrganizationForm . '.type.in:0,1'] = 'The type for reporting organisation is invalid.';
+        $messages[$reportingOrganizationForm . '.type.must_match'] = trans('validation.the_type_of_reporting_org_must_match_type_of_reporting_org_in_organisation');
+        $messages[$reportingOrganizationForm . '.type.in:0,1'] = trans('validation.the_type_for_reporting_organisation_is_invalid');
 
         if ($this->reportingOrganisationInOrganisation) {
             $narrativeMessages = $this->getMessagesForNarrative($reportingOrganization['narrative'], $reportingOrganizationForm);
 
             foreach ($reportingOrganization['narrative'] as $index => $narrative) {
-                $narrativeMessages["$reportingOrganizationForm.narrative.$index.narrative.must_match"] = 'Narrative must match Narrative in organisations reporting-org';
-                $narrativeMessages["$reportingOrganizationForm.narrative.$index.language.must_match"] = 'Language must match Language in organisations reporting-org';
+                $narrativeMessages["$reportingOrganizationForm.narrative.$index.narrative.must_match"] = trans('validation.narrative_must_match_narrative_in_organisations_reporting_org');
+                $narrativeMessages["$reportingOrganizationForm.narrative.$index.language.must_match"] = trans('validation.language_must_match_language_in_organisations_reporting_org');
             }
 
             foreach ($narrativeMessages as $key => $item) {

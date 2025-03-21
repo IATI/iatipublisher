@@ -4,7 +4,14 @@
       <table class="mb-3">
         <tbody>
           <tr>
-            <td>Organisation Identifier Code</td>
+            <td>
+              {{
+                getTranslatedElement(
+                  translatedData,
+                  'organisation_identifier_code'
+                )
+              }}
+            </td>
             <td>
               <div class="text-sm">
                 {{ PoData[0].organization_identifier_code ?? '' }}
@@ -17,7 +24,7 @@
             </td>
           </tr>
           <tr>
-            <td>Description</td>
+            <td>{{ getTranslatedElement(translatedData, 'description') }}</td>
             <td>
               <div
                 v-for="(po, i) in PoData[0].narrative"
@@ -31,8 +38,12 @@
                   (
                   {{
                     po.language
-                      ? `Language: ${type.languages[po.language]}`
-                      : 'Language: Missing'
+                      ? `${getTranslatedLanguage(translatedData)} : ${
+                          type.languages[po.language]
+                        }`
+                      : `${getTranslatedLanguage(
+                          translatedData
+                        )} : ${getTranslatedMissing(translatedData)}`
                   }})
                 </div>
                 <div class="text-sm">
@@ -47,7 +58,9 @@
             </td>
           </tr>
           <tr>
-            <td>Provider Activity ID</td>
+            <td>
+              {{ getTranslatedElement(translatedData, 'provider_activity_id') }}
+            </td>
             <td>
               <div class="text-sm">
                 {{ PoData[0].provider_activity_id ?? '' }}
@@ -60,7 +73,7 @@
             </td>
           </tr>
           <tr>
-            <td>Type</td>
+            <td>{{ getTranslatedElement(translatedData, 'type') }}</td>
             <td>
               <div class="text-sm">
                 {{
@@ -82,6 +95,11 @@
 
 <script lang="ts">
 import { defineComponent, toRefs, inject } from 'vue';
+import {
+  getTranslatedElement,
+  getTranslatedLanguage,
+  getTranslatedMissing,
+} from 'Composable/utils';
 
 export default defineComponent({
   name: 'TransactionProviderOrganisation',
@@ -93,8 +111,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { data } = toRefs(props);
-
     interface ArrayObject {
       [index: number]: {
         narrative: [{ language: string; narrative: string }];
@@ -103,14 +119,25 @@ export default defineComponent({
         type: string;
       };
     }
-    const PoData = data.value as ArrayObject;
 
     interface TypesInterface {
       organizationType: [];
       languages: [];
     }
+
+    const { data } = toRefs(props);
+
+    const PoData = data.value as ArrayObject;
+
     const type = inject('types') as TypesInterface;
-    return { PoData, type };
+    const translatedData = inject('translatedData') as Record<string, string>;
+
+    return { PoData, type, translatedData };
+  },
+  methods: {
+    getTranslatedMissing,
+    getTranslatedLanguage,
+    getTranslatedElement,
   },
 });
 </script>

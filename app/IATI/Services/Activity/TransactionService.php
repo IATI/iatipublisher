@@ -558,14 +558,14 @@ class TransactionService
 
         if (!empty($activity->sector)) {
             $element['sub_elements']['sector']['freeze'] = true;
-            $element['sub_elements']['sector']['info_text'] = 'Sector has already been declared at activity level. You can’t declare a sector at the transaction level. To declare at transaction level, you need to remove sector at activity level.';
+            $element['sub_elements']['sector']['info_text'] = trans('common/common.transaction_sector_form_info_text');
         }
 
         if (!empty($activity->recipient_country) || !empty($activity->recipient_region)) {
             $element['sub_elements']['recipient_region']['freeze'] = true;
-            $element['sub_elements']['recipient_region']['info_text'] = 'Recipient Region or Recipient Country is already added at activity level. You can add a Recipient Region and or Recipient Country either at activity level or at transaction level.';
+            $element['sub_elements']['recipient_region']['info_text'] = trans('common/common.transaction_recipient_region_form_info_text');
             $element['sub_elements']['recipient_country']['freeze'] = true;
-            $element['sub_elements']['recipient_country']['info_text'] = 'Recipient Region or Recipient Country is already added at activity level. You can add a Recipient Region and or Recipient Country either at activity level or at transaction level.';
+            $element['sub_elements']['recipient_country']['info_text'] = trans('common/common.transaction_recipient_region_form_info_text');
         }
 
         if ($transactionId) {

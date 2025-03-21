@@ -35,6 +35,7 @@ mix.webpackConfig({
       ),
       Interfaces: path.resolve(__dirname, './resources/assets/js/interfaces/'),
       Store: path.resolve(__dirname, './resources/assets/js/store/'),
+      Services: path.resolve(__dirname, './resources/assets/js/services/'),
     },
   },
 });

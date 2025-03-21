@@ -1,14 +1,19 @@
 <template>
   <div>
-    <h3 class="pb-2 text-base font-bold leading-6 text-n-50">Publishing</h3>
+    <h3 class="pb-2 text-base font-bold leading-6 text-n-50">
+      {{ translatedData['common.common.publishing'] }}
+    </h3>
     <div class="relative w-full rounded-lg bg-white duration-200">
       <div class="rounded-lg border border-n-20 bg-white p-4">
         <div class="flex items-center justify-between pb-4">
           <h3 class="flex items-center space-x-2 text-sm text-n-50">
-            <span>Activities </span
-            ><span
+            <span>
+              {{ translatedData['common.common.activities'] }}
+            </span>
+            <span
               class="flex h-6 w-6 items-center justify-center rounded-full bg-lagoon-10 text-lagoon-50"
-              >0
+            >
+              0
             </span>
           </h3>
         </div>
@@ -21,12 +26,14 @@
 <script setup lang="ts">
 import { useStorage } from '@vueuse/core';
 import { onMounted, watch, ref, reactive, inject, defineEmits } from 'vue';
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
 import axios from 'axios';
 import { isJson } from 'Composable/utils';
 import ShimmerLoading from './ShimmerLoading.vue';
 
 const store = useStore();
+const translatedData = inject('translatedData') as Record<string, string>;
+
 let pa = useStorage('vue-use-local-storage', {
   publishingActivities: localStorage.getItem('publishingActivities') ?? {},
 });
@@ -113,11 +120,15 @@ const pollingForBulkpublishData = () => {
             refreshToastMsg.visibility = true;
             refreshToastMsg.refreshMessageType = false;
             refreshToastMsg.refreshMessage =
-              'Some activities have failed to publish. Refresh to see changes.';
+              translatedData[
+                'workflow_frontend.bulk_publish.some_activities_have_failed_to_publish_refresh_to_see_changes'
+              ];
           } else {
             refreshToastMsg.visibility = true;
             refreshToastMsg.refreshMessage =
-              'Activity has been published successfully, refresh to see changes';
+              translatedData[
+                'common.common.activity_has_been_published_successfully_refresh_to_see_changes'
+              ];
             setTimeout(() => {
               refreshToastMsg.visibility = false;
             }, 10000);
@@ -212,7 +223,9 @@ const failedActivities = (nestedObject: object) => {
     hasFailedActivities.data = failedActivitiesData as actElements;
     refreshToastMsg.refreshMessageType = false;
     refreshToastMsg.refreshMessage =
-      'Some activities have failed to publish. Refresh to see changes.';
+      translatedData[
+        'workflow_frontend.bulk_publish.some_activities_have_failed_to_publish_refresh_to_see_changes'
+      ];
   } else {
     hasFailedActivities.status = false;
     hasFailedActivities.ids = [];

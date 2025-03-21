@@ -47,11 +47,7 @@ textarea.form__input {
 }
 .form__input {
   @apply mb-2 box-border w-full rounded border border-n-30 text-bluecoral outline-none duration-300;
-
-  @media screen and (min-width: 640px) {
-    padding: 13px 0 13px 16px;
-  }
-  padding: 10px 0 10px 16px;
+  padding: 8px 0 8px 16px;
 
   &::placeholder {
     @apply text-sm font-normal text-n-40;

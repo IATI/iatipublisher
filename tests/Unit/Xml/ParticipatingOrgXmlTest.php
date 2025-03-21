@@ -11,18 +11,21 @@ class ParticipatingOrgXmlTest extends XmlBaseTest
      * Throws validation messages for all invalid data.
      *
      * @return void
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \JsonException
      * @test
      */
     public function throw_validation_if_invalid_data(): void
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The identifier must not contain symbols or blank space', $flattenErrors);
-        $this->assertContains('The participating organisation role is invalid.', $flattenErrors);
-        $this->assertContains('The participating organisation type is invalid.', $flattenErrors);
-        $this->assertContains('The Crs Channel Code is invalid.', $flattenErrors);
-        $this->assertContains('The @xml:lang field is invalid.', $flattenErrors);
-        $this->assertContains('The narrative field is required with @xml:lang field.', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_participating_org.invalid_identifier'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_participating_org.invalid_role'), $flattenErrors);
+        $this->assertContains(trans('validation.organisation_type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_participating_org.invalid_crs_channel_code'), $flattenErrors);
+        $this->assertContains(trans('validation.language_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.narrative_is_required_when_language_is_populated'), $flattenErrors);
     }
 
     /**
