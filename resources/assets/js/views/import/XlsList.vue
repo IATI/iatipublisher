@@ -108,6 +108,7 @@
                 :index="index"
                 :import-data="importData"
                 :status="status"
+                :translated-data="props.translatedData"
               />
             </td>
             <td :class="countErrors(index) > 0 && ' xls-error'">
