@@ -402,6 +402,7 @@ const closeBulkpublish = () => {
     };
 
     store.state.bulkActivityPublishStatus.completedSteps = [];
+    localStorage.removeItem('validatingActivities');
   }, 1000);
 
   store.state.showBulkpublish = false;
@@ -559,7 +560,6 @@ const hideBulkpublishLoader = () => {
 };
 
 const handleActivityPublishedData = (data) => {
-  console.log('Data', data);
   activityPublishedData.value = data;
 };
 

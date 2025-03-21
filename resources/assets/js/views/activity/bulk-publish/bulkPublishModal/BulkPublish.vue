@@ -307,6 +307,7 @@ const showPublishingActivityModal = computed(() => {
 
 const cancelActivityPublishing = (isFinalStep?: boolean) => {
   localStorage.setItem('vue-use-local-storage', 'publishingActivities:{}');
+  localStorage.removeItem('validatingActivities');
   emit('cancelBulkPublishing');
   if (isFinalStep) {
     window.location.reload();
