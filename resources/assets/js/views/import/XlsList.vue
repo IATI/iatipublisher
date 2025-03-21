@@ -3,7 +3,9 @@
     <div class="flex flex-wrap justify-between">
       <h6 class="text-3xl font-bold text-n-50">
         {{ translatedData['workflow_frontend.import.add_update_all'] }}
-        <span class="capitalize">{{ status.template }}</span>
+        <span class="capitalize">{{
+          status.template === 'Activity' ? 'Activities' : status.template
+        }}</span>
       </h6>
       <div class="flex flex-wrap justify-end gap-3">
         <Toast
@@ -38,7 +40,15 @@
         v-html="
           translatedData[
             'workflow_frontend.import.select_from_the_list_below_to_add'
-          ].replace(':statusTemplate', status.templage)
+          ]
+            .replace(
+              ':statusTemplate',
+              status.template === 'Activity' ? 'Activities' : status.template
+            )
+            .replace(
+              ':statusTemplate',
+              status.template === 'Activity' ? 'Activities' : status.template
+            )
         "
       ></p>
     </div>
