@@ -4,7 +4,9 @@
       <h6 class="text-3xl font-bold text-n-50">
         {{ translatedData['workflow_frontend.import.add_update_all'] }}
         <span class="capitalize">{{
-          status.template === 'Activity' ? 'Activities' : status.template
+          status.template?.toLowerCase() === 'activity'
+            ? 'activities'
+            : status.template
         }}</span>
       </h6>
       <div class="flex flex-wrap justify-end gap-3">
@@ -43,11 +45,11 @@
           ]
             .replace(
               ':statusTemplate',
-              status.template === 'Activity' ? 'Activities' : status.template
+              status.template === 'activity' ? 'activities' : status.template
             )
             .replace(
               ':statusTemplate',
-              status.template === 'Activity' ? 'Activities' : status.template
+              status.template === 'activity' ? 'activities' : status.template
             )
         "
       ></p>
