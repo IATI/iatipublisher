@@ -35,7 +35,7 @@ return [
     'please_wait_for_the_completion_of_previous_import'                        => 'Please wait for previous import to complete.',
     'please_wait_for_the_completion_of_previous_import_or_click_import_anyway' => 'Please wait for previous import to complete or click "Import Anyway".',
     'cancel_this_import'                                                       => 'Cancel this import',
-    'add_update_all'                                                           => 'Add/Update All',
+    'add_update_all'                                                           => 'Add/Update',
     'select_from_the_list_below_to_add'                                        => 'Select which :statusTemplate you would like to add or update from the list below. Any :statusTemplate left unselected will need re-uploading.',
     'errors_detected'                                                          => 'Errors Detected',
     'we_detected_some_errors_in_the_uploaded_file'                             => 'We detected errors in your uploaded file.',
