@@ -214,6 +214,13 @@ class BulkPublishingController extends Controller
                     ]);
                 }
 
+                if (!$this->activityService->checkNonPublishedActivities($activityIds)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'All activities are already published.',
+                    ]);
+                }
+
                 Cache::forget('activity-validation-delete');
                 Cache::put('activity-validation-' . auth()->user()->id, true, now()->addMinutes(2));
                 $activityTitle = $this->bulkPublishingService->validateActivitiesOnIATI($activityIds);

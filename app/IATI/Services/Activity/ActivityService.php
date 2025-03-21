@@ -849,4 +849,16 @@ class ActivityService
 
         return $processedStatus;
     }
+
+    /**
+     * Counts the number of non-published activities with the given ids.
+     *
+     * @param $activityIds
+     *
+     * @return int
+     */
+    public function checkNonPublishedActivities($activityIds): int
+    {
+        return $this->activityRepository->checkNonPublishedActivities($activityIds);
+    }
 }
