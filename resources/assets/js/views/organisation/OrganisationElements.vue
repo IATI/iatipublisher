@@ -44,11 +44,7 @@
               @click="dropdownFilter('')"
             >
               <svg-vue class="mr-1 text-lg" icon="box"></svg-vue>
-              <span>{{
-                translatedData[
-                  'organisationDetail.organisation_elements.all_elements'
-                ]
-              }}</span>
+              <span>{{ translatedData['common.common.all_elements'] }}</span>
             </li>
             <li
               class="flex px-3.5 py-1.5 hover:bg-white"

@@ -681,6 +681,7 @@ export default defineComponent({
     ];
 
     provide('parentItemId', activityId);
+    provide('translatedData', props.translatedData);
 
     return {
       breadcrumbData,

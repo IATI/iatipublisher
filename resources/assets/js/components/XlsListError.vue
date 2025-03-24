@@ -212,7 +212,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, computed, ref, inject } from 'vue';
+import { defineProps, computed, ref, toRefs } from 'vue';
 import { getTranslatedElement, getTranslatedUntitled } from 'Composable/utils';
 const showErrors = ref(false);
 const showCritical = ref(false);
@@ -241,6 +241,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  translatedData: {
+    type: Object,
+    required: true,
+  },
 });
 
 const errorLength = (currentError) => {
@@ -254,7 +258,7 @@ const errorLength = (currentError) => {
   return count;
 };
 
-const translatedData = inject('translatedData') as Record<string, string>;
+const { translatedData } = toRefs(props);
 
 const title = computed(() => {
   switch (props.status['template']) {

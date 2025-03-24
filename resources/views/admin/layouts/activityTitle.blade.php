@@ -32,8 +32,7 @@
         </div>
         <div>
           <h4 class="relative mr-4 text-2xl font-bold ellipsis__title">
-            <span class="overflow-hidden ellipsis__title">{{ $data['form_header'] }}</span>
-            <span class="ellipsis__title--hover">{{ $data['form_header'] }}</span>
+            <span class="overflow-hidden ellipsis__title">{{ ucwords($data['form_header']) }}</span>
           </h4>
         </div>
       </div>
