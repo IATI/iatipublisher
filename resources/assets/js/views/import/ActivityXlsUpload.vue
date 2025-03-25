@@ -296,7 +296,7 @@
                 >
                   {{
                     translatedData['common.common.basic_activity_elements']
-                  }}.xls
+                  }}.xlsx
                 </a>
               </li>
               <li
@@ -313,7 +313,7 @@
                     translatedData[
                       'workflow_frontend.import.result_except_indicator_and_period'
                     ]
-                  }}.xls
+                  }}.xlsx
                 </a>
               </li>
               <li
@@ -329,7 +329,7 @@
                   class="block w-full p-2.5 text-n-40 group-hover:text-n-50"
                   >{{
                     translatedData['common.common.indicators_except_period']
-                  }}.xls</a
+                  }}.xlsx</a
                 >
               </li>
               <li
@@ -341,7 +341,7 @@
                     translatedData['workflow_frontend.import.period_template']
                   "
                   class="block w-full p-2.5 text-n-40 group-hover:text-n-50"
-                  >{{ translatedData['common.common.period'] }}.xls</a
+                  >{{ translatedData['common.common.periods'] }}.xlsx</a
                 >
               </li>
             </ul>
@@ -576,7 +576,7 @@
             }
           "
         >
-          Go Back
+          {{ translatedData['common.common.go_back'] }}
         </button>
         <BtnComponent
           v-if="uploadComplete || xlsFailed"

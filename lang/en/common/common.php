@@ -370,4 +370,5 @@ return [
     'iati_identifier_of_all_non_published_activities'                                                                                                                 => 'Iati identifier of all non published activities',
     'reporting_org_of_all_activities'                                                                                                                                 => 'Reporting org of all activities',
     'are_you_sure_you_want_to_save_the_change'                                                                                                                        => 'Are you sure you want to save the change ?',
+    'the_xls_file_is_empty'                                                                                                                                           => 'The xlsx file is empty.',
 ];

@@ -42,7 +42,7 @@
         "type": "text",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "elements/org_json_schema.organisation_identifier_attributes_iati-activity-identifier_hover_text",
+        "hover_text": "elements/org_json_schema.organisation_identifier_attributes_iati_activity_identifier_hover_text",
         "help_text": ""
       }
     },
