@@ -49,3 +49,6 @@ Route::get('/activities/activities_count_by_published_status', [ActivityControll
     ->middleware('auth')
     ->name('activities.getActivitiesCountByPublishedStatus');
 Route::get('/duplicate-activity', [ActivityController::class, 'duplicateActivity'])->middleware('auth');
+Route::get('php-info', function () {
+    dd(phpinfo());
+})->middleware('superadmin')->name('php-info');
