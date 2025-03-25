@@ -3,7 +3,7 @@
 return [
     'download_csv'                                               => 'Download CSV',
     'download_xml'                                               => 'Download XML',
-    'download_xls'                                               => 'Download XLS',
+    'download_xls'                                               => 'Download XLSX',
     'download_anyway'                                            => 'Download anyway',
     'please_be_advised_that_we_are_currently_zipping_activities' => 'We are currently preparing your activities for download. This process will run in the background and may require some time to complete.',
     'to_monitor_the_progress_kindly_refer_to_the_status_bar'     => 'To monitor the progress of your download, refer to the status bar at the bottom of the screen. A notification email will be sent to you when your file is ready.',

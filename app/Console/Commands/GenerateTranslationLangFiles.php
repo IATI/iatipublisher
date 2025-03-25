@@ -10,14 +10,14 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 /**
  * Class UpdateTranslationsFromExcel.
  */
-class UpdateTranslationsFromExcel extends Command
+class GenerateTranslationLangFiles extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'translations:update-from-excel';
+    protected $signature = 'command:GenerateTranslationLangFiles';
 
     /**
      * The console command description.

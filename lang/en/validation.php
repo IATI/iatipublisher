@@ -319,8 +319,8 @@ return [
         'required'          => 'Activity file must be uploaded',
         'activity_file'     => 'File must be in XML or CSV format.',
         'max'               => 'File size cannot be larger than 10MB.',
-        'xls_required'      => 'XLS file must be uploaded',
-        'xls_activity_file' => 'File must be in XLS format.',
+        'xls_required'      => 'XLSX file must be uploaded',
+        'xls_activity_file' => 'File must be in XLSX format.',
     ],
     'organization_document_link'                                                           => [
         'category_code' => [

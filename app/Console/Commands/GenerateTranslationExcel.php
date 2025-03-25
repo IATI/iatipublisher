@@ -19,7 +19,7 @@ class GenerateTranslationExcel extends Command
      *
      * @var string
      */
-    protected $signature = 'translations:generate-excel';
+    protected $signature = 'command:GenerateTranslationExcel';
 
     /**
      * The console command description.

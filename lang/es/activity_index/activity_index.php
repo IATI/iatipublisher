@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'all'                    => 'All',
-    'ready_for_republishing' => 'Ready for republishing',
-    'draft'                  => 'Draft',
+    'all'                    => 'ES_All',
+    'ready_for_republishing' => 'ES_Ready for republishing',
+    'draft'                  => 'ES_Draft',
 ];

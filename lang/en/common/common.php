@@ -202,7 +202,7 @@ return [
     'core_elements_not_complete'                                                                                                                                      => 'Core elements not complete',
     'show_full_transaction_list'                                                                                                                                      => 'Show full transaction list',
     'type_your_publisher_id_here'                                                                                                                                     => 'Enter your Publisher ID here',
-    'import_activities_from_xls'                                                                                                                                      => 'Import activities from .XLS',
+    'import_activities_from_xls'                                                                                                                                      => 'Import activities from .XLSX',
     'type_default_hierarchy_here'                                                                                                                                     => 'Type hierarchy here',
     'iati_organisation_identifier'                                                                                                                                    => 'IATI organisation identifier',
     'select_your_default_language'                                                                                                                                    => 'Select your default language',
@@ -327,7 +327,7 @@ return [
     'all_elements'                                                                                                                                                    => 'All elements',
     'delete_alert'                                                                                                                                                    => 'Delete Alert',
     'are_you_sure_you_want_to_delete_this_item'                                                                                                                       => 'Are you sure you want to delete this item?',
-    'fetching_xls_file'                                                                                                                                               => 'Fetching .xls file',
+    'fetching_xls_file'                                                                                                                                               => 'Fetching .XLSX file',
     'the_sector_percentage_field_must_be_a_number'                                                                                                                    => 'The sector percentage field must be a number.',
     'add_new_result'                                                                                                                                                  => 'Add New Result',
     'show_full_result_list'                                                                                                                                           => 'Show full result list',
@@ -369,5 +369,5 @@ return [
     'updating_the_organisation_identifier_will_update_the_following_elements'                                                                                         => 'Updating the organisation identifier will update the following elements',
     'iati_identifier_of_all_non_published_activities'                                                                                                                 => 'Iati identifier of all non published activities',
     'reporting_org_of_all_activities'                                                                                                                                 => 'Reporting org of all activities',
-    'are_you_sure_you_want_to_save_the_change'                                                                                                                        => 'Are you sure you want to save the change ?'
+    'are_you_sure_you_want_to_save_the_change'                                                                                                                        => 'Are you sure you want to save the change ?',
 ];

@@ -1,6 +1,5 @@
 <?php
 
 return [
-    'search_elements_to_add_edit' => 'Search elements to add/edit',
-    'all_elements'                => 'All Elements',
+    'search_elements_to_add_edit' => 'ES_Search elements to add/edit',
 ];
