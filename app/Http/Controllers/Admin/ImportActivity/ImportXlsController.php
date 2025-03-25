@@ -163,20 +163,43 @@ class ImportXlsController extends Controller
             $this->db->beginTransaction();
             $status = $this->importXlsService->getImportStatus();
             $activities = $request->get('activities');
+
+            logger('$status');
+            logger($status);
+
             if (empty($status)) {
+                logger('first if');
+
                 $translatedMessage = trans('workflow_backend/import_xls_controller.please_ensure_that_you_have_uploaded_xls_file');
 
                 return response()->json(['success' => false, 'message' => $translatedMessage]);
             }
-
             if (empty($activities)) {
+                logger('second if');
+
                 $translatedMessage = trans('workflow_backend/import_xls_controller.please_select_the_data_you_want_to_add');
 
                 return response()->json(['success' => false, 'message' => $translatedMessage]);
             }
 
             $xlsType = $status['template'];
+
+            logger('$xlsType');
+            logger($xlsType);
+
+            logger('ImportCacheHelper::organisationHasCompletedValidatingData(Auth::user()->organization_id)');
+            logger(ImportCacheHelper::organisationHasCompletedValidatingData(Auth::user()->organization_id));
+
+            logger('ImportCacheHelper::getImportStep(180)');
+            logger(ImportCacheHelper::getImportStep(Auth::user()->organization_id));
+
             if ($xlsType === 'activity' && !ImportCacheHelper::hasOrganisationFinishedValidationStep(Auth::user()->organization_id)) {
+
+                logger('third if');
+
+                //TODO: Session flash here
+                // Clear ongoing import here
+
                 $translatedMessage = trans('workflow_backend/import_activity_controller.error_has_occurred_while_importing_activities');
 
                 return response()->json(['success' => false, 'message' =>  $translatedMessage, 'type' => $xlsType]);
@@ -191,10 +214,16 @@ class ImportXlsController extends Controller
 
             Session::put('success', $translatedMessage);
 
+            logger('before if statement');
+
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (Exception $e) {
             $this->db->rollBack();
             $this->importXlsService->deleteImportStatus();
+            logger('inside catch statement - xls importValidatedActivities');
+
+            $translatedMessage = trans('common/common.error_has_occurred_while_importing_activity');
+            Session::put('error', $translatedMessage);
 
             ImportCacheHelper::clearImportCache(Auth::user()->organization_id);
 
@@ -319,25 +348,35 @@ class ImportXlsController extends Controller
     public function show(): View|JsonResponse|RedirectResponse
     {
         try {
+            logger('XLS import step 1');
             $status = $this->importXlsService->getImportStatus();
 
+            logger('XLS import step 2');
             if (empty($status)) {
+                logger('XLS import step 3');
                 $translatedMessage = trans('workflow_backend/import_xls_controller.please_upload_xls_file_to_continue');
 
                 return redirect()->route('admin.activities.index')->with('error', $translatedMessage);
             }
 
             $importData = $this->importXlsService->getAwsXlsData('valid.json');
+            logger('XLS import step 4');
+            logger($importData);
             $globalError = $this->importXlsService->getAwsXlsData('globalError.json');
+            logger('XLS import step 5');
+            logger(json_encode($globalError));
             $errors = $globalError->errors;
             $errors = empty($errors) ? null : $errors;
             $errorCount = $globalError->error_count;
+
+            logger('XLS import step 6');
 
             return view(
                 'admin.import.xls.list',
                 compact('status', 'importData', 'errors', 'errorCount')
             );
         } catch (Exception $e) {
+            logger('Catch statement');
             logger()->error($e->getMessage());
             $translatedMessage = trans('common/common.error_opening_data_entry_form');
 

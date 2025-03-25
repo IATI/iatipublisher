@@ -204,25 +204,42 @@ class ImportActivityController extends Controller
         try {
             $this->db->beginTransaction();
             $activities = $request->get('activities');
+
+            logger('activities');
+            logger($activities);
+
             $orgId = Auth::user()->organization_id;
             $filetype = Session::get('import_filetype') ?? ImportCacheHelper::getSessionConsistentFiletype($orgId);
 
+            logger('CSV-XML importValidatedActivities step: 2');
             if (!ImportCacheHelper::hasOrganisationFinishedValidationStep($orgId)) {
+                logger('CSV-XML importValidatedActivities step: 3');
+                Session::put('error', 'No data to import.');
+                ImportCacheHelper::clearImportCache(Auth::user()->organization_id);
+
                 $translatedMessage = trans('workflow_backend/import_activity_controller.no_data_to_import');
 
                 return response()->json(['success' => false, 'message' => $translatedMessage, 'type' => $filetype]);
             }
+            logger('CSV-XML importValidatedActivities step: 4');
 
             if ($activities) {
+                logger('CSV-XML importValidatedActivities step: 5');
                 if ($filetype === 'xml') {
+                    logger('CSV-XML importValidatedActivities step: 6');
                     $this->importXmlService->create($activities);
                     $this->importStatusService->completeOrganisationImportStatus($orgId, 'xml');
                 } else {
+                    logger('CSV-XML importValidatedActivities step: 7');
                     $this->importCsvService->create($activities);
                     $this->importCsvService->endImport();
                     $this->importStatusService->completeOrganisationImportStatus($orgId, 'csv');
                 }
+                logger('CSV-XML importValidatedActivities step: $filetype');
+                logger($filetype);
             }
+
+            logger('CSV-XML importValidatedActivities step: 8');
 
             $this->db->commit();
             ImportCacheHelper::markImportStepComplete($orgId);
@@ -232,6 +249,8 @@ class ImportActivityController extends Controller
 
             ImportCacheHelper::clearImportCache($orgId);
 
+            logger('CSV-XML importValidatedActivities step: before return');
+
             $translatedMessage = trans('workflow_backend/import_activity_controller..imported_data_successfully');
             Session::flash('success', $translatedMessage);
 
@@ -240,6 +259,7 @@ class ImportActivityController extends Controller
             $this->db->rollBack();
             $this->deleteOngoingImports();
 
+            logger('CSV-XML importValidatedActivities step: In Exception');
             logger()->error($e);
 
             ImportCacheHelper::clearImportCache(Auth::user()->organization_id);
@@ -258,12 +278,17 @@ class ImportActivityController extends Controller
      */
     public function status(): View|RedirectResponse
     {
+        logger('CSV-XML import step 1');
         try {
+            logger('CSV-XML import step 2');
             $orgId = Auth::user()->organization_id;
             $userId = Auth::user()->id;
+            dd($_SESSION, ImportCacheHelper::getSessionConsistentFiletype($orgId));
             $filetype = Session::get('import_filetype') ?? ImportCacheHelper::getSessionConsistentFiletype($orgId);
 
+            logger('CSV-XML import step 3');
             if (!$orgId) {
+                logger('CSV-XML import step 4');
                 $translatedMessage = trans('common/common.user_is_not_associated_with_any_organization');
 
                 Session::put('error', $translatedMessage);
@@ -271,14 +296,27 @@ class ImportActivityController extends Controller
                 return redirect()->route('admin.activities.index');
             }
 
+            logger('CSV-XML import step 5');
+
             if (!$filetype) {
+                logger('CSV-XML import step 6');
+                $translatedMessage = 'Something went wrong. Please try again.';
+
+                Session::flash('error', $translatedMessage);
+                $this->importStatusService->deleteOngoingImports($orgId);
+
+                //TODO : Clear cache here.
                 return redirect()->route('admin.activities.index');
             }
 
+            logger('CSV-XML import step 7');
             $status = awsGetFile(sprintf('%s/%s/%s/%s', $filetype === 'xml' ? $this->xml_data_storage_path : $this->csv_data_storage_path, $orgId, $userId, 'status.json'));
             $schema_error = awsGetFile(sprintf('%s/%s/%s/%s', $filetype === 'xml' ? $this->xml_data_storage_path : $this->csv_data_storage_path, $orgId, $userId, 'schema_error.log'));
 
+            logger('CSV-XML import step 8');
             if (!$status) {
+                logger('CSV-XML import step 9');
+
                 $translatedMessage = 'status.json file not present in AWS. Please try again.';
 
                 Session::put('error', $translatedMessage);
@@ -287,9 +325,11 @@ class ImportActivityController extends Controller
                 return redirect()->route('admin.activities.index');
             }
 
+            logger('CSV-XML import step 10');
             $status = json_decode($status, true, 512, JSON_THROW_ON_ERROR);
 
             if ($schema_error) {
+                logger('CSV-XML import step 11');
                 Session::put('error', $status['message'] . '. To see errors <b>
 
                 <a href=' . awsUrl(sprintf('%s/%s/%s/%s', $filetype === 'xml' ? $this->xml_data_storage_path : $this->csv_data_storage_path, $orgId, $userId, 'schema_error.log')) . ' target="_blank">Open Error File</a></b>');
@@ -299,13 +339,17 @@ class ImportActivityController extends Controller
             }
 
             if (!$status['success']) {
+                logger('CSV-XML import step 12');
                 Session::put('error', $status['message']);
 
                 return redirect()->route('admin.activities.index');
             }
 
+            logger('CSV-XML import step 13');
+
             return view('admin.import.list');
         } catch (Exception $e) {
+            logger('CSV-XML import step 4');
             logger()->error($e->getMessage());
             $translatedMessage = trans('workflow_backend/import_activity_controller.error_has_occurred_while_checking_the_status');
 
@@ -320,12 +364,18 @@ class ImportActivityController extends Controller
      */
     public function getImportListData(): JsonResponse
     {
+        logger('CSV-XML import step listing step 1');
         try {
             $orgId = Auth::user()?->organization_id;
 
+            logger('CSV-XML import step listing step 2');
+
             $filetype = Session::get('import_filetype') ?? ImportCacheHelper::getSessionConsistentFiletype($orgId);
 
+            logger('CSV-XML import step listing step 3');
             if (!$filetype) {
+                logger('CSV-XML import step listing step 4');
+
                 $translatedMessage = trans('workflow_backend/import_activity_controller.please_upload_csv_or_xml_file_to_import_activity');
 
                 Session::put('error', $translatedMessage);
@@ -333,22 +383,35 @@ class ImportActivityController extends Controller
                 return response()->json(['status' => 'error', 'message' => $translatedMessage]);
             }
 
+            logger('CSV-XML import step listing step 5');
+
             if ($filetype === 'xml') {
+                logger('CSV-XML import step listing step 6');
+
                 $result = $this->importXmlService->loadJsonFile('status.json');
                 $data = $this->importXmlService->loadJsonFile('valid.json');
             } else {
+                logger('CSV-XML import step listing step 7');
+
                 $result = $this->importCsvService->getAwsCsvData('status.json');
                 $data = $this->importCsvService->getAwsCsvData('valid.json');
             }
 
+            logger('CSV-XML import step listing step 8');
+
             $status = strcasecmp($result->message, 'Complete') === 0;
 
             if (!$data) {
+                logger('CSV-XML import step listing step 9');
+                //TODO: Clear cache here.
                 $translatedMessage = trans('workflow_backend/import_activity_controller.error_has_occurred_while_importing_activities');
 
                 Session::flash('error', $translatedMessage);
             }
 
+            logger('CSV-XML import step listing step 10');
+
+            //TODO: FE polling handling here.
             return response()->json(['status' => $status, 'data' => $data]);
         } catch (Exception $e) {
             $this->deleteOngoingImports();
@@ -357,6 +420,7 @@ class ImportActivityController extends Controller
 
             Session::flash('error', $translatedMessage);
 
+            logger('CSV-XML import step listing step 11');
             logger()->error($e->getMessage());
 
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);

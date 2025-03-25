@@ -67,7 +67,7 @@ class ActivityCreateRequest extends FormRequest
                 'required',
                 Rule::notIn($activityIdentifiers),
                 new NoSpacesInBetweenInActivityIdentifier(),
-                new NoLeadingWhiteSpaceInActivityIdentifier($iatiIdentifierText, $organisationIdentifier),
+                new NoLeadingWhiteSpaceInActivityIdentifier($iatiIdentifierText ?? '', $organisationIdentifier),
             ],
             'iati_identifier_text' => ['sometimes'],
         ];

@@ -31,6 +31,7 @@ trait TestDataTrait
                     'language'  => 'ng',
                 ],
             ],
+            'activity_identifier'     => 'TAN',
             'description'             => null,
             'activity_status'         => null,
             'status'                  => 'draft',

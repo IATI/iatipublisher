@@ -52,6 +52,21 @@ Route::get('/duplicate-activity', [ActivityController::class, 'duplicateActivity
 Route::get('/language/{language}', [App\Http\Controllers\Web\WebController::class, 'setLocale'])->name('set-locale');
 Route::get('/current-language', [App\Http\Controllers\Web\WebController::class, 'getLocale'])->name('get-locale');
 Route::get('/translated-data', [App\Http\Controllers\Web\WebController::class, 'getTranslatedData'])->name('get-translated-data');
-Route::get('php-info', function () {
+
+Route::get('/php-info', function () {
     dd(phpinfo());
 })->middleware('superadmin')->name('php-info');
+
+Route::get('xls-test', function () {
+    try {
+        /** @var $importXlsService \App\IATI\Services\ImportActivity\ImportXlsService */
+        $importXlsService = app(App\IATI\Services\ImportActivity\ImportXlsService::class);
+
+        $contents = json_decode(awsGetFile('XlsImporter/tmp/180/254/valid.json'), false, 512, JSON_THROW_ON_ERROR | 0);
+
+        $activities = ['0'=>0];
+        $importXlsService->saveActivities($activities, $contents);
+    } catch (Exception $e) {
+        logger()->error($e);
+    }
+})->middleware('superadmin')->name('xls-test');

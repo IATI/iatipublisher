@@ -120,6 +120,12 @@ class ActivityTableFaker extends Seeder
             'created_by' => $user_id,
             'updated_by' => $user_id,
         ];
-        Activity::factory()->count(25)->has(Transaction::factory())->create($activity_attr);
+
+        $count = 25;
+
+        for ($i = 0; $i < $count; $i++) {
+            $activity_attr['activity_identifier'] = 'SYRZ000041' . $i;
+            Activity::factory()->has(Transaction::factory())->create($activity_attr);
+        }
     }
 }
