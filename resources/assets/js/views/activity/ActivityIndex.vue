@@ -3,6 +3,7 @@
     id="activity-listing-page"
     class="page-height bg-paper px-5 pb-[71px] pt-4 xl:px-10"
   >
+    <PageLoader />
     <div id="activity">
       <Loader v-if="isLoading"></Loader>
       <PageTitle :is-disabled-publish="isDisabledPublish" />
@@ -143,6 +144,7 @@ import ErrorMessage from 'Components/ErrorMessage.vue';
 import { useStore } from 'Store/activities';
 import { detailStore } from 'Store/activities/show';
 import { useStorage } from '@vueuse/core';
+import PageLoader from 'Components/PageLoader.vue';
 
 const store = useStore();
 const activityStore = detailStore();
@@ -157,6 +159,7 @@ export default defineComponent({
     ErrorMessage,
     XlsUploadIndicator,
     OnBoardingIndex,
+    PageLoader,
   },
   props: {
     toast: {
