@@ -192,6 +192,7 @@ class ImportActivityController extends Controller
      */
     public function importValidatedActivities(Request $request): mixed
     {
+        set_time_limit(300);
         try {
             $this->db->beginTransaction();
             $activities = $request->get('activities');
