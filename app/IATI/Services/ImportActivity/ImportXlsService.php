@@ -172,8 +172,6 @@ class ImportXlsService
      * @param $activityId
      *
      * @return $this
-     * @throws \JsonException
-     * @throws \ReflectionException
      */
     protected function saveTransactions($transactions, $activityId): static
     {
@@ -187,8 +185,9 @@ class ImportXlsService
                     'deprecation_status_map'=>json_encode(refreshTransactionDeprecationStatusMap($transaction)),
                 ];
             }
-
+            logger('before transaction upsert');
             $this->transactionRepository->upsert($transactionList, 'id');
+            logger('after transaction upsert');
         }
 
         return $this;
@@ -201,7 +200,6 @@ class ImportXlsService
      *
      * @return void
      *
-     * @throws BindingResolutionException
      * @throws \JsonException
      * @throws \ReflectionException
      */

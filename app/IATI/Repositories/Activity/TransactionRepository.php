@@ -104,13 +104,7 @@ class TransactionRepository extends Repository
      */
     public function deleteTransaction($activityId): bool|int
     {
-        $transactions = $this->model->where('activity_id', $activityId)->get();
-
-        if (!empty($transactions)) {
-            $transactions->each->delete();
-        }
-
-        return false;
+        return $this->model->where('activity_id', $activityId)->forceDelete();
     }
 
     /**
