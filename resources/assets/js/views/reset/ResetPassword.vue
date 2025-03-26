@@ -2,8 +2,18 @@
   <div class="mt-14">
     <Loader v-if="loaderVisibility" />
     <div class="reset reset__password" @keyup.enter="reset">
-      <h2>Reset Password</h2>
-      <p class="mb-4">Please enter your new password</p>
+      <h2>
+        {{
+          translatedData['public.forgot_password.reset_password_page.heading']
+        }}
+      </h2>
+      <p class="mb-4">
+        {{
+          translatedData[
+            'public.forgot_password.reset_password_page.subheading'
+          ]
+        }}
+      </p>
       <div class="text-center">
         <span v-if="errorData.email !== ''" class="error" role="alert">
           {{ errorData.email }}
@@ -15,9 +25,9 @@
           'reset__content mt-3': errorData.email,
         }"
       >
-        <label class="text-sm font-bold text-bluecoral" for="password"
-          >New Password</label
-        >
+        <label class="text-sm font-bold text-bluecoral" for="password">{{
+          translatedData['common.common.new_password']
+        }}</label>
         <input
           id="new_password"
           v-model="formData.password"
@@ -26,7 +36,11 @@
             error__input: errorData.password !== '',
           }"
           type="password"
-          placeholder="Enter a new password"
+          :placeholder="
+            translatedData[
+              'public.forgot_password.reset_password_page.new_password.placeholder'
+            ]
+          "
         />
         <svg-vue class="lock-icon text-xl" icon="pw-lock" />
         <span v-if="errorData.password !== ''" class="error" role="alert">
@@ -37,7 +51,11 @@
         <label
           class="text-sm font-bold text-bluecoral"
           for="password_confirmation"
-          >Repeat Password</label
+          >{{
+            translatedData[
+              'public.forgot_password.reset_password_page.repeat_password.title'
+            ]
+          }}</label
         >
         <input
           id="repeat_password"
@@ -49,7 +67,11 @@
               (errorData.password && formData.password !== '') !== '',
           }"
           type="password"
-          placeholder="Re-enter your password"
+          :placeholder="
+            translatedData[
+              'public.forgot_password.reset_password_page.repeat_password.placeholder'
+            ]
+          "
         />
         <svg-vue class="lock-icon text-xl" icon="pw-lock" />
         <span
@@ -61,7 +83,9 @@
         </span>
       </div>
       <button type="submit" class="btn reset-btn" @click="reset()">
-        Reset Password
+        {{
+          translatedData['public.forgot_password.reset_password_page.heading']
+        }}
       </button>
     </div>
   </div>
@@ -82,6 +106,10 @@ export default defineComponent({
     },
     token: {
       type: String,
+      required: true,
+    },
+    translatedData: {
+      type: Object,
       required: true,
     },
   },

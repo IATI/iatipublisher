@@ -48,17 +48,21 @@ class ResultRequest extends ActivityBaseRequest
     /**
      * Returns rules for result.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      * @param $fileUpload
-     * @param array $indicators
-     * @param null $resultId
+     * @param  array  $indicators
+     * @param  null  $resultId
      *
      * @return array
      *
      * @throws BindingResolutionException
      */
-    public function getWarningForResult(array $formFields, bool $fileUpload = false, array $indicators = [], $resultId = null): array
-    {
+    public function getWarningForResult(
+        array $formFields,
+        bool $fileUpload = false,
+        array $indicators = [],
+        $resultId = null
+    ): array {
         $rules = [];
 
         $tempRules = [
@@ -80,9 +84,9 @@ class ResultRequest extends ActivityBaseRequest
     /**
      * Returns critical rules for result.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      * @param $fileUpload
-     * @param array $indicators
+     * @param  array  $indicators
      *
      * @return array
      *
@@ -91,14 +95,26 @@ class ResultRequest extends ActivityBaseRequest
     public function getErrorsForResult(array $formFields, bool $fileUpload = false, array $indicators = []): array
     {
         $rules = [];
-        $rules['type'] = sprintf('nullable|in:%s', implode(',', array_keys(
-            $this->getCodeListForRequestFiles('ResultType', 'Activity', false)
-        )));
+        $rules['type'] = sprintf(
+            'nullable|in:%s',
+            implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles('ResultType', 'Activity', false)
+                )
+            )
+        );
         $rules['aggregation_status'] = sprintf('nullable|in:0,1');
 
         $tempRules = [
-            $this->getErrorsForNarrative(Arr::get($formFields, 'title.0.narrative', []), 'title.0'),
-            $this->getErrorsForNarrative(Arr::get($formFields, 'description.0.narrative', []), 'description.0'),
+            $this->getErrorsForNarrative(
+                Arr::get($formFields, 'title.0.narrative', []),
+                'title.0'
+            ),
+            $this->getErrorsForNarrative(
+                Arr::get($formFields, 'description.0.narrative', []),
+                'description.0'
+            ),
             $this->getErrorsForDocumentLink(Arr::get($formFields, 'document_link')),
             $this->getErrorsForReferences(Arr::get($formFields, 'reference', []), $fileUpload, $indicators),
         ];
@@ -115,9 +131,9 @@ class ResultRequest extends ActivityBaseRequest
     /**
      * Returns messages for transaction validations.
      *
-     * @param array $formFields
-     * @param array $fileUpload
-     * @param array $resultId
+     * @param  array  $formFields
+     * @param  array  $fileUpload
+     * @param  array  $resultId
      *
      * @return array
      */
@@ -126,8 +142,14 @@ class ResultRequest extends ActivityBaseRequest
         $messages = [];
 
         $tempMessages = [
-            $this->getMessagesForNarrative(Arr::get($formFields, 'title.0.narrative', []), 'title.0'),
-            $this->getMessagesForNarrative(Arr::get($formFields, 'description.0.narrative', []), 'description.0'),
+            $this->getMessagesForNarrative(
+                Arr::get($formFields, 'title.0.narrative', []),
+                'title.0'
+            ),
+            $this->getMessagesForNarrative(
+                Arr::get($formFields, 'description.0.narrative', []),
+                'description.0'
+            ),
             $this->getMessagesForDocumentLink(Arr::get($formFields, 'document_link', [])),
             $this->getMessagesForReferences(Arr::get($formFields, 'reference', []), $fileUpload, $resultId),
         ];
@@ -146,15 +168,19 @@ class ResultRequest extends ActivityBaseRequest
      *
      * @param $formFields
      * @param $fileUpload
-     * @param array $indicators
-     * @param int|null $resultId
+     * @param  array  $indicators
+     * @param  int|null  $resultId
      *
      * @return array
      *
      * @throws BindingResolutionException
      */
-    protected function getWarningForReferences($formFields, $fileUpload = false, array $indicators = [], int $resultId = null): array
-    {
+    protected function getWarningForReferences(
+        $formFields,
+        $fileUpload = false,
+        array $indicators = [],
+        int $resultId = null
+    ): array {
         $resultService = app()->make(ResultService::class);
         $rules = [];
 
@@ -201,13 +227,28 @@ class ResultRequest extends ActivityBaseRequest
                     }
 
                     $codePresent = $hasResultId ? $resultService->indicatorHasRefCode($resultId) : $hasCode;
-                    $vocabularyPresent = $hasResultId ? $resultService->indicatorHasRefVocabulary($resultId) : $hasVocabulary;
+                    $vocabularyPresent = $hasResultId ? $resultService->indicatorHasRefVocabulary(
+                        $resultId
+                    ) : $hasVocabulary;
 
                     $rules[sprintf('%s.code', $referenceForm)][] = $codePresent ? 'indicator_ref_code_present' : false;
-                    $rules[sprintf('%s.vocabulary', $referenceForm)][] = $vocabularyPresent ? 'indicator_ref_vocabulary_present' : false;
+                    $rules[sprintf(
+                        '%s.vocabulary',
+                        $referenceForm
+                    )][]
+                        = $vocabularyPresent ? 'indicator_ref_vocabulary_present' : false;
                 } else {
-                    $rules[sprintf('%s.code', $referenceForm)] = $hasResultId && $resultService->indicatorHasRefCode($resultId) ? 'indicator_ref_code_present' : false;
-                    $rules[sprintf('%s.vocabulary', $referenceForm)] = $hasResultId && $resultService->indicatorHasRefVocabulary($resultId) ? 'indicator_ref_vocabulary_present' : false;
+                    $rules[sprintf('%s.code', $referenceForm)]
+                        = $hasResultId && $resultService->indicatorHasRefCode(
+                            $resultId
+                        ) ? 'indicator_ref_code_present' : false;
+                    $rules[sprintf(
+                        '%s.vocabulary',
+                        $referenceForm
+                    )]
+                        = $hasResultId && $resultService->indicatorHasRefVocabulary(
+                            $resultId
+                        ) ? 'indicator_ref_vocabulary_present' : false;
                 }
             }
         }
@@ -220,7 +261,7 @@ class ResultRequest extends ActivityBaseRequest
      *
      * @param $formFields
      * @param $fileUpload
-     * @param array $indicators
+     * @param  array  $indicators
      *
      * @return array
      * @throws JsonException
@@ -232,9 +273,15 @@ class ResultRequest extends ActivityBaseRequest
         foreach ($formFields as $referenceIndex => $reference) {
             $referenceForm = sprintf('reference.%s', $referenceIndex);
             $rules[sprintf('%s.vocabulary_uri', $referenceForm)] = 'nullable|url';
-            $rules[sprintf('%s.vocabulary', $referenceForm)] = sprintf('nullable|in:%s', implode(',', array_keys(
-                $this->getCodeListForRequestFiles('ResultVocabulary', 'Activity')
-            )));
+            $rules[sprintf('%s.vocabulary', $referenceForm)] = sprintf(
+                'nullable|in:%s',
+                implode(
+                    ',',
+                    array_keys(
+                        $this->getCodeListForRequestFiles('ResultVocabulary', 'Activity')
+                    )
+                )
+            );
         }
 
         return $rules;
@@ -262,14 +309,26 @@ class ResultRequest extends ActivityBaseRequest
 
         foreach ($formFields as $referenceIndex => $reference) {
             $referenceForm = sprintf('reference.%s', $referenceIndex);
-            $messages[sprintf('%s.vocabulary_uri.url', $referenceForm)] = 'The @vocabulary-uri field must be a valid url.';
+            $messages[sprintf(
+                '%s.vocabulary_uri.url',
+                $referenceForm
+            )]
+                = trans('validation.url_valid');
 
             if (!empty($reference['code']) && $hasResultId) {
-                $messages[sprintf('%s.code.indicator_ref_code_present', $referenceForm)] = 'The code is already defined in its indicators';
+                $messages[sprintf(
+                    '%s.code.indicator_ref_code_present',
+                    $referenceForm
+                )]
+                    = trans('validation.activity_results.reference.code_present');
             }
 
             if (!empty($reference['vocabulary']) && $hasResultId) {
-                $messages[sprintf('%s.vocabulary.indicator_ref_vocabulary_present', $referenceForm)] = 'The vocabulary is already defined in its indicators';
+                $messages[sprintf(
+                    '%s.vocabulary.indicator_ref_vocabulary_present',
+                    $referenceForm
+                )]
+                    = trans('validation.activity_results.reference.vocabulary_present');
             }
         }
 

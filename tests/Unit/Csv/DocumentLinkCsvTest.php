@@ -88,12 +88,13 @@ class DocumentLinkCsvTest extends CsvBaseTest
         $rows = $this->invalid_data();
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('The document link format is invalid', $flattenErrors);
-        $this->assertContains('The @url field must be a valid url.', $flattenErrors);
-        $this->assertContains('The @iso-date field must be a proper date.', $flattenErrors);
-        $this->assertContains('The @iso-date field must be a greater than 1900.', $flattenErrors);
-        $this->assertContains('The document link category code is invalid.', $flattenErrors);
-        $this->assertContains('The document link language code is invalid.', $flattenErrors);
+
+        $this->assertContains(trans('validation.document_link_format_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.url_valid'), $flattenErrors);
+        $this->assertContains(trans('validation.this_must_be_a_valid_date'), $flattenErrors);
+        $this->assertContains(trans('validation.date_must_be_after_1900'), $flattenErrors);
+        $this->assertContains(trans('validation.document_link_category_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.language_is_invalid'), $flattenErrors);
     }
 
     /**

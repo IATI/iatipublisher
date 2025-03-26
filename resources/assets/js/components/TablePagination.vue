@@ -9,7 +9,7 @@
       @click="previousPage"
     >
       <svg-vue icon="arrow-left"></svg-vue>
-      <span class="">Prev</span>
+      <span class="">{{ translatedData['common.common.previous'] }}</span>
     </a>
 
     <span v-if="data.last_page < 6" class="flex"
@@ -75,14 +75,14 @@
       }"
       @click="nextPage"
     >
-      <span class="">Next</span>
+      <span class="">{{ translatedData['common.common.next'] }}</span>
       <svg-vue icon="arrow-right" />
     </a>
   </nav>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, watch } from 'vue';
+import { defineComponent, computed, ref, watch, inject } from 'vue';
 
 export default defineComponent({
   name: 'PaginationComponent',
@@ -103,6 +103,7 @@ export default defineComponent({
     const active_page = ref(1);
     const last_pagelist = ref();
     const mid_pagelist = ref();
+    const translatedData = inject('translatedData') as Record<string, string>;
 
     watch(
       () => props.reset,
@@ -169,12 +170,12 @@ export default defineComponent({
     return {
       props,
       active_page,
-      updateActivePage,
       nextPage,
       previousPage,
       changePage,
       lastpages,
       midpages,
+      translatedData,
     };
   },
 });

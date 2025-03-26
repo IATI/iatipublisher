@@ -17,18 +17,19 @@ class LocationXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The location reference field shouldn\'t contain the symbols /, &, | or ?.', $flattenErrors);
-        $this->assertContains('The location reach code is invalid.', $flattenErrors);
-        $this->assertContains('The location exactness is invalid.', $flattenErrors);
-        $this->assertContains('The location class is invalid.', $flattenErrors);
-        $this->assertContains('The location feature designation is invalid.', $flattenErrors);
-        $this->assertContains('The location id vocabulary is invalid.', $flattenErrors);
-        $this->assertContains('The location administrative vocabulary is invalid.', $flattenErrors);
-        $this->assertContains('The location administrative code is invalid.', $flattenErrors);
-        $this->assertContains('The location administrative level must not have negative value.', $flattenErrors);
-        $this->assertContains('The location administrative level must be an integer.', $flattenErrors);
-        $this->assertContains('The pos latitude must be numeric', $flattenErrors);
-        $this->assertContains('The pos longitude must be numeric', $flattenErrors);
+
+        $this->assertContains(trans('validation.reference_should_not_contain_symbol'), $flattenErrors);
+        $this->assertContains(trans('validation.this_field_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.this_field_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.this_field_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.this_field_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.vocabulary_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.this_field_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.this_field_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_location.administrative.level_min'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_location.administrative.level_int'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_location.point.latitude_numeric'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_location.point.longitude_numeric'), $flattenErrors);
     }
 
     /**

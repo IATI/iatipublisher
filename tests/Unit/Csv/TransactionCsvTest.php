@@ -5,12 +5,31 @@ namespace Tests\Unit\Csv;
 use App\CsvImporter\Entities\Activity\Components\ActivityRow;
 use App\CsvImporter\Entities\Activity\Components\Elements\Transaction;
 use Illuminate\Support\Arr;
+use ReflectionClass;
 
 /**
  * Class TransactionCsvTest.
  */
 class TransactionCsvTest extends CsvBaseTest
 {
+    /**
+     * Pass if all valid data.
+     *
+     * @return void
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \JsonException
+     * @throws \ReflectionException
+     * @test
+     */
+    public function pass_if_valid_data(): void
+    {
+        $this->signIn();
+        $rows = $this->valid_data();
+        $errors = $this->getErrors($rows);
+        $flattenErrors = Arr::flatten($errors);
+        $this->assertEmpty($flattenErrors);
+    }
+
     /**
      * All valid data.
      *
@@ -85,14 +104,24 @@ class TransactionCsvTest extends CsvBaseTest
     /**
      * Collects validation error messages.
      *
+     * @param $rows
+     *
      * @return array
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
+     * @throws \ReflectionException
      */
     public function getErrors($rows): array
     {
         $errors = [];
         foreach ($rows as $row) {
-            $activityRow = new ActivityRow($row, $this->organization->id, $this->user->id, $this->getIdentifiers(), $this->user->organization->reporting_org);
+            $activityRow = new ActivityRow(
+                $row,
+                $this->organization->id,
+                $this->user->id,
+                $this->getIdentifiers(),
+                $this->user->organization->reporting_org
+            );
             $activityRow->validateUnique($row);
             $this->validateElements($activityRow);
             $errors[] = $activityRow->errors();
@@ -114,12 +143,13 @@ class TransactionCsvTest extends CsvBaseTest
      * Validate elements.
      *
      * @param $activityRow
+     *
      * @return mixed
      * @throws \ReflectionException
      */
     public function validateElements($activityRow): mixed
     {
-        $activityRowReflection = new \ReflectionClass($activityRow);
+        $activityRowReflection = new ReflectionClass($activityRow);
         $transactionRow = $activityRowReflection->getMethod('validateElements');
         $transactionRow->setAccessible(true);
 
@@ -130,32 +160,17 @@ class TransactionCsvTest extends CsvBaseTest
      * Get transaction rows.
      *
      * @param $activityRow
+     *
      * @return mixed
      * @throws \ReflectionException
      */
     public function getTransactionRows($activityRow): mixed
     {
-        $activityRowReflection = new \ReflectionClass($activityRow);
+        $activityRowReflection = new ReflectionClass($activityRow);
         $transactionRow = $activityRowReflection->getProperty('transactionRows');
         $transactionRow->setAccessible(true);
 
         return $transactionRow->getValue($activityRow);
-    }
-
-    /**
-     * Pass if all valid data.
-     *
-     * @return void
-     * @test
-     * @throws \JsonException
-     */
-    public function pass_if_valid_data(): void
-    {
-        $this->signIn();
-        $rows = $this->valid_data();
-        $errors = $this->getErrors($rows);
-        $flattenErrors = Arr::flatten($errors);
-        $this->assertEmpty($flattenErrors);
     }
 
     /**
@@ -192,7 +207,9 @@ class TransactionCsvTest extends CsvBaseTest
      * throw validation if sector already at activity level.
      *
      * @return void
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
+     * @throws \ReflectionException
      * @test
      */
     public function throw_validation_if_sector_at_activity_and_transaction(): void
@@ -201,7 +218,11 @@ class TransactionCsvTest extends CsvBaseTest
         $rows = $this->sector_activity_transaction_level_data();
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('Sector has already been declared at activity level. You can’t declare a sector at the transaction level. To declare at transaction level, you need to remove sector at activity level.', $flattenErrors);
+
+        $this->assertContains(
+            trans('validation.activity_transactions.sector_in_activity'),
+            $flattenErrors
+        );
     }
 
     /**
@@ -224,8 +245,10 @@ class TransactionCsvTest extends CsvBaseTest
      * Throw if sector empty at activity level but one at transaction level and empty at another transaction.
      *
      * @return void
-     * @test
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
+     * @throws \ReflectionException
+     * @test
      */
     public function throw_validation_if_sector_at_one_transaction_empty_at_another_transaction(): void
     {
@@ -233,7 +256,11 @@ class TransactionCsvTest extends CsvBaseTest
         $rows = $this->sector_at_one_transaction_empty_at_another_transaction_data();
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('You have declared sector at transaction level so you must declare sector for all the transactions.', $flattenErrors);
+
+        $this->assertContains(
+            trans('validation.activity_transactions.sector.required'),
+            $flattenErrors
+        );
     }
 
     /**
@@ -273,8 +300,10 @@ class TransactionCsvTest extends CsvBaseTest
      * Allow negative value in transaction.
      *
      * @return void
-     * @test
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
+     * @throws \ReflectionException
+     * @test
      */
     public function pass_if_negative_value_passed_in_transaction(): void
     {
@@ -302,8 +331,10 @@ class TransactionCsvTest extends CsvBaseTest
      * All data invalid.
      *
      * @return void
-     * @test
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
+     * @throws \ReflectionException
+     * @test
      */
     public function throw_all_possible_validation_for_invalid_data(): void
     {
@@ -312,20 +343,19 @@ class TransactionCsvTest extends CsvBaseTest
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
 
-        $this->assertContains('The transaction type is invalid.', $flattenErrors);
-        $this->assertContains('The @amount field must be a number.', $flattenErrors);
-        $this->assertContains('The transaction provider org type is invalid.', $flattenErrors);
-        $this->assertContains('The transaction receiver org type is invalid.', $flattenErrors);
-        $this->assertContains('The @iso-date field must be a valid date.', $flattenErrors);
-        $this->assertContains('The @value-date field must be a valid date.', $flattenErrors);
-        $this->assertContains('The @iso-date must not be in future.', $flattenErrors);
-        $this->assertContains('The @value-date must not be in future.', $flattenErrors);
-        $this->assertContains('validation.exclude_operators', $flattenErrors);
-        $this->assertContains('The transaction sector vocabulary is invalid.', $flattenErrors);
-        $this->assertContains('The transaction recipient country code is invalid.', $flattenErrors);
-        $this->assertContains('The transaction sector code is invalid.', $flattenErrors);
-        $this->assertContains('The transaction recipient country code is invalid.', $flattenErrors);
-        $this->assertContains('The transaction sector vocabulary-uri field must be a valid url.', $flattenErrors);
+        $this->assertContains(trans('validation.type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.amount_number'), $flattenErrors);
+        $this->assertContains(trans('validation.organisation_type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.organisation_type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.date_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.date_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.future_date'), $flattenErrors);
+        $this->assertContains(trans('validation.future_date'), $flattenErrors);
+        $this->assertContains(trans('validation.vocabulary_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.country_code'), $flattenErrors);
+        $this->assertContains(trans('validation.sector_code_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.country_code'), $flattenErrors);
+        $this->assertContains(trans('validation.url_valid'), $flattenErrors);
     }
 
     /**
@@ -338,17 +368,26 @@ class TransactionCsvTest extends CsvBaseTest
         // here recipient region , country and sector at activity level
         $data = $this->completeData;
         $data[0]['transaction_internal_reference'] = ['12345'];
-        $data[0]['transaction_type'] = ['111111', '1']; // invalid transaction type
-        $data[0]['transaction_date'] = ['4000-01-01', 'invalid date']; // future and invalid date
-        $data[0]['transaction_value'] = ['invalid value']; // invalid value
-        $data[0]['transaction_value_date'] = ['4000-02-01', ' invalid date']; // future and invalid value date
+        $data[0]['transaction_type'] = [
+            '111111',
+            '1',
+        ];                                                                                                                          // invalid transaction type
+        $data[0]['transaction_date'] = [
+            '4000-01-01',
+            'invalid date',
+        ];                                                                                                                          // future and invalid date
+        $data[0]['transaction_value'] = ['invalid value'];                                      // invalid value
+        $data[0]['transaction_value_date'] = [
+            '4000-02-01',
+            ' invalid date',
+        ];                                                                                                                          // future and invalid value date
         $data[0]['transaction_description'] = ['narrative one'];
         $data[0]['transaction_provider_organisation_identifier'] = ['12345'];
         $data[0]['transaction_provider_organisation_type'] = ['1500']; // invalid organization type
         $data[0]['transaction_provider_organisation_activity_identifier'] = ['123*(&)'];
         $data[0]['transaction_provider_organisation_description'] = ['narrative description'];
         $data[0]['transaction_receiver_organisation_identifier'] = ['12345'];
-        $data[0]['transaction_receiver_organisation_type'] = ['11110']; // invalida organzation type
+        $data[0]['transaction_receiver_organisation_type'] = ['11110'];                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 // invalida organzation type
         $data[0]['transaction_receiver_organisation_activity_identifier'] = ['12*(&)3'];
         $data[0]['transaction_receiver_organisation_description'] = ['narrative description'];
         $data[0]['transaction_sector_vocabulary'] = [];
@@ -360,7 +399,7 @@ class TransactionCsvTest extends CsvBaseTest
         $data[0]['transaction_recipient_region_vocabulary_uri'] = [];
 
         // this second row contains sector, recipient region , recipient region at transaction level
-        $data[1]['sector_vocabulary'] = []; // invalid sector vocabulary
+        $data[1]['sector_vocabulary'] = [];                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        // invalid sector vocabulary
         $data[1]['sector_vocabulary_uri'] = [];
         $data[1]['sector_code'] = [];
         $data[1]['sector_percentage'] = [];
@@ -389,12 +428,16 @@ class TransactionCsvTest extends CsvBaseTest
         $data[1]['transaction_receiver_organisation_activity_identifier'] = ['123'];
         $data[1]['transaction_receiver_organisation_description'] = ['nar desc'];
 
-        $data[1]['transaction_sector_vocabulary'] = ['111111', '1', '99']; // invalid sector vocabulary
+        $data[1]['transaction_sector_vocabulary'] = ['111111', '1', '99'];   // invalid sector vocabulary
         $data[1]['transaction_sector_vocabulary_uri'] = ['', '', 'invalid url']; // invalid url
-        $data[1]['transaction_sector_code'] = ['1', '009', '123']; // invalid sector code
+        $data[1]['transaction_sector_code'] = ['1', '009', '123'];     // invalid sector code
         $data[1]['transaction_sector_narrative'] = ['narrative one', 'narrative two', 'narrative three'];
 
-        $data[1]['transaction_recipient_country_code'] = ['asdf', 'asdf', 'NasdfasdfO']; // invalid recipient country code
+        $data[1]['transaction_recipient_country_code'] = [
+            'asdf',
+            'asdf',
+            'NasdfasdfO',
+        ]; // invalid recipient country code
         $data[1]['transaction_recipient_region_code'] = [];
         $data[1]['transaction_recipient_region_vocabulary_uri'] = [];
 
@@ -405,8 +448,10 @@ class TransactionCsvTest extends CsvBaseTest
      * Throw validation if region or country already at activity level.
      *
      * @return void
-     * @test
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
+     * @throws \ReflectionException
+     * @test
      */
     public function throw_validation_if_region_or_country_already_activity_level(): void
     {
@@ -414,7 +459,11 @@ class TransactionCsvTest extends CsvBaseTest
         $rows = $this->region_or_country_already_at_activity_level_data();
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('Recipient Region or Recipient Country is already added at activity level. You can add a Recipient Region and or Recipient Country either at activity level or at transaction level.', $flattenErrors);
+
+        $this->assertContains(
+            trans('validation.activity_transactions.country_region_in_activity'),
+            $flattenErrors
+        );
     }
 
     /**
@@ -435,7 +484,9 @@ class TransactionCsvTest extends CsvBaseTest
      * Throw validation if both region or country at transaction.
      *
      * @return void
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
+     * @throws \ReflectionException
      * @test
      */
     public function throw_validation_if_both_region_or_country_at_transaction(): void
@@ -444,7 +495,8 @@ class TransactionCsvTest extends CsvBaseTest
         $rows = $this->both_region_and_country_at_transaction_level_data();
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('You must add either recipient country or recipient region.', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_transactions.country_or_region'), $flattenErrors);
     }
 
     /**
@@ -499,8 +551,10 @@ class TransactionCsvTest extends CsvBaseTest
      * throw validation region or country at one transaction but empty at other.
      *
      * @return void
-     * @test
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
+     * @throws \ReflectionException
+     * @test
      */
     public function throw_validation_if_region_or_country_at_one_transaction_empty_at_another_transaction(): void
     {
@@ -508,7 +562,8 @@ class TransactionCsvTest extends CsvBaseTest
         $rows = $this->region_or_country_at_one_transaction_empty_at_another_transaction_data();
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('You must add either recipient country or recipient region.', $flattenErrors);
+
+        $this->assertContains(trans('validation.activity_transactions.country_or_region'), $flattenErrors);
     }
 
     /**

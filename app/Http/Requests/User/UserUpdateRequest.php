@@ -55,8 +55,8 @@ class UserUpdateRequest extends FormRequest
      */
     public function messages(): array
     {
-        $messages['username.regex'] = 'The username is invalid. Username must be purely lowercase alphabets followed by alphanumeric(ascii) characters and these symbols:-_';
-        $messages['email.unique'] = 'Email is already in use in IATI Publisher.';
+        $messages['username.regex'] = trans('validation.username_regex');
+        $messages['email.unique'] = trans('validation.email_unique');
 
         return $messages;
     }

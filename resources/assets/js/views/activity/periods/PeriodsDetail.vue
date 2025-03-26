@@ -22,7 +22,7 @@
     </div>
     <PageTitle
       :breadcrumb-data="breadcrumbData"
-      title="Period Detail"
+      :title="translatedData['common.common.period_detail']"
       :back-link="`${periodLink}`"
     >
       <div class="flex justify-end">
@@ -34,16 +34,20 @@
         />
         <!-- <Status class="mr-2.5" :data="false" /> -->
         <Btn
-          text="Add Period"
+          :text="translatedData['common.common.add_period']"
           icon="add"
           :link="`${periodLink}/create`"
           class="mr-2.5"
         />
-        <Btn text="Edit Period" :link="`${periodLink}/${period.id}/edit`" />
+        <Btn
+          :text="translatedData['common.common.edit_period']"
+          :link="`${periodLink}/${period.id}/edit`"
+        />
       </div>
     </PageTitle>
     <div class="-mt-6 mb-8 ml-[26px] text-n-40">
-      Period number: {{ period.period_code }}
+      {{ translatedData['common.common.period_number'] }} :
+      {{ period.period_code }}
     </div>
     <div
       class="sidebar-open-icon"
@@ -76,14 +80,12 @@
           <ul class="text-sm font-bold leading-relaxed">
             <li>
               <a v-smooth-scroll href="#target" :class="linkClasses">
-                <!-- <svg-vue icon="core" class="mr-2 text-base"></svg-vue> -->
-                target
+                {{ getTranslatedElement(translatedData, 'target') }}
               </a>
             </li>
             <li>
               <a v-smooth-scroll href="#actual" :class="linkClasses">
-                <!-- <svg-vue icon="core" class="mr-2 text-base"></svg-vue> -->
-                actual
+                {{ getTranslatedElement(translatedData, 'actual') }}
               </a>
             </li>
           </ul>
@@ -98,14 +100,12 @@
             <ul class="text-sm font-bold leading-relaxed">
               <li>
                 <a v-smooth-scroll href="#target" :class="linkClasses">
-                  <!-- <svg-vue icon="core" class="mr-2 text-base"></svg-vue> -->
-                  target
+                  {{ getTranslatedElement(translatedData, 'target') }}
                 </a>
               </li>
               <li>
                 <a v-smooth-scroll href="#actual" :class="linkClasses">
-                  <!-- <svg-vue icon="core" class="mr-2 text-base"></svg-vue> -->
-                  actual
+                  {{ getTranslatedElement(translatedData, 'actual') }}
                 </a>
               </li>
             </ul>
@@ -160,6 +160,7 @@ import {
   onUnmounted,
   watch,
   reactive,
+  watchEffect,
 } from 'vue';
 
 //component
@@ -172,6 +173,7 @@ import { TargetValue, ActualValue } from './elements/Index';
 //composable
 import dateFormat from 'Composable/dateFormat';
 import getActivityTitle from 'Composable/title';
+import { getTranslatedElement, toTitleCase } from '../../../composable/utils';
 
 export default defineComponent({
   name: 'PeriodDetail',
@@ -204,6 +206,10 @@ export default defineComponent({
       required: true,
     },
     element: {
+      type: Object,
+      required: true,
+    },
+    translatedData: {
       type: Object,
       required: true,
     },
@@ -259,7 +265,7 @@ export default defineComponent({
      */
     const breadcrumbData = [
       {
-        title: 'Your Activities',
+        title: props.translatedData['common.common.your_activities'],
         link: '/activities',
       },
       {
@@ -267,7 +273,7 @@ export default defineComponent({
         link: activityLink,
       },
       {
-        title: 'Result List',
+        title: props.translatedData['common.common.result_list'],
         link: `/activity/${activityId}/result`,
       },
       {
@@ -275,7 +281,7 @@ export default defineComponent({
         link: resultLink,
       },
       {
-        title: 'Indicator List',
+        title: props.translatedData['common.common.indicator_list'],
         link: `/result/${resultId}/indicator`,
       },
       {
@@ -283,14 +289,15 @@ export default defineComponent({
         link: indicatorLink,
       },
       {
-        title: 'Period List',
+        title: props.translatedData['common.common.period_list'],
         link: `/indicator/${indicatorId}/period`,
       },
       {
-        title: 'Period',
+        title: props.translatedData['elements.label.period'],
         link: '',
       },
     ];
+
     const calcWidth = (event) => {
       screenWidth.value = event.target.innerWidth;
       if (screenWidth.value > 1024) {
@@ -328,6 +335,8 @@ export default defineComponent({
       window.removeEventListener('resize', calcWidth);
     });
 
+    provide('translatedData', props.translatedData);
+
     return {
       linkClasses,
       periodData,
@@ -342,5 +351,6 @@ export default defineComponent({
       istopVisible,
     };
   },
+  methods: { getTranslatedElement },
 });
 </script>

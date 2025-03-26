@@ -43,7 +43,7 @@ class ReportingOrgController extends Controller
     {
         try {
             $id = Auth::user()->organization_id;
-            $element = json_decode(file_get_contents(app_path('IATI/Data/organizationElementJsonSchema.json')), true, 512, JSON_THROW_ON_ERROR);
+            $element = readOrganizationElementJsonSchema();
             $organization = $this->reportingOrgService->getOrganizationData($id);
             $form = $this->reportingOrgService->formGenerator($id, Arr::get($organization->deprecation_status_map, 'reporting_org', []));
             $data = ['title'=> $element['reporting_org']['label'], 'name'=>'reporting-org'];
@@ -51,8 +51,9 @@ class ReportingOrgController extends Controller
             return view('admin.organisation.forms.reportingOrg.reportingOrg', compact('form', 'organization', 'data'));
         } catch (\Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
-            return redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while opening organization reporting_org form.');
+            return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
     }
 
@@ -69,23 +70,28 @@ class ReportingOrgController extends Controller
             DB::beginTransaction();
 
             if (!$this->reportingOrgService->update(Auth::user()->organization_id, $request->all())) {
+                $translatedMessage = trans('common/common.failed_to_update_data');
+
                 return $request->expectsJson() ?
-                    response()->json(['success' => false, 'error' => 'Error has occurred while updating organization reporting_org.'], 500) :
-                    redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while updating organization reporting_org.');
+                    response()->json(['success' => false, 'error' => $translatedMessage], 500) :
+                    redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
             }
 
             DB::commit();
 
+            $translatedMessage = trans('common/common.updated_successfully');
+
             return $request->expectsJson() ?
-                response()->json(['success' => true, 'message' => 'Organization reporting_org updated successfully.']) :
-                redirect()->route('admin.organisation.index')->with('success', 'Organization reporting_org updated successfully.');
+                response()->json(['success' => true, 'message' => $translatedMessage]) :
+                redirect()->route('admin.organisation.index')->with('success', $translatedMessage);
         } catch (\Exception $e) {
             DB::rollBack();
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
             return $request->expectsJson() ?
-                response()->json(['success' => false, 'error' => 'Error has occurred while updating organization reporting_org.'], 500) :
-                redirect()->route('admin.organisation.index')->with('error', 'Error has occurred while updating organization reporting_org.');
+                response()->json(['success' => false, 'error' => $translatedMessage], 500) :
+                redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
         }
     }
 }

@@ -45,7 +45,7 @@
     <div class="country_budget_items ml-5">
       <table>
         <tr class="multiline">
-          <td>Narrative</td>
+          <td>{{ getTranslatedElement(translatedData, 'narrative') }}</td>
           <td>
             <div
               v-for="(narrative, k) in post.narrative"
@@ -85,6 +85,7 @@
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
+import { getTranslatedElement } from '../../../composable/utils';
 
 export default defineComponent({
   name: 'ActivitySector',
@@ -112,5 +113,6 @@ export default defineComponent({
 
     return { types, roundFloat };
   },
+  methods: { getTranslatedElement },
 });
 </script>

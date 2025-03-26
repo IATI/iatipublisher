@@ -35,30 +35,30 @@
                                 <img src="{{ url('/images/warning-activity-salmon.svg') }}" alt="" class="h-[18px]">
                             </div>
                             <div>
-                                <h4 class="font-bold text-sm">Organisation-Identifier has changed</h4>
+                                <h4 class="font-bold text-sm"><?= trans('common/common.organisation_identifier_has_changed')?></h4>
                             </div>
                         </div>
                     </div>
 
                     <div class="bg-eggshell mb-4 p-4 rounded  px-5">
                         <div class="pb-3">
-                            <p class="text-sm">Updating the organisation-identifier will update the following elements:</p>
+                            <p class="text-sm"><?= trans('common/common.updating_the_organisation_identifier_will_update_the_following_elements')?></p>
                             <ul class="list-disc px-3 ml-2 text-n-50">
-                                <li class="text-sm">iati-identifier of all non-published activities.</li>
-                                <li class="text-sm">reporting-org of all activities.</li>
+                                <li class="text-sm"><?= trans('common/common.iati_identifier_of_all_non_published_activities')?></li>
+                                <li class="text-sm"><?= trans('common/common.reporting_org_of_all_activities')?></li>
                             </ul>
                         </div>
 
-                        <p class="text-sm">Are you sure you want to save the change ?</p>
+                        <p class="text-sm"><?= trans('common/common.are_you_sure_you_want_to_save_the_change')?></p>
                     </div>
                     <div class="flex align-end justify-end gap-3">
                         <button type="button" class="px-2 py-1 bg-white hover:bg-black hover:text-white rounded uppercase text-n-40 font-bold font-weight-bold" data-dismiss="modal"
                                 onclick="closeSaveAndExitModal()">
-                            Cancel
+                           <?= trans('common/common.cancel') ?>
                         </button>
                         <button type="submit" id="submitSaveAndExit" class="px-2 py-1 uppercase btn primary-btn font-bold" data-loading-text="Loading"
                                 onclick="submitSaveAndExit()">
-                            SAVE AND EXIT
+                            <?= trans('common/common.save_and_exit') ?>
                         </button>
                     </div>
                 </div>

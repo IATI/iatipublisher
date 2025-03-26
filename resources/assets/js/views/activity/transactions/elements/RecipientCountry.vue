@@ -15,7 +15,7 @@
         <table class="mb-3">
           <tbody>
             <tr>
-              <td>Description</td>
+              <td>{{ getTranslatedElement(translatedData, 'description') }}</td>
               <td>
                 <div
                   v-for="(sd, i) in cou.narrative"
@@ -29,8 +29,10 @@
                     (
                     {{
                       sd.language
-                        ? `Language: ${type.languages[sd.language]}`
-                        : 'Language N/A'
+                        ? `${getTranslatedLanguage(translatedData)} : ${
+                            type.languages[sd.language]
+                          }`
+                        : `${getTranslatedLanguage(translatedData)} : N/A`
                     }})
                   </div>
                   <div class="text-sm">
@@ -53,6 +55,7 @@
 
 <script lang="ts">
 import { defineComponent, toRefs, inject } from 'vue';
+import { getTranslatedElement, getTranslatedLanguage } from 'Composable/utils';
 
 export default defineComponent({
   name: 'TransactionRecipientCountry',
@@ -80,7 +83,10 @@ export default defineComponent({
     }
 
     const type = inject('types') as TypesInterface;
-    return { country, type };
+    const translatedData = inject('translatedData') as Record<string, string>;
+
+    return { country, type, translatedData };
   },
+  methods: { getTranslatedElement, getTranslatedLanguage },
 });
 </script>

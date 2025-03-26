@@ -33,8 +33,8 @@ class ActivityStatusCsvTest extends CsvBaseTest
         }
 
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('The activity status cannot have more than one value.', $flattenErrors);
-        $this->assertContains('The activity status does not exist.', $flattenErrors);
+        $this->assertContains(trans('validation.activity_status.size'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_status.in'), $flattenErrors);
     }
 
     /**

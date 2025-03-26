@@ -49,9 +49,9 @@ class IndicatorRequest extends ActivityBaseRequest
     /**
      * Returns rules for result indicator.
      *
-     * @param array $formFields
-     * @param bool $fileUpload
-     * @param array $result
+     * @param  array  $formFields
+     * @param  bool  $fileUpload
+     * @param  array  $result
      * @param $resultId
      *
      * @return array
@@ -59,8 +59,12 @@ class IndicatorRequest extends ActivityBaseRequest
      *
      * @throws ContainerExceptionInterface
      */
-    public function getWarningForIndicator(array $formFields, bool $fileUpload = false, array $result = [], $resultId = null): array
-    {
+    public function getWarningForIndicator(
+        array $formFields,
+        bool $fileUpload = false,
+        array $result = [],
+        $resultId = null
+    ): array {
         $rules = [];
 
         if (!$fileUpload) {
@@ -69,9 +73,17 @@ class IndicatorRequest extends ActivityBaseRequest
 
         $tempRules = [
             $this->getWarningForNarrative(Arr::get($formFields, 'title.0.narrative', []), 'title.0'),
-            $this->getWarningForNarrative(Arr::get($formFields, 'description.0.narrative', []), 'description.0'),
+            $this->getWarningForNarrative(
+                Arr::get($formFields, 'description.0.narrative', []),
+                'description.0'
+            ),
             $this->getWarningForDocumentLink(Arr::get($formFields, 'document_link', [])),
-            $this->getWarningForReference(Arr::get($formFields, 'reference', []), $fileUpload, $result, $resultId),
+            $this->getWarningForReference(
+                Arr::get($formFields, 'reference', []),
+                $fileUpload,
+                $result,
+                $resultId
+            ),
             $this->getWarningForBaseline(Arr::get($formFields, 'baseline', [])),
         ];
 
@@ -87,9 +99,9 @@ class IndicatorRequest extends ActivityBaseRequest
     /**
      * Returns rules for result indicator.
      *
-     * @param array $formFields
-     * @param bool $fileUpload
-     * @param array $result
+     * @param  array  $formFields
+     * @param  bool  $fileUpload
+     * @param  array  $result
      *
      * @return array
      * @throws NotFoundExceptionInterface
@@ -99,9 +111,15 @@ class IndicatorRequest extends ActivityBaseRequest
     public function getErrorsForIndicator(array $formFields, bool $fileUpload = false, array $result = []): array
     {
         $rules = [];
-        $rules['measure'] = sprintf('nullable|in:%s', implode(',', array_keys(
-            $this->getCodeListForRequestFiles('IndicatorMeasure', 'Activity', false)
-        )));
+        $rules['measure'] = sprintf(
+            'nullable|in:%s',
+            implode(
+                ',',
+                array_keys(
+                    $this->getCodeListForRequestFiles('IndicatorMeasure', 'Activity', false)
+                )
+            )
+        );
         $rules['ascending'] = sprintf('nullable|in:0,1');
         $rules['aggregation_status'] = sprintf('nullable|in:0,1');
 
@@ -125,16 +143,16 @@ class IndicatorRequest extends ActivityBaseRequest
     /**
      * Returns messages for result indicator validations.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
     public function getMessagesForIndicator(array $formFields): array
     {
         $messages = [];
-        $messages['measure.in'] = 'The indicator measure is invalid.';
-        $messages['aggregation_status.in'] = 'The indicator aggregation status is invalid.';
-        $messages['ascending.in'] = 'The indicator ascending is invalid.';
+        $messages['measure.in'] = trans('validation.activity_indicators.invalid_measure');
+        $messages['aggregation_status.in'] = trans('validation.activity_indicators.invalid_aggregation_status');
+        $messages['ascending.in'] = trans('validation.this_field_is_invalid');
 
         $tempMessages = [
             $this->getMessagesForNarrative(Arr::get($formFields, 'title', []), 'title.0'),
@@ -158,7 +176,7 @@ class IndicatorRequest extends ActivityBaseRequest
      *
      * @param $formFields
      * @param $fileUpload
-     * @param array $result
+     * @param  array  $result
      * @param $resultId
      *
      * @return array
@@ -205,13 +223,23 @@ class IndicatorRequest extends ActivityBaseRequest
                     }
 
                     $codePresent = $resultId ? $resultService->resultHasRefCode($resultId) : $hasCode;
-                    $vocabularyPresent = $resultId ? $resultService->resultHasRefVocabulary($resultId) : $hasVocabulary;
+                    $vocabularyPresent = $resultId ?
+                        $resultService->resultHasRefVocabulary($resultId) : $hasVocabulary;
 
-                    $rules[sprintf('%s.code', $referenceForm)][] = $codePresent ? 'result_ref_code_present' : false;
-                    $rules[sprintf('%s.vocabulary', $referenceForm)][] = $vocabularyPresent ? 'result_ref_vocabulary_present' : false;
+                    $rules[sprintf('%s.code', $referenceForm)][]
+                        = $codePresent ? 'result_ref_code_present' : false;
+                    $rules[sprintf(
+                        '%s.vocabulary',
+                        $referenceForm
+                    )][]
+                        = $vocabularyPresent ? 'result_ref_vocabulary_present' : false;
                 } else {
-                    $rules[sprintf('%s.code', $referenceForm)][] = $resultService->resultHasRefCode($resultId) ? 'result_ref_code_present' : false;
-                    $rules[sprintf('%s.vocabulary', $referenceForm)][] = $resultService->resultHasRefVocabulary($resultId) ? 'result_ref_vocabulary_present' : false;
+                    $rules[sprintf('%s.code', $referenceForm)][] = $resultService->resultHasRefCode(
+                        $resultId
+                    ) ? 'result_ref_code_present' : false;
+                    $rules[sprintf('%s.vocabulary', $referenceForm)][] = $resultService->resultHasRefVocabulary(
+                        $resultId
+                    ) ? 'result_ref_vocabulary_present' : false;
                 }
             }
         }
@@ -236,9 +264,19 @@ class IndicatorRequest extends ActivityBaseRequest
         foreach ($formFields as $referenceIndex => $reference) {
             $referenceForm = sprintf('reference.%s', $referenceIndex);
             $rules[sprintf('%s.indicator_uri', $referenceForm)] = 'nullable|url';
-            $rules[sprintf('%s.vocabulary', $referenceForm)] = sprintf('nullable|in:%s', implode(',', array_keys(
-                $this->getCodeListForRequestFiles('IndicatorVocabulary', 'Activity', false)
-            )));
+            $rules[sprintf('%s.vocabulary', $referenceForm)] = sprintf(
+                'nullable|in:%s',
+                implode(
+                    ',',
+                    array_keys(
+                        $this->getCodeListForRequestFiles(
+                            'IndicatorVocabulary',
+                            'Activity',
+                            false
+                        )
+                    )
+                )
+            );
         }
 
         return $rules;
@@ -257,14 +295,26 @@ class IndicatorRequest extends ActivityBaseRequest
 
         foreach ($formFields as $referenceIndex => $reference) {
             $referenceForm = sprintf('reference.%s', $referenceIndex);
-            $messages[sprintf('%s.indicator_uri.url', $referenceForm)] = 'The @indicator-uri field must be a valid url.';
+            $messages[sprintf(
+                '%s.indicator_uri.url',
+                $referenceForm
+            )]
+                = trans('validation.url_valid');
 
             if (!empty($reference['code'])) {
-                $messages[sprintf('%s.code.result_ref_code_present', $referenceForm)] = 'The code is already defined in its result';
+                $messages[sprintf(
+                    '%s.code.result_ref_code_present',
+                    $referenceForm
+                )]
+                    = trans('validation.activity_indicators.reference.result_ref_code_present');
             }
 
             if (!empty($reference['vocabulary'])) {
-                $messages[sprintf('%s.vocabulary.result_ref_vocabulary_present', $referenceForm)] = 'The vocabulary is already defined in its result';
+                $messages[sprintf(
+                    '%s.vocabulary.result_ref_vocabulary_present',
+                    $referenceForm
+                )]
+                    = trans('validation.activity_indicators.reference.result_ref_vocabulary_present');
             }
         }
 
@@ -295,13 +345,19 @@ class IndicatorRequest extends ActivityBaseRequest
                 $rules[sprintf('%s.value', $baselineForm)] = 'nullable|numeric';
             }
 
-            $narrativeRules = $this->getWarningForNarrative($baseline['comment'][0]['narrative'], sprintf('%s.comment.0', $baselineForm));
+            $narrativeRules = $this->getWarningForNarrative(
+                $baseline['comment'][0]['narrative'],
+                sprintf('%s.comment.0', $baselineForm)
+            );
 
             foreach ($narrativeRules as $key => $item) {
                 $rules[$key] = $item;
             }
 
-            $dcoLinkRules = $this->getWarningForDocumentLink(Arr::get($baseline, 'document_link', []), $baselineForm);
+            $dcoLinkRules = $this->getWarningForDocumentLink(
+                Arr::get($baseline, 'document_link', []),
+                $baselineForm
+            );
 
             foreach ($dcoLinkRules as $key => $item) {
                 $rules[$key] = $item;
@@ -330,18 +386,28 @@ class IndicatorRequest extends ActivityBaseRequest
             $baselineYearRule = 'nullable|date_format:Y|digits:4';
 
             if (!empty($baseline['date']) && dateStrToTime(($baseline['date']))) {
-                $baselineYearRule = sprintf('%s|in:%s', $baselineYearRule, date('Y', dateStrToTime($baseline['date'])));
+                $baselineYearRule = sprintf(
+                    '%s|in:%s',
+                    $baselineYearRule,
+                    date('Y', dateStrToTime($baseline['date']))
+                );
             }
 
             $rules[sprintf('%s.year', $baselineForm)] = $baselineYearRule;
 
-            $narrativeRules = $this->getErrorsForNarrative($baseline['comment'][0]['narrative'], sprintf('%s.comment.0', $baselineForm));
+            $narrativeRules = $this->getErrorsForNarrative(
+                $baseline['comment'][0]['narrative'],
+                sprintf('%s.comment.0', $baselineForm)
+            );
 
             foreach ($narrativeRules as $key => $item) {
                 $rules[$key] = $item;
             }
 
-            $dcoLinkRules = $this->getErrorsForDocumentLink(Arr::get($baseline, 'document_link', []), $baselineForm);
+            $dcoLinkRules = $this->getErrorsForDocumentLink(
+                Arr::get($baseline, 'document_link', []),
+                $baselineForm
+            );
 
             foreach ($dcoLinkRules as $key => $item) {
                 $rules[$key] = $item;
@@ -364,20 +430,34 @@ class IndicatorRequest extends ActivityBaseRequest
 
         foreach ($formFields as $baselineIndex => $baseline) {
             $baselineForm = sprintf('baseline.%s', $baselineIndex);
-            $messages[sprintf('%s.year.date_format', $baselineForm)] = 'The @year field is not valid.';
-            $messages[sprintf('%s.year.in', $baselineForm)] = 'The @year field should be the year of baseline date';
-            $messages[sprintf('%s.year.digits', $baselineForm)] = 'The @year field must have 4 digits.';
+            $messages[sprintf('%s.year.date_format', $baselineForm)] = trans(
+                'validation.activity_indicators.baseline.year.invalid_year'
+            );
+            $messages[sprintf('%s.year.in', $baselineForm)] = trans('validation.activity_indicators.baseline.year.in');
+            $messages[sprintf('%s.year.digits', $baselineForm)] = trans(
+                'validation.activity_indicators.baseline.year.digits'
+            );
 
-            $messages[sprintf('%s.value.numeric', $baselineForm)] = 'The @value field must be a number.';
-            $messages[sprintf('%s.value.gte', $baselineForm)] = 'The @value field must be greater or equal to 0.';
+            $messages[sprintf('%s.value.numeric', $baselineForm)] = trans(
+                'validation.activity_indicators.baseline.value.numeric'
+            );
+            $messages[sprintf('%s.value.gte', $baselineForm)] = trans(
+                'validation.activity_indicators.baseline.value.gte'
+            );
 
-            $narrativeMessages = $this->getMessagesForNarrative($baseline['comment'][0]['narrative'], sprintf('%s.comment.0', $baselineForm));
+            $narrativeMessages = $this->getMessagesForNarrative(
+                $baseline['comment'][0]['narrative'],
+                sprintf('%s.comment.0', $baselineForm)
+            );
 
             foreach ($narrativeMessages as $key => $item) {
                 $messages[$key] = $item;
             }
 
-            $docLinkMessages = $this->getMessagesForDocumentLink(Arr::get($baseline, 'document_link', []), $baselineForm);
+            $docLinkMessages = $this->getMessagesForDocumentLink(
+                Arr::get($baseline, 'document_link', []),
+                $baselineForm
+            );
 
             foreach ($docLinkMessages as $key => $item) {
                 $messages[$key] = $item;

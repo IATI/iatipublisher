@@ -129,7 +129,7 @@ class IdentifierRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'activity_identifier.not_in' => 'The activity identifier already exists.',
+            'activity_identifier.not_in' => trans('validation.attribute_exists'),
         ];
     }
 }

@@ -15,7 +15,10 @@
         </div>
       </div>
       <div class="tect-xs mx-3 font-normal text-n-40">
-        <span class="capitalize"> ({{ status['template'] }} Identifier </span>
+        <span class="capitalize">
+          ({{ status['template'] }}
+          {{ getTranslatedElement(translatedData, 'identifier') }}
+        </span>
         : {{ activity.identifier }})
       </div>
       <span
@@ -27,7 +30,14 @@
           }
         "
       >
-        <span>show {{ countErrors(index) }} error</span>
+        <span>
+          {{
+            translatedData['common.common.show_count_errors'].replace(
+              ':count',
+              String(countErrors(index))
+            )
+          }}
+        </span>
         <svg-vue class="text-[6px]" icon="dropdown-arrow" />
       </span>
     </div>
@@ -43,7 +53,10 @@
         >
           <span class="flex items-center space-x-2">
             <svg-vue class="text-crimson-40" icon="alert" />
-            <span> {{ errorLength('critical') }} Critical errors</span>
+            <span>
+              {{ errorLength('critical') }}
+              {{ translatedData['common.common.critical_errors'] }}
+            </span>
           </span>
 
           <svg-vue
@@ -53,8 +66,13 @@
           />
         </div>
         <div class="error-help">
-          (The activity contains critical errors and thus cannot be uploaded to
-          the system.)
+          (
+          {{
+            translatedData[
+              'workflow_frontend.import.the_activity_contains_critical_errors'
+            ]
+          }}
+          )
         </div>
         <div class="critical-dropdown-container">
           <div class="critical-dropdown">
@@ -94,7 +112,10 @@
         >
           <span class="flex items-center space-x-2">
             <svg-vue class="text-crimson-40" icon="alert" />
-            <span>{{ errorLength('error') }} Errors</span>
+            <span
+              >{{ errorLength('error') }}
+              {{ translatedData['common.common.errors'] }}</span
+            >
           </span>
           <svg-vue
             icon="dropdown-arrow"
@@ -103,10 +124,11 @@
           />
         </div>
         <div class="error-help">
-          (The activity with the errors will be uploaded to our system, but the
-          field containing the error will be removed. You will need to refill
-          these fields with correct data once the activity is uploaded to our
-          system.)
+          ({{
+            translatedData[
+              'workflow_frontend.import.the_activity_with_the_errors_will_be_uploaded_to_our_system'
+            ]
+          }})
         </div>
         <div class="error-dropdown-container">
           <div class="error-dropdown">
@@ -143,9 +165,11 @@
       >
         <div class="flex items-center justify-between bg-eggshell p-3 pb-0.5">
           <span class="flex items-center space-x-2">
-            <svg-vue icon="alert" class="text-camel-40" /><span>
-              {{ errorLength('warning') }} Warnings</span
-            >
+            <svg-vue icon="alert" class="text-camel-40" />
+            <span>
+              {{ errorLength('warning') }}
+              {{ translatedData['common.common.warnings'] }}
+            </span>
           </span>
           <svg-vue
             icon="dropdown-arrow"
@@ -154,9 +178,11 @@
           />
         </div>
         <div class="error-help bg-eggshell">
-          (The field with warnings will be uploaded to our system. These fields
-          contain data that are against the rules of the IATI Validator and will
-          cause validation errors while publishing.)
+          ({{
+            translatedData[
+              'workflow_frontend.import.the_field_with_warnings_will_be_uploaded_to_our_system'
+            ]
+          }})
         </div>
         <div class="warning-dropdown-container">
           <div class="warning-dropdown">
@@ -186,7 +212,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, computed, ref } from 'vue';
+import { defineProps, computed, ref, toRefs } from 'vue';
+import { getTranslatedElement, getTranslatedUntitled } from 'Composable/utils';
 const showErrors = ref(false);
 const showCritical = ref(false);
 const criticalToggle = ref(false);
@@ -214,6 +241,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  translatedData: {
+    type: Object,
+    required: true,
+  },
 });
 
 const errorLength = (currentError) => {
@@ -226,17 +257,22 @@ const errorLength = (currentError) => {
 
   return count;
 };
+
+const { translatedData } = toRefs(props);
+
 const title = computed(() => {
   switch (props.status['template']) {
     case 'activity':
       return props.activity.data.title
-        ? props.activity.data.title[0].narrative ?? 'Untitled'
-        : 'Untitled';
+        ? props.activity.data.title[0].narrative ??
+            getTranslatedUntitled(translatedData)
+        : getTranslatedUntitled(translatedData);
 
     case 'result':
       return props.activity.data.title
-        ? props.activity.data.title[0].narrative[0]['narrative'] ?? 'Untitled'
-        : 'Untitled';
+        ? props.activity.data.title[0].narrative[0]['narrative'] ??
+            getTranslatedUntitled(translatedData)
+        : getTranslatedUntitled(translatedData);
     case 'period':
       return (
         (props.activity.data.period_start &&
@@ -247,10 +283,11 @@ const title = computed(() => {
       );
     case 'indicator':
       return props.activity.data.title
-        ? props.activity.data.title[0].narrative[0]['narrative'] ?? 'Untitled'
-        : 'Untitled';
+        ? props.activity.data.title[0].narrative[0]['narrative'] ??
+            getTranslatedUntitled(translatedData)
+        : getTranslatedUntitled(translatedData);
     default:
-      return 'Untitled';
+      return getTranslatedUntitled(translatedData);
   }
 });
 
@@ -401,7 +438,7 @@ const errorAccordionToggle = (e: Event) => {
   font-style: italic;
   font-weight: 400;
   margin-bottom: 18px;
-  background-color: none;
+  background-color: transparent;
 }
 
 .error-dropdown-container p {

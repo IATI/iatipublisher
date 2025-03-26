@@ -1,6 +1,8 @@
 <template>
   <div class="relative">
-    <h3 class="pb-2 text-base font-bold leading-6 text-n-50">Importing</h3>
+    <h3 class="pb-2 text-base font-bold leading-6 text-n-50">
+      {{ translatedData['activity_index.xls_loader.importing'] }}
+    </h3>
     <div
       class="relative rounded-lg border border-n-20 bg-white p-4 duration-200"
     >
@@ -15,7 +17,9 @@
         <h3
           class="flex items-center space-x-2 text-sm leading-[22px] text-n-50"
         >
-          <span>Multiple Activities</span>
+          <span>{{
+            translatedData['activity_index.xls_loader.multiple_activities']
+          }}</span>
           <span
             class="flex h-6 w-6 items-center justify-center rounded-full bg-lagoon-10 text-lagoon-50"
             >{{ totalCount ?? 0 }}</span
@@ -47,7 +51,10 @@
       <div v-if="xlsFailed" class="flex justify-between space-x-5">
         <div>
           <p class="text-sm font-bold text-crimson-50">
-            {{ currentActivity }} upload failed:
+            {{ currentActivity }}
+            {{
+              translatedData['activity_index.xls_loader.multiple_activities']
+            }}
           </p>
           <p class="text-sm text-crimson-50">{{ xlsFailedMessage }}</p>
         </div>
@@ -55,15 +62,16 @@
           class="text-xs font-bold uppercase text-crimson-50 hover:text-spring-50"
           @click="retry"
         >
-          Retry
+          {{ translatedData['common.common.retry'] }}
         </button>
       </div>
       <div v-else class="flex justify-between space-x-5">
         <p v-if="completed" class="text-sm text-n-40">
-          {{ currentActivity }} file upload complete
+          {{ currentActivity }}
+          {{ translatedData['activity_index.xls_loader.file_upload_complete'] }}
         </p>
         <p v-else class="text-sm text-n-40">
-          Uploading
+          {{ translatedData['activity_index.xls_loader.uploading'] }}
           <span v-if="totalCount && processing">
             {{ `${processedCount} / ${totalCount}` }}</span
           >
@@ -74,7 +82,7 @@
           href="/import/xls/list"
           class="text-xs font-bold uppercase text-spring-50 hover:text-spring-50"
         >
-          Proceed
+          {{ translatedData['common.common.continue'] }}
         </a>
         <spinnerLoader v-else />
       </div>
@@ -94,6 +102,7 @@ import spinnerLoader from './spinnerLoader.vue';
 import axios from 'axios';
 
 const currentActivity = ref(null);
+const translatedData = inject('translatedData') as Record<string, string>;
 
 defineEmits(['close']);
 
@@ -124,13 +133,15 @@ const props = defineProps({
 const mapActivityName = (name) => {
   switch (name) {
     case 'activity':
-      return 'Basic Activity Elements';
+      return translatedData['common.common.basic_activity_elements'];
     case 'period':
       return 'Period';
     case 'indicator':
-      return 'Indicators except Period';
+      return translatedData['common.common.indicators_except_period'];
     case 'result':
-      return 'Result except Indicators and Period';
+      return translatedData[
+        'workflow_frontend.import.result_except_indicator_and_period'
+      ];
     default:
       return name;
   }

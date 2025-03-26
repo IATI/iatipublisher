@@ -237,7 +237,7 @@ class UserService
 
         if ($res->getStatusCode() === 404) {
             if ($exists) {
-                $errors['publisher_id'] = ['Publisher ID doesn\'t exist in IATI Registry.'];
+                $errors['publisher_id'] = trans('common/common.publisher_id_doesnt_exist_in_iati_registry');
             }
 
             return $errors;
@@ -246,11 +246,11 @@ class UserService
         $response = json_decode($res->getBody()->getContents())->result;
 
         if (!in_array($publisher_id, $response) && $exists) {
-            $errors['publisher_id'] = ['Publisher ID doesn\'t match your IATI Registry information.'];
+            $errors['publisher_id'] = [trans('common/common.publisher_id_doesnt_match_your_iati_registry_information')];
         }
 
         if (in_array($publisher_id, $response) && !$exists) {
-            $errors['publisher_id'] = ['Publisher ID already exists in IATI Registry.'];
+            $errors['publisher_id'] = [trans('user/user_service.publisher_id_already_exists_in_iati_registry')];
         }
 
         return $errors;
@@ -297,7 +297,7 @@ class UserService
                 if (Arr::get($publisher, 'publisher_iati_id', false) === $identifier) {
                     return [
                         'identifier' => [
-                            0 => 'IATI Organizational Identifier already exists in IATI Registry.',
+                            0 => trans('user/user_service.iati_organizational_identifier_already_exists_in_iati_registry'),
                         ],
                     ];
                 }
@@ -338,7 +338,7 @@ class UserService
 
         if ($res->getStatusCode() === 404) {
             if ($exists) {
-                $errors['username'] = ['User doesn\'t exist in IATI Registry.'];
+                $errors['username'] = [trans('user/user_service.user_doesnt_exist_in_iati_registry')];
             }
 
             return $errors;
@@ -348,11 +348,11 @@ class UserService
 
         if ($exists) {
             if ($data['username'] !== $response->name) {
-                $errors['username'] = ['User with this name does not exists in IATI Registry.'];
+                $errors['username'] = [trans('user/user_service.user_with_this_name_does_not_exists_in_iati_registry')];
             }
         } else {
             if ($data['username'] === $response->name) {
-                $errors['username'] = ['Username already exists in IATI Registry.'];
+                $errors['username'] = trans('user/user_service.username_already_exists_in_iati_registry');
             }
         }
 

@@ -34,7 +34,7 @@ class ReportingOrgRequest extends OrganizationBaseRequest
     /**
      * Rules for reporting organization form.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -51,19 +51,31 @@ class ReportingOrgRequest extends OrganizationBaseRequest
             $rules[$reportingOrganizationForm . '.ref'] = [
                 'nullable',
                 'not_regex:/(&|!|\/|\||\?)/',
-                !compareStringIgnoringWhitespace((string) $reportingOrganization['ref'], (string) $organisationIdentifier) ? 'must_match' : '',
+                !compareStringIgnoringWhitespace(
+                    (string) $reportingOrganization['ref'],
+                    (string) $organisationIdentifier
+                ) ? 'must_match' : '',
             ];
             $rules[$reportingOrganizationForm . '.type'] = [
                 'nullable',
-                sprintf('in:%s', implode(',', array_keys(
-                    $this->getCodeListForRequestFiles('OrganizationType', 'Organization')
-                ))),
+                sprintf(
+                    'in:%s',
+                    implode(
+                        ',',
+                        array_keys(
+                            $this->getCodeListForRequestFiles('OrganizationType', 'Organization')
+                        )
+                    )
+                ),
             ];
             $rules[$reportingOrganizationForm . '.secondary_reporter'] = [
                 'nullable',
                 'in:0,1',
             ];
-            $narrativeRules = $this->getWarningForNarrative($reportingOrganization['narrative'], $reportingOrganizationForm);
+            $narrativeRules = $this->getWarningForNarrative(
+                $reportingOrganization['narrative'],
+                $reportingOrganizationForm
+            );
 
             foreach ($narrativeRules as $key => $item) {
                 $rules[$key] = $item;
@@ -76,7 +88,7 @@ class ReportingOrgRequest extends OrganizationBaseRequest
     /**
      * Custom message for reporting organization form.
      *
-     * @param array $formFields
+     * @param  array  $formFields
      *
      * @return array
      */
@@ -86,9 +98,13 @@ class ReportingOrgRequest extends OrganizationBaseRequest
 
         foreach ($formFields as $reportingOrganizationIndex => $reportingOrganization) {
             $reportingOrganizationForm = sprintf('reporting_org.%s', $reportingOrganizationIndex);
-            $messages[$reportingOrganizationForm . '.ref.not_regex'] = 'The @ref format is invalid.';
-            $messages[$reportingOrganizationForm . '.ref.must_match'] = 'The @ref of reporting-org must match the organisation-identifier.';
-            $narrativeMessages = $this->getMessagesForNarrative($reportingOrganization['narrative'], $reportingOrganizationForm);
+            $messages[$reportingOrganizationForm . '.ref.not_regex'] = trans('validation.invalid_ref');
+            $messages[$reportingOrganizationForm . '.ref.must_match']
+                = trans('validation.reporting_org_ref_must_match');
+            $narrativeMessages = $this->getMessagesForNarrative(
+                $reportingOrganization['narrative'],
+                $reportingOrganizationForm
+            );
 
             foreach ($narrativeMessages as $key => $item) {
                 $messages[$key] = $item;

@@ -51,7 +51,7 @@
                     ? lastRegistered?.name[0].narrative
                     : lastRegistered?.publisher_name
                     ? lastRegistered?.publisher_name
-                    : 'untitled',
+                    : getTranslatedUntitled(translatedData),
                   30
                 )
               }}
@@ -69,7 +69,7 @@
                     ? lastUpdatedPublisher?.name[0].narrative
                     : lastUpdatedPublisher?.publisher_name
                     ? lastUpdatedPublisher?.publisher_name
-                    : 'untitled',
+                    : getTranslatedUntitled(translatedData),
                   30
                 )
               }}
@@ -212,6 +212,7 @@
     <Loader
       v-if="loader.status"
       :text="loader.text"
+      :translated-data="translatedData"
       :class="{ 'animate-loader': loader }"
     />
   </section>
@@ -223,7 +224,7 @@ import DashboardGraph from './DashboardGraph.vue';
 import axios from 'axios';
 import moment from 'moment';
 import Loader from 'Components/sections/ProgressLoader.vue';
-import { truncateText } from '../../composable/utils';
+import { getTranslatedUntitled, truncateText } from '../../composable/utils';
 import ShimmerLoading from 'Components/ShimmerLoading.vue';
 interface PublisherStat {
   active: number;

@@ -61,7 +61,7 @@ class SectorController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : $hasData,
                 elementName: 'sector',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->basicBreadCrumbInfo($activity, 'sector');
 
@@ -75,10 +75,11 @@ class SectorController extends Controller
             return view('admin.activity.sector.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while opening activity sector form.'
+                $translatedMessage
             );
         }
     }
@@ -95,14 +96,18 @@ class SectorController extends Controller
     {
         try {
             if (!$this->sectorService->update($id, $request->all())) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity sector.');
-            }
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Activity sector updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating activity sector.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 
@@ -125,7 +130,9 @@ class SectorController extends Controller
 
             if (!is_array_value_empty($sector)) {
                 $element['freeze'] = true;
-                $element['info_text'] = 'Sector has already been declared at transaction level. You can add either in activity level or transaction level.';
+                $translatedMessage = trans('activity_detail/sector_controller.sector_has_already_been_declared_at_transaction_level');
+
+                $element['info_text'] = $translatedMessage;
             }
         }
 

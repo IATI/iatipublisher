@@ -10,5 +10,6 @@
         :default-tied-status='{{ json_encode($defaultTiedStatus) }}'
         :budget-not-provided="{{ json_encode($budgetNotProvided) }}" user-role="{{ $userRole }}"
         :is-superadmin="{{json_encode(isSuperAdmin())}}"
+        :translated-data="{{json_encode($translatedData)}}"
     ></setting-page>
 @endsection

@@ -209,7 +209,7 @@ class XlsQueueProcessor
                 }
 
                 if ($sheetName === $mainMappingSheet[$xlsType] && (count($data) === 0 || is_array_value_empty(Arr::get($data, '0', [])))) {
-                    awsUploadFile(sprintf('%s/%s/%s/%s', $this->xls_data_storage_path, $this->orgId, $this->userId, 'status.json'), json_encode(['success' => false, 'message' => 'The xls file is empty.'], JSON_THROW_ON_ERROR));
+                    awsUploadFile(sprintf('%s/%s/%s/%s', $this->xls_data_storage_path, $this->orgId, $this->userId, 'status.json'), json_encode(['success' => false, 'message' => trans('common/common.the_xls_file_is_empty')], JSON_THROW_ON_ERROR));
 
                     return false;
                 }

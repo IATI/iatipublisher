@@ -113,3 +113,61 @@ export function isEveryValueNull(data): boolean {
     return data === null;
   }
 }
+
+export function getTranslatedUntitled(translatedData): string {
+  return translatedData ? translatedData['common.common.untitled'] : 'Untitled';
+}
+
+export function getTranslatedMissing(translatedData, element = ''): string {
+  if (!translatedData) {
+    return toTitleCase(element) + ' ' + 'Not Entered';
+  }
+
+  let returnValue = translatedData['common.common.missing'];
+
+  if (element) {
+    returnValue =
+      (getTranslatedElement(translatedData, element) ?? element) +
+      ' ' +
+      translatedData['common.common.missing'];
+  }
+
+  return toTitleCase(returnValue);
+}
+
+export function getTranslatedLanguage(translatedData): string {
+  return translatedData
+    ? toTitleCase(translatedData['elements.label.language'])
+    : 'Language';
+}
+
+export function getTranslatedDeleteElement(translatedData, element = '') {
+  let returnValue = translatedData['common.common.delete'];
+
+  if (element) {
+    returnValue =
+      translatedData['common.common.delete'] +
+        ' ' +
+        getTranslatedElement(translatedData, element) ?? element;
+  }
+
+  return toTitleCase(returnValue);
+}
+export function getTranslatedElement(translatedData, element: string): string {
+  if (!translatedData) {
+    return toTitleCase(element);
+  }
+
+  return toTitleCase(translatedData[`elements.label.${element}`] ?? '');
+}
+
+export function toTitleCase(word: string): string {
+  return word?.replace(
+    /\w\S*/g,
+    (txt) => txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase()
+  );
+}
+
+export function toKebabCase(word: string): string {
+  return word.replace(/_/g, '-').toLowerCase();
+}

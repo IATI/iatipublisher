@@ -2,7 +2,7 @@
   <div class="relative bg-paper px-5 pb-[71px] pt-4 xl:px-10">
     <PageTitle
       :breadcrumb-data="breadcrumbData"
-      title="Transaction List"
+      :title="translatedData['common.common.transaction_list']"
       :back-link="activityLink"
     >
       <div class="flex items-center space-x-3">
@@ -15,12 +15,16 @@
         <ButtonComponent
           v-if="store.state.selectedTransactions.length > 0"
           type="secondary"
-          :text="`Delete Selected (${store.state.selectedTransactions.length})`"
+          :text="`${translatedData['common.common.delete_selected']} (${store.state.selectedTransactions.length})`"
           icon="delete"
           @click="initiateDelete('bulk')"
         />
         <a :href="`${activityLink}/transaction/create`">
-          <Btn text="Add Transaction" icon="plus" type="primary" />
+          <Btn
+            :text="translatedData['common.common.add_transaction']"
+            icon="plus"
+            type="primary"
+          />
         </a>
       </div>
     </PageTitle>
@@ -37,7 +41,9 @@
         <thead>
           <tr class="bg-n-10">
             <th id="internal_ref" scope="col">
-              <span>Internal Ref</span>
+              <span>{{
+                getTranslatedElement(translatedData, 'internal_ref')
+              }}</span>
             </th>
             <th
               id="transaction_type"
@@ -56,7 +62,9 @@
                     }-arrow`"
                   />
                 </span>
-                <span>Transaction Type</span>
+                <span>{{
+                  getTranslatedElement(translatedData, 'transaction_type')
+                }}</span>
               </div>
             </th>
             <th
@@ -76,7 +84,9 @@
                     }-arrow`"
                   />
                 </span>
-                <span>Transaction Value</span>
+                <span>{{
+                  getTranslatedElement(translatedData, 'transaction_value')
+                }}</span>
               </div>
             </th>
             <th
@@ -96,22 +106,13 @@
                     }-arrow`"
                   />
                 </span>
-                <span>Transaction Date</span>
+                <span>{{
+                  getTranslatedElement(translatedData, 'transaction_date')
+                }}</span>
               </div>
             </th>
-            <!--            <th id="status" scope="col">-->
-            <!--              <a-->
-            <!--                class="transition duration-500 text-n-50 hover:text-spring-50"-->
-            <!--                href="#"-->
-            <!--              >-->
-            <!--                <span class="sorting-indicator descending">-->
-            <!--                  <svg-vue icon="descending-arrow" />-->
-            <!--                </span>-->
-            <!--                <span>Status</span>-->
-            <!--              </a>-->
-            <!--            </th>-->
             <th id="action" scope="col">
-              <span>Action</span>
+              <span>{{ translatedData['common.common.action'] }}</span>
             </th>
             <th id="select_all" scope="col">
               <span>
@@ -187,7 +188,6 @@
                 }}
               </span>
             </td>
-            <!--            <td><span class="text-spring-50">completed</span></td>-->
             <td>
               <div class="flex text-n-40">
                 <a
@@ -202,7 +202,6 @@
                 >
                   <svg-vue icon="delete" class="text-xl"></svg-vue>
                 </span>
-                <!-- <DeleteAction :item-id="trans.id" item-type="transaction" /> -->
               </div>
             </td>
 
@@ -236,6 +235,7 @@
         @fetch-activities="fetchListings"
       />
     </div>
+
     <PopupModal
       :modal-active="deleteModalShow"
       width="583"
@@ -244,16 +244,21 @@
       <div class="mb-4">
         <div class="title mb-6 flex">
           <svg-vue class="mr-1 mt-0.5 text-lg text-crimson-40" icon="delete" />
-          <b>Delete Transaction</b>
+          <b>{{
+            toTitleCase(translatedData['common.common.delete_transaction'])
+          }}</b>
         </div>
         <div class="rounded-lg bg-rose p-4">
           <p>
-            Are you sure you want to delete
             {{
               deleteTransactionList.type === 'single'
-                ? 'this transaction'
-                : 'these transactions'
-            }}?
+                ? translatedData[
+                    'common.common.are_you_sure_you_want_to_delete_this_transaction'
+                  ]
+                : translatedData[
+                    'common.common.are_you_sure_you_want_to_delete_these_transactions'
+                  ]
+            }}
           </p>
         </div>
       </div>
@@ -261,13 +266,13 @@
         <div class="inline-flex">
           <ButtonComponent
             class="bg-white px-6 uppercase"
-            text="Go Back"
+            :text="translatedData['common.common.go_back']"
             type=""
             @click="deleteModalShow = false"
           />
           <ButtonComponent
             class="space"
-            text="Delete"
+            :text="translatedData['common.common.delete']"
             type="primary"
             @click="confirmDelete"
           />
@@ -286,6 +291,7 @@ import {
   provide,
   computed,
   ref,
+  watchEffect,
 } from 'vue';
 import axios from 'axios';
 
@@ -301,9 +307,10 @@ import dateFormat from 'Composable/dateFormat';
 import getActivityTitle from 'Composable/title';
 import { useToggle } from '@vueuse/core';
 import moment from 'moment';
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
 import ButtonComponent from 'Components/ButtonComponent.vue';
 import PopupModal from 'Components/PopupModal.vue';
+import { getTranslatedElement, toTitleCase } from 'Composable/utils';
 
 // toggle state for modal popup
 let [deleteValue, deleteToggle] = useToggle();
@@ -336,9 +343,14 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    translatedData: {
+      type: Object,
+      required: true,
+    },
   },
   setup(props) {
     const { activity } = toRefs(props);
+
     const activityId = activity.value.id,
       activityTitle = getActivityTitle(activity.value.title, 'en'),
       activityLink = `/activity/${activityId}`;
@@ -573,7 +585,7 @@ export default defineComponent({
           isPaginationReset.value = false;
         }, 100);
 
-        getTransactions();
+        getTransactions().then();
       }
     };
 
@@ -610,7 +622,7 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      getTransactions();
+      getTransactions().then();
 
       if (props.toast.message !== '') {
         toastData.type = props.toast.type;
@@ -650,15 +662,12 @@ export default defineComponent({
         });
     }
 
-    // Provide
-    provide('parentItemId', activityId);
-
     /**
      * Breadcrumb data
      */
     const breadcrumbData = [
       {
-        title: 'Your Activities',
+        title: props.translatedData['common.common.your_activities'],
         link: '/activities',
       },
       {
@@ -666,10 +675,13 @@ export default defineComponent({
         link: activityLink,
       },
       {
-        title: 'Transaction List',
+        title: props.translatedData['common.common.transaction_list'],
         link: '',
       },
     ];
+
+    provide('parentItemId', activityId);
+    provide('translatedData', props.translatedData);
 
     return {
       breadcrumbData,
@@ -707,5 +719,6 @@ export default defineComponent({
       return moment;
     },
   },
+  methods: { toTitleCase, getTranslatedElement },
 });
 </script>

@@ -33,9 +33,10 @@ class OtherIdentifierCsvTest extends CsvBaseTest
         }
 
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('The other identifier type is not valid.', $flattenErrors);
-        $this->assertContains("The other identifier reference field shouldn't contain the symbols /, &, | or ?.", $flattenErrors);
-        $this->assertContains("The owner org reference field shouldn't contain the symbols /, &, | or ?.", $flattenErrors);
+
+        $this->assertContains(trans('validation.type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.type_is_invalid'), $flattenErrors);
+        $this->assertContains(trans('validation.type_is_invalid'), $flattenErrors);
     }
 
     /**

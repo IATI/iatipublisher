@@ -2,7 +2,7 @@
   <div class="relative w-[365px] bg-n-10">
     <div class="flex justify-between">
       <h6 class="mb-2 font-bold">
-        Publishing Activity
+        {{ translatedData['common.common.publishing_activity'] }}
         <span
           class="inline-block rounded-full bg-[#CDF8FA] py-1 px-2 text-xs font-medium text-bluecoral"
         >
@@ -13,7 +13,7 @@
         class="flex items-center gap-1.5 text-xs font-bold text-bluecoral"
         @click="handleMinimize"
       >
-        <span>EXPAND</span>
+        <span>{{ translatedData['common.common.expand'] }}</span>
         <svg-vue class="text-[9px]" icon="open-link" />
       </button>
     </div>
@@ -21,15 +21,27 @@
       <div class="flex justify-between">
         <div class="flex space-x-2">
           <div v-if="percentageWidth == 100" class="pb-3 text-sm text-n-50">
-            Data checking complete.
+            {{
+              translatedData[
+                'workflow_frontend.validation.data_checking_complete'
+              ]
+            }}
             <span>{{
               hasError
-                ? 'Click Expand for details'
-                : 'Click continue to publish'
+                ? translatedData[
+                    'workflow_frontend.validation.click_expand_for_details'
+                  ]
+                : translatedData[
+                    'workflow_frontend.validation.click_continue_to_publish'
+                  ]
             }}</span>
           </div>
           <div v-else class="text-sm text-n-50">
-            Checking your data before publication
+            {{
+              translatedData[
+                'common.common.checking_your_data_before_publication'
+              ]
+            }}
           </div>
           <div
             class="relative mx-2 flex h-5 w-5 items-center justify-center rounded-full bg-lagoon-10 text-xs font-medium text-spring-50"
@@ -48,7 +60,7 @@
             class="mt-2 fill-bluecoral text-lg text-bluecoral"
             icon="cross"
           />
-          <span>Cancel</span>
+          <span>{{ translatedData['common.common.cancel'] }}</span>
         </button>
       </div>
       <div class="flex items-center justify-between space-x-2">
@@ -84,7 +96,13 @@
             icon="warning-activity"
             class="flex-shrink-0 text-base text-[#E34D5B]"
           ></svg-vue>
-          <span> There may be data quality issues with these activities. </span>
+          <span>
+            {{
+              translatedData[
+                'workflow_frontend.validation.there_may_be_data_quality_issues_with_these_activities'
+              ]
+            }}
+          </span>
         </div>
 
         <div class="flex justify-center pt-2">
@@ -95,7 +113,7 @@
               @click="validationCancelHandler()"
             >
               <svg-vue icon="cross" class="mt-2 text-lg"></svg-vue>
-              <span>Cancel</span>
+              <span>{{ translatedData['common.common.cancel'] }}</span>
             </button>
           </div>
           <button
@@ -104,7 +122,7 @@
             :disabled="isAllCriticalErrors"
             @click="startBulkPublish"
           >
-            <span>Continue</span>
+            <span>{{ translatedData['common.common.continue'] }}</span>
           </button>
         </div>
       </div>
@@ -112,7 +130,9 @@
         v-if="hasError && percentageWidth === 100"
         class="flex items-center justify-between"
       >
-        <span class="text-sm text-[#E34D5B]">Validation failed</span>
+        <span class="text-sm text-[#E34D5B]">{{
+          translatedData['common.common.validation_failed']
+        }}</span>
         <button
           v-if="hasError && percentageWidth == 100"
           class="flex items-center text-xs font-bold uppercase text-bluecoral"
@@ -123,7 +143,7 @@
             class="mt-2 fill-bluecoral text-lg text-bluecoral"
             icon="cross"
           />
-          <span>Cancel</span>
+          <span>{{ translatedData['common.common.cancel'] }}</span>
         </button>
       </div>
     </div>
@@ -139,11 +159,12 @@ import {
   defineEmits,
   defineExpose,
   watchEffect,
+  inject,
 } from 'vue';
-
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
 import axios from 'axios';
 import { cn } from '../libs/utils';
+
 const store = useStore();
 const props = defineProps({
   validationStats: {
@@ -161,6 +182,7 @@ const props = defineProps({
   },
 });
 
+const translatedData = inject('translatedData') as Record<string, string>;
 const emit = defineEmits(['stopValidation', 'proceed']);
 const isAllCriticalErrors = ref(false);
 
@@ -199,11 +221,7 @@ watchEffect(() => {
           .top_level_error !== 'critical'
     );
 
-  if (activities.length < 1) {
-    isAllCriticalErrors.value = true;
-  } else {
-    isAllCriticalErrors.value = false;
-  }
+  isAllCriticalErrors.value = activities.length < 1;
 });
 
 const validationCancelHandler = async () => {
@@ -269,12 +287,6 @@ const handleMinimize = () => {
   store.state.isPublishedModalMinimized = false;
   localStorage.setItem('isPublishedModalMinimized', 'false');
 };
-
-const totalValidationFailedActivities = computed(() => {
-  return Object.values(
-    store.state.bulkActivityPublishStatus.importedActivitiesList
-  ).filter((item) => !item?.is_valid).length;
-});
 
 defineExpose({
   validationCancelHandler,

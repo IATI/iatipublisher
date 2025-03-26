@@ -47,9 +47,9 @@ class ImportXlsRequest extends ActivityBaseRequest
      */
     public function messages(): array
     {
-        $messages['activity.required'] = 'The xls file must be uploaded';
-        $messages['activity.activity_file'] = 'The file must be of xls format.';
-        $messages['activity.max'] = 'The file shouldn\'t be greater than 10MB.';
+        $messages['activity.required'] = trans('validation.activity_upload.xls_required');
+        $messages['activity.activity_file'] = trans('validation.activity_upload.xls_activity_file');
+        $messages['activity.max'] = trans('validation.activity_upload.max');
 
         return $messages;
     }
@@ -57,7 +57,7 @@ class ImportXlsRequest extends ActivityBaseRequest
     /**
      * Overwritten failedValidation method for JSON response.
      *
-     * @param Validator $validator
+     * @param  Validator  $validator
      *
      * @return ValidationException
      */

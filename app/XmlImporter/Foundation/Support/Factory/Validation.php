@@ -179,7 +179,7 @@ class Validation extends Factory
         $messages = [];
         $messages[sprintf('%s.narrative.unique_lang', $elementName)] = trans(
             'validation.unique',
-            ['attribute' => trans('elementForm.language')]
+            ['attribute' => trans('elements/label.language')]
         );
 
         foreach ($elementNarrative as $narrativeIndex => $narrative) {
@@ -239,7 +239,7 @@ class Validation extends Factory
         $messages = [];
         $messages[sprintf('%s.narrative.unique_lang', $elementName)] = trans(
             'validation.unique',
-            ['attribute' => trans('elementForm.language')]
+            ['attribute' => trans('elements/label.language')]
         );
 
         foreach ($elementNarrative as $narrativeIndex => $narrative) {
@@ -250,14 +250,14 @@ class Validation extends Factory
                     $narrativeIndex
                 )] = trans(
                     'validation.required_with',
-                    ['attribute' => trans('elementForm.narrative'), 'values' => trans('elementForm.language')]
+                    ['attribute' => trans('elements/label.narrative'), 'values' => trans('elements/label.language')]
                 );
             } else {
                 $messages[sprintf(
                     '%s.narrative.%s.narrative.required',
                     $elementName,
                     $narrativeIndex
-                )] = trans('validation.required', ['attribute' => trans('elementForm.narrative')]);
+                )] = trans('validation.required', ['attribute' => trans('elements/label.narrative')]);
             }
         }
 
@@ -338,7 +338,7 @@ class Validation extends Factory
         $messages = [];
         $messages[sprintf('%s.narrative.unique_lang', $formBase)] = trans(
             'validation.unique',
-            ['attribute' => trans('elementForm.language')]
+            ['attribute' => trans('elements/label.language')]
         );
 
         foreach ($formFields as $narrativeIndex => $narrative) {
@@ -348,13 +348,13 @@ class Validation extends Factory
                 $narrativeIndex
             )] = trans(
                 'validation.required_with',
-                ['attribute' => trans('elementForm.narrative'), 'values' => trans('elementForm.language')]
+                ['attribute' => trans('elements/label.narrative'), 'values' => trans('elements/label.language')]
             );
 
             if ($narrative['narrative'] !== '') {
                 $messages[sprintf('%s.sector_vocabulary.required_with', $formBase)] = trans(
                     'validation.required_with',
-                    ['attribute' => trans('elementForm.sector_vocabulary'), 'values' => trans('elementForm.narrative')]
+                    ['attribute' => trans('elements/label.sector_vocabulary'), 'values' => trans('elements/label.narrative')]
                 );
 
                 if ($sector['sector_vocabulary'] === '1' || $sector['sector_vocabulary'] === '2') {
@@ -362,8 +362,8 @@ class Validation extends Factory
                         $messages[sprintf('%s.sector_code.required_with', $formBase)] = trans(
                             'validation.required_with',
                             [
-                                'attribute' => trans('elementForm.sector_code'),
-                                'values'    => trans('elementForm.narrative'),
+                                'attribute' => trans('elements/label.sector_code'),
+                                'values'    => trans('elements/label.narrative'),
                             ]
                         );
                     }
@@ -371,15 +371,15 @@ class Validation extends Factory
                         $messages[sprintf('%s.sector_category_code.required_with', $formBase)] = trans(
                             'validation.required_with',
                             [
-                                'attribute' => trans('elementForm.sector_code'),
-                                'values'    => trans('elementForm.narrative'),
+                                'attribute' => trans('elements/label.sector_code'),
+                                'values'    => trans('elements/label.narrative'),
                             ]
                         );
                     }
                 } else {
                     $messages[sprintf('%s.text.required_with', $formBase)] = trans(
                         'elementForm.required_with',
-                        ['attribute' => trans('elementForm.sector_code'), 'values' => trans('elementForm.narrative')]
+                        ['attribute' => trans('elements/label.sector_code'), 'values' => trans('elements/label.narrative')]
                     );
                 }
             }
@@ -443,11 +443,11 @@ class Validation extends Factory
         foreach ($formFields as $periodStartKey => $periodStartVal) {
             $messages[$formBase . '.period_start.' . $periodStartKey . '.date.required'] = trans(
                 'validation.required',
-                ['attribute' => trans('elementForm.period_start')]
+                ['attribute' => trans('elements/label.period_start')]
             );
             $messages[$formBase . '.period_end.' . $periodStartKey . '.date.date'] = trans(
                 'validation.date',
-                ['attribute' => trans('elementForm.period_start')]
+                ['attribute' => trans('elements/label.period_start')]
             );
         }
 
@@ -493,15 +493,15 @@ class Validation extends Factory
         foreach ($formFields as $periodEndKey => $periodEndVal) {
             $messages[$formBase . '.period_end.' . $periodEndKey . '.date.required'] = trans(
                 'validation.required',
-                ['attribute' => trans('elementForm.period_end')]
+                ['attribute' => trans('elements/label.period_end')]
             );
             $messages[$formBase . '.period_end.' . $periodEndKey . '.date.date'] = trans(
                 'validation.date',
-                ['attribute' => trans('elementForm.period_end')]
+                ['attribute' => trans('elements/label.period_end')]
             );
             $messages[$formBase . '.period_end.' . $periodEndKey . '.date.after'] = trans(
                 'validation.after',
-                ['attribute' => trans('elementForm.period_end'), 'date' => trans('elementForm.period_start')]
+                ['attribute' => trans('elements/label.period_end'), 'date' => trans('elements/label.period_start')]
             );
         }
 

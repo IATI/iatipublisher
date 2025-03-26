@@ -2,7 +2,7 @@
   <div class="relative bg-paper px-5 pb-[71px] pt-4 xl:px-10">
     <PageTitle
       :breadcrumb-data="breadcrumbData"
-      title="Result List"
+      :title="translatedData['common.common.result_list']"
       :back-link="activityLink"
     >
       <div class="flex items-center space-x-3">
@@ -16,7 +16,7 @@
           <ButtonComponent
             v-if="store.state.selectedResults.length > 0"
             type="secondary"
-            :text="`Delete Selected (${store.state.selectedResults.length})`"
+            :text="`${translatedData['common.common.delete_selected']} (${store.state.selectedResults.length})`"
             icon="delete"
             @click="initiateDelete('bulk')"
           />
@@ -29,12 +29,16 @@
           <input
             v-model="searchValue"
             type="text"
-            placeholder="Search Result"
+            :placeholder="translatedData['common.common.search_result']"
             @change="getResults('search')"
           />
         </div>
         <a :href="`${activityLink}/result/create`">
-          <Btn text="Add Result" icon="plus" type="primary" />
+          <Btn
+            :text="translatedData['common.common.add_result']"
+            icon="plus"
+            type="primary"
+          />
         </a>
       </div>
     </PageTitle>
@@ -51,19 +55,21 @@
               scope="col"
               class="w-[650px] 2xl:w-[1000px]"
             >
-              <span>Title</span>
+              <span>{{ getTranslatedElement(translatedData, 'title') }}</span>
             </th>
             <th id="transaction_type" scope="col">
-              <span>Result Number</span>
+              <span>{{ translatedData['common.common.result_number'] }}</span>
             </th>
             <th id="transaction_value" scope="col">
-              <span>RESULT TYPE</span>
+              <span>Result Type</span>
             </th>
             <th id="transaction_date" scope="col">
-              <span>AGGREGATION STATUS</span>
+              <span>{{
+                getTranslatedElement(translatedData, 'aggregation_status')
+              }}</span>
             </th>
             <th id="action" scope="col">
-              <span>Action</span>
+              <span>{{ translatedData['common.common.action'] }}</span>
             </th>
             <th id="select_all" scope="col">
               <span>
@@ -105,7 +111,10 @@
               class="cursor-pointer"
               @click="handleNavigate(`${activityLink}/result/${result.id}`)"
             >
-              {{ types.resultType[result.result.type] ?? 'Missing' }}
+              {{
+                types.resultType[result.result.type] ??
+                getTranslatedMissing(translatedData)
+              }}
             </td>
             <td
               class="cursor-pointer capitalize"
@@ -113,10 +122,10 @@
             >
               {{
                 parseInt(result.result.aggregation_status)
-                  ? 'True'
+                  ? translatedData['common.common.true']
                   : result.result.aggregation_status
-                  ? 'False'
-                  : 'Missing'
+                  ? translatedData['common.common.false']
+                  : getTranslatedMissing(translatedData)
               }}
             </td>
             <td>
@@ -141,7 +150,9 @@
               class="check-column"
               @click="(event: Event) => event.stopPropagation()"
             >
-              <label class="sr-only" for=""> Select results </label>
+              <label class="sr-only" for="">
+                {{ translatedData['common.common.select_results'] }}
+              </label>
               <label class="checkbox">
                 <input
                   v-model="store.state.selectedResults"
@@ -155,7 +166,9 @@
           </tr>
         </tbody>
         <tbody v-else>
-          <td colspan="5" class="text-center">Results not found</td>
+          <td colspan="5" class="text-center">
+            {{ translatedData['common.common.no_data_found'] }}
+          </td>
         </tbody>
       </table>
     </div>
@@ -177,16 +190,19 @@
       <div class="mb-4">
         <div class="title mb-6 flex">
           <svg-vue class="mr-1 mt-0.5 text-lg text-crimson-40" icon="delete" />
-          <b>Delete Results</b>
+          <b>{{ translatedData['common.common.delete_results'] }}</b>
         </div>
         <div class="rounded-lg bg-rose p-4">
           <p>
-            Are you sure you want to delete
             {{
               deleteResultsList.type === 'single'
-                ? 'this result'
-                : 'these results'
-            }}?
+                ? translatedData[
+                    'common.common.are_you_sure_you_want_to_delete_this_result'
+                  ]
+                : translatedData[
+                    'common.common.are_you_sure_you_want_to_delete_these_results'
+                  ]
+            }}
           </p>
         </div>
       </div>
@@ -194,13 +210,13 @@
         <div class="inline-flex">
           <ButtonComponent
             class="bg-white px-6 uppercase"
-            text="Go Back"
+            :text="translatedData['common.common.go_back']"
             type=""
             @click="deleteModalShow = false"
           />
           <ButtonComponent
             class="space"
-            text="Delete"
+            :text="translatedData['common.common.delete']"
             type="primary"
             @click="confirmDelete"
           />
@@ -219,6 +235,7 @@ import {
   reactive,
   provide,
   computed,
+  watchEffect,
 } from 'vue';
 import axios from 'axios';
 
@@ -236,6 +253,7 @@ import { useStore } from 'Store/activities';
 import ButtonComponent from 'Components/ButtonComponent.vue';
 import PopupModal from 'Components/PopupModal.vue';
 import { useToggle } from '@vueuse/core';
+import { getTranslatedElement, getTranslatedMissing } from 'Composable/utils';
 
 export default defineComponent({
   name: 'ResultsList',
@@ -265,9 +283,14 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    translatedData: {
+      type: Object,
+      required: true,
+    },
   },
   setup(props) {
     const { activity } = toRefs(props);
+
     const activityId = activity.value.id,
       activityTitle = activity.value.title,
       activityLink = `/activity/${activityId}`;
@@ -326,7 +349,7 @@ export default defineComponent({
      */
     const breadcrumbData = [
       {
-        title: 'Your Activities',
+        title: props.translatedData['common.common.your_activities'],
         link: '/activities',
       },
       {
@@ -334,7 +357,7 @@ export default defineComponent({
         link: activityLink,
       },
       {
-        title: 'Result List',
+        title: props.translatedData['common.common.result_list'],
         link: '',
       },
     ];
@@ -663,6 +686,7 @@ export default defineComponent({
 
     // Provide
     provide('parentItemId', activityId);
+    provide('translatedData', props.translatedData);
 
     return {
       breadcrumbData,
@@ -689,6 +713,7 @@ export default defineComponent({
       confirmDelete,
     };
   },
+  methods: { getTranslatedMissing, getTranslatedElement },
 });
 </script>
 <style scoped>

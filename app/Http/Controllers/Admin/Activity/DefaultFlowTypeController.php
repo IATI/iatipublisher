@@ -59,7 +59,7 @@ class DefaultFlowTypeController extends Controller
             $formHeader = $this->getFormHeader(
                 hasData    : $hasData,
                 elementName: 'default_flow_type',
-                parentTitle: Arr::get($activity, 'title.0.narrative', 'Untitled')
+                parentTitle: Arr::get($activity, 'title.0.narrative', getTranslatedUntitled())
             );
             $breadCrumbInfo = $this->basicBreadCrumbInfo($activity, 'default_flow_type');
 
@@ -74,9 +74,11 @@ class DefaultFlowTypeController extends Controller
         } catch (Exception $e) {
             logger()->error($e->getMessage());
 
+            $translatedMessage = trans('common/common.error_opening_data_entry_form');
+
             return redirect()->route('admin.activity.show', $id)->with(
                 'error',
-                'Error has occurred while rendering default-flow-type form.'
+                $translatedMessage
             );
         }
     }
@@ -95,14 +97,18 @@ class DefaultFlowTypeController extends Controller
             $activityDefaultFlowType = $request->get('default_flow_type') !== null ? (int) $request->get('default_flow_type') : null;
 
             if (!$this->defaultFlowTypeService->update($id, ['code' => $activityDefaultFlowType])) {
-                return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating default-flow-type.');
-            }
+                $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('success', 'Default-flow-type updated successfully.');
+                return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
+            }
+            $translatedMessage = trans('common/common.updated_successfully');
+
+            return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $translatedMessage = trans('common/common.failed_to_update_data');
 
-            return redirect()->route('admin.activity.show', $id)->with('error', 'Error has occurred while updating default-flow-type.');
+            return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);
         }
     }
 }

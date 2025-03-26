@@ -1,48 +1,48 @@
 {
   "organisation_identifier": {
     "name": "organisation_identifier",
-    "label": "organisation-identifier",
+    "label": "elements/label.organisation_identifier",
     "criteria": "mandatory",
-    "hover_text": "A unique code for your organisation, which was entered when you registered with IATI. It is generated from your organisation registration agency and number.<br><br><a target='_blank' href='https://iatistandard.org/en/guidance/publishing-data/registering-and-managing-your-organisation-account/how-to-create-your-iati-organisation-identifier/'>Click here for more information</a>",
+    "hover_text": "elements/org_json_schema.organisation_identifier_hover_text",
     "help_text": "",
     "attributes": {
       "organization_country": {
         "name": "organization_country",
-        "label": "Country",
+        "label": "elements/label.country",
         "type": "select",
         "choices": "Activity/Country.json",
         "required": false,
         "criteria": "",
-        "hover_text": "Select the country that your organisation is registered in.",
+        "hover_text": "elements/org_json_schema.organisation_identifier_attributes_organization_country_hover_text",
         "help_text": ""
       },
       "organization_registration_agency": {
         "name": "organization_registration_agency",
-        "label": "Organisation Registration Agency",
+        "label": "elements/label.organisation_registration_agency",
         "type": "select",
         "choices": "Organization/OrganizationRegistrationAgency.json",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "Select an agency that your organisation is registered with. If you need help, please email: support@iatistandard.org",
+        "hover_text": "elements/org_json_schema.organisation_identifier_attributes_organization_registration_agency_hover_text",
         "help_text": ""
       },
       "registration_number": {
         "name": "registration_number",
-        "label": "Registration Number",
+        "label": "elements/label.registration_number",
         "type": "text",
         "required": true,
-        "placeholder": "for e.g. 123456",
+        "placeholder": "common/common.for_example_123456",
         "criteria": "mandatory",
-        "hover_text": "Enter your organisation's registration number with the registration agency that you have selected.",
+        "hover_text": "elements/org_json_schema.organisation_identifier_attributes_registration_number_hover_text",
         "help_text": ""
       },
       "iati-activity-identifier": {
         "name": "organisation_identifier",
-        "label": "organisation-identifier",
+        "label": "elements/label.organisation_identifier",
         "type": "text",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "The organisation identifier is a unique code for your organisation, which is generated from your organisation registration agency and number.",
+        "hover_text": "elements/org_json_schema.organisation_identifier_attributes_iati_activity_identifier_hover_text",
         "help_text": ""
       }
     },
@@ -50,21 +50,21 @@
   },
   "name": {
     "name": "name",
-    "label": "name",
+    "label": "elements/label.name",
     "multiple": false,
-    "hover_text": "The name of the organisation that data is being published about.",
+    "hover_text": "common/common.the_name_of_your_organisation_publishing_the_data",
     "show_info_in_title": true,
     "attributes": {},
     "sub_elements": {
       "narrative": {
         "name": "narrative",
-        "label": "narrative",
+        "label": "elements/label.narrative",
         "type": "text",
         "required": true,
         "criteria": "mandatory",
         "element_criteria": "mandatory",
         "add_more": true,
-        "hover_text": "Enter the organisation's name. This can be repeated in multiple languages.",
+        "hover_text": "elements/org_json_schema.name_sub_elements_narrative_hover_text",
         "help_text": "",
         "attr": {
           "row": 4
@@ -72,15 +72,15 @@
         "attributes": {
           "lang": {
             "name": "language",
-            "label": "language",
+            "label": "elements/label.language",
             "type": "select",
             "multiSelect": false,
             "choices": "Activity/Language.json",
-            "placeholder": "Select language",
+            "placeholder": "common/common.select_language",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "If no language is selected, your default language is assumed."
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -89,57 +89,57 @@
   },
   "reporting_org": {
     "name": "reporting_org",
-    "label": "reporting organisation",
+    "label": "elements/label.reporting_org",
     "form_has_borders": true,
     "label_has_borders": true,
     "add_more_has_borders": true,
-    "hover_text": "The organisation that is publishing data. If a primary reporter, the organisation is publishing data about itself. If a secondary reporter, it is publishing on the activities of another organisation. <br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/reporting-org/'>Click here for more information</a>",
+    "hover_text": "elements/org_json_schema.reporting_org_hover_text",
     "help_text": "",
     "add_more": false,
     "attributes": {
       "ref": {
         "name": "ref",
-        "label": "reference",
+        "label": "elements/label.reference",
         "type": "text",
-        "placeholder": "Type reference",
+        "placeholder": "common/common.type_reference",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "Provide your organisation's IATI identifier. This was entered when you registered with IATI.",
+        "hover_text": "common/common.provide_your_organisations_iati_identifier",
         "help_text": ""
       },
       "type": {
         "name": "type",
-        "label": "type",
+        "label": "elements/label.type",
         "type": "select",
         "multiSelect": false,
         "choices": "Organization/OrganizationType.json",
-        "placeholder": "Select type",
+        "placeholder": "common/common.select_type",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "Select the type that best describes your organisation.",
+        "hover_text": "common/common.select_the_type_that_best_describes_your_organisation",
         "help_text": ""
       },
       "secondary_reporter": {
         "name": "secondary_reporter",
-        "label": "secondary-reporter",
+        "label": "elements/label.secondary_reporter",
         "type": "select",
         "choices": {
           "1": "True",
           "0": "False"
         },
-        "placeholder": "Select secondary-reporter",
+        "placeholder": "common/common.select_an_option",
         "required": false,
         "criteria": "",
-        "hover_text": "If you are publishing data about your own organisation, select 'False'. If you are publishing data about another organisation, and are not officially assigned to report on its behalf, select 'True'.",
+        "hover_text": "common/common.if_you_are_publishing_data_about_your_own_organisation",
         "help_text": ""
       }
     },
     "sub_elements": {
       "narrative": {
         "name": "narrative",
-        "label": "name",
+        "label": "elements/label.name",
         "type": "textarea",
-        "placeholder": "Type name",
+        "placeholder": "common/common.type_name",
         "required": true,
         "criteria": "mandatory",
         "element_criteria": "mandatory",
@@ -147,20 +147,20 @@
         "attr": {
           "row": 4
         },
-        "hover_text": "Enter your organisation's name. This can be repeated in multiple languages.",
+        "hover_text": "common/common.enter_your_organisations_name_this_can_be_repeated_in_multiple_language",
         "help_text": "",
         "attributes": {
           "lang": {
             "name": "language",
-            "label": "language",
+            "label": "elements/label.language",
             "type": "select",
             "multiSelect": false,
             "choices": "Activity/Language.json",
-            "placeholder": "Select language",
+            "placeholder": "common/common.select_language",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "If no language is selected, your default language is assumed."
+            "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
           }
         },
         "sub_elements": {}
@@ -169,44 +169,44 @@
   },
   "total_budget": {
     "name": "total_budget",
-    "label": "total budget",
+    "label": "elements/label.total_budget",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
     "add_more_has_borders": true,
     "do_not_repeat_button": true,
-    "hover_text": "Provide your organisation\u2019s total expected development and humanitarian spend for the current and (where possible) following three years. Budgets should preferably be entered for each three month (quarter) period. Budget time periods should not overlap or cover a period of more than twelve months. <br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/total-budget/'>Click here for more information</a>",
+    "hover_text": "elements/org_json_schema.total_budget_hover_text",
     "help_text": "",
     "attributes": {
       "status": {
         "name": "total_budget_status",
-        "label": "status",
+        "label": "elements/label.status",
         "type": "select",
         "multiselect": false,
         "choices": "Activity/BudgetStatus.json",
         "required": false,
         "criteria": "",
-        "hover_text": "Select a status that best describes this budget:<br><br>(1) <b>indicative</b> - a non-binding estimate for the described budget.<br><br>(2) <b>committed</b> - a binding agreement for the described budget.<br><br>If no status is selected, the budget is assumed to be indicative.",
+        "hover_text": "common/common.select_a_status_that_best_describes_this_budget",
         "help_text": ""
       }
     },
     "sub_elements": {
       "period_start": {
         "name": "period_start",
-        "label": "period-start",
+        "label": "elements/label.period_start",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "Enter the start date of the budget period.",
+        "hover_text": "elements/org_json_schema.total_budget_sub_elements_period_start_hover_text",
         "attributes": {
           "date": {
             "name": "date",
-            "label": "date",
+            "label": "elements/label.date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -217,20 +217,20 @@
       },
       "period_end": {
         "name": "period_end",
-        "label": "period-end",
+        "label": "elements/label.period_end",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "Enter the end date of the budget period. This cannot be greater than one year from the start date.",
+        "hover_text": "elements/org_json_schema.total_budget_sub_elements_period_end_hover_text",
         "attributes": {
           "date": {
             "name": "date",
-            "label": "date",
+            "label": "elements/label.date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -241,21 +241,21 @@
       },
       "value": {
         "name": "value",
-        "label": "value",
+        "label": "elements/label.value",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "The total value of the organisation\u2019s budget for this period.",
+        "hover_text": "elements/org_json_schema.total_budget_sub_elements_value_hover_text",
         "help_text": "",
         "attributes": {
           "amount": {
             "name": "amount",
-            "label": "value",
+            "label": "elements/label.value",
             "type": "text",
-            "placeholder": "Type value here",
+            "placeholder": "common/common.type_value_here",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -263,24 +263,24 @@
           },
           "currency": {
             "name": "currency",
-            "label": "currency",
+            "label": "elements/label.currency",
             "type": "select",
             "multiselect": false,
             "choices": "Activity/Currency.json",
-            "placeholder": "Select currency",
+            "placeholder": "common/common.select_currency",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "If no currency is selected, your default currency is assumed."
+            "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
           },
           "value_date": {
             "name": "value_date",
-            "label": "value-date",
+            "label": "elements/label.value_date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "The date used to determine the exchange rate for currency conversions.",
+            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
             "help_text": ""
           }
         },
@@ -288,42 +288,42 @@
       },
       "budget_line": {
         "name": "budget_line",
-        "label": "budget line",
+        "label": "elements/label.budget_line",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
         "add_more_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "optional_text",
-        "hover_text": "You can provide further information in budget lines. Budget lines allow the total budget to be broken down, for example, into different projects happening in the same year. The sum of budget lines does not have to equal the total budget.",
+        "hover_text": "elements/org_json_schema.total_budget_sub_elements_budget_line_hover_text",
         "help_text": "",
         "attributes": {
           "ref": {
             "name": "ref",
-            "label": "reference",
+            "label": "elements/label.reference",
             "type": "text",
-            "placeholder": "Type reference",
+            "placeholder": "common/common.type_reference",
             "required": false,
             "criteria": "",
-            "hover_text": "You can provide a reference that you use to identify this budget line in your organisation\u2019s financial reporting system.",
+            "hover_text": "elements/org_json_schema.total_budget_sub_elements_budget_line_attributes_ref_hover_text",
             "help_text": ""
           }
         },
         "sub_elements": {
           "value": {
             "name": "value",
-            "label": "value",
+            "label": "elements/label.value",
             "add_more": false,
             "form_has_borders": true,
             "label_has_borders": true,
-            "hover_text": "Provide the sub-total for this budget.",
+            "hover_text": "elements/org_json_schema.total_budget_sub_elements_budget_line_sub_elements_value_hover_text",
             "help_text": "",
             "attributes": {
               "amount": {
                 "name": "amount",
-                "label": "value",
+                "label": "elements/label.value",
                 "type": "text",
-                "placeholder": "Type value here",
+                "placeholder": "common/common.type_value_here",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
@@ -331,24 +331,24 @@
               },
               "currency": {
                 "name": "currency",
-                "label": "currency",
+                "label": "elements/label.currency",
                 "type": "select",
                 "multiselect": false,
                 "choices": "Activity/Currency.json",
                 "required": true,
                 "criteria": "",
-                "placeholder": "Select currency",
+                "placeholder": "common/common.select_currency",
                 "hover_text": "",
-                "help_text": "If no currency is selected, your default currency is assumed."
+                "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
               },
               "value_date": {
                 "name": "value_date",
-                "label": "value-date",
+                "label": "elements/label.value_date",
                 "type": "date",
-                "placeholder": "YYYY-MM-DD",
+                "placeholder": "common/common.yyyy_mm_dd",
                 "required": true,
                 "criteria": "",
-                "hover_text": "The date used to determine the exchange rate for currency conversions.",
+                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                 "help_text": ""
               }
             },
@@ -356,15 +356,15 @@
           },
           "narrative": {
             "name": "narrative",
-            "label": "narrative",
+            "label": "elements/label.narrative",
             "type": "textarea",
-            "placeholder": "Type narrative",
+            "placeholder": "common/common.enter_narrative",
             "required": true,
             "criteria": "",
             "add_more": true,
             "form_has_borders": true,
             "label_has_borders": true,
-            "hover_text": "Provide a description for this budget line.",
+            "hover_text": "elements/org_json_schema.total_budget_sub_elements_budget_line_sub_elements_narrative_hover_text",
             "help_text": "",
             "attr": {
               "row": 4
@@ -372,15 +372,15 @@
             "attributes": {
               "lang": {
                 "name": "language",
-                "label": "language",
+                "label": "elements/label.language",
                 "type": "select",
                 "multiSelect": false,
                 "choices": "Activity/Language.json",
-                "placeholder": "Select language",
+                "placeholder": "common/common.select_language",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "If no language is selected, your default language is assumed."
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -391,62 +391,62 @@
   },
   "recipient_org_budget": {
     "name": "recipient_org_budget",
-    "label": "recipient organisation budget",
+    "label": "elements/label.recipient_organisation_budget",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
     "add_more_has_borders": true,
     "do_not_repeat_button": true,
-    "hover_text": "You can provide forward-looking budgets for each institution which receives core funding from your organisation. <br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/recipient-org-budget/'>Click here for more information</a>",
+    "hover_text": "elements/org_json_schema.recipient_org_budget_hover_text",
     "help_text": "",
     "attributes": {
       "status": {
         "name": "status",
-        "label": "status",
+        "label": "elements/label.status",
         "type": "select",
         "multiselect": false,
         "choices": "Activity/BudgetStatus.json",
-        "placeholder": "Select status",
+        "placeholder": "common/common.select_status",
         "required": false,
         "criteria": "",
-        "hover_text": "Select a status that best describes this budget:<br><br>(1) <b>indicative</b> - a non-binding estimate for the described budget.<br><br>(2) <b>committed</b> - a binding agreement for the described budget.<br><br>If no status is selected, the budget is assumed to be indicative.",
+        "hover_text": "common/common.select_a_status_that_best_describes_this_budget",
         "help_text": ""
       }
     },
     "sub_elements": {
       "recipient_org": {
         "name": "recipient_org",
-        "label": "recipient organisation",
+        "label": "elements/label.recipient_organisation",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "Provide information about the organisation that will receive the funds.",
+        "hover_text": "common/common.planned_disbursement_sub_elements_receiver_org_hover_text",
         "help_text": "",
         "attributes": {
           "ref": {
             "name": "ref",
-            "label": "reference",
+            "label": "elements/label.reference",
             "type": "text",
-            "placeholder": "Type reference",
+            "placeholder": "common/common.type_reference",
             "required": false,
             "criteria": "",
-            "hover_text": "Enter the organisation\u2019s IATI organisation identifier. If you cannot provide an identifier then you must provide the name of the organisation.<br><br><a target='_blank' href='https://iatistandard.org/en/guidance/publishing-data/data-quality-and-visualisation/finding-other-organisations-identifiers/'>Click here for information on how to find other organisations' identifiers</a>. ",
+            "hover_text": "common/common.enter_the_organisations_iati_organisation_identifier",
             "help_text": ""
           }
         },
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "narrative",
+            "label": "elements/label.narrative",
             "type": "textarea",
-            "placeholder": "Type narrative",
+            "placeholder": "common/common.enter_narrative",
             "required": true,
             "criteria": "mandatory",
             "add_more": true,
-            "hover_text": "Enter the name of the organisation. This can be repeated in multiple languages.",
+            "hover_text": "common/common.enter_your_organisations_name_this_can_be_repeated_in_multiple_language",
             "help_text": "",
             "attr": {
               "row": 4
@@ -454,15 +454,15 @@
             "attributes": {
               "lang": {
                 "name": "language",
-                "label": "language",
+                "label": "elements/label.language",
                 "type": "select",
                 "multiSelect": false,
                 "choices": "Activity/Language.json",
-                "placeholder": "Select language",
+                "placeholder": "common/common.select_language",
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "If no language is selected, your default language is assumed."
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -471,20 +471,20 @@
       },
       "period_start": {
         "name": "period_start",
-        "label": "period-start",
+        "label": "elements/label.period_start",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "Enter the start date of the budget period.",
+        "hover_text": "elements/org_json_schema.total_budget_sub_elements_period_start_hover_text",
         "attributes": {
           "date": {
             "name": "date",
-            "label": "date",
+            "label": "elements/label.date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -495,20 +495,20 @@
       },
       "period_end": {
         "name": "period_end",
-        "label": "period-end",
+        "label": "elements/label.period_end",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "Enter the end date of the budget period. This cannot be greater than one year from the start date.",
+        "hover_text": "elements/org_json_schema.total_budget_sub_elements_period_end_hover_text",
         "attributes": {
           "date": {
             "name": "date",
-            "label": "date",
+            "label": "elements/label.date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -519,20 +519,20 @@
       },
       "value": {
         "name": "value",
-        "label": "value",
+        "label": "elements/label.value",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "The total amount of money budgeted for the recipient organisation during this time period.",
+        "hover_text": "elements/org_json_schema.recipient_org_budget_sub_elements_value_hover_text",
         "attributes": {
           "amount": {
             "name": "amount",
-            "label": "value",
+            "label": "elements/label.value",
             "type": "text",
-            "placeholder": "Type value here",
+            "placeholder": "common/common.type_value_here",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -540,24 +540,24 @@
           },
           "currency": {
             "name": "currency",
-            "label": "currency",
+            "label": "elements/label.currency",
             "type": "select",
             "multiselect": false,
             "choices": "Activity/Currency.json",
-            "placeholder": "Select currency",
+            "placeholder": "common/common.select_currency",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "If no currency is selected, your default currency is assumed."
+            "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
           },
           "value_date": {
             "name": "value_date",
-            "label": "value-date",
+            "label": "elements/label.value_date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "The date used to determine the exchange rate for currency conversions.",
+            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
             "help_text": ""
           }
         },
@@ -565,41 +565,41 @@
       },
       "budget_line": {
         "name": "budget_line",
-        "label": "budget line",
+        "label": "elements/label.budget_line",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
         "add_more_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "optional_text",
-        "hover_text": "You can provide further information in budget lines. Budget lines allow the recipient organisation budget to be broken down, for example, into different projects happening in the same year. The sum of budget lines does not have to equal the total recipient organisation budget.",
+        "hover_text": "elements/org_json_schema.recipient_org_budget_sub_elements_budget_line_hover_text",
         "help_text": "",
         "attributes": {
           "ref": {
             "name": "ref",
-            "label": "reference",
+            "label": "elements/label.reference",
             "type": "text",
-            "placeholder": "Type reference",
+            "placeholder": "common/common.type_reference",
             "required": false,
             "criteria": "",
-            "hover_text": "You can provide a reference that you use to identify this budget line in your organisation\u2019s financial reporting system.",
+            "hover_text": "elements/org_json_schema.total_budget_sub_elements_budget_line_attributes_ref_hover_text",
             "help_text": ""
           }
         },
         "sub_elements": {
           "value": {
             "name": "value",
-            "label": "value",
+            "label": "elements/label.value",
             "add_more": false,
             "form_has_borders": true,
             "label_has_borders": true,
-            "hover_text": "Provide the sub-total for this budget.",
+            "hover_text": "elements/org_json_schema.total_budget_sub_elements_budget_line_sub_elements_value_hover_text",
             "attributes": {
               "amount": {
                 "name": "amount",
-                "label": "value",
+                "label": "elements/label.value",
                 "type": "text",
-                "placeholder": "Type value here",
+                "placeholder": "common/common.type_value_here",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
@@ -607,24 +607,24 @@
               },
               "currency": {
                 "name": "currency",
-                "label": "currency",
+                "label": "elements/label.currency",
                 "type": "select",
                 "multiselect": false,
                 "choices": "Activity/Currency.json",
-                "placeholder": "Select currency",
+                "placeholder": "common/common.select_currency",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "If no currency is selected, your default currency is assumed."
+                "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
               },
               "value_date": {
                 "name": "value_date",
-                "label": "value-date",
+                "label": "elements/label.value_date",
                 "type": "date",
-                "placeholder": "YYYY-MM-DD",
+                "placeholder": "common/common.yyyy_mm_dd",
                 "required": true,
                 "criteria": "",
-                "hover_text": "The date used to determine the exchange rate for currency conversions.",
+                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                 "help_text": ""
               }
             },
@@ -632,15 +632,15 @@
           },
           "narrative": {
             "name": "narrative",
-            "label": "narrative",
+            "label": "elements/label.narrative",
             "type": "textarea",
-            "placeholder": "Type narrative",
+            "placeholder": "common/common.enter_narrative",
             "required": true,
             "criteria": "",
             "add_more": true,
             "form_has_borders": true,
             "label_has_borders": true,
-            "hover_text": "Provide a description for this budget line.",
+            "hover_text": "elements/org_json_schema.total_budget_sub_elements_budget_line_sub_elements_narrative_hover_text",
             "help_text": "",
             "attr": {
               "row": 4
@@ -648,15 +648,15 @@
             "attributes": {
               "lang": {
                 "name": "language",
-                "label": "language",
+                "label": "elements/label.language",
                 "type": "select",
                 "multiSelect": false,
                 "choices": "Activity/Language.json",
-                "placeholder": "Select language",
+                "placeholder": "common/common.select_language",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "If no language is selected, your default language is assumed."
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -667,32 +667,32 @@
   },
   "recipient_region_budget": {
     "name": "recipient_region_budget",
-    "label": "recipient region budget",
+    "label": "elements/label.recipient_region_budget",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
     "add_more_has_borders": true,
     "do_not_repeat_button": true,
-    "hover_text": "You can provide forward-looking budgets for particular regions that your organisation operates in. These should be in addition to, or instead of, country-specific budgets. <br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/recipient-region-budget/'>Click here for more information</a>",
+    "hover_text": "elements/org_json_schema.recipient_region_budget_hover_text",
     "help_text": "",
     "attributes": {
       "status": {
         "name": "status",
-        "label": "status",
+        "label": "elements/label.status",
         "type": "select",
         "multiselect": false,
         "choices": "Activity/BudgetStatus.json",
-        "placeholder": "Select status",
+        "placeholder": "common/common.select_status",
         "required": false,
         "criteria": "",
-        "hover_text": "Select a status that best describes this budget:<br><br>(1) <b>indicative</b> - a non-binding estimate for the described budget.<br><br>(2) <b>committed</b> - a binding agreement for the described budget.<br><br>If no status is selected, the budget is assumed to be indicative.",
+        "hover_text": "common/common.select_a_status_that_best_describes_this_budget",
         "help_text": ""
       }
     },
     "sub_elements": {
       "recipient_region": {
         "name": "recipient_region",
-        "label": "recipient region",
+        "label": "elements/label.recipient_region",
         "criteria": "mandatory",
         "add_more": false,
         "form_has_borders": true,
@@ -700,80 +700,80 @@
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "The geographic region where funds have been allocated.",
+        "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_recipient_region_hover_text",
         "attributes": {
           "vocabulary": {
             "name": "region_vocabulary",
-            "label": "vocabulary",
+            "label": "elements/label.vocabulary",
             "type": "select",
             "multiselect": false,
             "choices": "Activity/RegionVocabulary.json",
-            "placeholder": "Select vocabulary",
+            "placeholder": "common/common.select_an_option",
             "required": false,
             "criteria": "",
-            "hover_text": "You can select regions from the 'OECD DAC', 'UN' or your own internal codelist. IATI recommends that you use the 'OECD DAC' codelist. If you do not choose an option, then the codelist 'OECD DAC' is assumed.<br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/codelists/regionvocabulary/'>Click here for more information on these codelists</a>.",
+            "hover_text": "common/common.you_can_select_regions_from_the_oecd_dac_un_or_your_own_internal_codelist",
             "help_text": ""
           },
           "oecd_region_code": {
             "name": "region_code",
-            "label": "code",
+            "label": "elements/label.code",
             "type": "select",
             "multiselect": false,
             "choices": "Activity/Region.json",
-            "placeholder": "Select code",
+            "placeholder": "common/common.select_code",
             "required": false,
             "criteria": "",
-            "hover_text": "Select the region benefitting from this budget. If vocabulary \u201899 - Reporting Organisation' has been selected, enter a code from your own region list.",
+            "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_recipient_region_attributes_oecd_region_code_hover_text",
             "help_text": ""
           },
           "region_code": {
             "name": "code",
-            "label": "code",
+            "label": "elements/label.code",
             "type": "text",
-            "placeholder": "Select code",
+            "placeholder": "common/common.select_code",
             "required": false,
             "criteria": "",
             "hidden": true,
-            "hover_text": "Select the region benefitting from this budget. If vocabulary \u201899 - Reporting Organisation' has been selected, enter a code from your own region list.",
+            "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_recipient_region_attributes_oecd_region_code_hover_text",
             "help_text": ""
           },
           "vocabulary-uri": {
             "name": "vocabulary_uri",
-            "label": "vocabulary-uri",
+            "label": "elements/label.vocabulary_uri_block",
             "type": "text",
-            "placeholder": "Type vocabulary-uri",
+            "placeholder": "common/common.enter_uri",
             "required": false,
             "criteria": "",
-            "hover_text": "If you have selected the vocabulary \u201899 - Reporting Organisation\u2019, provide the URI where this internal list is defined.",
+            "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_recipient_region_attributes_vocabulary_uri_hover_text",
             "help_text": ""
           }
         },
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "narrative",
+            "label": "elements/label.narrative",
             "type": "textarea",
-            "placeholder": "Type narrative",
+            "placeholder": "common/common.enter_narrative",
             "required": false,
             "criteria": "",
             "add_more": true,
             "attr": {
               "row": 4
             },
-            "hover_text": "Add an optional name or description of the region benefitting from the activity.",
+            "hover_text": "common/common.add_an_optional_name_or_description_of_the_region_benefitting_from_the_activity",
             "help_text": "",
             "attributes": {
               "lang": {
                 "name": "language",
-                "label": "language",
+                "label": "elements/label.language",
                 "type": "select",
                 "multiSelect": false,
                 "choices": "Activity/Language.json",
-                "placeholder": "Select language",
+                "placeholder": "common/common.select_language",
                 "required": false,
                 "criteria": "recommended",
                 "hover_text": "",
-                "help_text": "If no language is selected, your default language is assumed."
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -782,20 +782,20 @@
       },
       "period_start": {
         "name": "period_start",
-        "label": "period-start",
+        "label": "elements/label.period_start",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "Enter the start date of the budget period.",
+        "hover_text": "elements/org_json_schema.total_budget_sub_elements_period_start_hover_text",
         "attributes": {
           "date": {
             "name": "date",
-            "label": "date",
+            "label": "elements/label.date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -806,20 +806,20 @@
       },
       "period_end": {
         "name": "period_end",
-        "label": "period-end",
+        "label": "elements/label.period_end",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "Enter the end date of the budget period. This must not be greater than one year from the start date.",
+        "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_period_end_hover_text",
         "attributes": {
           "date": {
             "name": "date",
-            "label": "date",
+            "label": "elements/label.date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -830,21 +830,21 @@
       },
       "value": {
         "name": "value",
-        "label": "value",
+        "label": "elements/label.value",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "The total amount of money budgeted for this recipient region during the time period.",
+        "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_value_hover_text",
         "help_text": "",
         "attributes": {
           "amount": {
             "name": "amount",
-            "label": "value",
+            "label": "elements/label.value",
             "type": "text",
-            "placeholder": "Type value here",
+            "placeholder": "common/common.type_value_here",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -852,24 +852,24 @@
           },
           "currency": {
             "name": "currency",
-            "label": "currency",
+            "label": "elements/label.currency",
             "type": "select",
             "multiselect": false,
             "choices": "Activity/Currency.json",
-            "placeholder": "Select currency",
+            "placeholder": "common/common.select_currency",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "If no currency is selected, your default currency is assumed."
+            "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
           },
           "value_date": {
             "name": "value_date",
-            "label": "value-date",
+            "label": "elements/label.value_date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "The date used to determine the exchange rate for currency conversions.",
+            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
             "help_text": ""
           }
         },
@@ -877,42 +877,42 @@
       },
       "budget_line": {
         "name": "budget_line",
-        "label": "budget line",
+        "label": "elements/label.budget_line",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
         "add_more_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "optional_text",
-        "hover_text": "You can provide further information in budget lines. Budget lines allow the recipient region budget to be broken down, for example, into different projects happening in the same year. The sum of budget lines does not have to equal the total recipient region budget.",
+        "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_budget_line_hover_text",
         "help_text": "",
         "attributes": {
           "ref": {
             "name": "ref",
-            "label": "reference",
+            "label": "elements/label.reference",
             "type": "text",
-            "placeholder": "Type reference",
+            "placeholder": "common/common.type_reference",
             "required": false,
             "criteria": "",
-            "hover_text": "You can provide a reference that you use to identify this budget line in your organisation\u2019s internal financial management system.",
+            "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_budget_line_attributes_ref_hover_text",
             "help_text": ""
           }
         },
         "sub_elements": {
           "value": {
             "name": "value",
-            "label": "value",
+            "label": "elements/label.value",
             "add_more": false,
             "form_has_borders": true,
             "label_has_borders": true,
-            "hover_text": "Provide the sub-total for this budget.",
+            "hover_text": "elements/org_json_schema.total_budget_sub_elements_budget_line_sub_elements_value_hover_text",
             "help_text": "",
             "attributes": {
               "amount": {
                 "name": "amount",
-                "label": "value",
+                "label": "elements/label.value",
                 "type": "text",
-                "placeholder": "Type value here",
+                "placeholder": "common/common.type_value_here",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
@@ -920,24 +920,24 @@
               },
               "currency": {
                 "name": "currency",
-                "label": "currency",
+                "label": "elements/label.currency",
                 "type": "select",
                 "multiselect": false,
                 "choices": "Activity/Currency.json",
-                "placeholder": "Select currency",
+                "placeholder": "common/common.select_currency",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "If no currency is selected, your default currency is assumed."
+                "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
               },
               "value_date": {
                 "name": "value_date",
-                "label": "value-date",
+                "label": "elements/label.value_date",
                 "type": "date",
-                "placeholder": "YYYY-MM-DD",
+                "placeholder": "common/common.yyyy_mm_dd",
                 "required": true,
                 "criteria": "",
-                "hover_text": "The date used to determine the exchange rate for currency conversions.",
+                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                 "help_text": ""
               }
             },
@@ -945,13 +945,13 @@
           },
           "narrative": {
             "name": "narrative",
-            "label": "narrative",
+            "label": "elements/label.narrative",
             "type": "textarea",
-            "placeholder": "Type narrative",
+            "placeholder": "common/common.enter_narrative",
             "required": true,
             "criteria": "",
             "add_more": true,
-            "hover_text": "Provide a description for this budget line.",
+            "hover_text": "elements/org_json_schema.total_budget_sub_elements_budget_line_sub_elements_narrative_hover_text",
             "help_text": "",
             "attr": {
               "row": 4
@@ -959,15 +959,15 @@
             "attributes": {
               "lang": {
                 "name": "language",
-                "label": "language",
+                "label": "elements/label.language",
                 "type": "select",
                 "multiSelect": false,
                 "choices": "Activity/Language.json",
-                "placeholder": "Select language",
+                "placeholder": "common/common.select_language",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "If no language is selected, your default language is assumed."
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -978,32 +978,32 @@
   },
   "recipient_country_budget": {
     "name": "recipient_country_budget",
-    "label": "recipient country budget",
+    "label": "elements/label.recipient_country_budget",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
     "add_more_has_borders": true,
     "do_not_repeat_button": true,
-    "hover_text": "You can provide forward-looking budgets for particular countries that your organisation operates in. <br><br><a target=\u2019_blank\u2019 href=\u2019https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/recipient-country-budget/\u2019>Click here for more information</a>",
+    "hover_text": "elements/org_json_schema.recipient_country_budget_hover_text",
     "help_text": "",
     "attributes": {
       "status": {
         "name": "status",
-        "label": "status",
+        "label": "elements/label.status",
         "type": "select",
         "multiselect": false,
         "choices": "Activity/BudgetStatus.json",
-        "placeholder": "Select status",
+        "placeholder": "common/common.select_status",
         "required": false,
         "criteria": "",
-        "hover_text": "Select a status that best describes this budget:<br><br>(1) <b>indicative</b> - a non-binding estimate for the described budget.<br><br>(2) <b>committed</b> - a binding agreement for the described budget.<br><br>If no status is selected, the budget is assumed to be indicative.",
+        "hover_text": "common/common.select_a_status_that_best_describes_this_budget",
         "help_text": ""
       }
     },
     "sub_elements": {
       "recipient_country": {
         "name": "recipient_country",
-        "label": "recipient country",
+        "label": "elements/label.recipient_country",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -1011,47 +1011,47 @@
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "The country where funds have been allocated.",
+        "hover_text": "elements/org_json_schema.recipient_country_budget_sub_elements_recipient_country_hover_text",
         "attributes": {
           "code": {
             "name": "code",
-            "label": "code",
+            "label": "elements/label.code",
             "type": "select",
             "multiselect": false,
             "choices": "Activity/Country.json",
-            "placeholder": "Select code",
+            "placeholder": "common/common.select_code",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "Select the country benefitting from this budget. ",
+            "hover_text": "elements/org_json_schema.recipient_country_budget_sub_elements_recipient_country_attributes_code_hover_text",
             "help_text": ""
           }
         },
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "narrative",
+            "label": "elements/label.narrative",
             "type": "textarea",
-            "placeholder": "Type narrative",
+            "placeholder": "common/common.enter_narrative",
             "required": false,
             "criteria": "",
             "add_more": true,
             "attr": {
               "row": 4
             },
-            "hover_text": "Add an optional name or description of the country benefitting from the activity.",
+            "hover_text": "common/common.add_an_optional_name_or_description_of_the_country_benefitting_from_the_activity",
             "help_text": "",
             "attributes": {
               "lang": {
                 "name": "language",
-                "label": "language",
+                "label": "elements/label.language",
                 "type": "select",
                 "multiSelect": false,
                 "choices": "Activity/Language.json",
-                "placeholder": "Select language",
+                "placeholder": "common/common.select_language",
                 "required": false,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "If no language is selected, your default language is assumed."
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1060,20 +1060,20 @@
       },
       "period_start": {
         "name": "period_start",
-        "label": "period-start",
+        "label": "elements/label.period_start",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "Enter the start date of the budget period.",
+        "hover_text": "elements/org_json_schema.total_budget_sub_elements_period_start_hover_text",
         "attributes": {
           "date": {
             "name": "date",
-            "label": "date",
+            "label": "elements/label.date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -1084,20 +1084,20 @@
       },
       "period_end": {
         "name": "period_end",
-        "label": "period-end",
+        "label": "elements/label.period_end",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "Enter the end date of the budget period. This must not be greater than one year from the start date.",
+        "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_period_end_hover_text",
         "attributes": {
           "date": {
             "name": "date",
-            "label": "date",
+            "label": "elements/label.date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -1108,21 +1108,21 @@
       },
       "value": {
         "name": "value",
-        "label": "value",
+        "label": "elements/label.value",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "The total amount of money budgeted for this recipient country during the time period.",
+        "hover_text": "elements/org_json_schema.recipient_country_budget_sub_elements_value_hover_text",
         "help_text": "",
         "attributes": {
           "amount": {
             "name": "amount",
-            "label": "value",
+            "label": "elements/label.value",
             "type": "text",
-            "placeholder": "Type value here",
+            "placeholder": "common/common.type_value_here",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -1130,24 +1130,24 @@
           },
           "currency": {
             "name": "currency",
-            "label": "currency",
+            "label": "elements/label.currency",
             "type": "select",
             "multiselect": false,
             "choices": "Activity/Currency.json",
-            "placeholder": "Select currency",
+            "placeholder": "common/common.select_currency",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "If no currency is selected, your default currency is assumed."
+            "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
           },
           "value_date": {
             "name": "value_date",
-            "label": "value-date",
+            "label": "elements/label.value_date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "The date used to determine the exchange rate for currency conversions.",
+            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
             "help_text": ""
           }
         },
@@ -1155,42 +1155,42 @@
       },
       "budget_line": {
         "name": "budget_line",
-        "label": "budget line",
+        "label": "elements/label.budget_line",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
         "add_more_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "optional_text",
-        "hover_text": "You can provide further information in budget lines. Budget lines allow the recipient country budget to be broken down, for example, into different projects happening in the same year. The sum of budget lines does not have to equal the total recipient country budget.",
+        "hover_text": "elements/org_json_schema.recipient_country_budget_sub_elements_budget_line_hover_text",
         "help_text": "",
         "attributes": {
           "ref": {
             "name": "ref",
-            "label": "reference",
+            "label": "elements/label.reference",
             "type": "text",
-            "placeholder": "Type reference",
+            "placeholder": "common/common.type_reference",
             "required": false,
             "criteria": "",
-            "hover_text": "You can provide a reference that you use to identify this budget line in your organisation\u2019s internal financial management system.",
+            "hover_text": "elements/org_json_schema.recipient_region_budget_sub_elements_budget_line_attributes_ref_hover_text",
             "help_text": ""
           }
         },
         "sub_elements": {
           "value": {
             "name": "value",
-            "label": "value",
+            "label": "elements/label.value",
             "add_more": false,
             "form_has_borders": true,
             "label_has_borders": true,
-            "hover_text": "Provide the sub-total for this budget.",
+            "hover_text": "elements/org_json_schema.total_budget_sub_elements_budget_line_sub_elements_value_hover_text",
             "help_text": "",
             "attributes": {
               "amount": {
                 "name": "amount",
-                "label": "value",
+                "label": "elements/label.value",
                 "type": "text",
-                "placeholder": "Type value here",
+                "placeholder": "common/common.type_value_here",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
@@ -1198,24 +1198,24 @@
               },
               "currency": {
                 "name": "currency",
-                "label": "currency",
+                "label": "elements/label.currency",
                 "type": "select",
                 "multiselect": false,
                 "choices": "Activity/Currency.json",
-                "placeholder": "Select currency",
+                "placeholder": "common/common.select_currency",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "If no currency is selected, your default currency is assumed."
+                "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
               },
               "value_date": {
                 "name": "value_date",
-                "label": "value-date",
+                "label": "elements/label.value_date",
                 "type": "date",
-                "placeholder": "YYYY-MM-DD",
+                "placeholder": "common/common.yyyy_mm_dd",
                 "required": true,
                 "criteria": "",
-                "hover_text": "The date used to determine the exchange rate for currency conversions.",
+                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                 "help_text": ""
               }
             },
@@ -1223,13 +1223,13 @@
           },
           "narrative": {
             "name": "narrative",
-            "label": "narrative",
+            "label": "elements/label.narrative",
             "type": "textarea",
-            "placeholder": "Type narrative",
+            "placeholder": "common/common.select_language",
             "required": true,
             "criteria": "",
             "add_more": true,
-            "hover_text": "Provide a description for this budget line.",
+            "hover_text": "elements/org_json_schema.total_budget_sub_elements_budget_line_sub_elements_narrative_hover_text",
             "help_text": "",
             "attr": {
               "row": 4
@@ -1237,15 +1237,15 @@
             "attributes": {
               "lang": {
                 "name": "language",
-                "label": "language",
+                "label": "elements/label.language",
                 "type": "select",
                 "multiSelect": false,
                 "choices": "Activity/Language.json",
-                "placeholder": "Select language",
+                "placeholder": "common/common.select_language",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "If no language is selected, your default language is assumed."
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1256,31 +1256,31 @@
   },
   "total_expenditure": {
     "name": "total_expenditure",
-    "label": "total expenditure",
+    "label": "elements/label.total_expenditure",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
     "add_more_has_borders": true,
-    "hover_text": "You can provide information on your organisation's past spending on humanitarian and development work. This is known as \u2018total expenditure\u2019 and IATI recommends, where possible, that your organisation reports its total expenditure for each of the past three years. An expenditure period must not be longer than one year. <br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/total-expenditure/'>Click here for more information</a>",
+    "hover_text": "elements/org_json_schema.total_expenditure_hover_text",
     "help_text": "",
     "attributes": {},
     "sub_elements": {
       "period_start": {
         "name": "period_start",
-        "label": "period-start",
+        "label": "elements/label.period_start",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "Enter the start date of the expenditure period.",
+        "hover_text": "elements/org_json_schema.total_expenditure_sub_elements_period_start_hover_text",
         "attributes": {
           "date": {
             "name": "date",
-            "label": "date",
+            "label": "elements/label.date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -1291,20 +1291,20 @@
       },
       "period_end": {
         "name": "period_end",
-        "label": "period-end",
+        "label": "elements/label.period_end",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "Enter the end date of the expenditure period. This must not be greater than one year from the start date.",
+        "hover_text": "elements/org_json_schema.total_expenditure_sub_elements_period_end_hover_text",
         "attributes": {
           "date": {
             "name": "date",
-            "label": "date",
+            "label": "elements/label.date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -1315,21 +1315,21 @@
       },
       "value": {
         "name": "value",
-        "label": "value",
+        "label": "elements/label.value",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "The total value of your organisation\u2019s humanitarian and development expenditure for this period.",
+        "hover_text": "elements/org_json_schema.total_expenditure_sub_elements_value_hover_text",
         "help_text": "",
         "attributes": {
           "amount": {
             "name": "amount",
-            "label": "value",
+            "label": "elements/label.value",
             "type": "text",
-            "placeholder": "Type value here",
+            "placeholder": "common/common.type_value_here",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
@@ -1337,24 +1337,24 @@
           },
           "currency": {
             "name": "currency",
-            "label": "currency",
+            "label": "elements/label.currency",
             "type": "select",
             "multiselect": false,
             "choices": "Activity/Currency.json",
-            "placeholder": "Select currency",
+            "placeholder": "common/common.select_currency",
             "required": true,
             "criteria": "mandatory",
             "hover_text": "",
-            "help_text": "If no currency is selected, your default currency is assumed."
+            "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
           },
           "value_date": {
             "name": "value_date",
-            "label": "value-date",
+            "label": "elements/label.value_date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "The date used to determine the exchange rate for currency conversions.",
+            "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
             "help_text": ""
           }
         },
@@ -1362,42 +1362,42 @@
       },
       "expense_line": {
         "name": "expense_line",
-        "label": "expense line",
+        "label": "elements/label.expense_line",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
         "add_more_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "optional_text",
-        "hover_text": "You can provide further information by breaking your organisation\u2019s expenditure down into expense line(s). The sum of expense lines does not have to equal the total value of expenditure.",
+        "hover_text": "elements/org_json_schema.total_expenditure_sub_elements_expense_line_hover_text",
         "help_text": "",
         "attributes": {
           "ref": {
             "name": "ref",
-            "label": "reference",
+            "label": "elements/label.reference",
             "type": "text",
-            "placeholder": "Type reference",
+            "placeholder": "common/common.type_reference",
             "required": false,
             "criteria": "",
-            "hover_text": "You can provide a reference that you use to identify this expense in your organisation\u2019s financial reporting system.",
+            "hover_text": "elements/org_json_schema.total_expenditure_sub_elements_expense_line_attributes_ref_hover_text",
             "help_text": ""
           }
         },
         "sub_elements": {
           "value": {
             "name": "value",
-            "label": "value",
+            "label": "elements/label.value",
             "add_more": false,
             "form_has_borders": true,
             "label_has_borders": true,
-            "hover_text": "Provide the sub-total for this expense line.",
+            "hover_text": "elements/org_json_schema.total_expenditure_sub_elements_expense_line_sub_elements_value_hover_text",
             "help_text": "",
             "attributes": {
               "amount": {
                 "name": "amount",
-                "label": "value",
+                "label": "elements/label.value",
                 "type": "text",
-                "placeholder": "Type value here",
+                "placeholder": "common/common.type_value_here",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
@@ -1405,24 +1405,24 @@
               },
               "currency": {
                 "name": "currency",
-                "label": "currency",
+                "label": "elements/label.currency",
                 "type": "select",
                 "multiselect": false,
                 "choices": "Activity/Currency.json",
-                "placeholder": "Select currency",
+                "placeholder": "common/common.select_currency",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "If no currency is selected, your default currency is assumed."
+                "help_text": "common/common.if_no_currency_is_selected_your_default_currency_is_assumed"
               },
               "value_date": {
                 "name": "value_date",
-                "label": "value-date",
+                "label": "elements/label.value_date",
                 "type": "date",
-                "placeholder": "YYYY-MM-DD",
+                "placeholder": "common/common.yyyy_mm_dd",
                 "required": true,
                 "criteria": "",
-                "hover_text": "The date used to determine the exchange rate for currency conversions.",
+                "hover_text": "common/common.the_date_used_to_determine_the_exchange_rate_for_currency_conversions",
                 "help_text": ""
               }
             },
@@ -1430,13 +1430,13 @@
           },
           "narrative": {
             "name": "narrative",
-            "label": "narrative",
+            "label": "elements/label.narrative",
             "type": "textarea",
-            "placeholder": "Type narrative",
+            "placeholder": "common/common.enter_narrative",
             "required": true,
             "criteria": "",
             "add_more": true,
-            "hover_text": "Provide a description for this expense line.",
+            "hover_text": "elements/org_json_schema.total_expenditure_sub_elements_expense_line_sub_elements_narrative_hover_text",
             "help_text": "",
             "attr": {
               "row": 4
@@ -1444,15 +1444,15 @@
             "attributes": {
               "lang": {
                 "name": "language",
-                "label": "language",
+                "label": "elements/label.language",
                 "type": "select",
                 "multiSelect": false,
                 "choices": "Activity/Language.json",
-                "placeholder": "Select language",
+                "placeholder": "common/common.select_language",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "If no language is selected, your default language is assumed."
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1463,76 +1463,76 @@
   },
   "document_link": {
     "name": "document_link",
-    "label": "document-link",
+    "label": "elements/label.document_link",
     "add_more": true,
     "form_has_borders": true,
     "label_has_borders": true,
     "add_more_has_borders": true,
     "do_not_repeat_button": true,
-    "hover_text": "A link to an online, publicly accessible, web page or document. For example, you could provide a link to your organisation\u2019s annual report or a work plan for a particular country. Create additional document elements for each separate document. <br><br><a target='_blank' href='https://iatistandard.org/en/iati-standard/203/organisation-standard/iati-organisations/iati-organisation/document-link/'>Click here for more information</a>",
+    "hover_text": "elements/org_json_schema.document_link_hover_text",
     "help_text": "",
     "attributes": {
       "url": {
         "name": "url",
-        "label": "url",
+        "label": "elements/label.url",
         "type": "text",
-        "placeholder": "Select url",
+        "placeholder": "common/common.type_url",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "A link to where the document is available online - e.g. 'http://www.example.org/doc.odt'",
+        "hover_text": "common/common.a_link_to_where_the_document_is_available_online",
         "help_text": ""
       },
       "format": {
         "name": "format",
-        "label": "format",
+        "label": "elements/label.format",
         "type": "select",
-        "placeholder": "Select code",
+        "placeholder": "common/common.select_code",
         "multiselect": false,
         "choices": "Activity/FileFormat.json",
         "required": true,
         "criteria": "mandatory",
-        "hover_text": "Select the document file format from the drop-down list. For example, a PDF file could be 'application/pdf'.",
+        "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
         "help_text": ""
       }
     },
     "sub_elements": {
       "title": {
         "name": "title",
-        "label": "title",
+        "label": "elements/label.title",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
-        "hover_text": "A short title for the document.",
+        "hover_text": "common/common.a_short_title_for_the_document",
         "attributes": {},
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "narrative",
+            "label": "elements/label.narrative",
             "type": "textarea",
-            "placeholder": "Type narrative",
+            "placeholder": "common/common.enter_narrative",
             "required": true,
             "criteria": "mandatory",
             "add_more": true,
             "attr": {
               "row": 4
             },
-            "hover_text": "Provide a short title for the document or webpage.",
+            "hover_text": "common/common.provide_a_short_title_for_the_document_or_webpage",
             "help_text": "",
             "attributes": {
               "lang": {
                 "name": "language",
-                "label": "language",
+                "label": "elements/label.language",
                 "type": "select",
                 "multiSelect": false,
                 "choices": "Activity/Language.json",
-                "placeholder": "Select language",
+                "placeholder": "common/common.select_language",
                 "required": true,
                 "criteria": "mandatory",
                 "hover_text": "",
-                "help_text": "If no language is selected, your default language is assumed."
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1541,7 +1541,7 @@
       },
       "category": {
         "name": "category",
-        "label": "Category",
+        "label": "elements/label.category",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
@@ -1549,19 +1549,19 @@
         "label_indicator": "required_icon",
         "element_criteria": "mandatory",
         "wrapper_collection": false,
-        "hover_text": "A category that describes the type of document. You can select multiple categories.",
+        "hover_text": "common/common.a_category_that_describes_the_type_of_document_you_can_select_multiple_categories",
         "help_text": "",
         "attributes": {
           "code": {
             "name": "code",
-            "label": "code",
+            "label": "elements/label.code",
             "type": "select",
             "multiSelect": false,
             "choices": "Organization/DocumentCategory.json",
-            "placeholder": "Select code",
+            "placeholder": "common/common.select_code",
             "required": true,
             "criteria": "mandatory",
-            "hover_text": "Select a category from the drop-down menu that describes what your document is.",
+            "hover_text": "common/common.select_a_category_from_the_drop_down_menu_that_describes_what_your_document_is",
             "help_text": ""
           }
         },
@@ -1569,40 +1569,40 @@
       },
       "description": {
         "name": "description",
-        "label": "Description",
+        "label": "elements/label.description",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "optional_text",
         "attributes": {},
-        "hover_text": "A description of the document contents, or guidance on where to access relevant information.",
+        "hover_text": "common/common.a_description_of_the_document_contents",
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "narrative",
+            "label": "elements/label.narrative",
             "type": "textarea",
-            "placeholder": "Type narrative",
+            "placeholder": "common/common.enter_narrative",
             "required": true,
             "criteria": "",
             "add_more": true,
             "attr": {
               "row": 4
             },
-            "hover_text": "Provide a short description of the document or webpage, including any instructions on where to find relevant information.",
+            "hover_text": "common/common.provide_a_short_description_of_the_document",
             "help_text": "",
             "attributes": {
               "lang": {
                 "name": "language",
-                "label": "language",
+                "label": "elements/label.language",
                 "type": "select",
                 "multiSelect": false,
                 "choices": "Activity/Language.json",
-                "placeholder": "Select language",
+                "placeholder": "common/common.select_language",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "If no language is selected, your default language is assumed."
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}
@@ -1611,22 +1611,22 @@
       },
       "language": {
         "name": "language",
-        "label": "Language",
+        "label": "elements/label.language",
         "add_more": true,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "optional_text",
         "wrapper_collection": false,
-        "hover_text": "Select the language that the document is written in. This can be repeated to describe multilingual documents.",
+        "hover_text": "common/common.select_the_language_that_the_document_is_written_in",
         "attributes": {
           "code": {
             "name": "language",
-            "label": "code",
+            "label": "elements/label.code",
             "type": "select",
             "multiSelect": false,
             "choices": "Activity/Language.json",
-            "placeholder": "Select code",
+            "placeholder": "common/common.select_code",
             "required": true,
             "criteria": "",
             "hover_text": "",
@@ -1637,22 +1637,22 @@
       },
       "document_date": {
         "name": "document_date",
-        "label": "document date",
+        "label": "elements/label.document_date",
         "add_more": false,
         "form_has_borders": true,
         "label_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "optional_text",
-        "hover_text": "The publication date of the document or webpage.",
+        "hover_text": "common/common.the_publication_date_of_the_document_or_webpage",
         "attributes": {
           "date": {
             "name": "date",
-            "label": "date",
+            "label": "elements/label.date",
             "type": "date",
-            "placeholder": "YYYY-MM-DD",
+            "placeholder": "common/common.yyyy_mm_dd",
             "required": true,
             "criteria": "",
-            "hover_text": "Provide the date of publication for the document, or the date that it was last updated.",
+            "hover_text": "common/common.provide_the_date_of_publication_for_the_document",
             "help_text": ""
           }
         },
@@ -1660,7 +1660,7 @@
       },
       "recipient_country": {
         "name": "recipient_country",
-        "label": "recipient country",
+        "label": "elements/label.recipient_country",
         "criteria": "",
         "add_more": true,
         "form_has_borders": true,
@@ -1668,48 +1668,48 @@
         "add_more_has_borders": true,
         "is_collapsable": true,
         "label_indicator": "optional_text",
-        "hover_text": "If a recipient country is the focus of this document or webpage, you can specify it here. You can state more than one country.",
+        "hover_text": "elements/org_json_schema.document_link_sub_elements_recipient_country_hover_text",
         "help_text": "",
         "attributes": {
           "code": {
             "name": "code",
-            "label": "code",
+            "label": "elements/label.code",
             "type": "select",
             "multiselect": false,
             "choices": "Activity/Country.json",
-            "placeholder": "Select code",
+            "placeholder": "common/common.select_code",
             "required": true,
             "criteria": "",
-            "hover_text": "Select the recipient country that is the focus for this document or webpage.",
+            "hover_text": "elements/org_json_schema.document_link_sub_elements_recipient_country_attributes_code_hover_text",
             "help_text": ""
           }
         },
         "sub_elements": {
           "narrative": {
             "name": "narrative",
-            "label": "narrative",
+            "label": "elements/label.narrative",
             "type": "textarea",
-            "placeholder": "Type narrative",
+            "placeholder": "common/common.enter_narrative",
             "required": true,
             "criteria": "",
             "add_more": true,
             "attr": {
               "row": 4
             },
-            "hover_text": "Add an optional name or description of the country.",
+            "hover_text": "elements/org_json_schema.document_link_sub_elements_recipient_country_sub_elements_narrative_hover_text",
             "help_text": "",
             "attributes": {
               "lang": {
                 "name": "language",
-                "label": "language",
+                "label": "elements/label.language",
                 "type": "select",
                 "multiSelect": false,
                 "choices": "Activity/Language.json",
-                "placeholder": "Select language",
+                "placeholder": "common/common.select_language",
                 "required": true,
                 "criteria": "",
                 "hover_text": "",
-                "help_text": "If no language is selected, your default language is assumed."
+                "help_text": "common/common.if_no_language_is_selected_your_default_language_is_assumed"
               }
             },
             "sub_elements": {}

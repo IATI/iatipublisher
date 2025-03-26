@@ -11,5 +11,9 @@
         :types="{{ json_encode($types) }}"
         :status="{{ json_encode($status) }}"
         :user-role="{{ json_encode($userRole) }}"
+        :translated-data='{{json_encode($translatedData)}}'
     />
 @endsection
+
+
+

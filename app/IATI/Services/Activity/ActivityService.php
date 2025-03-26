@@ -8,6 +8,7 @@ use App\Constants\CoreElements;
 use App\IATI\Models\Activity\Activity;
 use App\IATI\Repositories\Activity\ActivityRepository;
 use App\IATI\Repositories\Organization\OrganizationRepository;
+use App\IATI\Services\ElementCompleteService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -79,6 +80,7 @@ class ActivityService
      */
     public function getPaginatedActivities(int $page, array $queryParams): Collection|LengthAwarePaginator
     {
+        $elementCompleteService = new ElementCompleteService();
         $activities = $this->activityRepository->getActivityForOrganization(
             Auth::user()->organization_id,
             $queryParams,
@@ -93,6 +95,7 @@ class ActivityService
             $elementStatus['reporting_org'] = $orgReportingOrgStatus;
 
             $activity->setAttribute('coreCompleted', isCoreElementCompleted($elementStatus));
+            $activity->setAttribute('core_completeness', $elementCompleteService->calculateCompletePercentage($elementStatus));
         }
 
         return $activities;

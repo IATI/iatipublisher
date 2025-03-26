@@ -10,17 +10,25 @@
       <svg-vue icon="folder" class="text-[94px]" />
     </div>
     <h5 class="mb-[5px] text-heading-5 font-bold leading-9">
-      No activity has been added yet.
+      {{
+        translatedData[
+          'activity_index.error_activity.no_activity_has_been_added_yet'
+        ]
+      }}
     </h5>
     <div class="mb-[17px] text-caption-c1 leading-5 text-n-50">
-      Click on the button below to add a new activity
+      {{
+        translatedData[
+          'activity_index.error_activity.click_on_the_button_below_to_add_a_new_activity'
+        ]
+      }}
     </div>
     <ActivityButton />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, inject, reactive } from 'vue';
 import ActivityButton from './AddActivityButton.vue';
 
 export default defineComponent({
@@ -29,11 +37,13 @@ export default defineComponent({
     ActivityButton,
   },
   setup() {
+    const translatedData = inject('translatedData') as Record<string, string>;
+
     const state = reactive({
       dismiss: true,
     });
 
-    return { state };
+    return { state, translatedData };
   },
 });
 </script>

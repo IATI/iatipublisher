@@ -5,19 +5,24 @@
     <Loader v-if="isLoaderVisible" />
     <div class="section__container">
       <div class="section__title">
-        <h2>Create IATI Publisher Account</h2>
+        <h2>
+          {{ translatedData['public.register.registered_page.heading'] }}
+        </h2>
         <p>
-          Start your IATI publishing journey by creating an account in IATI
-          Publisher
+          {{ translatedData['public.register.registered_page.start_journey'] }}
         </p>
       </div>
       <div class="section__wrapper flex justify-center">
-        <EmailVerification v-if="checkStep('3')" :email="formData['email']" />
+        <EmailVerification
+          v-if="checkStep('3')"
+          :email="formData['email']"
+          :translated-data="translatedData"
+        />
         <div v-else class="form input__field" @keyup.enter="goToNextForm">
           <aside class="mb-4 block border-b border-b-n-10 pb-4 xl:hidden">
-            <span class="text-base font-bold"
-              >Step {{ getCurrentStep() }} out of 3</span
-            >
+            <span class="text-base font-bold">
+              {{ translatedStepXOutOf3 }}
+            </span>
             <ul class="relative mt-3 text-sm text-n-40">
               <li
                 v-for="(form, key, i) in registerForm"
@@ -65,7 +70,9 @@
               <div class="flex items-center">
                 <small class="label">
                   <span class="required-icon px-1">*</span>
-                  <span>Mandatory fields</span>
+                  <span>{{
+                    translatedData['common.common.mandatory_fields']
+                  }}</span>
                 </small>
               </div>
             </div>
@@ -75,27 +82,20 @@
             >
               <p class="mb-2 flex font-bold">
                 <svg-vue class="mr-2 text-xl" icon="warning" />
-                Sorry, the information you provided doesn’t match your IATI
-                Registry information.
+                {{
+                  translatedData[
+                    'public.register.registered_page.register_section.info_doesnt_match_iati_registry'
+                  ]
+                }}
               </p>
-              <p class="ml-8 xl:mr-1">
-                Please note that if you’re an account holder in
-                <span
-                  ><a href="https://iatiregistry.org/">IATI Registry</a></span
-                >, make sure your
-                <span class="font-bold"
-                  >Publisher Name, Publisher ID and IATI Organisation ID</span
-                >
-                match your IATI Registry Information. Contact
-                <span
-                  ><a
-                    class="text-bluecoral"
-                    href="mailto:support@iatistandard.org"
-                    >support@iatistandard.org</a
-                  ></span
-                >
-                for more details.
-              </p>
+              <p
+                class="ml-8 xl:mr-1"
+                v-html="
+                  translatedData[
+                    'public.register.registered_page.register_section.make_sure_account_holder'
+                  ]
+                "
+              ></p>
             </div>
             <div class="form__content">
               <div
@@ -108,10 +108,10 @@
                 <div class="mb-2 flex items-center justify-between">
                   <label :for="field.id" class="label"
                     >{{ field['label'] }}
-                    <span v-if="field.required" class="text-salmon-40"> *</span>
+                    <span v-if="field.required" class="required-icon"> *</span>
                   </label>
                   <HoverText
-                    v-if="field.hover_text !== ''"
+                    v-if="'hover_text' in field && field.hover_text !== ''"
                     :hover-text="field.hover_text"
                     :name="field.label"
                   />
@@ -174,16 +174,18 @@
               @click="goToPreviousForm()"
             >
               <svg-vue class="mr-3 cursor-pointer" icon="left-arrow" />
-              Go back
+              {{ translatedData['common.common.go_back'] }}
             </button>
             <span
               v-if="checkStep(1)"
               class="pb-4 text-sm font-normal text-n-40 sm:pb-0"
-              >Already have an account?
+            >
+              {{ translatedData['common.common.already_have_an_account'] }}
               <a
                 class="border-b-2 border-b-transparent font-bold text-bluecoral hover:border-b-2 hover:border-b-turquoise hover:text-bluecoral"
                 href="/"
-                >Sign In.</a
+              >
+                {{ translatedData['common.common.sign_in'] }} .</a
               ></span
             >
             <button
@@ -191,26 +193,27 @@
               class="btn btn-next"
               @click="goToNextForm()"
             >
-              Next Step
+              {{ translatedData['public.register.commons.next_step'] }}
               <svg-vue class="text-2xl" icon="right-arrow" />
             </button>
           </div>
           <div v-if="checkStep(2)" class="mt-6 text-center">
-            <span class="text-sm font-normal text-n-40"
-              >Already have an account?
+            <span class="text-sm font-normal text-n-40">
+              {{ translatedData['common.common.already_have_an_account'] }}
               <a
                 class="border-b-2 border-b-transparent font-bold text-bluecoral hover:border-b-2 hover:border-b-turquoise hover:text-bluecoral"
                 href="/"
-                >Sign In.</a
+              >
+                {{ translatedData['common.common.sign_in'] }} .</a
               ></span
             >
           </div>
         </div>
 
         <aside class="register__sidebar hidden xl:block">
-          <span class="text-base font-bold"
-            >Step {{ getCurrentStep() }} out of 3</span
-          >
+          <span class="text-base font-bold">
+            {{ translatedStepXOutOf3 }}
+          </span>
           <ul class="relative mt-6 text-sm text-n-40">
             <li
               v-for="(form, key, i) in registerForm"
@@ -261,9 +264,10 @@ import HoverText from './../../components/HoverText.vue';
 import Multiselect from '@vueform/multiselect';
 import Loader from '../../components/Loader.vue';
 
-import { generateUsername } from 'Composable/utils';
+import { generateUsername, toTitleCase } from 'Composable/utils';
 
 export default defineComponent({
+  methods: { toTitleCase },
   components: {
     EmailVerification,
     HoverText,
@@ -288,12 +292,28 @@ export default defineComponent({
       type: [Object],
       required: true,
     },
+    translatedData: {
+      type: Object,
+      required: true,
+    },
   },
 
   setup(props) {
     const step = ref(1);
     const publisherExists = ref(true);
     const isLoaderVisible = ref(false);
+
+    const translatedStepXOutOf3 = ref('');
+
+    watch(
+      [() => props.translatedData, getCurrentStep],
+      () => {
+        translatedStepXOutOf3.value = props.translatedData[
+          'public.register.registered_page.step_count_out_of_3'
+        ].replace(':count', getCurrentStep());
+      },
+      { immediate: true }
+    );
 
     let { agency } = toRefs(props);
 
@@ -393,100 +413,139 @@ export default defineComponent({
 
     const registerForm = reactive({
       1: {
-        title: 'Publisher Information',
+        title: props.translatedData['common.common.publisher_information'],
         is_complete: false,
         description:
-          'This information will be used to register your organisation',
+          props.translatedData[
+            'public.register.registered_page.register_section.publisher_information_description'
+          ],
         hover_text:
-          'Provide information about your organisation. You will need to provide the same information that you used to create your Publisher Account on the IATI Registry (iatiregistry.org).',
+          props.translatedData[
+            'public.register.registered_page.register_section.publisher_information_hover_text'
+          ],
         fields: {
           publisher_name: {
-            label: 'Publisher Name',
+            label: props.translatedData['common.common.publisher_name'],
             name: 'publisher_name',
-            placeholder: 'Type your Publisher Name here',
+            placeholder:
+              props.translatedData[
+                'common.common.enter_your_organisation_name'
+              ],
             id: 'publisher-name',
             required: true,
-            hover_text: 'Provide the name of your organisation.',
+            hover_text:
+              props.translatedData[
+                'common.common.the_name_of_your_organisation_publishing_the_data'
+              ],
             type: 'text',
             class: 'col-span-2 mb-4 lg:mb-2',
             help_text: '',
           },
           publisher_id: {
-            label: 'Publisher ID',
+            label: props.translatedData['common.common.publisher_id'],
             name: 'publisher_id',
-            placeholder: 'Type your publisher ID here',
+            placeholder:
+              props.translatedData['common.common.type_your_publisher_id_here'],
             id: 'publisher-id',
             required: true,
             hover_text:
-              "This is the unique ID for your organisation that you created when you set up your IATI Registry Publisher Account. It should be a shorter version of your organisation's name, which will include lowercase letters and may include numbers, - (dash) or _ (underscore). For example nef_mali' for Near East Foundation Mali.",
+              props.translatedData[
+                'common.common.this_is_the_unique_id_for_your_organisation'
+              ],
             type: 'text',
             class: 'mb-4 lg:mb-2',
             help_text: '',
           },
           country: {
-            label: 'Country',
+            label: props.translatedData['common.common.country'],
             name: 'country',
-            placeholder: 'Select a Country',
+            placeholder: props.translatedData['common.common.select_an_option'],
             id: 'country_select',
             required: false,
             type: 'select',
-            hover_text: 'Add the location of your organisation.',
+            hover_text:
+              props.translatedData[
+                'common.common.add_the_location_of_your_organisation'
+              ],
             options: props.country,
             class: 'mb-4 lg:mb-2 relative',
             help_text: '',
           },
           organization_registration_agency: {
-            label: 'Organisation Registration Agency',
+            label:
+              props.translatedData[
+                'common.common.organisation_registration_agency'
+              ],
             name: 'registration_agency',
-            placeholder: 'Select an Organisation Registration Agency',
+            placeholder: props.translatedData['common.common.select_an_option'],
             id: 'registration-agency',
             required: true,
             hover_text:
-              'Provide the name of the agency in your country where you organisation is registered. If you do not know this information please email support@iatistandard.org.',
+              props.translatedData[
+                'public.register.registered_page.register_section.organisation_registration_agency_hover_text'
+              ],
             type: 'select',
             options: registration_agency,
             class: 'mb-4 lg:mb-2 relative',
             help_text: '',
           },
           organization_registration_no: {
-            label: 'Organisation Registration Number',
+            label:
+              props.translatedData[
+                'public.register.registered_page.register_section.organisation_registration_number'
+              ],
             name: 'registration_number',
-            placeholder: 'Type your Registration Number here',
+            placeholder:
+              props.translatedData[
+                'common.common.type_your_registration_number_here'
+              ],
             id: 'registration-number',
             required: true,
             hover_text:
-              'Add the registration number for your organisation that has been provided by the registration agency named above.',
+              props.translatedData[
+                'common.common.provide_your_organisations_registration_number'
+              ],
             type: 'text',
             class: 'mb-4 lg:mb-2',
-            help_text: 'E.g. 123456',
+            help_text: props.translatedData['common.common.for_example_123456'],
           },
           iati_organizational_identifier: {
-            label: 'IATI Organisation Identifier',
+            label:
+              props.translatedData[
+                'common.common.iati_organisation_identifier'
+              ],
             name: 'identifier',
             placeholder: '',
             id: 'identifier',
             required: true,
             hover_text:
-              'The Organisation Identifier is a unique code for your organisation. This is generated from the Organisation Registration Agency and Registration Number. For more information read: <a href="http://iatistandard.org/en/guidance/preparing-organisation/organisation-account/how-to-create-your-iati-organisation-identifier/" target="_blank">How to create your IATI organisation identifier.</a>',
+              props.translatedData[
+                'common.common.this_is_a_unique_code_for_your_organisation'
+              ],
             type: 'text',
             class: 'mb-4 lg:mb-6',
             help_text:
-              'This is autogenerated, please make sure to fill the above fields correctly.',
+              props.translatedData['common.common.this_is_autogenerated'],
           },
         },
       },
       2: {
-        title: 'Administrator Information',
+        title: props.translatedData['common.common.administrator_information'],
         is_complete: false,
         description:
-          'This information will be used to create an admin account in IATI Publisher',
+          props.translatedData[
+            'common.common.this_will_create_an_admin_account_for_you_as_an_individual'
+          ],
         hover_text:
-          'Provide your information to create an admin account here on IATI Publisher.',
+          props.translatedData[
+            'public.register.registered_page.register_section.administrator_hover_text'
+          ],
         fields: {
           full_name: {
-            label: 'Full Name',
+            label: props.translatedData['common.common.full_name'],
             name: 'full_name',
-            placeholder: 'Type your full name here',
+            placeholder:
+              props.translatedData['common.common.type_your_full_name_here'],
             id: 'full-name',
             hover_text: '',
             required: true,
@@ -494,9 +553,10 @@ export default defineComponent({
             class: 'mb-4 lg:mb-2',
           },
           email: {
-            label: 'Email Address',
+            label: props.translatedData['common.common.email_address'],
             name: 'email',
-            placeholder: 'Type valid email here',
+            placeholder:
+              props.translatedData['common.common.type_valid_email_here'],
             id: 'email',
             required: true,
             hover_text: '',
@@ -504,21 +564,27 @@ export default defineComponent({
             class: 'mb-4 lg:mb-2',
           },
           username: {
-            label: 'Username',
+            label: props.translatedData['common.common.username'],
             name: 'username',
-            placeholder: 'Type username here',
+            placeholder:
+              props.translatedData['common.common.type_username_here'],
             id: 'username',
             required: true,
             hover_text:
-              'You will need this later to login into IATI Publisher.',
+              props.translatedData[
+                'common.common.you_will_need_this_later_to_login'
+              ],
             type: 'text',
             class: 'mb-4 lg:mb-2',
             help_text: '',
           },
           default_language: {
-            label: 'Default language',
+            label: props.translatedData['elements.label.default_language'],
             name: 'default_language',
-            placeholder: 'Select your default language',
+            placeholder:
+              props.translatedData[
+                'common.common.select_your_default_language'
+              ],
             id: 'default-language',
             required: true,
             type: 'select',
@@ -526,9 +592,10 @@ export default defineComponent({
             class: 'mb-4 lg:mb-2',
           },
           password: {
-            label: 'Password',
+            label: props.translatedData['common.common.password'],
             name: 'password',
-            placeholder: 'Type password here',
+            placeholder:
+              props.translatedData['common.common.type_password_here'],
             id: 'password',
             required: true,
             hover_text: '',
@@ -536,9 +603,10 @@ export default defineComponent({
             class: 'mb-4 lg:mb-2',
           },
           confirm_password: {
-            label: 'Confirm Password',
+            label: props.translatedData['common.common.confirm_password'],
             name: 'password_confirmation',
-            placeholder: 'Type password here',
+            placeholder:
+              props.translatedData['common.common.type_password_here'],
             id: 'password-confirmation',
             required: true,
             hover_text: '',
@@ -548,10 +616,12 @@ export default defineComponent({
         },
       },
       3: {
-        title: 'Email Verification',
+        title: props.translatedData['common.common.email_verification'],
         is_complete: false,
         description:
-          'Please verify and activate your IATI Publisher account through your provided email',
+          props.translatedData[
+            'common.common.please_verify_and_activate_your_iati_publisher_account'
+          ],
       },
     });
 
@@ -680,6 +750,7 @@ export default defineComponent({
       checkStep,
       isTextField,
       props,
+      translatedStepXOutOf3,
     };
   },
 });
@@ -689,6 +760,7 @@ export default defineComponent({
 
 <style lang="scss">
 .label {
+  text-transform: capitalize;
   @apply text-sm font-normal text-n-50;
 }
 

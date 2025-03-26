@@ -13,12 +13,18 @@
     <span v-if="value[0].amount" class="mb-5">{{ value[0].currency }}</span>
   </div>
   <div v-if="value[0].amount" class="text-sm">
-    {{ value[0].date ? `valued at ${dateFormat(value[0].date)}` : '' }}
+    {{
+      value[0].date
+        ? `${translatedData['common.common.valued_at']} ${dateFormat(
+            value[0].date
+          )}`
+        : ''
+    }}
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs } from 'vue';
+import { defineComponent, inject, toRefs } from 'vue';
 import dateFormat from './../../../../composable/dateFormat';
 
 export default defineComponent({
@@ -32,12 +38,13 @@ export default defineComponent({
   },
   setup(props) {
     const { data } = toRefs(props);
+    const translatedData = inject('translatedData') as Record<string, string>;
 
     interface ArrayObject {
       [index: number]: { amount: string; currency: string; date: Date };
     }
     const value = data.value as ArrayObject;
-    return { value, dateFormat };
+    return { value, dateFormat, translatedData };
   },
 });
 </script>

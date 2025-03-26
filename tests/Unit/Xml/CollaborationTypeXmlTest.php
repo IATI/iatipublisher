@@ -17,8 +17,8 @@ class CollaborationTypeXmlTest extends XmlBaseTest
     {
         $rows = $this->invalid_data();
         $flattenErrors = $this->getErrors($rows);
-        $this->assertContains('The collaboration type does not exist.', $flattenErrors);
-        $this->assertContains('The collaboration type must be 1 characters.', $flattenErrors);
+        $this->assertContains(trans('validation.activity_collaboration_type.in'), $flattenErrors);
+        $this->assertContains(trans('validation.activity_collaboration_type.size'), $flattenErrors);
     }
 
     /**

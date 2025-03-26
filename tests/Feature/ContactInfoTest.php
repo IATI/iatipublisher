@@ -215,8 +215,7 @@ class ContactInfoTest extends TestCase
         $this->actingAs($org->user)->put("/activity/$activity->id/contact_info", $postData);
 
         $validationErrors = Arr::dot(session('errors')->toArray());
-
-        $this->assertContains('The contact info telephone number must have atleast 7 digits.', $validationErrors);
+        $this->assertContains(trans('validation.activity_contact_info.telephone.min'), $validationErrors);
     }
 
     public function test_contact_info_throws_validation_error_when_number_is_not_numeric()
@@ -509,8 +508,7 @@ class ContactInfoTest extends TestCase
         $this->actingAs($org->user)->put("/activity/$activity->id/contact_info", $postData);
 
         $validationErrors = Arr::dot(session('errors')->toArray());
-
-        $this->assertContains('The contact info telephone number must not have more than 20 digits.', $validationErrors);
+        $this->assertContains(trans('validation.activity_contact_info.telephone.max'), $validationErrors);
     }
 
     public function test_contact_info_throws_validation_error_when_number_has_invalid_signs()
@@ -607,7 +605,6 @@ class ContactInfoTest extends TestCase
         $this->actingAs($org->user)->put("/activity/$activity->id/contact_info", $postData);
 
         $validationErrors = Arr::dot(session('errors')->toArray());
-
-        $this->assertContains('The contact info telephone number is invalid.', $validationErrors);
+        $this->assertContains(trans('validation.contact_info_telephone_is_invalid'), $validationErrors);
     }
 }

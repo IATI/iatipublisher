@@ -94,7 +94,7 @@ class NameService
      */
     public function formGenerator($id, $deprecationStatusMap = []): Form
     {
-        $element = json_decode(file_get_contents(app_path('IATI/Data/organizationElementJsonSchema.json')), true);
+        $element = readOrganizationElementJsonSchema();
         $model['narrative'] = $this->getNameData($id);
         $this->baseFormCreator->url = route('admin.organisation.name.update', [$id]);
 

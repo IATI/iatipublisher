@@ -9,7 +9,11 @@
         <input
           v-model="elements.search"
           class="panel__input"
-          placeholder="Search elements to add/edit"
+          :placeholder="
+            translatedData[
+              'organisationDetail.organisation_elements.search_elements_to_add_edit'
+            ]
+          "
           type="text"
         />
       </div>
@@ -42,28 +46,30 @@
               @click="dropdownFilter('')"
             >
               <svg-vue class="mr-1 text-lg" icon="box" />
-              <span>All Elements</span>
+              <span>{{ translatedData['common.common.all_elements'] }}</span>
             </li>
             <li
               class="flex px-3.5 py-1.5 hover:bg-white"
               @click="dropdownFilter('core')"
             >
               <svg-vue class="mr-1 text-lg" icon="core" />
-              <span>Core</span>
+              <span>{{ translatedData['common.common.core'] }}</span>
             </li>
             <li
               class="flex px-3.5 py-1.5 hover:bg-white"
               @click="dropdownFilter('completed')"
             >
               <svg-vue class="mr-1 text-lg" icon="double-tick" />
-              <span>Completed</span>
+              <span>
+                {{ translatedData['common.common.completed'] }}
+              </span>
             </li>
             <li
               class="flex px-3.5 py-1.5 hover:bg-white"
               @click="dropdownFilter('not_completed')"
             >
               <svg-vue class="!mr-1.5 ml-1" icon="red-cross"></svg-vue>
-              <span>Not Completed</span>
+              <span>{{ translatedData['common.common.not_completed'] }}</span>
             </li>
           </ul>
         </div>
@@ -122,7 +128,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, reactive, onMounted, ref, toRefs } from 'vue';
+import {
+  computed,
+  defineProps,
+  reactive,
+  onMounted,
+  ref,
+  toRefs,
+  inject,
+} from 'vue';
 import { useToggle } from '@vueuse/core';
 
 import { activityCoreElements } from 'Composable/coreElements';
@@ -142,7 +156,7 @@ const { data } = toRefs(props);
 const dropdown = ref();
 const dropdownBtn = ref();
 const [searchBtnValue, searchBtnToggle] = useToggle();
-
+const translatedData = inject('translatedData') as Record<string, string>;
 /**
  * Search functionality
  */

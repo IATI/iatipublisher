@@ -11,7 +11,7 @@
         <table class="mb-3">
           <tbody>
             <tr>
-              <td>Code</td>
+              <td>{{ getTranslatedElement(translatedData, 'code') }}</td>
               <td>
                 {{ ref.code ? ref.code : '' }}
                 <span v-if="!ref.code" class="text-xs italic text-light-gray"
@@ -20,7 +20,9 @@
               </td>
             </tr>
             <tr>
-              <td>Vocabulary URI</td>
+              <td>
+                {{ getTranslatedElement(translatedData, 'vocabulary_uri') }}
+              </td>
               <td>
                 <a
                   v-if="ref.vocabulary_uri"
@@ -42,8 +44,8 @@
 </template>
 
 <script lang="ts">
-import { isEveryValueNull } from 'Composable/utils';
-import { defineComponent, toRefs } from 'vue';
+import { getTranslatedElement, isEveryValueNull } from 'Composable/utils';
+import { defineComponent, inject, toRefs } from 'vue';
 
 export default defineComponent({
   name: 'ResultReference',
@@ -70,9 +72,12 @@ export default defineComponent({
       };
     }
 
+    const translatedData = inject('translatedData') as Record<string, string>;
     let { data } = toRefs(props);
     const referenceData = data.value as ReferenceArray;
-    return { referenceData, isEveryValueNull };
+
+    return { referenceData, isEveryValueNull, translatedData };
   },
+  methods: { getTranslatedElement },
 });
 </script>

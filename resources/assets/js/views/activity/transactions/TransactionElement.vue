@@ -179,21 +179,8 @@ export default defineComponent({
 
     provide('types', types);
 
-    /**
-     * Joins data from array with a comma
-     * @param language
-     */
-
-    interface Entry {
-      [key: string]: string;
-    }
-
-    function getLanguages(language: Entry[]) {
-      return language.map((entry) => entry.language).join(', ');
-    }
     return {
       elementData,
-      getLanguages,
       dateFormat,
     };
   },

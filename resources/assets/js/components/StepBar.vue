@@ -20,7 +20,8 @@
       </div>
       <div class="">
         <p class="text-[10px] leading-[15px] tracking-[-2%]">
-          Step {{ step.step }}
+          {{ translatedData['activity_index.step_bar.step'] ?? 'Step' }}
+          {{ step.step }}
         </p>
         <p class="text-sm font-bold tracking-[-2%]">{{ step.title }}</p>
       </div>
@@ -28,22 +29,27 @@
   </div>
   <div class="mt-[26px] rounded-lg bg-blue-40 p-[10px] text-sm tracking-[-2%]">
     <span>
-      This widget can be accessed from 'Get Started' in the profile dropdown
-      menu.
+      {{
+        translatedData[
+          'activity_index.step_bar.this_widget_can_be_accessed_from_get_started'
+        ]
+      }}
     </span>
   </div>
   <div class="mt-4 text-right">
     <label class="checkbox !flex items-center justify-end gap-2">
       <input v-model="checkMark" type="checkbox" />
       <span class="checkmark white" />
-      <div class="text-sm">Don't show this again</div>
+      <span class="text-sm">
+        {{ translatedData['activity_index.step_bar.dont_show_this_again'] }}
+      </span>
     </label>
   </div>
 </template>
 
 <script setup lang="ts">
 import axios from 'axios';
-import { defineProps, ref, watch, defineEmits } from 'vue';
+import { defineProps, ref, watch, defineEmits, inject } from 'vue';
 
 const props = defineProps({
   currentStep: {
@@ -62,6 +68,7 @@ const props = defineProps({
 
 const emit = defineEmits(['change-step']);
 
+const translatedData = inject('translatedData') as Record<string, string>;
 const checkMark = ref(false);
 
 watch(checkMark, async (newVal) => {

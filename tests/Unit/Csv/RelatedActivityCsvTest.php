@@ -93,6 +93,7 @@ class RelatedActivityCsvTest extends CsvBaseTest
         $rows = $this->invalid_data();
         $errors = $this->getErrors($rows);
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('The relationship type in related activity is invalid.', $flattenErrors);
+
+        $this->assertContains(trans('validation.this_field_is_invalid'), $flattenErrors);
     }
 }

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h3 class="pb-2 text-base font-bold leading-6 text-n-50">Downloading</h3>
+    <h3 class="pb-2 text-base font-bold leading-6 text-n-50">
+      {{ toTitleCase(translatedData['common.common.downloading']) }}
+    </h3>
     <div class="relative rounded-lg border border-n-20 bg-white p-4">
       <button
         v-if="xlsDownloadStatus === 'completed'"
@@ -20,13 +22,19 @@
           "
           class="text-sm text-n-40"
         >
-          Preparing {{ fileCount ? fileCount : 0 }}/4 files for download
+          {{
+            translatedData[
+              'workflow_frontend.download.preparing_filecount_files_for_download'
+            ].replace(':fileCount', String(fileCount) ?? 0)
+          }}
         </p>
         <p v-if="xlsDownloadStatus == 'cancelled'" class="text-sm text-n-40">
-          Preparing for Cancel
+          {{
+            translatedData['workflow_frontend.download.preparing_for_cancel']
+          }}
         </p>
         <p v-if="xlsDownloadStatus == 'completed'" class="text-sm text-n-40">
-          Zip File is Ready
+          {{ translatedData['workflow_frontend.download.zip_file_is_ready'] }}
         </p>
 
         <spinnerLoader
@@ -39,7 +47,7 @@
           class="text-xs font-bold uppercase text-spring-50 hover:text-spring-50"
           @click="downloadFile"
         >
-          download
+          {{ translatedData['common.common.download'] }}
         </button>
       </div>
 
@@ -59,27 +67,41 @@
       </div>
       <div v-else class="flex justify-between space-x-4">
         <div class="flex space-x-2">
-          <span class="text-sm text-n-40"
-            >Preparing activities for download</span
-          >
-          <span class="text-sm italic text-n-30">Failed</span>
+          <span class="text-sm text-n-40">
+            {{
+              translatedData[
+                'workflow_frontend.download.preparing_activities_for_download'
+              ]
+            }}
+          </span>
+          <span class="text-sm italic text-n-30">{{
+            translatedData['common.common.failed']
+          }}</span>
         </div>
         <button
           class="text-xs font-bold uppercase text-bluecoral hover:text-bluecoral"
           @click="showRetryDownloadModel = true"
         >
-          retry
+          {{ translatedData['common.common.retry'] }}
         </button>
       </div>
     </div>
   </div>
   <Modal :modal-active="showRetryDownloadModel" width="583">
-    <p class="bg-eggshell p-4 text-n-50">Are you sure you want to retry?</p>
+    <p class="bg-eggshell p-4 text-n-50">
+      {{
+        translatedData[
+          'workflow_frontend.download.are_you_sure_you_want_to_retry'
+        ]
+      }}
+    </p>
     <div class="flex justify-end space-x-5">
       <button class="ghost-btn" @click="showRetryDownloadModel = false">
-        cancel
+        {{ translatedData['common.common.cancel'] }}
       </button>
-      <button class="primary-btn" @click="retryDownload()">Retry</button>
+      <button class="primary-btn" @click="retryDownload()">
+        {{ translatedData['common.common.retry'] }}
+      </button>
     </div>
   </Modal>
 </template>
@@ -87,9 +109,10 @@
 import { inject, computed, ref, Ref } from 'vue';
 import spinnerLoader from './spinnerLoader.vue';
 import Modal from 'Components/PopupModal.vue';
-
 import axios from 'axios';
-import { useStore } from 'Store/activities/index';
+import { useStore } from 'Store/activities';
+import { toTitleCase } from '../composable/utils';
+
 const store = useStore();
 const showRetryDownloadModel = ref();
 const isLoading = ref();
@@ -146,4 +169,5 @@ const percentageWidth = computed(() => {
 const fileCount = inject('fileCount');
 const xlsDownloadStatus = inject('xlsDownloadStatus') as Ref;
 const downloadApiUrl = inject('downloadApiUrl');
+const translatedData = inject('translatedData') as Record<string, string>;
 </script>

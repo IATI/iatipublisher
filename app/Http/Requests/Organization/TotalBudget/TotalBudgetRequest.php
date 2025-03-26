@@ -52,16 +52,35 @@ class TotalBudgetRequest extends OrganizationBaseRequest
             }
 
             $totalBudgetForm = sprintf('total_budget.%s', $totalBudgetIndex);
-            $rules[$totalBudgetForm . '.total_budget_status'] = ['nullable', sprintf('in:%s', implode(',', array_keys(
-                $this->getCodeListForRequestFiles('BudgetStatus', 'Activity')
-            )))];
-            $periodStartRules = $this->getWarningForPeriodStart($totalBudget['period_start'], $totalBudgetForm, $diff, 365);
+            $rules[$totalBudgetForm . '.total_budget_status'] = [
+                'nullable',
+                sprintf(
+                    'in:%s',
+                    implode(
+                        ',',
+                        array_keys(
+                            $this->getCodeListForRequestFiles('BudgetStatus', 'Activity')
+                        )
+                    )
+                ),
+            ];
+            $periodStartRules = $this->getWarningForPeriodStart(
+                $totalBudget['period_start'],
+                $totalBudgetForm,
+                $diff,
+                365
+            );
 
             foreach ($periodStartRules as $key => $periodStartRule) {
                 $rules[$key] = $periodStartRule;
             }
 
-            $periodEndRules = $this->getWarningForPeriodEnd($totalBudget['period_end'], $totalBudgetForm, $diff, 365);
+            $periodEndRules = $this->getWarningForPeriodEnd(
+                $totalBudget['period_end'],
+                $totalBudgetForm,
+                $diff,
+                365
+            );
 
             foreach ($periodEndRules as $key => $periodEndRule) {
                 $rules[$key] = $periodEndRule;
