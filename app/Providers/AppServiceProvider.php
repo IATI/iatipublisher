@@ -5,8 +5,6 @@ namespace App\Providers;
 use App\Database\PostgresConnection;
 use App\SpamEmail;
 use Illuminate\Database\Connection;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
@@ -33,10 +31,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        DB::listen(function ($query) {
-            Log::info($query->sql, $query->bindings);
-        });
-
         Validator::extend('not_in_spam_emails', function ($attribute, $value, $parameters, $validator) {
             return !SpamEmail::where('email', $value)->exists();
         });

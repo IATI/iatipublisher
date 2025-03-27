@@ -148,4 +148,66 @@ class TransactionRepository extends Repository
     {
         return (bool) $this->model->whereIn('id', $transactionIds)->delete();
     }
+
+    public function bulkDeleteTransactionsByActivityIds(array $activityIds): bool
+    {
+        if (empty($activityIds)) {
+            return false;
+        }
+
+        $chunks = array_chunk($activityIds, 500);
+
+        foreach ($chunks as $chunk) {
+            $this->model->whereIn('activity_id', $chunk)->delete();
+        }
+
+        return true;
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function createTransactions(array $activitiesToUpsert, array $allActivityIdsMappedToActivityIdentifiers): int
+    {
+        $preparedData = $this->prepareAllTransactionDataToUpsert($activitiesToUpsert, $allActivityIdsMappedToActivityIdentifiers);
+
+        if (empty($preparedData)) {
+            return 0;
+        }
+
+        $chunks = array_chunk($preparedData, 500);
+        $totalInsertedRows = 0;
+
+        foreach ($chunks as $chunk) {
+            $totalInsertedRows += $this->model->insert($chunk);
+        }
+
+        return $totalInsertedRows;
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    private function prepareAllTransactionDataToUpsert(array $activitiesToUpsert, array $allActivityIdsMappedToActivityIdentifiers): array
+    {
+        $preparedData = [];
+
+        foreach ($activitiesToUpsert as $activityIdentifier => $activityData) {
+            if (!empty($activityData['transactions'])) {
+                foreach ($activityData['transactions'] as $transaction) {
+                    $activityId = $allActivityIdsMappedToActivityIdentifiers[$activityIdentifier];
+
+                    $transactionData = [
+                        'activity_id'            => $activityId,
+                        'transaction'            => json_encode($transaction, JSON_THROW_ON_ERROR),
+                        'deprecation_status_map' => json_encode(refreshTransactionDeprecationStatusMap($transaction), JSON_THROW_ON_ERROR),
+                    ];
+
+                    $preparedData[] = $transactionData;
+                }
+            }
+        }
+
+        return $preparedData;
+    }
 }

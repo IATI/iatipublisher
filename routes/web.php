@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\Activity\ActivityController;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\IATI\Services\ImportActivity\ImportXlsService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,3 +54,21 @@ Route::get('/duplicate-activity', [ActivityController::class, 'duplicateActivity
 Route::get('php-info', function () {
     dd(phpinfo());
 })->middleware('superadmin')->name('php-info');
+
+//Route::get('/bruh', function () {
+//    try {
+//        DB::beginTransaction();
+//
+//        /**@var $importXlsService \App\IATI\Services\ImportActivity\ImportXlsService*/
+//        $importXlsService = app(ImportXlsService::class);
+//
+//        $importXlsService->saveActivities([], true);
+//
+//        DB::commit();
+//        return response()->json(['success' => true]);
+//    }catch (\Exception $exception){
+//        DB::rollBack();
+//        logger($exception->getMessage());
+//        return response()->json(['success' => false]);
+//    }
+//});
