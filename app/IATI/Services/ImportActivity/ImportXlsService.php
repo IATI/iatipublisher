@@ -230,6 +230,10 @@ class ImportXlsService
                 if ($oldActivity['has_ever_been_published']) {
                     $activityData['iati_identifier']['iati_identifier_text'] = $oldActivity['iati_identifier']['iati_identifier_text'];
                     $activityData['iati_identifier']['present_organization_identifier'] = $oldActivity['iati_identifier']['present_organization_identifier'];
+                } else {
+                    $organizationIdentifier = Auth::user()->organization->identifier;
+                    $activityData['iati_identifier']['iati_identifier_text'] = $organizationIdentifier . '-' . Arr::get($activityData, 'iati_identifier.activity_identifier');
+                    $activityData['iati_identifier']['present_organization_identifier'] = $organizationIdentifier;
                 }
 
                 $this->activityRepository->update($existingId, $activityData);

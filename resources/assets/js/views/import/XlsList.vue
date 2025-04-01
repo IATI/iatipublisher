@@ -461,6 +461,10 @@ const addActivities = () => {
       .post(`/import/xls/activity`, { activities: selectedActivities.value })
       .then(() => {
         window.location.href = '/activities';
+      })
+      .catch((error) => {
+        console.error(error);
+        window.location.href = '/activities';
       });
   }
 };
