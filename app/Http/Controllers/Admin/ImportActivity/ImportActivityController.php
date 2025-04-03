@@ -418,7 +418,7 @@ class ImportActivityController extends Controller
             Session::flash('error', $translatedMessage);
 
             logger('CSV-XML import step listing step 11');
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }

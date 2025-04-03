@@ -1,0 +1,227 @@
+[2025-04-03 00:00:28] dev.ERROR: App\Console\Commands\UpdateJsonFiles::addLanguageProperty(): Argument #1 ($data) must be of type array, null given, called in /opt/apps/laravel-in-kubernetes/app/Console/Commands/UpdateJsonFiles.php on line 512 {"exception":"[object] (TypeError(code: 0): App\\Console\\Commands\\UpdateJsonFiles::addLanguageProperty(): Argument #1 ($data) must be of type array, null given, called in /opt/apps/laravel-in-kubernetes/app/Console/Commands/UpdateJsonFiles.php on line 512 at /opt/apps/laravel-in-kubernetes/app/Console/Commands/UpdateJsonFiles.php:564)
+[stacktrace]
+#0 /opt/apps/laravel-in-kubernetes/app/Console/Commands/UpdateJsonFiles.php(512): App\\Console\\Commands\\UpdateJsonFiles->addLanguageProperty()
+#1 /opt/apps/laravel-in-kubernetes/app/Console/Commands/UpdateJsonFiles.php(447): App\\Console\\Commands\\UpdateJsonFiles->parseToPublisherJson()
+#2 /opt/apps/laravel-in-kubernetes/app/Console/Commands/UpdateJsonFiles.php(317): App\\Console\\Commands\\UpdateJsonFiles->proceedNormally()
+#3 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\UpdateJsonFiles->handle()
+#4 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Container/Util.php(41): Illuminate\\Container\\BoundMethod::{closure:Illuminate\\Container\\BoundMethod::call():35}()
+#5 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure()
+#6 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#7 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Container/Container.php(661): Illuminate\\Container\\BoundMethod::call()
+#8 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Console/Command.php(183): Illuminate\\Container\\Container->call()
+#9 /opt/apps/laravel-in-kubernetes/vendor/symfony/console/Command/Command.php(326): Illuminate\\Console\\Command->execute()
+#10 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Console/Command.php(152): Symfony\\Component\\Console\\Command\\Command->run()
+#11 /opt/apps/laravel-in-kubernetes/vendor/symfony/console/Application.php(1078): Illuminate\\Console\\Command->run()
+#12 /opt/apps/laravel-in-kubernetes/vendor/symfony/console/Application.php(324): Symfony\\Component\\Console\\Application->doRunCommand()
+#13 /opt/apps/laravel-in-kubernetes/vendor/symfony/console/Application.php(175): Symfony\\Component\\Console\\Application->doRun()
+#14 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Console/Application.php(102): Symfony\\Component\\Console\\Application->run()
+#15 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(155): Illuminate\\Console\\Application->run()
+#16 /opt/apps/laravel-in-kubernetes/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
+#17 {main}
+"}
+[2025-04-03 00:05:01] dev.INFO:  Attempting to fetch from org-id website...
+[2025-04-03 00:05:03] dev.INFO:  Attempting to write new json...
+[2025-04-03 00:05:05] dev.INFO:  Completed.
+[2025-04-03 00:05:05] dev.INFO:  Completed.
+[2025-04-03 00:10:01] dev.INFO: Attempting to set AppData cache at: 2025-04-03 00:10:01
+[2025-04-03 00:10:17] dev.INFO: AppData cache set at: 2025-04-03 00:10:17
+[2025-04-03 08:45:29] dev.INFO: Attempting to set AppData cache at: 2025-04-03 08:45:29
+[2025-04-03 08:45:44] dev.INFO: AppData cache set at: 2025-04-03 08:45:44
+[2025-04-03 08:45:44] dev.INFO:  Attempting to fetch from org-id website...
+[2025-04-03 08:45:45] dev.INFO:  Attempting to write new json...
+[2025-04-03 08:45:48] dev.INFO:  Completed.
+[2025-04-03 08:45:48] dev.INFO:  Completed.
+[2025-04-03 08:59:53] dev.DEBUG: CSV-XML import step 1
+[2025-04-03 08:59:53] dev.DEBUG: CSV-XML import step 2
+[2025-04-03 08:59:53] dev.DEBUG: CSV-XML import step 4
+[2025-04-03 08:59:53] dev.ERROR: Undefined global variable $_SESSION
+[2025-04-03 09:37:50] dev.INFO: Attempting to set AppData cache at: 2025-04-03 09:37:50
+[2025-04-03 09:37:59] dev.INFO: AppData cache set at: 2025-04-03 09:37:59
+[2025-04-03 09:38:00] dev.INFO:  Attempting to fetch from org-id website...
+[2025-04-03 09:38:01] dev.INFO:  Attempting to write new json...
+[2025-04-03 09:38:04] dev.INFO:  Completed.
+[2025-04-03 09:38:04] dev.INFO:  Completed.
+[2025-04-03 10:27:44] dev.DEBUG: CSV-XML import step 1
+[2025-04-03 10:27:44] dev.DEBUG: CSV-XML import step 2
+[2025-04-03 10:27:44] dev.DEBUG: CSV-XML import step 3
+[2025-04-03 10:27:44] dev.DEBUG: CSV-XML import step 5
+[2025-04-03 10:27:44] dev.DEBUG: CSV-XML import step 7
+[2025-04-03 10:27:45] dev.DEBUG: CSV-XML import step 8
+[2025-04-03 10:27:45] dev.DEBUG: CSV-XML import step 10
+[2025-04-03 10:27:45] dev.DEBUG: CSV-XML import step 13
+[2025-04-03 10:27:50] dev.DEBUG: CSV-XML import step listing step 1
+[2025-04-03 10:27:50] dev.DEBUG: CSV-XML import step listing step 2
+[2025-04-03 10:27:50] dev.DEBUG: CSV-XML import step listing step 3
+[2025-04-03 10:27:50] dev.DEBUG: CSV-XML import step listing step 5
+[2025-04-03 10:27:50] dev.DEBUG: CSV-XML import step listing step 6
+[2025-04-03 10:27:53] dev.DEBUG: CSV-XML import step listing step 8
+[2025-04-03 10:27:53] dev.DEBUG: CSV-XML import step listing step 10
+[2025-04-03 10:29:31] dev.DEBUG: CSV-XML import step 1
+[2025-04-03 10:29:31] dev.DEBUG: CSV-XML import step 2
+[2025-04-03 10:29:31] dev.DEBUG: CSV-XML import step 3
+[2025-04-03 10:29:31] dev.DEBUG: CSV-XML import step 5
+[2025-04-03 10:29:31] dev.DEBUG: CSV-XML import step 7
+[2025-04-03 10:29:33] dev.DEBUG: CSV-XML import step 8
+[2025-04-03 10:29:33] dev.DEBUG: CSV-XML import step 10
+[2025-04-03 10:29:33] dev.DEBUG: CSV-XML import step 13
+[2025-04-03 10:29:37] dev.DEBUG: CSV-XML import step listing step 1
+[2025-04-03 10:29:37] dev.DEBUG: CSV-XML import step listing step 2
+[2025-04-03 10:29:37] dev.DEBUG: CSV-XML import step listing step 3
+[2025-04-03 10:29:37] dev.DEBUG: CSV-XML import step listing step 5
+[2025-04-03 10:29:37] dev.DEBUG: CSV-XML import step listing step 6
+[2025-04-03 10:29:38] dev.DEBUG: CSV-XML import step listing step 8
+[2025-04-03 10:29:38] dev.DEBUG: CSV-XML import step listing step 9
+[2025-04-03 10:29:38] dev.DEBUG: CSV-XML import step listing step 11
+[2025-04-03 10:29:38] dev.ERROR:
+[2025-04-03 10:31:59] dev.DEBUG: CSV-XML import step 1
+[2025-04-03 10:31:59] dev.DEBUG: CSV-XML import step 2
+[2025-04-03 10:31:59] dev.DEBUG: CSV-XML import step 3
+[2025-04-03 10:31:59] dev.DEBUG: CSV-XML import step 5
+[2025-04-03 10:31:59] dev.DEBUG: CSV-XML import step 7
+[2025-04-03 10:32:01] dev.DEBUG: CSV-XML import step 8
+[2025-04-03 10:32:01] dev.DEBUG: CSV-XML import step 10
+[2025-04-03 10:32:01] dev.DEBUG: CSV-XML import step 13
+[2025-04-03 10:32:05] dev.DEBUG: CSV-XML import step listing step 1
+[2025-04-03 10:32:05] dev.DEBUG: CSV-XML import step listing step 2
+[2025-04-03 10:32:05] dev.DEBUG: CSV-XML import step listing step 3
+[2025-04-03 10:32:05] dev.DEBUG: CSV-XML import step listing step 5
+[2025-04-03 10:32:05] dev.DEBUG: CSV-XML import step listing step 6
+[2025-04-03 10:32:07] dev.DEBUG: CSV-XML import step listing step 8
+[2025-04-03 10:32:07] dev.DEBUG: CSV-XML import step listing step 9
+[2025-04-03 10:32:07] dev.DEBUG: CSV-XML import step listing step 11
+[2025-04-03 10:32:07] dev.ERROR: Exception in /opt/apps/laravel-in-kubernetes/app/Http/Controllers/Admin/ImportActivity/ImportActivityController.php:407
+Stack trace:
+#0 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Controller.php(54): App\Http\Controllers\Admin\ImportActivity\ImportActivityController->getImportListData()
+#1 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(43): Illuminate\Routing\Controller->callAction()
+#2 /opt/apps/laravel-in-kubernetes/vendor/sentry/sentry-laravel/src/Sentry/Laravel/Tracing/Routing/TracingControllerDispatcherTracing.php(21): Illuminate\Routing\ControllerDispatcher->dispatch()
+#3 /opt/apps/laravel-in-kubernetes/vendor/sentry/sentry-laravel/src/Sentry/Laravel/Tracing/Routing/TracingRoutingDispatcher.php(31): Sentry\Laravel\Tracing\Routing\TracingControllerDispatcherTracing->Sentry\Laravel\Tracing\Routing\{closure}()
+#4 /opt/apps/laravel-in-kubernetes/vendor/sentry/sentry-laravel/src/Sentry/Laravel/Tracing/Routing/TracingControllerDispatcherTracing.php(20): Sentry\Laravel\Tracing\Routing\TracingRoutingDispatcher->wrapRouteDispatch()
+#5 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Route.php(260): Sentry\Laravel\Tracing\Routing\TracingControllerDispatcherTracing->dispatch()
+#6 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Route.php(205): Illuminate\Routing\Route->runController()
+#7 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Router.php(798): Illuminate\Routing\Route->run()
+#8 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(141): Illuminate\Routing\Router->Illuminate\Routing\{closure}()
+#9 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authorize.php(45): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#10 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Auth\Middleware\Authorize->handle()
+#11 /opt/apps/laravel-in-kubernetes/app/Http/Middleware/SetLocale.php(35): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#12 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): App\Http\Middleware\SetLocale->handle()
+#13 /opt/apps/laravel-in-kubernetes/app/Http/Middleware/LogoutIfInactive.php(26): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#14 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): App\Http\Middleware\LogoutIfInactive->handle()
+#15 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(50): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#16 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Routing\Middleware\SubstituteBindings->handle()
+#17 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php(44): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#18 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Auth\Middleware\Authenticate->handle()
+#19 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/View/Middleware/ShareErrorsFromSession.php(49): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#20 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\View\Middleware\ShareErrorsFromSession->handle()
+#21 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(121): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#22 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(64): Illuminate\Session\Middleware\StartSession->handleStatefulRequest()
+#23 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Session\Middleware\StartSession->handle()
+#24 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/AddQueuedCookiesToResponse.php(37): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#25 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse->handle()
+#26 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/EncryptCookies.php(67): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#27 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Cookie\Middleware\EncryptCookies->handle()
+#28 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#29 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Router.php(799): Illuminate\Pipeline\Pipeline->then()
+#30 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Router.php(776): Illuminate\Routing\Router->runRouteWithinStack()
+#31 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Router.php(740): Illuminate\Routing\Router->runRoute()
+#32 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Router.php(729): Illuminate\Routing\Router->dispatchToRoute()
+#33 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(190): Illuminate\Routing\Router->dispatch()
+#34 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(141): Illuminate\Foundation\Http\Kernel->Illuminate\Foundation\Http\{closure}()
+#35 /opt/apps/laravel-in-kubernetes/vendor/sentry/sentry-laravel/src/Sentry/Laravel/Http/SetRequestIpMiddleware.php(45): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#36 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Sentry\Laravel\Http\SetRequestIpMiddleware->handle()
+#37 /opt/apps/laravel-in-kubernetes/vendor/sentry/sentry-laravel/src/Sentry/Laravel/Http/SetRequestMiddleware.php(30): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#38 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Sentry\Laravel\Http\SetRequestMiddleware->handle()
+#39 /opt/apps/laravel-in-kubernetes/vendor/barryvdh/laravel-debugbar/src/Middleware/InjectDebugbar.php(59): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#40 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Barryvdh\Debugbar\Middleware\InjectDebugbar->handle()
+#41 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#42 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle()
+#43 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle()
+#44 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#45 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(40): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle()
+#46 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\TrimStrings->handle()
+#47 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#48 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle()
+#49 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(86): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#50 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle()
+#51 /opt/apps/laravel-in-kubernetes/vendor/fruitcake/laravel-cors/src/HandleCors.php(38): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#52 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Fruitcake\Cors\HandleCors->handle()
+#53 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(39): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#54 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Http\Middleware\TrustProxies->handle()
+#55 /opt/apps/laravel-in-kubernetes/vendor/sentry/sentry-laravel/src/Sentry/Laravel/Tracing/Middleware.php(52): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#56 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Sentry\Laravel\Tracing\Middleware->handle()
+#57 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#58 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(165): Illuminate\Pipeline\Pipeline->then()
+#59 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(134): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter()
+#60 /opt/apps/laravel-in-kubernetes/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle()
+#61 {main}
+[2025-04-03 10:32:09] dev.DEBUG: CSV-XML import step listing step 1
+[2025-04-03 10:32:09] dev.DEBUG: CSV-XML import step listing step 2
+[2025-04-03 10:32:09] dev.DEBUG: CSV-XML import step listing step 3
+[2025-04-03 10:32:09] dev.DEBUG: CSV-XML import step listing step 5
+[2025-04-03 10:32:09] dev.DEBUG: CSV-XML import step listing step 6
+[2025-04-03 10:32:10] dev.DEBUG: CSV-XML import step listing step 8
+[2025-04-03 10:32:10] dev.DEBUG: CSV-XML import step listing step 9
+[2025-04-03 10:32:10] dev.DEBUG: CSV-XML import step listing step 11
+[2025-04-03 10:32:10] dev.ERROR: Exception in /opt/apps/laravel-in-kubernetes/app/Http/Controllers/Admin/ImportActivity/ImportActivityController.php:407
+Stack trace:
+#0 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Controller.php(54): App\Http\Controllers\Admin\ImportActivity\ImportActivityController->getImportListData()
+#1 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(43): Illuminate\Routing\Controller->callAction()
+#2 /opt/apps/laravel-in-kubernetes/vendor/sentry/sentry-laravel/src/Sentry/Laravel/Tracing/Routing/TracingControllerDispatcherTracing.php(21): Illuminate\Routing\ControllerDispatcher->dispatch()
+#3 /opt/apps/laravel-in-kubernetes/vendor/sentry/sentry-laravel/src/Sentry/Laravel/Tracing/Routing/TracingRoutingDispatcher.php(31): Sentry\Laravel\Tracing\Routing\TracingControllerDispatcherTracing->Sentry\Laravel\Tracing\Routing\{closure}()
+#4 /opt/apps/laravel-in-kubernetes/vendor/sentry/sentry-laravel/src/Sentry/Laravel/Tracing/Routing/TracingControllerDispatcherTracing.php(20): Sentry\Laravel\Tracing\Routing\TracingRoutingDispatcher->wrapRouteDispatch()
+#5 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Route.php(260): Sentry\Laravel\Tracing\Routing\TracingControllerDispatcherTracing->dispatch()
+#6 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Route.php(205): Illuminate\Routing\Route->runController()
+#7 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Router.php(798): Illuminate\Routing\Route->run()
+#8 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(141): Illuminate\Routing\Router->Illuminate\Routing\{closure}()
+#9 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authorize.php(45): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#10 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Auth\Middleware\Authorize->handle()
+#11 /opt/apps/laravel-in-kubernetes/app/Http/Middleware/SetLocale.php(35): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#12 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): App\Http\Middleware\SetLocale->handle()
+#13 /opt/apps/laravel-in-kubernetes/app/Http/Middleware/LogoutIfInactive.php(26): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#14 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): App\Http\Middleware\LogoutIfInactive->handle()
+#15 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(50): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#16 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Routing\Middleware\SubstituteBindings->handle()
+#17 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php(44): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#18 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Auth\Middleware\Authenticate->handle()
+#19 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/View/Middleware/ShareErrorsFromSession.php(49): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#20 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\View\Middleware\ShareErrorsFromSession->handle()
+#21 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(121): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#22 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(64): Illuminate\Session\Middleware\StartSession->handleStatefulRequest()
+#23 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Session\Middleware\StartSession->handle()
+#24 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/AddQueuedCookiesToResponse.php(37): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#25 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse->handle()
+#26 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/EncryptCookies.php(67): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#27 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Cookie\Middleware\EncryptCookies->handle()
+#28 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#29 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Router.php(799): Illuminate\Pipeline\Pipeline->then()
+#30 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Router.php(776): Illuminate\Routing\Router->runRouteWithinStack()
+#31 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Router.php(740): Illuminate\Routing\Router->runRoute()
+#32 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Routing/Router.php(729): Illuminate\Routing\Router->dispatchToRoute()
+#33 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(190): Illuminate\Routing\Router->dispatch()
+#34 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(141): Illuminate\Foundation\Http\Kernel->Illuminate\Foundation\Http\{closure}()
+#35 /opt/apps/laravel-in-kubernetes/vendor/sentry/sentry-laravel/src/Sentry/Laravel/Http/SetRequestIpMiddleware.php(45): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#36 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Sentry\Laravel\Http\SetRequestIpMiddleware->handle()
+#37 /opt/apps/laravel-in-kubernetes/vendor/sentry/sentry-laravel/src/Sentry/Laravel/Http/SetRequestMiddleware.php(30): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#38 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Sentry\Laravel\Http\SetRequestMiddleware->handle()
+#39 /opt/apps/laravel-in-kubernetes/vendor/barryvdh/laravel-debugbar/src/Middleware/InjectDebugbar.php(59): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#40 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Barryvdh\Debugbar\Middleware\InjectDebugbar->handle()
+#41 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#42 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle()
+#43 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull->handle()
+#44 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#45 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(40): Illuminate\Foundation\Http\Middleware\TransformsRequest->handle()
+#46 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\TrimStrings->handle()
+#47 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php(27): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#48 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle()
+#49 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(86): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#50 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance->handle()
+#51 /opt/apps/laravel-in-kubernetes/vendor/fruitcake/laravel-cors/src/HandleCors.php(38): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#52 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Fruitcake\Cors\HandleCors->handle()
+#53 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(39): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#54 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate\Http\Middleware\TrustProxies->handle()
+#55 /opt/apps/laravel-in-kubernetes/vendor/sentry/sentry-laravel/src/Sentry/Laravel/Tracing/Middleware.php(52): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#56 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Sentry\Laravel\Tracing\Middleware->handle()
+#57 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}()
+#58 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(165): Illuminate\Pipeline\Pipeline->then()
+#59 /opt/apps/laravel-in-kubernetes/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(134): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter()
+#60 /opt/apps/laravel-in-kubernetes/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle()
+#61 {main}
