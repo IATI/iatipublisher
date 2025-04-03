@@ -117,8 +117,8 @@ class ImportXlsController extends Controller
             $orgId = Auth::user()->organization_id;
             $ongoingImportStatus = $this->importStatusService->getOrganisationImportStatus($orgId);
 
-            if (ImportCacheHelper::hasOngoingImport($orgId) || !empty($status) || Arr::get($ongoingImportStatus, 'status') === 'processing') {
-                $translatedMessage = trans('common/common.import_is_currently_on_progress_please_cancel_the_current_import_to_continue');
+            if (ImportCacheHelper::isAnotherImportInProgressForOrganisation($orgId) || !empty($status) || Arr::get($ongoingImportStatus, 'status') === 'processing') {
+                $translatedMessage = trans('common/comm on.import_is_currently_on_progress_please_cancel_the_current_import_to_continue');
 
                 return response()->json([
                     'success' => false,
@@ -135,7 +135,7 @@ class ImportXlsController extends Controller
                 $this->importXlsService->startImport($file->getClientOriginalName(), $user->id, $user->organization_id, $xlsType);
             }
 
-            ImportCacheHelper::setImportStepToValidating($orgId);
+            ImportCacheHelper::markValidationStepComplete($orgId);
             $translatedMessage = trans('common/common.uploaded_successfully');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
@@ -163,7 +163,6 @@ class ImportXlsController extends Controller
             $this->db->beginTransaction();
             $status = $this->importXlsService->getImportStatus();
             $activities = $request->get('activities');
-
             if (empty($status)) {
                 $translatedMessage = trans('workflow_backend/import_xls_controller.please_ensure_that_you_have_uploaded_xls_file');
 
@@ -177,8 +176,7 @@ class ImportXlsController extends Controller
             }
 
             $xlsType = $status['template'];
-
-            if ($xlsType === 'activity' && !ImportCacheHelper::organisationHasCompletedValidatingData(Auth::user()->organization_id)) {
+            if ($xlsType === 'activity' && !ImportCacheHelper::hasOrganisationFinishedValidationStep(Auth::user()->organization_id)) {
                 $translatedMessage = trans('workflow_backend/import_activity_controller.error_has_occurred_while_importing_activities');
 
                 return response()->json(['success' => false, 'message' =>  $translatedMessage, 'type' => $xlsType]);
@@ -195,14 +193,18 @@ class ImportXlsController extends Controller
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (Exception $e) {
-            $translatedMessage = trans('common/common.error_has_occurred_while_importing_activity');
-            Session::put('error', $translatedMessage);
+            $this->db->rollBack();
+            $this->importXlsService->deleteImportStatus();
 
             ImportCacheHelper::clearImportCache(Auth::user()->organization_id);
 
+            $translatedMessage = trans('common/common.error_has_occurred_while_importing_activity');
+
+            Session::flash('error', $translatedMessage);
+
             logger()->error($e);
 
-            return redirect()->back()->withResponse(['success' => false, 'message' => $translatedMessage]);
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
         }
     }
 
