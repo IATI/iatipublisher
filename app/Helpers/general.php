@@ -842,9 +842,11 @@ if (!function_exists('unsetErrorFields')) {
     /**
      * unset fields from imported activity that contains critical error.
      *
-     * @param $request
+     * @param $importContent
      *
      * @return array
+     *
+     * @throws JsonException
      */
     function unsetErrorFields($importContent): array
     {

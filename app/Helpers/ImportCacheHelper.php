@@ -45,9 +45,21 @@ class ImportCacheHelper
      *
      * @return bool
      */
-    public static function activityAlreadyBeingImported(int $orgId, string $activityIdentifier): bool
+    public static function isThisActivityBeingImported(int $orgId, string $activityIdentifier): bool
     {
-        return in_array($activityIdentifier, self::getActivityIdentifiersFromCache($orgId), true);
+        return in_array($activityIdentifier, self::fetchCachedActivityIdentifiers($orgId), true);
+    }
+
+    /**
+     * Checks if there is an ongoing import for the given organisation.
+     *
+     * @param int $orgId
+     *
+     * @return bool
+     */
+    public static function isAnotherImportInProgressForOrganisation(int $orgId): bool
+    {
+        return Arr::get(self::fetchOrganisationCache($orgId), self::HAS_ONGOING_IMPORT, false);
     }
 
     /**
@@ -57,9 +69,9 @@ class ImportCacheHelper
      *
      * @return array
      */
-    public static function getActivityIdentifiersFromCache(int $orgId): array
+    public static function fetchCachedActivityIdentifiers(int $orgId): array
     {
-        return Arr::get(self::getCacheValueForOrganisation($orgId), self::ACTIVITY_IDENTIFIERS, []);
+        return Arr::get(self::fetchOrganisationCache($orgId), self::ACTIVITY_IDENTIFIERS, []);
     }
 
     /**
@@ -69,9 +81,9 @@ class ImportCacheHelper
      *
      * @return array
      */
-    public static function getCacheValueForOrganisation(int $orgId): array
+    public static function fetchOrganisationCache(int $orgId): array
     {
-        return Cache::get(self::getCacheKey($orgId), []);
+        return Cache::get(self::generateCacheKey($orgId), []);
     }
 
     /**
@@ -81,7 +93,7 @@ class ImportCacheHelper
      *
      * @return string
      */
-    public static function getCacheKey(int $orgId): string
+    public static function generateCacheKey(int $orgId): string
     {
         return sprintf(self::CACHE_KEY_PATTERN, $orgId);
     }
@@ -96,7 +108,7 @@ class ImportCacheHelper
      */
     public static function appendActivityIdentifiersToCache(int $orgId, string $activityIdentifier): void
     {
-        $cacheValue = self::getCacheValueForOrganisation($orgId);
+        $cacheValue = self::fetchOrganisationCache($orgId);
         $activityIdentifiers = Arr::get($cacheValue, self::ACTIVITY_IDENTIFIERS, []);
 
         if (!in_array($activityIdentifier, $activityIdentifiers)) {
@@ -104,37 +116,7 @@ class ImportCacheHelper
         }
 
         $cacheValue[self::ACTIVITY_IDENTIFIERS] = $activityIdentifiers;
-        Cache::put(self::getCacheKey($orgId), $cacheValue);
-    }
-
-    /**
-     * Sets the import step to 'validating_complete' for the given organisation.
-     *
-     * @param int $orgId
-     *
-     * @return void
-     */
-    public static function setImportStepToValidating(int $orgId): void
-    {
-        $cacheValue = self::getCacheValueForOrganisation($orgId);
-        $cacheValue[self::STEP] = self::VALIDATING_COMPLETE;
-
-        Cache::put(self::getCacheKey($orgId), $cacheValue);
-    }
-
-    /**
-     * Sets the import step to 'importing_complete' for the given organisation.
-     *
-     * @param int $orgId
-     *
-     * @return void
-     */
-    public static function setImportStepToImported(int $orgId): void
-    {
-        $cacheValue = self::getCacheValueForOrganisation($orgId);
-        $cacheValue[self::STEP] = self::IMPORTING_COMPLETE;
-
-        Cache::put(self::getCacheKey($orgId), $cacheValue);
+        Cache::put(self::generateCacheKey($orgId), $cacheValue);
     }
 
     /**
@@ -146,10 +128,10 @@ class ImportCacheHelper
      */
     public static function beginOngoingImport(int $orgId): void
     {
-        $cacheValue = self::getCacheValueForOrganisation($orgId);
+        $cacheValue = self::fetchOrganisationCache($orgId);
         $cacheValue[self::HAS_ONGOING_IMPORT] = true;
 
-        Cache::put(self::getCacheKey($orgId), $cacheValue);
+        Cache::put(self::generateCacheKey($orgId), $cacheValue);
     }
 
     /**
@@ -161,20 +143,8 @@ class ImportCacheHelper
      */
     public static function clearImportCache(int $orgId): void
     {
-        self::organisationHasCompletedImportingData($orgId);
-        Cache::forget(self::getCacheKey($orgId));
-    }
-
-    /**
-     * Checks if the organisation has completed importing data.
-     *
-     * @param int $orgId
-     *
-     * @return bool
-     */
-    public static function organisationHasCompletedImportingData(int $orgId): bool
-    {
-        return self::getImportStep($orgId) === self::VALIDATING_COMPLETE;
+        self::markImportStepComplete($orgId);
+        Cache::forget(self::generateCacheKey($orgId));
     }
 
     /**
@@ -184,9 +154,36 @@ class ImportCacheHelper
      *
      * @return string
      */
-    public static function getImportStep(int $orgId): string
+    public static function fetchCurrentImportStep(int $orgId): string
     {
-        return Arr::get(self::getCacheValueForOrganisation($orgId), self::STEP, '');
+        return Arr::get(self::fetchOrganisationCache($orgId), self::STEP, '');
+    }
+
+    /**
+     * Checks if the organisation has completed importing data.
+     *
+     * @param int $orgId
+     *
+     * @return bool
+     */
+    public static function hasOrganisationFinishedImportStep(int $orgId): bool
+    {
+        return self::fetchCurrentImportStep($orgId) === self::IMPORTING_COMPLETE;
+    }
+
+    /**
+     * Sets the import step to 'importing_complete' for the given organisation.
+     *
+     * @param int $orgId
+     *
+     * @return void
+     */
+    public static function markImportStepComplete(int $orgId): void
+    {
+        $cacheValue = self::fetchOrganisationCache($orgId);
+        $cacheValue[self::STEP] = self::IMPORTING_COMPLETE;
+
+        Cache::put(self::generateCacheKey($orgId), $cacheValue);
     }
 
     /**
@@ -196,21 +193,24 @@ class ImportCacheHelper
      *
      * @return bool
      */
-    public static function organisationHasCompletedValidatingData(int $orgId): bool
+    public static function hasOrganisationFinishedValidationStep(int $orgId): bool
     {
-        return self::getImportStep($orgId) === self::VALIDATING_COMPLETE;
+        return self::fetchCurrentImportStep($orgId) === self::VALIDATING_COMPLETE;
     }
 
     /**
-     * Checks if there is an ongoing import for the given organisation.
+     * Sets the import step to 'validating_complete' for the given organisation.
      *
      * @param int $orgId
      *
-     * @return bool
+     * @return void
      */
-    public static function hasOngoingImport(int $orgId): bool
+    public static function markValidationStepComplete(int $orgId): void
     {
-        return Arr::get(self::getCacheValueForOrganisation($orgId), self::HAS_ONGOING_IMPORT, false);
+        $cacheValue = self::fetchOrganisationCache($orgId);
+        $cacheValue[self::STEP] = self::VALIDATING_COMPLETE;
+
+        Cache::put(self::generateCacheKey($orgId), $cacheValue);
     }
 
     /**
@@ -222,7 +222,7 @@ class ImportCacheHelper
      */
     public static function getSessionConsistentFiletype(int $orgId): ?string
     {
-        return Arr::get(self::getCacheValueForOrganisation($orgId), self::SESSION_IMPORT_FILETYPE, null);
+        return Arr::get(self::fetchOrganisationCache($orgId), self::SESSION_IMPORT_FILETYPE);
     }
 
     /**
@@ -235,9 +235,9 @@ class ImportCacheHelper
      */
     public static function setSessionConsistentFiletype(int $orgId, string $filetype): void
     {
-        $cacheValue = self::getCacheValueForOrganisation($orgId);
+        $cacheValue = self::fetchOrganisationCache($orgId);
         $cacheValue[self::SESSION_IMPORT_FILETYPE] = $filetype;
 
-        Cache::put(self::getCacheKey($orgId), $cacheValue);
+        Cache::put(self::generateCacheKey($orgId), $cacheValue);
     }
 }

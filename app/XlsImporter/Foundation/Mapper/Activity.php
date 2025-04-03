@@ -286,6 +286,7 @@ class Activity
      * Validates mapped data and store them to json files.
      *
      * @return void
+     * @throws \JsonException
      */
     public function validateAndStoreData(): void
     {
@@ -314,7 +315,7 @@ class Activity
                 $this->errorCount['critical'] += count(Arr::get($this->processingErrors, $activityIdentifier));
             }
 
-            if (!ImportCacheHelper::activityAlreadyBeingImported($orgId, $activityIdentifier)) {
+            if (!ImportCacheHelper::isThisActivityBeingImported($orgId, $activityIdentifier)) {
                 $this->storeValidatedData($activity, $error, $existingId, $activityIdentifier);
             }
 

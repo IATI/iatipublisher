@@ -104,13 +104,7 @@ class TransactionRepository extends Repository
      */
     public function deleteTransaction($activityId): bool|int
     {
-        $transactions = $this->model->where('activity_id', $activityId)->get();
-
-        if (!empty($transactions)) {
-            $transactions->each->delete();
-        }
-
-        return false;
+        return $this->model->where('activity_id', $activityId)->forceDelete();
     }
 
     /**
@@ -153,5 +147,76 @@ class TransactionRepository extends Repository
     public function bulkDeleteTransactions(array $transactionIds): bool
     {
         return (bool) $this->model->whereIn('id', $transactionIds)->delete();
+    }
+
+    public function bulkDeleteTransactionsByActivityIds(array $activityIds): bool
+    {
+        if (empty($activityIds)) {
+            return false;
+        }
+
+        $chunks = array_chunk($activityIds, 500);
+
+        foreach ($chunks as $chunk) {
+            $this->model->whereIn('activity_id', $chunk)->delete();
+        }
+
+        return true;
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function createTransactions(array $allActivityData, array $allActivityIdsMappedToActivityIdentifiers, array $defaultFieldValuesMappedToActivityIdentifier): int
+    {
+        $preparedData = $this->prepareAllTransactionDataToUpsert($allActivityData, $allActivityIdsMappedToActivityIdentifiers, $defaultFieldValuesMappedToActivityIdentifier);
+
+        if (empty($preparedData)) {
+            return 0;
+        }
+
+        $chunks = array_chunk($preparedData, 500);
+        $totalInsertedRows = 0;
+
+        foreach ($chunks as $chunk) {
+            $totalInsertedRows += $this->model->insert($chunk);
+        }
+
+        return $totalInsertedRows;
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    private function prepareAllTransactionDataToUpsert(array $allActivityData, array $allActivityIdsMappedToActivityIdentifiers, array $defaultFieldValuesMappedToActivityIdentifier): array
+    {
+        $preparedData = [];
+
+        foreach ($allActivityData as $activityIdentifier => $activityData) {
+            if (!empty($activityData['transactions'])) {
+                $defaultFieldValues = $defaultFieldValuesMappedToActivityIdentifier[$activityIdentifier];
+
+                foreach ($activityData['transactions'] as $transaction) {
+                    $activityId = $allActivityIdsMappedToActivityIdentifiers[$activityIdentifier];
+
+                    $transactionData = [
+                        'transaction'            => $transaction,
+                        'deprecation_status_map' => refreshTransactionDeprecationStatusMap($transaction),
+                    ];
+
+                    $transactionData = $this->populateDefaultFields($transactionData, $defaultFieldValues);
+
+                    $transactionData = [
+                        'activity_id'            => $activityId,
+                        'transaction'            => json_encode($transactionData['transaction'], JSON_THROW_ON_ERROR),
+                        'deprecation_status_map' => json_encode($transactionData['deprecation_status_map'], JSON_THROW_ON_ERROR),
+                    ];
+
+                    $preparedData[] = $transactionData;
+                }
+            }
+        }
+
+        return $preparedData;
     }
 }

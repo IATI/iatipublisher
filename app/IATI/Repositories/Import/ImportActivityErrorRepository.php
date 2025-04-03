@@ -62,4 +62,28 @@ class ImportActivityErrorRepository extends Repository
     {
         return (bool) $this->model->where('activity_id', $activityId)->delete();
     }
+
+    /**
+     * Delete import_status where activity_id in array.
+     *
+     * @param array $activityIds
+     *
+     * @return bool
+     */
+    public function deleteByActivityIds(array $activityIds): bool
+    {
+        return (bool) $this->model->where('activity_id', $activityIds)->delete();
+    }
+
+    /**
+     * Upsert import_status by activity_id.
+     *
+     * @param array $importActivityErrorsToUpsert
+     *
+     * @return bool
+     */
+    public function updateOrCreateErrorByActivityIds(array $importActivityErrorsToUpsert): bool
+    {
+        return $this->model->insert($importActivityErrorsToUpsert);
+    }
 }

@@ -146,7 +146,7 @@ class XmlQueueWriter
     {
         $activityIdentifier = Arr::get($mappedActivity, 'iati_identifier.activity_identifier');
 
-        if (ImportCacheHelper::activityAlreadyBeingImported($this->orgId, $activityIdentifier)) {
+        if (ImportCacheHelper::isThisActivityBeingImported($this->orgId, $activityIdentifier)) {
             return false;
         }
 
