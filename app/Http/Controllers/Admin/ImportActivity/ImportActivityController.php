@@ -252,7 +252,7 @@ class ImportActivityController extends Controller
 
             logger('CSV-XML importValidatedActivities step: before return');
 
-            $translatedMessage = trans('workflow_backend/import_activity_controller..imported_data_successfully');
+            $translatedMessage = trans('workflow_backend/import_activity_controller.imported_data_successfully');
             Session::flash('success', $translatedMessage);
 
             return response()->json(['success' => true, 'message' => $translatedMessage, 'type' => $filetype]);
