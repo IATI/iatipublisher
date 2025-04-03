@@ -199,18 +199,6 @@ class ImportCacheHelper
     }
 
     /**
-     * Checks if the organisation has completed importing data.
-     *
-     * @param int $orgId
-     *
-     * @return void
-     */
-    public static function organisationHasCompletedImportingData(int $orgId): void
-    {
-        self::setImportStepToImportingComplete($orgId);
-    }
-
-    /**
      * Sets the import step to 'validating_complete' for the given organisation.
      *
      * @param int $orgId

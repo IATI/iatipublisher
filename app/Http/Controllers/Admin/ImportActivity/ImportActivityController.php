@@ -214,10 +214,11 @@ class ImportActivityController extends Controller
             logger('CSV-XML importValidatedActivities step: 2');
             if (!ImportCacheHelper::hasOrganisationFinishedValidationStep($orgId)) {
                 logger('CSV-XML importValidatedActivities step: 3');
-                Session::put('error', 'No data to import.');
+
                 ImportCacheHelper::clearImportCache(Auth::user()->organization_id);
 
                 $translatedMessage = trans('workflow_backend/import_activity_controller.no_data_to_import');
+                Session::flash('error', $translatedMessage);
 
                 return response()->json(['success' => false, 'message' => $translatedMessage, 'type' => $filetype]);
             }
@@ -283,7 +284,6 @@ class ImportActivityController extends Controller
             logger('CSV-XML import step 2');
             $orgId = Auth::user()->organization_id;
             $userId = Auth::user()->id;
-            dd($_SESSION, ImportCacheHelper::getSessionConsistentFiletype($orgId));
             $filetype = Session::get('import_filetype') ?? ImportCacheHelper::getSessionConsistentFiletype($orgId);
 
             logger('CSV-XML import step 3');
@@ -303,9 +303,9 @@ class ImportActivityController extends Controller
                 $translatedMessage = 'Something went wrong. Please try again.';
 
                 Session::flash('error', $translatedMessage);
+
                 $this->importStatusService->deleteOngoingImports($orgId);
 
-                //TODO : Clear cache here.
                 return redirect()->route('admin.activities.index');
             }
 
@@ -403,15 +403,12 @@ class ImportActivityController extends Controller
 
             if (!$data) {
                 logger('CSV-XML import step listing step 9');
-                //TODO: Clear cache here.
-                $translatedMessage = trans('workflow_backend/import_activity_controller.error_has_occurred_while_importing_activities');
 
-                Session::flash('error', $translatedMessage);
+                throw new Exception();
             }
 
             logger('CSV-XML import step listing step 10');
 
-            //TODO: FE polling handling here.
             return response()->json(['status' => $status, 'data' => $data]);
         } catch (Exception $e) {
             $this->deleteOngoingImports();
