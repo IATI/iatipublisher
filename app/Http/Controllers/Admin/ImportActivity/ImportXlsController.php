@@ -367,7 +367,7 @@ class ImportXlsController extends Controller
 
             $importData = $this->importXlsService->getAwsXlsData('valid.json');
             logger('XLS import step 4');
-            logger($importData);
+//            logger($importData);
             $globalError = $this->importXlsService->getAwsXlsData('globalError.json');
             logger('XLS import step 5');
             logger(json_encode($globalError));

@@ -481,6 +481,10 @@ class ImportXmlService
     public function loadJsonFile($filename): mixed
     {
         try {
+            $filePath = sprintf('%s/%s/%s/%s', $this->xml_data_storage_path, Auth::user()->organization_id, Auth::user()->id, $filename);
+            logger('$filePath');
+            logger($filePath);
+
             $contents = awsGetFile(
                 sprintf(
                     '%s/%s/%s/%s',
@@ -490,6 +494,9 @@ class ImportXmlService
                     $filename
                 )
             );
+
+            logger('$contents');
+            logger($contents);
 
             if ($contents) {
                 return json_decode($contents, false, 512, JSON_THROW_ON_ERROR);
