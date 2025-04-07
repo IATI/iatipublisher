@@ -202,7 +202,7 @@ class ImportXlsService
      *
      * @throws \JsonException
      */
-    public function saveActivities($activities, $contents = false)
+    public function saveActivities($activities, $contents = false): bool
     {
         $orgId = (int) Auth::user()->organization->id;
         $userId = Auth::user()->id;
