@@ -1087,6 +1087,10 @@ class ActivityRepository extends Repository
             return false;
         }
 
+        foreach ($preparedData as $activity) {
+            logger($activity);
+        }
+
         return (bool) $this->model->where('org_id', $orgId)->upsert(
             values  : $preparedData,
             uniqueBy: ['org_id', 'activity_identifier'],
@@ -1099,6 +1103,46 @@ class ActivityRepository extends Repository
      */
     public function prepareAllActivityDataToUpsert(int $orgId, array $activitiesToUpsert): array
     {
+        $activityProperties = [
+            'complete_percentage',
+            'element_status',
+            'activity_date',
+            'activity_identifier',
+            'activity_scope',
+            'activity_status',
+            'budget',
+            'capital_spend',
+            'collaboration_type',
+            'conditions',
+            'contact_info',
+            'country_budget_items',
+            'default_aid_type',
+            'default_field_values',
+            'default_finance_type',
+            'default_flow_type',
+            'default_tied_status',
+            'deprecation_status_map',
+            'description',
+            'document_link',
+            'humanitarian_scope',
+            'iati_identifier',
+            'legacy_data',
+            'location',
+            'org_id',
+            'other_identifier',
+            'participating_org',
+            'planned_disbursement',
+            'policy_marker',
+            'recipient_country',
+            'recipient_region',
+            'related_activity',
+            'reporting_org',
+            'sector',
+            'tag',
+            'title',
+            'upload_medium',
+        ];
+
         $preparedData = [];
 
         foreach ($activitiesToUpsert as $activity) {
@@ -1112,9 +1156,12 @@ class ActivityRepository extends Repository
                 $activity = $this->populateDefaultFields($activity, $defaultFieldValues);
                 $activity['default_field_values'] = $defaultFieldValues;
 
-                foreach ($activity as $key => $properties) {
-                    if ($properties && is_array($properties)) {
-                        $activity[$key] = json_encode($properties, JSON_THROW_ON_ERROR);
+                foreach ($activityProperties as $property) {
+                    $value = Arr::get($activity, $property);
+                    $activity[$property] = $value;
+
+                    if ($value && is_array($value)) {
+                        $activity[$property] = json_encode($value, JSON_THROW_ON_ERROR);
                     }
                 }
 
