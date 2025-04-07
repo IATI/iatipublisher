@@ -77,7 +77,7 @@ class IdentifierRequest extends FormRequest
         }
 
         return [
-            'activity_identifier' => ['required', Rule::notIn($activityIdentifiers), new NoSpacesInBetweenInActivityIdentifier(), new NoLeadingWhiteSpaceInActivityIdentifier(request()->get('iati_identifier_text'), $authUser->organization->identifier)],
+            'activity_identifier' => ['required', Rule::notIn($activityIdentifiers), new NoSpacesInBetweenInActivityIdentifier(), new NoLeadingWhiteSpaceInActivityIdentifier(request()->get('iati_identifier_text') ?? '', $authUser->organization->identifier)],
         ];
     }
 
@@ -103,7 +103,7 @@ class IdentifierRequest extends FormRequest
         ];
 
         if ($fileUploadType === 'xml' && $authUser) {
-            $rules[$ruleKey][] = new NoLeadingWhiteSpaceInActivityIdentifier($iatiIdentifierText, $authUser->organization->identifier);
+            $rules[$ruleKey][] = new NoLeadingWhiteSpaceInActivityIdentifier($iatiIdentifierText ?? '', $authUser->organization->identifier);
         }
 
         return $rules;

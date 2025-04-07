@@ -76,6 +76,7 @@ class Activity extends Model implements Auditable
         'updated_at',
         'has_ever_been_published',
         'deprecation_status_map',
+        'activity_identifier',
     ];
 
     /**
@@ -130,6 +131,22 @@ class Activity extends Model implements Auditable
         static::saving(
             function ($model) {
                 if (Auth::check()) {
+                    if (!empty($model->iati_identifier) && empty($model->activity_identifier)) {
+                        $model->activity_identifier = Arr::get($model->iati_identifier, 'activity_identifier');
+                    }
+
+                    if (!Arr::get($model->iati_identifier, 'iati_identifier_text')) {
+                        $organisationIdentifier = Auth::user()->organization->identifier;
+                        $activityIdentifier = $model->iati_identifier;
+                        $iatiIdentifier = [
+                            'iati_identifier' => $activityIdentifier,
+                            'iati_identifier_text' => $organisationIdentifier . '-' . $model->iati_identifier_text,
+                            'present_organization_identifier' => $organisationIdentifier,
+                        ];
+
+                        $model->iati_identifier = $iatiIdentifier;
+                    }
+
                     $model->created_by = auth()->user()->id;
                     $model->updated_by = auth()->user()->id;
                 }

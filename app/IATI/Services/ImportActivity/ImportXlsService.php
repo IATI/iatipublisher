@@ -16,6 +16,7 @@ use App\IATI\Services\ElementCompleteService;
 use App\XlsImporter\Events\XlsWasUploaded;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
@@ -73,17 +74,20 @@ class ImportXlsService
 
     private ElementCompleteService $elementCompleteService;
 
+    private ActivityService $activityService;
+
     /**
      * XmlImportManager constructor.
      *
-     * @param ActivityRepository    $activityRepository
-     * @param TransactionRepository $transactionRepository
-     * @param ResultRepository      $resultRepository
-     * @param PeriodRepository      $periodRepository
-     * @param IndicatorRepository   $indicatorRepository
-     * @param ImportActivityErrorRepository  $importActivityErrorRepo
-     * @param ImportStatusRepository  $importStatusRepo
-     * @param XmlService            $xmlService
+     * @param ActivityRepository                          $activityRepository
+     * @param TransactionRepository                       $transactionRepository
+     * @param ResultRepository                            $resultRepository
+     * @param PeriodRepository                            $periodRepository
+     * @param IndicatorRepository                         $indicatorRepository
+     * @param ImportActivityErrorRepository               $importActivityErrorRepo
+     * @param ImportStatusRepository                      $importStatusRepo
+     * @param ElementCompleteService   $elementCompleteService
+     * @param ActivityService $activityService
      */
     public function __construct(
         ActivityRepository $activityRepository,
@@ -94,6 +98,7 @@ class ImportXlsService
         ImportActivityErrorRepository $importActivityErrorRepo,
         ImportStatusRepository $importStatusRepo,
         ElementCompleteService $elementCompleteService,
+        ActivityService $activityService,
     ) {
         $this->transactionRepository = $transactionRepository;
         $this->activityRepository = $activityRepository;
@@ -103,6 +108,7 @@ class ImportXlsService
         $this->importStatusRepo = $importStatusRepo;
         $this->periodRepository = $periodRepository;
         $this->elementCompleteService = $elementCompleteService;
+        $this->activityService = $activityService;
         $this->xls_file_storage_path = env('XLS_FILE_STORAGE_PATH', 'XlsImporter/file');
         $this->xls_data_storage_path = env('XLS_DATA_STORAGE_PATH', 'XlsImporter/tmp');
     }
@@ -172,8 +178,6 @@ class ImportXlsService
      * @param $activityId
      *
      * @return $this
-     * @throws \JsonException
-     * @throws \ReflectionException
      */
     protected function saveTransactions($transactions, $activityId): static
     {
@@ -187,7 +191,6 @@ class ImportXlsService
                     'deprecation_status_map'=>json_encode(refreshTransactionDeprecationStatusMap($transaction)),
                 ];
             }
-
             $this->transactionRepository->upsert($transactionList, 'id');
         }
 
@@ -197,111 +200,215 @@ class ImportXlsService
     /**
      * Save result of mapped activity in database.
      *
-     * @param $activities
-     *
-     * @return void
-     *
-     * @throws BindingResolutionException
      * @throws \JsonException
-     * @throws \ReflectionException
      */
-    protected function saveActivities($activities): void
+    public function saveActivities($activities, $contents = false): bool
     {
-        $organizationId = Auth::user()->organization->id;
+        $orgId = (int) Auth::user()->organization->id;
         $userId = Auth::user()->id;
-        $contents = json_decode(awsGetFile(sprintf('%s/%s/%s/%s', $this->xls_data_storage_path, $organizationId, $userId, 'valid.json')), false, 512, JSON_THROW_ON_ERROR | 0);
+        $filepath = sprintf('%s/%s/%s/%s', $this->xls_data_storage_path, $orgId, $userId, 'valid.json');
+
+        if (!$contents) {
+            $contents = json_decode(awsGetFile($filepath), false, 512, JSON_THROW_ON_ERROR | 0);
+        }
+
+        logger('$filepath');
+        logger($filepath);
+
+        $organizationIdentifier = Auth::user()->organization->identifier;
+        $defaultValues = $this->activityService->getDefaultValues();
+
+        $activitiesToUpsert = [];
+        $allActivityIdentifiers = [];
+        $defaultFieldValuesMappedToActivityIdentifier = [];
 
         foreach ($activities as $value) {
-            $storeActivity = null;
-            $activity = unsetErrorFields($contents[$value]);
-            $activity['data'] = unsetDeprecatedFieldValues(Arr::get($activity, 'data', []));
+            $activityInfo = $this->formatActivityInfo($contents[$value]);
+            $activityIdentifier = Arr::get($activityInfo, 'identifier', 'iati_identifier.activity_identifier');
 
-            $activityData = Arr::get($activity, 'data', []);
-
-            $organizationId = Auth::user()->organization->id;
-            $existingId = Arr::get($activity, 'existing', false);
-
-            if ($existingId || $this->activityRepository->getActivityWithIdentifier($organizationId, Arr::get($activityData, 'iati_identifier.activity_identifier'))) {
-                $oldActivity = $this->activityRepository->find($existingId);
-                $activityData = $this->fillActivityData($activityData);
-                $activityData['upload_medium'] = 'xls';
-                $activityData['deprecation_status_map'] = refreshActivityDeprecationStatusMap($activityData);
-
-                if ($oldActivity['has_ever_been_published']) {
-                    $activityData['iati_identifier']['iati_identifier_text'] = $oldActivity['iati_identifier']['iati_identifier_text'];
-                    $activityData['iati_identifier']['present_organization_identifier'] = $oldActivity['iati_identifier']['present_organization_identifier'];
-                }
-
-                $this->activityRepository->update($existingId, $activityData);
-                $this->transactionRepository->deleteTransaction($existingId);
-                $this->saveTransactions(Arr::get($activityData, 'transactions', []), $existingId);
-
-                $storeActivity = $this->activityRepository->find($existingId);
-
-                if (!empty($activity['errors'])) {
-                    $this->importActivityErrorRepo->updateOrCreateError($existingId, $activity['errors']);
-                } else {
-                    $this->importActivityErrorRepo->deleteImportError($existingId);
-                }
+            if ($this->isExistingActivity($activityInfo, $orgId, $activityIdentifier)) {
+                $activityData = $this->handleExistingActivity($organizationIdentifier, $activityInfo);
             } else {
-                /** @var $activityService ActivityService */
-                $activityService = app(ActivityService::class);
-                $organizationIdentifier = Auth::user()->organization->identifier;
-                $defaultValues = $activityService->getDefaultValues();
-
-                $activityData['org_id'] = $organizationId;
-                $activityData['upload_medium'] = 'xls';
-
-                $activityData['collaboration_type'] = $this->getIntOrNullFromActivityDataOrDefaultValues(
-                    activityData         : $activityData,
-                    activityDataAccessKey: 'collaboration_type',
-                    defaultValues        : $defaultValues,
-                    defaultDataKey       : 'default_collaboration_type'
-                );
-                $activityData['flow_type'] = $this->getIntOrNullFromActivityDataOrDefaultValues(
-                    activityData         : $activityData,
-                    activityDataAccessKey: 'flow_type',
-                    defaultValues        : $defaultValues,
-                    defaultDataKey       : 'default_flow_type'
-                );
-                $activityData['finance_type'] = $this->getIntOrNullFromActivityDataOrDefaultValues(
-                    activityData         : $activityData,
-                    activityDataAccessKey: 'finance_type',
-                    defaultValues        : $defaultValues,
-                    defaultDataKey       : 'default_finance_type'
-                );
-                $activityData['tied_status'] = $this->getIntOrNullFromActivityDataOrDefaultValues(
-                    activityData         : $activityData,
-                    activityDataAccessKey: 'tied_status',
-                    defaultValues        : $defaultValues,
-                    defaultDataKey       : 'default_tied_status'
-                );
-
-                $activityData['iati_identifier']['iati_identifier_text'] = $organizationIdentifier . '-' . $activityData['iati_identifier']['activity_identifier'];
-                $activityData['iati_identifier']['present_organization_identifier'] = $organizationIdentifier;
-                $activityData['iati_identifier'] = trimStringValueInArray($activityData['iati_identifier']);
-
-                if (isset($defaultValues['default_aid_type']) && !empty($defaultValues['default_aid_type'])) {
-                    $activityData['default_aid_type'] = [
-                        [
-                            'default_aid_type_vocabulary' => '1',
-                            'default_aid_type' => $defaultValues['default_aid_type'],
-                        ],
-                    ];
-                }
-
-                $storeActivity = $this->activityRepository->store($activityData);
-                $this->saveTransactions(Arr::get($activityData, 'transactions', []), $storeActivity->id);
-
-                if (!empty($activity['errors'])) {
-                    $this->importActivityErrorRepo->updateOrCreateError($storeActivity->id, $activity['errors']);
-                }
+                $activityData = $this->handleNewActivity($organizationIdentifier, $activityInfo, $defaultValues);
             }
 
-            $this->elementCompleteService->refreshElementStatus(
-                $this->activityRepository->getActivitityWithRelationsById($storeActivity->id)
-            );
+            $activityData['org_id'] = $orgId;
+            $activityData['upload_medium'] = 'xls';
+            $activityData['deprecation_status_map'] = refreshActivityDeprecationStatusMap($activityData);
+            $activityData['errors'] = Arr::get($activityInfo, 'errors', []);
+
+            $allActivityIdentifiers[] = $activityIdentifier;
+            $activitiesToUpsert[$activityIdentifier] = $activityData;
+            $defaultFieldValuesMappedToActivityIdentifier[$activityIdentifier] = $defaultValues;
         }
+
+        return $this->performAllDatabaseWriteOperations($orgId, $activitiesToUpsert, $allActivityIdentifiers, $defaultFieldValuesMappedToActivityIdentifier);
+    }
+
+    /**
+     * Unset Error values and Deprecated values if any.
+     *
+     * @param array|\stdClass $activityInfo
+     *
+     * @return array
+     * @throws \JsonException
+     */
+    private function formatActivityInfo(array|\stdClass $activityInfo): array
+    {
+        $activityInfo = unsetErrorFields($activityInfo);
+        $activityInfo['data'] = unsetDeprecatedFieldValues(Arr::get($activityInfo, 'data', []));
+
+        return $activityInfo;
+    }
+
+    /**
+     * Check if new or existing activity.
+     *
+     * @param array  $activity
+     * @param int    $orgId
+     * @param string $activityIdentifier
+     *
+     * @return bool
+     */
+    private function isExistingActivity(array $activity, int $orgId, string $activityIdentifier): bool
+    {
+        return Arr::get($activity, 'existing', false) || $this->activityRepository->getActivityWithIdentifier($orgId, $activityIdentifier);
+    }
+
+    /**
+     *  Prepare data for existing activity case.
+     *  Prepare: collaboration_type, flow_type, finance_type, tied_status, iati_identifier, default_aid_type.
+     *
+     * @param string $organizationIdentifier
+     * @param array  $activity
+     * @param array  $defaultValues
+     *
+     * @return array
+     */
+    private function handleNewActivity(string $organizationIdentifier, array $activity, array $defaultValues): array
+    {
+        $activityData = Arr::get($activity, 'data', []);
+
+        $activityData['collaboration_type'] = $this->getIntOrNullFromActivityDataOrDefaultValues(
+            activityData         : $activityData,
+            activityDataAccessKey: 'collaboration_type',
+            defaultValues        : $defaultValues,
+            defaultDataKey       : 'default_collaboration_type'
+        );
+//        $activityData['flow_type'] = $this->getIntOrNullFromActivityDataOrDefaultValues(
+//            activityData         : $activityData,
+//            activityDataAccessKey: 'flow_type',
+//            defaultValues        : $defaultValues,
+//            defaultDataKey       : 'default_flow_type'
+//        );
+//        $activityData['finance_type'] = $this->getIntOrNullFromActivityDataOrDefaultValues(
+//            activityData         : $activityData,
+//            activityDataAccessKey: 'finance_type',
+//            defaultValues        : $defaultValues,
+//            defaultDataKey       : 'default_finance_type'
+//        );
+//        $activityData['tied_status'] = $this->getIntOrNullFromActivityDataOrDefaultValues(
+//            activityData         : $activityData,
+//            activityDataAccessKey: 'tied_status',
+//            defaultValues        : $defaultValues,
+//            defaultDataKey       : 'default_tied_status'
+//        );
+
+        $activityData['iati_identifier'] = [
+            'activity_identifier'             => $activityData['iati_identifier']['activity_identifier'],
+            'iati_identifier_text'            => $organizationIdentifier . '-' . $activityData['iati_identifier']['activity_identifier'],
+            'present_organization_identifier' => $organizationIdentifier,
+        ];
+
+        if (!empty($defaultValues['default_aid_type'])) {
+            $activityData['default_aid_type'] = [
+                [
+                    'default_aid_type_vocabulary' => '1',
+                    'default_aid_type'            => $defaultValues['default_aid_type'],
+                ],
+            ];
+        }
+
+        return trimStringValueInArray($activityData);
+    }
+
+    /**
+     * Prepare data for existing activity case.
+     * Prepare: iati_identifier field.
+     *
+     * @param string $organizationIdentifier
+     * @param array  $activity
+     *
+     * @return array
+     */
+    private function handleExistingActivity(string $organizationIdentifier, array $activity): array
+    {
+        $existingId = Arr::get($activity, 'existing');
+
+        $oldActivity = $this->activityRepository->find($existingId);
+        $activityData = $this->fillActivityData(Arr::get($activity, 'data', []));
+
+        if ($oldActivity['has_ever_been_published']) {
+            $activityData['iati_identifier'] = $oldActivity['iati_identifier'];
+        } else {
+            $activityData['iati_identifier'] = [
+                'activity_identifier'             => $activityData['iati_identifier']['activity_identifier'],
+                'iati_identifier_text'            => $organizationIdentifier . '-' . $activityData['iati_identifier']['activity_identifier'],
+                'present_organization_identifier' => $organizationIdentifier,
+            ];
+        }
+
+        return trimStringValueInArray($activityData);
+    }
+
+    /**
+     * @param int   $orgId
+     * @param array $activitiesToUpsert
+     * @param array $allActivityIdentifiers
+     * @param array $defaultFieldValuesMappedToActivityIdentifier
+     *
+     * @return bool
+     *
+     * @throws \JsonException
+     */
+    private function performAllDatabaseWriteOperations(int $orgId, array $activitiesToUpsert, array $allActivityIdentifiers, array $defaultFieldValuesMappedToActivityIdentifier): bool
+    {
+        $importActivityErrorsToInsert = [];
+
+        /** Save all activities, all at once. */
+        $activityDataForUpsert = $this->activityRepository->prepareAllActivityDataToUpsert($orgId, $activitiesToUpsert, $defaultFieldValuesMappedToActivityIdentifier);
+        $this->activityRepository->createOrUpdateActivities($orgId, $activityDataForUpsert);
+
+        $activityIdsMapped = $this->activityRepository->getActivityIdsByIdentifier($orgId, $allActivityIdentifiers);
+        $storedActivityIds = array_values($activityIdsMapped);
+
+        /* Delete all transactions and create new transactions, all at once.*/
+        $this->transactionRepository->bulkDeleteTransactionsByActivityIds($storedActivityIds);
+        $this->transactionRepository->createTransactions($activitiesToUpsert, $activityIdsMapped, $defaultFieldValuesMappedToActivityIdentifier);
+
+        foreach ($activitiesToUpsert as $activityData) {
+            $activityIdentifier = Arr::get($activityData, 'iati_identifier.activity_identifier');
+            $activityId = Arr::get($activityIdsMapped, $activityIdentifier);
+
+            /* Prepare data for either deleting OR update/insert import_activity_error record */
+            if (!empty($activityData['errors'])) {
+                $importActivityErrorsToInsert[] = [
+                    'activity_id' => $activityId,
+                    'error'       => json_encode($activityData['errors'], JSON_THROW_ON_ERROR),
+                ];
+            }
+        }
+
+        /* Delete some and upsert some import_activity_error. */
+        $this->importActivityErrorRepo->deleteByActivityIds(array_values($activityIdsMapped));
+        $this->importActivityErrorRepo->updateOrCreateErrorByActivityIds($importActivityErrorsToInsert);
+
+        /** Recalc element_status and complete_percentage once all transactions and activities are created. */
+        $storedActivities = $this->activityRepository->getActivitiesHavingIds($storedActivityIds);
+        $finalActivityData = $this->prepareActivityDataWithElementStatus($storedActivities);
+        $finalActivityDataForUpsert = $this->activityRepository->prepareAllActivityDataToUpsert($orgId, $finalActivityData);
+
+        return $this->activityRepository->createOrUpdateActivities($orgId, $finalActivityDataForUpsert, ['element_status', 'complete_percentage']);
     }
 
     public function getIntOrNullFromActivityDataOrDefaultValues(
@@ -383,7 +490,7 @@ class ImportXlsService
      */
     protected function saveResults($results): bool
     {
-        $organizationId = Auth::user()->organization->id;
+        $organizationId = (int) Auth::user()->organization->id;
         $userId = Auth::user()->id;
         $identifiers = $this->dbIatiIdentifiers($organizationId, 'activity');
         $contents = json_decode(awsGetFile(sprintf('%s/%s/%s/%s', $this->xls_data_storage_path, $organizationId, $userId, 'valid.json')), false, 512, 0);
@@ -723,5 +830,16 @@ class ImportXlsService
         }
 
         return [];
+    }
+
+    /**
+     * @param Collection<\App\IATI\Models\Activity\Activity> $activities
+     *
+     * @return array
+     * @throws \JsonException
+     */
+    private function prepareActivityDataWithElementStatus(Collection $activities): array
+    {
+        return $this->elementCompleteService->refreshElementStatusForMultipleActivities($activities);
     }
 }

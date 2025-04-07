@@ -216,4 +216,16 @@ class ResultRepository extends Repository
             ->first()
             ->toArray();
     }
+
+    /**
+     * Delete results where activity_id in array.
+     *
+     * @param array $activityIds
+     *
+     * @return bool
+     */
+    public function bulkDeleteResultsByActivityIds(array $activityIds):bool
+    {
+        return (bool) $this->model->whereIn('activity_id', $activityIds)->delete();
+    }
 }

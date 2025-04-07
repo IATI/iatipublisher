@@ -37,6 +37,7 @@ class ContactInfoTest extends TestCase
                     'language'  => 'en',
                 ],
             ],
+            'activity_identifier'=>'SYRZ000041',
         ]);
 
         $postData = [
@@ -133,6 +134,7 @@ class ContactInfoTest extends TestCase
                 'iati_identifier_text'            => 'CZ-ICO-25755277-SYRZ000041',
                 'present_organization_identifier' => 'CZ-ICO-25755277',
             ],
+            'activity_identifier'=>'SYRZ000041',
             'title'           => [
                 [
                     'narrative' => 'DGGF Track 3',
@@ -230,6 +232,7 @@ class ContactInfoTest extends TestCase
                 'iati_identifier_text'            => 'CZ-ICO-25755277-SYRZ000041',
                 'present_organization_identifier' => 'CZ-ICO-25755277',
             ],
+            'activity_identifier'=>'SYRZ000041',
             'title'           => [
                 [
                     'narrative' => 'DGGF Track 3',
@@ -328,6 +331,7 @@ class ContactInfoTest extends TestCase
                 'iati_identifier_text'            => 'CZ-ICO-25755277-SYRZ000041',
                 'present_organization_identifier' => 'CZ-ICO-25755277',
             ],
+            'activity_identifier'=>'SYRZ000041',
             'title'           => [
                 [
                     'narrative' => 'DGGF Track 3',
@@ -426,6 +430,7 @@ class ContactInfoTest extends TestCase
                 'iati_identifier_text'            => 'CZ-ICO-25755277-SYRZ000041',
                 'present_organization_identifier' => 'CZ-ICO-25755277',
             ],
+            'activity_identifier'=>'SYRZ000041',
             'title'           => [
                 [
                     'narrative' => 'DGGF Track 3',
@@ -523,6 +528,7 @@ class ContactInfoTest extends TestCase
                 'iati_identifier_text'            => 'CZ-ICO-25755277-SYRZ000041',
                 'present_organization_identifier' => 'CZ-ICO-25755277',
             ],
+            'activity_identifier'=>'SYRZ000041',
             'title'           => [
                 [
                     'narrative' => 'DGGF Track 3',
