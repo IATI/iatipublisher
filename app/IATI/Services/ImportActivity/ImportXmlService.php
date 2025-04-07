@@ -605,9 +605,10 @@ class ImportXmlService
 
         /* Delete all results and then create result->indicator->period, for each activity. */
         $this->resultRepository->bulkDeleteResultsByActivityIds($storedActivityIds);
+
         foreach ($activitiesToUpsert as $activityData) {
             $activityIdentifier = Arr::get($activityData, 'iati_identifier.activity_identifier');
-            $activityId = Arr::get($allActivityIdentifiers, $activityIdentifier);
+            $activityId = Arr::get($activityIdsMapped, $activityIdentifier);
 
             $this->saveResults(
                 Arr::get($activityData, 'result', []),

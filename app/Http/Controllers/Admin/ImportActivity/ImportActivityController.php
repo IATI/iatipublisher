@@ -205,9 +205,6 @@ class ImportActivityController extends Controller
             $this->db->beginTransaction();
             $activities = $request->get('activities');
 
-            logger('activities');
-            logger($activities);
-
             $orgId = Auth::user()->organization_id;
             $filetype = Session::get('import_filetype') ?? ImportCacheHelper::getSessionConsistentFiletype($orgId);
 

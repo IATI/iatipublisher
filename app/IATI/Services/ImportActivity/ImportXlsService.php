@@ -226,7 +226,7 @@ class ImportXlsService
             $activityInfo = $this->formatActivityInfo($contents[$value]);
             $activityIdentifier = Arr::get($activityInfo, 'identifier', 'iati_identifier.activity_identifier');
 
-            if (!$this->isExistingActivity($activityInfo, $orgId, $activityIdentifier)) {
+            if ($this->isExistingActivity($activityInfo, $orgId, $activityIdentifier)) {
                 $activityData = $this->handleExistingActivity($organizationIdentifier, $activityInfo);
             } else {
                 $activityData = $this->handleNewActivity($organizationIdentifier, $activityInfo, $defaultValues);
@@ -344,7 +344,7 @@ class ImportXlsService
     private function handleExistingActivity(string $organizationIdentifier, array $activity): array
     {
         $existingId = Arr::get($activity, 'existing');
-        dd($existingId);
+
         $oldActivity = $this->activityRepository->find($existingId);
         $activityData = $this->fillActivityData(Arr::get($activity, 'data', []));
 

@@ -62,11 +62,12 @@ Route::get('xls-test', function () {
         /** @var $importXlsService \App\IATI\Services\ImportActivity\ImportXlsService */
         $importXlsService = app(App\IATI\Services\ImportActivity\ImportXlsService::class);
 
-        $contents = json_decode(awsGetFile('XlsImporter/tmp/180/254/valid.json'), false, 512, JSON_THROW_ON_ERROR | 0);
+        $contents = json_decode(awsGetFile('XlsImporter/tmp/183/257/valid.json'), false, 512, JSON_THROW_ON_ERROR | 0);
 
         $activities = ['0'=>0];
         $importXlsService->saveActivities($activities, $contents);
+        dd('a');
     } catch (Exception $e) {
         logger()->error($e);
     }
-})->middleware('superadmin')->name('xls-test');
+});
