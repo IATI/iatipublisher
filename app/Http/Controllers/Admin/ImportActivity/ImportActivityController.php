@@ -288,7 +288,7 @@ class ImportActivityController extends Controller
                 logger('CSV-XML import step 4');
                 $translatedMessage = trans('common/common.user_is_not_associated_with_any_organization');
 
-                Session::put('error', $translatedMessage);
+                Session::flash('error', $translatedMessage);
 
                 return redirect()->route('admin.activities.index');
             }
@@ -363,7 +363,7 @@ class ImportActivityController extends Controller
     {
         logger('CSV-XML import step listing step 1');
         try {
-            $orgId = Auth::user()?->organization_id;
+            $orgId = Auth::user()->organization_id;
 
             logger('CSV-XML import step listing step 2');
 
@@ -398,9 +398,8 @@ class ImportActivityController extends Controller
 
             $status = strcasecmp($result->message, 'Complete') === 0;
 
-            if (!$data) {
-                logger('CSV-XML import step listing step 9');
-
+            logger(!$data);
+            if ($status && !$data) {
                 throw new Exception();
             }
 

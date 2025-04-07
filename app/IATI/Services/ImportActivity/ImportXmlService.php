@@ -485,21 +485,11 @@ class ImportXmlService
             logger('$filePath');
             logger($filePath);
 
-            $contents = awsGetFile(
-                sprintf(
-                    '%s/%s/%s/%s',
-                    $this->xml_data_storage_path,
-                    Auth::user()->organization_id,
-                    Auth::user()->id,
-                    $filename
-                )
-            );
+            $contents = awsGetFile($filePath);
 
             if ($contents) {
                 return json_decode($contents, false, 512, JSON_THROW_ON_ERROR);
             }
-
-            return false;
         } catch (Exception $exception) {
             $this->logger->error(
                 sprintf('Error due to %s', $exception->getMessage()),
