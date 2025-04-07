@@ -495,9 +495,6 @@ class ImportXmlService
                 )
             );
 
-            logger('$contents');
-            logger($contents);
-
             if ($contents) {
                 return json_decode($contents, false, 512, JSON_THROW_ON_ERROR);
             }

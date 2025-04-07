@@ -371,4 +371,5 @@ return [
     'reporting_org_of_all_activities'                                                                                                                                 => 'Reporting org of all activities',
     'are_you_sure_you_want_to_save_the_change'                                                                                                                        => 'Are you sure you want to save the change ?',
     'the_xls_file_is_empty'                                                                                                                                           => 'The xlsx file is empty.',
+    'error_opening_data_entry_form'                                                                                                                                   => 'Error opening data entry form.',
 ];
