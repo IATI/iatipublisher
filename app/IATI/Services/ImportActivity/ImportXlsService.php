@@ -222,20 +222,23 @@ class ImportXlsService
         $allActivityIdentifiers = [];
         $defaultFieldValuesMappedToActivityIdentifier = [];
 
+        $dateTimeString = now()->toDateTimeString();
+
         foreach ($activities as $value) {
             $activityInfo = $this->formatActivityInfo($contents[$value]);
             $activityIdentifier = Arr::get($activityInfo, 'identifier', 'iati_identifier.activity_identifier');
 
             if ($this->isExistingActivity($activityInfo, $orgId, $activityIdentifier)) {
-                $activityData = $this->handleExistingActivity($organizationIdentifier, $activityInfo);
+                $activityData = $this->handleExistingActivity($organizationIdentifier, $activityInfo, $dateTimeString);
             } else {
-                $activityData = $this->handleNewActivity($organizationIdentifier, $activityInfo, $defaultValues);
+                $activityData = $this->handleNewActivity($organizationIdentifier, $activityInfo, $defaultValues, $dateTimeString);
             }
 
             $activityData['org_id'] = $orgId;
-            $activityData['upload_medium'] = 'xls';
             $activityData['deprecation_status_map'] = refreshActivityDeprecationStatusMap($activityData);
             $activityData['errors'] = Arr::get($activityInfo, 'errors', []);
+            $activityData['upload_medium'] = 'xls';
+            $activityData['status'] = 'draft';
 
             $allActivityIdentifiers[] = $activityIdentifier;
             $activitiesToUpsert[$activityIdentifier] = $activityData;
@@ -282,10 +285,11 @@ class ImportXlsService
      * @param string $organizationIdentifier
      * @param array  $activity
      * @param array  $defaultValues
+     * @param string $dateTimeString
      *
      * @return array
      */
-    private function handleNewActivity(string $organizationIdentifier, array $activity, array $defaultValues): array
+    private function handleNewActivity(string $organizationIdentifier, array $activity, array $defaultValues, string $dateTimeString): array
     {
         $activityData = Arr::get($activity, 'data', []);
 
@@ -329,6 +333,11 @@ class ImportXlsService
             ];
         }
 
+        $activityData['created_at'] = $dateTimeString;
+        $activityData['updated_at'] = $dateTimeString;
+        $activityData['created_by'] = Auth::user()->id;
+        $activityData['updated_by'] = Auth::user()->id;
+
         return trimStringValueInArray($activityData);
     }
 
@@ -338,10 +347,11 @@ class ImportXlsService
      *
      * @param string $organizationIdentifier
      * @param array  $activity
+     * @param string $dateTimeString
      *
      * @return array
      */
-    private function handleExistingActivity(string $organizationIdentifier, array $activity): array
+    private function handleExistingActivity(string $organizationIdentifier, array $activity, string $dateTimeString): array
     {
         $existingId = Arr::get($activity, 'existing');
 
@@ -350,13 +360,22 @@ class ImportXlsService
 
         if ($oldActivity['has_ever_been_published']) {
             $activityData['iati_identifier'] = $oldActivity['iati_identifier'];
+            $activityData['linked_to_iati'] = $oldActivity['linked_to_iati'];
+            $activityData['has_ever_been_published'] = true;
         } else {
             $activityData['iati_identifier'] = [
                 'activity_identifier'             => $activityData['iati_identifier']['activity_identifier'],
                 'iati_identifier_text'            => $organizationIdentifier . '-' . $activityData['iati_identifier']['activity_identifier'],
                 'present_organization_identifier' => $organizationIdentifier,
             ];
+            $activityData['has_ever_been_published'] = false;
+            $activityData['linked_to_iati'] = false;
         }
+
+        $activityData['created_at'] = $oldActivity['created_at'];
+        $activityData['updated_at'] = $dateTimeString;
+        $activityData['created_by'] = $oldActivity['created_by'];
+        $activityData['updated_by'] = Auth::user()->id;
 
         return trimStringValueInArray($activityData);
     }

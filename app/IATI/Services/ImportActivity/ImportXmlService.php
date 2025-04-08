@@ -302,6 +302,8 @@ class ImportXmlService
         $allActivityIdentifiers = [];
         $defaultFieldValuesMappedToActivityIdentifier = [];
 
+        $dateTimeString = now()->toDateTimeString();
+
         foreach ($activities as $value) {
             $activityInfo = $this->formatActivityInfo($contents[$value]);
             $activityData = Arr::get($activityInfo, 'data', []);
@@ -309,14 +311,16 @@ class ImportXmlService
             $activityIdentifier = Arr::get($activityData, 'iati_identifier.activity_identifier');
 
             if ($this->isExistingActivity($orgId, $activityInfo)) {
-                $activityData = $this->handleExistingActivity($orgId, $organizationIdentifier, $activityData);
+                $activityData = $this->handleExistingActivity($orgId, $organizationIdentifier, $activityData, $dateTimeString);
             } else {
-                $activityData = $this->handleNewActivity($orgId, $organizationIdentifier, $activityData);
+                $activityData = $this->handleNewActivity($orgId, $organizationIdentifier, $activityData, $dateTimeString);
             }
 
             $activityData['transactions'] = Arr::get($activityInfo, 'data.transactions', []);
             $activityData['result'] = Arr::get($activityInfo, 'data.result', []);
             $activityData['errors'] = Arr::get($activityInfo, 'data.errors', []);
+            $activityData['upload_medium'] = 'xml';
+            $activityData['status'] = 'draft';
 
             $allActivityIdentifiers[] = $activityIdentifier;
             $activitiesToUpsert[$activityIdentifier] = $activityData;
@@ -537,21 +541,31 @@ class ImportXmlService
      * @param int    $orgId
      * @param string $organizationIdentifier
      * @param array  $activityData
+     * @param string $dateTimeString
      *
      * @return array
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    private function handleExistingActivity(int $orgId, string $organizationIdentifier, array $activityData): array
+    private function handleExistingActivity(int $orgId, string $organizationIdentifier, array $activityData, string $dateTimeString): array
     {
         $oldActivity = $this->activityRepository->getActivityWithIdentifier($orgId, Arr::get($activityData, 'iati_identifier.activity_identifier'));
 
         if ($oldActivity['has_ever_been_published']) {
             $activityData['iati_identifier']['iati_identifier_text'] = $oldActivity['iati_identifier']['iati_identifier_text'];
             $activityData['iati_identifier']['present_organization_identifier'] = $oldActivity['iati_identifier']['present_organization_identifier'];
+            $activityData['linked_to_iati'] = $oldActivity['linked_to_iati'];
+            $activityData['has_ever_been_published'] = true;
         } else {
             $activityData['iati_identifier']['iati_identifier_text'] = $organizationIdentifier . '-' . Arr::get($activityData, 'identifier.activity_identifier');
             $activityData['iati_identifier']['present_organization_identifier'] = $organizationIdentifier;
+            $activityData['linked_to_iati'] = false;
+            $activityData['has_ever_been_published'] = false;
         }
+
+        $activityData['created_at'] = $oldActivity['created_at'];
+        $activityData['updated_at'] = $dateTimeString;
+        $activityData['created_by'] = $oldActivity['created_by'];
+        $activityData['updated_by'] = Auth::user()->id;
 
         return trimStringValueInArray($this->activityRepository->formatActivityDataForXmlImport($orgId, $activityData));
     }
@@ -559,11 +573,17 @@ class ImportXmlService
     /**
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function handleNewActivity(int $orgId, string $organizationIdentifier, array $activityData): array
+    public function handleNewActivity(int $orgId, string $organizationIdentifier, array $activityData, string $dateTimeString): array
     {
         $activityData['iati_identifier']['iati_identifier_text'] = $organizationIdentifier . '-' . $activityData['iati_identifier']['activity_identifier'];
         $activityData['iati_identifier']['present_organization_identifier'] = $organizationIdentifier;
+
         $activityData = $this->activityRepository->formatActivityDataForXmlImport($orgId, $activityData);
+
+        $activityData['created_at'] = $dateTimeString;
+        $activityData['updated_at'] = $dateTimeString;
+        $activityData['created_by'] = Auth::user()->id;
+        $activityData['updated_by'] = Auth::user()->id;
 
         return trimStringValueInArray($activityData);
     }
