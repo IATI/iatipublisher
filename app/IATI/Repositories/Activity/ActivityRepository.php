@@ -1087,10 +1087,6 @@ class ActivityRepository extends Repository
             return false;
         }
 
-        foreach ($preparedData as $activity) {
-            logger($activity);
-        }
-
         return (bool) $this->model->where('org_id', $orgId)->upsert(
             values  : $preparedData,
             uniqueBy: ['org_id', 'activity_identifier'],
