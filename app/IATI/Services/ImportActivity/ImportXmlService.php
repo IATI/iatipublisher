@@ -584,6 +584,8 @@ class ImportXmlService
         $activityData['updated_at'] = $dateTimeString;
         $activityData['created_by'] = Auth::user()->id;
         $activityData['updated_by'] = Auth::user()->id;
+        $activityData['linked_to_iati'] = false;
+        $activityData['has_ever_been_published'] = false;
 
         return trimStringValueInArray($activityData);
     }
