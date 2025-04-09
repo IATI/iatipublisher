@@ -362,7 +362,7 @@ class ImportXlsService
 
         if ($oldActivity['has_ever_been_published']) {
             $activityData['iati_identifier'] = $oldActivity['iati_identifier'];
-            $activityData['linked_to_iati'] = $oldActivity['linked_to_iati'];
+            $activityData['linked_to_iati'] = $oldActivity['linked_to_iati'] ?? false;
             $activityData['has_ever_been_published'] = true;
         } else {
             $activityData['iati_identifier'] = [

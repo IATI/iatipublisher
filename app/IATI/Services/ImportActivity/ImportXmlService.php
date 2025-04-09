@@ -553,7 +553,7 @@ class ImportXmlService
         if ($oldActivity['has_ever_been_published']) {
             $activityData['iati_identifier']['iati_identifier_text'] = $oldActivity['iati_identifier']['iati_identifier_text'];
             $activityData['iati_identifier']['present_organization_identifier'] = $oldActivity['iati_identifier']['present_organization_identifier'];
-            $activityData['linked_to_iati'] = $oldActivity['linked_to_iati'];
+            $activityData['linked_to_iati'] = $oldActivity['linked_to_iati'] ?? false;
             $activityData['has_ever_been_published'] = true;
         } else {
             $activityData['iati_identifier']['iati_identifier_text'] = $organizationIdentifier . '-' . Arr::get($activityData, 'identifier.activity_identifier');
@@ -567,7 +567,9 @@ class ImportXmlService
         $activityData['created_by'] = $oldActivity['created_by'];
         $activityData['updated_by'] = Auth::user()->id;
 
-        return trimStringValueInArray($this->activityRepository->formatActivityDataForXmlImport($orgId, $activityData));
+        $activityData = $this->activityRepository->formatActivityDataForXmlImport($orgId, $activityData);
+
+        return trimStringValueInArray($activityData);
     }
 
     /**
@@ -578,14 +580,14 @@ class ImportXmlService
         $activityData['iati_identifier']['iati_identifier_text'] = $organizationIdentifier . '-' . $activityData['iati_identifier']['activity_identifier'];
         $activityData['iati_identifier']['present_organization_identifier'] = $organizationIdentifier;
 
-        $activityData = $this->activityRepository->formatActivityDataForXmlImport($orgId, $activityData);
-
         $activityData['created_at'] = $dateTimeString;
         $activityData['updated_at'] = $dateTimeString;
         $activityData['created_by'] = Auth::user()->id;
         $activityData['updated_by'] = Auth::user()->id;
         $activityData['linked_to_iati'] = false;
         $activityData['has_ever_been_published'] = false;
+
+        $activityData = $this->activityRepository->formatActivityDataForXmlImport($orgId, $activityData);
 
         return trimStringValueInArray($activityData);
     }
