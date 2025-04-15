@@ -185,32 +185,36 @@ onUnmounted(() => {
 onMounted(() => {
   window.addEventListener('resize', getDimensions);
   isLoading.value = true;
+
   let count = 0;
+
   timer = setInterval(() => {
     axios
       .get('/import/get-import-list-data')
       .then((res) => {
-        Object.assign(activities, res.data.data);
-        activitiesLength.value = res.data.data.length;
+        const status = res.data.status;
+        const data = res.data.data;
 
-        if (res.data.status) {
+        Object.assign(activities, data || {});
+        activitiesLength.value = data ? data.length : 0;
+
+        if (status === 'error' || (!data && count >= 40)) {
+          clearInterval(timer);
+          isLoading.value = false;
+          window.location.href = '/activities';
+        } else if (status === true) {
           clearInterval(timer);
           isLoading.value = false;
         }
 
-        if (res.data.status === 'error' || (!res.data.data && count >= 40)) {
-          clearInterval(timer);
-          window.location.href = '/activities';
-        }
         count++;
-
         setTimeout(getDimensions, 200);
       })
       .catch(() => {
         console.log('catch ma aayo');
 
         isLoading.value = false;
-
+        clearInterval(timer);
         window.location.href = '/activities';
       });
   }, 3000);
