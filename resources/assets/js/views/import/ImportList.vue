@@ -207,7 +207,10 @@ onMounted(() => {
         setTimeout(getDimensions, 200);
       })
       .catch(() => {
+        console.log('catch ma aayo');
+
         isLoading.value = false;
+
         window.location.href = '/activities';
       });
   }, 3000);

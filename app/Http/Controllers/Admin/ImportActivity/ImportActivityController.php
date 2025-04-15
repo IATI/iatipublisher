@@ -405,7 +405,10 @@ class ImportActivityController extends Controller
 
             logger('CSV-XML import step listing step 10');
 
-            return response()->json(['status' => $status, 'data' => $data]);
+            $returnVal = ['status' => $status, 'data' => $data];
+            logger(json_encode($returnVal));
+
+            return response()->json($returnVal);
         } catch (Exception $e) {
             $this->deleteOngoingImports();
 
