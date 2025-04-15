@@ -1,4 +1,5 @@
 <template>
+  <PageLoader v-if="isLoading" />
   <div class="px-10 py-8">
     <div class="flex flex-wrap justify-between">
       <h6 class="text-3xl font-bold text-n-50">
@@ -135,12 +136,7 @@
       </table>
     </div>
   </div>
-  <Loader
-    v-if="loader"
-    :text="loaderText"
-    :translated-data="translatedData"
-    :class="{ 'animate-loader': loader }"
-  />
+
   <Modal
     :modal-active="showIdentifierErrorModel && showGlobalError"
     width="583"
@@ -264,20 +260,19 @@ import Modal from 'Components/PopupModal.vue';
 import axios from 'axios';
 import Toast from 'Components/ToastMessage.vue';
 import { defineProps, onMounted, ref, nextTick, onUnmounted } from 'vue';
-import Loader from 'Components/sections/ProgressLoader.vue';
 import BtnComponent from 'Components/ButtonComponent.vue';
 import { getTranslatedElement } from 'Composable/utils';
+import PageLoader from 'Components/PageLoader.vue';
 
 // const translatedData = inject('translatedData') as Record<string, string>;
 const selectAll = ref(false);
 const sortOrder = ref('ascending');
 
+const isLoading = ref(false);
+
 const tableRow = ref({});
 const showCriticalErrorModel = ref(false);
 const showIdentifierErrorModel = ref(false);
-
-const loader = ref(false),
-  loaderText = ref('Adding activities');
 
 const showCriticalErrorMessage = ref(false);
 const showGlobalError = ref(true);
@@ -316,10 +311,6 @@ const getDimensions = async () => {
   await nextTick();
   tableWidth.value = tableRow?.value['0']?.clientWidth;
 };
-
-loaderText.value = props.translatedData[
-  'common.common.adding_template'
-].replace(':template', props.status.template);
 
 const sort = () => {
   sortOrder.value === 'ascending'
@@ -389,9 +380,6 @@ onMounted(() => {
     showIdentifierErrorModel.value = true;
   }
   activitiesLength.value = props.importData.length;
-  loaderText.value = props.translatedData[
-    'common.common.adding_template'
-  ].replace(':template', props.status.template);
 });
 
 const cancelImport = () => {
@@ -455,7 +443,7 @@ const countErrors = (activityIndex) => {
 };
 const addActivities = () => {
   if (selectedActivities.value.length > 0) {
-    loader.value = true;
+    isLoading.value = true;
 
     axios
       .post(`/import/xls/activity`, { activities: selectedActivities.value })

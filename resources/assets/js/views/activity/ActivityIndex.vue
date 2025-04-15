@@ -143,6 +143,7 @@ import ErrorMessage from 'Components/ErrorMessage.vue';
 import { useStore } from 'Store/activities';
 import { detailStore } from 'Store/activities/show';
 import { useStorage } from '@vueuse/core';
+import http from 'Composable/http.utils';
 
 const store = useStore();
 const activityStore = detailStore();
@@ -305,38 +306,39 @@ export default defineComponent({
     // for publish button
     const toastMessage = reactive({
       visibility: false,
-
       message: '',
       type: false,
     });
     const pollingForXlsStatus = () => {
       const checkStatus = setInterval(function () {
-        axios.get('/import/xls/status').then((res) => {
-          if (res.data.data?.message === 'Started') {
-            //reset
-            totalCount.value = null;
-            processedCount.value = 0;
-            xlsFailed.value = false;
-            xlsFailedMessage.value = '';
-          } else {
-            totalCount.value = res.data.data?.total_count;
-            processedCount.value = res.data.data?.processed_count;
-            xlsFailed.value = !res.data.data?.success;
-            xlsFailedMessage.value = res.data.data?.message;
-          }
+        http()
+          .get('/import/xls/status')
+          .then((res) => {
+            if (res.data.data?.message === 'Started') {
+              //reset
+              totalCount.value = null;
+              processedCount.value = 0;
+              xlsFailed.value = false;
+              xlsFailedMessage.value = '';
+            } else {
+              totalCount.value = res.data.data?.total_count;
+              processedCount.value = res.data.data?.processed_count;
+              xlsFailed.value = !res.data.data?.success;
+              xlsFailedMessage.value = res.data.data?.message;
+            }
 
-          if (res.data.data?.message === 'Processing') {
-            processing.value = true;
-          }
+            if (res.data.data?.message === 'Processing') {
+              processing.value = true;
+            }
 
-          if (
-            !res.data?.data?.success ||
-            res.data?.data?.message === 'Complete'
-          ) {
-            uploadComplete.value = true;
-            clearInterval(checkStatus);
-          }
-        });
+            if (
+              !res.data?.data?.success ||
+              res.data?.data?.message === 'Complete'
+            ) {
+              uploadComplete.value = true;
+              clearInterval(checkStatus);
+            }
+          });
       }, 2500);
     };
     watch(
@@ -442,6 +444,29 @@ export default defineComponent({
         checkDownloadStatus();
       }
     );
+
+    onMounted(() => {
+      const url = new URL(window.location.href);
+      const searchParams = url.searchParams;
+
+      const cancelParam = searchParams.get('cancel');
+      searchParams.delete('cancel');
+
+      if (cancelParam === 'true') {
+        toastData.type = true;
+        toastData.visibility = true;
+        toastData.message = 'Import cancelled successfully.';
+      } else if (cancelParam === 'false') {
+        toastData.type = false;
+        toastData.visibility = true;
+        toastData.message = 'Something went wrong.';
+      }
+
+      const newQuery = searchParams.toString();
+      const newUrl = newQuery ? `${url.pathname}?${newQuery}` : url.pathname;
+
+      window.history.replaceState({}, '', newUrl);
+    });
 
     onMounted(async () => {
       fetchActivitiesCountByPublishStatus();

@@ -1,4 +1,5 @@
 <template>
+  <PageLoader v-if="isLoading" />
   <div class="listing__page bg-paper pb-[71px] pt-4">
     <div class="page-title mb-4 w-screen px-10">
       <div class="flex items-end gap-4">
@@ -615,6 +616,7 @@ import PublishSelected from 'Activity/bulk-publish/PublishSelected.vue';
 import { getTranslatedElement } from 'Composable/utils';
 import { defineProps } from 'vue';
 import transactionDate from 'Activity/transactions/elements/TransactionDate.vue';
+import PageLoader from 'Components/PageLoader.vue';
 
 interface ActivitiesInterface {
   last_page: number;
@@ -632,6 +634,7 @@ interface paType {
 }
 
 const xlsIndicatorMounted = ref(false);
+const isLoading = ref(false);
 
 const xlsFailedMessage = ref('');
 const uploadType = ref();
@@ -859,9 +862,7 @@ const selectAll = () => {
 
 function uploadFile() {
   if (!xlsData.value) {
-    loader.value = true;
-    loaderText.value = props.translatedData['common.common.fetching_xls_file'];
-
+    isLoading.value = true;
     let activity = file.value.files.length ? file.value.files[0] : '';
 
     let xlsType = uploadType;
@@ -880,6 +881,7 @@ function uploadFile() {
         if (file.value.files.length && res?.data?.success) {
           checkXlsStatus();
         } else {
+          isLoading.value = false;
           error.value =
             res.data.errors && Object.values(res.data.errors).join(' ');
         }
@@ -889,6 +891,7 @@ function uploadFile() {
       })
       .finally(() => {
         loader.value = false;
+        isLoading.value = false;
         uploadType.value = [];
 
         file.value.value = null;
