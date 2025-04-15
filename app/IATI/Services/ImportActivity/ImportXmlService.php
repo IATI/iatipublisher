@@ -289,11 +289,9 @@ class ImportXmlService
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
      */
-    public function create($activities, $contents = false): bool
+    public function create($activities): bool
     {
-        if (!$contents) {
-            $contents = $this->loadJsonFile('valid.json');
-        }
+        $contents = $this->loadJsonFile('valid.json');
 
         $orgId = Auth::user()->organization->id;
         $organizationIdentifier = Auth::user()->organization->identifier;
@@ -494,6 +492,8 @@ class ImportXmlService
             if ($contents) {
                 return json_decode($contents, false, 512, JSON_THROW_ON_ERROR);
             }
+
+            return null;
         } catch (Exception $exception) {
             $this->logger->error(
                 sprintf('Error due to %s', $exception->getMessage()),
