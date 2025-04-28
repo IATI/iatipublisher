@@ -1,4 +1,6 @@
 <template>
+  <PageLoader v-if="isLoading" :translated-data="translatedData" />
+
   <div class="listing__page bg-paper pb-[71px] pt-4">
     <div class="page-title mb-4 w-screen px-10">
       <div class="flex items-end gap-4">
@@ -612,9 +614,9 @@ import Pagination from 'Components/TablePagination.vue';
 import { useStore } from 'Store/activities';
 import { useStorage } from '@vueuse/core';
 import PublishSelected from 'Activity/bulk-publish/PublishSelected.vue';
-import { getTranslatedElement } from 'Composable/utils';
 import { defineProps } from 'vue';
-import transactionDate from 'Activity/transactions/elements/TransactionDate.vue';
+import PageLoader from 'Components/PageLoader.vue';
+import http from 'Composable/http.utils';
 
 interface ActivitiesInterface {
   last_page: number;
@@ -632,6 +634,7 @@ interface paType {
 }
 
 const xlsIndicatorMounted = ref(false);
+const isLoading = ref(false);
 
 const xlsFailedMessage = ref('');
 const uploadType = ref();
@@ -859,9 +862,7 @@ const selectAll = () => {
 
 function uploadFile() {
   if (!xlsData.value) {
-    loader.value = true;
-    loaderText.value = props.translatedData['common.common.fetching_xls_file'];
-
+    isLoading.value = true;
     let activity = file.value.files.length ? file.value.files[0] : '';
 
     let xlsType = uploadType;
@@ -880,6 +881,7 @@ function uploadFile() {
         if (file.value.files.length && res?.data?.success) {
           checkXlsStatus();
         } else {
+          isLoading.value = false;
           error.value =
             res.data.errors && Object.values(res.data.errors).join(' ');
         }
@@ -889,6 +891,7 @@ function uploadFile() {
       })
       .finally(() => {
         loader.value = false;
+        isLoading.value = false;
         uploadType.value = [];
 
         file.value.value = null;
@@ -936,36 +939,46 @@ const cancelImport = () => {
 };
 
 const pollingForXlsStatus = () => {
-  const checkStatus = setInterval(function () {
-    axios.get('/import/xls/status').then((res) => {
-      if (res.data.data?.message === 'Started') {
-        //reset
-        totalCount.value = null;
-        processedCount.value = 0;
-        xlsFailed.value = false;
-        xlsFailedMessage.value = '';
-      } else {
-        totalCount.value = res.data.data?.total_count;
-        processedCount.value = res.data.data?.processed_count;
-        xlsFailed.value = !res.data.data?.success;
-        xlsFailedMessage.value = res.data.data?.message;
-      }
-      if (res.data.data?.message === 'Processing') {
-        processing.value = true;
-      }
+  const poll = () => {
+    http()
+      .get('/import/xls/poll-xls-import-progress')
+      .then((res) => {
+        const data = res.data.data;
 
-      if (!res.data?.data?.success || res.data?.data?.message === 'Complete') {
-        clearInterval(checkStatus);
-      }
-      if (res.data?.data?.message === 'Complete') {
-        uploadComplete.value = true;
-      }
-    });
-  }, 2500);
+        if (data?.message === 'Started') {
+          totalCount.value = null;
+          processedCount.value = 0;
+          xlsFailed.value = false;
+          xlsFailedMessage.value = '';
+        } else {
+          totalCount.value = data?.total_count;
+          processedCount.value = data?.processed_count;
+          xlsFailed.value = !data?.success;
+          xlsFailedMessage.value = data?.message;
+        }
+
+        if (data?.message === 'Processing') {
+          processing.value = true;
+        }
+
+        if (!data?.success || data?.message === 'Complete') {
+          uploadComplete.value = true;
+          return;
+        }
+
+        setTimeout(poll, 2500);
+      })
+      .catch((err) => {
+        console.error('Polling error:', err);
+        setTimeout(poll, 2500);
+      });
+  };
+
+  poll();
 };
 
 const checkXlsStatus = () => {
-  axios.get('/import/xls/poll-import-progress-status').then((res) => {
+  axios.get('/import/xls/check-xls-status').then((res) => {
     uploadComplete.value = false;
     activityName.value = res?.data?.status?.template;
     currentActivity.value = mapActivityName(activityName.value);

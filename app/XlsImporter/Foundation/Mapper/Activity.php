@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\XlsImporter\Foundation\Mapper;
 
 use App\Helpers\ImportCacheHelper;
+use App\IATI\Models\Organization\Organization;
+use App\IATI\Services\ElementCompleteService;
 use App\XlsImporter\Foundation\Mapper\Traits\XlsMapperHelper;
 use App\XlsImporter\Foundation\XlsValidator\Validators\ActivityValidator;
 use Illuminate\Support\Arr;
@@ -286,19 +288,35 @@ class Activity
      * Validates mapped data and store them to json files.
      *
      * @return void
+     * @throws \JsonException
      */
     public function validateAndStoreData(): void
     {
         $orgId = $this->orgId;
+        $organization = Organization::find($orgId);
         $activityValidator = app(ActivityValidator::class);
+
+        /** @var ElementCompleteService $elementCompleteService */
+        $elementCompleteService = app(ElementCompleteService::class);
+        $orgReportingOrgStatus = Arr::get($organization, 'element_status.reporting_org', false);
+        $attributes = getActivityAttributes();
+
         $this->totalCount = count($this->activities);
 
         foreach ($this->activities as $activityIdentifier => $activity) {
+            $elementStatus = $elementCompleteService->prepareActivityElementStatus(new \App\IATI\Models\Activity\Activity($activity), $orgReportingOrgStatus, $attributes);
+            $completePercentage = $elementCompleteService->calculateCompletePercentage($elementStatus);
+            $deprecationStatusMap = refreshActivityDeprecationStatusMap($activity);
+
             $activityIdentifier = (string) $activityIdentifier;
             $errors = $activityValidator
                 ->init($activity)
                 ->validateData();
             $this->processedCount++;
+
+            $activity['element_status'] = $elementStatus;
+            $activity['complete_percentage'] = $completePercentage;
+            $activity['deprecation_status_map'] = $deprecationStatusMap;
 
             $excelColumnAndRowName = isset($this->columnTracker[$activityIdentifier]) ? Arr::collapse($this->columnTracker[$activityIdentifier]) : null;
             $error = $this->appendExcelColumnAndRowDetail($errors, $excelColumnAndRowName);
@@ -314,7 +332,7 @@ class Activity
                 $this->errorCount['critical'] += count(Arr::get($this->processingErrors, $activityIdentifier));
             }
 
-            if (!ImportCacheHelper::activityAlreadyBeingImported($orgId, $activityIdentifier)) {
+            if (!ImportCacheHelper::isThisActivityBeingImported($orgId, $activityIdentifier)) {
                 $this->storeValidatedData($activity, $error, $existingId, $activityIdentifier);
             }
 

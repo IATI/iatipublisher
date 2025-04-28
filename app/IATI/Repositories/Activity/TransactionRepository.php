@@ -9,6 +9,7 @@ use App\IATI\Repositories\Repository;
 use App\IATI\Traits\FillDefaultValuesTrait;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class TransactionRepository.
@@ -104,13 +105,7 @@ class TransactionRepository extends Repository
      */
     public function deleteTransaction($activityId): bool|int
     {
-        $transactions = $this->model->where('activity_id', $activityId)->get();
-
-        if (!empty($transactions)) {
-            $transactions->each->delete();
-        }
-
-        return false;
+        return $this->model->where('activity_id', $activityId)->forceDelete();
     }
 
     /**
@@ -153,5 +148,56 @@ class TransactionRepository extends Repository
     public function bulkDeleteTransactions(array $transactionIds): bool
     {
         return (bool) $this->model->whereIn('id', $transactionIds)->delete();
+    }
+
+    public function bulkDeleteTransactionsByActivityIds(array $activityIds): bool
+    {
+        if (empty($activityIds)) {
+            return false;
+        }
+
+        return (bool) $this->model->whereIn('activity_id', $activityIds)->delete();
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function createTransactions(array $allActivityData, array $allActivityIdsMappedToActivityIdentifiers, array $defaultFieldValuesMappedToActivityIdentifier): bool
+    {
+        $preparedData = $this->prepareAllTransactionDataToUpsert($allActivityData, $allActivityIdsMappedToActivityIdentifiers, $defaultFieldValuesMappedToActivityIdentifier);
+
+        return DB::table('activity_transactions')->insert($preparedData);
+    }
+
+    private function prepareAllTransactionDataToUpsert(array $allActivityData, array $allActivityIdsMappedToActivityIdentifiers, array $defaultFieldValuesMappedToActivityIdentifier): array
+    {
+        $preparedData = [];
+
+        foreach ($allActivityData as $activityIdentifier => $activityData) {
+            if (!empty($activityData['transactions'])) {
+                $defaultFieldValues = $defaultFieldValuesMappedToActivityIdentifier[$activityIdentifier];
+
+                foreach ($activityData['transactions'] as $index => $transaction) {
+                    $activityId = $allActivityIdsMappedToActivityIdentifiers[$activityIdentifier];
+
+                    $transactionData = [
+                        'transaction'            => $transaction,
+//                        'deprecation_status_map' => refreshTransactionDeprecationStatusMap($transaction),
+                    ];
+
+                    $transactionData = $this->populateDefaultFields($transactionData, $defaultFieldValues);
+
+                    $transactionData = [
+                        'activity_id'            => $activityId,
+                        'transaction'            => json_encode($transactionData['transaction'], JSON_THROW_ON_ERROR),
+                        'deprecation_status_map' => json_encode([], JSON_THROW_ON_ERROR),
+                    ];
+
+                    $preparedData[] = $transactionData;
+                }
+            }
+        }
+
+        return $preparedData;
     }
 }

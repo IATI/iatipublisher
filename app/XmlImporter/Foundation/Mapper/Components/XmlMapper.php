@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\XmlImporter\Foundation\Mapper\Components;
 
+use App\IATI\Models\Organization\Organization;
+use App\IATI\Services\ElementCompleteService;
 use App\XmlImporter\Foundation\Mapper\Components\Elements\Result;
 use App\XmlImporter\Foundation\Mapper\Components\Elements\Transaction;
 use App\XmlImporter\Foundation\Support\Helpers\Traits\XmlHelper;
@@ -134,6 +136,12 @@ class XmlMapper
      */
     public function map(array $activities, $template, $authUser, $orgId, $orgRef, $dbIatiIdentifiers, $organizationReportingOrg): static
     {
+        $elementCompleteService = app(ElementCompleteService::class);
+
+        $organization = Organization::find($orgId);
+        $attributes = getActivityAttributes();
+        $orgReportingOrgStatus = Arr::get($organization, 'element_status.reporting_org', false);
+
         $xmlActivityIdentifiers = $this->xmlActivityIdentifiers($activities);
         $xmlQueueWriter = app()->makeWith(XmlQueueWriter::class, [
             'authUser'                 => $authUser,
@@ -149,11 +157,25 @@ class XmlMapper
 
         foreach ($activities as $index => $activity) {
             $this->initComponents($organizationReportingOrg);
+
             $mappedData[$index] = $this->activity->map($this->filter($activity, 'iatiActivity'), $template, $orgRef);
             $mappedData[$index]['default_field_values'] = $this->defaultFieldValues($activity, $template);
             $mappedData[$index]['transactions'] = $this->transactionElement->map($this->filter($activity, 'transaction'), $template);
             $mappedData[$index]['transaction_references'] = $this->transactionElement->getReferences();
             $mappedData[$index]['result'] = $this->resultElement->map($this->filter($activity, 'result'), $template);
+
+            $elementStatus = $elementCompleteService->prepareActivityElementStatus(
+                new \App\IATI\Models\Activity\Activity($mappedData[$index]),
+                $orgReportingOrgStatus,
+                $attributes
+            );
+
+            $completePercentage = $elementCompleteService->calculateCompletePercentage($elementStatus);
+            $deprecationStatusMap = refreshActivityDeprecationStatusMap($mappedData[$index]);
+
+            $mappedData[$index]['element_status'] = $elementStatus;
+            $mappedData[$index]['complete_percentage'] = $completePercentage;
+            $mappedData[$index]['deprecation_status_map'] = $deprecationStatusMap;
 
             $xmlQueueWriter->save($mappedData[$index], $totalActivities, $index);
         }
@@ -325,6 +347,7 @@ class XmlMapper
 
         foreach ($activities as $index => $activity) {
             $this->initComponents($organizationReportingOrg);
+
             $mappedData[$index] = $this->activity->map($this->filter($activity, 'iatiActivity'), $template, $orgRef);
             $mappedData[$index]['default_field_values'] = $this->defaultFieldValues($activity, $template);
             $mappedData[$index]['transactions'] = $this->transactionElement->map($this->filter($activity, 'transaction'), $template);

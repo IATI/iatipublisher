@@ -183,7 +183,7 @@ class ActivityRow extends Row
         $this->organizationReportingOrg = $organizationReportingOrg;
         $this->userId = $userId;
         $this->init();
-        $this->csv_data_storage_path = env('CSV_DATA_STORAGE_PATH ', 'CsvImporter/tmp');
+        $this->csv_data_storage_path = config('import.csv_data_storage_path');
     }
 
     /**
@@ -265,7 +265,7 @@ class ActivityRow extends Row
     {
         $activityIdentifier = (string) Arr::get($this->data(), 'identifier.activity_identifier');
 
-        if (ImportCacheHelper::activityAlreadyBeingImported($this->organizationId, $activityIdentifier)) {
+        if (ImportCacheHelper::isThisActivityBeingImported($this->organizationId, $activityIdentifier)) {
             return;
         }
 

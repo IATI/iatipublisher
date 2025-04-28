@@ -21,6 +21,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('command:FetchOrganisationRegistrationAgency')->dailyAt('00:05');
         $schedule->command('command:SetAppDataJsonCache')->dailyAt('00:10');
         $schedule->command('command:ClearOlderAuditLogs')->monthlyOn(1, '00:00');
+        $schedule->command('command:ClearImportStatusIfStuck')->everyFifteenMinutes();
     }
 
     /**

@@ -62,12 +62,15 @@ data:
   AWS_DEFAULT_REGION: "us-east-1"
   AWS_BUCKET: "iatipublisher-dev"
   AWS_USE_PATH_STYLE_ENDPOINT: "false"
-  AWS_ENDPOINT: "https://s3.amazonaws.com"
+#  AWS_ENDPOINT: "https://s3.amazonaws.com"
 
-  CSV_DATA_STORAGE_PATH :  'CsvImporter/tmp'
-  CSV_FILE_STORAGE_PATH :  'CsvImporter/file'
-  XML_DATA_STORAGE_PATH :  'XmlImporter/tmp'
-  XML_FILE_STORAGE_PATH :  'XmlImporter/file'
+  CSV_DATA_STORAGE_PATH : 'CsvImporter/tmp'
+  CSV_FILE_STORAGE_PATH : 'CsvImporter/file'
+  XML_DATA_STORAGE_PATH : 'XmlImporter/tmp'
+  XML_FILE_STORAGE_PATH : 'XmlImporter/file'
+  XLS_FILE_STORAGE_PATH : 'XlsImporter/file'
+  XLS_DATA_STORAGE_PATH : 'XlsImporter/tmp'
+  CSV_FILE_LOCAL_STORAGE_PATH : 'CsvImporter/file'
 
   SENTRY_LARAVEL_DSN: 'https://581da70faf2347c2922a06b4dd3f48eb@o4504529613684736.ingest.sentry.io/4504529613684736'
   SENTRY_TRACES_SAMPLE_RATE: "1.0"

@@ -436,9 +436,8 @@ const startBulkPublish = () => {
       '{"publishingActivities":{}}'
     );
     pa.value = { publishingActivities: {} };
-  } else {
-    console.error('pa.value is undefined');
   }
+
   axios
     .get(
       `/activities/start-bulk-publish?activities=[${store.state.validatingActivities}]`

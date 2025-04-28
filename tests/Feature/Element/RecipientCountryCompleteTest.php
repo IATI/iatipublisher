@@ -361,6 +361,7 @@ class RecipientCountryCompleteTest extends ElementCompleteTest
             'iati_identifier' => [
                 'activity_identifier' => 'test-activity',
             ],
+            'activity_identifier' => 'test-activity',
             'other_identifier' => [
                 [
                     'reference' => 'other-identifier-reference',
