@@ -193,12 +193,13 @@ class BulkPublishingController extends Controller
      *
      * @return JsonResponse
      *
-     * @throws Exception
+     * @throws Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function validateActivities(Request $request): JsonResponse
     {
+        DB::beginTransaction();
+
         try {
-            DB::beginTransaction();
             $hasUploadedCache = Cache::get('activity-validation-' . auth()->user()->id);
             $message = $this->activityWorkflowService->getPublishErrorMessage(auth()->user()->organization);
 
@@ -245,9 +246,11 @@ class BulkPublishingController extends Controller
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         } catch (Exception $e) {
-            DB::rollBack();
             logger()->error($e->getMessage());
             logger()->error($e);
+
+            DB::rollBack();
+
             $translatedMessage = trans('workflow_backend/bulk_publishing_controller.error_has_occurred_while_validating_activities');
 
             return response()->json(

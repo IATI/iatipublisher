@@ -143,6 +143,7 @@ import ErrorMessage from 'Components/ErrorMessage.vue';
 import { useStore } from 'Store/activities';
 import { detailStore } from 'Store/activities/show';
 import { useStorage } from '@vueuse/core';
+import http from 'Composable/http.utils';
 
 const store = useStore();
 const activityStore = detailStore();
@@ -305,40 +306,48 @@ export default defineComponent({
     // for publish button
     const toastMessage = reactive({
       visibility: false,
-
       message: '',
       type: false,
     });
     const pollingForXlsStatus = () => {
-      const checkStatus = setInterval(function () {
-        axios.get('/import/xls/status').then((res) => {
-          if (res.data.data?.message === 'Started') {
-            //reset
-            totalCount.value = null;
-            processedCount.value = 0;
-            xlsFailed.value = false;
-            xlsFailedMessage.value = '';
-          } else {
-            totalCount.value = res.data.data?.total_count;
-            processedCount.value = res.data.data?.processed_count;
-            xlsFailed.value = !res.data.data?.success;
-            xlsFailedMessage.value = res.data.data?.message;
-          }
+      const poll = () => {
+        http()
+          .get('/import/xls/poll-xls-import-progress')
+          .then((res) => {
+            const data = res.data.data;
 
-          if (res.data.data?.message === 'Processing') {
-            processing.value = true;
-          }
+            if (data?.message === 'Started') {
+              totalCount.value = null;
+              processedCount.value = 0;
+              xlsFailed.value = false;
+              xlsFailedMessage.value = '';
+            } else {
+              totalCount.value = data?.total_count;
+              processedCount.value = data?.processed_count;
+              xlsFailed.value = !data?.success;
+              xlsFailedMessage.value = data?.message;
+            }
 
-          if (
-            !res.data?.data?.success ||
-            res.data?.data?.message === 'Complete'
-          ) {
-            uploadComplete.value = true;
-            clearInterval(checkStatus);
-          }
-        });
-      }, 2500);
+            if (data?.message === 'Processing') {
+              processing.value = true;
+            }
+
+            if (!data?.success || data?.message === 'Complete') {
+              uploadComplete.value = true;
+              return;
+            }
+
+            setTimeout(poll, 2500);
+          })
+          .catch((err) => {
+            console.error('Polling error:', err);
+            setTimeout(poll, 2500);
+          });
+      };
+
+      poll();
     };
+
     watch(
       () => store.state.startXlsDownload,
       (value) => {
@@ -393,7 +402,7 @@ export default defineComponent({
     });
 
     const checkXlsStatus = () => {
-      axios.get('/import/xls/poll-import-progress-status').then((res) => {
+      axios.get('/import/xls/check-xls-status').then((res) => {
         activityName.value = res?.data?.status?.template;
         xlsData.value = Object.keys(res.data.status).length > 0;
 
@@ -442,6 +451,29 @@ export default defineComponent({
         checkDownloadStatus();
       }
     );
+
+    onMounted(() => {
+      const url = new URL(window.location.href);
+      const searchParams = url.searchParams;
+
+      const cancelParam = searchParams.get('cancel');
+      searchParams.delete('cancel');
+
+      if (cancelParam === 'true') {
+        toastData.type = true;
+        toastData.visibility = true;
+        toastData.message = 'Import cancelled successfully.';
+      } else if (cancelParam === 'false') {
+        toastData.type = false;
+        toastData.visibility = true;
+        toastData.message = 'Something went wrong.';
+      }
+
+      const newQuery = searchParams.toString();
+      const newUrl = newQuery ? `${url.pathname}?${newQuery}` : url.pathname;
+
+      window.history.replaceState({}, '', newUrl);
+    });
 
     onMounted(async () => {
       fetchActivitiesCountByPublishStatus();

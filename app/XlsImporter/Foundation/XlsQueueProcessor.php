@@ -81,8 +81,8 @@ class XlsQueueProcessor
         $this->xlsMapper = $xlsMapper;
         $this->activityRepo = $activityRepo;
         $this->databaseManager = $databaseManager;
-        $this->xls_file_storage_path = env('XLS_FILE_STORAGE_PATH ', 'XlsImporter/file');
-        $this->xls_data_storage_path = env('XLS_DATA_STORAGE_PATH ', 'XlsImporter/tmp');
+        $this->xls_file_storage_path = config('import.xls_file_storage_path');
+        $this->xls_data_storage_path = config('import.xls_data_storage_path');
     }
 
     /**
@@ -107,11 +107,13 @@ class XlsQueueProcessor
             $this->userId = $userId;
             $this->filename = $filename;
             $filePath = sprintf('%s/%s/%s/%s', $this->xls_file_storage_path, $this->orgId, $this->userId, $filename);
-            $contents = awsGetFile(sprintf('%s/%s/%s/%s', $this->xls_file_storage_path, $this->orgId, $this->userId, $filename));
 
             $xlsToArray = new XlsToArray();
             Excel::import($xlsToArray, $filePath, 's3');
             $contents = $xlsToArray->sheetData;
+
+            unset($xlsToArray);
+            gc_collect_cycles();
 
             if (!$this->checkXlsFile($contents, $xlsType)) {
                 return false;
@@ -121,10 +123,10 @@ class XlsQueueProcessor
 
             $this->databaseManager->rollback();
 
-            return false;
+            return true;
         } catch (\Exception $e) {
             logger()->error($e);
-            awsUploadFile(sprintf('%s/%s/%s/%s', $this->xls_data_storage_path, $orgId, $userId, 'status.json'), json_encode(['success' => false, 'message' => 'Error has occurred while importing the file.'], JSON_THROW_ON_ERROR));
+            awsUploadFile(sprintf('%s/%s/%s/%s', $this->xls_data_storage_path, $orgId, $userId, 'status.json'), json_encode(['success' => false, 'message' => trans('common/common.error_has_occurred_while_importing_the_file')], JSON_THROW_ON_ERROR));
 
             throw $e;
         }
@@ -226,6 +228,7 @@ class XlsQueueProcessor
      * @param $systemSheets
      *
      * @return bool
+     * @throws \JsonException
      */
     public function checkSheetNames($xlsSheetNames, $systemSheets): bool
     {

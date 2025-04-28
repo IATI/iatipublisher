@@ -140,7 +140,6 @@ class GenerateTranslationLangFiles extends Command
 
         $languageArray = is_file($filePath) ? include $filePath : [];
 
-        logger($filePath);
         try {
             foreach ($translationData as $key => $translation) {
                 $this->setDotNotationValue($languageArray, $key, $translation);
@@ -212,8 +211,6 @@ class GenerateTranslationLangFiles extends Command
 
         foreach ($keys as $part) {
             if (!isset($temp[$part])) {
-                logger($temp);
-                logger($part);
                 $temp[$part] = [];
             }
 

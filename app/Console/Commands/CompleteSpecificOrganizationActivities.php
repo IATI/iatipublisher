@@ -45,7 +45,8 @@ class CompleteSpecificOrganizationActivities extends Command
             $organizationIds = explode(',', $organizationIdString);
 
             Activity::query()->whereIn('org_id', $organizationIds)->chunkById(100, function ($activities) {
-                $elementCompleteService = app()->make(ElementCompleteService::class);
+                /** @var ElementCompleteService $elementCompleteService */
+                $elementCompleteService = app(ElementCompleteService::class);
 
                 foreach ($activities as $activity) {
                     $elementCompleteService->refreshElementStatus($activity);

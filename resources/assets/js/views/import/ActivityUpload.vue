@@ -1,4 +1,6 @@
 <template>
+  <PageLoader v-if="isLoading" :translated-data="translatedData" />
+
   <div class="listing__page bg-paper pb-[71px] pt-4">
     <div class="page-title mb-4 w-screen px-10">
       <div class="flex items-end gap-4">
@@ -122,26 +124,18 @@
       </div>
     </div>
   </div>
-  <Loader
-    v-if="loader"
-    :text="loaderText"
-    :translated-data="translatedData"
-    :class="{ 'animate-loader': loader }"
-  />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import BtnComponent from 'Components/ButtonComponent.vue';
 import HoverText from 'Components/HoverText.vue';
-import Loader from 'Components/sections/ProgressLoader.vue';
 import axios from 'axios';
 import { defineProps } from 'vue';
+import PageLoader from 'Components/PageLoader.vue';
 
 const file = ref(),
   error = ref(''),
-  loader = ref(false),
-  loaderText = ref(''),
   hasOngoingImportWarning = ref(false),
   ongoingImportType = ref('');
 
@@ -152,8 +146,7 @@ const props = defineProps({
   },
 });
 
-loaderText.value =
-  props.translatedData['common.common.please_wait'] ?? 'Please Wait';
+const isLoading = ref(false);
 async function checkOngoingImports() {
   try {
     const response = await axios.get('/import/check-ongoing-import');
@@ -178,9 +171,7 @@ function showHasOngoingImportWarning(importType: null | string) {
 }
 
 async function uploadFile() {
-  loader.value = true;
-  loaderText.value =
-    props.translatedData['workflow_frontend.import.uploading_csv_xml_file'];
+  isLoading.value = true;
   let activity = file.value.files.length ? file.value.files[0] : '';
   const config = {
     headers: {
@@ -205,11 +196,11 @@ async function uploadFile() {
         error.value = Object.values(response.data.errors).join(' ');
       }
 
-      loader.value = false;
+      isLoading.value = false;
     }
   } catch (err) {
     error.value = 'Error has occurred while uploading the file.';
-    loader.value = false;
+    isLoading.value = false;
   }
 }
 

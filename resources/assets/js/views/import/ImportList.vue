@@ -1,4 +1,5 @@
 <template>
+  <PageLoader v-if="isLoading" :translated-data="translatedData" />
   <div class="listing__page bg-paper px-10 pb-[71px] pt-4">
     <div class="page-title mb-6">
       <div class="pb-4 text-caption-c1 text-n-40">
@@ -137,32 +138,17 @@
       </table>
     </div>
   </div>
-  <Loader
-    v-if="loader"
-    :text="loaderText"
-    :translated-data="translatedData"
-    :class="{ 'animate-loader': loader }"
-    :change-text="false"
-  />
 </template>
 
 <script setup lang="ts">
-import {
-  ref,
-  onMounted,
-  reactive,
-  nextTick,
-  onUnmounted,
-  provide,
-  computed,
-} from 'vue';
+import { ref, onMounted, reactive, nextTick, onUnmounted, provide } from 'vue';
 import BtnComponent from 'Components/ButtonComponent.vue';
-import Loader from 'Components/sections/ProgressLoader.vue';
 import Placeholder from './ImportPlaceholder.vue';
 import ListElement from './ListElement.vue';
 import axios from 'axios';
 import { defineProps } from 'vue';
 import Toast from 'Components/ToastMessage.vue';
+import PageLoader from 'Components/PageLoader.vue';
 
 let activities = reactive({});
 const selectedActivities: Array<string> = reactive([]);
@@ -176,6 +162,7 @@ const tableWidth = ref({});
 const toastMessage = ref('');
 const toastType = ref(false);
 const toastVisibility = ref(false);
+const isLoading = ref(false);
 
 let timer;
 
@@ -189,42 +176,62 @@ const props = defineProps({
 const getDimensions = async () => {
   ``;
   await nextTick();
-  tableWidth.value = tableRow?.value[0].clientWidth;
+  try {
+    tableWidth.value = tableRow?.value[0].clientWidth;
+  } catch (e) {
+    console.error('Error rendering table.');
+  }
 };
 
 onUnmounted(() => {
   window.removeEventListener('resize', getDimensions);
 });
+
 onMounted(() => {
   window.addEventListener('resize', getDimensions);
-  loader.value = true;
-  loaderText.value = props.translatedData['common.common.please_wait'];
+  isLoading.value = true;
+
   let count = 0;
-  timer = setInterval(() => {
+  let done = false;
+
+  const poll = () => {
+    if (done) return;
+
     axios
       .get('/import/get-import-list-data')
       .then((res) => {
-        Object.assign(activities, res.data.data);
-        activitiesLength.value = res.data.data.length;
+        if (done) return;
 
-        if (res.data.status) {
-          clearInterval(timer);
-          loader.value = false;
+        const status = res.data.status;
+        const data = res.data.data;
+
+        Object.assign(activities, data || {});
+        activitiesLength.value = data ? data.length : 0;
+
+        if (status === 'error' || (!data && count >= 60)) {
+          done = true;
+          isLoading.value = false;
+          redirectToActivities();
+          return;
+        } else if (status === true) {
+          done = true;
+          isLoading.value = false;
+          return;
         }
 
-        if (res.data.status === 'error' || (!res.data.data && count >= 40)) {
-          clearInterval(timer);
-          window.location.href = '/activities';
-        }
         count++;
-
         setTimeout(getDimensions, 200);
+        setTimeout(poll, 3000);
       })
       .catch(() => {
-        loader.value = false;
-        window.location.href = '/activities';
+        if (done) return;
+        done = true;
+        isLoading.value = false;
+        redirectToActivities();
       });
-  }, 3000);
+  };
+
+  poll();
 });
 
 const cancelOngoingImports = async () => {
@@ -240,7 +247,7 @@ const cancelOngoingImports = async () => {
 
     if (response.success) {
       setTimeout(() => {
-        window.location.href = '/activities';
+        redirectToActivities();
       }, 2000);
     }
   } catch (error) {
@@ -294,22 +301,37 @@ function selectAllActivities() {
   }
 }
 
-function importActivities() {
-  loaderText.value =
-    props.translatedData['workflow_frontend.import.uploading_csv_xml_file'];
-  loader.value = true;
+async function importActivities() {
+  try {
+    isLoading.value = true;
 
-  axios
-    .post('/import/activity', {
+    await axios.post('/import/activity', {
       activities: selectedActivities,
       filetype: 'csv',
-    })
-    .then(() => {
-      window.location.href = '/activities';
-    })
-    .catch(() => {
-      window.location.href = '/activities';
     });
+
+    isLoading.value = false;
+    toastMessage.value = 'Successfully imported.';
+    toastType.value = true;
+    toastVisibility.value = true;
+
+    redirectToActivities();
+  } catch (error) {
+    isLoading.value = false;
+
+    toastMessage.value = 'An error occurred during import.';
+    toastType.value = false;
+    toastVisibility.value = true;
+
+    setTimeout(() => {
+      toastVisibility.value = false;
+      redirectToActivities();
+    }, 2000);
+  }
+}
+
+function redirectToActivities() {
+  window.location.href = '/activities';
 }
 
 provide('translatedData', props.translatedData);

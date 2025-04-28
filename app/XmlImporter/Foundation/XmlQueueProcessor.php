@@ -91,8 +91,8 @@ class XmlQueueProcessor
         $this->activityRepo = $activityRepo;
         $this->databaseManager = $databaseManager;
         $this->importStatusRepository = $importStatusRepository;
-        $this->xml_file_storage_path = env('XML_FILE_STORAGE_PATH ', 'XmlImporter/file');
-        $this->xml_data_storage_path = env('XML_DATA_STORAGE_PATH ', 'XmlImporter/tmp');
+        $this->xml_file_storage_path = config('import.xml_file_storage_path');
+        $this->xml_data_storage_path = config('import.xml_data_storage_path');
     }
 
     /**
@@ -136,7 +136,7 @@ class XmlQueueProcessor
 
             awsUploadFile(sprintf('%s/%s/%s/%s', $this->xml_data_storage_path, $this->orgId, $this->userId, 'schema_error.log'), json_encode(libxml_get_errors(), JSON_THROW_ON_ERROR));
 
-            awsUploadFile(sprintf('%s/%s/%s/%s', $this->xml_data_storage_path, $orgId, $userId, 'status.json'), json_encode(['success' => false, 'message' => 'Invalid XML or Header mismatched'], JSON_THROW_ON_ERROR));
+            awsUploadFile(sprintf('%s/%s/%s/%s', $this->xml_data_storage_path, $orgId, $userId, 'status.json'), json_encode(['success' => false, 'message' => 'Invalid XML or Header mismatched', 'error_type'=>'header_mismatch'], JSON_THROW_ON_ERROR));
 
             $this->databaseManager->rollback();
 
@@ -152,7 +152,7 @@ class XmlQueueProcessor
             ImportCacheHelper::clearImportCache($orgId);
             $this->importStatusRepository->deleteOngoingImports($orgId);
 
-            awsUploadFile(sprintf('%s/%s/%s/%s', $this->xml_data_storage_path, $orgId, $userId, 'status.json'), json_encode(['success' => false, 'message' => 'Error has occurred while importing the file.'], JSON_THROW_ON_ERROR));
+            awsUploadFile(sprintf('%s/%s/%s/%s', $this->xml_data_storage_path, $orgId, $userId, 'status.json'), json_encode(['success' => false, 'message' => trans('common/common.error_has_occurred_while_importing_the_file')], JSON_THROW_ON_ERROR));
 
             throw  $e;
         }

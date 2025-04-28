@@ -195,7 +195,7 @@ class ElementCompleteService
      */
     public function isIatiIdentifierElementCompleted($activity): bool
     {
-        $identifier = $activity->iati_identifier;
+        $identifier = $activity->iati_identifier ?? [];
 
         return !(!array_key_exists('activity_identifier', $identifier) || empty($identifier['activity_identifier']));
     }
@@ -391,7 +391,7 @@ class ElementCompleteService
 
     public function isSectorElementCompletedInTransaction(Activity $activity): bool
     {
-        $transactions = $activity->transactions;
+        $transactions = $activity['transactions'] ?? $activity->transactions;
 
         foreach ($transactions as $transaction) {
             foreach (Arr::get($transaction, 'transaction.sector', []) as $sector) {
@@ -411,7 +411,7 @@ class ElementCompleteService
 
     public function activityHasTransactionSector(Activity $activity): bool
     {
-        $transactions = $activity->transactions;
+        $transactions = $activity['transactions'] ?? $activity->transactions;
 
         if (!empty($transactions)) {
             foreach ($transactions as $transaction) {
@@ -1059,30 +1059,30 @@ class ElementCompleteService
     }
 
     /**
-     * @param $activity
+     * @param Activity $activity
      *
      * @return bool
      *
      * @throws JsonException
      */
-    public function isTransactionsElementCompleted($activity): bool
+    public function isTransactionsElementCompleted(Activity $activity): bool
     {
-        $transactionData = $activity->transactions()->get()->toArray();
+        $transactionData = $activity['transactions'] ?? $activity->transactions()->get()->toArray();
 
-        if (!empty($transactionData)) {
-            $this->element = 'transactions';
-            $elementSchema = getElementSchema($this->element);
-
-            foreach ($transactionData as $transactionDatum) {
-                if (!$this->checkTransactionData($elementSchema['sub_elements'], $transactionDatum['transaction'])) {
-                    return false;
-                }
-            }
-
-            return true;
+        if (empty($transactionData) || count($transactionData) < 1) {
+            return false;
         }
 
-        return false;
+        $this->element = 'transactions';
+        $elementSchema = getElementSchema($this->element);
+
+        foreach ($transactionData as $transactionDatum) {
+            if (!$this->checkTransactionData($elementSchema['sub_elements'], $transactionDatum['transaction'])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -1207,26 +1207,54 @@ class ElementCompleteService
      */
     public function refreshElementStatus($activity): void
     {
-        $elementStatus = [];
+        $orgReportingOrgStatus = Arr::get(auth()->user()->organization, 'element_status.reporting_org', false);
         $attributes = getActivityAttributes();
 
-        foreach ($attributes as $attribute) {
-            $methodName = dashesToCamelCase('is_' . $attribute . '_element_completed');
-
-            if (is_callable([$this, $methodName])) {
-                if ($attribute === 'reporting_org') {
-                    $elementStatus[$attribute] = Arr::get(auth()->user()->organization, 'element_status.reporting_org', false);
-                } else {
-                    $elementStatus[$attribute] = call_user_func([$this, $methodName], $activity);
-                }
-            }
-        }
-
-        $activity->element_status = $elementStatus;
+        $activity->element_status = $this->prepareActivityElementStatus($activity, $orgReportingOrgStatus, $attributes);
         $activity->complete_percentage = $this->calculateCompletePercentage($activity->element_status);
         $activity->timestamps = false;
 
         $activity->updateQuietly(['touch' => false]);
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function refreshElementStatusForMultipleActivities($allActivities): array
+    {
+        $authUser = auth()->user();
+        $orgReportingOrgStatus = Arr::get($authUser->organization, 'element_status.reporting_org', false);
+        $attributes = getActivityAttributes();
+        $activitiesData = [];
+
+        foreach ($allActivities as $activity) {
+            $activity->element_status = $this->prepareActivityElementStatus($activity, $orgReportingOrgStatus, $attributes);
+            $activity->complete_percentage = $this->calculateCompletePercentage($activity->element_status);
+            $activity->timestamps = false;
+
+            $activitiesData[] = $activity->toArray();
+        }
+
+        return $activitiesData;
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function prepareActivityDataForUpsert(int $orgId, array $activity): array
+    {
+        $activity['org_id'] = $orgId;
+        $activity['activity_identifier'] = Arr::get($activity, 'iati_identifier.activity_identifier');
+
+        unset($activity['transactions'], $activity['results']);
+
+        foreach ($activity as $key => $properties) {
+            if ($properties && is_array($properties)) {
+                $activity[$key] = json_encode($properties, JSON_THROW_ON_ERROR);
+            }
+        }
+
+        return $activity;
     }
 
     /**
@@ -1425,5 +1453,33 @@ class ElementCompleteService
         }
 
         return true;
+    }
+
+    /**
+     * Prepare element_status.
+     *
+     * @param       $activity
+     * @param bool  $orgReportingOrgStatus
+     * @param array $attributes
+     *
+     * @return array
+     */
+    public function prepareActivityElementStatus($activity, bool $orgReportingOrgStatus, array $attributes): array
+    {
+        $elementStatus = [];
+
+        foreach ($attributes as $attribute) {
+            $methodName = dashesToCamelCase('is_' . $attribute . '_element_completed');
+
+            if (is_callable([$this, $methodName])) {
+                if ($attribute === 'reporting_org') {
+                    $elementStatus[$attribute] = $orgReportingOrgStatus;
+                } else {
+                    $elementStatus[$attribute] = call_user_func([$this, $methodName], $activity);
+                }
+            }
+        }
+
+        return $elementStatus;
     }
 }

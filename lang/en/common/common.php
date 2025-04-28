@@ -371,4 +371,13 @@ return [
     'reporting_org_of_all_activities'                                                                                                                                 => 'Reporting org of all activities',
     'are_you_sure_you_want_to_save_the_change'                                                                                                                        => 'Are you sure you want to save the change ?',
     'the_xls_file_is_empty'                                                                                                                                           => 'The xlsx file is empty.',
+    'error_opening_data_entry_form'                                                                                                                                   => 'Error opening data entry form.',
+    'your_file_is_being_uploaded'                                                                                                                                     => 'Your file is being uploaded. Please wait - this may take a few minutes.',
+    'this_might_take_a_few_more_minutes'                                                                                                                              => 'This might take a few more minutes.',
+    'were_still_working_on_it_hang_in_there'                                                                                                                          => 'We\'re still working on it! Hang in there.',
+    'almost_there_your_file_is_near_completion'                                                                                                                       => 'Almost there, your file is near completion.',
+    'this_is_taking_longer_than_expected_would_you_like_to_cancel_and_start_again'                                                                                    => 'This is taking longer than expected. Would you like to cancel and start again ?',
+    'this_is_taking_longer_than_expected'                                                                                                                             => 'This is taking longer than expected.',
+    'cancel_and_start_again'                                                                                                                                          => 'Cancel and start again',
+    'error_has_occurred_while_importing_the_file'                                                                                                                     => 'Error has occurred while importing the file.',
 ];

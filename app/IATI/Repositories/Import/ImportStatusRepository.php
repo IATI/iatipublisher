@@ -27,15 +27,14 @@ class ImportStatusRepository extends Repository
      * Returns import status.
      *
      * @param $organizationId
-     * @param $userId
      *
      * @return array
      */
-    public function getImportStatus($organizationId, $userId): array
+    public function getImportStatus($organizationId): array
     {
         $status = $this->model->where('organization_id', $organizationId)
-            ->where('user_id', $userId)
             ->where('type', 'xls')
+            ->latest()
             ->first();
 
         return $status ? $status->toArray() : [];
@@ -86,6 +85,7 @@ class ImportStatusRepository extends Repository
         $status = $this->model->where('organization_id', '=', $orgId)
             ->where('status', '=', 'processing')
             ->where('template', '=', 'activity')
+            ->latest()
             ->first();
 
         return $status ? $status->toArray() : [];

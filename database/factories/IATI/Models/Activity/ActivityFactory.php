@@ -32,6 +32,7 @@ class ActivityFactory extends Factory
                     'language'  => 'en',
                 ],
             ],
+            'activity_identifier'=>'SYRZ000041',
         ];
     }
 }

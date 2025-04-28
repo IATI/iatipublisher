@@ -139,8 +139,8 @@ class ImportCsvService
         $this->importActivityErrorRepo = $importActivityErrorRepo;
         $this->filesystem = $filesystem;
         $this->elementCompleteService = $elementCompleteService;
-        $this->csv_data_storage_path = env('CSV_DATA_STORAGE_PATH', 'CsvImporter/tmp');
-        $this->csv_file_storage_path = env('CSV_FILE_STORAGE_PATH', 'CsvImporter/file');
+        $this->csv_data_storage_path = config('import.csv_data_storage_path');
+        $this->csv_file_storage_path = config('import.csv_file_storage_path');
     }
 
     /**
@@ -182,7 +182,7 @@ class ImportCsvService
     public function localStorageFile($file, $filename): File
     {
         $localStorage = Storage::disk('local');
-        $localStoragePath = sprintf('%s/%s/%s', env('CSV_FILE_LOCAL_STORAGE_PATH'), Auth::user()->organization->id, $filename);
+        $localStoragePath = sprintf('%s/%s/%s', config('import.csv_file_local_storage_path'), Auth::user()->organization->id, $filename);
         $localStorage->put($localStoragePath, $file);
 
         return new File(storage_path(sprintf('%s/%s', 'app', $localStoragePath)));

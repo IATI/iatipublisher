@@ -6,11 +6,11 @@ use App\Database\PostgresConnection;
 use App\IATI\Traits\IatiTranslationTrait;
 use App\SpamEmail;
 use Illuminate\Database\Connection;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
-use URL;
 
 class AppServiceProvider extends ServiceProvider
 {
