@@ -261,7 +261,12 @@ class Activity extends Model implements Auditable
         $elementStatus = Arr::get($this->attributes, 'element_status', []) ? json_decode($this->attributes['element_status'], true, 512, JSON_THROW_ON_ERROR) : [];
 
         if (empty($value) && !empty($this->attributes['recipient_country'])) {
-            $countryTotalPercentage = (float) array_sum(array_column($this->recipient_country, 'percentage'));
+            $percentages = array_map(
+                fn ($v) => is_numeric($v) ? (float) $v : 0,
+                array_column($this->recipient_country, 'percentage')
+            );
+
+            $countryTotalPercentage = (float) array_sum($percentages);
 
             if ($countryTotalPercentage !== 100.0) {
                 $elementStatus['recipient_country'] = false;

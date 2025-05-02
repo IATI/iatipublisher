@@ -142,12 +142,12 @@ class XmlQueueProcessor
 
             return false;
         } catch (InvalidTag $e) {
-            logger($e);
+            logger()->error($e);
             awsUploadFile(sprintf('%s/%s/%s/%s', $this->xml_data_storage_path, $orgId, $userId, 'status.json'), json_encode(['success' => false, 'message' => $e->getMessage()], JSON_THROW_ON_ERROR));
 
             throw $e;
         } catch (\Exception $e) {
-            logger($e);
+            logger()->error($e);
 
             ImportCacheHelper::clearImportCache($orgId);
             $this->importStatusRepository->deleteOngoingImports($orgId);

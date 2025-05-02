@@ -133,6 +133,7 @@ import HoverText from 'Components/HoverText.vue';
 import axios from 'axios';
 import { defineProps } from 'vue';
 import PageLoader from 'Components/PageLoader.vue';
+import type { AxiosResponse } from 'axios';
 
 const file = ref(),
   error = ref(''),
@@ -182,13 +183,39 @@ async function uploadFile() {
   data.append('activity', activity);
   error.value = '';
 
-  try {
-    const response = await axios.post('/import', data, config);
+  let timeout = 5000;
+  const isXml = activity.name.endsWith('.xml');
 
-    if (response?.data?.success && file.value.files.length) {
-      setTimeout(() => {
-        window.location.href = '/import/list';
-      }, 5000);
+  if (isXml) {
+    const fileText = await activity.text();
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(fileText, 'application/xml');
+    const activities = xmlDoc.getElementsByTagName('iati-activity');
+    const count = activities.length;
+
+    timeout = Math.max(5000, count * 500);
+  }
+
+  const timeoutPromise = new Promise<{ timeoutReached: true }>((resolve) =>
+    setTimeout(() => resolve({ timeoutReached: true }), timeout)
+  );
+
+  try {
+    const result = await Promise.race([
+      axios.post('/import', data, config),
+      timeoutPromise,
+    ]);
+
+    if ('timeoutReached' in result) {
+      window.location.href = '/import/list';
+
+      return;
+    }
+
+    const response = result as AxiosResponse;
+
+    if (response.data?.success && file.value.files.length) {
+      window.location.href = '/import/list';
     } else {
       if (hasOngoingImport(response?.data?.errors)) {
         showHasOngoingImportWarning(response.data.errors.import_type);

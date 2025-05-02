@@ -11,5 +11,5 @@ return [
     'no_import_in_progress_for_this_organisation'          => 'No import in progress for this organisation.',
     'deleted_ongoing_imports'                              => 'Import cancelled',
     'failed_to_delete_ongoing_imports'                     => 'Failed to cancel import.',
-    'no_data_to_import'                                    => 'No data to import',
+    'no_data_to_import'                                    => 'No data to import. Please try again.',
 ];
