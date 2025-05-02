@@ -208,15 +208,6 @@ class ImportActivityController extends Controller
             $orgId = Auth::user()->organization_id;
             $filetype = Session::get('import_filetype') ?? ImportCacheHelper::getSessionConsistentFiletype($orgId);
 
-            if (!ImportCacheHelper::hasOrganisationFinishedValidationStep($orgId)) {
-                ImportCacheHelper::clearImportCache(Auth::user()->organization_id);
-
-                $translatedMessage = trans('workflow_backend/import_activity_controller.no_data_to_import');
-                Session::flash('error', $translatedMessage);
-
-                return response()->json(['success' => false, 'message' => $translatedMessage, 'type' => $filetype]);
-            }
-
             if ($activities) {
                 if ($filetype === 'xml') {
                     $this->importXmlService->create($activities);
@@ -384,6 +375,10 @@ class ImportActivityController extends Controller
             if ($status && !$data) {
                 throw new Exception();
             }
+
+//            if(strcasecmp($result->message, trans('common/common.error_has_occurred_while_importing_the_file')) === 0) {
+//                throw new Exception();
+//            }
 
             $returnVal = ['status' => $status, 'data' => $data];
 

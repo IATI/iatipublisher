@@ -1108,7 +1108,12 @@ class ElementCompleteService
         $regionStatus = $this->isLevelOneMultiDimensionElementCompleted($activity->recipient_region);
 
         if (empty($activity->recipient_region) && !empty($activity->recipient_country)) {
-            $countryTotalPercentage = (float) array_sum(array_column($activity->recipient_country, 'percentage'));
+            $percentages = array_map(
+                fn ($v) => is_numeric($v) ? (float) $v : 0,
+                array_column($activity->recipient_country, 'percentage')
+            );
+
+            $countryTotalPercentage = (float) array_sum($percentages);
 
             if ($countryTotalPercentage === 100.0) {
                 return true;
@@ -1134,7 +1139,12 @@ class ElementCompleteService
             }
 
             if (!empty($activity->recipient_country)) {
-                $countryTotalPercentage = (float) array_sum(array_column($activity->recipient_country, 'percentage'));
+                $countryPercentages = array_map(
+                    fn ($v) => is_numeric($v) ? (float) $v : 0,
+                    array_column($activity->recipient_country, 'percentage')
+                );
+
+                $countryTotalPercentage = (float) array_sum($countryPercentages);
                 $totalPercentage = $firstGroupTotalPercentage + $countryTotalPercentage;
 
                 return $totalPercentage === 100.0 ? $regionStatus : false;
@@ -1181,7 +1191,13 @@ class ElementCompleteService
         }
 
         if (!empty($activity->recipient_country)) {
-            $countryTotalPercentage = (float) array_sum(array_column($activity->recipient_country, 'percentage'));
+            $percentagesRaw = array_column($activity->recipient_country, 'percentage');
+            $percentages = array_map(
+                fn ($v) => is_numeric($v) ? (float) $v : 0.0,
+                $percentagesRaw
+            );
+
+            $countryTotalPercentage = (float) array_sum($percentages);
 
             if (empty($activity->recipient_region) && $countryTotalPercentage != 100.0) {
                 return false;
