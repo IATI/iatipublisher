@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'step'                                         => 'ES_Step',
-    'this_widget_can_be_accessed_from_get_started' => 'ES_This \'Get Started\' guidance can be accessed from your profile menu.',
-    'dont_show_this_again'                         => 'ES_Don\'t show this again',
+    'step' => 'Étape',
+    'this_widget_can_be_accessed_from_get_started' => 'Vous pouvez accéder à ce guide de démarrage (Get Started) à partir du menu de votre profil.',
+    'dont_show_this_again' => 'Ne plus afficher',
 ];
