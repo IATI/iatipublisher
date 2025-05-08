@@ -11,4 +11,10 @@ return [
     'support_iati_standard_org' => 'support@iatistandard.org',
     'copyright_iati_2022_all_rights_reserved' => 'Copyright IATI 2022. All rights reserved.',
     'home' => 'Accueil',
+    'about'                                     => 'ES_About',
+    'code_licensed_under_the_gnu_agpl_link'     => 'ES_Code licensed under <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">GNU AGPL</a>.',
+    'documentation_licensed_under_cc_by3_link'  => 'ES_Documentation licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 3.0</a>.',
+    'privacy'                                   => 'ES_Privacy',
+    'data_removal'                              => 'ES_Data Removal',
+    'copyright_iati'                            => 'ES_Copyright IATI 2024',
 ];
