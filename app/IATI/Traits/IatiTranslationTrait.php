@@ -65,7 +65,7 @@ trait IatiTranslationTrait
         return $requiredTranslations;
     }
 
-    public function getPageTranslationDependency(array $folders = ['activity_detail', 'activity_index', 'adminHeader', 'api', 'common', 'elements', 'footer', 'onboarding', 'organisationDetail', 'public', 'register', 'settings', 'user', 'userProfile', 'workflow_backend', 'workflow_frontend']): array
+    public function getPageTranslationDependency(array $folders = ['activity_detail', 'activity_index', 'adminHeader', 'api', 'common', 'elements', 'footer', 'onboarding', 'organisationDetail', 'public', 'register', 'settings', 'user', 'userProfile', 'workflow_backend', 'workflow_frontend', 'custom_pages']): array
     {
         $cacheData = $this->loadTranslations();
         $translatedData = Arr::dot($this->filterTranslations($cacheData, $folders));
