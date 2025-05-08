@@ -14,7 +14,7 @@ trait IatiTranslationTrait
     public function loadTranslations(): array
     {
         $lang = App::getLocale();
-        $cacheData = false;
+        $cacheData = Cache::get("translated_data_{$lang}");
 
         if (!$cacheData) {
             $cacheData = [];
@@ -46,7 +46,7 @@ trait IatiTranslationTrait
 
             $cacheData['general'] = $outerFileTranslations;
             //  TODO: Remove this
-            //  Cache::put("translated_data_{$lang}", $cacheData, now()->addHours(24));
+            Cache::put("translated_data_{$lang}", $cacheData, now()->addHours(24));
         }
 
         return $cacheData;

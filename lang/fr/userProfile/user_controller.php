@@ -1,16 +1,16 @@
 <?php
 
 return [
-    'new_user_successfully_created'              => 'FR_New user successfully created',
-    'error_has_occurred_while_creating_user'     => 'FR_Error creating user',
-    'user_has_been_deleted_successfully'         => 'FR_User has been deleted successfully',
-    'the_user_cannot_be_deleted'                 => 'FR_The user cannot be deleted',
-    'error_has_occurred_while_deleting_user'     => 'FR_Error deleting user',
-    'verification_email_successfully_sent'       => 'FR_Verification email successfully sent',
-    'please_enter_correct_current_password'      => 'FR_Please enter correct password',
-    'error_occurred_while_updating_password'     => 'FR_Error updating password',
-    'error_occurred_while_updating_user_profile' => 'FR_Error updating user profile',
-    'user_has_been_deactivated_successfully'     => 'FR_User has been deactivated successfully',
-    'user_has_been_activated_successfully'       => 'FR_User has been activated successfully',
-    'the_status_of_this_user_cannot_be_changed'  => 'FR_The status of this user cannot be changed',
+    'new_user_successfully_created' => 'Nuevo usuario creado con éxito',
+    'error_has_occurred_while_creating_user' => 'Error al crear usuario',
+    'user_has_been_deleted_successfully' => 'El usuario se ha eliminado correctamente',
+    'the_user_cannot_be_deleted' => 'El usuario no puede eliminarse',
+    'error_has_occurred_while_deleting_user' => 'Error al eliminar usuario',
+    'verification_email_successfully_sent' => 'Correo electrónico de verificación enviado con éxito',
+    'please_enter_correct_current_password' => 'Introduzca la contraseña correcta',
+    'error_occurred_while_updating_password' => 'Error al actualizar la contraseña',
+    'error_occurred_while_updating_user_profile' => 'Error al actualizar el perfil de usuario',
+    'user_has_been_deactivated_successfully' => 'El usuario se ha desactivado con éxito',
+    'user_has_been_activated_successfully' => 'El usuario se ha activado con éxito',
+    'the_status_of_this_user_cannot_be_changed' => 'No se puede cambiar el estado de este usuario',
 ];

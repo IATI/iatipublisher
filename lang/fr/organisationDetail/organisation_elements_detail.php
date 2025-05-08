@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'organisation_identifier'                                     => 'FR_Organisation Identifier',
-    'deprecation_code_usage'                                      => 'FR_Deprecated code usage',
-    'couldnt_delete_the_organisation_element_due_to_system_error' => 'FR_Unable to delete data element due to system error.',
+    'organisation_identifier' => 'Identificador de la organización',
+    'deprecation_code_usage' => 'El código utilizado está obsoleto',
+    'couldnt_delete_the_organisation_element_due_to_system_error' => 'No se pudo eliminar el elemento de datos debido a un error del sistema.',
 ];
