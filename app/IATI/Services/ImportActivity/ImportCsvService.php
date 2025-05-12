@@ -286,11 +286,17 @@ class ImportCsvService
      * @param $filename
      *
      * @return $this
+     * @throws \JsonException
      */
-    public function startImport($filename): static
+    public function startImport($filename, $userId, $orgId): static
     {
         Session::put('import-status', 'Processing');
         Session::put('filename', $filename);
+
+        awsUploadFile(
+            sprintf('%s/%s/%s/%s', $this->csv_data_storage_path, $orgId, $userId, 'status.json'),
+            json_encode(['success' => true, 'message' => 'Started'], JSON_THROW_ON_ERROR)
+        );
 
         return $this;
     }
