@@ -168,7 +168,7 @@ class ImportActivityController extends Controller
 
                 if ($this->importCsvService->storeCsv($file)) {
                     $filename = str_replace(' ', '', $file->getClientOriginalName());
-                    $this->importCsvService->startImport($filename)->fireCsvUploadEvent($filename);
+                    $this->importCsvService->startImport($filename, $user->id, $orgId)->fireCsvUploadEvent($filename);
                 }
             }
 
