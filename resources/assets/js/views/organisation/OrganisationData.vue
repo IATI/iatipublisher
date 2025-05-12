@@ -23,7 +23,7 @@
           <div class="title grow-0">
             <div class="max-w-sm pb-4 text-caption-c1 text-n-40">
               <nav aria-label="breadcrumbs" class="rank-math-breadcrumb">
-                <div class="flex">
+                <div class="flex items-center">
                   <a class="whitespace-nowrap font-bold" href="/organisation">
                     {{
                       translatedData[

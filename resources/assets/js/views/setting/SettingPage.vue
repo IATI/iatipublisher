@@ -70,7 +70,7 @@
       </div>
     </div>
     <div
-      class="fixed bottom-0 left-0 w-full bg-eggshell px-6 py-5 shadow-dropdown sm:pr-40"
+      class="fixed bottom-0 left-0 z-[100] w-full bg-eggshell px-6 py-5 shadow-dropdown sm:pr-40"
     >
       <div class="flex items-center justify-end">
         <a

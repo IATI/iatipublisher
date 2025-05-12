@@ -36,7 +36,12 @@
 
     <!-- styles -->
     <link rel="stylesheet" href="{{ mix('css/webportal-app.css') }}" media="print" onload="this.media='all'">
-
+    <link
+    href={{ env('IATI_DESIGN_SYSTEM_URL')}}
+    rel="stylesheet"
+    
+    />
+    
     <link rel="icon"
         href="{{ asset('favicon.ico') }}"
         type="image/x-icon" />
@@ -58,10 +63,12 @@
             <admin-footer
                 :super-admin='{{ Auth::check() ? (int) isSuperAdmin() : 0 }}'
                 :translated-data='{{json_encode($translatedData)}}'
+                :current-language="{{json_encode($currentLanguage)}}"
             ></admin-footer>
         @else
             <web-footer
                 :translated-data='{{json_encode($translatedData)}}'
+                :current-language="{{json_encode($currentLanguage)}}"
             >
             </web-footer>
         @endif
@@ -71,6 +78,8 @@
     <script defer src="{{ mix('/js/vendor.js') }}"></script>
     <script defer src="{{ mix('/js/app.js') }}"></script>
     <script defer src="{{ mix('js/webportal-script.js') }}"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/iati-design-system@3.5.0/dist/js/iati.js"></script>
+
 
 </body>
 

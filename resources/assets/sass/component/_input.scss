@@ -39,6 +39,7 @@
 }
 textarea.form__input {
   display: block;
+  padding-top: 14px !important;
 }
 .text-area {
   outline: none !important;
@@ -151,7 +152,7 @@ textarea.form__input {
     border-radius: 20px;
   }
   svg {
-    @apply absolute left-3 top-3 text-base text-n-30;
+    @apply absolute left-3 top-2.5 text-base text-n-30;
   }
 }
 .required-icon {

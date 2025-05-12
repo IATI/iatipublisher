@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav aria-label="breadcrumbs" class="rank-math-breadcrumb">
-      <div class="flex">
+      <div class="flex items-center">
         <template v-for="(bc, d) in breadcrumbData" :key="d">
           <template v-if="Number(d) === 0">
             <a class="whitespace-nowrap font-bold" href="/">
