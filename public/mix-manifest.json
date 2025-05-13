@@ -1,20 +1,10 @@
 {
-<<<<<<< HEAD
-    "/js/app.js": "/js/app.js?id=37bf6218c558577be55a210d537c4449",
+    "/js/app.js": "/js/app.js?id=c40334122520dd7704737fb37587dff6",
     "/js/script.js": "/js/script.js?id=3c76a186055f6358307e48bdd9ead790",
-    "/js/webportal-script.js": "/js/webportal-script.js?id=55315683d985acd888e7f109c76f6fde",
-    "/js/formbuilder.js": "/js/formbuilder.js?id=7a2a3cb6bb636bf59d6b3b94e1feb480",
+    "/js/webportal-script.js": "/js/webportal-script.js?id=1bcae4271c042a8b79b241f34a1653fc",
+    "/js/formbuilder.js": "/js/formbuilder.js?id=bf7a2285c44a8258fd9afa3d462ed26d",
     "/manifest.js": "/manifest.js?id=3ed1124c8f4dcb98acc36de67cb80349",
-    "/css/webportal-app.css": "/css/webportal-app.css?id=d60d98be9a376aa3ba9dd0c52db5f98d",
-    "/css/app.css": "/css/app.css?id=d42c201b0a53d5a21fd9d914b58196a7",
-=======
-    "/js/app.js": "/js/app.js?id=daaae55c2d64f1f6d5dfe424343c04d6",
-    "/js/script.js": "/js/script.js?id=3c76a186055f6358307e48bdd9ead790",
-    "/js/webportal-script.js": "/js/webportal-script.js?id=d8679bb8f9fe4a8f4aed2c8f4cf2f45b",
-    "/js/formbuilder.js": "/js/formbuilder.js?id=18cfbf7f9bcb8432bc2aab2bb67a9f44",
-    "/manifest.js": "/manifest.js?id=3ed1124c8f4dcb98acc36de67cb80349",
-    "/css/webportal-app.css": "/css/webportal-app.css?id=b7c3ca41e1ebe67ff05a27809d454f6c",
-    "/css/app.css": "/css/app.css?id=4efe58abe9871d5796762363ce508aff",
->>>>>>> 46e4ae24 (-[x] Header Footer Design System Integration)
-    "/js/vendor.js": "/js/vendor.js?id=89676cf973ac538e1cc89e1895c5b6c3"
+    "/css/webportal-app.css": "/css/webportal-app.css?id=2bf0fdfd2cc78b4d2c2f8e6e05ecd238",
+    "/css/app.css": "/css/app.css?id=d8909ac0aa35a0ec21deac060ecf9b2f",
+    "/js/vendor.js": "/js/vendor.js?id=5147ad2362c970c726f833228cebc69e"
 }
