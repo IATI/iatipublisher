@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\XlsImporter\Foundation\Mapper;
 
-use App\Helpers\ImportCacheHelper;
 use App\IATI\Models\Organization\Organization;
 use App\IATI\Services\ElementCompleteService;
 use App\XlsImporter\Foundation\Mapper\Traits\XlsMapperHelper;
@@ -332,11 +331,7 @@ class Activity
                 $this->errorCount['critical'] += count(Arr::get($this->processingErrors, $activityIdentifier));
             }
 
-            if (!ImportCacheHelper::isThisActivityBeingImported($orgId, $activityIdentifier)) {
-                $this->storeValidatedData($activity, $error, $existingId, $activityIdentifier);
-            }
-
-            ImportCacheHelper::appendActivityIdentifiersToCache($orgId, $activityIdentifier);
+            $this->storeValidatedData($activity, $error, $existingId, $activityIdentifier);
         }
 
         $this->storeGlobalErrors();

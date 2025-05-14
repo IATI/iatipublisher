@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\XmlImporter\Foundation;
 
-use App\Helpers\ImportCacheHelper;
 use App\IATI\Repositories\Activity\ActivityRepository;
 use App\IATI\Repositories\Activity\DocumentLinkRepository;
 use App\IATI\Repositories\Activity\ResultRepository;
@@ -145,12 +144,6 @@ class XmlQueueWriter
     public function save($mappedActivity): bool
     {
         $activityIdentifier = Arr::get($mappedActivity, 'iati_identifier.activity_identifier');
-
-        if (ImportCacheHelper::isThisActivityBeingImported($this->orgId, $activityIdentifier)) {
-            return false;
-        }
-
-        ImportCacheHelper::appendActivityIdentifiersToCache($this->orgId, $activityIdentifier);
 
         /** @var $xmlValidator XmlValidator */
         $xmlValidator = app(XmlValidator::class);

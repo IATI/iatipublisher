@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\CsvImporter\Entities\Activity\Components;
 
 use App\CsvImporter\Entities\Row;
-use App\Helpers\ImportCacheHelper;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -264,12 +263,6 @@ class ActivityRow extends Row
     public function keep(): void
     {
         $activityIdentifier = (string) Arr::get($this->data(), 'identifier.activity_identifier');
-
-        if (ImportCacheHelper::isThisActivityBeingImported($this->organizationId, $activityIdentifier)) {
-            return;
-        }
-
-        ImportCacheHelper::appendActivityIdentifiersToCache($this->organizationId, $activityIdentifier);
 
         $path = sprintf('%s/%s/%s/%s', $this->csv_data_storage_path, $this->organizationId, $this->userId, self::VALID_CSV_FILE);
 

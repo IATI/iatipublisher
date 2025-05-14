@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin\ImportActivity;
 
-use App\Helpers\ImportCacheHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Activity\UploadActivity\ImportActivityRequest;
 use App\IATI\Services\Activity\ActivityService;
@@ -131,7 +130,7 @@ class ImportActivityController extends Controller
 
             $ongoingImportStatus = $this->importStatusService->getOrganisationImportStatus($orgId);
 
-            if (ImportCacheHelper::isAnotherImportInProgressForOrganisation($orgId) || Arr::get($ongoingImportStatus, 'status') === 'processing') {
+            if (Arr::get($ongoingImportStatus, 'status') === 'processing') {
                 $translatedMessage = trans('common/common.import_is_currently_on_progress_please_cancel_the_current_import_to_continue');
 
                 return response()->json([
@@ -146,7 +145,6 @@ class ImportActivityController extends Controller
             }
 
             Session::put('import_filetype', $filetype);
-            ImportCacheHelper::setSessionConsistentFiletype($orgId, $filetype);
 
             if ($filetype === 'xml') {
                 if ($this->importXmlService->store($file)) {
@@ -174,14 +172,11 @@ class ImportActivityController extends Controller
 
             DB::commit();
 
-            ImportCacheHelper::markValidationStepComplete($orgId);
             $translatedMessage = trans('common/common.uploaded_successfully');
 
             return response()->json(['success' => true, 'message' => $translatedMessage, 'type' => $filetype]);
         } catch (Exception $e) {
             DB::rollback();
-
-            ImportCacheHelper::clearImportCache(Auth::user()->organization_id);
 
             logger()->error($e->getMessage());
 
@@ -206,7 +201,7 @@ class ImportActivityController extends Controller
             $activities = $request->get('activities');
 
             $orgId = Auth::user()->organization_id;
-            $filetype = Session::get('import_filetype') ?? ImportCacheHelper::getSessionConsistentFiletype($orgId);
+            $filetype = Session::get('import_filetype');
 
             if ($activities) {
                 if ($filetype === 'xml') {
@@ -220,12 +215,9 @@ class ImportActivityController extends Controller
             }
 
             $this->db->commit();
-            ImportCacheHelper::markImportStepComplete($orgId);
 
             Session::forget('import_filetype');
             Session::forget('error');
-
-            ImportCacheHelper::clearImportCache($orgId);
 
             $translatedMessage = trans('workflow_backend/import_activity_controller.imported_data_successfully');
             Session::flash('success', $translatedMessage);
@@ -236,8 +228,6 @@ class ImportActivityController extends Controller
             $this->deleteOngoingImports();
 
             logger()->error($e);
-
-            ImportCacheHelper::clearImportCache(Auth::user()->organization_id);
 
             $translatedMessage = trans('common/common.error_has_occurred_while_importing_activity');
             Session::flash('error', $translatedMessage);
@@ -256,7 +246,7 @@ class ImportActivityController extends Controller
         try {
             $orgId = Auth::user()->organization_id;
             $userId = Auth::user()->id;
-            $filetype = Session::get('import_filetype') ?? ImportCacheHelper::getSessionConsistentFiletype($orgId);
+            $filetype = Session::get('import_filetype');
 
             if (!$orgId) {
                 $translatedMessage = trans('common/common.user_is_not_associated_with_any_organization');
@@ -329,7 +319,7 @@ class ImportActivityController extends Controller
             $orgId = Auth::user()->organization_id;
             $userId = Auth::user()->id;
 
-            $filetype = Session::get('import_filetype') ?? ImportCacheHelper::getSessionConsistentFiletype($orgId);
+            $filetype = Session::get('import_filetype');
 
             $status = awsGetFile(sprintf('%s/%s/%s/%s', $filetype === 'xml' ? $this->xml_data_storage_path : $this->csv_data_storage_path, $orgId, $userId, 'status.json'));
             $schema_error = awsGetFile(sprintf('%s/%s/%s/%s', $filetype === 'xml' ? $this->xml_data_storage_path : $this->csv_data_storage_path, $orgId, $userId, 'schema_error.log'));
