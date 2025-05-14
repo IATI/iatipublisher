@@ -718,14 +718,12 @@ $(async function () {
    * @param currentLanguage
    */
   function toggleOptionalText(optionalLabel: Element, currentLanguage = 'en') {
-    console.log('currentLanguage');
-    console.log(currentLanguage);
     let optionalLabelString = 'Optional';
 
     if (currentLanguage === 'fr') {
-      optionalLabelString = 'fr_Optional';
+      optionalLabelString = 'Opcional';
     } else if (currentLanguage === 'es') {
-      optionalLabelString = 'es_Optional';
+      optionalLabelString = 'Facultatif';
     }
 
     const optionalLabelWithSvg = `<svg viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">

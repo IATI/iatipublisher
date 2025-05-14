@@ -3,6 +3,7 @@
 @section('content')
     <activities-detail
         :translated-data='{{json_encode($translatedData)}}'
+        :current-language='{{json_encode($currentLanguage)}}'
     >
     </activities-detail>
 

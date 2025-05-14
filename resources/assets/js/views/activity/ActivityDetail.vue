@@ -572,6 +572,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    currentLanguage: {
+      type: String,
+      required: true,
+    },
   },
   setup(props) {
     interface paType {
@@ -863,7 +867,9 @@ export default defineComponent({
     provide('activities', publishingActivities as Ref);
     provide('refreshToastMsg', refreshToastMsg);
     provide('translatedData', props.translatedData);
+    provide('currentLanguage', props.currentLanguage);
 
+    console.log(props.currentLanguage);
     indexStore.dispatch('updateSelectedActivities', [activity.value.id]);
 
     /**

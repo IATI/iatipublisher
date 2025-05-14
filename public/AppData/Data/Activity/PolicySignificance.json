@@ -7,7 +7,7 @@
         {
             "code": "0",
             "name": "not targeted",
-            "description": "The score "not targeted" means that the activity was examined but found not to target the policy objective.",
+            "description": "The score \"not targeted\" means that the activity was examined but found not to target the policy objective.",
             "status": "active",
             "language": "en"
         },
@@ -21,7 +21,7 @@
         {
             "code": "2",
             "name": "principal objective",
-            "description": "Principal (primary) policy objectives are those which can be identified as being fundamental in the design and impact of the activity and which are an explicit objective of the activity. They may be selected by answering the question "Would the activity have been undertaken without this objective?"",
+            "description": "Principal (primary) policy objectives are those which can be identified as being fundamental in the design and impact of the activity and which are an explicit objective of the activity. They may be selected by answering the question \"Would the activity have been undertaken without this objective?\"",
             "status": "active",
             "language": "en"
         },

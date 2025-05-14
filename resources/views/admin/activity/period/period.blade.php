@@ -6,5 +6,6 @@
                   :period="{{ json_encode($period) }}"
                   :toast = "{{ json_encode($toast)}}"
                   :translated-data="{{json_encode($translatedData)}}"
+                  :current-language="{{json_encode($currentLanguage)}}"
     ></periods-list>
 @endsection

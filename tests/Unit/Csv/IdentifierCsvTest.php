@@ -32,7 +32,7 @@ class IdentifierCsvTest extends CsvBaseTest
         }
 
         $flattenErrors = Arr::flatten($errors);
-        $this->assertContains('The activity-identifier must only contain letters, numbers, and hyphens, with no spaces or other special characters.', $flattenErrors);
+        $this->assertContains(trans('validation.no_spaces_in_between_in_activity_identifier'), $flattenErrors);
         $this->assertContains('The activity identifier field is required.', $flattenErrors);
     }
 

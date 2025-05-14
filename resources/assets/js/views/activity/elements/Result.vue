@@ -66,7 +66,10 @@
                     class="mr-4 max-w-[500px] overflow-x-hidden text-ellipsis whitespace-nowrap"
                   >
                     {{
-                      getActivityTitle(result.result.title[0].narrative, 'en')
+                      getActivityTitle(
+                        result.result.title[0].narrative,
+                        currentLanguage
+                      )
                     }}
                   </div>
                   <div class="flex shrink-0">
@@ -110,7 +113,7 @@
                                 getActivityTitle(
                                   result.result.description[0].narrative,
                                   currentLanguage
-                                ) === 'Untitled'
+                                ) === getTranslatedUntitled(translatedData)
                                   ? 'N/A'
                                   : types.languages[
                                       result?.result?.description?.[0]
@@ -460,20 +463,19 @@ export default defineComponent({
   setup(props) {
     const format = 'MMMM DD, YYYY';
     const translatedData = inject('translatedData') as Record<string, string>;
+    const currentLanguage = inject('currentLanguage') as string;
     const { data } = toRefs(props);
 
     let resultData = data.value.content;
-
-    const currentLanguage = 'en';
 
     return {
       moment,
       format,
       resultData,
       getActivityTitle,
-      currentLanguage,
       dateFormat,
       translatedData,
+      currentLanguage,
     };
   },
   computed: {
@@ -481,6 +483,6 @@ export default defineComponent({
       return indicator;
     },
   },
-  methods: { traceSegment, getTranslatedUntitled, onlyDeprecatedStatusMap },
+  methods: { getTranslatedUntitled, onlyDeprecatedStatusMap },
 });
 </script>

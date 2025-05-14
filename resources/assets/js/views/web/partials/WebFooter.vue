@@ -114,7 +114,6 @@
               id="iati-country-switcher"
               v-model="isActive"
               class="iati-country-switcher__control cursor-pointer"
-              disabled
               @change="onLanguageChange"
             >
               <option value="en">English</option>

@@ -1,7 +1,7 @@
 <template>
   <div id="date-range-main" ref="dateRangeMain" class="flex space-x-1">
     <div>
-      <div class="relative min-w-[150px]">
+      <div class="relative">
         <!--Range Dropdown-->
         <div
           v-if="dropdownRange && Object.keys(dropdownRange).length"
@@ -17,14 +17,14 @@
           v-show="showRangeDropdown"
           ref="dateDropdown"
           class="absolute w-fit bg-white p-2 shadow-sm"
-          style="top: 32px; right: 8px"
+          style="top: 32px; right: 8px; z-index: 99"
         >
           <li
             v-for="(value, key) in dropdownRange"
             :key="key"
-            class="daterange-item"
+            class="daterange-item w-full"
             :class="value === dateType ? 'daterange-item-active' : ''"
-            style="min-width: 180px"
+            style="z-index: 100; min-width: 250px"
             @click="setDateRangeTypeInDropdown(value, key)"
           >
             {{ value }}

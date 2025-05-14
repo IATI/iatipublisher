@@ -352,7 +352,7 @@ class UserService
             }
         } else {
             if ($data['username'] === $response->name) {
-                $errors['username'] = trans('user/user_service.username_already_exists_in_iati_registry');
+                $errors['username'] = [trans('user/user_service.username_already_exists_in_iati_registry')];
             }
         }
 
