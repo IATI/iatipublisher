@@ -329,7 +329,7 @@ class Result
     public function getElementData($data, $dependency, $elementDropDownFields, $element, $elementActivityIdentifier): array
     {
         if (is_null($elementActivityIdentifier)) {
-            $this->globalErrors[] = sprintf('Error detected on %s sheet, cell A %s: The identifier is missing.', $this->sheetName, $this->rowCount);
+            $this->globalErrors[] = sprintf('Error detected on %s sheet, cell A %s: Identifier is missing.', $this->sheetName, $this->rowCount);
 
             return [];
         }

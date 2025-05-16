@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\XlsImporter\Foundation\Mapper;
 
-use App\Helpers\ImportCacheHelper;
 use App\IATI\Models\Organization\Organization;
 use App\IATI\Services\ElementCompleteService;
 use App\XlsImporter\Foundation\Mapper\Traits\XlsMapperHelper;
@@ -323,7 +322,7 @@ class Activity
             $existingId = Arr::get($this->existingIdentifier, $activityIdentifier, false);
 
             if (!in_array($activityIdentifier, $this->activitiesIdentifier)) {
-                $error['critical']['iati_identifier']['settings'] = 'The activity identifier has not been mentioned on setting sheet.';
+                $error['critical']['iati_identifier']['settings'] = trans('validation.the_activity_identifier_has_not_been_mentioned_on_setting_sheet');
                 $this->errorCount['critical']++;
             }
 
@@ -332,11 +331,7 @@ class Activity
                 $this->errorCount['critical'] += count(Arr::get($this->processingErrors, $activityIdentifier));
             }
 
-            if (!ImportCacheHelper::isThisActivityBeingImported($orgId, $activityIdentifier)) {
-                $this->storeValidatedData($activity, $error, $existingId, $activityIdentifier);
-            }
-
-            ImportCacheHelper::appendActivityIdentifiersToCache($orgId, $activityIdentifier);
+            $this->storeValidatedData($activity, $error, $existingId, $activityIdentifier);
         }
 
         $this->storeGlobalErrors();
@@ -349,20 +344,18 @@ class Activity
      * @param $data
      *
      * @return void
+     * @throws \JsonException
      */
     public function defaultValues($data): void
     {
         $dropDownFields = $this->getDropDownFields();
         $excelColumnName = $this->getExcelColumnNameMapper();
-        $elementActivityIdentifier = null;
 
-        foreach ($data as $index => $row) {
-            $secondary_reporter = '';
-
+        foreach ($data as $row) {
             if ($this->checkRowNotEmpty($row)) {
                 $elementActivityIdentifier = trim((string) Arr::get($row, 'activity_identifier'));
 
-                if (is_null($elementActivityIdentifier)) {
+                if (empty($elementActivityIdentifier)) {
                     $this->globalErrors[] = 'Error detected on ' . $this->sheetName . ' sheet, cell A' . $this->rowCount . ': Identifier is missing.';
                     $this->rowCount++;
                     continue;
@@ -408,10 +401,16 @@ class Activity
      */
     public function getReportingOrganization($secondary_reporter): array
     {
-        if (is_string($secondary_reporter) && in_array(strtolower($secondary_reporter), ['false', 'true'])) {
-            $secondary_reporter = (int) filter_var($secondary_reporter, FILTER_VALIDATE_BOOLEAN);
+        $value = is_string($secondary_reporter) ? strtolower(trim($secondary_reporter)) : $secondary_reporter;
+
+        if ($value === 'true') {
+            $secondary_reporter = 1;
+        } elseif ($value === 'false') {
+            $secondary_reporter = 0;
+        } elseif ($value === '' || $value === null || $value === 'null') {
+            $secondary_reporter = null;
         } else {
-            $secondary_reporter = $secondary_reporter ? (int) $secondary_reporter : $secondary_reporter;
+            $secondary_reporter = $secondary_reporter ? 1 : 0;
         }
 
         if (!empty($this->organizationReportingOrg)) {
@@ -442,18 +441,18 @@ class Activity
      * @param $data
      *
      * @return void
+     * @throws \JsonException
      */
     public function singleValuedFields($data): void
     {
         $dropDownFields = $this->getDropDownFields();
-        $elementActivityIdentifier = null;
         $excelColumnName = $this->getExcelColumnNameMapper();
 
-        foreach ($data as $index => $row) {
+        foreach ($data as $row) {
             if ($this->checkRowNotEmpty($row)) {
                 $elementActivityIdentifier = trim((string) Arr::get($row, 'activity_identifier'));
 
-                if (is_null($elementActivityIdentifier)) {
+                if (empty($elementActivityIdentifier)) {
                     $this->globalErrors[] = 'Error detected on ' . $this->sheetName . ' sheet, cell A' . $this->rowCount . ': Identifier is missing.';
                     $this->rowCount++;
                     continue;
@@ -565,9 +564,25 @@ class Activity
      * @param $element
      *
      * @return array
+     * @throws \JsonException
      */
     public function getElementData($data, $dependency, $elementDropDownFields, $elementActivityIdentifier, $element): array
     {
+        /*
+         * Change source: https://github.com/IATI/iatipublisher/issues/1791
+         * Read comment: app/XlsImporter/Foundation/Mapper/Traits/XlsMapperHelper.php:407
+         */
+        if (!empty($this->tempErrors) && $element === 'title') {
+            foreach ($this->tempErrors['settings'] as $errorActivityIdentifier => $errorRepresentation) {
+                $errorIndex = array_key_first($errorRepresentation);
+                $error = $errorRepresentation[$errorIndex];
+
+                $this->processingErrors[$errorActivityIdentifier]['settings'][$errorIndex] = $error;
+            }
+
+            unset($this->tempErrors['settings']);
+        }
+
         $this->isIdentifierDuplicate($elementActivityIdentifier, $element);
 
         $elementBase = Arr::get($dependency, 'elementBase', null);
