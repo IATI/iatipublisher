@@ -180,19 +180,10 @@ class ImportXlsController extends Controller
 
             $xlsType = $status['template'];
 
-            if ($xlsType === 'activity') {
-                $translatedMessage = trans('workflow_backend/import_activity_controller.error_has_occurred_while_importing_activities');
-
-                Session::flash('error', $translatedMessage);
-
-                $this->deleteImportStatus();
-
-                return response()->json(['success' => false, 'message' =>  $translatedMessage, 'type' => $xlsType]);
-            }
-
             $this->importXlsService->create($activities, $xlsType);
 
             $this->importXlsService->deleteImportStatus();
+
             $this->db->commit();
 
             $translatedMessage = trans('workflow_backend/import_xls_controller.xls_file_with_xlstype_imported_successfully', ['xlsType'=>$xlsType]);

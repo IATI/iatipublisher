@@ -536,22 +536,14 @@ class ActivityRow extends Row
         } else {
             $contentInValidDotJson = collect(json_decode($validJsonFile, true, 512, JSON_THROW_ON_ERROR));
 
-            $activityIdentifiersPresentInValidJson = $contentInValidDotJson
-                ->pluck('data.identifier.activity_identifier')
-                ->filter();
+            $appendableData = [
+                'data'      => $this->data(),
+                'errors'    => $this->errors(),
+                'status'    => 'processed',
+                'existence' => $this->existence,
+            ];
 
-            $currentActivityIdentifier = Arr::get($this->data(), 'identifier.activity_identifier', '');
-
-            if (!$activityIdentifiersPresentInValidJson->contains($currentActivityIdentifier)) {
-                $appendableData = [
-                    'data'      => $this->data(),
-                    'errors'    => $this->errors(),
-                    'status'    => 'processed',
-                    'existence' => $this->existence,
-                ];
-
-                $contentInValidDotJson->push($appendableData);
-            }
+            $contentInValidDotJson->push($appendableData);
         }
 
         $this->uploadContent($destinationFilePath, $contentInValidDotJson->toJson(JSON_THROW_ON_ERROR));
@@ -728,7 +720,7 @@ class ActivityRow extends Row
     protected function containsDuplicateActivities($commonIdentifierCount): bool
     {
         if ($commonIdentifierCount > 1) {
-            $this->errors['critical']['activity_identifier']['activity_identifier'] = 'This Activity has been duplicated in the uploaded Csv File.';
+            $this->errors['critical']['activity_identifier']['activity_identifier'] = trans('validation.this_activity_has_been_duplicated_in_the_uploaded_csv_file');
 
             return true;
         }
