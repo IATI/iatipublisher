@@ -401,10 +401,16 @@ class Activity
      */
     public function getReportingOrganization($secondary_reporter): array
     {
-        if (is_string($secondary_reporter) && in_array(strtolower($secondary_reporter), ['false', 'true'])) {
-            $secondary_reporter = (int) filter_var($secondary_reporter, FILTER_VALIDATE_BOOLEAN);
+        $value = is_string($secondary_reporter) ? strtolower(trim($secondary_reporter)) : $secondary_reporter;
+
+        if ($value === 'true') {
+            $secondary_reporter = 1;
+        } elseif ($value === 'false') {
+            $secondary_reporter = 0;
+        } elseif ($value === '' || $value === null || $value === 'null') {
+            $secondary_reporter = null;
         } else {
-            $secondary_reporter = $secondary_reporter ? (int) $secondary_reporter : $secondary_reporter;
+            $secondary_reporter = $secondary_reporter ? 1 : 0;
         }
 
         if (!empty($this->organizationReportingOrg)) {
