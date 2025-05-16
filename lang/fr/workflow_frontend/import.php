@@ -30,7 +30,6 @@ return [
     'the_activity_contains_critical_errors' => 'Les activités comportant des erreurs critiques ne peuvent pas être importées. Veuillez revoir vos données et les téléverser à nouveau.',
     'the_field_with_warnings_will_be_uploaded_to_our_system' => 'Les activités comportant des avertissements peuvent être importées dans IATI Publisher.',
     'the_activity_with_the_errors_will_be_uploaded_to_our_system' => 'Les activités comportant des erreurs peuvent toujours être importées, mais les champs contenant des erreurs peuvent être retirés. Nous vous recommandons de corriger les erreurs et de téléverser à nouveau vos données.',
-    'Upload in progress' => 'FR_Import in progress',
     'we_are_in_the_process_of_uploading' => 'Importation du fichier :activityTitle en cours.',
     'please_wait_for_the_completion_of_previous_import' => 'Veuillez attendre la fin de l\'importation précédente.',
     'please_wait_for_the_completion_of_previous_import_or_click_import_anyway' => 'Attendez la fin de l\'importation précédente ou cliquez sur "Importer tout de même" (Import Anyway).',
