@@ -295,11 +295,11 @@ class XmlValidator
         ];
 
         if ($isDuplicate) {
-            $errors['critical']['activity_identifier']['activity_identifier.identifier'] = 'The activity has been duplicated.';
+            $errors['critical']['activity_identifier']['activity_identifier.identifier'] = trans('validation.the_activity_has_been_duplicated');
         }
 
         if (!$isIdentifierValid) {
-            $errors['critical']['activity_identifier']['activity_identifier.activity_identifier'] = 'The activity is invalid. Please ensure that the activity identifier matches with organization identifier.';
+            $errors['critical']['activity_identifier']['activity_identifier.activity_identifier'] = trans('validation.the_activity_is_invalid');
         }
 
         foreach ($errors as $key => $value) {
