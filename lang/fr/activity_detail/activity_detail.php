@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'the_iati_standard_contains_a_wide_range_of_data_elements_and_your_organisation_is_encouraged' => 'La Norma IATI contiene un amplio abanico de elementos de datos y se recomienda a su organización que cumplimente al menos los elementos marcados como "básicos".',
-    'complete_all_core_elements_to_get_100_score' => 'Cumplimente todos los elementos básicos para llegar al 100%',
-    'core_elements_include_the_iati_standards_mandatory_and_recommended_elements' => 'Los elementos básicos incluyen los campos obligatorios y recomendados de la Norma IATI. Es importante proporcionar esta información para garantizar que sus datos sean utilizables y útiles.',
-    'override_this_activitys_default_values' => 'Reemplazar los valores predeterminados de esta actividad',
-    'removed_successfully' => 'Eliminado con éxito',
+    'the_iati_standard_contains_a_wide_range_of_data_elements_and_your_organisation_is_encouraged' => 'La norme IITA contient un large éventail d\'éléments de données et votre organisation est encouragée à renseigner au moins les éléments marqués comme étant "de base".',
+    'complete_all_core_elements_to_get_100_score' => 'Renseigner tous les éléments de base pour obtenir un score de 100 %',
+    'core_elements_include_the_iati_standards_mandatory_and_recommended_elements' => 'Les éléments de base comprennent les champs obligatoires et recommandés de la norme IITA. Il est important de fournir ces informations pour que vos données soient utilisables et utiles.',
+    'override_this_activitys_default_values' => 'Remplacer les valeurs par défaut de cette activité',
+    'removed_successfully' => 'Retrait réussi',
 ];

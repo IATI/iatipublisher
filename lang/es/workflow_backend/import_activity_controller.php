@@ -1,14 +1,14 @@
 <?php
 
 return [
-    'the_file_is_empty_please_upload_file_with_activities' => 'Le fichier est vide. Veuillez téléverser un fichier contenant les données relatives à l\'activité.',
-    'imported_data_successfully' => 'Les données ont été importées avec succès.',
-    'open_error_file' => 'Ouvrir le fichier d\'erreurs',
-    'error_has_occurred_while_checking_the_status' => 'Erreur lors de la vérification du statut.',
-    'please_upload_csv_or_xml_file_to_import_activity' => 'Veuillez téléverser un fichier CSV ou XML pour importer les données d\'activité.',
-    'error_has_occurred_while_importing_activities' => 'Erreur lors de l\'importation des données d\'activité.',
-    'ongoing_import_in_progress_for_this_organisation' => 'Importation déjà en cours pour cette organisation.',
-    'no_import_in_progress_for_this_organisation' => 'Aucune importation en cours pour cette organisation.',
-    'deleted_ongoing_imports' => 'Importation annulée',
-    'failed_to_delete_ongoing_imports' => 'Échec lors de l\'annulation de l\'importation.',
+    'the_file_is_empty_please_upload_file_with_activities' => 'El archivo está vacío. Cargue un archivo que contenga datos de actividades.',
+    'imported_data_successfully' => 'Datos importados correctamente.',
+    'open_error_file' => 'Abrir el archivo de error',
+    'error_has_occurred_while_checking_the_status' => 'Error al comprobar el estado.',
+    'please_upload_csv_or_xml_file_to_import_activity' => 'Cargue un archivo CSV o XML para importar datos de actividad.',
+    'error_has_occurred_while_importing_activities' => 'Error al importar datos de actividad.',
+    'ongoing_import_in_progress_for_this_organisation' => 'La importación de esta organización ya está en curso.',
+    'no_import_in_progress_for_this_organisation' => 'No hay ninguna importación en curso de esta organización.',
+    'deleted_ongoing_imports' => 'Importación cancelada',
+    'failed_to_delete_ongoing_imports' => 'Error al cancelar la importación.',
 ];

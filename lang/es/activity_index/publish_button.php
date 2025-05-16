@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'some_elements_use_deprecated_codelist_values' => 'Certains éléments utilisent des valeurs de liste de codes obsolètes.',
-    'certain_elements_in_this_activity_use_deprecated_code_list_values' => 'Certains éléments de cette activité utilisent des valeurs de liste de codes obsolètes. Nous vous recommandons de les revoir afin d\'utiliser les codes mis à jour.',
-    'fix_issues' => 'Corriger les problèmes',
-    'there_is_missing_data_in_some_of_the_core_elements' => '<p>Certains éléments de base de cette activité n\'ont pas été renseignés. Nous vous recommandons de les renseigner afin de garantir la pertinence de vos données.</p><p>Souhaitez-vous continuer tout de même et vérifier/valider vos données ?</p>',
+    'some_elements_use_deprecated_codelist_values' => 'En algunos elementos se están usando valores obsoletos de la lista de códigos',
+    'certain_elements_in_this_activity_use_deprecated_code_list_values' => 'En algunos elementos de esta actividad se están usando valores obsoletos de la lista de códigos. Recomendamos revisarlos para utilizar códigos actualizados.',
+    'fix_issues' => 'Solucionar problemas',
+    'there_is_missing_data_in_some_of_the_core_elements' => '<p>Algunos elementos básicos de esta actividad no se han cumplimentado. Le recomendamos que los cumplimente para garantizar que sus datos sean útiles.</p><p>¿Desea continuar de todos modos y comprobar (validar) sus datos?</p>',
 ];

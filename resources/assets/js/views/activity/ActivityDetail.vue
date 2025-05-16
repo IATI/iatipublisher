@@ -365,11 +365,13 @@
                 class="tab-btn !p-0"
               >
                 <a :href="`#${String(key)}`" class="p-2 !pr-0">{{
-                  post.label
+                  translatedData[`activity_detail.element_group.${key}`]
                 }}</a>
                 <span class="hover__text pr-2">
                   <HoverText
-                    :name="post.label"
+                    :name="
+                      translatedData[`activity_detail.element_group.${key}`]
+                    "
                     :hover-text="
                       translatedData[
                         'common.common.you_cannot_publish_an_activity_until_all_the_mandatory_fields_have_been_filled'
@@ -775,6 +777,11 @@ export default defineComponent({
 
     // generating available categories of elements
     Object.keys(groupedData).map((key) => {
+      console.log('key');
+      console.log(key);
+      console.log('activities');
+      console.log(activities);
+
       if (Object.prototype.hasOwnProperty.call(activities, key)) {
         groupedData[key]['status'] = 'enabled';
       } else {

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'recipient_country_is_already_added_at_transaction_level' => 'El país receptor ya se ha añadido en el nivel de transacción. Puede cumplimentar el país receptor en el nivel de actividad o de transacción, pero no en ambos.',
+    'recipient_country_is_already_added_at_transaction_level' => 'Le pays bénéficiaire a déjà été ajouté au niveau de la transaction. Vous pouvez renseigner le pays bénéficiaire au niveau de l\'activité ou de la transaction, mais pas au niveau des deux.',
 ];

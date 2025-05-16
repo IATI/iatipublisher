@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'all' => 'Todo',
-    'ready_for_republishing' => 'Listo para volver a publicarse',
-    'draft' => 'Borrador',
+    'all' => 'Toutes les options',
+    'ready_for_republishing' => 'Prêt pour republication',
+    'draft' => 'Projet',
 ];

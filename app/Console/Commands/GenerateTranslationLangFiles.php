@@ -63,7 +63,7 @@ class GenerateTranslationLangFiles extends Command
                         continue;
                     }
 
-                    [$key, $filename, $englishTranslation, $spanishTranslation, $frenchTranslation] = $row;
+                    [$key, $filename, $englishTranslation, $frenchTranslation, $spanishTranslation] = $row;
 
                     $translations[$filename]['en'][$key] = html_entity_decode($englishTranslation, ENT_QUOTES | ENT_HTML5, 'UTF-8');
                     $translations[$filename]['es'][$key] = html_entity_decode($spanishTranslation, ENT_QUOTES | ENT_HTML5, 'UTF-8');

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'failed' => 'Ces identifiants sont introuvables dans nos registres.',
-    'password' => 'Le mot de passe est incorrect.',
-    'throttle' => 'Dépassement du nombre de tentatives de connexion autorisé. Veuillez réessayer dans :seconds secondes.',
+    'failed' => 'Estas credenciales no coinciden con nuestros registros.',
+    'password' => 'La contraseña es incorrecta.',
+    'throttle' => 'Demasiados intentos de inicio de sesión. Inténtelo de nuevo en :seconds segundos.',
 ];

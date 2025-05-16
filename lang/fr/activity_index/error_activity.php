@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'no_activity_has_been_added_yet' => 'Aún no se ha añadido ninguna actividad',
-    'click_on_the_button_below_to_add_a_new_activity' => 'Haga clic en el botón inferior para añadir una nueva actividad',
+    'no_activity_has_been_added_yet' => 'Aucune activité n\'a encore été ajoutée.',
+    'click_on_the_button_below_to_add_a_new_activity' => 'Cliquer sur le bouton ci-dessous pour ajouter une nouvelle activité',
 ];

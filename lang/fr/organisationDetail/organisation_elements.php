@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'search_elements_to_add_edit' => 'Buscar elementos para añadir/editar',
+    'search_elements_to_add_edit' => 'Éléments de recherche à ajouter/modifier',
 ];

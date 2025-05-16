@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'importing' => 'Importando',
-    'multiple_activities' => 'Múltiples actividades',
-    'upload_failed' => 'Error al cargar:',
-    'file_upload_complete' => 'Carga de archivos completada',
-    'uploading' => 'Cargando',
+    'importing' => 'Importation',
+    'multiple_activities' => 'Activités multiples',
+    'upload_failed' => 'Le téléversement a échoué :',
+    'file_upload_complete' => 'Téléversement du fichier terminé',
+    'uploading' => 'Téléversement',
 ];
