@@ -365,12 +365,14 @@
                 class="tab-btn !p-0"
               >
                 <a :href="`#${String(key)}`" class="p-2 !pr-0">{{
-                  translatedData[`activity_detail.element_group.${key}`]
+                  translatedData[`activity_detail.element_group.${String(key)}`]
                 }}</a>
                 <span class="hover__text pr-2">
                   <HoverText
                     :name="
-                      translatedData[`activity_detail.element_group.${key}`]
+                      translatedData[
+                        `activity_detail.element_group.${String(key)}`
+                      ]
                     "
                     :hover-text="
                       translatedData[
@@ -777,11 +779,6 @@ export default defineComponent({
 
     // generating available categories of elements
     Object.keys(groupedData).map((key) => {
-      console.log('key');
-      console.log(key);
-      console.log('activities');
-      console.log(activities);
-
       if (Object.prototype.hasOwnProperty.call(activities, key)) {
         groupedData[key]['status'] = 'enabled';
       } else {
@@ -876,7 +873,6 @@ export default defineComponent({
     provide('translatedData', props.translatedData);
     provide('currentLanguage', props.currentLanguage);
 
-    console.log(props.currentLanguage);
     indexStore.dispatch('updateSelectedActivities', [activity.value.id]);
 
     /**
