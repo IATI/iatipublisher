@@ -54,20 +54,22 @@
       <div class="mt-24">
         <div
           v-if="hasOngoingImportWarning"
-          class="border-orangeish my-2 flex max-w-[95%] items-center space-x-2 rounded-md bg-eggshell px-4 py-6 align-middle text-xs font-normal text-n-50"
+          class="border-orangeish my-2 flex w-full items-center rounded-md bg-eggshell px-4 py-6 text-xs font-normal text-n-50"
         >
-          {{ translatedData['workflow_frontend.import.cannot_import'] }}
-          <template v-if="ongoingImportType === ''">
-            {{ ongoingImportType }}
-            <a href="#" class="px-1 font-bold" @click="openZendeskLauncher">
-              {{ translatedData['common.common.contact_support'] }}
-            </a>
-          </template>
-          <template v-else>
-            <span
-              v-html="getTranslatedAnotherImportInProgress(ongoingImportType)"
-            ></span>
-          </template>
+          <span class="inline">
+            {{ translatedData['workflow_frontend.import.cannot_import'] }}&nbsp;
+            <template v-if="ongoingImportType === ''">
+              {{ ongoingImportType }}
+              <a href="#" class="px-1 font-bold" @click="openZendeskLauncher">
+                {{ translatedData['common.common.contact_support'] }}
+              </a>
+            </template>
+            <template v-else>
+              <span
+                v-html="getTranslatedAnotherImportInProgress(ongoingImportType)"
+              ></span>
+            </template>
+          </span>
         </div>
 
         <div class="mt-2 rounded-lg border border-n-30">
@@ -259,9 +261,10 @@ const getTranslatedAnotherImportInProgress = (ongoingImportType: string) => {
 
   const url = ongoingImportType === 'xls' ? '/import/xls/list' : '/import/list';
 
+  console.log(props.translatedData['common.common.view_import_list']);
   message = message.replace(
     ':link',
-    `<a href="${url}" class="px-1 font-bold">view import list</a>`
+    `<a href="${url}" class="px-1 font-bold">${props.translatedData['common.common.view_import_list']}</a>`
   );
 
   return message;

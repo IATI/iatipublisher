@@ -735,7 +735,7 @@ class ActivityRow extends Row
     protected function containsDuplicateActivities($commonIdentifierCount): bool
     {
         if ($commonIdentifierCount > 1) {
-            $this->errors['critical']['activity_identifier']['activity_identifier'] = 'This Activity has been duplicated in the uploaded Csv File.';
+            $this->errors['critical']['activity_identifier']['activity_identifier'] = trans('validation.this_activity_has_been_duplicated_in_the_uploaded_csv_file');
 
             return true;
         }

@@ -323,7 +323,7 @@ class Activity
             $existingId = Arr::get($this->existingIdentifier, $activityIdentifier, false);
 
             if (!in_array($activityIdentifier, $this->activitiesIdentifier)) {
-                $error['critical']['iati_identifier']['settings'] = 'The activity identifier has not been mentioned on setting sheet.';
+                $error['critical']['iati_identifier']['settings'] = trans('validation.the_activity_identifier_has_not_been_mentioned_on_setting_sheet');
                 $this->errorCount['critical']++;
             }
 

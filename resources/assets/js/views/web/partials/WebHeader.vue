@@ -113,9 +113,9 @@
               class="iati-country-switcher__control cursor-pointer"
               @change="onLanguageChange"
             >
-              <option value="en">English</option>
-              <option value="fr">French</option>
-              <option value="es">Spanish</option>
+              <option value="en">{{ localizedLanguages.en }}</option>
+              <option value="fr">{{ localizedLanguages.fr }}</option>
+              <option value="es">{{ localizedLanguages.es }}</option>
             </select>
           </div>
 
@@ -185,6 +185,27 @@ const props = defineProps({
 });
 
 const isActive = ref(props.currentLanguage);
+
+const languageOptions: Record<string, Record<string, string>> = {
+  en: {
+    en: 'English',
+    fr: 'Français',
+    es: 'Español',
+  },
+  fr: {
+    en: 'Anglais',
+    fr: 'Français',
+    es: 'Espagnol',
+  },
+  es: {
+    en: 'Inglés',
+    fr: 'Francés',
+    es: 'Español',
+  },
+};
+
+const localizedLanguages =
+  languageOptions[props.currentLanguage] || languageOptions['en'];
 
 const onLanguageChange = (event: Event) => {
   const selectedLang = (event.target as HTMLSelectElement).value;

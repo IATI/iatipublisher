@@ -389,4 +389,5 @@ return [
     'choose_your_language'                                                                                                                                            => 'Choose your language',
     'useful_links'                                                                                                                                                    => 'Useful Links',
     'additional_information'                                                                                                                                          => 'Additional Information',
+    'view_import_list'                                                                                                                                                => 'view import list',
 ];
