@@ -12,45 +12,45 @@ use Illuminate\Support\Facades\DB;
 /**
  * @class ClearOlderAuditLogs
  *
- * Used in app/Console/Kernel.php. Scheduled to on the first of every month.
+ * This command is scheduled to run on the first day of every month.
+ *
+ * As part of our efforts to improve GDPR compliance and reduce personal data retention,
+ * this command deletes audit log entries that are older than one full calendar month.
+ *
+ * While we do not track mouse clicks or fine-grained user behavior, we do log actions like
+ * login, save, update, delete, download, and export. These logs are not used for profiling
+ * and do not track individual user journeys.
+ *
+ * IP addresses and browser user-agent strings may be considered personally identifiable
+ * under some interpretations of GDPR. To support data minimization, we are limiting
+ * retention of such logs to 1 month.
+ *
+ * See issue: https://github.com/iati/iatipublisher/issues/1456
  */
 class ClearOlderAuditLogs extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'command:ClearOlderAuditLogs';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Clear audit logs older than one month. See issue: https://github.com/iati/iatipublisher/issues/1456';
+    protected $description = 'Clear audit logs older than one full calendar month for GDPR data minimization.';
 
-    /**
-     * Execute the console command.
-     *
-     * @return void
-     */
     public function handle(): void
     {
         DB::beginTransaction();
 
         try {
-            $date = Carbon::now()->subMonth();
+            $cutoffDate = Carbon::now()->startOfMonth()->subMonth();
 
-            DB::table('audits')->where('created_at', '<', $date)->delete();
+            $deleted = DB::table('audits')
+                ->where('created_at', '<', $cutoffDate)
+                ->delete();
 
-            logger()->info('Successfully cleared audit logs older than one month.');
+            logger()->info("GDPR: Cleared {$deleted} audit logs older than {$cutoffDate->toDateString()}.");
 
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
 
-            logger()->error('Error clearing audit logs: ' . $e->getMessage());
+            logger()->error('Error clearing audit logs for GDPR compliance: ' . $e->getMessage());
         }
     }
 }
