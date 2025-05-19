@@ -243,8 +243,8 @@
           class="mb-12 mt-5 flex items-center justify-center gap-4 space-x-3"
         >
           <a
-            href="/files/Manuals/IATI_Publisher-Import_manual.pdf"
-            :download="translatedData['workflow_frontend.import.import_manual']"
+            href=" https://docs.publisher.iatistandard.org/en/latest/bulk-import/"
+            target="_blank"
             class="flex items-center space-x-1 text-bluecoral"
           >
             <span class="mx-1.5">{{
