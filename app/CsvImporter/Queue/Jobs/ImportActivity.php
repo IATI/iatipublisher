@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\CsvImporter\Queue\Jobs;
 
 use App\CsvImporter\Queue\CsvProcessor;
-use App\Helpers\ImportCacheHelper;
 use App\IATI\Models\Import\ImportStatus;
 use App\IATI\Repositories\Import\ImportStatusRepository;
 use App\Jobs\Job;
@@ -105,7 +104,6 @@ class ImportActivity extends Job implements ShouldQueue
             $this->delete();
         } catch (\Exception $e) {
             awsUploadFile(sprintf('%s/%s/%s/%s', $this->csv_data_storage_path, $this->organizationId, $this->userId, 'status.json'), json_encode(['success' => false, 'message' => $e->getMessage()], JSON_THROW_ON_ERROR));
-            ImportCacheHelper::clearImportCache($this->organizationId);
             ImportStatus::where('organization_id', $this->organizationId)->first()->update(['status' => 'failed']);
 
             $this->delete();

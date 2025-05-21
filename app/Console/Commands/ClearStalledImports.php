@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Helpers\ImportCacheHelper;
 use App\IATI\Models\Import\ImportStatus;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
@@ -36,8 +35,6 @@ class ClearStalledImports extends Command
 
             foreach ($possiblyStuckImports as $importStatus) {
                 $orgId = $importStatus->organization_id;
-
-                ImportCacheHelper::clearImportCache($orgId);
 
                 $hourDiff = $now->diffInMinutes($importStatus->created_at);
 

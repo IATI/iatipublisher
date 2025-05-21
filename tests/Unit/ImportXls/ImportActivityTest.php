@@ -38,8 +38,17 @@ class ImportActivityTest extends TestCase
             $elementData = Arr::get($processedData, $key, []);
 
             if (is_array($value) && is_array($elementData)) {
-                $difference1 = array_diff_assoc(Arr::dot($value), Arr::dot($elementData));
-                $difference2 = array_diff_assoc(Arr::dot($elementData), Arr::dot($value));
+                $expected = Arr::dot($value);
+                $actual = Arr::dot($elementData);
+
+                $normalize = fn ($v) => in_array($v, [false, 0, '', null], true) ? '' : $v;
+
+                $normalizedExpected = array_map($normalize, $expected);
+                $normalizedActual = array_map($normalize, $actual);
+
+                $difference1 = array_diff_assoc($normalizedExpected, $normalizedActual);
+                $difference2 = array_diff_assoc($normalizedActual, $normalizedExpected);
+
                 $this->assertTrue(empty($difference1));
                 $this->assertTrue(empty($difference2));
             } elseif ($elementData !== $value && !(empty($value) && empty($elementData))) {

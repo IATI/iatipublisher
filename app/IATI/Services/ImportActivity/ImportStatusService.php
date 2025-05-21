@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\IATI\Services\ImportActivity;
 
-use App\Helpers\ImportCacheHelper;
 use App\IATI\Repositories\Import\ImportStatusRepository;
 use Illuminate\Database\Eloquent\Model;
 
@@ -41,8 +40,6 @@ class ImportStatusService
      */
     public function completeOrganisationImportStatus(int $orgId, string $type): int
     {
-        ImportCacheHelper::clearImportCache($orgId);
-
         return $this->importStatusRepository->completeOrganisationImportStatus($orgId, $type);
     }
 
@@ -69,8 +66,6 @@ class ImportStatusService
      */
     public function deleteOngoingImports(int $orgId): int
     {
-        ImportCacheHelper::clearImportCache($orgId);
-
         return $this->importStatusRepository->deleteOngoingImports($orgId);
     }
 }
