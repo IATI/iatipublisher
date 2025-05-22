@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\XmlImporter\Foundation;
 
-use App\Helpers\ImportCacheHelper;
 use App\IATI\Repositories\Activity\ActivityRepository;
 use App\IATI\Repositories\Activity\DocumentLinkRepository;
 use App\IATI\Repositories\Activity\ResultRepository;
@@ -146,12 +145,6 @@ class XmlQueueWriter
     {
         $activityIdentifier = Arr::get($mappedActivity, 'iati_identifier.activity_identifier');
 
-        if (ImportCacheHelper::isThisActivityBeingImported($this->orgId, $activityIdentifier)) {
-            return false;
-        }
-
-        ImportCacheHelper::appendActivityIdentifiersToCache($this->orgId, $activityIdentifier);
-
         /** @var $xmlValidator XmlValidator */
         $xmlValidator = app(XmlValidator::class);
         $existence = $this->activityAlreadyExists($activityIdentifier);
@@ -242,22 +235,14 @@ class XmlQueueWriter
 
         $contentInValidDotJson = collect(json_decode($validJsonFile, true, 512, JSON_THROW_ON_ERROR));
 
-        $activityIdentifiersPresentInValidJson = $contentInValidDotJson
-            ->pluck('data.iati_identifier.activity_identifier')
-            ->filter();
+        $appendableData = [
+            'data'      => $data,
+            'errors'    => $errors,
+            'status'    => 'processed',
+            'existence' => $existence,
+        ];
 
-        $currentActivityIdentifier = Arr::get($data, 'iati_identifier.activity_identifier', '');
-
-        if (!$activityIdentifiersPresentInValidJson->contains($currentActivityIdentifier)) {
-            $appendableData = [
-                'data'      => $data,
-                'errors'    => $errors,
-                'status'    => 'processed',
-                'existence' => $existence,
-            ];
-
-            $contentInValidDotJson->push($appendableData);
-        }
+        $contentInValidDotJson->push($appendableData);
 
         $this->uploadContent($path, $contentInValidDotJson->toJson(JSON_THROW_ON_ERROR));
     }

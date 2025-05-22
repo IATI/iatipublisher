@@ -60,9 +60,10 @@ trait XlsMapperHelper
     }
 
     /**
-     * Returns content of excel-column-name-mapper which contains column name and column position in excel file.
+     * Returns content of excel-column-name-mapper which contains column name and column position in Excel file.
      *
      * @return array
+     * @throws \JsonException
      */
     public function getExcelColumnNameMapper(): array
     {
@@ -93,7 +94,7 @@ trait XlsMapperHelper
     public function mapDropDownValueToKey($value, $location, $fieldName): mixed
     {
         $booleanFieldList = readJsonFile('XlsImporter/Templates/boolean-field-list.json');
-        // should we consider case(capital and lower)?
+
         if (is_null($value)) {
             return null;
         }
@@ -120,9 +121,8 @@ trait XlsMapperHelper
             $locationArr = explode('/', $location);
 
             $dropDownValues = array_flip(getCodeList(explode('.', $locationArr[1])[0], $locationArr[0], filterDeprecated: true));
-            $key = Arr::get($dropDownValues, $value, $value);
 
-            return $key;
+            return Arr::get($dropDownValues, $value, $value);
         }
 
         return $value;
@@ -211,31 +211,23 @@ trait XlsMapperHelper
 
         $contentInValidDotJson = collect($contentInValidDotJson);
 
-        $activityIdentifiersPresentInValidJson = $contentInValidDotJson
-            ->pluck('data.iati_identifier.activity_identifier')
-            ->filter();
+        $appendableData = [
+            'data'             => $processedXlsData,
+            'errors'           => $errors,
+            'existing'         => $existingIdentifier,
+            'parentIdentifier' => $parentIdentifier,
+            'code'             => $code,
+            'identifier'       => $identifier,
+            'status'           => 'processed',
+        ];
 
-        $currentActivityIdentifier = Arr::get($processedXlsData, 'iati_identifier.activity_identifier', '');
-
-        if (!$activityIdentifiersPresentInValidJson->contains($currentActivityIdentifier)) {
-            $appendableData = [
-                'data'             => $processedXlsData,
-                'errors'           => $errors,
-                'existing'         => $existingIdentifier,
-                'parentIdentifier' => $parentIdentifier,
-                'code'             => $code,
-                'identifier'       => $identifier,
-                'status'           => 'processed',
-            ];
-
-            $contentInValidDotJson->push($appendableData);
-        }
+        $contentInValidDotJson->push($appendableData);
 
         $content = json_encode($contentInValidDotJson, JSON_THROW_ON_ERROR);
         $status = json_encode([
-            'success' => true,
-            'message' => 'Processing',
-            'total_count' => $this->totalCount,
+            'success'         => true,
+            'message'         => 'Processing',
+            'total_count'     => $this->totalCount,
             'processed_count' => $this->processedCount,
         ]);
 
@@ -413,6 +405,23 @@ trait XlsMapperHelper
     /**
      * Check if identifier is duplicate and validate identifier format.
      *
+     *  NOTE by PG-Momik:
+     *  Change source: https://github.com/IATI/iatipublisher/issues/1791
+     *
+     *  Issue Overview:
+     *  Previously, when duplicate activity identifiers existed in the "settings" sheet of the XLSX file, the error was shown against the wrong activity.
+     *
+     *  This change introduces a minimal structural update by assigning the error under a nested format:
+     *  - The outer key is "settings"
+     *  - The inner key is the activity identifier
+     *
+     *  This structure ensures:
+     *  1. Minimal changes to existing code, as this method is reused in multiple places.
+     *  2. No need to refactor the existing error mapping logic.
+     *  3. Errors under the "settings" key can be handled later when processing the corresponding sheet (i.e. Title).
+     *  4. Nesting errors under the specific activity identifier helps assign error messages accurately to the correct activity.
+     *
+     *
      * @param $elementIdentifier
      * @param $element
      * @param $validate
@@ -423,7 +432,13 @@ trait XlsMapperHelper
     public function isIdentifierDuplicate($elementIdentifier, $element, $validate = false, $type = null): bool
     {
         if (in_array($elementIdentifier, Arr::get($this->trackIdentifierBySheet, $this->sheetName, []))) {
-            $this->tempErrors["$element > $this->rowCount"] = sprintf('Error detected on %s sheet, cell A%s : The identifier has been duplicated.', $this->sheetName, $this->rowCount);
+            $errorMessage = sprintf('Error detected on %s sheet, cell A%s : The identifier has been duplicated.', $this->sheetName, $this->rowCount);
+
+            if ($element === 'settings') {
+                $this->tempErrors['settings'][$elementIdentifier]["$element > $this->rowCount"] = $errorMessage;
+            } else {
+                $this->tempErrors["$element > $this->rowCount"] = $errorMessage;
+            }
 
             return true;
         }

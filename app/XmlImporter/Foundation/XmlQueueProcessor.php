@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\XmlImporter\Foundation;
 
 use App\Exceptions\InvalidTag;
-use App\Helpers\ImportCacheHelper;
 use App\IATI\Repositories\Activity\ActivityRepository;
 use App\IATI\Repositories\Import\ImportStatusRepository;
 use App\XmlImporter\Foundation\Support\Providers\XmlServiceProvider;
@@ -149,7 +148,6 @@ class XmlQueueProcessor
         } catch (\Exception $e) {
             logger()->error($e);
 
-            ImportCacheHelper::clearImportCache($orgId);
             $this->importStatusRepository->deleteOngoingImports($orgId);
 
             awsUploadFile(sprintf('%s/%s/%s/%s', $this->xml_data_storage_path, $orgId, $userId, 'status.json'), json_encode(['success' => false, 'message' => trans('common/common.error_has_occurred_while_importing_the_file')], JSON_THROW_ON_ERROR));
