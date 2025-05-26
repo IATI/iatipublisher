@@ -277,23 +277,58 @@ export default defineComponent({
         apiUrl = `/activities/download-xml/true?activities=[${activities}]`;
       }
 
-      axios.get(apiUrl).then((res) => {
-        if (res.data.success == false) {
-          toastVisibility.value = true;
-          toastMessage.value = res.data.message;
-          toastmessageType.value = res.data.success;
-          setTimeout(() => (toastVisibility.value = false), 15000);
-        } else {
-          const response = res.data;
-          let blob = new Blob([response], {
-            type: 'application/xml',
-          });
-          let link = document.createElement('a');
-          link.href = window.URL.createObjectURL(blob);
-          link.download = res.headers['content-disposition']?.split('=')[1];
+      // Show initial toast
+      toastVisibility.value = true;
+      toastMessage.value =
+        translatedData['common.common.download_will_begin_shortly'];
+      toastmessageType.value = true;
+
+      axios
+        .get(apiUrl, { responseType: 'blob' })
+        .then((res) => {
+          const contentType = res.headers['content-type'];
+
+          if (contentType && contentType.includes('application/json')) {
+            const reader = new FileReader();
+            reader.onload = function () {
+              const result = reader.result;
+              if (typeof result === 'string') {
+                const json = JSON.parse(result);
+                toastMessage.value = json.message || 'Failed to download xml.';
+                toastmessageType.value = json.success ?? false;
+              } else {
+                toastMessage.value = 'Failed to download xml.';
+                toastmessageType.value = false;
+              }
+              setTimeout(() => (toastVisibility.value = false), 3000);
+            };
+            reader.readAsText(res.data);
+            return;
+          }
+
+          const blob = new Blob([res.data], { type: 'application/xml' });
+          const link = document.createElement('a');
+          const contentDisposition = res.headers['content-disposition'];
+          let filename = 'download.xml';
+
+          if (contentDisposition) {
+            const match = contentDisposition.match(/filename="?(.+)"?/);
+            if (match) filename = match[1];
+          }
+
+          link.href = URL.createObjectURL(blob);
+          link.setAttribute('download', filename);
+          document.body.appendChild(link);
           link.click();
-        }
-      });
+          link.remove();
+
+          toastVisibility.value = false;
+        })
+        .catch(() => {
+          toastMessage.value = 'Failed to download xml.';
+          toastmessageType.value = false;
+          setTimeout(() => (toastVisibility.value = false), 3000);
+        });
     };
 
     const downloadXls = (countActivities) => {
@@ -334,23 +369,60 @@ export default defineComponent({
         apiUrl = `/activities/download-csv?activities=[${activities}]`;
       }
 
-      axios.get(apiUrl).then((res) => {
-        if (res.data.success == false) {
-          toastVisibility.value = true;
-          toastMessage.value = res.data.message;
-          toastmessageType.value = res.data.success;
-          setTimeout(() => (toastVisibility.value = false), 15000);
-        } else {
-          const response = res.data;
-          let blob = new Blob([response], {
-            type: 'application/csv',
-          });
-          let link = document.createElement('a');
-          link.href = window.URL.createObjectURL(blob);
-          link.download = res.headers['content-disposition']?.split('=')[1];
+      toastVisibility.value = true;
+      toastMessage.value =
+        'Download will begin shortly. Large datasets may take a few minutes.';
+      toastmessageType.value = true;
+
+      axios
+        .get(apiUrl, { responseType: 'blob' })
+        .then((res) => {
+          const contentType = res.headers['content-type'];
+
+          if (contentType && contentType.includes('application/json')) {
+            const reader = new FileReader();
+            reader.onload = function () {
+              const result = reader.result;
+              if (typeof result === 'string') {
+                const json = JSON.parse(result);
+                toastMessage.value = json.message || 'Failed to download csv.';
+                toastmessageType.value = json.success ?? false;
+              } else {
+                toastMessage.value = 'Failed to download csv.';
+                toastmessageType.value = false;
+              }
+
+              toastVisibility.value = false;
+
+              setTimeout(() => (toastVisibility.value = false), 3000);
+            };
+            reader.readAsText(res.data);
+            return;
+          }
+
+          const blob = new Blob([res.data], { type: 'text/csv' });
+          const link = document.createElement('a');
+          const contentDisposition = res.headers['content-disposition'];
+          let filename = 'download.csv';
+
+          if (contentDisposition) {
+            const match = contentDisposition.match(/filename="?(.+)"?/);
+            if (match) filename = match[1];
+          }
+
+          link.href = URL.createObjectURL(blob);
+          link.setAttribute('download', filename);
+          document.body.appendChild(link);
           link.click();
-        }
-      });
+          link.remove();
+
+          toastVisibility.value = false;
+        })
+        .catch(() => {
+          toastMessage.value = 'Failed to download csv.';
+          toastmessageType.value = false;
+          setTimeout(() => (toastVisibility.value = false), 3000);
+        });
     };
 
     return {
