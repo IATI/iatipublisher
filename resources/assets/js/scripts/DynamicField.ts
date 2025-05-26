@@ -830,6 +830,8 @@ export class DynamicField {
           $('.identifier').attr('activity_identifier') + `-${$(this).val()}`
         );
       });
+
+      activity_identifier.trigger('keyup');
     }
   }
 
