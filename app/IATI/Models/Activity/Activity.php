@@ -135,12 +135,12 @@ class Activity extends Model implements Auditable
                         $model->activity_identifier = Arr::get($model->iati_identifier, 'activity_identifier');
                     }
 
-                    if (!Arr::get($model->iati_identifier, 'iati_identifier_text')) {
+                    if ($model->isDirty('iati_identifier') && empty(Arr::get($model->iati_identifier, 'iati_identifier_text'))) {
                         $organisationIdentifier = Auth::user()->organization->identifier;
-                        $activityIdentifier = $model->iati_identifier;
+                        $activityIdentifier = $model->iati_identifier['activity_identifier'];
                         $iatiIdentifier = [
-                            'iati_identifier' => $activityIdentifier,
-                            'iati_identifier_text' => $organisationIdentifier . '-' . $model->iati_identifier_text,
+                            'activity_identifier' => $activityIdentifier,
+                            'iati_identifier_text' => $organisationIdentifier . '-' . $activityIdentifier,
                             'present_organization_identifier' => $organisationIdentifier,
                         ];
 
