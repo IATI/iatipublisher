@@ -133,7 +133,7 @@ class ConditionCompleteTest extends ElementCompleteTest
         $activity->conditions = $conditions;
 
         $elementCompleteService = app()->make(ElementCompleteService::class);
-        $elementCompleteService->isConditionsElementCompleted($activity);
+        $this->assertTrue($elementCompleteService->isConditionsElementCompleted($activity));
     }
 
     /**
