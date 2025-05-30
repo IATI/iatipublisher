@@ -11,9 +11,9 @@ use App\IATI\Services\Download\DownloadActivityService;
 use App\IATI\Services\Download\DownloadXlsService;
 use App\XmlImporter\Foundation\Support\Providers\XmlServiceProvider;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -109,7 +109,7 @@ class DownloadActivityController extends Controller
             $this->auditService->auditEvent($activities, 'download', 'csv');
 
             return $this->csvGenerator->generateWithHeaders(getTimeStampedText($filename), $csvData, $headers);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             logger()->error($e->getMessage());
             $this->auditService->auditEvent(null, 'download', 'csv');
             $translatedMessage = trans('common/common.error_has_occurred_while_downloading_activity_csv');
@@ -162,7 +162,7 @@ class DownloadActivityController extends Controller
             $translatedMessage = trans('workflow_backend/download_activity_controller.xls_export_on_process');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             logger()->error($e->getMessage());
             $this->downloadXlsService->deleteDownloadStatus(auth()->user()->id);
             $this->cancelXlsDownload();
@@ -206,7 +206,7 @@ class DownloadActivityController extends Controller
             $translatedMessage = trans('workflow_backend/download_activity_controller.download_status_accessed_successfully');
 
             return response()->json(['success' => true, 'message' => $translatedMessage, 'status' => $status, 'file_count' => $fileCount, 'url' => $url ?? null]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             logger()->error($e);
             $translatedMessage = trans('workflow_backend/download_activity_controller.error_has_occurred_while_trying_to_check_download_status');
 
@@ -234,7 +234,7 @@ class DownloadActivityController extends Controller
                 $this->downloadXlsService->clearPreviousXlsFilesOnS3($userId, $status['id']);
                 $this->prepareActivityXls(request()->merge(['activities' => json_encode($activities, JSON_THROW_ON_ERROR)]));
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             logger()->error($e);
             $translatedMessage = trans('workflow_backend/download_activity_controller.error_has_occurred_while_trying_to_retry_download');
 
@@ -259,7 +259,7 @@ class DownloadActivityController extends Controller
             $translatedMessage = trans('workflow_backend/download_activity_controller.cancelled_successfully');
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             logger()->error($e->getMessage());
             $translatedMessage = trans('workflow_backend/download_activity_controller.error_has_occurred_while_trying_to_cancel_download');
 
@@ -272,14 +272,14 @@ class DownloadActivityController extends Controller
      *
      * @param Request $request
      * @param bool $download
-     *
-     * @return Response|JsonResponse
      */
-    public function downloadActivityXml(Request $request, bool $download = false): Response|JsonResponse
+    public function downloadActivityXml(Request $request, bool $download = false)
     {
         try {
-            $activityIds = ($request->get('activities') && $request->get('activities') !== 'all') ?
-                json_decode($request->get('activities'), true, 512, JSON_THROW_ON_ERROR) : [];
+            $activityIds = ($request->get('activities') && $request->get('activities') !== 'all')
+                ? json_decode($request->get('activities'), true, 512, JSON_THROW_ON_ERROR)
+                : [];
+
             $filename = $this->downloadActivityService->getOrganizationPublisherId();
 
             if (request()->get('activities') === 'all') {
@@ -294,28 +294,72 @@ class DownloadActivityController extends Controller
                 return response()->json(['success' => false, 'message' => $translatedMessage]);
             }
 
-            logger('$activities');
-            logger($activities);
-
             $mergedContent = $this->downloadActivityService->getCombinedXmlFile($activities);
 
             logger('$mergedContent');
             logger($mergedContent);
 
-            $this->auditService->auditEvent($activities, 'download', 'xml');
+            // Stream download the XML content
+            $xmlFilename = $filename . '_activities_' . date('Y-m-d_H-i-s') . '.xml';
 
-            logger('audit garyo');
-
-            return response($mergedContent)
-                ->withHeaders([
-                    'Content-Type' => 'text/xml',
-                    'Cache-Control' => 'public',
-                    'Content-Description' => 'File Transfer',
-                    'Content-Disposition' => 'attachment; filename=' . getTimeStampedText($filename) . '.xml',
-                    'Content-Transfer-Encoding' => 'binary',
-                ]);
-        } catch (\Exception $e) {
+            return response()->streamDownload(function () use ($mergedContent) {
+                echo $mergedContent;
+            }, $xmlFilename, [
+                'Content-Type' => 'application/xml',
+                'Content-Disposition' => 'attachment; filename="' . $xmlFilename . '"',
+                'Cache-Control' => 'no-cache, no-store, must-revalidate',
+                'Pragma' => 'no-cache',
+                'Expires' => '0',
+            ]);
+        } catch (Exception $e) {
             logger()->error($e->getMessage());
+            $this->auditService->auditEvent(null, 'download', 'xml');
+            $translatedMessage = trans('common/common.error_has_occurred_while_downloading_activity_csv');
+
+            return response()->json(['success' => false, 'message' => $translatedMessage]);
+        }
+    }
+
+    public function streamDownloadActivityXml(Request $request, bool $download = false): \Symfony\Component\HttpFoundation\StreamedResponse|JsonResponse
+    {
+        try {
+            $activityIds = ($request->get('activities') && $request->get('activities') !== 'all') ? json_decode(
+                $request->get('activities'),
+                true,
+                512,
+                JSON_THROW_ON_ERROR
+            ) : [];
+            $filename = $this->downloadActivityService->getOrganizationPublisherId();
+
+            if ($request->get('activities') === 'all') {
+                $activities = $this->downloadActivityService->getAllActivitiesToDownload(
+                    $this->sanitizeRequest($request)
+                );
+            } elseif (is_array($activityIds) && !empty($activityIds)) {
+                $activities = $this->downloadActivityService->getActivitiesToDownload($activityIds);
+            }
+
+            if (empty($activities)) {
+                $translatedMessage = trans('common/common.no_activities_selected');
+
+                return response()->json(['success' => false, 'message' => $translatedMessage]);
+            }
+
+            logger('$activities');
+            logger($activities);
+
+            return response()->streamDownload(function () use ($activities) {
+                $this->downloadActivityService->streamCombinedXmlFile($activities);
+            }, getTimeStampedText($filename) . '.xml', [
+                'Content-Type'              => 'text/xml',
+                'Cache-Control'             => 'public',
+                'Content-Description'       => 'File Transfer',
+                'Content-Disposition'       => 'attachment; filename=' . getTimeStampedText($filename) . '.xml',
+                'Content-Transfer-Encoding' => 'binary',
+            ]);
+        } catch (Exception $e) {
+            logger()->error($e->getMessage());
+
             $this->auditService->auditEvent(null, 'download', 'xml');
             $translatedMessage = trans('common/common.error_has_occurred_while_downloading_activity_csv');
 

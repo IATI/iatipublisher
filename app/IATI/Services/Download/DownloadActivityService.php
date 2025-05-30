@@ -125,6 +125,11 @@ class DownloadActivityService
         return $this->xmlGenerator->getCombinedXmlFile($activities);
     }
 
+    public function streamCombinedXmlFile($activities): string
+    {
+        return $this->xmlGenerator->streamCombinedXmlFile($activities);
+    }
+
     /**
      * Get organization publisher id.
      *
