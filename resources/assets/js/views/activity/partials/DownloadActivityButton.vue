@@ -291,14 +291,22 @@ export default defineComponent({
             const reader = new FileReader();
             reader.onload = function () {
               const result = reader.result;
+
               if (typeof result === 'string') {
+                console.log('if ma xiryo');
+                console.log(result);
+
                 const json = JSON.parse(result);
                 toastMessage.value = json.message || 'Failed to download xml.';
                 toastmessageType.value = json.success ?? false;
               } else {
+                console.log('else ma');
+                console.log(result);
+
                 toastMessage.value = 'Failed to download xml.';
                 toastmessageType.value = false;
               }
+
               setTimeout(() => (toastVisibility.value = false), 3000);
             };
             reader.readAsText(res.data);
@@ -323,7 +331,9 @@ export default defineComponent({
 
           toastVisibility.value = false;
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log('err');
+          console.log(err);
           toastMessage.value = 'Failed to download xml.';
           toastmessageType.value = false;
           setTimeout(() => (toastVisibility.value = false), 3000);

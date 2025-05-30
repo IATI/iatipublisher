@@ -294,9 +294,17 @@ class DownloadActivityController extends Controller
                 return response()->json(['success' => false, 'message' => $translatedMessage]);
             }
 
+            logger('$activities');
+            logger($activities);
+
             $mergedContent = $this->downloadActivityService->getCombinedXmlFile($activities);
 
+            logger('$mergedContent');
+            logger($mergedContent);
+
             $this->auditService->auditEvent($activities, 'download', 'xml');
+
+            logger('audit garyo');
 
             return response($mergedContent)
                 ->withHeaders([
