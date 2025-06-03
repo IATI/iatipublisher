@@ -379,4 +379,5 @@ return [
     'choose_your_language'                                                                                                                                            => 'FR_Choose your language',
     'useful_links'                                                                                                                                                    => 'FR_Useful Links',
     'additional_information'                                                                                                                                          => 'FR_Additional Information',
+    'download_will_begin_shortly'                                                                                                                                     => 'FR_Download will begin shortly. Large datasets may take a few minutes.'
 ];
