@@ -70,7 +70,7 @@
 <glyph unicode="Y" horiz-adv-x="1366" d="M-3 1466h347l345 -580l338 580h341l-539 -851v-615h-295v617z" />
 <glyph unicode="Z" horiz-adv-x="1251" d="M22 0v267l770 951h-683v248h1073v-230l-803 -989h834v-247h-1191z" />
 <glyph unicode="[" horiz-adv-x="682" d="M146 -413v1879h498v-221h-231v-1437h231v-221h-498z" />
-<glyph unicode="\" horiz-adv-x="569" d="M-3 1491h207l367 -1516h-211z" />
+<glyph unicode="" horiz-adv-x="569" d="M-3 1491h207l367 -1516h-211z" />
 <glyph unicode="]" horiz-adv-x="682" d="M38 -192h231v1439h-231v219h498v-1879h-498v221z" />
 <glyph unicode="^" horiz-adv-x="1196" d="M115 692l376 799h223l366 -799h-284l-198 489l-197 -489h-286z" />
 <glyph unicode="_" d="M-19 -223h1168v-182h-1168v182z" />
@@ -336,4 +336,4 @@
 <hkern g1="quoteright" 	g2="s" 	k="76" />
 <hkern g1="quoteright" 	g2="quoteright" 	k="76" />
 </font>
-</defs></svg> 
+</defs></svg>

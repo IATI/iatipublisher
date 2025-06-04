@@ -97,11 +97,19 @@
                   :href="`${activityLink}/result/${result.id}`"
                   class="ellipsis exception text-n-50"
                 >
-                  {{ getActivityTitle(result.result.title[0].narrative, 'en') }}
+                  {{
+                    getActivityTitle(
+                      result.result.title[0].narrative,
+                      currentLanguage
+                    )
+                  }}
                 </a>
                 <div class="w-52">
                   <span class="ellipsis__title--hover">{{
-                    getActivityTitle(result.result.title[0].narrative, 'en')
+                    getActivityTitle(
+                      result.result.title[0].narrative,
+                      currentLanguage
+                    )
                   }}</span>
                 </div>
               </div>
@@ -235,7 +243,6 @@ import {
   reactive,
   provide,
   computed,
-  watchEffect,
 } from 'vue';
 import axios from 'axios';
 
@@ -286,6 +293,11 @@ export default defineComponent({
     translatedData: {
       type: Object,
       required: true,
+    },
+    currentLanguage: {
+      type: String,
+      required: true,
+      default: 'en',
     },
   },
   setup(props) {
@@ -353,7 +365,7 @@ export default defineComponent({
         link: '/activities',
       },
       {
-        title: getActivityTitle(activityTitle, 'en'),
+        title: getActivityTitle(activityTitle, props.currentLanguage),
         link: activityLink,
       },
       {

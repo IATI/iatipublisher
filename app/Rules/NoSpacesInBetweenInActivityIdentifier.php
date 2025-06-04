@@ -43,6 +43,6 @@ class NoSpacesInBetweenInActivityIdentifier implements Rule
      */
     public function message(): string
     {
-        return 'The activity-identifier must only contain letters, numbers, and hyphens, with no spaces or other special characters.';
+        return trans('validation.no_spaces_in_between_in_activity_identifier');
     }
 }

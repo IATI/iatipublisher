@@ -45,7 +45,7 @@ class NoLeadingWhiteSpaceInActivityIdentifier implements Rule
      */
     public function message() : string
     {
-        return 'The activity-identifier must not start with space.';
+        return trans('validation.no_leading_white_space_in_activity_identifier');
     }
 
     /**

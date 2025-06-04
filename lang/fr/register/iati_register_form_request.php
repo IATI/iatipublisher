@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'the_registration_number_is_invalid' => 'FR_The registration number is invalid. Registration numbers should include letters, numbers, and symbols (. _ , - ) only.',
+    'the_registration_number_is_invalid' => 'Le numéro d\'enregistrement n\'est pas valide. Les numéros d\'enregistrement ne peuvent comporter que des lettres, des chiffres et des symboles (. _ , - ).',
 ];

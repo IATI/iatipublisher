@@ -72,14 +72,13 @@
 }
 @media screen and (min-width: 1024px) {
   .left {
-    height: 649px;
+    @apply h-fit;
 
     &__container {
       width: 386px;
     }
   }
   .right {
-    height: 649px;
   }
 }
 @media screen and (max-width: 768px) {

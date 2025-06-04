@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'activity_data'       => 'FR_Activity Data',
-    'organisation_data'   => 'FR_Organisation Data',
-    'add_import_activity' => 'FR_Add or Import Activity',
-    'your_profile'        => 'FR_Your Profile',
-    'logout'              => 'FR_Sign Out',
+    'activity_data'       => 'Données d\'activité',
+    'organisation_data'   => 'Données de l\'organisation',
+    'add_import_activity' => 'Ajouter ou importer une activité',
+    'your_profile'        => 'Votre profil',
+    'logout'              => 'Se déconnecter',
 ];

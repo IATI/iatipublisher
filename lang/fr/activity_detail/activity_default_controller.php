@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'error_occurred_while_updating_data' => 'FR_Error updating data',
+    'error_occurred_while_updating_data' => 'Erreur de mise à jour des données',
 ];

@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'edit_your_profile'                          => 'FR_Edit your profile',
-    'current_password'                           => 'FR_Current Password',
-    'change_password'                            => 'FR_Change Password',
-    'new_password'                               => 'FR_New Password ',
-    'language_preference'                        => 'FR_Language Preference',
-    'your_information'                           => 'FR_Your Information',
-    'you_havent_verified_your_email_address_yet' => 'FR_You haven\'t verified your email address yet. Please check for the verification email sent to you when you registered.',
-    'change_your_password'                       => 'FR_Change your password',
+    'edit_your_profile'                          => 'Modifier votre profil',
+    'current_password'                           => 'Mot de passe actuel',
+    'change_password'                            => 'Modifier le mot de passe',
+    'new_password'                               => 'Nouveau mot de passe',
+    'language_preference'                        => 'Préférence linguistique',
+    'your_information'                           => 'Vos informations',
+    'you_havent_verified_your_email_address_yet' => 'Vous n\'avez pas encore vérifié votre adresse électronique. Veuillez consulter le courriel de vérification qui vous a été envoyé lors de votre inscription.',
+    'change_your_password'                       => 'Modifier votre mot de passe',
 ];

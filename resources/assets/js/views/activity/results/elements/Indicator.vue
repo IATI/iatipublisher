@@ -32,7 +32,7 @@
             </button>
             <div class="help__text right-0 w-60">
               <span
-                class="close-help absolute top-5 right-2 z-[50] scale-[2] cursor-pointer"
+                class="close-help absolute top-5 right-2 z-[50] cursor-pointer"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 12 14"
@@ -62,7 +62,10 @@
                     :href="`/result/${result.id}/indicator/${post.id}`"
                   >
                     {{
-                      getActivityTitle(post.indicator.title[0].narrative, 'en')
+                      getActivityTitle(
+                        post.indicator.title[0].narrative,
+                        currentLanguage
+                      )
                     }}
                   </a>
                 </div>
@@ -931,6 +934,11 @@ export default defineComponent({
       type: String,
       required: false,
       default: '',
+    },
+    currentLanguage: {
+      type: String,
+      required: true,
+      default: 'en',
     },
   },
   setup(props) {

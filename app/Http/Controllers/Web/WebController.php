@@ -118,7 +118,7 @@ class WebController extends Controller
                 return response()->json(['success' => false, 'message' => 'Invalid language code.']);
             }
 
-            session()->put('locale', 'en');
+            session()->put('locale', $language);
 
             return response()->json(['success' => true, 'message' => 'Locale changed successfully.']);
         } catch (\Exception $e) {

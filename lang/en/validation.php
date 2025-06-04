@@ -372,7 +372,7 @@ return [
     'no_spaces_in_between_in_activity_identifier'                                          => 'The activity identifier can only contain letters, numbers, or hyphens (-), with no spaces or other special characters.',
     'no_leading_white_space_in_activity_identifier'                                        => 'The activity identifier cannot start with a space.',
     'the_activity_has_been_duplicated'                                                     => 'The activity has been duplicated.',
-    'the_activity_is_invalid'                                                              => 'The activity is invalid. Please ensure that the activity identifier matches with organization identifier.',
-    'this_activity_has_been_duplicated_in_the_uploaded_csv_file'                           => 'This Activity has been duplicated in the uploaded Csv File.',
-    'the_activity_identifier_has_not_been_mentioned_on_setting_sheet'=>'The activity identifier has not been mentioned on setting sheet.'
+    'the_activity_is_invalid'                                                              => 'The activity is invalid. Please ensure that the activity IATI identifier includes your organisation identifier.',
+    'this_activity_has_been_duplicated_in_the_uploaded_csv_file'                           => 'This activity has been duplicated in the uploaded CSV file.',
+    'the_activity_identifier_has_not_been_mentioned_on_setting_sheet'                      => 'Activity identifier has not been included on the Settings sheet.',
 ];

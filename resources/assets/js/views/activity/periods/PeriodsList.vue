@@ -116,10 +116,7 @@ import DeleteAction from 'Components/sections/DeleteAction.vue';
 // composable
 import dateFormat from 'Composable/dateFormat';
 import getActivityTitle from 'Composable/title';
-import {
-  getTranslatedElement,
-  getTranslatedMissing,
-} from '../../../composable/utils';
+import { getTranslatedElement, getTranslatedMissing } from 'Composable/utils';
 
 export default defineComponent({
   name: 'PeriodList',
@@ -150,6 +147,11 @@ export default defineComponent({
     translatedData: {
       type: Object,
       required: true,
+    },
+    currentLanguage: {
+      type: String,
+      required: true,
+      default: 'en',
     },
   },
   setup(props) {
@@ -201,7 +203,7 @@ export default defineComponent({
         link: '/activity',
       },
       {
-        title: getActivityTitle(activityTitle, 'en'),
+        title: getActivityTitle(activityTitle, props.currentLanguage),
         link: activityLink,
       },
       {
@@ -209,7 +211,7 @@ export default defineComponent({
         link: `/activity/${activityId}/result`,
       },
       {
-        title: getActivityTitle(resultTitle, 'en'),
+        title: getActivityTitle(resultTitle, props.currentLanguage),
         link: resultLink,
       },
       {
@@ -217,7 +219,7 @@ export default defineComponent({
         link: `/result/${resultId}/indicator`,
       },
       {
-        title: getActivityTitle(indicatorTitle, 'en'),
+        title: getActivityTitle(indicatorTitle, props.currentLanguage),
         link: indicatorLink,
       },
       {
@@ -230,7 +232,7 @@ export default defineComponent({
       axios.get(`/indicator/${indicatorId}/periods/page/1`).then((res) => {
         const response = res.data;
         Object.assign(periodsData, response.data);
-        isEmpty.value = response.data.data.length ? false : true;
+        isEmpty.value = !response.data.data.length;
       });
       if (props.toast.message !== '') {
         toastData.type = props.toast.type;

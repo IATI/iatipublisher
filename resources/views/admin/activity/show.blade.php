@@ -18,6 +18,7 @@
         :import-activity-error="{{ json_encode($importActivityError) }}"
         :deprecation-status-map="{{json_encode($deprecationStatusMap)}}"
         :translated-data='{{json_encode($translatedData)}}'
+        :current-language='{{json_encode($currentLanguage)}}'
     >
      </activities-detail>
 @endsection

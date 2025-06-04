@@ -31,7 +31,7 @@
   text-transform: uppercase;
   cursor: pointer;
   transition: 0.3s;
-  @apply w-24 text-bluecoral;
+  @apply w-fit text-bluecoral;
 
   svg {
     transition: 0.3s;
@@ -49,16 +49,14 @@
     height: 48px;
     padding: 13px 24px;
   }
-  @apply w-36 py-2.5 text-n-50 sm:w-40;
+  @apply w-fit py-2.5 text-n-50;
 
   svg {
     margin-left: 13px;
     transition: 0.2s;
   }
 }
-
 .get-started-btn {
-  width: 185px;
 }
 
 .reset-btn {

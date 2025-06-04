@@ -77,7 +77,7 @@
               </button>
             </div>
 
-            <div class="relative">
+            <div class="border-this relative">
               <input
                 id="api-token"
                 v-model="publishingForm.api_token"
@@ -96,25 +96,25 @@
                 v-if="!initialApiCallCompleted"
                 class="!absolute top-[50%] !m-0 !ml-2 !h-8 !w-[96%] -translate-y-1/2"
               />
+              <span
+                v-if="showTag && publishingInfo.isVerificationRequested"
+                :class="{
+                  tag__correct: publishingForm.token_status === 'Correct',
+                  tag__pending: publishingForm.token_status === 'Pending',
+                  tag__incorrect: publishingForm.token_status === 'Incorrect',
+                }"
+              >
+                {{
+                  translatedData[
+                    publishingForm.token_status === 'Correct'
+                      ? 'common.common.correct'
+                      : publishingForm.token_status === 'Pending'
+                      ? 'common.common.pending'
+                      : 'common.common.incorrect'
+                  ]
+                }}
+              </span>
             </div>
-            <span
-              v-if="showTag && publishingInfo.isVerificationRequested"
-              :class="{
-                tag__correct: publishingForm.token_status === 'Correct',
-                tag__pending: publishingForm.token_status === 'Pending',
-                tag__incorrect: publishingForm.token_status === 'Incorrect',
-              }"
-            >
-              {{
-                translatedData[
-                  publishingForm.token_status === 'Correct'
-                    ? 'common.common.correct'
-                    : publishingForm.token_status === 'Pending'
-                    ? 'common.common.pending'
-                    : 'common.common.incorrect'
-                ]
-              }}
-            </span>
           </div>
           <span v-if="publishingError.api_token" class="error" role="alert">
             {{ publishingError.api_token }}

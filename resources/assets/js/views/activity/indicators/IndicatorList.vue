@@ -65,7 +65,7 @@
                   {{
                     getActivityTitle(
                       indicator.indicator.title[0].narrative,
-                      'en'
+                      currentLanguage
                     )
                   }}
                 </a>
@@ -73,7 +73,7 @@
                   <span class="ellipsis__title--hover">{{
                     getActivityTitle(
                       indicator.indicator.title[0].narrative,
-                      'en'
+                      currentLanguage
                     )
                   }}</span>
                 </div>
@@ -194,6 +194,11 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    currentLanguage: {
+      type: String,
+      required: true,
+      default: 'en',
+    },
   },
   setup(props) {
     const { activity, parentData } = toRefs(props);
@@ -202,7 +207,10 @@ export default defineComponent({
       activityTitle = activity.value.title,
       activityLink = `/activity/${activityId}`,
       resultId = parentData.value.result.id,
-      resultTitle = getActivityTitle(parentData.value.result.title, 'en'),
+      resultTitle = getActivityTitle(
+        parentData.value.result.title,
+        props.currentLanguage
+      ),
       resultLink = `${activityLink}/result/${resultId}`,
       indicatorLink = `/result/${resultId}/indicator`;
 
@@ -238,7 +246,7 @@ export default defineComponent({
         link: '/activities',
       },
       {
-        title: getActivityTitle(activityTitle, 'en'),
+        title: getActivityTitle(activityTitle, props.currentLanguage),
         link: `/activity/${activityId}`,
       },
       {
