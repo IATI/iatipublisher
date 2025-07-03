@@ -30,7 +30,7 @@ class BaseForm extends Form
                     if (Arr::get($element, 'add_more', false) && Arr::get($sub_element, 'add_more', false) && !Arr::get($element, 'do_not_repeat_button', false)) {
                         $this->add(trans('common/common.delete_this') . $element['name'] ?? $sub_element['name'], 'button', [
                             'attr' => [
-                                'class' => 'delete-parent one text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1.2rem] w-[100%] justify-end pr-6 delete-parent-item delete-parent-selector',
+                                'class' => 'mt-4 mb-4 delete-parent one text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1rem] w-[100%] justify-end pr-6 delete-parent-item delete-parent-selector',
                             ],
                         ]);
                     }
@@ -55,7 +55,7 @@ class BaseForm extends Form
                         $name = $element['name'];
                         $this->add(trans('common/common.delete_this') . $element['name'], 'button', [
                             'attr' => [
-                                'class' => 'delete-parent one text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1.2rem] w-[100%] justify-end pr-6 ' . " delete-parent-item-$name delete-parent-item delete-parent-selector",
+                                'class' => 'mt-4 mb-4 delete-parent one text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1rem] w-[100%] justify-end pr-6 ' . " delete-parent-item-$name delete-parent-item delete-parent-selector",
                             ],
                         ]);
                     }
@@ -80,7 +80,7 @@ class BaseForm extends Form
                         $name = $element['name'];
                         $this->add(trans('common/common.delete_this') . $element['name'], 'button', [
                             'attr' => [
-                                'class' => 'delete-parent one text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1.2rem] w-[100%] justify-end pr-6 ' . " delete-parent-item-$name delete-parent-item delete-parent-selector",
+                                'class' => 'mt-4 mb-4 delete-parent one text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1rem] w-[100%] justify-end pr-6 ' . " delete-parent-item-$name delete-parent-item delete-parent-selector",
                             ],
                         ]);
                     }
@@ -93,7 +93,7 @@ class BaseForm extends Form
                     if (Arr::get($element, 'add_more', false) && Arr::get($sub_element, 'add_more', false) && !Arr::get($element, 'do_not_repeat_button', false)) {
                         $this->add(trans('common/common.delete_this') . $element['name'] ?? $sub_element['name'], 'button', [
                             'attr' => [
-                                'class' => 'delete-parent one text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1.2rem] w-[100%] justify-end pr-6 delete-parent-item delete-parent-selector',
+                                'class' => 'mt-4 mb-4 delete-parent one text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1rem] w-[100%] justify-end pr-6 delete-parent-item delete-parent-selector',
                             ],
                         ]);
                     }
@@ -253,7 +253,7 @@ class BaseForm extends Form
             $options['attr']['class'] = 'select2';
             $options['attr']['class'] .= !empty($defaultValue) ? ' default-value-indicator' : '';
             $options['attr']['data-placeholder'] = $defaultValue ?? Arr::get($field, 'placeholder', '');
-            $options['empty_value'] = $field['empty_value'] ?? 'Select a value';
+            $options['empty_value'] = $field['empty_value'] ?? trans('common/common.select_an_option');
             $options['choices'] = $field['choices']
                 ? (is_string($field['choices'])
                     ? ($this->getCodeList(
@@ -366,10 +366,11 @@ class BaseForm extends Form
 
         /* @Doc: Nested sub element: country_budget_item -> description */
         if (!$fieldHasAttributes && $field['sub_elements'] && $hasNarrativeSubElement) {
-            return "subelement rounded-t-sm two mx-6 mt-6 $formBorderClass $collapsableClass $labelWithBorder";
+            return "subelement rounded-t-sm two mx-6 mt-6 mb-3 $formBorderClass $collapsableClass $labelWithBorder";
         }
 
-        return "subelement rounded-t-sm three  mx-6 mb-6 $collapsableClass  $formBorderClass $labelWithBorder";
+        /* @Doc Other_identifier -> description */
+        return "subelement rounded-t-sm three mx-6 mb-6 mb-3 $collapsableClass  $formBorderClass $labelWithBorder";
     }
 
     private function getSubElementFormWrapperClasses($field, $element): string

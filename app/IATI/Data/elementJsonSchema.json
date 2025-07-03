@@ -2477,7 +2477,7 @@
         "name": "planned_disbursement_type",
         "label": "elements/label.type",
         "type": "select",
-        "placeholder": "",
+        "placeholder": "common/common.select_an_option",
         "choices": "Activity/BudgetType.json",
         "required": false,
         "criteria": "",

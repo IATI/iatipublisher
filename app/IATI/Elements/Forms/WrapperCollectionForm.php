@@ -87,7 +87,7 @@ class WrapperCollectionForm extends Form
             $name = $data['name'];
             $this->add(trans('common/common.delete_this') . $data['name'], 'button', [
                 'attr' => [
-                    'class' => 'delete-parent two text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1.2rem] w-[100%] justify-end pr-6 ' . " delete-parent-item-$name delete-parent-item delete-parent-selector",
+                    'class' => 'delete-parent two text-crimson-40 font-bold text-md uppercase absolute right-0 -bottom-[1rem] w-[100%] justify-end pr-6 ' . " delete-parent-item-$name delete-parent-item delete-parent-selector",
 
                 ],
             ]);
@@ -131,7 +131,7 @@ class WrapperCollectionForm extends Form
             $options['attr']['class'] = 'select2';
             $options['attr']['class'] .= !empty($defaultValue) ? ' default-value-indicator' : '';
             $options['attr']['data-placeholder'] = $defaultValue ?? Arr::get($field, 'placeholder', '');
-            $options['empty_value'] = $field['empty_value'] ?? 'Select a value';
+            $options['empty_value'] = $field['empty_value'] ?? trans('common/common.select_an_option');
             $options['choices'] = $field['choices']
                 ? (is_string($field['choices'])
                     ? ($this->getCodeList(

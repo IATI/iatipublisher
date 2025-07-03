@@ -78,7 +78,7 @@ class MultilevelSubElementForm extends BaseForm
 
     private function getBaseFormWrapperClasses(): string
     {
-        return 'multi-form relative two pb-3';
+        return 'multi-form relative two pb-6 mb-2';
     }
 
     private function getBaseFormDynamicWrapperClasses($sub_element, $element): string
