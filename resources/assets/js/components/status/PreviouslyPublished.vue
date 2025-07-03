@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center rounded bg-mint p-1.5 text-xs font-normal leading-normal text-n-50"
+    class="flex items-center rounded bg-mint px-1.5 py-1 text-xs font-normal leading-normal text-n-50"
   >
     <svg-vue v-if="icon" :icon="icon" class="mr-1.5 text-base text-spring-50" />
     <span>{{ resolvedText }}</span>

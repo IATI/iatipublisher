@@ -141,7 +141,7 @@
         >
           <div class="flex items-center gap-4">
             <button
-              class="text-xs font-bold text-n-40"
+              class="text-sm font-bold text-n-40"
               @click="emit(`proceedStep`)"
             >
               {{ translatedData['common.common.skip_to_next_step'] }}

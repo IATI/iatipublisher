@@ -56,7 +56,7 @@
   }
 
   td {
-    padding: 16px 24px !important;
+    padding: 28px !important;
     @apply relative align-top text-sm leading-relaxed;
   }
 
@@ -161,21 +161,18 @@
   }
 }
 
+#publishing-progress,
+#date,
+#status,
+#publish {
+  min-width: 120px;
+  width: fit-content;
+}
+
 #cb {
   width: 68px;
 }
 
-#status {
-  width: 192px;
-}
-
-#publish {
-  width: 280px;
-}
-
-#date {
-  width: 173px;
-}
 .iati-list-table {
   tr {
     overflow-y: visible;

@@ -198,7 +198,7 @@ button {
 }
 
 .ghost-btn {
-  @apply text-xs font-bold uppercase text-n-40;
+  @apply text-base font-bold uppercase text-n-40;
   transition: 0.4s;
 
   &:hover {
@@ -235,4 +235,12 @@ button {
     font-size: 6px;
     transition: 0.2s;
   }
+}
+
+.save-btn {
+  @apply px-4 text-base;
+}
+
+.btn__active {
+  @apply font-bold text-white;
 }
