@@ -11,7 +11,7 @@
           </th>
           <th id="publishing-progress" scope="col" class="progress-bar-header">
             <a
-              class="flex justify-end text-n-50 transition duration-500 hover:text-spring-50"
+              class="flex justify-center text-n-50 transition duration-500 hover:text-spring-50"
               :href="sortByPublishingProgress()"
             >
               <span class="sorting-indicator" :class="sortingDirection()">
@@ -104,7 +104,7 @@
             </div>
           </td>
 
-          <td class="flex items-center justify-end gap-2 text-n-40">
+          <td class="flex items-center justify-center gap-2 text-n-40">
             <div class="progress-bar-parent">
               <div class="progress-bar-wrapper">
                 <div class="progress-bar-container bg-spring-10">
@@ -122,11 +122,11 @@
             </div>
           </td>
 
-          <td class="text-n-40">
+          <td class="text-center text-n-40">
             {{ formatDate(datum.updated_at, currentLanguage) }}
           </td>
 
-          <td>
+          <td class="text-center">
             <button
               class="inline-flex items-center transition duration-500 hover:text-spring-50"
               :class="{
@@ -150,14 +150,13 @@
           </td>
 
           <td>
-            <div class="flex flex-wrap gap-2">
+            <div class="flex min-w-[185px] flex-wrap gap-2">
               <UnPublish
                 v-if="datum.linked_to_iati"
                 type="outline"
                 :activity-id="datum['id']"
               />
 
-              <!--TODO: Review after 1567-->
               <Publish
                 v-if="datum['status'] !== 'published'"
                 :linked-to-iati="datum.linked_to_iati"
@@ -171,7 +170,7 @@
             </div>
           </td>
 
-          <th
+          <td
             class="check-column"
             @click="(event: Event) => event.stopPropagation()"
           >
@@ -188,7 +187,7 @@
               />
               <span class="checkmark" />
             </label>
-          </th>
+          </td>
         </tr>
       </tbody>
       <tbody v-else>

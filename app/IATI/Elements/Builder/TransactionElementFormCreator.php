@@ -85,7 +85,7 @@ class TransactionElementFormCreator
                     'label'     => trans('common/common.cancel'),
                     'attr'      => [
                         'type'      => 'anchor',
-                        'class'     => 'ghost-btn mr-8',
+                        'class'     => 'ghost-btn mr-8 text-base',
                         'href' => $parent_url,
                     ],
                 ],
@@ -93,7 +93,7 @@ class TransactionElementFormCreator
                     'label'     => trans('common/common.save_and_exit'),
                     'attr'      => [
                         'type'      => 'submit',
-                        'class'     => 'primary-btn save-btn',
+                        'class'     => 'primary-btn save-btn text-base',
                     ],
                 ],
             ],

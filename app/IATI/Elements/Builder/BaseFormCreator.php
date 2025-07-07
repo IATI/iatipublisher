@@ -90,7 +90,7 @@ class BaseFormCreator
                         'label'     => trans('common/common.cancel'),
                         'attr'      => [
                             'type'  => 'anchor',
-                            'class' => 'ghost-btn mr-8',
+                            'class' => 'ghost-btn mr-8 text-base',
                             'href'  => $parent_url,
                         ],
                     ],
@@ -98,7 +98,7 @@ class BaseFormCreator
                         'label'     => trans('common/common.save_and_exit'),
                         'attr'      => [
                             'type'  => empty($additonalInfo) ? 'submit' : 'button',
-                            'class' => 'primary-btn save-btn text-sm',
+                            'class' => 'primary-btn save-btn text-base',
                             'id'    => empty($additonalInfo) ? '' : Arr::get($additonalInfo, 'submitId'),
                         ],
                     ],

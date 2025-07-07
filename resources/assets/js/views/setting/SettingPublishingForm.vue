@@ -77,7 +77,7 @@
               </button>
             </div>
 
-            <div class="border-this relative">
+            <div class="relative">
               <input
                 id="api-token"
                 v-model="publishingForm.api_token"

@@ -226,13 +226,13 @@
           </span>
         </div>
       </div>
-      <div class="mt-3 flex w-full items-center justify-between">
-        <button class="text-xs font-bold text-n-40" @click="previousStep">
+      <div class="mt-3 flex w-full items-center justify-between text-base">
+        <button class="text-sm font-bold text-n-40" @click="previousStep">
           {{ translatedData['common.common.previous'] }}
         </button>
         <div class="flex items-center gap-4">
           <button
-            class="text-xs font-bold text-n-40"
+            class="text-sm font-bold text-n-40"
             @click="emit('proceedStep')"
           >
             {{ translatedData['common.common.skip_to_next_step'] }}
