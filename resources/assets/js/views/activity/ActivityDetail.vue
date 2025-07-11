@@ -142,7 +142,7 @@
         <svg-vue icon="chevron" class="pb-2 text-3xl text-white" />
       </div>
       <div class="activities">
-        <aside class="activities__sidebar hidden lg:block">
+        <aside class="activities__sidebar">
           <div
             v-if="
               publishStatus.linked_to_iati && publishStatus.status === 'draft'
