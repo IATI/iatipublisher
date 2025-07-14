@@ -6,6 +6,7 @@ namespace App\XmlImporter\Foundation\Mapper\Components;
 
 use App\IATI\Models\Organization\Organization;
 use App\IATI\Services\ElementCompleteService;
+use App\IATI\Traits\HydrationTrait;
 use App\XmlImporter\Foundation\Mapper\Components\Elements\Result;
 use App\XmlImporter\Foundation\Mapper\Components\Elements\Transaction;
 use App\XmlImporter\Foundation\Support\Helpers\Traits\XmlHelper;
@@ -19,6 +20,7 @@ use Illuminate\Support\Arr;
 class XmlMapper
 {
     use XmlHelper;
+    use HydrationTrait;
 
     /**
      * @var
@@ -136,6 +138,7 @@ class XmlMapper
      */
     public function map(array $activities, $template, $authUser, $orgId, $orgRef, $dbIatiIdentifiers, $organizationReportingOrg): static
     {
+        /** @var ElementCompleteService $elementCompleteService */
         $elementCompleteService = app(ElementCompleteService::class);
 
         $organization = Organization::find($orgId);
@@ -164,12 +167,14 @@ class XmlMapper
             $mappedData[$index]['transaction_references'] = $this->transactionElement->getReferences();
             $mappedData[$index]['result'] = $this->resultElement->map($this->filter($activity, 'result'), $template);
 
-            $elementStatus = $elementCompleteService->prepareActivityElementStatus(
-                new \App\IATI\Models\Activity\Activity($mappedData[$index]),
-                $orgReportingOrgStatus,
-                $attributes
-            );
+            $activityData = $mappedData[$index];
+            $activityModel = new \App\IATI\Models\Activity\Activity($activityData);
 
+            /* For some reason the country_budget_items is inside an array, causing 'isCountryBudgetItemsElementCompleted' to return false */
+            $activityModel->country_budget_items = Arr::get($activityModel, 'country_budget_items.0');
+            $activityModel->transactions = $this->hydrateTransactions($activityData);
+
+            $elementStatus = $elementCompleteService->prepareActivityElementStatus($activityModel, $orgReportingOrgStatus, $attributes);
             $completePercentage = $elementCompleteService->calculateCompletePercentage($elementStatus);
             $deprecationStatusMap = refreshActivityDeprecationStatusMap($mappedData[$index]);
 

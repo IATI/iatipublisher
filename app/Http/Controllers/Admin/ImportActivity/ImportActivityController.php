@@ -20,6 +20,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -144,7 +145,7 @@ class ImportActivityController extends Controller
                 ]);
             }
 
-            Session::put('import_filetype', $filetype);
+            Cache::forever("import_filetype_{$orgId}", $filetype);
 
             if ($filetype === 'xml') {
                 if ($this->importXmlService->store($file)) {
@@ -201,7 +202,7 @@ class ImportActivityController extends Controller
             $activities = $request->get('activities');
 
             $orgId = Auth::user()->organization_id;
-            $filetype = Session::get('import_filetype');
+            $filetype = Cache::get('import_filetype_' . $orgId);
 
             if ($activities) {
                 if ($filetype === 'xml') {
@@ -216,7 +217,7 @@ class ImportActivityController extends Controller
 
             $this->db->commit();
 
-            Session::forget('import_filetype');
+            Cache::forget('import_filetype_' . $orgId);
             Session::forget('error');
 
             $translatedMessage = trans('workflow_backend/import_activity_controller.imported_data_successfully');
@@ -246,7 +247,7 @@ class ImportActivityController extends Controller
         try {
             $orgId = Auth::user()->organization_id;
             $userId = Auth::user()->id;
-            $filetype = Session::get('import_filetype');
+            $filetype = Cache::get('import_filetype_' . $orgId);
 
             if (!$orgId) {
                 $translatedMessage = trans('common/common.user_is_not_associated_with_any_organization');
@@ -319,7 +320,7 @@ class ImportActivityController extends Controller
             $orgId = Auth::user()->organization_id;
             $userId = Auth::user()->id;
 
-            $filetype = Session::get('import_filetype');
+            $filetype = Cache::get('import_filetype_' . $orgId);
 
             $status = awsGetFile(sprintf('%s/%s/%s/%s', $filetype === 'xml' ? $this->xml_data_storage_path : $this->csv_data_storage_path, $orgId, $userId, 'status.json'));
             $schema_error = awsGetFile(sprintf('%s/%s/%s/%s', $filetype === 'xml' ? $this->xml_data_storage_path : $this->csv_data_storage_path, $orgId, $userId, 'schema_error.log'));
