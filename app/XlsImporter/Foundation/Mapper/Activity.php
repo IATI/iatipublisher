@@ -6,6 +6,7 @@ namespace App\XlsImporter\Foundation\Mapper;
 
 use App\IATI\Models\Organization\Organization;
 use App\IATI\Services\ElementCompleteService;
+use App\IATI\Traits\HydrationTrait;
 use App\XlsImporter\Foundation\Mapper\Traits\XlsMapperHelper;
 use App\XlsImporter\Foundation\XlsValidator\Validators\ActivityValidator;
 use Illuminate\Support\Arr;
@@ -16,6 +17,7 @@ use Illuminate\Support\Arr;
 class Activity
 {
     use XlsMapperHelper;
+    use HydrationTrait;
 
     /**
      * List of all the activity sheets and corresponding elements.
@@ -260,6 +262,7 @@ class Activity
      * @param $activityData
      *
      * @return static
+     * @throws \JsonException
      */
     public function map($activityData): static
     {
@@ -303,7 +306,10 @@ class Activity
         $this->totalCount = count($this->activities);
 
         foreach ($this->activities as $activityIdentifier => $activity) {
-            $elementStatus = $elementCompleteService->prepareActivityElementStatus(new \App\IATI\Models\Activity\Activity($activity), $orgReportingOrgStatus, $attributes);
+            $activityModel = new \App\IATI\Models\Activity\Activity($activity);
+            $activityModel->transactions = $this->hydrateTransactions($activity);
+
+            $elementStatus = $elementCompleteService->prepareActivityElementStatus($activityModel, $orgReportingOrgStatus, $attributes);
             $completePercentage = $elementCompleteService->calculateCompletePercentage($elementStatus);
             $deprecationStatusMap = refreshActivityDeprecationStatusMap($activity);
 
