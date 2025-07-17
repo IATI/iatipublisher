@@ -525,6 +525,7 @@ $(async function () {
   $('body').on('select2:select', '#organization_country', function () {
     updateRegistrationAgency($(this));
   });
+
   $('body').on('select2:clear', '#organization_country', function () {
     updateRegistrationAgency($(this));
   });
@@ -835,8 +836,34 @@ $(async function () {
     observer.observe(document.body, { childList: true, subtree: true });
   }
 
+  /**
+   * Observes the DOM for any additions or changes related to URL input fields
+   * and initializes the visibility toggle between URL and file input fields accordingly.
+   *
+   * This sets up a MutationObserver on the document body to dynamically respond to
+   * new elements being added to the DOM, ensuring the visibility logic applies even to
+   * newly injected form fields.
+   *
+   * Usage:
+   * Call this function once to initialize observation and attach relevant input listeners.
+   */
+  function observeUrlToFileFieldDependency(): void {
+    const observer = new MutationObserver(() => {
+      initializeUrlToFileToggle();
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    /** Run it once initially on page load */
+    initializeUrlToFileToggle();
+  }
+
   attachInitialCollapsableButtonEvents(currentLanguage);
   observeNewCollapsableButtons(currentLanguage);
+  observeUrlToFileFieldDependency();
 });
 
 function escapeHtml(unsafe: string) {
@@ -904,8 +931,49 @@ function closeHelpText(helpText) {
   }, 1000);
 }
 
-/*
+/**
+ * Scans the DOM for input fields with IDs containing `[url]` and attaches event listeners
+ * to toggle the visibility of corresponding file input fields.
  *
- * Help Text Open Close Handlers End
+ * The logic ensures that when a URL input is filled (non-empty), the associated
+ * file input field is hidden (by adding the `hide-file` class to its container).
+ * If the URL input is cleared, the file input becomes visible again.
  *
+ * It uses a `data-observed` flag to prevent attaching duplicate event listeners.
  */
+function initializeUrlToFileToggle(): void {
+  const urlInputs =
+    document.querySelectorAll<HTMLInputElement>('input[id*="[url]"]');
+
+  urlInputs.forEach((urlInput) => {
+    // Prevent attaching multiple listeners
+    if (urlInput.dataset.observed === 'true') return;
+
+    urlInput.dataset.observed = 'true';
+
+    const idMatch = urlInput.id.match(/document_link\[(\d+)]\[url]/);
+    if (!idMatch) return;
+
+    const index = idMatch[1];
+    const fileInput = document.getElementById(
+      `document_link[${index}][document]`
+    ) as HTMLInputElement | null;
+    if (!fileInput) return;
+
+    const grandParent = fileInput.closest(
+      '.form-field.basis-auto.w-full.xl\\:basis-6\\/12.attribute'
+    );
+    if (!grandParent) return;
+
+    const toggleFileFieldVisibility = () => {
+      if (urlInput.value.trim() !== '') {
+        grandParent.classList.add('hide-file');
+      } else {
+        grandParent.classList.remove('hide-file');
+      }
+    };
+
+    toggleFileFieldVisibility(); // Initial check
+    urlInput.addEventListener('input', toggleFileFieldVisibility);
+  });
+}

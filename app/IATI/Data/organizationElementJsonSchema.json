@@ -1493,6 +1493,16 @@
         "criteria": "mandatory",
         "hover_text": "common/common.select_the_document_file_format_from_the_drop_down_list",
         "help_text": ""
+      },
+      "document": {
+        "name": "document",
+        "label": "elements/label.document",
+        "type": "file",
+        "placeholder": "",
+        "required": false,
+        "criteria": "",
+        "hover_text": "",
+        "help_text": ""
       }
     },
     "sub_elements": {

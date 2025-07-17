@@ -6,11 +6,13 @@ namespace App\IATI\Services\Organization;
 
 use App\IATI\Elements\Builder\ParentCollectionFormCreator;
 use App\IATI\Models\Organization\Organization;
+use App\IATI\Repositories\Document\DocumentRepository;
 use App\IATI\Repositories\Organization\OrganizationRepository;
 use App\IATI\Traits\DataSanitizeTrait;
 use App\IATI\Traits\OrganizationXmlBaseElements;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Kris\LaravelFormBuilder\Form;
 
 /**
@@ -18,7 +20,8 @@ use Kris\LaravelFormBuilder\Form;
  */
 class DocumentLinkService
 {
-    use OrganizationXmlBaseElements, DataSanitizeTrait;
+    use DataSanitizeTrait;
+    use OrganizationXmlBaseElements;
 
     /**
      * @var ParentCollectionFormCreator
@@ -30,15 +33,18 @@ class DocumentLinkService
      */
     protected OrganizationRepository $organizationRepository;
 
+    protected DocumentRepository $documentRepository;
+
     /**
      * DocumentLinkService constructor.
      *
      * @param OrganizationRepository $organizationRepository
      * @param ParentCollectionFormCreator $parentCollectionFormCreator
      */
-    public function __construct(OrganizationRepository $organizationRepository, ParentCollectionFormCreator $parentCollectionFormCreator)
+    public function __construct(OrganizationRepository $organizationRepository, DocumentRepository $documentRepository, ParentCollectionFormCreator $parentCollectionFormCreator)
     {
         $this->organizationRepository = $organizationRepository;
+        $this->documentRepository = $documentRepository;
         $this->parentCollectionFormCreator = $parentCollectionFormCreator;
     }
 
@@ -74,24 +80,42 @@ class DocumentLinkService
      *
      * @return bool
      */
-    public function update($id, $documentLink): bool
+    public function update($id, $documentLinks): bool
     {
-        $element = readOrganizationElementJsonSchema()['document_link'];
+        $organizationId = Auth::user()->organization->id;
 
-        foreach ($documentLink['document_link'] as $key => $document) {
-            foreach (array_keys($element['sub_elements']) as $subelement) {
-                $documentLink['document_link'][$key][$subelement] = array_values($document[$subelement]);
+        foreach ($documentLinks['document_link'] as $index => $documentLink) {
+            $document = Arr::get($documentLink, 'document', null);
+
+            if ($document) {
+                $extension = pathinfo($document->getClientOriginalName(), PATHINFO_EXTENSION);
+                $fileName = basename($document->getClientOriginalName(), ".$extension") . time() . '.' . $extension;
+
+                $documentData['activity_id'] = null;
+                $documentData['activities'] = null;
+                $documentData['organization_id'] = $organizationId;
+                $documentData['filename'] = $fileName;
+                $documentData['extension'] = $extension;
+                $documentData['document_link'] = $documentLink;
+
+                awsUploadFile("/document-link/$organizationId/" . $fileName, $document->get());
+                $this->documentRepository->store($documentData);
+
+                $documentLink['url'] = awsUrl("/document-link/$organizationId/" . $fileName);
             }
+
+            unset($documentLink['document']);
+            $documentLinks['document_link'][$index] = $documentLink;
         }
 
-        $sanitizedDocumentLink = $this->sanitizeData($documentLink['document_link']);
+        $documentLinks = $this->sanitizeData($documentLinks['document_link']);
 
         $organisation = $this->organizationRepository->find($id);
         $deprecationStatusMap = $organisation->deprecation_status_map;
-        $deprecationStatusMap['document_link'] = doesOrganisationDocumentLinkHaveDeprecatedCode($sanitizedDocumentLink);
+        $deprecationStatusMap['document_link'] = doesOrganisationDocumentLinkHaveDeprecatedCode($documentLinks);
 
-        return $this->organizationRepository->update($id, [
-            'document_link'          => $sanitizedDocumentLink,
+        return  $this->organizationRepository->update($id, [
+            'document_link'          => $documentLinks,
             'deprecation_status_map' => $deprecationStatusMap,
         ]);
     }

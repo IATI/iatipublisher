@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class DocumentLinkController.
@@ -66,15 +67,24 @@ class DocumentLinkController extends Controller
     public function update(DocumentLinkRequest $request): RedirectResponse
     {
         try {
-            if (!$this->documentLinkService->update(Auth::user()->organization_id, $request->all())) {
+            DB::beginTransaction();
+            $documentLink = $request->only(['document_link']);
+
+            if (!$this->documentLinkService->update(Auth::user()->organization_id, $documentLink)) {
                 $translatedMessage = trans('common/common.failed_to_update_data');
+                DB::rollBack();
 
                 return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
             }
+
             $translatedMessage = trans('common/common.updated_successfully');
+
+            DB::commit();
 
             return redirect()->route('admin.organisation.index')->with('success', $translatedMessage);
         } catch (\Exception $e) {
+            DB::rollBack();
+
             logger()->error($e->getMessage());
             $translatedMessage = trans('common/common.failed_to_update_data');
 

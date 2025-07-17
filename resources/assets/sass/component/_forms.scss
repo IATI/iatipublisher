@@ -714,3 +714,7 @@ aside {
 .collection_error:not(:has(.text-danger.error)) {
   @apply px-6;
 }
+
+.hide-file {
+  display: none;
+}
