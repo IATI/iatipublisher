@@ -37,7 +37,6 @@ import { reactive, provide, defineProps } from 'vue';
 import Loader from 'Components/sections/ProgressLoader.vue';
 import Toast from 'Components/ToastMessage.vue';
 import TableList from './components/TableList.vue';
-import transactionDate from 'Activity/transactions/elements/TransactionDate.vue';
 
 const props = defineProps({
   countries: { type: Object, required: true },

@@ -150,7 +150,6 @@ import {
   ref,
   toRefs,
   watch,
-  watchEffect,
 } from 'vue';
 //components
 import Btn from 'Components/buttons/Link.vue';
@@ -164,7 +163,6 @@ import {
   getTranslatedElement,
   getTranslatedUntitled,
   toKebabCase,
-  toTitleCase,
 } from 'Composable/utils';
 
 export default defineComponent({

@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\AccessibleRoute;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\EnsureUserHasOrganization;
 use App\Http\Middleware\LogoutIfInactive;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectActivity;
@@ -118,5 +119,6 @@ class Kernel extends HttpKernel
         'verified' => EnsureEmailIsVerified::class,
         'activity.auth' => RedirectActivity::class,
         'sanitize' => SanitizeRequest::class,
+        'has.organization' => EnsureUserHasOrganization::class,
     ];
 }

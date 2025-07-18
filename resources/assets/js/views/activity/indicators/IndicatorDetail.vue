@@ -258,7 +258,6 @@ import {
   watch,
   computed,
   onUnmounted,
-  watchEffect,
 } from 'vue';
 
 //component

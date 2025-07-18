@@ -59,6 +59,8 @@ import ResetPassword from './views/reset/ResetPassword.vue';
  */
 import OrganisationData from './views/organisation/OrganisationData.vue';
 
+import OrganisationMissing from './views/organisation/OrganisationMissing.vue';
+
 /**
  * Organisation List / Proxy
  */
@@ -173,6 +175,11 @@ app.component('LoadingState', LoadingState);
  * Organisation data
  */
 app.component('OrganisationData', OrganisationData);
+
+/**
+ * Organization Missing
+ */
+app.component('OrganizationMissing', OrganisationMissing);
 
 /**
  * Proxy
