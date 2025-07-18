@@ -30,4 +30,12 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'oidc' => [
+        'issuer'              => env('OIDC_ISSUER'),
+        'client_id'           => env('OIDC_CLIENT_ID'),
+        'client_secret'       => env('OIDC_CLIENT_SECRET'),
+        'redirect_uri'        => env('OIDC_REDIRECT_URI'),
+        'logout_endpoint'     => env('OIDC_LOGOUT_ENDPOINT'),
+        'logout_redirect_uri' => env('OIDC_LOGOUT_REDIRECT_URI'),
+    ],
 ];
