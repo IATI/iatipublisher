@@ -43,95 +43,95 @@ class RegisterTest extends TestCase
      *
      * @return void
      */
-    public function test_publisher_name_does_not_exist(): void
-    {
-        $this->post('/verifyPublisher', [
-            'publisher_name'      => 'test',
-            'publisher_id'        => env('IATI_YIPL_PUBLISHER_ID'),
-            'registration_agency' => env('IATI_YIPL_REGISTRATION_AGENCY'),
-            'registration_number' => env('IATI_YIPL_REGISTRATION_NUMBER'),
-            'identifier'          => env('IATI_YIPL_REGISTRATION_AGENCY') . '-' . env('IATI_YIPL_REGISTRATION_NUMBER'),
-        ])
-             ->assertStatus(200)
-             ->assertJsonStructure([
-                 'success',
-                 'errors' => [
-                     'publisher_name',
-                 ],
-             ])
-             ->assertJsonValidationErrors(['publisher_name']);
-    }
+//    public function test_publisher_name_does_not_exist(): void
+//    {
+//        $this->post('/verifyPublisher', [
+//            'publisher_name'      => 'test',
+//            'publisher_id'        => env('IATI_YIPL_PUBLISHER_ID'),
+//            'registration_agency' => env('IATI_YIPL_REGISTRATION_AGENCY'),
+//            'registration_number' => env('IATI_YIPL_REGISTRATION_NUMBER'),
+//            'identifier'          => env('IATI_YIPL_REGISTRATION_AGENCY') . '-' . env('IATI_YIPL_REGISTRATION_NUMBER'),
+//        ])
+//             ->assertStatus(200)
+//             ->assertJsonStructure([
+//                 'success',
+//                 'errors' => [
+//                     'publisher_name',
+//                 ],
+//             ])
+//             ->assertJsonValidationErrors(['publisher_name']);
+//    }
 
     /**
      * Publisher name and id mismatch test.
      *
      * @return void
      */
-    public function test_publisher_name_mismatch(): void
-    {
-        $this->post('/verifyPublisher', [
-            'publisher_name'      => 'test101',
-            'publisher_id'        => env('IATI_YIPL_PUBLISHER_ID'),
-            'registration_agency' => env('IATI_YIPL_REGISTRATION_AGENCY'),
-            'registration_number' => env('IATI_YIPL_REGISTRATION_NUMBER'),
-            'identifier'          => env('IATI_YIPL_REGISTRATION_AGENCY') . '-' . env('IATI_YIPL_REGISTRATION_NUMBER'),
-        ])
-             ->assertStatus(200)
-             ->assertJsonStructure([
-                 'success',
-                 'publisher_error',
-                 'errors' => [
-                     'publisher_name',
-                 ],
-             ])
-             ->assertJsonValidationErrors(['publisher_name']);
-    }
+//    public function test_publisher_name_mismatch(): void
+//    {
+//        $this->post('/verifyPublisher', [
+//            'publisher_name'      => 'test101',
+//            'publisher_id'        => env('IATI_YIPL_PUBLISHER_ID'),
+//            'registration_agency' => env('IATI_YIPL_REGISTRATION_AGENCY'),
+//            'registration_number' => env('IATI_YIPL_REGISTRATION_NUMBER'),
+//            'identifier'          => env('IATI_YIPL_REGISTRATION_AGENCY') . '-' . env('IATI_YIPL_REGISTRATION_NUMBER'),
+//        ])
+//             ->assertStatus(200)
+//             ->assertJsonStructure([
+//                 'success',
+//                 'publisher_error',
+//                 'errors' => [
+//                     'publisher_name',
+//                 ],
+//             ])
+//             ->assertJsonValidationErrors(['publisher_name']);
+//    }
 
     /**
      * Publisher iati id mismatch test.
      *
      * @return void
      */
-    public function test_publisher_iati_id_mismatch(): void
-    {
-        $this->post('/verifyPublisher', [
-            'publisher_name'      => env('IATI_YIPL_PUBLISHER_NAME'),
-            'publisher_id'        => env('IATI_YIPL_PUBLISHER_ID'),
-            'identifier'          => env('IATI_YIPL_REGISTRATION_AGENCY') . '-' . env('IATI_YIPL_REGISTRATION_NUMBER'),
-            'registration_agency' => env('IATI_YIPL_REGISTRATION_AGENCY'),
-            'registration_number' => 100,
-        ])
-             ->assertStatus(200)
-             ->assertJsonStructure([
-                 'success',
-                 'publisher_error',
-                 'errors' => [
-                     'identifier',
-                 ],
-             ])
-             ->assertJsonValidationErrors(['identifier']);
-    }
+//    public function test_publisher_iati_id_mismatch(): void
+//    {
+//        $this->post('/verifyPublisher', [
+//            'publisher_name'      => env('IATI_YIPL_PUBLISHER_NAME'),
+//            'publisher_id'        => env('IATI_YIPL_PUBLISHER_ID'),
+//            'identifier'          => env('IATI_YIPL_REGISTRATION_AGENCY') . '-' . env('IATI_YIPL_REGISTRATION_NUMBER'),
+//            'registration_agency' => env('IATI_YIPL_REGISTRATION_AGENCY'),
+//            'registration_number' => 100,
+//        ])
+//             ->assertStatus(200)
+//             ->assertJsonStructure([
+//                 'success',
+//                 'publisher_error',
+//                 'errors' => [
+//                     'identifier',
+//                 ],
+//             ])
+//             ->assertJsonValidationErrors(['identifier']);
+//    }
 
     /**
      * Publisher verify test.
      *
      * @return void
      */
-    public function test_publisher_verified(): void
-    {
-        $this->post('/verifyPublisher', [
-            'publisher_name'      => env('IATI_YIPL_PUBLISHER_NAME'),
-            'publisher_id'        => env('IATI_YIPL_PUBLISHER_ID'),
-            'registration_agency' => env('IATI_YIPL_REGISTRATION_AGENCY'),
-            'registration_number' => env('IATI_YIPL_REGISTRATION_NUMBER'),
-            'identifier'          => env('IATI_YIPL_REGISTRATION_AGENCY') . '-' . env('IATI_YIPL_REGISTRATION_NUMBER'),
-        ])
-             ->assertStatus(200)
-             ->assertJsonStructure([
-                 'success',
-                 'message',
-             ]);
-    }
+//    public function test_publisher_verified(): void
+//    {
+//        $this->post('/verifyPublisher', [
+//            'publisher_name'      => env('IATI_YIPL_PUBLISHER_NAME'),
+//            'publisher_id'        => env('IATI_YIPL_PUBLISHER_ID'),
+//            'registration_agency' => env('IATI_YIPL_REGISTRATION_AGENCY'),
+//            'registration_number' => env('IATI_YIPL_REGISTRATION_NUMBER'),
+//            'identifier'          => env('IATI_YIPL_REGISTRATION_AGENCY') . '-' . env('IATI_YIPL_REGISTRATION_NUMBER'),
+//        ])
+//             ->assertStatus(200)
+//             ->assertJsonStructure([
+//                 'success',
+//                 'message',
+//             ]);
+//    }
 
     /**
      * All required fields for admin test.

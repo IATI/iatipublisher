@@ -170,6 +170,8 @@ class XmlMapper
             $activityData = $mappedData[$index];
             $activityModel = new \App\IATI\Models\Activity\Activity($activityData);
 
+            /* For some reason the country_budget_items is inside an array, causing 'isCountryBudgetItemsElementCompleted' to return false */
+            $activityModel->country_budget_items = Arr::get($activityModel, 'country_budget_items.0');
             $activityModel->transactions = $this->hydrateTransactions($activityData);
 
             $elementStatus = $elementCompleteService->prepareActivityElementStatus($activityModel, $orgReportingOrgStatus, $attributes);
