@@ -84,6 +84,22 @@
               }}
             </a>
           </template>
+          <template
+            v-if="
+              item === 'Your organisation is pending approval by the IATI team.'
+            "
+          >
+            <p>
+              <a href="https://iatistandard.org/en/guidance/get-support/"
+                >Contact Support</a
+              >
+              {{
+                translatedData[
+                  'common.common.if_your_account_has_not_been_approved_within_two_working_days_of_registering'
+                ]
+              }}
+            </p>
+          </template>
         </li>
       </ul>
       <div class="mt-4 flex flex-row-reverse">

@@ -6,6 +6,7 @@ namespace App\Observers;
 
 use App\IATI\Models\Organization\Organization;
 use App\IATI\Services\OrganizationElementCompleteService;
+use App\IATI\Services\RegisterYourDataApi\IatiDataSyncService;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,16 +16,12 @@ use Illuminate\Support\Facades\Auth;
 class OrganizationObserver
 {
     /**
-     * @var OrganizationElementCompleteService
-     */
-    protected OrganizationElementCompleteService $organizationElementCompleteService;
-
-    /**
      * Organization observer constructor.
      */
-    public function __construct()
-    {
-        $this->organizationElementCompleteService = new OrganizationElementCompleteService();
+    public function __construct(
+        protected OrganizationElementCompleteService $organizationElementCompleteService,
+        protected IatiDataSyncService $iatiDataSyncService
+    ) {
     }
 
     /**
@@ -64,7 +61,10 @@ class OrganizationObserver
         $updatedElements = ($isNew) ? $this->getUpdatedElement($model->getAttributes()) : $this->getUpdatedElement($model->getChanges());
 
         foreach ($updatedElements as $attribute => $value) {
-            $elementStatus[$attribute] = call_user_func([$this->organizationElementCompleteService, dashesToCamelCase('is_' . $attribute . '_element_completed')], $model);
+            $elementStatus[$attribute] = call_user_func(
+                [$this->organizationElementCompleteService, dashesToCamelCase('is_' . $attribute . '_element_completed')],
+                $model
+            );
         }
 
         $model->element_status = $elementStatus;
@@ -116,6 +116,8 @@ class OrganizationObserver
         }
 
         $organization->saveQuietly();
+
+        $this->iatiDataSyncService->syncOrganizationUpstream($organization, $updatedElements);
     }
 
     /**
@@ -151,23 +153,8 @@ class OrganizationObserver
      *
      * @return void
      */
-    public function resetOrganizationStatus($model)
+    public function resetOrganizationStatus($model): void
     {
         $model->status = 'draft';
     }
-
-    // /**
-    //  * Handle the Organization "updated" event.
-    //  *
-    //  * @param Organization $organization
-    //  *
-    //  * @return void
-    //  * @throws \JsonException
-    //  */
-    // public function updated(Organization $organization): void
-    // {
-    //     $organization->reporting_org_complete_status = $organization->getReportingOrgElementCompletedAttribute();
-
-    //     $organization->saveQuietly();
-    // }
 }

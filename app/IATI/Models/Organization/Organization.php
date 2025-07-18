@@ -47,6 +47,7 @@ class Organization extends Model implements Auditable
         'registration_agency',
         'registration_number',
         'registration_type',
+        'data_license',
         'reporting_org',
         'total_budget',
         'recipient_org_budget',
@@ -64,6 +65,8 @@ class Organization extends Model implements Auditable
         'updated_at',
         'old_identifiers',
         'deprecation_status_map',
+        'uuid',
+        'registry_approved',
     ];
 
     /**
@@ -257,5 +260,17 @@ class Organization extends Model implements Auditable
     public function onboarding(): HasOne
     {
         return $this->hasOne(OrganizationOnboarding::class, 'org_id', 'id');
+    }
+
+    public function getHumanReadableNameAttribute(): ?string
+    {
+        return $this->name[0]['narrative'] ?? null;
+    }
+
+    public function getSourceTypeAttribute(): string
+    {
+        $isSecondary = data_get($this->reporting_org, '0.secondary_reporter', false);
+
+        return $isSecondary ? 'secondary_source' : 'primary_source';
     }
 }

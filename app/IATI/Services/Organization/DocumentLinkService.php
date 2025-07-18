@@ -67,7 +67,7 @@ class DocumentLinkService
      *
      * @return Model
      */
-    public function getOrganizationData($id): Model
+    public function getOrganizationData($id): Organization
     {
         return $this->organizationRepository->getOrganizationData($id);
     }

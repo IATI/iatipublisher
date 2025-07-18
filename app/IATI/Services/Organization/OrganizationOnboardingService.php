@@ -75,21 +75,16 @@ class OrganizationOnboardingService
             return [
                 [
                     'step'     => 1,
-                    'title'    => OrganizationOnboarding::PUBLISHING_SETTINGS,
-                    'complete' => false,
-                ],
-                [
-                    'step'     => 2,
                     'title'    => OrganizationOnboarding::DEFAULT_VALUES,
                     'complete' => false,
                 ],
                 [
-                    'step'     => 3,
+                    'step'     => 2,
                     'title'    => OrganizationOnboarding::ORGANIZATION_DATA,
                     'complete' => false,
                 ],
                 [
-                    'step'     => 4,
+                    'step'     => 3,
                     'title'    => OrganizationOnboarding::ACTIVITY,
                     'complete' => false,
                 ],
@@ -98,21 +93,16 @@ class OrganizationOnboardingService
 
         $array[] = [
             'step'     => 1,
-            'title'    => OrganizationOnboarding::PUBLISHING_SETTINGS,
-            'complete' => $this->checkPublishingSettingsComplete($settings->publishing_info),
-        ];
-        $array[] = [
-            'step'     => 2,
             'title'    => OrganizationOnboarding::DEFAULT_VALUES,
             'complete' => $this->checkDefaultValuesComplete($settings->default_values),
         ];
         $array[] = [
-            'step'     => 3,
+            'step'     => 2,
             'title'    => OrganizationOnboarding::ORGANIZATION_DATA,
             'complete' => $organization->is_published,
         ];
         $array[] = [
-            'step'     => 4,
+            'step'     => 3,
             'title'    => OrganizationOnboarding::ACTIVITY,
             'complete' => ($organization->registration_type === Enums::EXISTING_ORG) && count($organization->activities),
         ];
@@ -237,10 +227,9 @@ class OrganizationOnboardingService
 
         foreach ($organizationOnboarding['steps_status'] as &$onboardingStep) {
             $onboardingStep['title'] = match ($onboardingStep['step']) {
-                1 => Str::title(trans('common/common.publishing_settings')),
-                2 => Str::title(trans('common/common.default_values')),
-                3 => Str::title(trans('adminHeader/admin_header.organisation_data')),
-                4 => Str::title(trans('common/common.activity')),
+                1 => Str::title(trans('common/common.default_values')),
+                2 => Str::title(trans('adminHeader/admin_header.organisation_data')),
+                3 => Str::title(trans('common/common.activity')),
             };
         }
 

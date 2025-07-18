@@ -13,11 +13,9 @@ use App\IATI\Models\Setting\Setting;
 use App\IATI\Repositories\ApiLog\ApiLogRepository;
 use App\IATI\Repositories\Organization\OrganizationRepository;
 use App\IATI\Services\Publisher\PublisherService;
-use App\IATI\Services\Setting\SettingService;
 use App\IATI\Traits\OrganizationXmlBaseElements;
 use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
@@ -103,7 +101,7 @@ class OrganizationService
      *
      * @return Model
      */
-    public function getOrganizationData($id): Model
+    public function getOrganizationData($id): Organization
     {
         return $this->organizationRepo->getOrganizationData($id);
     }
@@ -132,6 +130,11 @@ class OrganizationService
     public function updatePublishedStatus($organization, $status, $alreadyPublished): bool
     {
         return $this->organizationRepo->updatePublishedStatus($organization, $status, $alreadyPublished);
+    }
+
+    public function update($organization, array $data)
+    {
+        return $organization->update($data);
     }
 
     /**
@@ -232,10 +235,14 @@ class OrganizationService
         }
 
         $response = json_decode($res->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
-        $result = $response->result;
+        try {
+            $result = $response->result;
 
-        if (strcasecmp($result->state, 'active') === 0) {
-            return true;
+            if (strcasecmp($result->state, 'active') === 0) {
+                return true;
+            }
+        } catch (Exception $e) {
+            return false;
         }
 
         return false;
@@ -362,12 +369,6 @@ class OrganizationService
         $settings = $org->settings;
         $publisherId = $orgData['publisher_id'];
         $orgApiToken = Arr::get($settingsData, 'api_token', '');
-        $publisherData = [
-            'publisher_id' => $publisherId,
-            'api_token' => $orgApiToken,
-        ];
-
-        $this->verifyPublisherAndToken($publisherData);
 
         $publishingInfo = $settings->publishing_info;
         $publishingInfo['publisher_id'] = $publisherId;
@@ -451,43 +452,6 @@ class OrganizationService
         }
 
         return $returnMap;
-    }
-
-    protected function changeUrlsInRegistry()
-    {
-        // need to publish merged file and org file without making much error
-
-        //org file
-
-        // merged unpubli 1-> merged X .
-    }
-
-    /**
-     * @param array $publisherData
-     *
-     * @return bool
-     *
-     * @throws BindingResolutionException
-     * @throws GuzzleException
-     * @throws JsonException
-     * @throws PublisherIdChangeByIatiAdminException
-     */
-    protected function verifyPublisherAndToken(array $publisherData): bool
-    {
-        try {
-            /** @var SettingService $settingService */
-            $settingService = app()->make(SettingService::class);
-
-            $publisherVerificationResponse = $settingService->verifyPublisher($publisherData);
-
-            return (bool) $publisherVerificationResponse;
-        } catch (Exception $e) {
-            if ($e instanceof ClientException && $e->getCode() === 404) {
-                throw new PublisherIdChangeByIatiAdminException();
-            }
-
-            throw $e;
-        }
     }
 
     /**

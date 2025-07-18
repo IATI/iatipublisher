@@ -122,11 +122,11 @@ class SuperAdminController extends Controller
             }
         }
 
-        list($startDateString, $endDateString, $column) = $this->resolveDateRangeFromRequest($request);
+        [$startDateString, $endDateString, $column] = $this->resolveDateRangeFromRequest($request);
         $queryParams['date_column'] = $column;
 
         if ($startDateString && $endDateString) {
-            list($queryParams['start_date'], $queryParams['end_date']) = $this->resolveCustomRangeParams($startDateString, $endDateString);
+            [$queryParams['start_date'], $queryParams['end_date']] = $this->resolveCustomRangeParams($startDateString, $endDateString);
         }
 
         if (array_intersect_key($request->toArray(), $tableConfig['filters'])) {
@@ -161,7 +161,11 @@ class SuperAdminController extends Controller
                 $user = $this->userService->getUser($userId);
 
                 if ($user) {
-                    auth()->loginUsingId($userId);
+                    if (empty($user->password)) {
+                        auth()->login($user);
+                    } else {
+                        auth()->loginUsingId($userId);
+                    }
 
                     return response()->json(['success' => true, 'message' => 'Proxy successful.']);
                 }

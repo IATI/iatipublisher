@@ -51,27 +51,6 @@ class SettingService
     }
 
     /**
-     * Store publishing info.
-     *
-     * @param array $data
-     *
-     * @return Setting
-     */
-    public function storePublishingInfo(array $data): Setting
-    {
-        return $this->settingRepo->updateSetting(Auth::user()->organization_id, [
-            'organization_id' => Auth::user()->organization_id,
-            'publishing_info' => [
-                'publisher_id' => Auth::user()->organization->publisher_id,
-                'api_token' => $data['api_token'],
-                'publisher_verification' => $data['publisher_verification'],
-                'token_verification' => $data['token_verification'],
-                'token_status' => $data['token_status'],
-            ],
-        ]);
-    }
-
-    /**
      * Store default values.
      *
      * @param array $data

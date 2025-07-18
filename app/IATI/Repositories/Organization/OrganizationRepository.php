@@ -53,7 +53,7 @@ class OrganizationRepository extends Repository
      *
      * @return Model
      */
-    public function getOrganizationData($id): Model
+    public function getOrganizationData($id): Organization
     {
         return $this->model->findOrFail($id);
     }

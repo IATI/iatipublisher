@@ -76,3 +76,15 @@ data:
   SENTRY_TRACES_SAMPLE_RATE: "1.0"
 
   IATI_DESIGN_SYSTEM_URL: 'https://cdn.jsdelivr.net/npm/iati-design-system@3.13.0/dist/css/iati.min.css'
+  OIDC_ISSUER: 'https://api.eu.asgardeo.io/t/iati/oauth2/token'
+  OIDC_AUTH_ENDPOINT: 'https://api.eu.asgardeo.io/t/iati/oauth2/authorize'
+  OIDC_TOKEN_ENDPOINT: 'https://api.eu.asgardeo.io/t/iati/oauth2/token'
+  OIDC_USERINFO_ENDPOINT: 'https://api.eu.asgardeo.io/t/iati/oauth2/userinfo'
+  OIDC_LOGOUT_ENDPOINT: 'https://api.eu.asgardeo.io/t/iati/oidc/logout'
+  OIDC_JWKS_URI: 'https://api.eu.asgardeo.io/t/iati/oauth2/jwks'
+  OIDC_REDIRECT_URI: 'https://iatipublisher-dev.yipl.com.np/login/iati/callback'
+  OIDC_LOGOUT_REDIRECT_URI: 'https://iatipublisher-dev.yipl.com.np/logout/callback'
+  REGISTRY_API_BASE_URL: 'https://dev.api.registeryourdata.iatistandard.org/api/v1'
+  REGISTRY_API_AUDIENCE: 'https://registry.iatistandard.org/api/v1'
+  REGISTRY_API_SCOPES: 'register_your_data ryd_org:read ryd_org:create ryd_dataset:read ryd_dataset:update ryd_org:user_admin'
+  IATI_MY_ACCOUNT_URL: 'https://account.iatistandard.org/my-account'

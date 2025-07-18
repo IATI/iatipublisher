@@ -261,9 +261,7 @@ import axios from 'axios';
 import Toast from 'Components/ToastMessage.vue';
 import { defineProps, onMounted, ref, nextTick, onUnmounted } from 'vue';
 import BtnComponent from 'Components/ButtonComponent.vue';
-import { getTranslatedElement } from 'Composable/utils';
 import PageLoader from 'Components/PageLoader.vue';
-import { now } from 'moment';
 
 // const translatedData = inject('translatedData') as Record<string, string>;
 const selectAll = ref(false);

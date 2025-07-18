@@ -495,7 +495,6 @@ import HoverText from './../../components/HoverText.vue';
 import { toTitleCase } from 'Composable/utils';
 
 export default defineComponent({
-  methods: { toTitleCase },
   components: {
     Multiselect,
     HoverText,
@@ -568,5 +567,6 @@ export default defineComponent({
       translatedData,
     };
   },
+  methods: { toTitleCase },
 });
 </script>

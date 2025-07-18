@@ -44,36 +44,6 @@ class ActivityPublishedRepository extends Repository
     }
 
     /**
-     * Updates existing record in activity published table.
-     *
-     * @param $activityPublished
-     * @param $publishedActivities
-     *
-     * @return bool
-     */
-    public function updatePublishedActivity($activityPublished, $publishedActivities): bool
-    {
-        $activityPublished->published_activities = $publishedActivities;
-
-        return $activityPublished->save();
-    }
-
-    /**
-     * Updates activity published data.
-     *
-     * @param $publishedFile
-     * @param $newPublishedFiles
-     *
-     * @return bool
-     */
-    public function updateActivityPublished($publishedFile, $newPublishedFiles): bool
-    {
-        $publishedFile->published_activities = array_values($newPublishedFiles);
-
-        return $publishedFile->save();
-    }
-
-    /**
      * Updates activity published table.
      *
      * @param $activityPublished
@@ -105,5 +75,15 @@ class ActivityPublishedRepository extends Repository
     public function getPublisherFileSize(int|string $orgId): float|int
     {
         return $this->model->where('organization_id', $orgId)?->first()->filesize ?? 0;
+    }
+
+    /**
+     * @param int $organizationId
+     *
+     * @return ActivityPublished|null
+     */
+    public function findByOrganizationId(int $organizationId): ?ActivityPublished
+    {
+        return $this->model->where('organization_id', $organizationId)->first();
     }
 }

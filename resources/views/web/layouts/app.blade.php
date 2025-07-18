@@ -79,9 +79,15 @@
 
     <!-- styles -->
     <link rel="stylesheet" href="{{ mix('css/webportal-app.css') }}" media="print" onload="this.media='all'">
-    <link href={{ env('IATI_DESIGN_SYSTEM_URL')}} rel="stylesheet" />
+    <link
+    href={{ config('services.oidc.iatiDesignSystemUrl')}}
+    rel="stylesheet"
 
-    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
+    />
+
+    <link rel="icon"
+        href="{{ asset('favicon.ico') }}"
+        type="image/x-icon" />
 
 </head>
 

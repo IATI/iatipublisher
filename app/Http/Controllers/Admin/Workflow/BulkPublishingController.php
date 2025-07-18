@@ -33,48 +33,15 @@ use Psr\Container\NotFoundExceptionInterface;
 class BulkPublishingController extends Controller
 {
     /**
-     * @var BulkPublishingService
-     */
-    protected BulkPublishingService $bulkPublishingService;
-
-    /**
-     * @var ActivityService
-     */
-    protected ActivityService $activityService;
-
-    /**
-     * @var ActivityWorkflowService
-     */
-    protected ActivityWorkflowService  $activityWorkflowService;
-
-    protected ActivityPublishedService $activityPublishedService;
-
-    /**
-     * @var BulkPublishingStatusService
-     */
-    protected BulkPublishingStatusService $publishingStatusService;
-
-    /**
      * BulkPublishingController Constructor.
-     *
-     * @param BulkPublishingService                                $bulkPublishingService
-     * @param ActivityService                                      $activityService
-     * @param ActivityWorkflowService                              $activityWorkflowService
-     * @param BulkPublishingStatusService                          $publishingStatusService
-     * @param ActivityPublishedService $activityPublishedService
      */
     public function __construct(
-        BulkPublishingService $bulkPublishingService,
-        ActivityService $activityService,
-        ActivityWorkflowService $activityWorkflowService,
-        BulkPublishingStatusService $publishingStatusService,
-        ActivityPublishedService $activityPublishedService,
+        protected BulkPublishingService $bulkPublishingService,
+        protected ActivityService $activityService,
+        protected ActivityWorkflowService $activityWorkflowService,
+        protected BulkPublishingStatusService $publishingStatusService,
+        protected ActivityPublishedService $activityPublishedService,
     ) {
-        $this->bulkPublishingService = $bulkPublishingService;
-        $this->activityService = $activityService;
-        $this->activityWorkflowService = $activityWorkflowService;
-        $this->publishingStatusService = $publishingStatusService;
-        $this->activityPublishedService = $activityPublishedService;
     }
 
     /**
@@ -329,6 +296,7 @@ class BulkPublishingController extends Controller
                         $activities,
                         $organization,
                         $organization->settings,
+                        session('oidc_access_token'),
                         $response['organization_id'],
                         $response['job_batch_uuid']
                     )
@@ -462,14 +430,14 @@ class BulkPublishingController extends Controller
             }
 
             if ($this->publishingStatusService->ongoingBulkPublishing(auth()->user()->organization->id)) {
-                $pubishingStatus = $this->bulkPublishingService->getOrganisationBulkPublishingStatus();
+                $publishingStatus = $this->bulkPublishingService->getOrganisationBulkPublishingStatus();
                 $translatedMessage = trans('workflow_backend/bulk_publishing_controller.another_bulk_publishing_is_already_in_progress');
 
                 return response()->json([
                     'success'     => false,
                     'message'     => $translatedMessage,
-                    'data'        => $pubishingStatus['publishingData'],
-                    'in_progress' => $pubishingStatus['inProgress'],
+                    'data'        => $publishingStatus['publishingData'],
+                    'in_progress' => $publishingStatus['inProgress'],
                 ]);
             }
             $translatedMessage = trans('common/common.activity_is_ready_to_be_published');
@@ -742,5 +710,3 @@ class BulkPublishingController extends Controller
         return Arr::get($response, 'status') === 'completed';
     }
 }
-
-// Comment for redeploy

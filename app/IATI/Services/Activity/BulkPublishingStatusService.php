@@ -13,18 +13,10 @@ use Illuminate\Support\Arr;
 class BulkPublishingStatusService
 {
     /**
-     * @var BulkPublishingStatusRepository
-     */
-    protected BulkPublishingStatusRepository $bulkPublishingStatusRepository;
-
-    /**
      * BulkPublishingStatusService constructor.
-     *
-     * @param BulkPublishingStatusRepository $bulkPublishingStatusRepository
      */
-    public function __construct(BulkPublishingStatusRepository $bulkPublishingStatusRepository)
+    public function __construct(protected BulkPublishingStatusRepository $bulkPublishingStatusRepository)
     {
-        $this->bulkPublishingStatusRepository = $bulkPublishingStatusRepository;
     }
 
     /**
@@ -160,5 +152,10 @@ class BulkPublishingStatusService
     public function deleteBulkPublishingStatus($organizationId): bool
     {
         return $this->bulkPublishingStatusRepository->deleteBulkPublishingStatus($organizationId);
+    }
+
+    public function updateBulkActivityStatus(array $activityIds, string $uuid, string $status): int
+    {
+        return $this->bulkPublishingStatusRepository->updateBulkStatus($activityIds, $uuid, $status);
     }
 }

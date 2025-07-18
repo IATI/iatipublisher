@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+    <style>html {
+            display: none
+        }</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'IATI Publisher') }}</title>
+
+
+    {{-- Normal --}}
+    <link rel="preload" href="{{ asset('fonts/Arial/arial-webfont.woff') }}" as="font" type="font/woff"
+          crossorigin>
+    <link rel="preload" href="{{ asset('fonts/Arial/arial-webfont.eot') }}" as="font" type="font/eot" crossorigin>
+    <link rel="preload" href="{{ asset('fonts/Arial/arial-webfont.svg') }}" as="font" type="font/svg" crossorigin>
+    <link rel="preload" href="{{ asset('fonts/Arial/arial-webfont.ttf') }}" as="font" type="font/ttf" crossorigin>
+
+    {{-- Bold --}}
+    <link rel="preload" href="{{ asset('fonts/Arial/arialbd-webfont.woff') }}" as="font" type="font/woff"
+          crossorigin>
+    <link rel="preload" href="{{ asset('fonts/Arial/arialbd-webfont.eot') }}" as="font" type="font/eot"
+          crossorigin>
+    <link rel="preload" href="{{ asset('fonts/Arial/arialbd-webfont.svg') }}" as="font" type="font/svg"
+          crossorigin>
+    <link rel="preload" href="{{ asset('fonts/Arial/arialbd-webfont.ttf') }}" as="font" type="font/ttf"
+          crossorigin>
+
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}" media="print" onload="this.media='all'">
+    <link rel="icon"
+          href="{{ asset('favicon.ico') }}"
+          type="image/x-icon" />
+    <link
+            href={{ config('services.oidc.iatiDesignSystemUrl')}}
+        rel="stylesheet"
+
+    />
+
+
+</head>
+<body class="overflow-x-hidden">
+<div id="app">
+    <header class="activity__header flex min-h-[60px] max-w-full justify-between gap-5 bg-bluecoral px-5 text-xs leading-normal text-white sm:gap-10 xl:px-10">
+
+        <nav
+            class="activity__header flex min-h-[60px] max-w-full justify-between gap-5 bg-bluecoral px-5 text-xs leading-normal text-white sm:gap-10 xl:px-10"
+        >
+            <div class="flex items-center gap-5">
+                <figure class="flex grow-0 items-center">
+                    <a href="{{route('logout.iati')}}">
+                        <svg-vue icon="logo" class="text-4xl" />
+                    </a>
+                </figure>
+            </div>
+        </nav>
+        <div class="user-nav pt-2">
+            <button class="button secondary-btn dropdown-btn">
+                <ul>
+                    <li class="dropdown__list">
+                        <a href="{{route('logout.iati')}}" class="flex w-full items-center">
+                            <svg-vue class="ml-1 mr-3" icon="logout"></svg-vue>
+                            <span class="text-sm">
+                    {{ trans('adminHeader/admin_header.logout') }}
+                  </span>
+                        </a>
+                    </li>
+                </ul>
+            </button>
+        </div>
+    </header>
+
+
+    <div class="bg-slate-100 flex pt-8">
+        <div
+                class="mx-auto mt-8 w-[80%] space-y-2 rounded-xl bg-white p-8 shadow-lg"
+        >
+            <div class="text-center">
+                <i class="fas fa-sitemap text-blue-600 mb-4 text-5xl"></i>
+
+                <h2 class="text-slate-900 text-3xl font-bold tracking-tight">
+                    One More Step Required
+                </h2>
+
+                <p class="text-slate-600 mt-2 text-lg">
+                    Welcome! Let's get your account ready for publishing.
+                </p>
+            </div>
+
+            <div
+                    class="bg-slate-50 border-slate-200 rounded-lg border p-4 px-4 text-left"
+            >
+                <p class="text-slate-800 font-medium">
+                    To use IATI Publisher, your account must be linked to an organization.
+                    Here’s what to do next:
+                </p>
+                <ul class="text-slate-600 mt-2 list-inside list-disc space-y-1">
+                    <li>Go to your central IATI Account page.</li>
+                    <li>
+                        Choose one of these two options:
+                        <ul class="ml-4 mt-1 list-inside list-disc">
+                            <li>Create a new organization.</li>
+                            <li>Request to join an existing organization.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="py-4 text-center">
+                <a
+                        href="https://account.iatistandard.org/"
+                        class="primary-btn font-bold"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                >
+                    Go to My IATI Account
+                </a>
+            </div>
+
+            <div class="text-center">
+                <p class="text-slate-400 text-sm">
+                    Once your organization is set up and approved, simply sign in again to
+                    get started.
+                </p>
+            </div>
+        </div>
+    </div>
+    <admin-footer
+            v-bind:super-admin="{{ (int) isSuperAdmin() }}"
+            :translated-data="{{json_encode($translatedData)}}"
+            :current-language="{{json_encode($currentLanguage)}}"
+    >
+    </admin-footer>
+</div>
+<script defer src="{{ mix('/manifest.js') }}"></script>
+<script defer src="{{ mix('/js/vendor.js') }}"></script>
+<script defer src="{{ mix('/js/app.js') }}"></script>
+<script defer src="{{ mix('/js/script.js') }}"></script>
+<script defer src="{{ mix('js/formbuilder.js') }}"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/iati-design-system@3.5.0/dist/js/iati.js"></script>
+<!-- Start of iati Zendesk Widget script -->
+<script id="ze-snippet"
+        src="https://static.zdassets.com/ekr/snippet.js?key=f1df04e0-f01e-4ab5-9091-67b2fddd6e60"></script>
+<script type="text/javascript">
+  window.zESettings = {
+    webWidget: {
+      color: {
+        theme: '#FFFFFF',
+        launcherText: '#155366',
+      },
+
+      contactForm: {
+        attachments: true,
+      },
+    },
+  };
+</script>

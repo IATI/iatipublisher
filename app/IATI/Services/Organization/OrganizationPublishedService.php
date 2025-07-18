@@ -13,18 +13,10 @@ use Illuminate\Database\Eloquent\Model;
 class OrganizationPublishedService
 {
     /**
-     * @var OrganizationPublishedRepository
-     */
-    protected OrganizationPublishedRepository $organizationPublishedRepository;
-
-    /**
      * OrganizationPublishedService constructor.
-     *
-     * @param OrganizationPublishedRepository $organizationPublishedRepository
      */
-    public function __construct(OrganizationPublishedRepository $organizationPublishedRepository)
+    public function __construct(protected OrganizationPublishedRepository $organizationPublishedRepository)
     {
-        $this->organizationPublishedRepository = $organizationPublishedRepository;
     }
 
     /**
@@ -43,26 +35,13 @@ class OrganizationPublishedService
     /**
      * Returns activity published data.
      *
-     * @param $organization_id
+     * @param $organizationId
      *
      * @return Model
      */
-    public function getOrganizationPublished($organization_id): ?Model
+    public function getOrganizationPublished($organizationId): ?Model
     {
-        return $this->organizationPublishedRepository->getOrganizationPublished($organization_id);
-    }
-
-    /**
-     * Updates activity published data.
-     *
-     * @param $publishedFile
-     * @param $newPublishedFiles
-     *
-     * @return bool
-     */
-    public function updateOrganizationPublished($publishedFile, $newPublishedFiles): bool
-    {
-        return $this->organizationPublishedRepository->updateOrganizationPublished($publishedFile, $newPublishedFiles);
+        return $this->organizationPublishedRepository->getOrganizationPublished($organizationId);
     }
 
     /**
@@ -78,5 +57,15 @@ class OrganizationPublishedService
         $this->organizationPublishedRepository->update($organization_id, [
             'published_to_registry' => $status ? 1 : 0,
         ]);
+    }
+
+    public function upsert(array $data, $uniqueBy): int
+    {
+        return $this->organizationPublishedRepository->upsert($data, $uniqueBy);
+    }
+
+    public function delete(int $id): bool
+    {
+        return $this->organizationPublishedRepository->delete($id);
     }
 }

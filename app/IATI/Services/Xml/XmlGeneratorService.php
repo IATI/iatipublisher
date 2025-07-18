@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\IATI\Services\Xml;
 
 use App\IATI\Elements\Xml\XmlGenerator;
+use App\IATI\Models\Activity\Activity;
+use App\IATI\Models\Organization\Organization;
+use App\IATI\Models\Setting\Setting;
 use App\IATI\Traits\XmlServiceTrait;
 use DOMDocument;
 use Exception;
@@ -74,13 +77,27 @@ class XmlGeneratorService
      *
      * @return DOMDocument|null
      */
-    public function generateActivityXml($activity, $transaction, $result, $settings, $organization): ?DOMDocument
+    public function getSingleActivityXmlDom($activity, $transaction, $result, $settings, $organization): ?DOMDocument
     {
-        return $this->xmlGenerator->generateActivityXml($activity, $transaction, $result, $settings, $organization);
+        return $this->xmlGenerator->getSingleActivityXmlDom($activity, $transaction, $result, $settings, $organization);
+    }
+
+    public function saveSingleActivityFileToAws(string $xmlContent, string $publisherId, int $activityId): string
+    {
+        $publishedActivityFileName = sprintf('%s-%s.xml', $publisherId, $activityId);
+        $path = sprintf('%s/%s/%s', 'xml', 'activityXmlFiles', $publishedActivityFileName);
+
+        $result = awsUploadFile($path, $xmlContent);
+
+        if (!$result) {
+            throw new Exception("Failed to upload single activity file to AWS S3: {$publishedActivityFileName}");
+        }
+
+        return $publishedActivityFileName;
     }
 
     /**
-     * Generates combines activities xml file and publishes to IATI.
+     * Generates combines activities XML data structures and orchestrates bulk file upload.
      *
      * @param $activities
      * @param $settings
@@ -96,7 +113,30 @@ class XmlGeneratorService
             $this->xmlGenerator->setUuid($this->uuid);
         }
 
-        return $this->xmlGenerator->generateActivitiesXml($activities, $settings, $organization);
+        $generationData = $this->xmlGenerator->generateActivitiesXml($activities, $settings, $organization);
+
+        $this->saveBulkActivityFilesToAws(
+            $generationData['single_xml_contents']
+        );
+
+        return $generationData;
+    }
+
+    /**
+     * Uploads all generated single activity files to AWS.
+     * @param array $fileContents map of [filename => xml_string]
+     * @throws \RuntimeException
+     */
+    public function saveBulkActivityFilesToAws(array $fileContents): void
+    {
+        foreach ($fileContents as $fileName => $content) {
+            $path = sprintf('%s/%s/%s', 'xml', 'activityXmlFiles', $fileName);
+            $result = awsUploadFile($path, $content);
+
+            if (!$result) {
+                throw new \RuntimeException("Failed to upload bulk activity file to AWS S3: {$fileName}");
+            }
+        }
     }
 
     /**
@@ -152,8 +192,16 @@ class XmlGeneratorService
      *
      * @throws Exception
      */
-    public function removeActivityXmlFromMergedXmlInS3($activity, $organization, $settings): void
+    public function removeActivityXmlFromMergedXmlInS3(Activity $activity, Organization $organization, Setting $settings): void
     {
         $this->xmlGenerator->removeActivityXmlFromMergedXmlInS3($activity, $organization, $settings);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function appendMultipleInnerActivityXmlToMergedXml(array $innerActivityXmlArray, $settings, $organization, array $activityMappedToActivityIdentifier, bool $refreshTimestamp = true): void
+    {
+        $this->xmlGenerator->appendMultipleInnerActivityXmlToMergedXml($innerActivityXmlArray, $settings, $organization, $activityMappedToActivityIdentifier, $refreshTimestamp);
     }
 }

@@ -80,69 +80,6 @@ class UserService
     }
 
     /**
-     * Register user that already exists in iati registry.
-     *
-     * @param array $data
-     *
-     * @return Model
-     */
-    public function registerExistingUser(array $data): Model
-    {
-        $publisherSourceType = Arr::get($data, 'source', 'secondary_source');
-        $secondaryReporterValue = $publisherSourceType === 'secondary_source' ? '1' : '0';
-        $narrativeValue = $publisherSourceType === 'primary_source'
-            ? [['narrative' => $data['publisher_name'], 'language' => $data['default_language']]]
-            : [['narrative' => null, 'language' => null]];
-
-        $organization = $this->organizationRepo->createOrganization([
-            'publisher_id'        => $data['publisher_id'],
-            'publisher_name'      => $data['publisher_name'],
-            'country'             => $data['country'] ?? null,
-            'registration_agency' => $data['registration_agency'],
-            'registration_number' => $data['registration_number'],
-            'registration_type'   => 'existing_org',
-            'identifier'          => $data['registration_agency'] . '-' . $data['registration_number'],
-            'iati_status'         => 'pending',
-            'name'                => [['narrative' => $data['publisher_name'], 'language' => $data['default_language']]],
-            'reporting_org'       => [[
-                'ref'                => $data['registration_agency'] . '-' . $data['registration_number'],
-                'type'               => '',
-                'secondary_reporter' => $secondaryReporterValue,
-                'narrative'          => $narrativeValue,
-            ]],
-        ]);
-
-        $this->settingRepo->store([
-            'organization_id' => $organization['id'],
-            'publishing_info' => [
-                'publisher_id'           => $data['publisher_id'],
-                'api_token'              => '',
-                'publisher_verification' => false,
-                'token_verification'     => false,
-                'token_status'           => 'Incorrect',
-            ],
-            'default_values' => [
-                'default_currency' => '',
-                'default_language' => $data['default_language'],
-            ],
-        ]);
-
-        $user = $this->userRepo->store([
-            'username'        => $data['username'],
-            'full_name'       => $data['full_name'],
-            'email'           => $data['email'],
-            'organization_id' => $organization['id'],
-            'password'        => Hash::make($data['password']),
-            'role_id'         => $this->roleRepo->getOrganizationAdminId(),
-            'registration_method' => 'existing_org',
-        ]);
-
-        User::sendEmail();
-
-        return $user;
-    }
-
-    /**
      * Register new user.
      *
      * @param array $data
@@ -217,6 +154,7 @@ class UserService
      */
     public function checkPublisher(string $publisher_id, bool $exists = true): array
     {
+        dd($exists);
         $clientConfig = ['base_uri' => env('IATI_API_ENDPOINT')];
         $clientConfig['headers']['User-Agent'] = 'iati-publisher';
 
@@ -574,17 +512,6 @@ class UserService
     }
 
     /**
-     * Stores the user that exists in IATI.
-     *
-     * @return void
-     */
-    public function resendVerificationEmail(): void
-    {
-        User::sendEmail();
-        User::resendEmail(Auth::user());
-    }
-
-    /**
      * Returns user if found.
      *
      * @param $id
@@ -596,20 +523,20 @@ class UserService
         return $this->userRepo->getUser($id);
     }
 
-    /**
-     * Update user password.
-     *
-     * @param $userId
-     * @param $data
-     *
-     * @return bool $bool
-     */
-    public function updatePassword($userId, $data): bool
-    {
-        return $this->userRepo->update($userId, [
-            'password'        => Hash::make($data['password']),
-        ]);
-    }
+//    /**
+//     * Update user password.
+//     *
+//     * @param $userId
+//     * @param $data
+//     *
+//     * @return bool $bool
+//     */
+//    public function updatePassword($userId, $data): bool
+//    {
+//        return $this->userRepo->update($userId, [
+//            'password'        => Hash::make($data['password']),
+//        ]);
+//    }
 
     /**
      * Store user created by logged in user.
@@ -630,34 +557,34 @@ class UserService
         return $user;
     }
 
-    /**
-     * Update user data.
-     *
-     * @param $id
-     * @param $data
-     *
-     * @return bool
-     */
-    public function update($id, $data): bool
-    {
-        $user = $this->userRepo->find($id);
-
-        if (Arr::get($data, 'password')) {
-            $data['password'] = Hash::make($data['password']);
-        }
-
-        $user->fill($data);
-        $emailChanged = $user->isDirty('email');
-        $user->email_verified_at = $emailChanged ? null : $user->email_verified_at;
-
-        $updated = $user->save();
-
-        if ($emailChanged) {
-            $user->sendEmailVerificationNotification();
-        }
-
-        return $updated;
-    }
+//    /**
+//     * Update user data.
+//     *
+//     * @param $id
+//     * @param $data
+//     *
+//     * @return bool
+//     */
+//    public function update($id, $data): bool
+//    {
+//        $user = $this->userRepo->find($id);
+//
+//        if (Arr::get($data, 'password')) {
+//            $data['password'] = Hash::make($data['password']);
+//        }
+//
+//        $user->fill($data);
+//        $emailChanged = $user->isDirty('email');
+//        $user->email_verified_at = $emailChanged ? null : $user->email_verified_at;
+//
+//        $updated = $user->save();
+//
+//        if ($emailChanged) {
+//            $user->sendEmailVerificationNotification();
+//        }
+//
+//        return $updated;
+//    }
 
     /**
      * Deletes user with id.

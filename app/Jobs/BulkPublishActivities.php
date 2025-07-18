@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\IATI\Models\Organization\Organization;
+use App\IATI\Models\Setting\Setting;
 use App\IATI\Repositories\Activity\BulkPublishingStatusRepository;
 use App\IATI\Services\Activity\ActivityService;
 use App\IATI\Services\Activity\BulkPublishingStatusService;
@@ -13,38 +15,17 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class BulkPublishActivities.
  */
 class BulkPublishActivities implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * @var object
-     */
-    protected object $activities;
-
-    /**
-     * @var object
-     */
-    protected object $organization;
-
-    /**
-     * @var object
-     */
-    protected object $settings;
-
-    /**
-     * @var int
-     */
-    protected int $organizationId;
-
-    /**
-     * @var string
-     */
-    protected string $uuid;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * @var BulkPublishingStatusService
@@ -66,24 +47,14 @@ class BulkPublishActivities implements ShouldQueue
      */
     public $timeout = 3600;
 
-    /**
-     * Create a new job instance.
-     *
-     * @param $activities
-     * @param $organization
-     * @param $settings
-     * @param $organizationId
-     * @param $uuid
-     *
-     * @return void
-     */
-    public function __construct($activities, $organization, $settings, $organizationId, $uuid)
-    {
-        $this->activities = $activities;
-        $this->organization = $organization;
-        $this->settings = $settings;
-        $this->organizationId = $organizationId;
-        $this->uuid = $uuid;
+    public function __construct(
+        protected object $activities,
+        protected Organization $organization,
+        protected Setting $settings,
+        protected string $accessToken,
+        protected int $organizationId,
+        protected string $uuid
+    ) {
     }
 
     /**
@@ -101,10 +72,8 @@ class BulkPublishActivities implements ShouldQueue
         $this->setServices($publishingStatusService, $activityWorkflowService, $activityService);
 
         if (count($this->activities)) {
-            /*
-             * See app/IATI/Services/Xml/XmlGeneratorService.php for change documentation.
-             */
-            $this->publishActivities($this->activities, $this->organization, $this->settings, true, $this->uuid);
+            /* See app/IATI/Services/Xml/XmlGeneratorService.php for change documentation. */
+            $this->publishActivities();
         }
     }
 
@@ -127,29 +96,37 @@ class BulkPublishActivities implements ShouldQueue
     /**
      * Publishes activity and updates publish status table.
      *
-     * @param $activities
-     * @param $organization
-     * @param $settings
-     * @param $publishFile
-     * @param bool $uuid
-     *
      * @return void
+     * @throws \Throwable
      */
-    public function publishActivities($activities, $organization, $settings, $publishFile, bool|string $uuid = false): void
+    public function publishActivities(): void
     {
         try {
-            $this->activityWorkflowService->publishActivities($activities, $organization, $settings, $publishFile, $uuid);
+            DB::beginTransaction();
 
-            foreach ($activities as $activity) {
-                $this->publishingStatusService->updateActivityStatus($activity->id, $this->uuid, 'completed');
-            }
+            $this->activityWorkflowService->publishActivities(
+                $this->activities,
+                $this->organization,
+                $this->settings,
+                $this->accessToken,
+                $this->uuid
+            );
+
+            $activityIds = $this->activities->pluck('id')->toArray();
+            $this->publishingStatusService->updateBulkActivityStatus($activityIds, $this->uuid, 'completed');
+
+            DB::commit();
         } catch (\Exception $e) {
+            DB::rollBack();
+
             logger()->error($e);
             awsUploadFile('error-bulk-publish.log', $e->getMessage());
-            foreach ($activities as $activity) {
-                $this->activityService->updatePublishedStatus($activity, 'draft', false);
-                $this->publishingStatusService->updateActivityStatus($activity->id, $this->uuid, 'failed');
-            }
+
+            $activityIds = $this->activities->pluck('id')->toArray();
+
+            $this->activityService->bulkUpdatePublishedStatus($activityIds, 'draft', false);
+
+            $this->publishingStatusService->updateBulkActivityStatus($activityIds, $this->uuid, 'failed');
         }
     }
 
