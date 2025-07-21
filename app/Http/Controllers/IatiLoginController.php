@@ -35,7 +35,7 @@ class IatiLoginController extends Controller
     /**
      * @throws \Jumbojett\OpenIDConnectClientException
      */
-    public function redirectToProvider(): void
+    public function redirectToProvider(int $a): void
     {
         $this->getClient()->authenticate();
     }
