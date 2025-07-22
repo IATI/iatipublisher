@@ -21,12 +21,12 @@ class IatiLoginController extends Controller
         $config = config('services.oidc');
 
         $oidc = new OpenIDConnectClient(
-            provider_url : '',
-            client_id    : '',
-            client_secret: ''
+            provider_url : rtrim($config['issuer'], '/'),
+            client_id    : $config['client_id'],
+            client_secret: $config['client_secret']
         );
 
-        $oidc->setRedirectURL('');
+        $oidc->setRedirectURL($config['redirect_uri']);
         $oidc->addScope(['openid', 'email', 'profile']);
 
         return $oidc;
