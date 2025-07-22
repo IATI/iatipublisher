@@ -21,12 +21,12 @@ class IatiLoginController extends Controller
         $config = config('services.oidc');
 
         $oidc = new OpenIDConnectClient(
-            provider_url : rtrim($config['issuer'], '/'),
-            client_id    : $config['client_id'],
-            client_secret: $config['client_secret']
+            provider_url : '',
+            client_id    : '',
+            client_secret: ''
         );
 
-        $oidc->setRedirectURL($config['redirect_uri']);
+        $oidc->setRedirectURL('');
         $oidc->addScope(['openid', 'email', 'profile']);
 
         return $oidc;
@@ -43,6 +43,7 @@ class IatiLoginController extends Controller
     public function handleProviderCallback(): JsonResponse|RedirectResponse
     {
         try {
+            dd('in handle callback');
             $oidc = $this->getClient();
             $oidc->authenticate();
             $userInfo = $oidc->requestUserInfo();
