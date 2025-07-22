@@ -76,5 +76,5 @@ data:
   SENTRY_TRACES_SAMPLE_RATE: "1.0"
 
   IATI_DESIGN_SYSTEM_URL: 'https://cdn.jsdelivr.net/npm/iati-design-system@3.13.0/dist/css/iati.min.css'
-  OIDC_REDIRECT_URI: ${APP_URL}/login/iati/callback
-  OIDC_LOGOUT_REDIRECT_URI: ${APP_URL}/logout/callback?
+  OIDC_REDIRECT_URI: 'https://iatipublisher-dev.yipl.com.np/login/iati/callback'
+  OIDC_LOGOUT_REDIRECT_URI: 'https://iatipublisher-dev.yipl.com.np/logout/callback?'
