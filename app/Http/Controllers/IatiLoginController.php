@@ -8,6 +8,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Jumbojett\OpenIDConnectClient;
 
@@ -21,12 +22,12 @@ class IatiLoginController extends Controller
         $config = config('services.oidc');
 
         $oidc = new OpenIDConnectClient(
-            provider_url : rtrim($config['issuer'], '/'),
-            client_id    : $config['client_id'],
-            client_secret: $config['client_secret']
+            provider_url : Cache::get('issuer'),
+            client_id    : Cache::get('client_id'),
+            client_secret: Cache::get('client_secret')
         );
 
-        $oidc->setRedirectURL($config['redirect_uri']);
+        $oidc->setRedirectURL(Cache::get('redirect_uri'));
         $oidc->addScope(['openid', 'email', 'profile']);
 
         return $oidc;
