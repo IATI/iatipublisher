@@ -849,7 +849,7 @@ $(async function () {
    */
   function observeUrlToFileFieldDependency(): void {
     const observer = new MutationObserver(() => {
-      initializeUrlToFileToggle();
+      initializeFileToUrlToggle();
     });
 
     observer.observe(document.body, {
@@ -858,7 +858,7 @@ $(async function () {
     });
 
     /** Run it once initially on page load */
-    initializeUrlToFileToggle();
+    initializeFileToUrlToggle();
   }
 
   attachInitialCollapsableButtonEvents(currentLanguage);
@@ -932,48 +932,45 @@ function closeHelpText(helpText) {
 }
 
 /**
- * Scans the DOM for input fields with IDs containing `[url]` and attaches event listeners
- * to toggle the visibility of corresponding file input fields.
+ * Scans the DOM for file input fields in the document-link form
+ * and hides the associated URL input when a file is selected.
  *
- * The logic ensures that when a URL input is filled (non-empty), the associated
- * file input field is hidden (by adding the `hide-file` class to its container).
- * If the URL input is cleared, the file input becomes visible again.
- *
- * It uses a `data-observed` flag to prevent attaching duplicate event listeners.
+ * This makes the form more intuitive: if a file is uploaded, the URL field is hidden,
+ * since the system will auto-generate the URL.
  */
-function initializeUrlToFileToggle(): void {
-  const urlInputs =
-    document.querySelectorAll<HTMLInputElement>('input[id*="[url]"]');
+function initializeFileToUrlToggle(): void {
+  const fileInputs = document.querySelectorAll<HTMLInputElement>(
+    'input[id*="[document]"]'
+  );
 
-  urlInputs.forEach((urlInput) => {
+  fileInputs.forEach((fileInput) => {
     // Prevent attaching multiple listeners
-    if (urlInput.dataset.observed === 'true') return;
+    if (fileInput.dataset.observed === 'true') return;
+    fileInput.dataset.observed = 'true';
 
-    urlInput.dataset.observed = 'true';
-
-    const idMatch = urlInput.id.match(/document_link\[(\d+)]\[url]/);
+    const idMatch = fileInput.id.match(/document_link\[(\d+)]\[document]/);
     if (!idMatch) return;
 
     const index = idMatch[1];
-    const fileInput = document.getElementById(
-      `document_link[${index}][document]`
+    const urlInput = document.getElementById(
+      `document_link[${index}][url]`
     ) as HTMLInputElement | null;
-    if (!fileInput) return;
+    if (!urlInput) return;
 
-    const grandParent = fileInput.closest(
+    const urlFieldWrapper = urlInput.closest(
       '.form-field.basis-auto.w-full.xl\\:basis-6\\/12.attribute'
     );
-    if (!grandParent) return;
+    if (!urlFieldWrapper) return;
 
-    const toggleFileFieldVisibility = () => {
-      if (urlInput.value.trim() !== '') {
-        grandParent.classList.add('hide-file');
+    const toggleUrlFieldVisibility = () => {
+      if (fileInput.files && fileInput.files.length > 0) {
+        urlFieldWrapper.classList.add('hide-url');
       } else {
-        grandParent.classList.remove('hide-file');
+        urlFieldWrapper.classList.remove('hide-url');
       }
     };
 
-    toggleFileFieldVisibility(); // Initial check
-    urlInput.addEventListener('input', toggleFileFieldVisibility);
+    toggleUrlFieldVisibility(); // Initial check
+    fileInput.addEventListener('change', toggleUrlFieldVisibility);
   });
 }
