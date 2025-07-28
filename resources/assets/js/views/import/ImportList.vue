@@ -67,7 +67,7 @@
                   class="rounded bg-n-0 px-4 py-2 text-xs font-bold uppercase text-bluecoral shadow-md"
                   @click="cancelOngoingImports"
                 >
-                  <span><svg-vue class="pt-1.5 text-2xl" icon="cross" /></span>
+                  <span><svg-vue icon="cross" /></span>
                   <span>{{
                     translatedData[
                       'workflow_frontend.import.cancel_this_import'
