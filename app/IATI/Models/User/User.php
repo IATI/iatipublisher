@@ -30,7 +30,10 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class User extends Authenticatable implements MustVerifyEmail, Auditable
 {
-    use HasApiTokens, HasFactory, Notifiable, \OwenIt\Auditing\Auditable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+    use \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.
@@ -43,7 +46,6 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         'password',
         'username',
         'full_name',
-        'email',
         'address',
         'organization_id',
         'is_active',
@@ -58,6 +60,13 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         'updated_at',
         'registration_method',
         'last_logged_in',
+        'sub',
+        'preferred_username',
+        'given_name',
+        'family_name',
+        'locale',
+        'picture',
+        'sign_on_method',
     ];
 
     /**

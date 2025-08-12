@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, Ref } from 'vue';
+import { defineComponent, inject } from 'vue';
 import dateFormat from 'Composable/dateFormat';
 import {
   getTranslatedElement,
