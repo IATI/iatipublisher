@@ -232,10 +232,14 @@ class OrganizationService
         }
 
         $response = json_decode($res->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
-        $result = $response->result;
+        try {
+            $result = $response->result;
 
-        if (strcasecmp($result->state, 'active') === 0) {
-            return true;
+            if (strcasecmp($result->state, 'active') === 0) {
+                return true;
+            }
+        } catch (Exception $e) {
+            return false;
         }
 
         return false;

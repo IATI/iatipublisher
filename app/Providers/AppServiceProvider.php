@@ -33,13 +33,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        URL::forceScheme('https');
+
         Validator::extend('not_in_spam_emails', function ($attribute, $value, $parameters, $validator) {
             return !SpamEmail::where('email', $value)->exists();
         });
-
-        if (config('app.env') === 'production' || config('app.env') === 'staging') {
-            URL::forceScheme('https');
-        }
 
         Horizon::auth(function ($request) {
             if (env('APP_ENV') === 'local') {

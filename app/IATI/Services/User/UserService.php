@@ -217,6 +217,7 @@ class UserService
      */
     public function checkPublisher(string $publisher_id, bool $exists = true): array
     {
+        dd($exists);
         $clientConfig = ['base_uri' => env('IATI_API_ENDPOINT')];
         $clientConfig['headers']['User-Agent'] = 'iati-publisher';
 

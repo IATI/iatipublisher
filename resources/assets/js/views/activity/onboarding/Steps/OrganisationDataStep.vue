@@ -385,21 +385,6 @@ const hasReferenceError = ref(false);
 const referenceErrorMessage = ref('');
 const translatedData = inject('translatedData') as Record<string, string>;
 
-const contentValues = [
-  {
-    title: translatedData['elements.label.reference'],
-    content: '',
-  },
-  {
-    title: translatedData['elements.label.reference'],
-    content: '',
-  },
-  {
-    title: translatedData['elements.label.secondary_reporter'],
-    content: '',
-  },
-];
-
 const resendVerificationEmail = () => {
   isLoaderVisible.value = true;
   axios

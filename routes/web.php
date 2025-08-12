@@ -57,4 +57,34 @@ Route::get('/translated-data', [App\Http\Controllers\Web\WebController::class, '
 Route::get('/login/iati', [IatiLoginController::class, 'redirectToProvider'])->name('login.iati');
 Route::get('/login/iati/callback', [IatiLoginController::class, 'handleProviderCallback'])->name('login.iati.callback');
 Route::get('/logout/iati', [IatiLoginController::class, 'logout'])->name('logout.iati');
-Route::get('/logout/callback', fn () =>  redirect('/'))->name('logout.iati.callback');
+Route::get('/logout/callback', function () {
+    logger('CALL BACK URL HIT-GET');
+
+    return redirect('/');
+});
+
+Route::post('/logout/callback', function () {
+    logger('CALL BACK URL HIT-POST');
+
+    return redirect('/');
+});
+
+Route::get('/test-registry-api', function () {
+    $url = 'https://registry.iatistandard.org/api/v1/reporting-orgs';
+
+    $client = new GuzzleHttp\Client();
+
+    $response = $client->request('GET', $url);
+
+    dd($response->getBody());
+})->middleware('auth');
+
+Route::get('/test-auth-user', function () {
+    $url = 'https://api.eu.asgardeo.io/t/iati/oauth2/userinfo';
+
+    $client = new GuzzleHttp\Client();
+
+    $response = $client->request('GET', $url);
+
+    dd($response->getBody());
+})->middleware('auth');
