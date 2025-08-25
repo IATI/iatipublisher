@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Activity\ActivityController;
+use App\Http\Controllers\IatiLoginController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
 
@@ -52,3 +53,38 @@ Route::get('/duplicate-activity', [ActivityController::class, 'duplicateActivity
 Route::get('/language/{language}', [App\Http\Controllers\Web\WebController::class, 'setLocale'])->name('set-locale');
 Route::get('/current-language', [App\Http\Controllers\Web\WebController::class, 'getLocale'])->name('get-locale');
 Route::get('/translated-data', [App\Http\Controllers\Web\WebController::class, 'getTranslatedData'])->name('get-translated-data');
+
+Route::get('/login/iati', [IatiLoginController::class, 'redirectToProvider'])->name('login.iati');
+Route::get('/login/iati/callback', [IatiLoginController::class, 'handleProviderCallback'])->name('login.iati.callback');
+Route::get('/logout/iati', [IatiLoginController::class, 'logout'])->name('logout.iati');
+Route::get('/logout/callback', function () {
+    logger('CALL BACK URL HIT-GET');
+
+    return redirect('/');
+});
+
+Route::post('/logout/callback', function () {
+    logger('CALL BACK URL HIT-POST');
+
+    return redirect('/');
+});
+
+Route::get('/test-registry-api', function () {
+    $url = 'https://registry.iatistandard.org/api/v1/reporting-orgs';
+
+    $client = new GuzzleHttp\Client();
+
+    $response = $client->request('GET', $url);
+
+    dd($response->getBody());
+})->middleware('auth');
+
+Route::get('/test-auth-user', function () {
+    $url = 'https://api.eu.asgardeo.io/t/iati/oauth2/userinfo';
+
+    $client = new GuzzleHttp\Client();
+
+    $response = $client->request('GET', $url);
+
+    dd($response->getBody());
+})->middleware('auth');

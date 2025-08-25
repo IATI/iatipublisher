@@ -15,8 +15,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
+        'domain'   => env('MAILGUN_DOMAIN'),
+        'secret'   => env('MAILGUN_SECRET'),
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
     ],
 
@@ -25,9 +25,19 @@ return [
     ],
 
     'ses' => [
-        'key' => env('AWS_ACCESS_KEY_ID'),
+        'key'    => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'oidc' => [
+        'issuer'              => env('OIDC_ISSUER'),
+        'client_id'           => env('OIDC_CLIENT_ID'),
+        'client_secret'       => env('OIDC_CLIENT_SECRET'),
+        'redirect_uri'        => env('OIDC_REDIRECT_URI'),
+        'logout_endpoint'     => env('OIDC_LOGOUT_ENDPOINT'),
+        'logout_redirect_uri' => env('OIDC_LOGOUT_REDIRECT_URI'),
+        'userinfo_endpoint'   => env('OIDC_USERINFO_ENDPOINT'),
+        'token_endpoint'      => env('OIDC_TOKEN_ENDPOINT'),
+    ],
 ];

@@ -411,7 +411,6 @@ import {
   getTranslatedUntitled,
   onlyDeprecatedStatusMap,
 } from 'Composable/utils';
-import { traceSegment } from '@jridgewell/trace-mapping';
 
 export default defineComponent({
   name: 'ActivityResult',
