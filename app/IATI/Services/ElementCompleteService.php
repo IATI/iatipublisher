@@ -393,14 +393,16 @@ class ElementCompleteService
     {
         $transactions = $activity['transactions'] ?? $activity->transactions;
 
-        foreach ($transactions as $transaction) {
-            foreach (Arr::get($transaction, 'transaction.sector', []) as $sector) {
-                if (!is_array_value_empty($sector)) {
-                    $sectorVocab = Arr::get($sector, 'sector_vocabulary') ?? null;
-                    $codeKey = $this->getSectorCodeKeyBasedOnVocab((string) $sectorVocab);
+        if (count($transactions ?? []) > 0) {
+            foreach ($transactions as $transaction) {
+                foreach (Arr::get($transaction, 'transaction.sector', []) as $sector) {
+                    if (!is_array_value_empty($sector)) {
+                        $sectorVocab = Arr::get($sector, 'sector_vocabulary') ?? null;
+                        $codeKey = $this->getSectorCodeKeyBasedOnVocab((string) $sectorVocab);
 
-                    if ($this->isEmptyValue(Arr::get($sector, $codeKey))) {
-                        return false;
+                        if ($this->isEmptyValue(Arr::get($sector, $codeKey))) {
+                            return false;
+                        }
                     }
                 }
             }
@@ -413,7 +415,7 @@ class ElementCompleteService
     {
         $transactions = $activity['transactions'] ?? $activity->transactions;
 
-        if (!empty($transactions)) {
+        if (count($transactions ?? []) > 0) {
             foreach ($transactions as $transaction) {
                 $transactionSector = Arr::get($transaction, 'transaction.sector', []);
 
@@ -1416,9 +1418,11 @@ class ElementCompleteService
     {
         $transactions = $activity->transactions;
 
-        foreach ($transactions as $transaction) {
-            if (!is_array_value_empty(Arr::get($transaction, 'transaction.recipient_country', []))) {
-                return true;
+        if (count($transactions ?? []) > 0) {
+            foreach ($transactions as $transaction) {
+                if (!is_array_value_empty(Arr::get($transaction, 'transaction.recipient_country', []))) {
+                    return true;
+                }
             }
         }
 
@@ -1429,9 +1433,11 @@ class ElementCompleteService
     {
         $transactions = $activity->transactions;
 
-        foreach ($transactions as $transaction) {
-            if (!is_array_value_empty(Arr::get($transaction, 'transaction.recipient_region', []))) {
-                return true;
+        if (count($transactions ?? []) > 0) {
+            foreach ($transactions as $transaction) {
+                if (!is_array_value_empty(Arr::get($transaction, 'transaction.recipient_region', []))) {
+                    return true;
+                }
             }
         }
 
@@ -1442,13 +1448,15 @@ class ElementCompleteService
     {
         $transactions = $activity->transactions;
 
-        foreach ($transactions as $transaction) {
-            $recipientRegion = Arr::get($transaction, 'transaction.recipient_region.0', []);
+        if (count($transactions ?? []) > 0) {
+            foreach ($transactions as $transaction) {
+                $recipientRegion = Arr::get($transaction, 'transaction.recipient_region.0', []);
 
-            if (isset($recipientRegion['region_code']) && empty($recipientRegion['region_code'])) {
-                return false;
-            } elseif (isset($recipientRegion['custom_code']) && empty($recipientRegion['custom_code'])) {
-                return false;
+                if (isset($recipientRegion['region_code']) && empty($recipientRegion['region_code'])) {
+                    return false;
+                } elseif (isset($recipientRegion['custom_code']) && empty($recipientRegion['custom_code'])) {
+                    return false;
+                }
             }
         }
 
@@ -1459,12 +1467,14 @@ class ElementCompleteService
     {
         $transactions = $activity->transactions;
 
-        foreach ($transactions as $transaction) {
-            $recipientCountry = Arr::get($transaction, 'transaction.recipient_country.0', []);
-            $countryCode = Arr::get($recipientCountry, 'country_code');
+        if (count($transactions ?? []) > 0) {
+            foreach ($transactions as $transaction) {
+                $recipientCountry = Arr::get($transaction, 'transaction.recipient_country.0', []);
+                $countryCode = Arr::get($recipientCountry, 'country_code');
 
-            if (empty($countryCode)) {
-                return false;
+                if (empty($countryCode)) {
+                    return false;
+                }
             }
         }
 
