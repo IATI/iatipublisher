@@ -117,7 +117,6 @@ class ActivityController extends Controller
     public function index(): View|JsonResponse
     {
         try {
-            DB::beginTransaction();
             $languages = getCodeList('Language', 'Activity', filterDeprecated: true);
             $toast = generateToastData();
             $settingsDefaultValue = $this->settingService->getSetting()->default_values ?? [];
@@ -129,6 +128,7 @@ class ActivityController extends Controller
             $isFirstTime = false;
 
             if (!$organizationOnboarding) {
+                DB::beginTransaction();
                 $organizationOnboarding = $this->organizationOnboardingService->createOrganizationOnboarding($organization);
                 $isFirstTime = true;
                 DB::commit();
