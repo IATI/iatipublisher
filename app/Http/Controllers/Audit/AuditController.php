@@ -39,7 +39,7 @@ class AuditController extends Controller
         try {
             return view('admin.audit.index');
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return redirect()->route('admin.activities.index')->with('error', 'Error while rendering audit listing page');
         }
@@ -61,7 +61,7 @@ class AuditController extends Controller
                 'message' => 'Audit log has been successfully fetched.',
                 'data'    => $this->auditService->getAuditLog($page, $this->sanitizeRequest($request)), ]);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success'=>false, 'message'=> 'Error has occurred while trying to fetch audit log.']);
         }

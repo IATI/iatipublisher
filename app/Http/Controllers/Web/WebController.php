@@ -32,7 +32,7 @@ class WebController extends Controller
 
             return view('web.welcome', compact('page', 'intent', 'message'));
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
         }
     }
 

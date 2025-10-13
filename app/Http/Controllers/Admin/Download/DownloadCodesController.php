@@ -61,7 +61,7 @@ class DownloadCodesController extends Controller
 
             return Excel::download(new CodesExport($codeData, []), $filename, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $this->auditService->auditEvent(null, 'download', 'codes');
             $translatedMessage = trans('common/common.error_has_occurred_while_downloading_activity_csv');
 

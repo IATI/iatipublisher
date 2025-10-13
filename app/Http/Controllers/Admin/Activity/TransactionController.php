@@ -195,7 +195,7 @@ class TransactionController extends Controller
                 $translatedMessage
             );
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return redirect()->route('admin.activity.transaction.index', $activityId)->with(
                 'error',
@@ -275,7 +275,7 @@ class TransactionController extends Controller
                 compact('transaction', 'activity', 'types', 'toast', 'element')
             );
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return redirect()->route('admin.activity.transaction.index', $activityId)->with(
                 'error',
@@ -319,7 +319,7 @@ class TransactionController extends Controller
 
             return view('admin.activity.transaction.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.transaction.index', $activityId)->with(
@@ -357,7 +357,7 @@ class TransactionController extends Controller
                 $translatedMessage
             );
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.transaction.index', $activityId)->with(
@@ -391,7 +391,7 @@ class TransactionController extends Controller
                 'activity_id' => $id,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.delete_error');
 
             Session::flash('error', $translatedMessage);

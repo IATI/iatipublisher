@@ -48,7 +48,7 @@ class CompleteStatusPercentageCommand extends Command
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            logger()->error($e->getMessage());
+            logger()->error($e);
         }
     }
 }

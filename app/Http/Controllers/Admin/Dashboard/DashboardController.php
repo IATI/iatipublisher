@@ -79,7 +79,7 @@ class DashboardController extends Controller
                 'data' => $this->dashboardService->getUserCounts(),
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the publisher stats.']);
         }
@@ -114,7 +114,7 @@ class DashboardController extends Controller
                 'data' => $this->dashboardService->getUserCountByOrganization($page, $queryParams),
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the paginated users.']);
         }
@@ -177,7 +177,7 @@ class DashboardController extends Controller
                 'data' => $publisherStat,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the publisher stats.']);
         }
@@ -234,7 +234,7 @@ class DashboardController extends Controller
                 'data' => $publisherStat,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the publisher by registration type.']);
         }
@@ -262,7 +262,7 @@ class DashboardController extends Controller
                 'data' => ['paginatedData' => $paginatedData, 'codeList' => $codeList],
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the publisher stats.']);
         }
@@ -290,7 +290,7 @@ class DashboardController extends Controller
                 'data' => ['paginatedData' => $paginatedData, 'codeList' => $codeList],
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the publisher grouped by type.']);
         }
@@ -318,7 +318,7 @@ class DashboardController extends Controller
                 'data' => ['paginatedData' => $paginatedData, 'codeList' => $codeList],
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the publisher grouped by type.']);
         }
@@ -345,7 +345,7 @@ class DashboardController extends Controller
                 'data' => $publisherStat,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the publisher stats.']);
         }
@@ -370,7 +370,7 @@ class DashboardController extends Controller
                 'data' => $publisherStat,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the activity stats.']);
         }
@@ -398,7 +398,7 @@ class DashboardController extends Controller
                 ],
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the publisher stats.']);
         }
@@ -423,7 +423,7 @@ class DashboardController extends Controller
                 'data' => $publisherStat,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the publisher stats.']);
         }
@@ -448,7 +448,7 @@ class DashboardController extends Controller
                 'data' => $activityStats,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the publisher stats.']);
         }
@@ -473,7 +473,7 @@ class DashboardController extends Controller
                 'data' => $activityStats,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the publisher stats.']);
         }
@@ -505,11 +505,11 @@ class DashboardController extends Controller
                 'data' => ['graph' => $results, 'count' => array_sum($results)],
             ]);
         } catch (InvalidFormatException $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Invalid date value entered in date range.']);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching user count in custom-range.']);
         }
@@ -570,7 +570,7 @@ class DashboardController extends Controller
 
             return $this->csvGenerator->generateWithHeaders(getTimeStampedText('activities'), $activities, $headers);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error has occurred while downloading activity csv.']);
         }

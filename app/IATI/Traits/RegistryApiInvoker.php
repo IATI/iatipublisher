@@ -69,7 +69,7 @@ trait RegistryApiInvoker
                 }
             }
 
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return redirect()->back()->with('error', 'Something went wrong.');
         }

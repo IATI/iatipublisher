@@ -56,7 +56,7 @@ class UpdateElementStatusAndCompletePercentage extends Command
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            logger()->error($e->getMessage());
+            logger()->error($e);
         }
     }
 }

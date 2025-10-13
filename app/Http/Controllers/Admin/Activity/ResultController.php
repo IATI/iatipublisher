@@ -69,7 +69,7 @@ class ResultController extends Controller
 
             return view('admin.activity.result.index', compact('activity', 'results', 'types', 'toast'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_has_occurred_while_rendering_activity_transactions_listing');
 
             return redirect()->route('admin.activity.result.index', $activityId)->with(
@@ -103,7 +103,7 @@ class ResultController extends Controller
                 ],
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = 'Error occurred while fetching the data.';
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
@@ -180,7 +180,7 @@ class ResultController extends Controller
 
             return view('admin.activity.result.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.result.index', $id)->with(
@@ -213,7 +213,7 @@ class ResultController extends Controller
                 $translatedMessage
             );
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return redirect()->route('admin.activity.result.index', $activityId)->with(
                 'error',
@@ -241,7 +241,7 @@ class ResultController extends Controller
 
             return view('admin.activity.result.detail', compact('activity', 'result', 'types', 'toast', 'element'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_has_occurred_while_rending_result_detail_page');
 
             return redirect()->route('admin.activity.result.index', $activityId)->with(
@@ -289,7 +289,7 @@ class ResultController extends Controller
 
             return view('admin.activity.result.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.result.index', $activityId)->with(
@@ -328,7 +328,7 @@ class ResultController extends Controller
                 $translatedMessage
             );
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.result.index', $activityId)->with(
@@ -359,7 +359,7 @@ class ResultController extends Controller
                 'activity_id' => $id,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.delete_error');
             Session::flash('error', $translatedMessage);
 

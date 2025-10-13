@@ -92,7 +92,7 @@ class RegistryValidatorJob implements ShouldQueue
                 $this->storeValidation($response);
             }
         } catch (BindingResolutionException|JsonException $e) {
-            logger($e);
+            logger()->error($e);
             $this->fail();
         }
     }

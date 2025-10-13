@@ -52,7 +52,7 @@ class ActivityDefaultController extends Controller
                 compact('currencies', 'languages', 'humanitarian', 'budgetNotProvided', 'activityId')
             );
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.show', $activityId)->with(
@@ -77,7 +77,7 @@ class ActivityDefaultController extends Controller
 
             return response()->json(['success' => true, 'message' => $translatedMessage, 'data' => $setting]);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = 'Error occurred while fetching the data.';
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
@@ -106,7 +106,7 @@ class ActivityDefaultController extends Controller
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             DB::rollBack();
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             $translatedMessage = trans('activity_detail/activity_default_controller.error_occurred_while_updating_data');
 

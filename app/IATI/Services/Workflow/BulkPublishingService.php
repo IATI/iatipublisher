@@ -199,7 +199,7 @@ class BulkPublishingService
 
             return ['success' => false, 'error' => 'Error has occurred while validating activity.'];
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             logger()->error($e);
 
             throw new \RuntimeException();

@@ -60,7 +60,7 @@ class SuperAdminController extends Controller
 
             return view('superadmin.organisationsList', compact('country', 'setupCompleteness', 'registrationType', 'publisherType', 'dataLicense', 'oldestDates'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(
                 ['success' => false, 'error' => 'Error has occurred while fetching organisations.']
@@ -169,7 +169,7 @@ class SuperAdminController extends Controller
 
             return response()->json(['success' => false, 'message' => 'Error occurred while trying to proxy']);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while trying to proxy']);
         }
@@ -202,7 +202,7 @@ class SuperAdminController extends Controller
                 )
             );
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return redirect('listOrganizations')->with('error', 'Failed opening System Version page.');
         }

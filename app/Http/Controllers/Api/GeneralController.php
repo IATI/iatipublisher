@@ -99,7 +99,7 @@ class GeneralController extends Controller
                 ],
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = 'Error Occurred While Mapping The File Extension.';
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);

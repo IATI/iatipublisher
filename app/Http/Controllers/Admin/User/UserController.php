@@ -94,7 +94,7 @@ class UserController extends Controller
 
             return view('admin.user.index', compact('status', 'organizations', 'roles', 'userRole', 'oldestDates'));
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             $translatedMessage = 'Error Has Occurred While Rendering User Listing Page';
 
@@ -123,7 +123,7 @@ class UserController extends Controller
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             $this->db->rollback();
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             $translatedMessage = trans('userProfile/user_controller.error_has_occurred_while_creating_user');
 
@@ -156,7 +156,7 @@ class UserController extends Controller
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             $this->db->rollback();
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             $translatedMessage = trans('common/common.failed_to_update_data');
 
@@ -208,7 +208,7 @@ class UserController extends Controller
                 'data'    => ['account_verified' => $status],
             ]);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json([
                 'success' => false,
@@ -233,7 +233,7 @@ class UserController extends Controller
                 'message' => $translatedMessage,
             ]);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json([
                 'success' => false,
@@ -257,7 +257,7 @@ class UserController extends Controller
 
             return view('admin.user.profile', compact('user', 'languagePreference'));
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_while_rendering_setting_page');
 
             return redirect()->route('admin.activities.index')->with('error', $translatedMessage);
@@ -285,7 +285,7 @@ class UserController extends Controller
                 'data' => $users,
             ]);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = 'Error occurred while trying to get paginated user.';
 
             return response()->json([
@@ -378,7 +378,7 @@ class UserController extends Controller
                 'message' => $translatedMessage,
             ]);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('userProfile/user_controller.error_occurred_while_updating_password');
 
             return response()->json([
@@ -412,7 +412,7 @@ class UserController extends Controller
             ]);
         } catch (\Exception $e) {
             $this->db->rollback();
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('userProfile/user_controller.error_occurred_while_updating_user_profile');
 
             return response()->json([
@@ -445,7 +445,7 @@ class UserController extends Controller
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = 'Error has occurred while trying to toggle user status';
 
             return response()->json([
@@ -473,7 +473,7 @@ class UserController extends Controller
 
             return $this->csvGenerator->generateWithHeaders(getTimeStampedText('users'), $users->toArray(), $headers);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $this->auditService->auditEvent(null, 'download');
 
             return response()->json(['success' => false, 'message' => $e->getMessage()]);

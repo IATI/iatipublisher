@@ -50,7 +50,7 @@ class ReportingOrgController extends Controller
 
             return view('admin.organisation.forms.reportingOrg.reportingOrg', compact('form', 'organization', 'data'));
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.organisation.index')->with('error', $translatedMessage);
@@ -86,7 +86,7 @@ class ReportingOrgController extends Controller
                 redirect()->route('admin.organisation.index')->with('success', $translatedMessage);
         } catch (\Exception $e) {
             DB::rollBack();
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.failed_to_update_data');
 
             return $request->expectsJson() ?
