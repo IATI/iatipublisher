@@ -109,7 +109,7 @@ class ReportingOrgController extends Controller
             return redirect()->route('admin.activity.show', $id)->with('success', $translatedMessage);
         } catch (Exception $e) {
             DB::rollBack();
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.activity.show', $id)->with('error', $translatedMessage);

@@ -87,7 +87,7 @@ class PeriodController extends Controller
                 'data'    => $period,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = 'Error occurred while fetching the data.';
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
@@ -124,7 +124,7 @@ class PeriodController extends Controller
 
             return view('admin.activity.period.period', compact('activity', 'parentData', 'period', 'types', 'toast'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_has_occurred_while_rendering_activity_transactions_listing');
 
             return redirect()->route('admin.indicator.period.index', $indicatorId)->with('error', $translatedMessage);
@@ -167,7 +167,7 @@ class PeriodController extends Controller
 
             return view('admin.activity.period.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.indicator.period.index', $indicatorId)->with(
@@ -201,7 +201,7 @@ class PeriodController extends Controller
                 $translatedMessage
             );
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return redirect()->route('admin.indicator.period.index', $indicatorId)->with(
                 'error',
@@ -242,7 +242,7 @@ class PeriodController extends Controller
 
             return view('admin.activity.period.detail', compact('activity', 'parentData', 'period', 'types', 'toast', 'element'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_has_occurred_while_rending_result_detail_page');
 
             return redirect()->route('admin.indicator.period.index', [$indicatorId])->with(
@@ -280,7 +280,7 @@ class PeriodController extends Controller
 
             return view('admin.activity.period.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.indicator.period.index', $indicatorId)->with('error', $translatedMessage);
@@ -317,7 +317,7 @@ class PeriodController extends Controller
                 $translatedMessage
             );
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.failed_to_update_data');
 
             return redirect()->route('admin.indicator.period.show', [$indicatorId, $periodId])->with(
@@ -349,7 +349,7 @@ class PeriodController extends Controller
                 'indicator_id' => $id,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.delete_error');
 
             Session::flash('error', $translatedMessage);

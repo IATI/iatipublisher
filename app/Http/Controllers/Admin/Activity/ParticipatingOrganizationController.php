@@ -74,7 +74,7 @@ class ParticipatingOrganizationController extends Controller
 
             return view('admin.activity.participatingOrganization.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activity.show', $id)->with(

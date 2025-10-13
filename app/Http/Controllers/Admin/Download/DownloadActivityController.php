@@ -110,7 +110,7 @@ class DownloadActivityController extends Controller
 
             return $this->csvGenerator->generateWithHeaders(getTimeStampedText($filename), $csvData, $headers);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $this->auditService->auditEvent(null, 'download', 'csv');
             $translatedMessage = trans('common/common.error_has_occurred_while_downloading_activity_csv');
 
@@ -163,7 +163,7 @@ class DownloadActivityController extends Controller
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $this->downloadXlsService->deleteDownloadStatus(auth()->user()->id);
             $this->cancelXlsDownload();
             $translatedMessage = trans('workflow_backend/download_activity_controller.error_has_occurred_while_downloading_activity_xls');
@@ -260,7 +260,7 @@ class DownloadActivityController extends Controller
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('workflow_backend/download_activity_controller.error_has_occurred_while_trying_to_cancel_download');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
@@ -307,7 +307,7 @@ class DownloadActivityController extends Controller
                     'Content-Transfer-Encoding' => 'binary',
                 ]);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $this->auditService->auditEvent(null, 'download', 'xml');
             $translatedMessage = trans('common/common.error_has_occurred_while_downloading_activity_csv');
 

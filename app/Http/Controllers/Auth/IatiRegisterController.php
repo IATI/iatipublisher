@@ -115,7 +115,7 @@ class IatiRegisterController extends Controller
 
             return response()->json(['success' => true, 'message' => $translatedMessage, 'data' => $publisherCheck]);
         } catch (ClientException $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(
                 [
@@ -123,7 +123,7 @@ class IatiRegisterController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             $translatedMessage = trans('common/common.error_has_occurred_while_verifying_the_publisher');
 
@@ -145,7 +145,7 @@ class IatiRegisterController extends Controller
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             $translatedMessage = trans('register/iati_register_controller.error_occurred_while_verifying_contact_info');
 
@@ -169,7 +169,7 @@ class IatiRegisterController extends Controller
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             $translatedMessage = trans('register/iati_register_controller.error_occurred_while_verifying_additional_info');
 
@@ -321,7 +321,7 @@ class IatiRegisterController extends Controller
 
             return view('web.iati_register', compact('types'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return view('web.welcome');
         }

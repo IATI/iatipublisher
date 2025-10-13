@@ -165,7 +165,7 @@ class RegisterController extends Controller
 
             return response()->json(['success' => true, 'message' => $translatedMessage, 'data' => $response]);
         } catch (ClientException $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(
                 [
@@ -177,7 +177,7 @@ class RegisterController extends Controller
                 ]
             );
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             $translatedMessage = trans('common/common.error_has_occurred_while_verifying_the_publisher');
 
@@ -202,7 +202,7 @@ class RegisterController extends Controller
 
             return $user;
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
         }
     }
 
@@ -260,7 +260,7 @@ class RegisterController extends Controller
 
             return view('web.register', compact('countries', 'registration_agencies', 'uncategorizedRegistrationAgencyPrefix', 'languages'));
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return redirect()->route('web.index.login');
         }

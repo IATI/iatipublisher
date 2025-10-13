@@ -46,7 +46,7 @@ class OrganizationOnboardingController extends Controller
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             DB::rollBack();
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('organisationDetail/organisation_onboarding_controller.error_occurred_while_updating_dont_show_again');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
@@ -69,7 +69,7 @@ class OrganizationOnboardingController extends Controller
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             DB::rollBack();
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('organisationDetail/organisation_onboarding_controller.error_occurred_while_storing_updating_activity_status');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);

@@ -67,7 +67,7 @@ class ActivityController extends Controller
 
             return response(['status' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('api/activity_controller.error_has_occurred_while_deleting_activity_element');
 
             return response(['status' => false, 'message' => $translatedMessage]);

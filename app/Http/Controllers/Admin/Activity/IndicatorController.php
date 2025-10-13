@@ -91,7 +91,7 @@ class IndicatorController extends Controller
 
             return view('admin.activity.indicator.indicator', compact('activity', 'parentData', 'indicators', 'types', 'toast'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             $translatedMessage = trans('common/common.error_has_occurred_while_rendering_activity_transactions_listing');
 
@@ -122,7 +122,7 @@ class IndicatorController extends Controller
                 'data'    => $indicator,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the data.']);
         }
@@ -164,7 +164,7 @@ class IndicatorController extends Controller
 
             return view('admin.activity.indicator.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.result.indicator.index', [$resultId])->with(
@@ -200,7 +200,7 @@ class IndicatorController extends Controller
                 $translatedMessage
             );
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return redirect()->route('admin.result.indicator.index', $resultId)->with(
                 'error',
@@ -231,7 +231,7 @@ class IndicatorController extends Controller
 
             return view('admin.activity.indicator.detail', compact('activity', 'resultTitle', 'indicator', 'period', 'types', 'toast', 'element'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_has_occurred_while_rending_result_detail_page');
 
             return redirect()->route('admin.result.indicator.index', $resultId)->with(
@@ -278,7 +278,7 @@ class IndicatorController extends Controller
 
             return view('admin.activity.indicator.edit', compact('form', 'activity', 'data'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.result.indicator.index', $resultId)->with(
@@ -320,7 +320,7 @@ class IndicatorController extends Controller
                 $translatedMessage
             );
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             $translatedMessage = trans('common/common.failed_to_update_data');
 
@@ -352,7 +352,7 @@ class IndicatorController extends Controller
                 'result_id' => $id,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.delete_error');
             Session::flash('error', $translatedMessage);
 

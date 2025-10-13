@@ -72,7 +72,7 @@ class SettingController extends Controller
 
             return view('admin.settings.index', compact('currencies', 'languages', 'humanitarian', 'budgetNotProvided', 'userRole', 'defaultCollaborationType', 'defaultFlowType', 'defaultFinanceType', 'defaultAidType', 'defaultTiedStatus'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_while_rendering_setting_page');
 
             return redirect()->route('admin.activities.index')->with('error', $translatedMessage);
@@ -109,7 +109,7 @@ class SettingController extends Controller
 
             return response()->json(['success' => true, 'message' => $translatedMessage, 'data' => $setting]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             if ($e instanceof GuzzleException && $e->getCode() === 404) {
                 $translatedMessage = trans('settings/setting_controller.publisher_does_not_exist_in_registry');
@@ -293,7 +293,7 @@ class SettingController extends Controller
             return response()->json(['success' => true, 'message' => $translatedMessage, 'data' => $setting]);
         } catch (Exception $e) {
             $this->db->rollBack();
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('settings/setting_controller.error_occurred_while_storing_setting');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
@@ -354,7 +354,7 @@ class SettingController extends Controller
                 'data' => $status,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json([
                 'success' => false,

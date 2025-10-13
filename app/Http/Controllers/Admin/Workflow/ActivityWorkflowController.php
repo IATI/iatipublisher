@@ -86,7 +86,7 @@ class ActivityWorkflowController extends Controller
             return response()->json(['success' => false, 'message' => $message->getMessage()]);
         } catch (\Exception $e) {
             DB::rollBack();
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('workflow_backend/activity_workflow_controller.error_has_occurred_while_publishing_activity');
 
             Session::put('error', $translatedMessage);
@@ -182,7 +182,7 @@ class ActivityWorkflowController extends Controller
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_has_occurred_while_checking_activity');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);

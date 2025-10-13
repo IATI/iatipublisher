@@ -58,7 +58,7 @@ class OrganizationIdentifierController extends Controller
 
             return view('admin.organisation.forms.organisationIdentifier.edit', compact('form', 'organization', 'data'));
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activities.show', $id)->with('error', $translatedMessage);
@@ -141,7 +141,7 @@ class OrganizationIdentifierController extends Controller
 
             return $response->publisher_iati_id === $identifier;
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return false;
         }

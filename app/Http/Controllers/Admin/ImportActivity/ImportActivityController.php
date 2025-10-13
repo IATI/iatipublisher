@@ -105,7 +105,7 @@ class ImportActivityController extends Controller
 
             return view('admin.import.index');
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_has_occurred_while_rendering_activity_import_page');
 
             return response()->json(['success' => false, 'error' => $translatedMessage]);
@@ -179,7 +179,7 @@ class ImportActivityController extends Controller
         } catch (Exception $e) {
             DB::rollback();
 
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             $translatedMessage = trans('common/common.error_has_occurred_while_rendering_activity_import_page');
 
@@ -302,7 +302,7 @@ class ImportActivityController extends Controller
 
             return view('admin.import.list');
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('workflow_backend/import_activity_controller.error_has_occurred_while_checking_the_status');
 
             return redirect()->route('admin.activities.index')->withResponse(['success' => false, 'error' => $translatedMessage]);
@@ -415,7 +415,7 @@ class ImportActivityController extends Controller
         try {
             return file_get_contents(app_path(sprintf('CsvImporter/Templates/%s/%s.csv', 'Activity', 'other_fields_transaction')));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
@@ -436,7 +436,7 @@ class ImportActivityController extends Controller
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_has_occurred_while_trying_to_delete_import_error');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
@@ -488,7 +488,7 @@ class ImportActivityController extends Controller
                 ],
             ]);
         } catch (Exception $e) {
-            logger($e);
+            logger()->error($e);
             DB::rollBack();
             $translatedMessage = trans('workflow_backend/import_activity_controller.failed_to_delete_ongoing_imports');
 

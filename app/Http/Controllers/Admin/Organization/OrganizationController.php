@@ -96,7 +96,7 @@ class OrganizationController extends Controller
 
             return view('admin.organisation.index', compact('elements', 'elementGroups', 'progress', 'organization', 'toast', 'types', 'mandatoryCompleted', 'status', 'userRole'));
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_opening_data_entry_form');
 
             return redirect()->route('admin.activities.index')->with('error', $translatedMessage);
@@ -186,7 +186,7 @@ class OrganizationController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
 
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = 'Error deleting organisation.';
 
             return ['success' => false, 'message' => $translatedMessage];
@@ -335,7 +335,7 @@ class OrganizationController extends Controller
             return response(['status' => true, 'message' => $translatedMessage]);
         } catch (Exception $e) {
             DB::rollBack();
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = 'Error Has Occurred While Deleting Organisation Element.';
 
             return response(['status' => false, 'message' => $translatedMessage]);

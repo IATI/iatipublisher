@@ -177,7 +177,7 @@ class BulkPublishingController extends Controller
             );
         } catch (Exception $e) {
             DB::rollBack();
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('workflow_backend/bulk_publishing_controller.error_has_occurred_while_checking_core_elements_completed');
 
             return response()->json(
@@ -246,7 +246,7 @@ class BulkPublishingController extends Controller
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             logger()->error($e);
 
             DB::rollBack();
@@ -439,7 +439,7 @@ class BulkPublishingController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             BulkPublishCacheHelper::clearBulkPublishCache(auth()->user()->organization_id);
-            logger()->error($e->getMessage());
+            logger()->error($e);
             logger()->error($e);
             $translatedMessage = trans('workflow_backend/bulk_publishing_controller.failed_to_stop_bulk_publishing');
 
@@ -478,7 +478,7 @@ class BulkPublishingController extends Controller
                 ['success' => true, 'message' => $translatedMessage, 'status' => 'completed']
             );
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             logger()->error($e);
             $translatedMessage = trans('common/common.error_has_occurred_while_checking_activity');
 
@@ -514,7 +514,7 @@ class BulkPublishingController extends Controller
                 ['success' => true, 'message' => $translatedMessage, 'status' => 'completed']
             );
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('common/common.error_has_occurred_while_checking_activity');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
@@ -539,7 +539,7 @@ class BulkPublishingController extends Controller
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
             logger()->error($e);
             DB::rollBack();
             $translatedMessage = trans('workflow_backend/bulk_publishing_controller.failed_to_delete_bulk_publishing_status');

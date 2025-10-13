@@ -165,7 +165,7 @@ class ActivityController extends Controller
             );
         } catch (Exception $e) {
             DB::rollBack();
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'error' => 'Error has occurred while fetching activities']);
         }
@@ -372,7 +372,7 @@ class ActivityController extends Controller
 
             return response()->json(['success' => false, 'message' => 'Activity delete failed.']);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
@@ -432,7 +432,7 @@ class ActivityController extends Controller
                 'data' => $activities,
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the data']);
         }
@@ -458,7 +458,7 @@ class ActivityController extends Controller
                 ],
             ]);
         } catch (Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while fetching the data']);
         }

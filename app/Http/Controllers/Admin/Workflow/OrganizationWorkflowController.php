@@ -73,7 +73,7 @@ class OrganizationWorkflowController extends Controller
             return response()->json(['success' => false, 'message' => $message->getMessage()]);
         } catch (\Exception $e) {
             DB::rollBack();
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('workflow_backend/organization_workflow_controller.error_has_occurred_while_publishing_organization');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
@@ -105,7 +105,7 @@ class OrganizationWorkflowController extends Controller
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (\Exception $e) {
             DB::rollBack();
-            logger()->error($e->getMessage());
+            logger()->error($e);
             $translatedMessage = trans('workflow_backend/organization_workflow_controller.error_has_occurred_while_un_publishing_organization');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
