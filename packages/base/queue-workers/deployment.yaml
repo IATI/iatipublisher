@@ -38,3 +38,10 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9000
+        volumeMounts:
+          - name: iati-persistent-storage
+            mountPath: /opt/apps/laravel-in-kubernetes/storage/logs
+      volumes:
+        - name: iati-persistent-storage
+          persistentVolumeClaim:
+            claimName: iati-pv-claim
