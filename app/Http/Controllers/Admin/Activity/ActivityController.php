@@ -164,8 +164,6 @@ class ActivityController extends Controller
                 )
             );
         } catch (Exception $e) {
-            Auth::logout();
-            session()->invalidate();
             DB::rollBack();
             logger()->error($e);
 

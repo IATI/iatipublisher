@@ -17,11 +17,13 @@ class ReportingOrgApiService
     /**
      * Get a list of all reporting orgs the user has access to.
      * Corresponds to: GET /reporting-orgs.
+     *
+     * Note: Trailing slash is required to prevent 307 redirect that strips auth header.
      */
     public function getReportingOrgs(string $accessToken, array $queryParams = []): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->get('reporting-orgs', $queryParams),
+            fn (PendingRequest $request) => $request->get('reporting-orgs/', $queryParams),
             $accessToken
         );
     }
@@ -33,7 +35,7 @@ class ReportingOrgApiService
     public function createReportingOrg(string $accessToken, array $data): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->post('reporting-orgs', $data),
+            fn (PendingRequest $request) => $request->post('reporting-orgs/', $data),
             $accessToken
         );
     }
@@ -45,7 +47,7 @@ class ReportingOrgApiService
     public function getReportingOrgDetails(string $accessToken, string $orgId, array $queryParams = []): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->get("reporting-orgs/{$orgId}", $queryParams),
+            fn (PendingRequest $request) => $request->get("reporting-orgs/{$orgId}/", $queryParams),
             $accessToken
         );
     }
@@ -57,7 +59,7 @@ class ReportingOrgApiService
     public function updateReportingOrg(string $accessToken, string $orgId, array $data): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->patch("reporting-orgs/{$orgId}", $data),
+            fn (PendingRequest $request) => $request->patch("reporting-orgs/{$orgId}/", $data),
             $accessToken
         );
     }
@@ -69,7 +71,7 @@ class ReportingOrgApiService
     public function deleteReportingOrg(string $accessToken, string $orgId): void
     {
         $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->delete("reporting-orgs/{$orgId}"),
+            fn (PendingRequest $request) => $request->delete("reporting-orgs/{$orgId}/"),
             $accessToken,
             false
         );
@@ -82,7 +84,7 @@ class ReportingOrgApiService
     public function getUsersForOrganisation(string $accessToken, string $orgId): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->get("reporting-orgs/{$orgId}/users"),
+            fn (PendingRequest $request) => $request->get("reporting-orgs/{$orgId}/users/"),
             $accessToken
         );
     }
@@ -94,7 +96,7 @@ class ReportingOrgApiService
     public function getDatasetsForOrganisation(string $accessToken, string $orgId, array $queryParams = []): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->get("reporting-orgs/{$orgId}/datasets", $queryParams),
+            fn (PendingRequest $request) => $request->get("reporting-orgs/{$orgId}/datasets/", $queryParams),
             $accessToken
         );
     }

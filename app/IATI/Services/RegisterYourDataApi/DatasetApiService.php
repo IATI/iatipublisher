@@ -21,6 +21,8 @@ class DatasetApiService
      * Add a new dataset to an organisation.
      * Corresponds to: POST /datasets.
      *
+     * Note: Trailing slashes added to all endpoints to prevent 307 redirects.
+     *
      * @param string $accessToken The user's API access token.
      * @param array $data The metadata for the new dataset, including 'owner_organisation_id'.
      * @return array The newly created dataset's data.
@@ -29,7 +31,7 @@ class DatasetApiService
     public function createDataset(string $accessToken, array $data): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->post('datasets', $data),
+            fn (PendingRequest $request) => $request->post('datasets/', $data),
             $accessToken
         );
     }
@@ -46,7 +48,7 @@ class DatasetApiService
     public function getDatasetDetails(string $accessToken, string $datasetId): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->get("datasets/{$datasetId}"),
+            fn (PendingRequest $request) => $request->get("datasets/{$datasetId}/"),
             $accessToken
         );
     }
@@ -64,7 +66,7 @@ class DatasetApiService
     public function updateDataset(string $accessToken, string $datasetId, array $data): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->patch("datasets/{$datasetId}", $data),
+            fn (PendingRequest $request) => $request->patch("datasets/{$datasetId}/", $data),
             $accessToken
         );
     }
@@ -83,7 +85,7 @@ class DatasetApiService
         // The API returns a BaseResponse which does not have a 'data' key,
         // so we set the third parameter to false.
         $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->delete("datasets/{$datasetId}"),
+            fn (PendingRequest $request) => $request->delete("datasets/{$datasetId}/"),
             $accessToken,
             false
         );

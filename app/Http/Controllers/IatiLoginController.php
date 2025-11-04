@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\IATI\Models\Organization\Organization;
 use App\IATI\Models\User\Role;
 use App\IATI\Models\User\User;
 use App\IATI\Services\OIDC\IatiOidcService;
 use App\IATI\Services\OIDC\OidcAuthenticationException;
+use App\IATI\Services\OIDC\OidcAuthenticationResult;
 use App\IATI\Services\RegisterYourDataApi\RegisterYourDataApiException;
 use App\IATI\Services\RegisterYourDataApi\ReportingOrgApiService;
 use Exception;
@@ -49,6 +51,7 @@ class IatiLoginController extends Controller
                 'org_uuid'          => Arr::get($authResult->claims, 'org_id', null),
             ]);
 
+            cache()->put('oidc_access_token', $authResult->accessToken);
             // 4. Log the user into the local application.
             Auth::login($user);
 
@@ -66,8 +69,8 @@ class IatiLoginController extends Controller
      */
     private function syncUserFromClaims(string $sub, array $claims): User
     {
-        $user = User::where('sub', $sub)->first();
         $email = Arr::get($claims, 'email');
+        $user = User::where('email', $email)->first();
 
         if ($user) {
             $user->update([
@@ -134,9 +137,7 @@ class IatiLoginController extends Controller
         session()->invalidate();
         session()->regenerateToken();
 
-        if ($idTokenHint) {
-            $this->oidcService->logout($idTokenHint);
-        }
+        $this->oidcService->logout($idTokenHint);
 
         return redirect('/');
     }
@@ -161,11 +162,8 @@ class IatiLoginController extends Controller
                 'error' => 'The API call failed.',
                 'message' => $e->getMessage(),
                 'statusCode' => $e->getCode(),
-                'original_exception' => $e->getPrevious(),
+                'response_body' => $e->getPrevious()?->response?->body(),
             ]);
-        } catch (Exception $e) {
-            // Catch any other exceptions (e.g., token not in session).
-            dd('An unexpected error occurred:', $e->getMessage());
         }
     }
 
@@ -188,4 +186,16 @@ class IatiLoginController extends Controller
     {
         return view('auth.onboarding.organization-missing');
     }
+
+//    private function syncOrgUsingUUID(OidcAuthenticationResult $authResult) {
+//        $orgUUID = $authResult->claims['org_id'];
+//        $orgDataInDatabase =  Organization::where('org_uuid', $authResult->claims['org_id'])->first();
+//
+//        $orgData = '';
+//        if(!$orgDataInDatabase) {
+//            $orgData = $this->reportingOrgApiService->getReportingOrgs($authResult->accessToken);
+//        }
+//
+//        dd($orgData);
+//    }
 }

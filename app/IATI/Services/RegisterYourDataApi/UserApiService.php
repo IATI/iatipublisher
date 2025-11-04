@@ -13,13 +13,15 @@ class UserApiService
     /**
      * The constructor injects the low-level API client that handles raw requests.
      */
-    public function __construct(private  _RegisterYourDataApiClient $apiClient)
+    public function __construct(private _RegisterYourDataApiClient $apiClient)
     {
     }
 
     /**
      * Apply for a user to be associated with an organisation.
      * Corresponds to: POST /users/{uid}/reporting-org.
+     *
+     * Note: Trailing slashes added to all endpoints to prevent 307 redirects.
      *
      * @param string $accessToken The user's API access token.
      * @param string $userId The UUID of the user.
@@ -33,7 +35,7 @@ class UserApiService
 
         // This endpoint returns a BaseResponse with no 'data' key.
         $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->post("users/{$userId}/reporting-org", $payload),
+            fn (PendingRequest $request) => $request->post("users/{$userId}/reporting-org/", $payload),
             $accessToken,
             false
         );
@@ -56,7 +58,7 @@ class UserApiService
 
         // This endpoint returns a BaseResponse with no 'data' key.
         $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->put("users/{$userId}/reporting-org/{$organisationId}", $payload),
+            fn (PendingRequest $request) => $request->put("users/{$userId}/reporting-org/{$organisationId}/", $payload),
             $accessToken,
             false
         );
@@ -76,7 +78,7 @@ class UserApiService
     {
         // This endpoint returns a BaseResponse with no 'data' key.
         $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->delete("users/{$userId}/reporting-org/{$organisationId}"),
+            fn (PendingRequest $request) => $request->delete("users/{$userId}/reporting-org/{$organisationId}/"),
             $accessToken,
             false
         );
