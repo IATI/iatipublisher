@@ -49,7 +49,7 @@ class ParentCollectionForm extends BaseForm
             $addMoreButtonClass = 'add_to_parent add_more button four relative text-xs font-bold text-spring-50 text-bluecoral uppercase leading-normal pl-6 ';
 
             if (Arr::get($field, 'add_more_has_borders')) {
-                $addMoreButtonClass = $addMoreButtonClass . getAddAdditionalButtonBorders();
+                $addMoreButtonClass = $addMoreButtonClass . getAddAdditionalButtonBorders() . ' mt-6';
             }
 
             $this->add('add_to_collection', 'button', [

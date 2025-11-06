@@ -37,7 +37,7 @@ if (!function_exists('getAddAdditionalButtonBorders')) {
      */
     function getAddAdditionalButtonBorders(): string
     {
-        return 'border-spring-50 border-x border-b w-full p-4';
+        return 'border-spring-50 border w-full p-4';
     }
 }
 

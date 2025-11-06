@@ -340,14 +340,15 @@ aside {
   display: none;
 }
 
-.multi-form.relative:not(.subelement):has(.add_to_collection.add_more):not(:first-of-type)::before {
-  content: '';
-  display: block;
-  height: 1px;
-  width: 96%;
-  background-color: #b1c6cc;
-  margin: 8px auto;
-}
+// Commented out to remove horizontal line
+//.multi-form.relative:not(.subelement):has(.add_to_collection.add_more):not(:first-of-type)::before {
+//  content: '';
+//  display: block;
+//  height: 1px;
+//  width: 96%;
+//  background-color: #b1c6cc;
+//  margin: 8px auto;
+//}
 
 .subelement.rounded-t-sm.four:has(+ .add_to_collection.add_more.button.four) {
   @apply border-x border-b border-spring-50;
