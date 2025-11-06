@@ -1,5 +1,13 @@
 {
-    "/js/app.js": "/js/app.js?id=bd7e13d4002a9280b619213493383a21",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "/js/app.js": "/js/app.js?id=385d1d565ba7af6d89939bc8afe9cb1d",
+=======
+    "/js/app.js": "/js/app.js?id=6e0d1d227b5b7ac85c562f1601ca4fd8",
+>>>>>>> Stashed changes
+=======
+    "/js/app.js": "/js/app.js?id=6e0d1d227b5b7ac85c562f1601ca4fd8",
+>>>>>>> Stashed changes
     "/js/script.js": "/js/script.js?id=3c76a186055f6358307e48bdd9ead790",
     "/js/webportal-script.js": "/js/webportal-script.js?id=1bcae4271c042a8b79b241f34a1653fc",
     "/js/formbuilder.js": "/js/formbuilder.js?id=7829990afc55670fb3018d45dccfaf0e",

@@ -41,8 +41,17 @@ class IatiLoginController extends Controller
             // 1. Delegate OIDC protocol handling to the service.
             $authResult = $this->oidcService->handleCallback();
 
+            //check on the reporting-orgs api to see if the user has access to the $authResult->org_id
+            $reporting_orgs = $this->reportingOrgApiService->getReportingOrgs($authResult->accessToken, ['include_meta' => 'no', 'include_actions' => 'no']);
+
+            if (count($reporting_orgs) > 0) {
+                $reporting_org_metadata = $reporting_orgs[0]['metadata'];
+
+                $organization = $this->syncOrganisationFromClaims($reporting_orgs[0]['id'], $reporting_org_metadata);
+            }
+
             // 2. Use the trusted result to synchronize the local user record.
-            $user = $this->syncUserFromClaims($authResult->subject, $authResult->claims);
+            $user = $this->syncUserFromClaims($authResult->subject, $authResult->claims, $organization?->id, $reporting_orgs[0]['user_role']);
 
             // 3. Store the necessary tokens in the session.
             session([
@@ -67,7 +76,7 @@ class IatiLoginController extends Controller
     /**
      * Synchronizes a local user record from the trusted claims provided by the OIDC service.
      */
-    private function syncUserFromClaims(string $sub, array $claims): User
+    private function syncUserFromClaims(string $sub, array $claims, int|null $orgId, string $role): User
     {
         $email = Arr::get($claims, 'email');
         $user = User::where('email', $email)->first();
@@ -83,6 +92,8 @@ class IatiLoginController extends Controller
                 'family_name'        => Arr::get($claims, 'family_name'),
                 'locale'             => Arr::get($claims, 'locale'),
                 'picture'            => Arr::get($claims, 'picture'),
+                'organization_id'    => $orgId,
+                'role_id'            => Role::where('role', $this->mapRegisterRoleToPublisher($role))->value('id'),
             ]);
         } else {
             $user = User::create([
@@ -94,7 +105,7 @@ class IatiLoginController extends Controller
                 'address'                 => Arr::get($claims, 'address'),
                 'is_active'               => true,
                 'email_verified_at'       => now(),
-                'role_id'                 => Role::where('role', 'general_user')->firstOrFail()->id,
+                'role_id'                 => Role::where('role', $this->mapRegisterRoleToPublisher($role))->value('id'),
                 'status'                  => true,
                 'language_preference'     => Arr::get($claims, 'locale', 'en'),
                 'last_logged_in'          => now(),
@@ -104,11 +115,68 @@ class IatiLoginController extends Controller
                 'family_name'             => Arr::get($claims, 'family_name'),
                 'locale'                  => Arr::get($claims, 'locale'),
                 'picture'                 => Arr::get($claims, 'picture'),
+                'organization_id'         => $orgId,
                 'migrated_from_aidstream' => false,
             ]);
         }
 
         return $user;
+    }
+
+    /**
+     * Synchronizes organisation.
+     */
+    private function syncOrganisationFromClaims(string $uuid, array $data): Organization
+    {
+        $organization = Organization::updateOrCreate(
+            ['identifier' => $data['organisation_identifier']],
+            [
+                'org_uuid' => $uuid,
+                'publisher_id' => $data['short_name'],
+                'publisher_name' => $data['human_readable_name'],
+                'publisher_type' => $data['organisation_type'],
+                'address' => $data['address'],
+                'telephone' => $data['phone'],
+                'reporting_org' => [
+                    [
+                        'ref' => $data['organisation_identifier'],
+                        'type' => $data['organisation_type'],
+                        'secondary_reporter' => $data['reporting_source_type'],
+                        'narrative' => [
+                            'narrative' => $data['description'],
+                            'language' => 'en',
+                        ],
+                    ],
+                ],
+                'country' => $data['hq_country'],
+                'status' => 'draft',
+                'iati_status' => 'pending',
+                'is_published' => false,
+                'org_status' => 'active',
+                'migrated_from_aidsteam' => false,
+                'registration_type' => 'existing_org',
+                'registry_approved' => $data['registry_approved'],
+            ]
+        );
+
+        return $organization;
+    }
+
+    /**
+     * Maps Iati Registery Roles with the roles on Publisher.
+     *
+     * @param string $registeryRole
+     * @return string
+     */
+    public function mapRegisterRoleToPublisher(string $registeryRole = 'general_user'): string
+    {
+        return match ($registeryRole) {
+            'provider_admin' => 'iati_admin',
+            'admin' => 'admin',
+            'editor' => 'admin',
+            'contributor' => 'general_user',
+            default => 'general_user'
+        };
     }
 
     /**
