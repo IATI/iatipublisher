@@ -41,7 +41,7 @@ class MultilevelSubElementForm extends BaseForm
                 $addMoreButtonClass = 'add_to_parent add_more button one relative pl-6 text-xs font-bold uppercase leading-normal text-spring-50 text-bluecoral ';
 
                 if ($this->shouldRenderBordersOnAddMoreButton($sub_element)) {
-                    $addMoreButtonClass = $addMoreButtonClass . getAddAdditionalButtonBorders();
+                    $addMoreButtonClass = $addMoreButtonClass . getAddAdditionalButtonBorders() . ' mt-6';
                 }
 
                 $this->add(
