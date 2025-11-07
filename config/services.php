@@ -40,6 +40,7 @@ return [
         'userinfo_endpoint'   => env('OIDC_USERINFO_ENDPOINT'),
         'token_endpoint'      => env('OIDC_TOKEN_ENDPOINT'),
         'scopes'              => ['openid', 'email', 'profile', 'address', 'phone', 'roles', 'groups', 'iati_account'],
+        'iatiDesignSystemUrl' => env('IATI_DESIGN_SYSTEM_URL'),
     ],
     'registry_api' => [
         'base_url' => env('REGISTRY_API_BASE_URL', 'https://dev.api.registeryourdata.iatistandard.org/api/v1'),

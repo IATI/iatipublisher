@@ -36,7 +36,7 @@
         href="{{ asset('favicon.ico') }}"
         type="image/x-icon" />
     <link
-        href={{ env('IATI_DESIGN_SYSTEM_URL')}}
+        href={{ config('services.oidc.iatiDesignSystemUrl')}}
         rel="stylesheet"
 
     />

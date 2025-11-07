@@ -38,7 +38,7 @@
           href="{{ asset('favicon.ico') }}"
           type="image/x-icon" />
     <link
-            href={{ env('IATI_DESIGN_SYSTEM_URL')}}
+            href={{ config('services.oidc.iatiDesignSystemUrl')}}
         rel="stylesheet"
 
     />
@@ -60,6 +60,20 @@
                 </figure>
             </div>
         </nav>
+        <div class="user-nav pt-2">
+            <button class="button secondary-btn dropdown-btn">
+                <ul>
+                    <li class="dropdown__list">
+                        <a href="/logout/iati" class="flex w-full items-center">
+                            <svg-vue class="ml-1 mr-3" icon="logout"></svg-vue>
+                            <span class="text-sm">
+                    {{ trans('adminHeader/admin_header.logout') }}
+                  </span>
+                        </a>
+                    </li>
+                </ul>
+            </button>
+        </div>
     </header>
 
 
