@@ -17,7 +17,7 @@ class IatiDataSyncService
         $existingOrg = Organization::where('org_uuid', $uuid)->first();
 
         $publisherTypeCode = $this->mapPublisherTypeCode($data['organisation_type'] ?? null);
-
+        $name = [['narrative' => $data['human_readable_name'] ?? null, 'language' => 'en']];
         $attributes = [
             'identifier'             => $data['organisation_identifier'],
             'org_uuid'               => $uuid,
@@ -31,12 +31,7 @@ class IatiDataSyncService
                     'ref'                => $data['organisation_identifier'] ?? null,
                     'type'               => $publisherTypeCode,
                     'secondary_reporter' => $this->mapSecondaryReporter($data['reporting_source_type'] ?? null),
-                    'narrative'          => [
-                        [
-                            'narrative' => $data['human_readable_name'] ?? null,
-                            'language'  => 'en',
-                        ],
-                    ],
+                    'narrative'          => $name,
                 ],
             ],
             'country'                => $this->mapCountryCode($data['hq_country'] ?? null),
@@ -65,12 +60,61 @@ class IatiDataSyncService
         return $existingOrg;
     }
 
+    private function mapPublisherTypeCode($publisherType): string|null
+    {
+        if (!$publisherType) {
+            return null;
+        }
+
+        $codeList = getCodeList('OrganizationType', 'Organization', false);
+
+        $matches = array_filter(
+            $codeList,
+            fn ($name) => strtolower($name) === strtolower($publisherType)
+        );
+
+        if (!empty($matches)) {
+            return (string) array_key_first($matches);
+        }
+
+        return null;
+    }
+
+    private function mapSecondaryReporter($reportingSourceType): ?bool
+    {
+        return match ($reportingSourceType) {
+            'primary_source'     => false,
+            'secondary_reporter' => true,
+            default              => null,
+        };
+    }
+
+    private function mapCountryCode($countryName): string|null
+    {
+        if (!$countryName) {
+            return null;
+        }
+
+        $codeList = getCodeList('Region', 'Activity', false);
+
+        $matches = array_filter(
+            $codeList,
+            fn ($name) => strtolower($name) === strtolower($countryName)
+        );
+
+        if (!empty($matches)) {
+            return (string) array_key_first($matches);
+        }
+
+        return null;
+    }
+
     public function syncSettings(Organization $organization): Setting
     {
         $setting = Setting::where('organization_id', $organization->id)->first();
 
         $attributes = [
-            'organization_id'                  => $organization->id,
+            'organization_id'         => $organization->id,
             'publishing_info'         => [
                 'publisher_id'           => $organization->publisher_id,
                 'api_token'              => '',
@@ -170,54 +214,5 @@ class IatiDataSyncService
             'contributor'    => 'general_user',
             default          => 'general_user'
         };
-    }
-
-    private function mapSecondaryReporter($reportingSourceType): ?bool
-    {
-        return match ($reportingSourceType) {
-            'primary_source'     => false,
-            'secondary_reporter' => true,
-            default              => null,
-        };
-    }
-
-    private function mapPublisherTypeCode($publisherType): string|null
-    {
-        if (!$publisherType) {
-            return null;
-        }
-
-        $codeList = getCodeList('OrganizationType', 'Organization', false);
-
-        $matches = array_filter(
-            $codeList,
-            fn ($name) => strtolower($name) === strtolower($publisherType)
-        );
-
-        if (!empty($matches)) {
-            return (string) array_key_first($matches);
-        }
-
-        return null;
-    }
-
-    private function mapCountryCode($countryName): string|null
-    {
-        if (!$countryName) {
-            return null;
-        }
-
-        $codeList = getCodeList('Region', 'Activity', false);
-
-        $matches = array_filter(
-            $codeList,
-            fn ($name) => strtolower($name) === strtolower($countryName)
-        );
-
-        if (!empty($matches)) {
-            return (string) array_key_first($matches);
-        }
-
-        return null;
     }
 }
