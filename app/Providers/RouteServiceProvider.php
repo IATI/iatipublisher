@@ -37,7 +37,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->routes(function () {
             Route::prefix('api')
-                ->middleware(['admin', 'auth', 'activity', 'api'])
+                ->middleware(['admin', 'auth', 'has.organization', 'activity', 'api'])
                 ->name('api.')
                 ->group(base_path('routes/api.php'));
             Route::name('general.')->group(base_path('routes/general.php'));
@@ -45,42 +45,42 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
 
-            Route::middleware(['admin', 'auth'])
+            Route::middleware(['admin', 'auth', 'has.organization'])
                 ->name('admin.')
                 ->group(base_path('routes/setting.php'));
 
-            Route::middleware(['admin', 'auth'])
+            Route::middleware(['admin', 'auth', 'has.organization'])
                 ->name('admin.')
                 ->group(base_path('routes/organization.php'));
 
-            Route::middleware(['admin', 'auth'])
+            Route::middleware(['admin', 'auth', 'has.organization'])
                 ->name('admin.')
                 ->group(base_path('routes/user.php'));
 
-            Route::middleware(['admin', 'auth', 'activity'])
+            Route::middleware(['admin', 'auth', 'has.organization', 'activity'])
                 ->name('admin.')
                 ->group(base_path('routes/activity.php'));
 
-            Route::middleware(['admin', 'auth'])
+            Route::middleware(['admin', 'auth', 'has.organization'])
                 ->name('admin.')
                 ->group(base_path('routes/publish.php'));
 
-            Route::middleware(['admin', 'auth'])
+            Route::middleware(['admin', 'auth', 'has.organization'])
                 ->name('admin.')
                 ->group(base_path('routes/import.php'));
 
-            Route::middleware(['admin', 'auth'])
+            Route::middleware(['admin', 'auth', 'has.organization'])
                 ->name('admin.')
                 ->group(base_path('routes/dashboard.php'));
 
-            Route::middleware(['admin', 'auth', 'superadmin'])
+            Route::middleware(['admin', 'auth', 'has.organization', 'superadmin'])
                 ->name('superadmin.')
                 ->group(base_path('routes/superadmin.php'));
 
-            Route::middleware(['admin', 'auth'])
+            Route::middleware(['admin', 'auth', 'has.organization'])
                 ->name('admin.')
                 ->group(base_path('routes/download.php'));
-            Route::middleware(['admin', 'auth', 'superadmin'])
+            Route::middleware(['admin', 'auth', 'has.organization', 'superadmin'])
                 ->name('audit.')
                 ->group(base_path('routes/audit.php'));
         });

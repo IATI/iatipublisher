@@ -114,7 +114,7 @@ class ActivityController extends Controller
      *
      * @return View|JsonResponse
      */
-    public function index(): View|JsonResponse
+    public function index()
     {
         try {
             $languages = getCodeList('Language', 'Activity', filterDeprecated: true);
@@ -588,5 +588,20 @@ class ActivityController extends Controller
         return response()->json([
             'message' => $translatedMessage,
         ]);
+    }
+
+    private function userOrgNotFound()
+    {
+        $rolesThatNeedOrg = ['general_user', 'admin'];
+        $user = \auth()->user();
+
+        $userRole = $user->role?->role;
+        $userOrgId = $user->organization_id;
+
+        if (in_array($userRole, $rolesThatNeedOrg) && is_null($userOrgId)) {
+            return true;
+        }
+
+        return false;
     }
 }

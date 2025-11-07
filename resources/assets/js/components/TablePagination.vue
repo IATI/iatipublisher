@@ -126,10 +126,6 @@ export default defineComponent({
       return mid_pagelist.value;
     });
 
-    function updateActivePage(page: number) {
-      active_page.value = page;
-    }
-
     function changePage(pageNum: number) {
       active_page.value = pageNum;
     }

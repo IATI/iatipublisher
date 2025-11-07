@@ -154,17 +154,13 @@ let activities = reactive({});
 const selectedActivities: Array<string> = reactive([]);
 const selectedCount = ref(0);
 const activitiesLength = ref(0);
-const loader = ref(false);
 const selectAll = ref(false);
-const loaderText = ref('Please Wait');
 const tableRow = ref({});
 const tableWidth = ref({});
 const toastMessage = ref('');
 const toastType = ref(false);
 const toastVisibility = ref(false);
 const isLoading = ref(false);
-
-let timer;
 
 const props = defineProps({
   translatedData: {

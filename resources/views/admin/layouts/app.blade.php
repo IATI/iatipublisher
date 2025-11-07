@@ -36,9 +36,9 @@
         href="{{ asset('favicon.ico') }}"
         type="image/x-icon" />
     <link
-        href={{ env('IATI_DESIGN_SYSTEM_URL')}}
+        href={{ config('services.oidc.iatiDesignSystemUrl')}}
         rel="stylesheet"
-        
+
     />
 
 
@@ -69,7 +69,7 @@
                 :languages="{{ json_encode(getCodeList('Language', 'Activity'), JSON_THROW_ON_ERROR) }}"
                 v-bind:super-admin="{{ isSuperAdminRoute() ? 1 : 0 }}"
                 :default-language="{{ json_encode(getSettingDefaultLanguage()) }}"
-                 :onboarding="{{ json_encode(Auth::user()->organization ? Auth::user()->organization->onboarding : null) }}"
+                :onboarding="{{ json_encode(Auth::user()->organization ? Auth::user()->organization->onboarding : null) }}"
                 :translated-data="{{json_encode($translatedData)}}"
                 :current-language="{{json_encode($currentLanguage)}}"
                 ></loggedin-header>
@@ -78,7 +78,7 @@
                     @yield('content')
                     @stack('scripts')
                 </main>
-                <admin-footer 
+                <admin-footer
                     v-bind:super-admin="{{ (int) isSuperAdmin() }}"
                     :translated-data="{{json_encode($translatedData)}}"
                     :current-language="{{json_encode($currentLanguage)}}"

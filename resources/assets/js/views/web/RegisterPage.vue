@@ -267,7 +267,6 @@ import Loader from '../../components/Loader.vue';
 import { generateUsername, toTitleCase } from 'Composable/utils';
 
 export default defineComponent({
-  methods: { toTitleCase },
   components: {
     EmailVerification,
     HoverText,
@@ -753,6 +752,7 @@ export default defineComponent({
       translatedStepXOutOf3,
     };
   },
+  methods: { toTitleCase },
 });
 </script>
 

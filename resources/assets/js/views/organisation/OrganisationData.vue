@@ -304,6 +304,7 @@
           <div class="activities__content--elements -mx-3 grid grid-cols-2">
             <template v-for="(post, key, index) in groupedData" :key="index">
               <template v-for="(element, name, i) in post.elements" :key="i">
+                {{ element }}
                 <OrganisationElementsDetail
                   v-if="
                     (typeof element.content === 'object'

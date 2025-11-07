@@ -28,209 +28,10 @@
               : ''
           }}
         </button>
-        <button
-          v-if="userRole !== 'general_user'"
-          class="primary-btn whitespace-nowrap"
-          @click="
-            () => {
-              emptyFormData();
-              setFormError();
-              addUserForm = true;
-            }
-          "
-        >
-          <svg-vue class="text-base" icon="plus-outlined" />
-          {{ getTranslatedAddNewUser(userRole, translatedData) }}
-        </button>
       </div>
     </div>
 
     <div>
-      <PopupModal
-        :modal-active="addUserForm || editUserForm"
-        @close="
-          () => {
-            addUserForm = false;
-            editUserForm = false;
-          }
-        "
-      >
-        <div
-          class="popup-model"
-          @keyup.enter="addUserForm ? createUser() : updateUser()"
-        >
-          <div class="mb-5 text-2xl font-bold text-bluecoral">
-            {{
-              addUserForm
-                ? getTranslatedAddNewUser(userRole, translatedData)
-                : getTranslatedEditUser(userRole, translatedData)
-            }}
-          </div>
-          <div class="grid grid-cols-2 gap-6">
-            <div class="col-span-2 flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50">
-                {{ translatedData['common.common.full_name'] }}
-                <span class="text-crimson-50"> * </span>
-              </label>
-              <input
-                id="full_name"
-                v-model="formData.full_name"
-                :class="
-                  formError['full_name'] ? 'border-crimson-50' : 'border-n-30'
-                "
-                class="w-full rounded border p-3"
-                type="text"
-              />
-              <span v-if="formError['full_name']" class="error">{{
-                formError['full_name'][0]
-              }}</span>
-            </div>
-
-            <div class="flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50">
-                {{ translatedData['common.common.username'] }}
-                <span class="text-crimson-50"> * </span>
-              </label>
-              <input
-                id="username"
-                v-model="formData.username"
-                :class="
-                  formError['username'] ? 'border-crimson-50' : 'border-n-30'
-                "
-                class="w-full rounded border p-3"
-                type="text"
-              />
-              <span v-if="formError['username']" class="error">{{
-                formError['username'][0]
-              }}</span>
-            </div>
-            <div class="flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50">
-                {{ translatedData['common.common.email_address'] }}
-                <span class="text-crimson-50"> * </span>
-              </label>
-              <input
-                id="email"
-                v-model="formData.email"
-                :class="
-                  formError['email'] ? 'border-crimson-50' : 'border-n-30'
-                "
-                class="w-full rounded border p-3"
-                type="email"
-              />
-              <span v-if="formError['email']" class="error">{{
-                formError['email'][0]
-              }}</span>
-            </div>
-
-            <div
-              v-if="addUserForm"
-              :class="formError['status'] && 'error__multiselect'"
-              class="flex flex-col items-start gap-2"
-            >
-              <label class="text-sm text-n-50">
-                {{ translatedData['common.common.status'] }}
-                <span class="text-crimson-50"> * </span>
-              </label>
-              <Multiselect
-                id="status"
-                v-model="formData.status"
-                :options="status"
-                :placeholder="translatedData['common.common.select_status']"
-                :searchable="true"
-              />
-              <span v-if="formError['status']" class="error">{{
-                formError['status'][0]
-              }}</span>
-            </div>
-            <div
-              v-if="userRole === 'admin'"
-              :class="formError['role_id'] && 'error__multiselect'"
-              class="flex flex-col items-start gap-2"
-            >
-              <label class="text-sm text-n-50">
-                {{ translatedData['common.common.role'] }}
-                <span class="text-crimson-50"> * </span></label
-              >
-              <Multiselect
-                id="role"
-                v-model="formData.role_id"
-                :options="roles"
-                :placeholder="translatedData['common.common.select_an_option']"
-                :searchable="true"
-              />
-              <span v-if="formError['role_id']" class="error">{{
-                formError['role_id'][0]
-              }}</span>
-            </div>
-
-            <div class="flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50">
-                {{ translatedData['common.common.new_password'] }}
-                <span v-if="!editUserForm" class="text-crimson-50"> * </span>
-              </label>
-              <input
-                id="password"
-                v-model="formData.password"
-                autocomplete="one-time-code"
-                :class="
-                  formError['password'] ? 'border-crimson-50' : 'border-n-30'
-                "
-                :placeholder="
-                  translatedData['common.common.enter_new_password']
-                "
-                class="w-full rounded border border-n-30 p-3"
-                type="password"
-              />
-              <span v-if="formError['password']" class="error">{{
-                formError['password'][0]
-              }}</span>
-            </div>
-            <div class="flex flex-col items-start gap-2">
-              <label class="text-sm text-n-50">
-                {{ translatedData['common.common.confirm_password'] }}
-                <span v-if="!editUserForm" class="text-crimson-50"> * </span>
-              </label>
-              <input
-                id="password-confirmation"
-                v-model="formData.password_confirmation"
-                autocomplete="one-time-code"
-                :placeholder="translatedData['common.common.confirm_password']"
-                :class="
-                  formError['password_confirmation']
-                    ? 'border-crimson-50'
-                    : 'border-n-30'
-                "
-                class="w-full rounded border border-n-30 p-3"
-                type="password"
-              />
-              <span v-if="formError['password_confirmation']" class="error">{{
-                formError['password_confirmation'][0]
-              }}</span>
-            </div>
-          </div>
-
-          <div class="mt-6 flex justify-end space-x-2">
-            <button
-              class="secondary-btn font-bold"
-              @click="
-                () => {
-                  addUserForm = false;
-                  editUserForm = false;
-                }
-              "
-            >
-              {{ translatedData['common.common.cancel'] }}
-            </button>
-            <button
-              class="primary-btn !px-10"
-              @click="addUserForm ? createUser() : updateUser()"
-            >
-              {{ translatedData['common.common.save'] }}
-            </button>
-          </div>
-        </div>
-      </PopupModal>
       <PopupModal
         :modal-active="deleteModal"
         @close="
@@ -696,13 +497,6 @@
                 v-if="userRole !== 'general_user'"
                 class="flex h-full items-center space-x-6"
               >
-                <p v-if="currentUserId !== user['id']" @click="editUser(user)">
-                  <svg-vue
-                    class="cursor-pointer text-base"
-                    icon="edit-action"
-                  />
-                </p>
-                <!-- <p @click="deleteUser(user['id'])"> -->
                 <p
                   v-if="currentUserId !== user['id']"
                   @click="openDeletemodel(user)"
@@ -1013,50 +807,6 @@ const setDateType = (dateType) => {
   filter.date_type = dateType;
 };
 
-const createUser = () => {
-  isLoaderVisible.value = true;
-  let passwordData = {
-    password: formData.password,
-    password_confirmation: formData.password_confirmation,
-  };
-
-  axios
-    .post('/user', { ...formData, ...passwordData })
-    .then((res) => {
-      toastData.visibility = true;
-      toastData.message = res.data.message;
-      toastData.type = res.data.success;
-      setFormError();
-      setFormError(res.data.errors);
-
-      if (res.data.success) {
-        clearFilter();
-        fetchUsersList(usersData['current_page'], true);
-        addUserForm.value = false;
-        emptyFormData();
-        setFormError();
-      }
-    })
-    .catch((error) => {
-      toastData.visibility = true;
-      toastData.message = error.data.message;
-      toastData.type = false;
-      addUserForm.value = false;
-    })
-    .finally(() => {
-      isLoaderVisible.value = false;
-    });
-};
-
-const editUser = (user) => {
-  formData.username = user.username;
-  formData.full_name = user.full_name;
-  formData.email = user.email;
-  formData.role_id = user.role_id;
-  editUserId.value = user.id;
-  editUserForm.value = true;
-};
-
 const emptyFormData = () => {
   for (const key in formData) {
     formData[key] = key === 'status' ? 1 : '';
@@ -1079,44 +829,6 @@ const openStatusModel = (user) => {
   statusValue.value = user.status;
   statusModal.value = true;
   statusUsername.value = user.username;
-};
-
-const updateUser = () => {
-  isLoaderVisible.value = true;
-  let passwordData = {
-    password: formData.password,
-    password_confirmation: formData.password_confirmation,
-  };
-
-  axios
-    .patch(`/user/${editUserId.value}`, { ...formData, ...passwordData })
-    .then((res) => {
-      toastData.visibility = true;
-      toastData.message = res.data.message;
-      toastData.type = res.data.success;
-      isLoaderVisible.value = false;
-      setFormError();
-      setFormError(res.data.errors);
-
-      if (res.data.success) {
-        editUserForm.value = false;
-        fetchUsersList(usersData['current_page']);
-        editUserId.value = '';
-        emptyFormData();
-        setFormError();
-        window.scrollTo(0, 0);
-      }
-    })
-    .catch((error) => {
-      editUserId.value = '';
-      toastData.visibility = true;
-      toastData.message = error.data.message;
-      toastData.type = false;
-      isLoaderVisible.value = false;
-    })
-    .finally(() => {
-      isLoaderVisible.value = false;
-    });
 };
 
 watch(
@@ -1291,40 +1003,6 @@ const downloadAll = () => {
 };
 
 /**
- * Returns the text : Add a new User  || Add a new IATI Admin
- *
- * @param userRole
- * @param transData
- *
- */
-function getTranslatedAddNewUser(userRole: string, transData): string {
-  const role =
-    userRole === 'admin'
-      ? transData['common.common.user']
-      : transData['common.common.iati_admin'];
-
-  return transData['common.common.add_a_new_user_role']?.replace(
-    ':userRole',
-    role
-  );
-}
-
-/**
- * Returns the text : Edit User || Edit IATI Admin
- *
- * @param userRole
- * @param transData
- */
-function getTranslatedEditUser(userRole: string, transData): string {
-  const role =
-    userRole === 'admin'
-      ? transData['common.common.user']
-      : transData['common.common.iati_admin'];
-
-  return transData['common.common.edit'] + ' ' + role;
-}
-
-/**
  * Returns the text : Are you sure you want to delete xyz ?
  *
  * @param deleteUsername
@@ -1334,10 +1012,9 @@ function getTranslatedDeleteConfirmation(
   deleteUsername: string,
   transData
 ): string {
-  return transData['common.common.are_you_sure_you_want_to_delete']?.replace(
-    ':deleteUsername',
-    deleteUsername
-  );
+  return transData[
+    'common.common.are_you_sure_you_want_to_delete_this_item'
+  ]?.replace(':deleteUsername', deleteUsername);
 }
 
 /**
