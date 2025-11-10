@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\IATI\Models\User\User;
+use App\IATI\Models\Download\DownloadStatus;
 use App\IATI\Services\Download\DownloadXlsService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -16,9 +16,12 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Class XlsExportMailJob.
  */
-class XlsExportMailJob implements ShouldQueue
+class XlsxExportCompleteJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Stores Email.
@@ -76,7 +79,9 @@ class XlsExportMailJob implements ShouldQueue
     public function handle(): void
     {
         if (empty(awsGetFile("Xls/$this->userId/$this->statusId/cancelStatus.json"))) {
-            User::sendXlsDownloadLink($this->email, $this->username, $this->statusId);
+            $updateData = ['status' => 'completed'];
+
+            DownloadStatus::where('id', $this->statusId)->update($updateData);
         }
     }
 

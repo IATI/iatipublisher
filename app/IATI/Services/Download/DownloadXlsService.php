@@ -8,7 +8,7 @@ use App\IATI\Repositories\Activity\IndicatorRepository;
 use App\IATI\Repositories\Activity\ResultRepository;
 use App\IATI\Repositories\Download\XlsDownloadStatusRepository;
 use App\Jobs\ExportXlsJob;
-use App\Jobs\XlsExportMailJob;
+use App\Jobs\XlsxExportCompleteJob;
 use App\Jobs\ZipXlsFileJob;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -189,7 +189,7 @@ class DownloadXlsService
         $authUser = auth()->user();
         ExportXlsJob::withChain([
             new ZipXlsFileJob($authUser->id, $statusId),
-            new XlsExportMailJob($authUser->email, $authUser->username, $authUser->id, $statusId),
+            new XlsxExportCompleteJob($authUser->email, $authUser->username, $authUser->id, $statusId),
         ])->dispatch($request->all(), $authUser->toArray(), $statusId);
     }
 }
