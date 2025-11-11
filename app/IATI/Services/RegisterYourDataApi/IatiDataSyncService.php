@@ -40,6 +40,7 @@ class IatiDataSyncService
             'migrated_from_aidsteam' => false,
             'registration_type'      => 'existing_org',
             'registry_approved'      => $data['registry_approved'] ?? false,
+            'data_license'           => $data['data_license_id'],
         ];
 
         if (!$existingOrg) {
@@ -95,7 +96,7 @@ class IatiDataSyncService
             return null;
         }
 
-        $codeList = getCodeList('Region', 'Activity', false);
+        $codeList = getCodeList('Country', 'Activity', false);
 
         $matches = array_filter(
             $codeList,

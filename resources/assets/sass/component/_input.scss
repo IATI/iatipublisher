@@ -253,41 +253,41 @@ label {
 }
 
 select.select2.default-value-indicator
-  + .select2
-  .selection
-  .select2-selection:not(:focus) {
++ .select2
+.selection
+.select2-selection:not(:focus) {
   border: 2px solid #3f9a7c;
   background-color: #3f9a7c15;
 }
 
 select.select2.default-value-indicator
-  + .select2
-  .selection
-  .select2-selection:not(:focus) {
++ .select2
+.selection
+.select2-selection:not(:focus) {
   border: 2px solid #3f9a7c;
   background-color: #3f9a7c15;
 }
 
 select.select2.default-value-indicator
-  + .select2
-  .selection
-  .select2-selection
-  .select2-selection__placeholder {
++ .select2
+.selection
+.select2-selection
+.select2-selection__placeholder {
   color: var(--bluecoral-50);
 }
 
 select.select2.default-value-indicator
-  + .select2.select2-container--open
-  .selection
-  .select2-selection {
++ .select2.select2-container--open
+.selection
+.select2-selection {
   border: 1px solid #a6b5ba;
   background-color: white;
 }
 
 select.select2.default-value-indicator
-  + .select2
-  .selection
-  .select2-selection.select2-selection--clearable {
++ .select2
+.selection
+.select2-selection.select2-selection--clearable {
   border: 1px solid #a6b5ba;
   background-color: white;
 }
