@@ -45,6 +45,7 @@ class IatiLoginController extends Controller
             $reportingOrgs = $this->reportingOrgApiService->getReportingOrgs($authResult->accessToken, ['include_meta' => 'yes', 'include_actions' => 'yes']);
 
             DB::beginTransaction();
+
             if (!empty($reportingOrgs)) {
                 $firstOrg = $reportingOrgs[0];
                 $orgId = $firstOrg['id'] ?? null;

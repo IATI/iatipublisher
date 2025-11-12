@@ -154,9 +154,9 @@ class IatiDataSyncService
 
         if ($user) {
             $user->update([
-                'email'              => $email,
-                'full_name'          => $this->extractName($claims),
-                'username'           => $this->extractName($claims),
+                'email'              => Arr::get($claims, 'email'),
+                'full_name'          => Arr::get($claims, 'family_name'),
+                'username'           => Arr::get($claims, 'username'),
                 'last_logged_in'     => now(),
                 'preferred_username' => Arr::get($claims, 'preferred_username'),
                 'given_name'         => Arr::get($claims, 'given_name'),
