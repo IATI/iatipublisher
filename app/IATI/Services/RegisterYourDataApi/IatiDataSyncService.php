@@ -26,6 +26,7 @@ class IatiDataSyncService
             'publisher_type'         => $publisherTypeCode,
             'address'                => $data['address'] ?? null,
             'telephone'              => $data['phone'] ?? null,
+            'name'                   => $name,
             'reporting_org'          => [
                 [
                     'ref'                => $data['organisation_identifier'] ?? null,
@@ -40,7 +41,7 @@ class IatiDataSyncService
             'migrated_from_aidsteam' => false,
             'registration_type'      => 'existing_org',
             'registry_approved'      => $data['registry_approved'] ?? false,
-            'data_license'           => $data['data_license_id'],
+            'data_license'           => $data['default_licence_id'],
         ];
 
         if (!$existingOrg) {
@@ -146,7 +147,7 @@ class IatiDataSyncService
         return $setting;
     }
 
-    public function syncUserFromClaims(string $sub, array $claims, int|null $orgId, string $role): User
+    public function syncUserFromClaims(string $sub, array $claims, int|null $orgId, string $publisherUserRole): User
     {
         // TODO: deprecate this , use 'sub' i.e uuid to query user.
         $email = Arr::get($claims, 'email');
@@ -164,7 +165,7 @@ class IatiDataSyncService
                 'locale'             => Arr::get($claims, 'locale'),
                 'picture'            => Arr::get($claims, 'picture'),
                 'organization_id'    => $orgId,
-                'role_id'            => Role::where('role', $this->mapRegisterRoleToPublisher($role))->value('id'),
+                'role_id'            => Role::where('role', $publisherUserRole)->value('id'),
             ]);
         } else {
             $user = User::create([
@@ -176,7 +177,7 @@ class IatiDataSyncService
                 'address'                 => Arr::get($claims, 'address'),
                 'is_active'               => true,
                 'email_verified_at'       => now(),
-                'role_id'                 => Role::where('role', $this->mapRegisterRoleToPublisher($role))->value('id'),
+                'role_id'                 => Role::where('role', $publisherUserRole)->value('id'),
                 'status'                  => true,
                 'language_preference'     => Arr::get($claims, 'locale', 'en'),
                 'last_logged_in'          => now(),
@@ -206,7 +207,7 @@ class IatiDataSyncService
         return $name ?: 'User-' . substr($claims['sub'] ?? 'unknown', 0, 8);
     }
 
-    private function mapRegisterRoleToPublisher(string $registryRole = 'general_user'): string
+    public function mapRegisterRoleToPublisher(string $registryRole = 'general_user'): string
     {
         return match ($registryRole) {
             'provider_admin' => 'iati_admin',

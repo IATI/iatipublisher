@@ -38,9 +38,9 @@ class IatiLoginController extends Controller
         try {
             $authResult = $this->oidcService->handleCallback();
 
-            $organization = null;
-            $orgId = null;
-            $userRole = null;
+            $publisherOrg = null;
+            $publisherOrgUUID = null;
+            $publisherUserRole = 'general_user';
 
             $reportingOrgs = $this->reportingOrgApiService->getReportingOrgs($authResult->accessToken, ['include_meta' => 'yes', 'include_actions' => 'yes']);
 
@@ -48,24 +48,26 @@ class IatiLoginController extends Controller
 
             if (!empty($reportingOrgs)) {
                 $firstOrg = $reportingOrgs[0];
-                $orgId = $firstOrg['id'] ?? null;
-                $userRole = $firstOrg['user_role'] ?? null;
+                $publisherOrgUUID = $firstOrg['id'] ?? null;
+                $publisherUserRole = $this->dataSyncService->mapRegisterRoleToPublisher($firstOrg['user_role'] ?? $publisherUserRole);
 
-                if ($orgId) {
-                    $reportingOrgMetadata = $firstOrg['metadata'] ?? [];
-                    $organization = $this->dataSyncService->syncOrganisationFromClaims(
-                        $orgId,
-                        $reportingOrgMetadata
-                    );
-                    $__ = $this->dataSyncService->syncSettings($organization);
+                if ($publisherUserRole !== 'iati_admin') {
+                    if ($publisherOrgUUID) {
+                        $reportingOrgMetadata = $firstOrg['metadata'] ?? [];
+                        $publisherOrg = $this->dataSyncService->syncOrganisationFromClaims(
+                            $publisherOrgUUID,
+                            $reportingOrgMetadata
+                        );
+                        $__ = $this->dataSyncService->syncSettings($publisherOrg);
+                    }
                 }
             }
 
             $user = $this->dataSyncService->syncUserFromClaims(
                 $authResult->subject,
                 $authResult->claims,
-                $organization?->id,
-                $userRole
+                $publisherOrg?->id,
+                $publisherUserRole
             );
 
             DB::commit();
@@ -73,10 +75,10 @@ class IatiLoginController extends Controller
             session([
                 'oidc_id_token' => $authResult->idToken,
                 'oidc_access_token' => $authResult->accessToken,
-                'org_uuid' => $orgId,
+                'org_uuid' => $publisherOrgUUID,
             ]);
 
-            cache()->put('oidc_access_token', $authResult->accessToken);
+            cache()->put('oidc_id_token', $authResult->idToken);
 
             Auth::login($user);
 
