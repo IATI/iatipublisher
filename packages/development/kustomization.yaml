@@ -8,7 +8,7 @@ resources:
 - config.yaml
 - ingress.yaml
 - pvc.yaml
-- github-credentails-sealed-secret.yaml
+- github-credentials-sealed-secret.yaml
 
 images:
   - name: ghcr.io/iati/iatipublisher/cli
