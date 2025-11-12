@@ -64,10 +64,8 @@ class Organization extends Model implements Auditable
         'updated_at',
         'old_identifiers',
         'deprecation_status_map',
-        'org_uuid',
-        'org_handle',
+        'uuid',
         'registry_approved',
-        'slug',
     ];
 
     /**

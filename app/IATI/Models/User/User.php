@@ -60,12 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         'updated_at',
         'registration_method',
         'last_logged_in',
-        'sub',
-        'preferred_username',
-        'given_name',
-        'family_name',
-        'locale',
-        'picture',
+        'uuid',
         'sign_on_method',
     ];
 

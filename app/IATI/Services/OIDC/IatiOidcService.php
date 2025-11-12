@@ -78,13 +78,13 @@ class IatiOidcService
             $client->verifyJWTSignature($idToken);
 
             $claims = (array) ($client->getVerifiedClaims() ?? []);
-            $subject = Arr::get($claims, 'sub');
+            $uuid = Arr::get($claims, 'sub');
 
-            if (!$subject) {
+            if (!$uuid) {
                 throw new OidcAuthenticationException('User identifier (sub) not found in authentication response.');
             }
 
-            return new OidcAuthenticationResult($idToken, $accessToken, $subject, $claims);
+            return new OidcAuthenticationResult($idToken, $accessToken, $uuid, $claims);
         } catch (OpenIDConnectClientException $e) {
             throw new OidcAuthenticationException('OIDC Client Error: ' . $e->getMessage(), 0, $e);
         }

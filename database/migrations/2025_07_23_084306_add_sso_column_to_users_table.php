@@ -9,16 +9,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('sub')->unique()->nullable()->after('id');
-            $table->string('preferred_username')->nullable()->after('username');
-            $table->string('given_name')->nullable()->after('full_name');
-            $table->string('family_name')->nullable()->after('given_name');
-            $table->string('locale')->nullable()->after('language_preference');
-            $table->string('picture')->nullable()->after('locale');
-            $table->string('sign_on_method')
-                ->nullable()
-                ->default('traditional')
-                ->after('migrated_from_aidstream');
+            $table->uuid()->unique()->nullable()->after('id');
+            $table->string('sign_on_method')->nullable()->default('traditional')->after('migrated_from_aidstream');
 
             DB::statement('ALTER TABLE users ALTER COLUMN password DROP NOT NULL;');
         });
@@ -28,16 +20,9 @@ return new class extends Migration {
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn([
-                'sub',
-                'preferred_username',
-                'given_name',
-                'family_name',
-                'locale',
-                'picture',
+                'uuid',
                 'sign_on_method',
             ]);
         });
-
-        DB::statement('ALTER TABLE users ALTER COLUMN password SET NOT NULL;');
     }
 };

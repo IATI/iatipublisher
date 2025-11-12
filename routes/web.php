@@ -73,14 +73,4 @@ Route::post('/logout/callback', function () {
     return redirect('/');
 });
 
-Route::get('/get-my-org', [IatiLoginController::class, 'testMyOrgApi']);
-
-Route::get('/test-auth-user', function () {
-    $url = 'https://api.eu.asgardeo.io/t/iati/oauth2/userinfo';
-
-    $client = new GuzzleHttp\Client();
-
-    $response = $client->request('GET', $url);
-
-    dd($response->getBody());
-})->middleware('auth');
+Route::get('test-publish', [IatiLoginController::class, 'testPublish']);

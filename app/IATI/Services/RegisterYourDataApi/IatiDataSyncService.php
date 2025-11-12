@@ -14,13 +14,13 @@ class IatiDataSyncService
 {
     public function syncOrganisationFromClaims(string $uuid, array $data): Organization
     {
-        $existingOrg = Organization::where('org_uuid', $uuid)->first();
+        $existingOrg = Organization::where('uuid', $uuid)->first();
 
         $publisherTypeCode = $this->mapPublisherTypeCode($data['organisation_type'] ?? null);
         $name = [['narrative' => $data['human_readable_name'] ?? null, 'language' => 'en']];
         $attributes = [
             'identifier'             => $data['organisation_identifier'],
-            'org_uuid'               => $uuid,
+            'uuid'               => $uuid,
             'publisher_id'           => $data['short_name'] ?? null,
             'publisher_name'         => $data['human_readable_name'] ?? null,
             'publisher_type'         => $publisherTypeCode,
@@ -147,11 +147,9 @@ class IatiDataSyncService
         return $setting;
     }
 
-    public function syncUserFromClaims(string $sub, array $claims, int|null $orgId, string $publisherUserRole): User
+    public function syncUserFromClaims(string $uuid, array $claims, int|null $orgId, string $publisherUserRole): User
     {
-        // TODO: deprecate this , use 'sub' i.e uuid to query user.
-        $email = Arr::get($claims, 'email');
-        $user = User::where('email', $email)->first();
+        $user = User::where('uuid', $uuid)->first();
 
         if ($user) {
             $user->update([
@@ -169,11 +167,11 @@ class IatiDataSyncService
             ]);
         } else {
             $user = User::create([
-                'sub'                     => $sub,
-                'email'                   => $email,
+                'uuid'                     => $uuid,
+                'email'                   => Arr::get($claims, 'email'),
+                'username'                => Arr::get($claims, 'username'),
                 'password'                => null,
-                'username'                => $email ?: $sub,
-                'full_name'               => $this->extractName($claims),
+                'full_name'               => Arr::get($claims, 'family_name'),
                 'address'                 => Arr::get($claims, 'address'),
                 'is_active'               => true,
                 'email_verified_at'       => now(),
@@ -204,7 +202,7 @@ class IatiDataSyncService
             $name = trim("$givenName $familyName");
         }
 
-        return $name ?: 'User-' . substr($claims['sub'] ?? 'unknown', 0, 8);
+        return $name ?: 'User-' . substr($claims['uuid'] ?? 'unknown', 0, 8);
     }
 
     public function mapRegisterRoleToPublisher(string $registryRole = 'general_user'): string

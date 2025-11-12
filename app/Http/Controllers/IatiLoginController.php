@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\IATI\Services\OIDC\IatiOidcService;
 use App\IATI\Services\OIDC\OidcAuthenticationException;
+use App\IATI\Services\RegisterYourDataApi\DatasetApiService;
 use App\IATI\Services\RegisterYourDataApi\IatiDataSyncService;
 use App\IATI\Services\RegisterYourDataApi\ReportingOrgApiService;
 use Illuminate\Http\RedirectResponse;
@@ -18,6 +19,7 @@ class IatiLoginController extends Controller
     public function __construct(
         private IatiOidcService $oidcService,
         private IatiDataSyncService $dataSyncService,
+        private DatasetApiService $datasetApiService,
         private ReportingOrgApiService $reportingOrgApiService
     ) {
     }
@@ -64,7 +66,7 @@ class IatiLoginController extends Controller
             }
 
             $user = $this->dataSyncService->syncUserFromClaims(
-                $authResult->subject,
+                $authResult->uuid,
                 $authResult->claims,
                 $publisherOrg?->id,
                 $publisherUserRole
@@ -75,7 +77,7 @@ class IatiLoginController extends Controller
             session([
                 'oidc_id_token' => $authResult->idToken,
                 'oidc_access_token' => $authResult->accessToken,
-                'org_uuid' => $publisherOrgUUID,
+                'uuid' => $publisherOrgUUID,
             ]);
 
             cache()->put('oidc_id_token', $authResult->idToken);
@@ -112,5 +114,15 @@ class IatiLoginController extends Controller
     public function showOrganizationMissingPage()
     {
         return view('auth.onboarding.organization-missing');
+    }
+
+    public function testPublish()
+    {
+        $rawAccessToken = session('oidc_access_token');
+        $accessToken = trim($rawAccessToken);
+
+        $orgUUID = session('uuid');
+
+        $availableDatasets = $this->reportingOrgApiService->getDatasetsForOrganisation($accessToken, $orgUUID);
     }
 }

@@ -44,10 +44,10 @@ class ReportingOrgApiService
      * Get detailed information about a specific organisation.
      * Corresponds to: GET /reporting-orgs/{oid}.
      */
-    public function getReportingOrgDetails(string $accessToken, string $orgId, array $queryParams = []): array
+    public function getReportingOrgDetails(string $accessToken, string $orgUUID, array $queryParams = []): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->get("reporting-orgs/{$orgId}/", $queryParams),
+            fn (PendingRequest $request) => $request->get("reporting-orgs/{$orgUUID}", $queryParams),
             $accessToken
         );
     }
@@ -56,10 +56,10 @@ class ReportingOrgApiService
      * Update metadata for an existing organisation.
      * Corresponds to: PATCH /reporting-orgs/{oid}.
      */
-    public function updateReportingOrg(string $accessToken, string $orgId, array $data): array
+    public function updateReportingOrg(string $accessToken, string $orgUUID, array $data): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->patch("reporting-orgs/{$orgId}/", $data),
+            fn (PendingRequest $request) => $request->patch("reporting-orgs/{$orgUUID}", $data),
             $accessToken
         );
     }
@@ -68,10 +68,10 @@ class ReportingOrgApiService
      * Delete an organisation.
      * Corresponds to: DELETE /reporting-orgs/{oid}.
      */
-    public function deleteReportingOrg(string $accessToken, string $orgId): void
+    public function deleteReportingOrg(string $accessToken, string $orgUUID): void
     {
         $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->delete("reporting-orgs/{$orgId}/"),
+            fn (PendingRequest $request) => $request->delete("reporting-orgs/{$orgUUID}"),
             $accessToken,
             false
         );
@@ -81,10 +81,10 @@ class ReportingOrgApiService
      * Get a list of users associated with a specific organisation.
      * Corresponds to: GET /reporting-orgs/{oid}/users.
      */
-    public function getUsersForOrganisation(string $accessToken, string $orgId): array
+    public function getUsersForOrganisation(string $accessToken, string $orgUUID): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->get("reporting-orgs/{$orgId}/users/"),
+            fn (PendingRequest $request) => $request->get("reporting-orgs/{$orgUUID}/users"),
             $accessToken
         );
     }
@@ -93,10 +93,10 @@ class ReportingOrgApiService
      * Get a list of datasets associated with a specific organisation.
      * Corresponds to: GET /reporting-orgs/{oid}/datasets.
      */
-    public function getDatasetsForOrganisation(string $accessToken, string $orgId, array $queryParams = []): array
+    public function getDatasetsForOrganisation(string $accessToken, string $orgUUID, array $queryParams = []): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->get("reporting-orgs/{$orgId}/datasets/", $queryParams),
+            fn (PendingRequest $request) => $request->get("reporting-orgs/{$orgUUID}/datasets", $queryParams),
             $accessToken
         );
     }

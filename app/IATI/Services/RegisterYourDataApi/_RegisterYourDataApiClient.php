@@ -4,7 +4,8 @@ namespace App\IATI\Services\RegisterYourDataApi;
 
 use GuzzleHttp\RequestOptions;
 use Illuminate\Http\Client\Factory as HttpClient;
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Client\Request; // Added for type hinting in $requestCallback
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Log;
 
@@ -28,7 +29,7 @@ class _RegisterYourDataApiClient
     /**
      * Executes an API request with consistent authentication and error handling.
      *
-     * @param callable $requestCallback A closure that performs the HTTP call (e.g., fn($request) => $request->post(...)).
+     * @param callable(PendingRequest): \Illuminate\Http\Client\Response $requestCallback A closure that performs the HTTP call (e.g., fn($request) => $request->post(...)).
      * @param string   $accessToken     The bearer token for authentication.
      * @param bool     $expectDataKey   Whether to extract the 'data' key from the response.
      *
@@ -43,20 +44,22 @@ class _RegisterYourDataApiClient
             $pendingRequest = $this->http
                 ->baseUrl($this->baseUrl)
                 ->acceptJson()
-                ->beforeSending(function (Request $request, array $options) {
+                ->beforeSending(function (Request $request, array $options) use ($accessToken) {
+                    $currentHeaders = $request->headers();
+
                     $curl = $this->getRequestAsCurl($request, $options);
 
                     Log::debug('RYDA API Request (cURL)', [
                         'curl_command' => $curl,
                         'url' => $request->url(),
-                        'headers' => $options[RequestOptions::HEADERS] ?? [],
+                        'headers' => $currentHeaders,
+                        'access_token' => $accessToken,
                     ]);
                 })
                 ->withHeaders([
                     'Authorization' => 'Bearer ' . $cleanAccessToken,
                 ]);
 
-            // Execute the request
             $response = $requestCallback($pendingRequest)->throw();
 
             return $expectDataKey ? $response->json('data') : $response->json();
@@ -78,8 +81,9 @@ class _RegisterYourDataApiClient
         // Start the command with method and URL
         $curl = "curl -X {$request->method()} '{$request->url()}'";
 
-        // --- 1. Add Headers ---
-        $headers = $options[RequestOptions::HEADERS] ?? [];
+        // --- 1. Add Headers (FIX: Use the Request object's headers) ---
+        // The Request object holds the merged, final headers to be sent.
+        $headers = $request->headers();
 
         foreach ($headers as $name => $values) {
             $lowerName = strtolower($name);
@@ -96,6 +100,8 @@ class _RegisterYourDataApiClient
                     }
                 }
 
+                // Ensure Accept header is also correctly included if present (often set by ->acceptJson())
+
                 // Escape value for shell use
                 $escapedValue = str_replace("'", "'\\''", $value);
                 $curl .= " -H '{$name}: {$escapedValue}'";
@@ -103,6 +109,7 @@ class _RegisterYourDataApiClient
         }
 
         // --- 2. Add Body/Payload ---
+        // (Body logic remains correct as it relies on Guzzle options keys)
 
         // Check for JSON payload (common for acceptJson())
         if (isset($options[RequestOptions::JSON])) {
@@ -128,6 +135,7 @@ class _RegisterYourDataApiClient
             $curl .= " -d '{$escapedBody}'";
 
             // If a content type wasn't set through the Laravel client, ensure it's here
+            // Note: We need to check $headers (from $request) now, not $options
             if ($contentType && !array_key_exists('Content-Type', $headers)) {
                 $curl .= " -H 'Content-Type: {$contentType}'";
             }
