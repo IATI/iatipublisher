@@ -54,13 +54,14 @@ class OrganizationWorkflowController extends Controller
             DB::beginTransaction();
             $organization = Auth::user()->organization;
 
-            if ($this->activityWorkflowService->hasNoPublisherInfo($organization->settings) || !$this->activityWorkflowService->isUserVerified()) {
+            if (!$this->activityWorkflowService->isUserVerified()) {
                 $message = $this->activityWorkflowService->getPublishErrorMessage($organization, 'organization');
 
                 return response()->json(['success' => false, 'message' => $message]);
             }
 
             $this->organizationWorkflowService->publishOrganization($organization);
+
             $this->organizationOnboardingService->updateOrganizationOnboardingStepToComplete($organization->id, OrganizationOnboarding::ORGANIZATION_DATA, true);
             DB::commit();
             $translatedMessage = trans('workflow_backend/organization_workflow_controller.organization_has_been_published_successfully');
@@ -119,9 +120,14 @@ class OrganizationWorkflowController extends Controller
      */
     public function checksForOrganizationPublish(): JsonResponse
     {
-        $message = $this->activityWorkflowService->getPublishErrorMessage(auth()->user()->organization, 'organization');
-        $translatedMessage = trans('workflow_backend/organization_workflow_controller.organization_is_ready_to_be_published');
+        $organization = auth()->user()->organization;
+        $message = $this->activityWorkflowService->getPublishErrorMessage($organization, 'organization');
+        $translatedMessage = trans(
+            'workflow_backend/organization_workflow_controller.organization_is_ready_to_be_published'
+        );
 
-        return !empty($message) ? response()->json(['success' => false, 'message' => $message]) : response()->json(['success' => true, 'message' => $translatedMessage]);
+        return !empty($message)
+            ? response()->json(['success' => false, 'message' => $message])
+            : response()->json(['success' => true, 'message' => $translatedMessage]);
     }
 }

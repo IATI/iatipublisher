@@ -15,7 +15,8 @@ use OwenIt\Auditing\Contracts\Auditable;
  */
 class ActivityPublished extends Model implements Auditable
 {
-    use HasFactory, \OwenIt\Auditing\Auditable;
+    use HasFactory;
+    use \OwenIt\Auditing\Auditable;
 
     /**
      * @var string
@@ -32,6 +33,7 @@ class ActivityPublished extends Model implements Auditable
             'published_to_registry',
             'organization_id',
             'filesize',
+            'dataset_uuid',
             'created_at',
             'updated_at',
         ];

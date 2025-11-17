@@ -103,7 +103,7 @@ class OrganizationService
      *
      * @return Model
      */
-    public function getOrganizationData($id): Model
+    public function getOrganizationData($id): Organization
     {
         return $this->organizationRepo->getOrganizationData($id);
     }

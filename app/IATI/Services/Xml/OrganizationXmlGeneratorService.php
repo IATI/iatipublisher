@@ -47,7 +47,7 @@ class OrganizationXmlGeneratorService
      *
      * @return void
      */
-    public function generateOrganizationXml($settings, $organization)
+    public function generateOrganizationXml($settings, $organization): void
     {
         $this->organizationXmlGenerator->generateOrganizationXml($settings, $organization);
     }

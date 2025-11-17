@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\IATI\Services\Workflow;
 
+use App\IATI\Models\Organization\Organization;
 use App\IATI\Services\Organization\OrganizationPublishedService;
 use App\IATI\Services\Organization\OrganizationService;
-use App\IATI\Services\Publisher\PublisherService;
+use App\IATI\Services\RegisterYourDataApi\DatasetApiService;
 use App\IATI\Services\Xml\OrganizationXmlGeneratorService;
 
 /**
@@ -15,43 +16,19 @@ use App\IATI\Services\Xml\OrganizationXmlGeneratorService;
 class OrganizationWorkflowService
 {
     /**
-     * @var OrganizationService
-     */
-    protected OrganizationService $organizationService;
-
-    /**
-     * @var OrganizationXmlGeneratorService
-     */
-    protected OrganizationXmlGeneratorService $xmlGeneratorService;
-
-    /**
-     * @var PublisherService
-     */
-    protected PublisherService $publisherService;
-
-    /**
-     * @var OrganizationPublishedService
-     */
-    protected OrganizationPublishedService $organizationPublishedService;
-
-    /**
      * OrganizationWorkflowService Constructor.
      *
-     * @param OrganizationService $organizationService
-     * @param OrganizationXmlGeneratorService $xmlGeneratorService
-     * @param PublisherService $publisherService
-     * @param OrganizationPublishedService $organizationPublishedService
+     * @param OrganizationService                                      $organizationService
+     * @param OrganizationXmlGeneratorService                          $xmlGeneratorService
+     * @param OrganizationPublishedService                             $organizationPublishedService
+     * @param DatasetApiService $datasetApiService
      */
     public function __construct(
-        OrganizationService $organizationService,
-        OrganizationXmlGeneratorService $xmlGeneratorService,
-        PublisherService $publisherService,
-        OrganizationPublishedService $organizationPublishedService,
+        protected OrganizationService $organizationService,
+        protected OrganizationXmlGeneratorService $xmlGeneratorService,
+        protected OrganizationPublishedService $organizationPublishedService,
+        protected DatasetApiService $datasetApiService,
     ) {
-        $this->organizationService = $organizationService;
-        $this->xmlGeneratorService = $xmlGeneratorService;
-        $this->publisherService = $publisherService;
-        $this->organizationPublishedService = $organizationPublishedService;
     }
 
     /**
@@ -59,9 +36,9 @@ class OrganizationWorkflowService
      *
      * @param $organizationId
      *
-     * @return \App\IATI\Models\Organization\Organization
+     * @return Organization
      */
-    public function findOrganization($organizationId): \App\IATI\Models\Organization\Organization
+    public function findOrganization($organizationId): Organization
     {
         return $this->organizationService->getOrganizationData($organizationId);
     }
@@ -72,17 +49,23 @@ class OrganizationWorkflowService
      * @param $organization
      *
      * @return void
+     * @throws \App\IATI\Services\RegisterYourDataApi\RegisterYourDataApiException
      */
     public function publishOrganization($organization): void
     {
         $settings = $organization->settings;
-        $this->xmlGeneratorService->generateOrganizationXml(
-            $settings,
-            $organization
-        );
+
+        $this->xmlGeneratorService->generateOrganizationXml($settings, $organization);
+
         $organizationPublished = $this->organizationPublishedService->getOrganizationPublished($organization->id);
-        $publishingInfo = $settings->publishing_info;
-        $this->publisherService->publishOrganizationFile($publishingInfo, $organizationPublished, $organization);
+        $datasetUUID = $organizationPublished->dataset_uuid;
+        $accessToken = session('oidc_access_token');
+        $payload = generateDatasetApiPayload($organization);
+
+        $_ = $organizationPublished
+            ? $this->datasetApiService->updateDataset($accessToken, $datasetUUID, $payload)
+            : $this->datasetApiService->createDataset($accessToken, $payload);
+
         $this->organizationService->updatePublishedStatus($organization, 'published', true);
     }
 
@@ -92,15 +75,19 @@ class OrganizationWorkflowService
      * @param $organization
      *
      * @return void
+     * @throws \App\IATI\Services\RegisterYourDataApi\RegisterYourDataApiException
      */
     public function unpublishOrganization($organization): void
     {
-        $publishedFile = $this->organizationPublishedService->getOrganizationPublished($organization->id);
-        $settings = $organization->settings;
         $organizationPublished = $this->organizationPublishedService->getOrganizationPublished($organization->id);
-        $publishingInfo = $settings->publishing_info;
-        $this->publisherService->unpublishOrganizationFile($publishingInfo, $organizationPublished);
+        $datasetUUID = $organizationPublished->dataset_uuid;
+        $accessToken = session('oidc_access_token');
+
+        if ($this->datasetApiService->getDatasetDetails($accessToken, $datasetUUID)) {
+            $this->datasetApiService->deleteDataset($accessToken, $datasetUUID);
+        }
+
         $this->organizationService->updatePublishedStatus($organization, 'draft', false);
-        $this->xmlGeneratorService->deleteUnpublishedFile($publishedFile['filename']);
+        $this->xmlGeneratorService->deleteUnpublishedFile($organizationPublished['filename']);
     }
 }

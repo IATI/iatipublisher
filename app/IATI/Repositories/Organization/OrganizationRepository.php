@@ -53,7 +53,7 @@ class OrganizationRepository extends Repository
      *
      * @return Model
      */
-    public function getOrganizationData($id): Model
+    public function getOrganizationData($id): Organization
     {
         return $this->model->findOrFail($id);
     }
@@ -264,7 +264,19 @@ class OrganizationRepository extends Repository
      */
     public function pluckAllOrganizations(): Collection
     {
-        return $this->model->select(DB::raw("case when name::text!='' and ((name->>0)::json)->>'narrative'!=null then ((name->>0)::json)->>'narrative' else publisher_name end as pub_name,id"))->get()->pluck('pub_name', 'id');
+        $sql = "
+        CASE
+            WHEN (name -> 0) ->> 'narrative' IS NOT NULL
+                 AND (name -> 0) ->> 'narrative' != ''
+            THEN (name -> 0) ->> 'narrative'
+            ELSE publisher_name
+        END as pub_name,
+        id
+    ";
+
+        return $this->model->select(DB::raw($sql))
+            ->get()
+            ->pluck('pub_name', 'id');
     }
 
     /**

@@ -73,4 +73,33 @@ Route::post('/logout/callback', function () {
     return redirect('/');
 });
 
-Route::get('test-publish', [IatiLoginController::class, 'testPublish']);
+Route::get('test-publish', [IatiLoginController::class, 'testPublish'])->middleware('auth');
+
+Route::get('/gen-uuid', function () {
+    $seenPublishers = [];
+    $allLogs = App\IATI\Models\ApiLog\ApiLog::where('url', 'https://iatiregistry.org/api/action/package_show')->get();
+    $ddable = [];
+
+    $i = 0;
+
+    foreach ($allLogs as $log) {
+        if (!str_contains($log->request['query']['id'], 'organisation') && $i < 10) {
+            $i++;
+            $requestId = $log->request['query']['id'];
+            $publisherId = str_replace($log->request['query']['id'], '-activities', $log->request['query']['id']);
+            $awsUrl = awsUrl('xml/mergedXml/' . $log->request['query']['id'] . '.xml');
+
+            $ddable[] = [
+                'file_slug'          => $requestId,
+                'dataset_uuid'       => $log->response->result->id,
+                'publisher_id'       => $publisherId,
+                'url'                => $awsUrl,
+                'file_exists_in_aws' => awsHasFile($awsUrl),
+            ];
+        }
+    }
+
+    dd($ddable);
+    $allActivityPublished = App\IATI\Models\Activity\ActivityPublished::with('organization')->all();
+    $allOrgPublished = App\IATI\Models\Organization\OrganizationPublished::with('organization')->all();
+});

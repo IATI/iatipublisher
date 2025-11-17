@@ -39,7 +39,7 @@ return [
         'logout_redirect_uri' => env('OIDC_LOGOUT_REDIRECT_URI'),
         'userinfo_endpoint'   => env('OIDC_USERINFO_ENDPOINT'),
         'token_endpoint'      => env('OIDC_TOKEN_ENDPOINT'),
-        'scopes'              => ['openid', 'email', 'profile', 'address', 'phone', 'roles', 'groups', 'iati_account'],
+        'scopes'              => ['openid', 'email', 'profile', 'address', 'phone', 'roles', 'groups', 'iati_account', 'offline_access'],
         'iatiDesignSystemUrl' => env('IATI_DESIGN_SYSTEM_URL'),
     ],
     'registry_api' => [

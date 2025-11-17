@@ -66,7 +66,7 @@ class DatasetApiService
     public function updateDataset(string $accessToken, string $datasetId, array $data): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->patch("datasets/{$datasetId}/", $data),
+            fn (PendingRequest $request) => $request->patch("datasets/{$datasetId}", $data),
             $accessToken
         );
     }
@@ -82,8 +82,6 @@ class DatasetApiService
      */
     public function deleteDataset(string $accessToken, string $datasetId): void
     {
-        // The API returns a BaseResponse which does not have a 'data' key,
-        // so we set the third parameter to false.
         $this->apiClient->executeRequest(
             fn (PendingRequest $request) => $request->delete("datasets/{$datasetId}/"),
             $accessToken,

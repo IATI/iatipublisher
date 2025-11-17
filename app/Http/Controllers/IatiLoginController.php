@@ -118,11 +118,33 @@ class IatiLoginController extends Controller
 
     public function testPublish()
     {
+        DB::enableQueryLog();
+
         $rawAccessToken = session('oidc_access_token');
         $accessToken = trim($rawAccessToken);
 
-        $orgUUID = session('uuid');
+        $org = auth()->user()->organization;
 
-        $availableDatasets = $this->reportingOrgApiService->getDatasetsForOrganisation($accessToken, $orgUUID);
+        $newDatasetPayload = [
+            /* Accessors: getHumanReadableName, sourceType */
+            'human_readable_name'   => $org->human_readable_name . 'aaa',
+            'source_type'           => $org->source_type,
+            'short_name'            => $org->publisher_id,
+            'url'                   => awsUrl('xml/mergedActivityXml/ztest-activities.xml'),
+            'visibility'            => 'public',
+            'licence_id'            => $org->data_license,
+            'owner_organisation_id' => $org->uuid,
+        ];
+
+        $queries = DB::getQueryLog();
+
+        $oldDatasets = $this->reportingOrgApiService->getDatasetsForOrganisation($accessToken, session('uuid'));
+        $newDataset = $this->datasetApiService->createDataset($accessToken, $newDatasetPayload);
+        $allDatasets1 = $this->reportingOrgApiService->getDatasetsForOrganisation($accessToken, session('uuid'));
+
+        $republishData = $this->datasetApiService->updateDataset($accessToken, 'a397d965-043f-c09b-137c-6915a820af7e', $newDatasetPayload);
+        $allDatasets2 = $this->reportingOrgApiService->getDatasetsForOrganisation($accessToken, session('uuid'));
+
+        dd($oldDatasets, $allDatasets1, $republishData, $allDatasets2);
     }
 }
