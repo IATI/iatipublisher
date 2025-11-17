@@ -17,11 +17,6 @@ class OrganizationWorkflowService
 {
     /**
      * OrganizationWorkflowService Constructor.
-     *
-     * @param OrganizationService                                      $organizationService
-     * @param OrganizationXmlGeneratorService                          $xmlGeneratorService
-     * @param OrganizationPublishedService                             $organizationPublishedService
-     * @param DatasetApiService $datasetApiService
      */
     public function __construct(
         protected OrganizationService $organizationService,
@@ -51,12 +46,11 @@ class OrganizationWorkflowService
      * @return void
      * @throws \App\IATI\Services\RegisterYourDataApi\RegisterYourDataApiException
      */
-    public function publishOrganization($organization): void
+    public function publishOrganization($organization, string $accessToken): void
     {
         $settings = $organization->settings;
 
         $organizationPublished = $this->organizationPublishedService->getOrganizationPublished($organization->id);
-        $accessToken = session('oidc_access_token');
         $payload = generateDatasetApiPayload($organization);
 
         $this->xmlGeneratorService->generateOrganizationXml($settings, $organization);
@@ -76,10 +70,9 @@ class OrganizationWorkflowService
      * @return void
      * @throws \App\IATI\Services\RegisterYourDataApi\RegisterYourDataApiException
      */
-    public function unpublishOrganization($organization): void
+    public function unpublishOrganization($organization, string $accessToken): void
     {
         $organizationPublished = $this->organizationPublishedService->getOrganizationPublished($organization->id);
-        $accessToken = session('oidc_access_token');
         $datasetUUID = $organizationPublished->dataset_uuid;
 
         if ($this->datasetApiService->getDatasetDetails($accessToken, $datasetUUID)) {

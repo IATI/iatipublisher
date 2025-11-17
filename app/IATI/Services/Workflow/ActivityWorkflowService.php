@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\IATI\Services\Workflow;
 
+use App\IATI\Models\Activity\Activity;
+use App\IATI\Models\Activity\ActivityPublished;
+use App\IATI\Models\Organization\Organization;
+use App\IATI\Models\Setting\Setting;
 use App\IATI\Repositories\ApiLog\ApiLogRepository;
 use App\IATI\Services\Activity\ActivityPublishedService;
 use App\IATI\Services\Activity\ActivityService;
@@ -26,21 +30,8 @@ use Illuminate\Support\Arr;
  */
 class ActivityWorkflowService
 {
-    private Client $client;
-
     /**
      * ActivityWorkflowService Constructor.
-     *
-     * @param OrganizationService                                      $organizationService
-     * @param SettingService                                           $settingService
-     * @param ActivityService                                          $activityService
-     * @param XmlGeneratorService                                      $xmlGeneratorService
-     * @param ActivityPublishedService                                 $activityPublishedService
-     * @param ActivitySnapshotService                                  $activitySnapshotService
-     * @param ActivityValidatorResponseService                         $validatorService
-     * @param ApiLogRepository                                         $apiLogRepo
-     * @param AuditService                                             $auditService
-     * @param DatasetApiService $datasetApiService
      */
     public function __construct(
         protected OrganizationService $organizationService,
@@ -54,7 +45,6 @@ class ActivityWorkflowService
         protected AuditService $auditService,
         protected DatasetApiService $datasetApiService,
     ) {
-        $this->client = new Client();
     }
 
     /**
@@ -72,17 +62,21 @@ class ActivityWorkflowService
     /**
      * Publish an activity to the IATI registry.
      *
-     * @param $activity
+     * @param      $activity
      * @param bool $publishFile
      *
      * @return void
      *
      * @throws Exception
      */
-    public function publishActivity($activity, bool $publishFile = true): void
+    public function publishActivity(object $activity, string $accessToken): void
     {
         $organization = $activity->organization;
         $settings = $organization->settings;
+
+        $activityPublished = $this->activityPublishedService->getActivityPublished($organization->id);
+        $payload = generateDatasetApiPayload($organization, 'activities');
+
         $generatedXmlContent = $this->xmlGeneratorService->generateActivityXml(
             $activity,
             $activity->transactions,
@@ -92,20 +86,19 @@ class ActivityWorkflowService
         );
 
         if ($generatedXmlContent) {
-            $this->xmlGeneratorService->appendCompleteActivityXmlToMergedXml($generatedXmlContent, $settings, $activity, $organization);
+            $this->xmlGeneratorService->appendCompleteActivityXmlToMergedXml(
+                $generatedXmlContent,
+                $settings,
+                $activity,
+                $organization
+            );
         } else {
             throw new Exception('Failed appending new activity to merged xml.');
         }
 
-        if ($publishFile) {
-            $activityPublished = $this->activityPublishedService->getActivityPublished($organization->id);
-            $accessToken = session('oidc_access_token');
-            $payload = generateDatasetApiPayload($organization, 'activities');
-
-            $_ = $activityPublished
-                ? $this->datasetApiService->updateDataset($accessToken, $activityPublished->dataset_uuid, $payload)
-                : $this->datasetApiService->createDataset($accessToken, $payload);
-        }
+        $_ = $activityPublished
+            ? $this->datasetApiService->updateDataset($accessToken, $activityPublished->dataset_uuid, $payload)
+            : $this->datasetApiService->createDataset($accessToken, $payload);
 
         $organizationIdentifier = $activity->organization->identifier;
         $iatiIdentifier = [
@@ -126,22 +119,17 @@ class ActivityWorkflowService
     /**
      * Publish an activities to the IATI registry.
      *
-     * @param             $activities
-     * @param             $organization
-     * @param             $settings
-     * @param bool        $publishFile
-     * @param bool|string $uuid
-     *
-     * @return void
-     *
-     * @throws \JsonException
      * @throws \App\IATI\Services\RegisterYourDataApi\RegisterYourDataApiException
+     * @throws \JsonException
      */
-    public function publishActivities($activities, $organization, $settings, bool $publishFile = true, bool|string $uuid = false): void
+    public function publishActivities(object $activities, Organization $organization, Setting $settings, string $accessToken, bool|string $uuid = false): void
     {
         if ($uuid) {
             $this->xmlGeneratorService->setUuid($uuid);
         }
+
+        $activityPublished = $this->activityPublishedService->getActivityPublished($organization->id);
+        $payload = generateDatasetApiPayload($organization, 'activities');
 
         $successfullyProcessedActivities = $this->xmlGeneratorService->generateActivitiesXml(
             $activities,
@@ -149,13 +137,11 @@ class ActivityWorkflowService
             $organization
         );
 
-        $activityPublished = $this->activityPublishedService->getActivityPublished($organization->id);
-        $accessToken = session('oidc_access_token');
-        $payload = generateDatasetApiPayload($organization, 'activities');
-
-        $_ = $activityPublished
+        $response = $activityPublished
             ? $this->datasetApiService->updateDataset($accessToken, $activityPublished->dataset_uuid, $payload)
             : $this->datasetApiService->createDataset($accessToken, $payload);
+
+        $activityPublished = $this->activityPublishedService->getActivityPublished($organization->id);
 
         $publisherId = Arr::get($organization, 'publisher_id', false);
         $mergedXmlPath = "xml/mergedActivityXml/$publisherId-activities.xml";
@@ -172,25 +158,20 @@ class ActivityWorkflowService
     /**
      * Unpublish activity and then republish required file to the IATI registry.
      *
-     * @param $activity
-     *
-     * @return void
-     *
+     * @throws \App\IATI\Services\RegisterYourDataApi\RegisterYourDataApiException
      * @throws Exception
      */
-    public function unpublishActivity($activity): void
+    public function unpublishActivity(Activity $activity, string $accessToken): void
     {
         $organization = $activity->organization;
         $settings = $organization->settings;
-        $publishedFile = $this->activityPublishedService->getActivityPublished($activity->org_id);
-
-        $this->removeActivityFromPublishedArray($publishedFile, $activity);
-
-        $this->xmlGeneratorService->removeActivityXmlFromMergedXmlInS3($activity, $organization, $settings);
 
         $activityPublished = $this->activityPublishedService->getActivityPublished($organization->id);
-        $accessToken = session('oidc_access_token');
         $payload = generateDatasetApiPayload($organization, 'activities');
+
+        $_ = $this->removeActivityFromPublishedArray($activityPublished, $activity);
+
+        $this->xmlGeneratorService->removeActivityXmlFromMergedXmlInS3($activity, $organization, $settings);
 
         $_ = $this->datasetApiService->updateDataset($accessToken, $activityPublished->dataset_uuid, $payload);
 
@@ -201,16 +182,22 @@ class ActivityWorkflowService
     /**
      * Removes activity file name from activity published row.
      *
-     * @param $publishedFile
+     * @param $activityPublished
      * @param $activity
      *
      * @return void
      */
-    public function removeActivityFromPublishedArray($publishedFile, $activity): void
+    public function removeActivityFromPublishedArray(ActivityPublished $activityPublished, Activity $activity): bool
     {
-        $containedActivities = $publishedFile->extractActivities();
+        $containedActivities = $activityPublished->extractActivities();
         $newPublishedFiles = Arr::except($containedActivities, $activity->id);
-        $this->activityPublishedService->updateActivityPublished($publishedFile, $newPublishedFiles);
+
+        return $this->activityPublishedService->update(
+            $activityPublished->id,
+            [
+                'published_activities'=>array_values($newPublishedFiles),
+            ]
+        );
     }
 
     /**
@@ -259,7 +246,10 @@ class ActivityWorkflowService
     {
         $client = new Client();
         $URI = env('IATI_VALIDATOR_ENDPOINT');
-        $params['headers'] = ['Content-Type' => 'application/json', 'Ocp-Apim-Subscription-Key' => env('IATI_VALIDATOR_KEY')];
+        $params['headers'] = [
+            'Content-Type'              => 'application/json',
+            'Ocp-Apim-Subscription-Key' => env('IATI_VALIDATOR_KEY'),
+        ];
         $params['query'] = ['group' => 'false', 'details' => 'true'];
         $params['body'] = $xmlData;
         $response = $client->post($URI, $params);
@@ -284,16 +274,6 @@ class ActivityWorkflowService
         ];
 
         return $client->postAsync($URI, $params);
-    }
-
-    /**
-     * Returns if logged in user is verified or not.
-     *
-     * @return bool
-     */
-    public function isUserVerified(): bool
-    {
-        return !is_null(auth()->user()->email_verified_at);
     }
 
     /**
@@ -324,6 +304,16 @@ class ActivityWorkflowService
         }
 
         return $messages;
+    }
+
+    /**
+     * Returns if logged in user is verified or not.
+     *
+     * @return bool
+     */
+    public function isUserVerified(): bool
+    {
+        return !is_null(auth()->user()->email_verified_at);
     }
 
     /**

@@ -31,7 +31,12 @@ use JsonException;
  */
 class RegistryValidatorJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, IatiValidatorResponseTrait, Batchable;
+    use Batchable;
+    use Dispatchable;
+    use IatiValidatorResponseTrait;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * The number of seconds the job can run before timing out.

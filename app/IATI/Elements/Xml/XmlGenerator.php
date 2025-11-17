@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\IATI\Elements\Xml;
 
 use App\Constants\Enums;
+use App\IATI\Models\Activity\Activity;
+use App\IATI\Models\Organization\Organization;
 use App\IATI\Models\Setting\Setting;
 use App\IATI\Repositories\Activity\BulkPublishingStatusRepository;
 use App\IATI\Services\Activity\ActivityPublishedService;
@@ -362,20 +364,25 @@ class XmlGenerator
      */
     public function savePublishedFiles($filename, $organizationId, $publishedActivity): array
     {
-        $published = $this->activityPublishedService->findOrCreate($filename, $organizationId);
+        $activityPublished = $this->activityPublishedService->findOrCreate($filename, $organizationId);
         $publishedActivities = $publishedActivity;
 
         if (!is_array($publishedActivity)) {
-            $publishedActivities = (array) $published->published_activities;
+            $publishedActivities = (array) $activityPublished->published_activities;
             (in_array($publishedActivity, $publishedActivities, true)) ?: array_push($publishedActivities, $publishedActivity);
         }
 
         if (is_array($publishedActivity)) {
-            $publishedActivities = (array) $published->published_activities;
+            $publishedActivities = (array) $activityPublished->published_activities;
             $publishedActivities = array_merge($publishedActivities, $publishedActivity);
         }
 
-        $this->activityPublishedService->update($published, array_values(array_unique($publishedActivities)));
+        $_ = $this->activityPublishedService->update(
+            $activityPublished->id,
+            [
+                'published_activities' => array_values(array_unique($publishedActivities)),
+            ]
+        );
 
         return $publishedActivities;
     }
@@ -741,7 +748,7 @@ class XmlGenerator
      *
      * @throws Exception
      */
-    public function removeActivityXmlFromMergedXmlInS3($activity, $organization, $settings): void
+    public function removeActivityXmlFromMergedXmlInS3(Activity $activity, Organization $organization, Setting $settings): void
     {
         $targetIatiIdentifier = $activity->iati_identifier['iati_identifier_text'];
         $mergedXml = $this->getMergedXmlFromS3($settings);

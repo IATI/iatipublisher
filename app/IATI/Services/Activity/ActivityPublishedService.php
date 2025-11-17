@@ -13,18 +13,10 @@ use Illuminate\Database\Eloquent\Model;
 class ActivityPublishedService
 {
     /**
-     * @var ActivityPublishedRepository
-     */
-    protected ActivityPublishedRepository $activityPublishedRepository;
-
-    /**
      * ActivityPublishedService constructor.
-     *
-     * @param ActivityPublishedRepository $activityPublishedRepository
      */
-    public function __construct(ActivityPublishedRepository $activityPublishedRepository)
+    public function __construct(protected ActivityPublishedRepository $activityPublishedRepository)
     {
-        $this->activityPublishedRepository = $activityPublishedRepository;
     }
 
     /**
@@ -48,9 +40,9 @@ class ActivityPublishedService
      *
      * @return bool
      */
-    public function update($activityPublished, $publishedActivities): bool
+    public function update(int $id, $data): bool
     {
-        return $this->activityPublishedRepository->updatePublishedActivity($activityPublished, $publishedActivities);
+        return $this->activityPublishedRepository->update($id, $data);
     }
 
     /**
@@ -62,21 +54,7 @@ class ActivityPublishedService
      */
     public function getActivityPublished($organization_id): object|null
     {
-        return $this->activityPublishedRepository->findBy('organization_id', $organization_id);
-    }
-
-    /**
-     * Updates activity published data.
-     *
-     * @param $publishedFile
-     * @param $publishedFile
-     * @param $newPublishedFiles
-     *
-     * @return bool
-     */
-    public function updateActivityPublished($publishedFile, $newPublishedFiles): bool
-    {
-        return $this->activityPublishedRepository->updateActivityPublished($publishedFile, $newPublishedFiles);
+        return $this->activityPublishedRepository->findByOrganizationId($organization_id);
     }
 
     /**

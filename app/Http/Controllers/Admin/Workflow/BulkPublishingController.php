@@ -34,12 +34,6 @@ class BulkPublishingController extends Controller
 {
     /**
      * BulkPublishingController Constructor.
-     *
-     * @param BulkPublishingService                                $bulkPublishingService
-     * @param ActivityService                                      $activityService
-     * @param ActivityWorkflowService                              $activityWorkflowService
-     * @param BulkPublishingStatusService                          $publishingStatusService
-     * @param ActivityPublishedService $activityPublishedService
      */
     public function __construct(
         protected BulkPublishingService $bulkPublishingService,
@@ -302,6 +296,7 @@ class BulkPublishingController extends Controller
                         $activities,
                         $organization,
                         $organization->settings,
+                        session('oidc_access_token'),
                         $response['organization_id'],
                         $response['job_batch_uuid']
                     )

@@ -27,62 +27,17 @@ class BulkPublishingService
     use IatiValidatorResponseTrait;
 
     /**
-     * @var ActivityService
-     */
-    protected ActivityService $activityService;
-
-    /**
-     * @var ActivityWorkflowService
-     */
-    protected ActivityWorkflowService $activityWorkflowService;
-
-    /**
-     * @var ActivityValidatorResponseService
-     */
-    protected ActivityValidatorResponseService $validatorService;
-
-    /**
-     * @var BulkPublishingStatusService
-     */
-    protected BulkPublishingStatusService $publishingStatusService;
-
-    protected ActivityPublishedService $activityPublishedService;
-
-    /**
-     * @var ApiLogRepository
-     */
-    protected ApiLogRepository $apiLogRepo;
-
-    /**
-     * @var ValidationStatusRepository
-     */
-    protected ValidationStatusRepository $validationStatusRepository;
-
-    /**
      * BulkPublishingService Constructor.
-     *
-     * @param ActivityService $activityService
-     * @param ActivityWorkflowService $activityWorkflowService
-     * @param ActivityValidatorResponseService $validatorService
-     * @param BulkPublishingStatusService $publishingStatusService
-     * @param ApiLogRepository $apiLogRepo
      */
     public function __construct(
-        ActivityService $activityService,
-        ActivityWorkflowService $activityWorkflowService,
-        ActivityValidatorResponseService $validatorService,
-        BulkPublishingStatusService $publishingStatusService,
-        ApiLogRepository $apiLogRepo,
-        ValidationStatusRepository $validationStatusRepository,
-        ActivityPublishedService $activityPublishedService,
+        protected ActivityService $activityService,
+        protected ActivityWorkflowService $activityWorkflowService,
+        protected ActivityValidatorResponseService $validatorService,
+        protected BulkPublishingStatusService $publishingStatusService,
+        protected ApiLogRepository $apiLogRepo,
+        protected ValidationStatusRepository $validationStatusRepository,
+        protected ActivityPublishedService $activityPublishedService,
     ) {
-        $this->activityService = $activityService;
-        $this->activityWorkflowService = $activityWorkflowService;
-        $this->validatorService = $validatorService;
-        $this->publishingStatusService = $publishingStatusService;
-        $this->apiLogRepo = $apiLogRepo;
-        $this->validationStatusRepository = $validationStatusRepository;
-        $this->activityPublishedService = $activityPublishedService;
     }
 
     /**

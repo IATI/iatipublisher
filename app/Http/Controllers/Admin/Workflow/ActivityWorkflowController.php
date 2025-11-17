@@ -23,33 +23,11 @@ class ActivityWorkflowController extends Controller
 {
     use IatiValidatorResponseTrait;
 
-    /**
-     * @var ActivityWorkflowService
-     */
-    protected ActivityWorkflowService $activityWorkflowService;
-
-    /**
-     * @var ActivityValidatorResponseService
-     */
-    protected ActivityValidatorResponseService $validatorService;
-
-    /**
-     * @var ApiLogService
-     */
-    protected ApiLogService $apiLogService;
-
-    /**
-     * ActivityWorkflowController Constructor.
-     *
-     * @param ActivityWorkflowService $activityWorkflowService
-     * @param ActivityValidatorResponseService $validatorService
-     * @param ApiLogService $apiLogService
-     */
-    public function __construct(ActivityWorkflowService $activityWorkflowService, ActivityValidatorResponseService $validatorService, ApiLogService $apiLogService)
-    {
-        $this->activityWorkflowService = $activityWorkflowService;
-        $this->validatorService = $validatorService;
-        $this->apiLogService = $apiLogService;
+    public function __construct(
+        protected ActivityWorkflowService $activityWorkflowService,
+        protected ActivityValidatorResponseService $validatorService,
+        protected ApiLogService $apiLogService
+    ) {
     }
 
     /**
@@ -72,8 +50,9 @@ class ActivityWorkflowController extends Controller
             }
 
             DB::beginTransaction();
-            $this->activityWorkflowService->publishActivity($activity);
+            $this->activityWorkflowService->publishActivity($activity, session('oidc_access_token'));
             DB::commit();
+
             $translatedMessage = trans('workflow_backend/activity_workflow_controller.activity_has_been_published_successfully');
             Session::put('success', $translatedMessage);
 
@@ -116,7 +95,7 @@ class ActivityWorkflowController extends Controller
                 return response()->json(['success' => false, 'message' => $translatedMessage]);
             }
 
-            $this->activityWorkflowService->unpublishActivity($activity);
+            $this->activityWorkflowService->unpublishActivity($activity, session('oidc_access_token'));
             DB::commit();
             $this->activityWorkflowService->deletePublishedFile($activity);
             $translatedMessage = trans('workflow_backend/activity_workflow_controller.activity_has_been_un_published_successfully');

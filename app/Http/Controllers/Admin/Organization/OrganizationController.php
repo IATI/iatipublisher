@@ -32,24 +32,12 @@ use JsonException;
 class OrganizationController extends Controller
 {
     /**
-     * @var OrganizationService
-     */
-    protected OrganizationService $organizationService;
-    /**
-     * @var OrganizationWorkflowService
-     */
-    protected OrganizationWorkflowService $organizationWorkflowService;
-
-    /**
      * OrganizationController Constructor.
-     *
-     * @param OrganizationService $organizationService
-     * @param OrganizationWorkflowService $organizationWorkflowService
      */
-    public function __construct(OrganizationService $organizationService, OrganizationWorkflowService $organizationWorkflowService)
-    {
-        $this->organizationService = $organizationService;
-        $this->organizationWorkflowService = $organizationWorkflowService;
+    public function __construct(
+        protected OrganizationService $organizationService,
+        protected OrganizationWorkflowService $organizationWorkflowService
+    ) {
     }
 
     /**

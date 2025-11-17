@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\IATI\Services\Xml;
 
 use App\IATI\Elements\Xml\XmlGenerator;
+use App\IATI\Models\Activity\Activity;
+use App\IATI\Models\Organization\Organization;
+use App\IATI\Models\Setting\Setting;
 use App\IATI\Traits\XmlServiceTrait;
 use DOMDocument;
 use Exception;
@@ -152,7 +155,7 @@ class XmlGeneratorService
      *
      * @throws Exception
      */
-    public function removeActivityXmlFromMergedXmlInS3($activity, $organization, $settings): void
+    public function removeActivityXmlFromMergedXmlInS3(Activity $activity, Organization $organization, Setting $settings): void
     {
         $this->xmlGenerator->removeActivityXmlFromMergedXmlInS3($activity, $organization, $settings);
     }

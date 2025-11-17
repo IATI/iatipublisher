@@ -13,18 +13,10 @@ use Illuminate\Support\Arr;
 class BulkPublishingStatusService
 {
     /**
-     * @var BulkPublishingStatusRepository
-     */
-    protected BulkPublishingStatusRepository $bulkPublishingStatusRepository;
-
-    /**
      * BulkPublishingStatusService constructor.
-     *
-     * @param BulkPublishingStatusRepository $bulkPublishingStatusRepository
      */
-    public function __construct(BulkPublishingStatusRepository $bulkPublishingStatusRepository)
+    public function __construct(protected BulkPublishingStatusRepository $bulkPublishingStatusRepository)
     {
-        $this->bulkPublishingStatusRepository = $bulkPublishingStatusRepository;
     }
 
     /**

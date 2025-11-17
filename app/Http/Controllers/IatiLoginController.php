@@ -139,6 +139,7 @@ class IatiLoginController extends Controller
         $queries = DB::getQueryLog();
 
         $oldDatasets = $this->reportingOrgApiService->getDatasetsForOrganisation($accessToken, session('uuid'));
+        dd($oldDatasets);
         $newDataset = $this->datasetApiService->createDataset($accessToken, $newDatasetPayload);
         $allDatasets1 = $this->reportingOrgApiService->getDatasetsForOrganisation($accessToken, session('uuid'));
 
