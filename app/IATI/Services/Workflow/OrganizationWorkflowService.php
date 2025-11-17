@@ -55,15 +55,14 @@ class OrganizationWorkflowService
     {
         $settings = $organization->settings;
 
-        $this->xmlGeneratorService->generateOrganizationXml($settings, $organization);
-
         $organizationPublished = $this->organizationPublishedService->getOrganizationPublished($organization->id);
-        $datasetUUID = $organizationPublished->dataset_uuid;
         $accessToken = session('oidc_access_token');
         $payload = generateDatasetApiPayload($organization);
 
+        $this->xmlGeneratorService->generateOrganizationXml($settings, $organization);
+
         $_ = $organizationPublished
-            ? $this->datasetApiService->updateDataset($accessToken, $datasetUUID, $payload)
+            ? $this->datasetApiService->updateDataset($accessToken, $organizationPublished->dataset_uuid, $payload)
             : $this->datasetApiService->createDataset($accessToken, $payload);
 
         $this->organizationService->updatePublishedStatus($organization, 'published', true);
@@ -80,8 +79,8 @@ class OrganizationWorkflowService
     public function unpublishOrganization($organization): void
     {
         $organizationPublished = $this->organizationPublishedService->getOrganizationPublished($organization->id);
-        $datasetUUID = $organizationPublished->dataset_uuid;
         $accessToken = session('oidc_access_token');
+        $datasetUUID = $organizationPublished->dataset_uuid;
 
         if ($this->datasetApiService->getDatasetDetails($accessToken, $datasetUUID)) {
             $this->datasetApiService->deleteDataset($accessToken, $datasetUUID);

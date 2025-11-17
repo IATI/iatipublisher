@@ -36,31 +36,11 @@
           class="relative flex w-[900px] items-center justify-center px-[40px]"
         >
           <Transition mode="out-in">
-            <div v-if="step === 1" class="h-full">
-              <PublishingSettingsStep
-                :publisher-id="props.organization.publisher_id"
-                :organization-id="props.organization.id"
-                :registration-type="props.organization.registration_type"
-                :publisher-setting="publisherSetting"
-                :fetch-data="fetchData"
-                :initial-render="initialRender"
-                :status="
-                  organizationSteps?.find(
-                    (onboardingStep) => onboardingStep.step === 1
-                  )?.complete ?? false
-                "
-                @proceed-step="proceedStep"
-                @change-render="handleChangeRender"
-                @complete-step="completeStep"
-                @remove-completed-step="removeCompletedStep"
-              />
-            </div>
-
             <div
-              v-else-if="step === 2"
+              v-if="step === 1"
               :class="{
                 'h-full': organizationSteps?.find(
-                  (onboardingStep) => onboardingStep.step === 2
+                  (onboardingStep) => onboardingStep.step === 1
                 )?.complete,
               }"
               class="w-full"
@@ -76,7 +56,7 @@
                 :default-values="defaultValue"
                 :status="
                   organizationSteps?.find(
-                    (onboardingStep) => onboardingStep.step === 2
+                    (onboardingStep) => onboardingStep.step === 1
                   )?.complete ?? false
                 "
                 :fetch-data="fetchData"
@@ -88,10 +68,10 @@
             </div>
 
             <div
-              v-else-if="step === 3"
+              v-else-if="step === 2"
               :class="{
                 'h-full': organizationSteps?.find(
-                  (onboardingStep) => onboardingStep.step === 3
+                  (onboardingStep) => onboardingStep.step === 2
                 )?.complete,
               }"
               class="w-full"
@@ -102,7 +82,7 @@
                 :fetch-data="fetchData"
                 :status="
                   organizationSteps?.find(
-                    (onboardingStep) => onboardingStep.step === 3
+                    (onboardingStep) => onboardingStep.step === 2
                   )?.complete ?? false
                 "
                 @proceed-step="proceedStep"
@@ -116,7 +96,7 @@
               <ActivityStep
                 :status="
                   organizationSteps?.find(
-                    (onboardingStep) => onboardingStep.step === 4
+                    (onboardingStep) => onboardingStep.step === 3
                   )?.complete
                 "
                 @proceed-step="proceedStep"

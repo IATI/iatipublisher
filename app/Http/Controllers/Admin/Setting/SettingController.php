@@ -21,7 +21,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use JsonException;
 use Throwable;
@@ -91,14 +90,7 @@ class SettingController extends Controller
         try {
             $setting = $this->settingService->getSetting();
 
-            $publisherData = [
-                'publisher_id' => $setting->publishing_info['publisher_id'],
-                'api_token'    => Arr::get($setting->publishing_info, 'api_token', false),
-            ];
-
-            $verifyPublisherInfo = $this->verifyPublisher($publisherData);
-            $verifyApiInfo = $this->verifyApi($publisherData);
-            [$tokenStatus] = $this->getTokenStatusAndMessage($verifyPublisherInfo, $verifyApiInfo);
+            $tokenStatus = Enums::TOKEN_CORRECT;
 
             $publishing_info = $setting->publishing_info;
             $publishing_info['token_status'] = $tokenStatus;
@@ -117,9 +109,7 @@ class SettingController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => $translatedMessage,
-                    'errors' => [
-                        'publisher_id' => $translatedMessage,
-                    ],
+                    'errors' => [],
                     'data' => $setting,
                 ]);
             }
@@ -148,7 +138,8 @@ class SettingController extends Controller
             $publisherData['publisher_verification'] = $verifyPublisherInfo['validation'];
             $publisherData['token_verification'] = $verifyApiInfo['validation'];
 
-            [$tokenStatus, $message] = $this->getTokenStatusAndMessage($verifyPublisherInfo, $verifyApiInfo);
+            $tokenStatus = Enums::TOKEN_CORRECT;
+            $message = trans('settings/setting_controller.api_token_verified_successfully');
             $publisherData['token_status'] = $tokenStatus;
 
             return response()->json(['success' => true, 'message' => $message, 'data' => $publisherData]);
@@ -199,10 +190,10 @@ class SettingController extends Controller
             $verifyApiInfo = $this->verifyApi($settingData);
 
             if (isset($verifyApiInfo['success'])) {
-                [$tokenStatus] = $this->getTokenStatusAndMessage($verifyPublisherInfo, $verifyApiInfo);
+                $tokenStatus = Enums::TOKEN_CORRECT;
                 $settingData['publisher_verification'] = $verifyPublisherInfo['validation'];
                 $settingData['token_status'] = $tokenStatus;
-                $settingData['token_verification'] = $tokenStatus === Enums::TOKEN_CORRECT;
+                $settingData['token_verification'] = true;
 
                 if ($tokenStatus === Enums::TOKEN_INCORRECT) {
                     $translatedMessage = trans('settings/setting_controller.your_api_token_is_invalid');
@@ -222,7 +213,7 @@ class SettingController extends Controller
                 }
 
                 if ($this->organizationOnboardingService->checkPublishingSettingsComplete($settingData)) {
-                    $this->organizationOnboardingService->updateOrganizationOnboardingStepToComplete(Auth::user()->organization_id, OrganizationOnboarding::PUBLISHING_SETTINGS, true);
+                    $this->organizationOnboardingService->updateOrganizationOnboardingStepToComplete(Auth::user()->organization_id, OrganizationOnboarding::DEFAULT_VALUES, true);
                 }
 
                 $this->db->commit();

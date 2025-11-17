@@ -18,8 +18,8 @@
       </div>
     </div>
     <div class="register mt-6" @keyup.enter="autoVerify">
-      <div class="register__container">
-        <div>
+      <div class="flex w-full items-start gap-4">
+        <div class="flex-grow">
           <div class="relative">
             <div class="flex justify-between">
               <label for="publisher-id"
@@ -57,90 +57,26 @@
           <span v-if="publishingError.publisher_id" class="error" role="alert">
             {{ publishingError.publisher_id }}
           </span>
-        </div>
-        <div>
-          <div class="relative">
-            <div class="flex justify-between">
-              <label for="api-token"
-                >{{ translatedData['common.common.api_token'] }}
-              </label>
-              <button>
-                <HoverText
-                  :name="translatedData['common.common.api_token']"
-                  :hover-text="
-                    translatedData[
-                      'common.common.the_api_token_is_a_unique_key_that_is_generated_from_your_organisation'
-                    ]
-                  "
-                  :show-iati-reference="true"
-                />
-              </button>
-            </div>
-
-            <div class="relative">
-              <input
-                id="api-token"
-                v-model="publishingForm.api_token"
-                class="register__input mb-2"
-                :class="{
-                  error__input: publishingError.api_token,
-                }"
-                :disabled="userRole !== 'admin'"
-                type="text"
-                :placeholder="
-                  translatedData['common.common.enter_api_token_here']
-                "
-                @input="updateStore('api_token')"
-              />
-              <ShimmerLoading
-                v-if="!initialApiCallCompleted"
-                class="!absolute top-[50%] !m-0 !ml-2 !h-8 !w-[96%] -translate-y-1/2"
-              />
-              <span
-                v-if="showTag && publishingInfo.isVerificationRequested"
-                :class="{
-                  tag__correct: publishingForm.token_status === 'Correct',
-                  tag__pending: publishingForm.token_status === 'Pending',
-                  tag__incorrect: publishingForm.token_status === 'Incorrect',
-                }"
-              >
-                {{
-                  translatedData[
-                    publishingForm.token_status === 'Correct'
-                      ? 'common.common.correct'
-                      : publishingForm.token_status === 'Pending'
-                      ? 'common.common.pending'
-                      : 'common.common.incorrect'
-                  ]
-                }}
-              </span>
-            </div>
-          </div>
-          <span v-if="publishingError.api_token" class="error" role="alert">
-            {{ publishingError.api_token }}
-          </span>
+          <button
+            :class="userRole !== 'admin' && 'cursor-not-allowed'"
+            class="primary-btn verify-btn"
+            @click="submitPublishing"
+          >
+            {{ translatedData['common.common.verify'] }}
+          </button>
         </div>
       </div>
-      <button
-        :class="userRole !== 'admin' && 'cursor-not-allowed'"
-        class="primary-btn verify-btn"
-        @click="submitPublishing"
-      >
-        {{ translatedData['common.common.verify'] }}
-      </button>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, ref, computed, inject, watch } from 'vue';
 import { useStore } from '../../store';
-import { ActionTypes } from '../../store/setting/actions';
+import { ActionTypes } from 'Store/setting/actions';
 import HoverText from './../../components/HoverText.vue';
-import ShimmerLoading from 'Components/ShimmerLoading.vue';
 
 export default defineComponent({
   components: {
-    ShimmerLoading,
     HoverText,
   },
   props: {

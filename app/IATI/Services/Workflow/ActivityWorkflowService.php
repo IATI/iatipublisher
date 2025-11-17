@@ -99,12 +99,11 @@ class ActivityWorkflowService
 
         if ($publishFile) {
             $activityPublished = $this->activityPublishedService->getActivityPublished($organization->id);
-            $datasetUUID = $activityPublished->dataset_uuid;
             $accessToken = session('oidc_access_token');
             $payload = generateDatasetApiPayload($organization, 'activities');
 
             $_ = $activityPublished
-                ? $this->datasetApiService->updateDataset($accessToken, $datasetUUID, $payload)
+                ? $this->datasetApiService->updateDataset($accessToken, $activityPublished->dataset_uuid, $payload)
                 : $this->datasetApiService->createDataset($accessToken, $payload);
         }
 
@@ -151,12 +150,11 @@ class ActivityWorkflowService
         );
 
         $activityPublished = $this->activityPublishedService->getActivityPublished($organization->id);
-        $datasetUUID = $activityPublished->dataset_uuid;
         $accessToken = session('oidc_access_token');
         $payload = generateDatasetApiPayload($organization, 'activities');
 
         $_ = $activityPublished
-            ? $this->datasetApiService->updateDataset($accessToken, $datasetUUID, $payload)
+            ? $this->datasetApiService->updateDataset($accessToken, $activityPublished->dataset_uuid, $payload)
             : $this->datasetApiService->createDataset($accessToken, $payload);
 
         $publisherId = Arr::get($organization, 'publisher_id', false);
@@ -191,11 +189,10 @@ class ActivityWorkflowService
         $this->xmlGeneratorService->removeActivityXmlFromMergedXmlInS3($activity, $organization, $settings);
 
         $activityPublished = $this->activityPublishedService->getActivityPublished($organization->id);
-        $datasetUUID = $activityPublished->dataset_uuid;
         $accessToken = session('oidc_access_token');
         $payload = generateDatasetApiPayload($organization, 'activities');
 
-        $_ = $this->datasetApiService->updateDataset($accessToken, $datasetUUID, $payload);
+        $_ = $this->datasetApiService->updateDataset($accessToken, $activityPublished->dataset_uuid, $payload);
 
         $this->activityService->updatePublishedStatus($activity, 'draft', false);
         $this->validatorService->deleteValidatorResponse($activity->id);
