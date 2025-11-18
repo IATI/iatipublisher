@@ -38,7 +38,7 @@ class SuperAdminMiddleware
 
         return redirect()->route('admin.activities.index')->with(
             'error',
-            'You need to be superadmin to use this route.'
+            'You do not have access to this. Please contact your administrator.'
         );
     }
 }

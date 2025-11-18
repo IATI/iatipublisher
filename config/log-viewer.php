@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\SuperAdminMiddleware;
 use Arcanedev\LogViewer\Contracts\Utilities\Filesystem;
 
 return [
@@ -52,8 +53,7 @@ return [
 
         'attributes' => [
             'prefix'     => 'log-viewer',
-
-            'middleware' => ['admin', 'auth'],
+            'middleware' => ['web', 'auth', SuperAdminMiddleware::class],
         ],
     ],
 

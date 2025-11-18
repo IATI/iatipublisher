@@ -143,7 +143,7 @@
               </span>
               <span class="text-sm leading-relaxed">{{
                 datum['status'] === 'draft'
-                  ? translatedData['common.common.status']
+                  ? translatedData['common.common.draft']
                   : translatedData['common.common.published']
               }}</span>
             </button>
