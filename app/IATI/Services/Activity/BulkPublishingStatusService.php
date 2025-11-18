@@ -153,4 +153,9 @@ class BulkPublishingStatusService
     {
         return $this->bulkPublishingStatusRepository->deleteBulkPublishingStatus($organizationId);
     }
+
+    public function updateBulkActivityStatus(array $activityIds, string $uuid, string $status): int
+    {
+        return $this->bulkPublishingStatusRepository->updateBulkStatus($activityIds, $uuid, $status);
+    }
 }

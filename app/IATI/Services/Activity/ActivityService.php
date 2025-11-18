@@ -247,6 +247,11 @@ class ActivityService
         return $this->activityRepository->updatePublishedStatus($activity, $status, $linkedToIati);
     }
 
+    public function bulkUpdatePublishedStatus($activityIds, $status, $linkedToIati): bool
+    {
+        return $this->activityRepository->bulkUpdatePublishedStatus($activityIds, $status, $linkedToIati);
+    }
+
     /**
      * Deletes desired activity.
      *
@@ -863,5 +868,9 @@ class ActivityService
     public function checkNonPublishedActivities($activityIds): int
     {
         return $this->activityRepository->checkNonPublishedActivities($activityIds);
+    }
+
+    public function updateBulkPublishedStatus($activityIds, string $string, bool $true)
+    {
     }
 }

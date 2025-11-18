@@ -132,6 +132,11 @@ class OrganizationService
         return $this->organizationRepo->updatePublishedStatus($organization, $status, $alreadyPublished);
     }
 
+    public function update($organization, array $data)
+    {
+        return $organization->update($data);
+    }
+
     /**
      * Return organization mandatory elements progress in percentage.
      *

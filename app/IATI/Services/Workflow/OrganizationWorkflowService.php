@@ -46,18 +46,29 @@ class OrganizationWorkflowService
      * @return void
      * @throws \App\IATI\Services\RegisterYourDataApi\RegisterYourDataApiException
      */
-    public function publishOrganization($organization, string $accessToken): void
+    public function publishOrganization(Organization $organization, string $accessToken): void
     {
         $settings = $organization->settings;
 
         $organizationPublished = $this->organizationPublishedService->getOrganizationPublished($organization->id);
-        $payload = generateDatasetApiPayload($organization);
 
         $this->xmlGeneratorService->generateOrganizationXml($settings, $organization);
 
-        $_ = $organizationPublished
+        $payload = generateDatasetApiPayload($organization);
+        $response = $organizationPublished
             ? $this->datasetApiService->updateDataset($accessToken, $organizationPublished->dataset_uuid, $payload)
             : $this->datasetApiService->createDataset($accessToken, $payload);
+
+        $filename = "$organization->publisher_id.organisation.xml";
+        $organizationPublishedData = [
+            'filename'              => $filename,
+            'organization_id'       => $organization->id,
+            'published_to_registry' => true,
+            'dataset_uuid'          => $response['id'],
+        ];
+
+        $organizationPublished = $this->organizationPublishedService->findOrCreate($filename, $organization->id);
+        $organizationPublished->fill($organizationPublishedData)->save();
 
         $this->organizationService->updatePublishedStatus($organization, 'published', true);
     }
@@ -73,6 +84,11 @@ class OrganizationWorkflowService
     public function unpublishOrganization($organization, string $accessToken): void
     {
         $organizationPublished = $this->organizationPublishedService->getOrganizationPublished($organization->id);
+
+        if ($organizationPublished) {
+            return;
+        }
+
         $datasetUUID = $organizationPublished->dataset_uuid;
 
         if ($this->datasetApiService->getDatasetDetails($accessToken, $datasetUUID)) {
@@ -81,5 +97,7 @@ class OrganizationWorkflowService
 
         $this->organizationService->updatePublishedStatus($organization, 'draft', false);
         $this->xmlGeneratorService->deleteUnpublishedFile($organizationPublished['filename']);
+
+        $this->organizationPublishedService->delete($organizationPublished->id);
     }
 }

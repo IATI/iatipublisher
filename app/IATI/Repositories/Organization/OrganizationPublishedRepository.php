@@ -55,19 +55,4 @@ class OrganizationPublishedRepository extends Repository
     {
         return $this->model->where('organization_id', $organization_id)->first();
     }
-
-    /**
-     * Updates activity published data.
-     *
-     * @param $publishedFile
-     * @param $newPublishedFiles
-     *
-     * @return bool
-     */
-    public function updateOrganizationPublished($publishedFile, $newPublishedFiles): bool
-    {
-        $publishedFile->published_activities = array_values($newPublishedFiles);
-
-        return $publishedFile->save();
-    }
 }

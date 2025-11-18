@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin\Workflow;
 
-use App\Exceptions\PublisherNotFound;
 use App\Http\Controllers\Controller;
 use App\IATI\Services\ApiLog\ApiLogService;
 use App\IATI\Services\Validator\ActivityValidatorResponseService;
 use App\IATI\Services\Workflow\ActivityWorkflowService;
 use App\IATI\Traits\IatiValidatorResponseTrait;
-use App\Jobs\RegistryValidatorJob;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -28,50 +25,6 @@ class ActivityWorkflowController extends Controller
         protected ActivityValidatorResponseService $validatorService,
         protected ApiLogService $apiLogService
     ) {
-    }
-
-    /**
-     * Publish an activity.
-     *
-     * @param $id
-     *
-     * @return JsonResponse
-     */
-    public function publish($id): JsonResponse
-    {
-        try {
-            $activity = $this->activityWorkflowService->findActivity($id);
-            $message = $this->activityWorkflowService->getPublishErrorMessage($activity->organization);
-
-            if (!empty($message)) {
-                Session::put('error', $message);
-
-                return response()->json(['success' => false, 'message' => $message]);
-            }
-
-            DB::beginTransaction();
-            $this->activityWorkflowService->publishActivity($activity, session('oidc_access_token'));
-            DB::commit();
-
-            $translatedMessage = trans('workflow_backend/activity_workflow_controller.activity_has_been_published_successfully');
-            Session::put('success', $translatedMessage);
-
-            return response()->json(['success' => true, 'message' => $translatedMessage]);
-        } catch (PublisherNotFound $message) {
-            DB::rollBack();
-            logger()->error($message->getMessage());
-            Session::put('error', $message->getMessage());
-
-            return response()->json(['success' => false, 'message' => $message->getMessage()]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            logger()->error($e);
-            $translatedMessage = trans('workflow_backend/activity_workflow_controller.error_has_occurred_while_publishing_activity');
-
-            Session::put('error', $translatedMessage);
-
-            return response()->json(['success' => false, 'message' => $translatedMessage]);
-        }
     }
 
     /**
@@ -107,62 +60,6 @@ class ActivityWorkflowController extends Controller
             logger()->error($e);
             $translatedMessage = trans('workflow_backend/activity_workflow_controller.error_has_occurred_while_un_publishing_activity');
             Session::put('error', $translatedMessage);
-
-            return response()->json(['success' => false, 'message' => $translatedMessage]);
-        }
-    }
-
-    /**
-     * Validates activity on the IATI Validator.
-     *
-     * @param $id
-     *
-     * @return JsonResponse
-     */
-    public function validateActivity($id): JsonResponse
-    {
-        try {
-            $activity = $this->activityWorkflowService->findActivity($id);
-            $message = $this->activityWorkflowService->getPublishErrorMessage($activity->organization);
-            $user = Auth::user();
-
-            if (!empty($message)) {
-                Session::put('error', $message);
-
-                return response()->json(['success' => false, 'message' => $message]);
-            }
-
-            RegistryValidatorJob::dispatch($activity, $user);
-            $translatedMessage = 'Validating Activities';
-
-            return response()->json(['success' => true, 'message' => $translatedMessage]);
-        } catch (\Exception $e) {
-            logger()->error($e);
-            $translatedMessage = trans('workflow_backend/activity_workflow_controller.error_has_occurred_while_validating_activity');
-
-            return response()->json(['success' => false, 'error' => $translatedMessage]);
-        }
-    }
-
-    /**
-     * Performs required checks for publishing activity.
-     *
-     * @return JsonResponse
-     */
-    public function checksForActivityPublish(): JsonResponse
-    {
-        try {
-            $message = $this->activityWorkflowService->getPublishErrorMessage(auth()->user()->organization);
-
-            if (!empty($message)) {
-                return response()->json(['success' => false, 'message' => $message]);
-            }
-            $translatedMessage = trans('common/common.activity_is_ready_to_be_published');
-
-            return response()->json(['success' => true, 'message' => $translatedMessage]);
-        } catch (\Exception $e) {
-            logger()->error($e);
-            $translatedMessage = trans('common/common.error_has_occurred_while_checking_activity');
 
             return response()->json(['success' => false, 'message' => $translatedMessage]);
         }

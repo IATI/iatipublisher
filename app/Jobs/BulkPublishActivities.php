@@ -102,6 +102,7 @@ class BulkPublishActivities implements ShouldQueue
     {
         try {
             DB::beginTransaction();
+
             $this->activityWorkflowService->publishActivities(
                 $this->activities,
                 $this->organization,
@@ -110,18 +111,22 @@ class BulkPublishActivities implements ShouldQueue
                 $this->uuid
             );
 
-            foreach ($this->activities as $activity) {
-                $this->publishingStatusService->updateActivityStatus($activity->id, $this->uuid, 'completed');
-            }
+            $activityIds = $this->activities->pluck('id')->toArray();
+
+            $this->publishingStatusService->updateBulkActivityStatus($activityIds, $this->uuid, 'completed');
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+
             logger()->error($e);
             awsUploadFile('error-bulk-publish.log', $e->getMessage());
-            foreach ($this->activities as $activity) {
-                $this->activityService->updatePublishedStatus($activity, 'draft', false);
-                $this->publishingStatusService->updateActivityStatus($activity->id, $this->uuid, 'failed');
-            }
+
+            $activityIds = $this->activities->pluck('id')->toArray();
+
+            $this->activityService->bulkUpdatePublishedStatus($activityIds, 'draft', false);
+
+            $this->publishingStatusService->updateBulkActivityStatus($activityIds, $this->uuid, 'failed');
         }
     }
 

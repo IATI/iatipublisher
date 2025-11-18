@@ -40,8 +40,6 @@ class OrganizationWorkflowController extends Controller
     public function publish(): JsonResponse
     {
         try {
-            DB::beginTransaction();
-
             $organization = Auth::user()->organization;
 
             if (!$this->activityWorkflowService->isUserVerified()) {
@@ -49,6 +47,8 @@ class OrganizationWorkflowController extends Controller
 
                 return response()->json(['success' => false, 'message' => $message]);
             }
+
+            DB::beginTransaction();
 
             $this->organizationWorkflowService->publishOrganization($organization, session('oidc_access_token'));
 
@@ -88,7 +88,6 @@ class OrganizationWorkflowController extends Controller
     public function unPublish(): JsonResponse|RedirectResponse
     {
         try {
-            DB::beginTransaction();
             $organization = Auth::user()->organization;
 
             if (!$organization->is_published && $organization->status === 'draft') {
@@ -99,13 +98,13 @@ class OrganizationWorkflowController extends Controller
                 return redirect()->route('admin.activities.index')->with('error', $translatedMessage);
             }
 
+            DB::beginTransaction();
+
             $this->organizationWorkflowService->unpublishOrganization($organization, session('oidc_access_token'));
-            $this->organizationOnboardingService->updateOrganizationOnboardingStepToComplete(
-                $organization->id,
-                OrganizationOnboarding::ORGANIZATION_DATA,
-                false
-            );
+            $this->organizationOnboardingService->updateOrganizationOnboardingStepToComplete($organization->id, OrganizationOnboarding::ORGANIZATION_DATA, false);
+
             DB::commit();
+
             $translatedMessage = trans(
                 'workflow_backend/organization_workflow_controller.organization_has_been_un_published_successfully'
             );

@@ -70,17 +70,6 @@ class ActivityPublishedService
     }
 
     /**
-     * @param           $activityPublished
-     * @param float|int $mergedFilesize
-     *
-     * @return void
-     */
-    public function updateFilesize($activityPublished, float|int $mergedFilesize): void
-    {
-        $this->activityPublishedRepository->updateFilesize($activityPublished, $mergedFilesize);
-    }
-
-    /**
      * @param $orgId
      *
      * @return int|float
@@ -88,5 +77,26 @@ class ActivityPublishedService
     public function getPublisherFileSize(int|string $orgId): int|float
     {
         return $this->activityPublishedRepository->getPublisherFileSize($orgId);
+    }
+
+    /**
+     * Stores published file details for a bulk operation.
+     */
+    public function trackActivityPublished(int $organizationId, string $mergedFileName, array $publishedActivityFileNames, $filesize, $uuid): bool
+    {
+        $activityPublished = $this->findOrCreate($mergedFileName, $organizationId);
+        $currentPublishedActivities = (array) $activityPublished->published_activities;
+
+        $newPublishedActivities = array_merge($currentPublishedActivities, $publishedActivityFileNames);
+
+        return $this->update(
+            $activityPublished->id,
+            [
+                'published_activities'  => array_values(array_unique($newPublishedActivities)),
+                'filesize'              => $filesize,
+                'published_to_registry' => true,
+                'dataset_uuid'          => $uuid,
+            ]
+        );
     }
 }
