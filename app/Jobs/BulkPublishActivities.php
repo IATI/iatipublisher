@@ -112,7 +112,10 @@ class BulkPublishActivities implements ShouldQueue
             );
 
             $activityIds = $this->activities->pluck('id')->toArray();
-
+            logger('$activityIds');
+            logger($activityIds);
+            logger('$this->uuid');
+            logger($this->uuid);
             $this->publishingStatusService->updateBulkActivityStatus($activityIds, $this->uuid, 'completed');
 
             DB::commit();

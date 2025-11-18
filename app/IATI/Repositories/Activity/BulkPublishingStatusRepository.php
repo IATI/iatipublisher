@@ -179,7 +179,7 @@ class BulkPublishingStatusRepository extends Repository
         }
 
         return $this->model->whereIn('activity_id', $activityIds)
-            ->where('uuid', $uuid)
+            ->where('job_batch_uuid', $uuid)
             ->update(['status' => $status, 'updated_at' => now()]);
     }
 }
