@@ -97,6 +97,7 @@ class BulkPublishActivities implements ShouldQueue
      * Publishes activity and updates publish status table.
      *
      * @return void
+     * @throws \Throwable
      */
     public function publishActivities(): void
     {
@@ -112,10 +113,6 @@ class BulkPublishActivities implements ShouldQueue
             );
 
             $activityIds = $this->activities->pluck('id')->toArray();
-            logger('$activityIds');
-            logger($activityIds);
-            logger('$this->uuid');
-            logger($this->uuid);
             $this->publishingStatusService->updateBulkActivityStatus($activityIds, $this->uuid, 'completed');
 
             DB::commit();

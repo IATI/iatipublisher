@@ -56,7 +56,7 @@ class IatiLoginController extends Controller
                 if ($publisherUserRole !== 'iati_admin') {
                     if ($publisherOrgUUID) {
                         $reportingOrgMetadata = $firstOrg['metadata'] ?? [];
-                        $publisherOrg = $this->dataSyncService->syncOrganisationFromClaims(
+                        $publisherOrg = $this->dataSyncService->syncOrganizationDownstream(
                             $publisherOrgUUID,
                             $reportingOrgMetadata
                         );

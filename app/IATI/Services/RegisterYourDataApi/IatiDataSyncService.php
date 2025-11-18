@@ -12,7 +12,11 @@ use Illuminate\Support\Arr;
 
 class IatiDataSyncService
 {
-    public function syncOrganisationFromClaims(string $uuid, array $data): Organization
+    public function __construct(private ReportingOrgApiService $reportingOrgApiService)
+    {
+    }
+
+    public function syncOrganizationDownstream(string $uuid, array $data): Organization
     {
         $existingOrg = Organization::where('uuid', $uuid)->first();
 
@@ -193,18 +197,9 @@ class IatiDataSyncService
         return $user;
     }
 
-    private function extractName(array $claims): string
-    {
-        $name = Arr::get($claims, 'name') ?? Arr::get($claims, 'preferred_username');
-        if (empty($name)) {
-            $givenName = Arr::get($claims, 'given_name');
-            $familyName = Arr::get($claims, 'family_name');
-            $name = trim("$givenName $familyName");
-        }
-
-        return $name ?: 'User-' . substr($claims['uuid'] ?? 'unknown', 0, 8);
-    }
-
+    /**
+     * Maps registry role against system roles.
+     */
     public function mapRegisterRoleToPublisher(string $registryRole = 'general_user'): string
     {
         return match ($registryRole) {
@@ -214,5 +209,99 @@ class IatiDataSyncService
             'contributor'    => 'general_user',
             default          => 'general_user'
         };
+    }
+
+    /**
+     * Orchestrates the building of the API PATCH payload and sends the update request.
+     */
+    public function syncOrganizationUpstream(Organization $organization, array $dirtyAttributes): bool
+    {
+        $apiPayload = $this->buildReportingOrgApiPayload($organization, $dirtyAttributes);
+
+        if (empty($apiPayload)) {
+            return true;
+        }
+
+        $accessToken = session('oidc_access_token');
+
+        $this->reportingOrgApiService->updateReportingOrg($accessToken, $organization->uuid, $apiPayload);
+
+        return true;
+    }
+
+    /**
+     * Reverse maps the IATI organisation type code (e.g., '10') back to the API label (e.g., 'Regional NGO').
+     */
+    private function mapPublisherCodeToLabel(?string $publisherTypeCode): ?string
+    {
+        $codeList = getCodeList('OrganizationType', 'Organization', false);
+
+        return Arr::get($codeList, $publisherTypeCode);
+    }
+
+    /**
+     * Reverse maps the internal country code (e.g., 'CO') back to the API country name.
+     */
+    private function mapCountryCodeToLabel(?string $countryCode): ?string
+    {
+        $codeList = getCodeList('Country', 'Activity', false);
+
+        return Arr::get($codeList, $countryCode);
+    }
+
+    /**
+     * Reverse maps the internal boolean secondary_reporter flag to the API label.
+     */
+    private function mapSecondaryReporterToLabel(?string $isSecondaryReporter): string|null
+    {
+        if ($isSecondaryReporter === '0') {
+            return 'primary_source';
+        }
+
+        if ($isSecondaryReporter === '1') {
+            return 'secondary_source';
+        }
+
+        return null;
+    }
+
+    /**
+     * Builds the external API PATCH payload by reverse-mapping internal model attributes.
+     */
+    private function buildReportingOrgApiPayload(Organization $organization, array $dirtyAttributes): array
+    {
+        $payload = [];
+
+        if (Arr::has($dirtyAttributes, 'publisher_name')) {
+            $payload['human_readable_name'] = $organization->publisher_name;
+        }
+
+        if (Arr::has($dirtyAttributes, 'address')) {
+            $payload['address'] = $organization->address;
+        }
+
+        if (Arr::has($dirtyAttributes, 'telephone')) {
+            $payload['phone'] = $organization->telephone;
+        }
+
+        if (Arr::has($dirtyAttributes, 'data_license')) {
+            $payload['default_licence_id'] = $organization->data_license;
+        }
+
+        if (Arr::has($dirtyAttributes, 'country')) {
+            $payload['hq_country'] = $this->mapCountryCodeToLabel($organization->country);
+        }
+
+        if (Arr::has($dirtyAttributes, 'reporting_org')) {
+            $reportingOrgData = $organization->reporting_org;
+
+            $isSecondary = Arr::get($reportingOrgData, '0.secondary_reporter');
+            $organisationTypeCode = ($organization->publisher_type ?? $reportingOrgData[0]['type']) ?? null;
+
+            $payload['secondary_reporter_type'] = $this->mapSecondaryReporterToLabel($isSecondary);
+            $payload['organisation_type'] = $this->mapPublisherCodeToLabel($organisationTypeCode);
+        }
+
+        return $payload;
     }
 }
