@@ -74,15 +74,20 @@ class IatiLoginController extends Controller
 
             DB::commit();
 
-            session([
-                'oidc_id_token' => $authResult->idToken,
-                'oidc_access_token' => $authResult->accessToken,
-                'uuid' => $publisherOrgUUID,
-            ]);
-
             cache()->put('oidc_id_token', $authResult->idToken);
 
-            Auth::login($user);
+            auth()->login($user);
+
+            session([
+                'oidc_id_token'     => $authResult->idToken,
+                'oidc_access_token' => $authResult->accessToken,
+                'uuid'              => $publisherOrgUUID,
+                'role_id'           => $user->role_id,
+            ]);
+
+            if (isSuperAdmin()) {
+                session(['superadmin_user_id' => $user->id]);
+            }
 
             return redirect()->intended('/');
         } catch (OidcAuthenticationException $e) {

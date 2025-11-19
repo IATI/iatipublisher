@@ -17,7 +17,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
 use JsonException;
 
 /**
@@ -163,7 +162,7 @@ class SuperAdminController extends Controller
 
                 if ($user) {
                     if (empty($user->password)) {
-                        Auth::login($user);
+                        auth()->login($user);
                     } else {
                         auth()->loginUsingId($userId);
                     }
