@@ -28,12 +28,19 @@ return new class extends Migration {
         $tableName = DBTables::ORGANIZATION_PUBLISH;
         $indexName = $tableName . '_dataset_uuid_index';
 
-        Schema::table($tableName, function (Blueprint $table) use ($indexName) {
-            if (Schema::hasIndex($table->getTable(), $indexName)) {
-                $table->dropIndex($indexName);
-            }
+        $indexExists = DB::table('pg_indexes')
+            ->where('tablename', $tableName)
+            ->where('indexname', $indexName)
+            ->exists();
 
-            $table->dropColumn('dataset_uuid');
+        if ($indexExists) {
+            DB::statement("DROP INDEX IF EXISTS {$indexName};");
+        }
+
+        Schema::table($tableName, function (Blueprint $table) {
+            if (Schema::hasColumn($table->getTable(), 'dataset_uuid')) {
+                $table->dropColumn('dataset_uuid');
+            }
         });
     }
 };

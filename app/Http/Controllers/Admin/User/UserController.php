@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\UserProfileRequest;
-use App\Http\Requests\User\UserRequest;
-use App\Http\Requests\User\UserUpdateRequest;
 use App\IATI\Services\Audit\AuditService;
 use App\IATI\Services\Dashboard\DashboardService;
 use App\IATI\Services\Download\CsvGenerator;
@@ -20,7 +17,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
@@ -103,95 +99,6 @@ class UserController extends Controller
     }
 
     /**
-     * Stores user.
-     *
-     * @param $request
-     *
-     * @return JsonResponse
-     */
-    public function store(UserRequest $request): JsonResponse
-    {
-        try {
-            $formData = $request->only(['full_name', 'username', 'email', 'status', 'role_id', 'password', 'password_confirmation']);
-
-            $this->db->beginTransaction();
-            $this->userService->store($formData);
-            $this->db->commit();
-
-            $translatedMessage = trans('userProfile/user_controller.new_user_successfully_created');
-
-            return response()->json(['success' => true, 'message' => $translatedMessage]);
-        } catch (\Exception $e) {
-            $this->db->rollback();
-            logger()->error($e);
-
-            $translatedMessage = trans('userProfile/user_controller.error_has_occurred_while_creating_user');
-
-            return response()->json(['success' => false, 'message' => $translatedMessage]);
-        }
-    }
-
-    /**
-     * Updates user.
-     *
-     * @param $request
-     *
-     * @return JsonResponse
-     */
-    public function update(UserUpdateRequest $request, $id): JsonResponse
-    {
-        try {
-            $formData = $request->only(['full_name', 'username', 'email', 'role_id', 'password', 'password_confirmation']);
-
-            if (empty($formData['password'])) {
-                unset($formData['password'], $formData['password_confirmation']);
-            }
-
-            $this->db->beginTransaction();
-            $this->userService->update($id, $formData);
-            $this->db->commit();
-
-            $translatedMessage = trans('common/common.updated_successfully');
-
-            return response()->json(['success' => true, 'message' => $translatedMessage]);
-        } catch (\Exception $e) {
-            $this->db->rollback();
-            logger()->error($e);
-
-            $translatedMessage = trans('common/common.failed_to_update_data');
-
-            return response()->json(['success' => false, 'message' => $translatedMessage]);
-        }
-    }
-
-    /**
-     * Delete user.
-     *
-     * @param int $id
-     * @return JsonResponse
-     */
-    public function delete(int $id): JsonResponse
-    {
-        try {
-            if ($this->userService->delete($id)) {
-                $translatedMessage = trans('userProfile/user_controller.user_has_been_deleted_successfully');
-
-                return response()->json(['success' => true, 'message' => $translatedMessage]);
-            }
-
-            $translatedMessage = trans('userProfile/user_controller.the_user_cannot_be_deleted');
-
-            return response()->json(['success' => false, 'message' => $translatedMessage]);
-        } catch (\Exception $e) {
-            logger()->error($e);
-
-            $translatedMessage = trans('userProfile/user_controller.error_has_occurred_while_deleting_user');
-
-            return response()->json(['success' => false, 'message' => $translatedMessage]);
-        }
-    }
-
-    /**
      * Get User status.
      *
      * @return JsonResponse
@@ -206,31 +113,6 @@ class UserController extends Controller
                 'success' => true,
                 'message' => $translatedMessage,
                 'data'    => ['account_verified' => $status],
-            ]);
-        } catch (\Exception $e) {
-            logger()->error($e);
-
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }
-
-    /**
-     * Get User status.
-     *
-     * @return JsonResponse
-     */
-    public function resendVerificationEmail(): JsonResponse
-    {
-        try {
-            $this->userService->resendVerificationEmail();
-            $translatedMessage = trans('userProfile/user_controller.verification_email_successfully_sent');
-
-            return response()->json([
-                'success' => true,
-                'message' => $translatedMessage,
             ]);
         } catch (\Exception $e) {
             logger()->error($e);
@@ -350,109 +232,6 @@ class UserController extends Controller
         }
 
         return $queryParams;
-    }
-
-    /**
-     * Update user password.
-     *
-     * @param UserProfileRequest $request $request
-     *
-     * @return JsonResponse
-     */
-    public function updatePassword(UserProfileRequest $request): JsonResponse
-    {
-        try {
-            $formData = $request->only(['current_password', 'password']);
-
-            if (!Hash::check($formData['current_password'], Auth::user()->getAuthPassword())) {
-                $translatedMessage = trans('userProfile/user_controller.please_enter_correct_current_password');
-
-                return response()->json(['success' => false, 'errors' => ['current_password' => $translatedMessage]]);
-            }
-
-            $this->userService->updatePassword(Auth::user()->id, $formData);
-            $translatedMessage = trans('common/common.updated_successfully');
-
-            return response()->json([
-                'success' => true,
-                'message' => $translatedMessage,
-            ]);
-        } catch (\Exception $e) {
-            logger()->error($e);
-            $translatedMessage = trans('userProfile/user_controller.error_occurred_while_updating_password');
-
-            return response()->json([
-                'success' => false,
-                'message' => $translatedMessage,
-            ]);
-        }
-    }
-
-    /**
-     * Update user profile.
-     *
-     * @param UserProfileRequest $request $request
-     *
-     * @return JsonResponse
-     * @throws \Throwable
-     */
-    public function updateProfile(UserProfileRequest $request): JsonResponse
-    {
-        try {
-            $formData = $request->only(['username', 'full_name', 'email', 'language_preference']);
-
-            $this->db->beginTransaction();
-            $this->userService->update(Auth::user()->id, $formData);
-            $this->db->commit();
-            $translatedMessage = trans('common/common.updated_successfully');
-
-            return response()->json([
-                'success' => true,
-                'message' => $translatedMessage,
-            ]);
-        } catch (\Exception $e) {
-            $this->db->rollback();
-            logger()->error($e);
-            $translatedMessage = trans('userProfile/user_controller.error_occurred_while_updating_user_profile');
-
-            return response()->json([
-                'success' => false,
-                'message' => $translatedMessage,
-            ]);
-        }
-    }
-
-    /**
-     * Toggle user status.
-     *
-     * @param $id
-     *
-     * @return JsonResponse
-     */
-    public function toggleUserStatus($id): JsonResponse
-    {
-        try {
-            $user = $this->userService->getUser($id);
-
-            if ($this->userService->toggleUserStatus($id)) {
-                $translatedMessage = $user->status
-                    ? trans('userProfile/user_controller.user_has_been_deactivated_successfully')
-                    : trans('userProfile/user_controller.user_has_been_activated_successfully');
-
-                return response()->json(['success' => true, 'message' => $translatedMessage]);
-            }
-            $translatedMessage = trans('userProfile/user_controller.the_status_of_this_user_cannot_be_changed');
-
-            return response()->json(['success' => false, 'message' => $translatedMessage]);
-        } catch (\Exception $e) {
-            logger()->error($e);
-            $translatedMessage = 'Error has occurred while trying to toggle user status';
-
-            return response()->json([
-                'success' => false,
-                'message' => $translatedMessage,
-            ]);
-        }
     }
 
     /**

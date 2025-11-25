@@ -74,16 +74,11 @@ class UserRepository extends Repository
             ->leftJoin('organizations', 'organizations.id', 'users.organization_id')
             ->join('roles', 'roles.id', 'users.role_id')
             ->select(
-                DB::raw(
-                    "users.id,username,
+                DB::raw('
+                    users.id,
+                    username,
                     full_name,
-                    case when organizations.name::text!='' and
-                    (
-                     ((organizations.name->>0)::json)->>'narrative'!= null
-                     AND
-                     ((organizations.name->>0)::json)->>'narrative'!= ''
-                    )
-                    then ((organizations.name->>0)::json)->>'narrative' else publisher_name end as publisher_name,
+                    publisher_name,
                     email,
                     users.status,
                     roles.role,
@@ -91,8 +86,7 @@ class UserRepository extends Repository
                     users.created_at,
                     last_logged_in,
                     email_verified_at
-                    "
-                )
+               ')
             );
 
         if (!empty($queryParams)) {

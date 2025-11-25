@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['can:edit_setting']], static function () {
-    Route::post('setting/store/publisher', [App\Http\Controllers\Admin\Setting\SettingController::class, 'storePublishingInfo'])->name('setting.publisher.save');
     Route::post('setting/store/default', [App\Http\Controllers\Admin\Setting\SettingController::class, 'storeDefaultForm'])->name('setting.default.save');
-    Route::post('setting/verify', [App\Http\Controllers\Admin\Setting\SettingController::class, 'verify'])->name('setting.verify');
 });
 
 Route::group(['middleware' => ['can:view_setting']], static function () {

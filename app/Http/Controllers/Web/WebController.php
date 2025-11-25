@@ -55,16 +55,6 @@ class WebController extends Controller
     }
 
     /**
-     * Shows the web page.
-     *
-     * @return Renderable
-     */
-    public function register(): Renderable
-    {
-        return view('web.register');
-    }
-
-    /**
      * Shows the about page.
      *
      * @return Renderable

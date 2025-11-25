@@ -38,12 +38,26 @@
           </span>
         </div>
       </div>
-      <button id="btn" type="button" class="btn mt-6" @click="loginWithIati">
+      <button id="btn" type="button" class="btn mt-4" @click="loginWithIati">
         {{
           translatedData['common.common.log_in_with_iati'] || 'Log in with iati'
         }}
         <svg-vue class="" icon="right-arrow" />
       </button>
+      <div class="mt-6 block leading-6">
+        <span class="flex flex-wrap">
+          {{
+            translatedData[
+              'public.login.iati_publishing_tool_section.havent_registered_label'
+            ]
+          }}
+          <button
+            class="ml-1 border-b-2 border-b-transparent text-base text-turquoise hover:border-b-2 hover:border-b-turquoise"
+          >
+            {{ translatedData['common.common.join_now'] }}
+          </button>
+        </span>
+      </div>
     </div>
   </div>
 </template>
