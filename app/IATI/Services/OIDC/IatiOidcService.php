@@ -78,7 +78,7 @@ class IatiOidcService
             $idToken = $client->getIdToken();
             $accessToken = $client->getAccessToken();
             $refreshToken = $client->getRefreshToken();
-            $expiresIn = isset($client->getTokenResponse()->expires_in) ? (int) $client->getTokenResponse()->expires_in : null
+            $expiresIn = isset($client->getTokenResponse()->expires_in) ? (int) $client->getTokenResponse()->expires_in : null;
 
             $client->verifyJWTSignature($idToken);
 
