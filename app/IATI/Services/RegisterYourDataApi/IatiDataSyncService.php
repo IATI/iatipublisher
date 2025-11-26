@@ -174,7 +174,7 @@ class IatiDataSyncService
                 'email'                   => Arr::get($claims, 'email'),
                 'username'                => Arr::get($claims, 'username'),
                 'password'                => null,
-                'full_name'               => Arr::get($claims, 'family_name'),
+                'full_name'               => Arr::get($claims, 'username'),
                 'address'                 => Arr::get($claims, 'address'),
                 'is_active'               => true,
                 'email_verified_at'       => now(),
