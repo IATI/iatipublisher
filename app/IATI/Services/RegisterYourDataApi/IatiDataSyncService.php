@@ -24,7 +24,7 @@ class IatiDataSyncService
         $name = [['narrative' => $data['human_readable_name'] ?? null, 'language' => 'en']];
         $attributes = [
             'identifier'             => $data['organisation_identifier'],
-            'uuid'                   => $uuid,
+            'uuid'               => $uuid,
             'publisher_id'           => $data['short_name'] ?? null,
             'publisher_name'         => $data['human_readable_name'] ?? null,
             'publisher_type'         => $publisherTypeCode,
@@ -52,8 +52,7 @@ class IatiDataSyncService
             $attributes['status'] = 'draft';
             $attributes['is_published'] = false;
 
-            // Create model WITHOUT triggering observers
-            return Organization::createQuietly($attributes);
+            return Organization::create($attributes);
         }
 
         $existingOrg->fill($attributes);
@@ -300,8 +299,8 @@ class IatiDataSyncService
             $isSecondary = Arr::get($reportingOrgData, '0.secondary_reporter');
             $organisationTypeCode = ($organization->publisher_type ?? $reportingOrgData[0]['type']) ?? null;
 
-            $payload['secondary_reporter_type'] = $this->mapSecondaryReporterToLabel(isSecondaryReporter: $isSecondary);
-            $payload['organisation_type'] = $this->mapPublisherCodeToLabel($organisationTypeCode ? (string) ($organisationTypeCode) : null);
+            $payload['secondary_reporter_type'] = $this->mapSecondaryReporterToLabel($isSecondary);
+            $payload['organisation_type'] = $this->mapPublisherCodeToLabel($organisationTypeCode);
         }
 
         return $payload;
