@@ -7,7 +7,14 @@ namespace App\IATI\Services\OIDC;
  */
 final class OidcAuthenticationResult
 {
-    public function __construct(public string $idToken, public string $accessToken, public string $uuid, public array $claims)
+    public function __construct(
+        public string $idToken,
+        public string $accessToken,
+        public string $refreshToken,
+        public string $expiresIn,
+        public string $uuid,
+        public array $claims
+    )
     {
     }
 }

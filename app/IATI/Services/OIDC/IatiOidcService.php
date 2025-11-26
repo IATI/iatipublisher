@@ -2,6 +2,7 @@
 
 namespace App\IATI\Services\OIDC;
 
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Jumbojett\OpenIDConnectClient;
 use Jumbojett\OpenIDConnectClientException;
@@ -38,7 +39,7 @@ class IatiOidcService
     /**
      * Private helper to construct and configure the OIDC client library.
      */
-    private function buildClient(): OpenIDConnectClient
+    private function buildClient($isRefresh = false): OpenIDConnectClient
     {
         $client = new OpenIDConnectClient(
             provider_url : $this->oidcConfig['issuer'],
@@ -46,10 +47,12 @@ class IatiOidcService
             client_secret: $this->oidcConfig['client_secret']
         );
 
-        $allScopes = array_unique(array_merge($this->oidcConfig['scopes'], $this->apiConfig['scopes']));
+        if (!$isRefresh) {
+            $allScopes = array_unique(array_merge($this->oidcConfig['scopes'], $this->apiConfig['scopes']));
+            $client->addScope($allScopes);
+        }
 
         $client->setRedirectURL($this->oidcConfig['redirect_uri']);
-        $client->addScope($allScopes);
         $client->addAuthParam(['audience' => $this->apiConfig['audience']]);
 
         return $client;
@@ -74,6 +77,8 @@ class IatiOidcService
 
             $idToken = $client->getIdToken();
             $accessToken = $client->getAccessToken();
+            $refreshToken = $client->getRefreshToken();
+            $expiresIn = isset($client->getTokenResponse()->expires_in) ? (int) $client->getTokenResponse()->expires_in : null
 
             $client->verifyJWTSignature($idToken);
 
@@ -84,7 +89,7 @@ class IatiOidcService
                 throw new OidcAuthenticationException('User identifier (sub) not found in authentication response.');
             }
 
-            return new OidcAuthenticationResult($idToken, $accessToken, $uuid, $claims);
+            return new OidcAuthenticationResult($idToken, $accessToken, $refreshToken, $expiresIn, $uuid, $claims);
         } catch (OpenIDConnectClientException $e) {
             throw new OidcAuthenticationException('OIDC Client Error: ' . $e->getMessage(), 0, $e);
         }
@@ -106,5 +111,98 @@ class IatiOidcService
         if ($idToken && $logoutEndpoint && $logoutRedirectUri) {
             $this->buildClient()->signOut($idToken, $logoutRedirectUri);
         }
+    }
+
+    /**
+     * Attempts to refresh the access token using the given refresh token.
+     * Communicates with the OIDC provider and returns a new token pair.
+     *
+     * @param string $refreshToken
+     * @return OidcTokenPair
+     *
+     * @throws OidcAuthenticationException
+     */
+    public function refreshAccessToken(string $refreshToken): OidcTokenPair
+    {
+        try {
+            $client = $this->buildClient(true);
+            $response = $client->refreshToken($refreshToken);
+        } catch (OpenIDConnectClientException $e) {
+            throw new OidcAuthenticationException('Unable to refresh access token: ' . $e->getMessage(), 0, $e);
+        }
+
+        if (empty($response->access_token)) {
+            throw new OidcAuthenticationException('Refresh response did not contain an access token.');
+        }
+
+        return new OidcTokenPair(
+            $response->access_token,
+            $response->refresh_token ?? $refreshToken,
+            isset($response->expires_in) ? (int) $response->expires_in : null,
+        );
+    }
+
+    /**
+     * Retrieves the current access token from session.
+     * If forced or expired, automatically refreshes the token.
+     *
+     * @param bool $forceRefresh
+     * @return string
+     *
+     * @throws OidcAuthenticationException
+     */
+    public function getAccessToken(bool $forceRefresh = false): string
+    {
+        $accessToken = session('oidc_access_token');
+        if (!$accessToken) {
+            throw new OidcAuthenticationException('No OIDC access token in session.');
+        }
+
+        if ($forceRefresh || $this->tokenExpired()) {
+            $accessToken = $this->refreshUsingStoredToken();
+        }
+
+        return $accessToken;
+    }
+
+    /**
+     * Determines whether the stored access token has expired.
+     *
+     * @return bool
+     */
+    private function tokenExpired(): bool
+    {
+        $expiresAt = session('oidc_access_token_expires_at');
+
+        return $expiresAt && Carbon::parse($expiresAt)->isPast();
+    }
+
+    /**
+     * Refreshes the access token using the stored session refresh token.
+     * Saves the newly returned tokens back into the session.
+     *
+     * @return string
+     *
+     * @throws OidcAuthenticationException
+     */
+    private function refreshUsingStoredToken(): string
+    {
+        $refreshToken = session('oidc_refresh_token');
+
+        if (!$refreshToken) {
+            throw new OidcAuthenticationException('No OIDC refresh token in session.');
+        }
+
+        $newTokens = $this->refreshAccessToken($refreshToken);
+
+        session([
+            'oidc_access_token'            => $newTokens->accessToken,
+            'oidc_refresh_token'           => $newTokens->refreshToken ?? $refreshToken,
+            'oidc_access_token_expires_at' => $newTokens->expiresIn
+                ? now()->addSeconds($newTokens->expiresIn - 60)->toIso8601String()
+                : null,
+        ]);
+
+        return $newTokens->accessToken;
     }
 }

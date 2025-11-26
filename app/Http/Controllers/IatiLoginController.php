@@ -79,8 +79,12 @@ class IatiLoginController extends Controller
             auth()->login($user);
 
             session([
-                'oidc_id_token'     => $authResult->idToken,
-                'oidc_access_token' => $authResult->accessToken,
+                'oidc_id_token'         => $authResult->idToken,
+                'oidc_access_token'     => $authResult->accessToken,
+                'oidc_refresh_token'    => $authResult->refreshToken,
+                'oidc_access_token_expires_at' => $authResult->expiresIn
+                    ? now()->addSeconds($authResult->expiresIn - 60)->toIso8601String()
+                    : null,
                 'uuid'              => $publisherOrgUUID,
                 'role_id'           => $user->role_id,
             ]);

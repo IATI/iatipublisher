@@ -10,6 +10,7 @@ use App\Http\Middleware\LogoutIfInactive;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectActivity;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\RefreshOidcToken;
 use App\Http\Middleware\SanitizeRequest;
 use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\SuperAdminMiddleware;
@@ -64,6 +65,7 @@ class Kernel extends HttpKernel
             VerifyCsrfToken::class,
             SubstituteBindings::class,
             SetLocale::class,
+            RefreshOidcToken::class,
         ],
 
         'admin' => [
@@ -74,6 +76,7 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
             LogoutIfInactive::class,
             SetLocale::class,
+            RefreshOidcToken::class,
         ],
 
         'activity' => [
@@ -81,22 +84,26 @@ class Kernel extends HttpKernel
             VerifyCsrfToken::class,
             RedirectActivity::class,
             SetLocale::class,
+            RefreshOidcToken::class,
         ],
 
         'general' => [
             VerifyCsrfToken::class,
             SetLocale::class,
+            RefreshOidcToken::class,
         ],
 
         'superadmin' => [
             LogoutIfInactive::class,
             SuperAdminMiddleware::class,
             SetLocale::class,
+            RefreshOidcToken::class,
         ],
 
         'api' => [
             'throttle:api',
             AccessibleRoute::class,
+            RefreshOidcToken::class,
         ],
     ];
 
