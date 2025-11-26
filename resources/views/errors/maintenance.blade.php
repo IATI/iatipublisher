@@ -121,11 +121,16 @@
     <h1>@lang('custom_pages/maintenance_mode.sorry_iati_publisher_is_under_maintenance')</h1>
 
     <div class="time-banner">
-        <strong>@lang('custom_pages/maintenance_mode.scheduled_maintenance', ['timerange' => '3:00 - 8:00 UTC'])</strong>
+        {{-- DYNAMIC TIMERANGE HERE --}}
+        <strong>
+            @lang('custom_pages/maintenance_mode.scheduled_maintenance', [
+                'timerange' => Cache::get('maintenance_timerange', 'Scheduled Maintenance')
+            ])
+        </strong>
     </div>
 
     <div class="maintenance-message">
-        <p>@lang('custom_pages/maintenance_mode.iati_publisher_is_temporarily_unavailable', ['time'=>'08:00 UTC'])</p>
+        <p>@lang('custom_pages/maintenance_mode.iati_publisher_is_temporarily_unavailable', ['time'=> Cache::get('maintenance_timerange', 'soon')])</p>
         <br>
         <p>@lang('custom_pages/maintenance_mode.we_appreciate_your_understanding')</p>
     </div>
