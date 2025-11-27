@@ -44,14 +44,19 @@ class IatiLoginController extends Controller
             $publisherOrgUUID = null;
             $publisherUserRole = 'general_user';
 
-            $reportingOrgs = $this->reportingOrgApiService->getReportingOrgs($authResult->accessToken, ['include_meta' => 'yes', 'include_actions' => 'yes']);
+            $reportingOrgs = $this->reportingOrgApiService->getReportingOrgs(
+                $authResult->accessToken,
+                ['include_meta' => 'yes', 'include_actions' => 'yes']
+            );
 
             DB::beginTransaction();
 
             if (!empty($reportingOrgs)) {
                 $firstOrg = $reportingOrgs[0];
                 $publisherOrgUUID = $firstOrg['id'] ?? null;
-                $publisherUserRole = $this->dataSyncService->mapRegisterRoleToPublisher($firstOrg['user_role'] ?? $publisherUserRole);
+                $publisherUserRole = $this->dataSyncService->mapRegisterRoleToPublisher(
+                    $firstOrg['user_role'] ?? $publisherUserRole
+                );
 
                 if ($publisherUserRole !== 'iati_admin') {
                     if ($publisherOrgUUID) {
@@ -74,19 +79,17 @@ class IatiLoginController extends Controller
 
             DB::commit();
 
-            cache()->put('oidc_id_token', $authResult->idToken);
-
             auth()->login($user);
 
             session([
-                'oidc_id_token'         => $authResult->idToken,
-                'oidc_access_token'     => $authResult->accessToken,
-                'oidc_refresh_token'    => $authResult->refreshToken,
+                'oidc_id_token'                => $authResult->idToken,
+                'oidc_access_token'            => $authResult->accessToken,
+                'oidc_refresh_token'           => $authResult->refreshToken,
                 'oidc_access_token_expires_at' => $authResult->expiresIn
                     ? now()->addSeconds($authResult->expiresIn - 60)->toIso8601String()
                     : null,
-                'uuid'              => $publisherOrgUUID,
-                'role_id'           => $user->role_id,
+                'uuid'                         => $publisherOrgUUID,
+                'role_id'                      => $user->role_id,
             ]);
 
             if (isSuperAdmin()) {
@@ -96,6 +99,8 @@ class IatiLoginController extends Controller
             return redirect()->intended('/');
         } catch (OidcAuthenticationException $e) {
             DB::rollBack();
+
+            auth()->logout();
             Log::error('OIDC Authentication Failed', ['message' => $e->getMessage()]);
 
             return redirect()
@@ -107,17 +112,28 @@ class IatiLoginController extends Controller
     /**
      * Handles logging the user out of the local app and the central OIDC session.
      */
-    public function logout(): RedirectResponse
+    public function logout()
     {
-        $idTokenHint = session('oidc_id_token');
+        try {
+            $idTokenHint = session('oidc_id_token');
 
-        Auth::logout();
-        session()->invalidate();
-        session()->regenerateToken();
+            Auth::logout();
+            session()->invalidate();
+            session()->regenerateToken();
 
-        $this->oidcService->logout($idTokenHint);
+            $this->oidcService->logout($idTokenHint);
 
-        return redirect('/');
+            session()->flash('message', 'You have been logged out.');
+
+            return redirect('/');
+        } catch (\Exception $exception) {
+            logger()->error($exception);
+
+            Auth::logout();
+            session()->invalidate();
+
+            return redirect('/');
+        }
     }
 
     public function showOrganizationMissingPage()
@@ -151,7 +167,11 @@ class IatiLoginController extends Controller
         $newDataset = $this->datasetApiService->createDataset($accessToken, $newDatasetPayload);
         $allDatasets1 = $this->reportingOrgApiService->getDatasetsForOrganisation($accessToken, session('uuid'));
 
-        $republishData = $this->datasetApiService->updateDataset($accessToken, 'a397d965-043f-c09b-137c-6915a820af7e', $newDatasetPayload);
+        $republishData = $this->datasetApiService->updateDataset(
+            $accessToken,
+            'a397d965-043f-c09b-137c-6915a820af7e',
+            $newDatasetPayload
+        );
         $allDatasets2 = $this->reportingOrgApiService->getDatasetsForOrganisation($accessToken, session('uuid'));
 
         dd($oldDatasets, $allDatasets1, $republishData, $allDatasets2);
