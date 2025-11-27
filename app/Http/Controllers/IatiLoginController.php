@@ -40,9 +40,18 @@ class IatiLoginController extends Controller
         try {
             $authResult = $this->oidcService->handleCallback();
 
+            session([
+                'oidc_id_token'                => $authResult->idToken,
+                'oidc_access_token'            => $authResult->accessToken,
+                'oidc_refresh_token'           => $authResult->refreshToken,
+                'oidc_access_token_expires_at' => $authResult->expiresIn
+                    ? now()->addSeconds($authResult->expiresIn - 60)->toIso8601String()
+                    : null,
+            ]);
+
             $publisherOrg = null;
             $publisherOrgUUID = null;
-            $publisherUserRole = 'general_user';
+            $publisherUserRole = 'admin';
 
             $reportingOrgs = $this->reportingOrgApiService->getReportingOrgs($authResult->accessToken, ['include_meta' => 'yes', 'include_actions' => 'yes']);
 
@@ -79,14 +88,8 @@ class IatiLoginController extends Controller
             auth()->login($user);
 
             session([
-                'oidc_id_token'         => $authResult->idToken,
-                'oidc_access_token'     => $authResult->accessToken,
-                'oidc_refresh_token'    => $authResult->refreshToken,
-                'oidc_access_token_expires_at' => $authResult->expiresIn
-                    ? now()->addSeconds($authResult->expiresIn - 60)->toIso8601String()
-                    : null,
-                'uuid'              => $publisherOrgUUID,
-                'role_id'           => $user->role_id,
+                'uuid'    => $publisherOrgUUID,
+                'role_id' => $user->role_id,
             ]);
 
             if (isSuperAdmin()) {

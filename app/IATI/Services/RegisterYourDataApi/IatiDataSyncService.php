@@ -199,14 +199,14 @@ class IatiDataSyncService
     /**
      * Maps registry role against system roles.
      */
-    public function mapRegisterRoleToPublisher(string $registryRole = 'general_user'): string
+    public function mapRegisterRoleToPublisher(string $registryRole = 'admin'): string
     {
         return match ($registryRole) {
             'provider_admin' => 'iati_admin',
-            'admin'          => 'admin',
-            'editor'         => 'admin',
-            'contributor'    => 'general_user',
-            default          => 'general_user'
+//            'admin'          => 'admin',
+//            'editor'         => 'admin',
+//            'contributor'    => 'admin',
+            default          => 'admin'
         };
     }
 
@@ -233,6 +233,10 @@ class IatiDataSyncService
      */
     private function mapPublisherCodeToLabel(?string $publisherTypeCode): ?string
     {
+        if (!$publisherTypeCode) {
+            return null;
+        }
+
         $codeList = getCodeList('OrganizationType', 'Organization', false);
 
         return Arr::get($codeList, $publisherTypeCode);
@@ -243,6 +247,10 @@ class IatiDataSyncService
      */
     private function mapCountryCodeToLabel(?string $countryCode): ?string
     {
+        if (!$countryCode) {
+            return null;
+        }
+
         $codeList = getCodeList('Country', 'Activity', false);
 
         return Arr::get($codeList, $countryCode);

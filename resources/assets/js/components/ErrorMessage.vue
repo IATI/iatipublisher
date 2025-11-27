@@ -111,7 +111,7 @@
         </div>
       </TransitionRoot>
     </div>
-    <div v-if="!errorData.publisher_active" class="ml-4 mr-6">
+    <div v-if="!errorData.registry_approved" class="ml-4 mr-6">
       <TransitionRoot
         :show="show"
         as="template"
@@ -128,16 +128,19 @@
               <svg-vue icon="red-dot" class="text-[6px]"></svg-vue>
               <span>{{
                 translatedData[
-                  'activity_index.error_message.iati_registry_account_is_inactive'
+                  'common.common.your_organisation_is_pending_approval_by_the_iati_team'
                 ]
               }}</span>
             </div>
 
             <div class="ml-5 text-left">
               <p>
+                <a href="https://iatistandard.org/en/guidance/get-support/"
+                  >Contact Support</a
+                >
                 {{
                   translatedData[
-                    'common.common.your_organisation_is_pending_approval_by_the_iati_team'
+                    'common.common.if_your_account_has_not_been_approved_within_two_working_days_of_registering'
                   ]
                 }}
               </p>
@@ -172,6 +175,7 @@ const toastData = inject('toastData') as ToastInterface;
 const errorData = reactive({
   account_verified: false,
   publisher_active: false,
+  registry_approved: false,
   default_setting: false,
 });
 const isLoaderVisible = ref(false);
@@ -185,8 +189,9 @@ onMounted(async () => {
         const org_response = org_res.data;
 
         errorData.default_setting = response?.data?.default_status;
-        errorData.publisher_active =
-          org_response.data?.publisher_active ?? false;
+        errorData.publisher_active = true;
+        errorData.registry_approved =
+          org_response.data?.registry_approved ?? false;
 
         let groupedError = ['default_setting', 'account_verified'];
 
