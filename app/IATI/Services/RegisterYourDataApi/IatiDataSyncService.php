@@ -174,7 +174,7 @@ class IatiDataSyncService
                 'email'                   => Arr::get($claims, 'email'),
                 'username'                => Arr::get($claims, 'username'),
                 'password'                => null,
-                'full_name'               => Arr::get($claims, 'family_name'),
+                'full_name'               => Arr::get($claims, 'username'),
                 'address'                 => Arr::get($claims, 'address'),
                 'is_active'               => true,
                 'email_verified_at'       => now(),
@@ -279,8 +279,8 @@ class IatiDataSyncService
     {
         $payload = [];
 
-        if (Arr::has($dirtyAttributes, 'publisher_name')) {
-            $payload['human_readable_name'] = $organization->publisher_name;
+        if (Arr::has($dirtyAttributes, 'name')) {
+            $payload['human_readable_name'] = $organization->name[0]['narrative'];
         }
 
         if (Arr::has($dirtyAttributes, 'address')) {
@@ -304,8 +304,7 @@ class IatiDataSyncService
 
             $isSecondary = Arr::get($reportingOrgData, '0.secondary_reporter');
             $organisationTypeCode = ($organization->publisher_type ?? $reportingOrgData[0]['type']) ?? null;
-
-            $payload['secondary_reporter_type'] = $this->mapSecondaryReporterToLabel($isSecondary);
+            $payload['reporting_source_type'] = $this->mapSecondaryReporterToLabel($isSecondary);
             $payload['organisation_type'] = $this->mapPublisherCodeToLabel($organisationTypeCode ? (string) ($organisationTypeCode) : null);
         }
 

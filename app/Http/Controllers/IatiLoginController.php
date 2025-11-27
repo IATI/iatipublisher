@@ -9,6 +9,7 @@ use App\IATI\Services\OIDC\OidcAuthenticationException;
 use App\IATI\Services\RegisterYourDataApi\DatasetApiService;
 use App\IATI\Services\RegisterYourDataApi\IatiDataSyncService;
 use App\IATI\Services\RegisterYourDataApi\ReportingOrgApiService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -101,8 +102,21 @@ class IatiLoginController extends Controller
             DB::rollBack();
             Log::error('OIDC Authentication Failed', ['message' => $e->getMessage()]);
 
+            session()->invalidate();
+            session()->regenerateToken();
+
             return redirect()
-                ->route('login')
+                ->route('web.index.login')
+                ->withErrors(['message' => 'Authentication error: ' . $e->getMessage()]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error('Error when OIDC login', ['message' => $e->getMessage()]);
+
+            session()->invalidate();
+            session()->regenerateToken();
+
+            return redirect()
+                ->route('web.index.login')
                 ->withErrors(['message' => 'Authentication error: ' . $e->getMessage()]);
         }
     }
