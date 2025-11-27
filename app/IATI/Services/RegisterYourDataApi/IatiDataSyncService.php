@@ -60,7 +60,7 @@ class IatiDataSyncService
         if ($existingOrg->isDirty()) {
             $existingOrg->status = 'draft';
             $existingOrg->is_published = $existingOrg->getOriginal('is_published');
-            $existingOrg->save();
+            $existingOrg->saveQuietly();
         }
 
         return $existingOrg;
@@ -306,7 +306,7 @@ class IatiDataSyncService
             $organisationTypeCode = ($organization->publisher_type ?? $reportingOrgData[0]['type']) ?? null;
 
             $payload['secondary_reporter_type'] = $this->mapSecondaryReporterToLabel($isSecondary);
-            $payload['organisation_type'] = $this->mapPublisherCodeToLabel($organisationTypeCode);
+            $payload['organisation_type'] = $this->mapPublisherCodeToLabel($organisationTypeCode ? (string) ($organisationTypeCode) : null);
         }
 
         return $payload;

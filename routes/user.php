@@ -14,9 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([], static function () {
-    Route::get('/users', [App\Http\Controllers\Admin\User\UserController::class, 'index'])->name('user.index');
-    Route::get('/user/verification/status', [App\Http\Controllers\Admin\User\UserController::class, 'getUserVerificationStatus'])->name('user.verification.status');
-    Route::get('/users/page/{page}', [App\Http\Controllers\Admin\User\UserController::class, 'getPaginatedUsers'])->name('user.list');
+    Route::group(['middleware' => 'superadmin'], static function () {
+        Route::get('/users', [App\Http\Controllers\Admin\User\UserController::class, 'index'])->name('user.index');
+        Route::get('/user/verification/status', [App\Http\Controllers\Admin\User\UserController::class, 'getUserVerificationStatus'])->name('user.verification.status');
+        Route::get('/users/page/{page}', [App\Http\Controllers\Admin\User\UserController::class, 'getPaginatedUsers'])->name('user.list');
+        Route::get('/users/download', [App\Http\Controllers\Admin\User\UserController::class, 'downloadUsers'])->name('user.download');
+    });
+
     Route::get('/profile', [App\Http\Controllers\Admin\User\UserController::class, 'showUserProfile'])->name('user.profile');
-    Route::get('/users/download', [App\Http\Controllers\Admin\User\UserController::class, 'downloadUsers'])->name('user.download');
 });

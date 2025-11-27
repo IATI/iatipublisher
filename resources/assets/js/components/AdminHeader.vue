@@ -434,12 +434,6 @@ const data = reactive({
       permalink: '#',
       active: false,
     },
-    {
-      name: props.translatedData['common.common.users'],
-      identifier: 'users',
-      permalink: '/users',
-      active: false,
-    },
   ],
   superadmin_menus: [
     {
@@ -530,7 +524,6 @@ function changeActiveMenu() {
     data.superadmin_menus[0]['active'] = true;
   }
   if (path.includes('users')) {
-    data.org_menus[4]['active'] = true;
     data.superadmin_menus[2]['active'] = true;
   }
   if (path.includes('list-organisations')) {
