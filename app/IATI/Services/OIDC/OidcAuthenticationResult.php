@@ -14,7 +14,6 @@ final class OidcAuthenticationResult
         public string $expiresIn,
         public string $uuid,
         public array $claims
-    )
-    {
+    ) {
     }
 }
