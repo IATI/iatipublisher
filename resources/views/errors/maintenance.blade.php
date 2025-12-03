@@ -130,7 +130,12 @@
     </div>
 
     <div class="maintenance-message">
-        <p>@lang('custom_pages/maintenance_mode.iati_publisher_is_temporarily_unavailable', ['time'=> Cache::get('maintenance_timerange', 'soon')])</p>
+        @if(Cache::get('maintenance_type') === 'maintenance')
+            <p>@lang('custom_pages/maintenance_mode.iati_publisher_is_temporarily_unavailable', ['time'=> Cache::get('maintenance_timerange', 'soon')])</p>
+        @else
+            <p>@lang('custom_pages/maintenance_mode.IATI_Publisher_is_unavailable_this_week_while_we_replace_the_IATI_Registry')</p>
+            <p><a href="https://www.iaticonnect.org/technical-cop/topic/planned-downtime-1-5th-dec-iati-registry-replacement-underway">@lang('custom_pages/maintenance_mode.read_more_about_this_work_on_IATI_Connect')</a></p>
+        @endif
         <br>
         <p>@lang('custom_pages/maintenance_mode.we_appreciate_your_understanding')</p>
     </div>
