@@ -252,8 +252,8 @@ class ActivityWorkflowService
             return $messages;
         }
 
-        if (!$this->isUserVerified()) {
-            $messages[] = 'You have not verified your email address.';
+        if (!$organization->registry_approved) {
+            $messages[] = 'Your organisation is pending approval by the IATI team.';
         }
 
         if ($type === 'activity' && !$this->isOrganizationPublished($organization)) {
@@ -261,16 +261,6 @@ class ActivityWorkflowService
         }
 
         return $messages;
-    }
-
-    /**
-     * Returns if logged in user is verified or not.
-     *
-     * @return bool
-     */
-    public function isUserVerified(): bool
-    {
-        return !is_null(auth()->user()->email_verified_at);
     }
 
     /**

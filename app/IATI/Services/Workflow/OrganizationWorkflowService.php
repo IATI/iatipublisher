@@ -85,10 +85,6 @@ class OrganizationWorkflowService
     {
         $organizationPublished = $this->organizationPublishedService->getOrganizationPublished($organization->id);
 
-        if ($organizationPublished) {
-            return;
-        }
-
         $datasetUUID = $organizationPublished->dataset_uuid;
 
         if ($this->datasetApiService->getDatasetDetails($accessToken, $datasetUUID)) {

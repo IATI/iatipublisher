@@ -42,7 +42,7 @@ class OrganizationWorkflowController extends Controller
         try {
             $organization = Auth::user()->organization;
 
-            if (!$this->activityWorkflowService->isUserVerified()) {
+            if (!$organization->registry_approved) {
                 $message = $this->activityWorkflowService->getPublishErrorMessage($organization, 'organization');
 
                 return response()->json(['success' => false, 'message' => $message]);
