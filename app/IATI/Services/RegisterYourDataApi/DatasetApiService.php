@@ -31,7 +31,7 @@ class DatasetApiService
     public function createDataset(string $accessToken, array $data): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->post('datasets/', $data),
+            fn (PendingRequest $request) => $request->post('datasets', $data),
             $accessToken
         );
     }
@@ -48,7 +48,7 @@ class DatasetApiService
     public function getDatasetDetails(string $accessToken, string $datasetId): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->get("datasets/{$datasetId}/"),
+            fn (PendingRequest $request) => $request->get("datasets/{$datasetId}"),
             $accessToken
         );
     }
@@ -83,7 +83,7 @@ class DatasetApiService
     public function deleteDataset(string $accessToken, string $datasetId): void
     {
         $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->delete("datasets/{$datasetId}/"),
+            fn (PendingRequest $request) => $request->delete("datasets/{$datasetId}"),
             $accessToken,
             false
         );

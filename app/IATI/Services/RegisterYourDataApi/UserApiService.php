@@ -35,7 +35,7 @@ class UserApiService
 
         // This endpoint returns a BaseResponse with no 'data' key.
         $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->post("users/{$userId}/reporting-org/", $payload),
+            fn (PendingRequest $request) => $request->post("users/{$userId}/reporting-org", $payload),
             $accessToken,
             false
         );
@@ -58,7 +58,7 @@ class UserApiService
 
         // This endpoint returns a BaseResponse with no 'data' key.
         $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->put("users/{$userId}/reporting-org/{$organisationId}/", $payload),
+            fn (PendingRequest $request) => $request->put("users/{$userId}/reporting-org/{$organisationId}", $payload),
             $accessToken,
             false
         );
@@ -78,7 +78,7 @@ class UserApiService
     {
         // This endpoint returns a BaseResponse with no 'data' key.
         $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->delete("users/{$userId}/reporting-org/{$organisationId}/"),
+            fn (PendingRequest $request) => $request->delete("users/{$userId}/reporting-org/{$organisationId}"),
             $accessToken,
             false
         );

@@ -30,7 +30,7 @@ class MiscellaneousApiService
         // According to the YAML, this endpoint's success response is a direct array,
         // not nested under a 'data' key.
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->get('licences/'),
+            fn (PendingRequest $request) => $request->get('licences'),
             $accessToken,
             false
         );
@@ -49,7 +49,7 @@ class MiscellaneousApiService
         // This endpoint's purpose is to succeed or fail. A 200 OK means access is granted.
         // Any other status will throw an exception.
         $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->get('access-check/'),
+            fn (PendingRequest $request) => $request->get('access-check'),
             $accessToken,
             false
         );

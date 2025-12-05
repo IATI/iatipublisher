@@ -23,7 +23,7 @@ class ReportingOrgApiService
     public function getReportingOrgs(string $accessToken, array $queryParams = []): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->get('reporting-orgs/', $queryParams),
+            fn (PendingRequest $request) => $request->get('reporting-orgs', $queryParams),
             $accessToken
         );
     }
@@ -35,7 +35,7 @@ class ReportingOrgApiService
     public function createReportingOrg(string $accessToken, array $data): array
     {
         return $this->apiClient->executeRequest(
-            fn (PendingRequest $request) => $request->post('reporting-orgs/', $data),
+            fn (PendingRequest $request) => $request->post('reporting-orgs', $data),
             $accessToken
         );
     }

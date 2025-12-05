@@ -59,7 +59,10 @@ class IatiLoginController extends Controller
             DB::beginTransaction();
 
             if (!empty($reportingOrgs)) {
-                $firstOrg = $reportingOrgs[0];
+                $firstOrg = collect($reportingOrgs)
+                    ->first(function ($org) {
+                        return $org['user_role'] !== 'contributor_pending';
+                    });
                 $publisherOrgUUID = $firstOrg['id'] ?? null;
                 $publisherUserRole = $this->dataSyncService->mapRegisterRoleToPublisher($firstOrg['user_role'] ?? $publisherUserRole);
 
