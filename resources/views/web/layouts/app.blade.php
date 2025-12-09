@@ -96,18 +96,6 @@
     >
     </web-header>
 
-    <!-- Animated Downtime Banner -->
-    <div class="downtime-banner">
-        ⚠️⚠️
-        <strong> 📢 Planned downtime:</strong> IATI Publisher will be unavailable 1-5th December while we replace the IATI Registry.
-        <a href="https://www.iaticonnect.org/technical-cop/stream/topic/iati-registry-relaunch-scheduled-dec-2025" target="_blank">
-            Read more about this work on IATI Connect.
-        </a>
-
-        ⚠️⚠️
-    </div>
-    <!-- End Downtime Banner -->
-
     <main>@yield('content')</main>
 
     @if (Auth::user())
