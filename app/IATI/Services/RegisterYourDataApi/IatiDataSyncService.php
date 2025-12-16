@@ -20,7 +20,7 @@ class IatiDataSyncService
     {
         $existingOrg = Organization::where('uuid', $uuid)->first();
 
-        $publisherTypeCode = $this->mapPublisherTypeCode($data['organisation_type'] ?? null);
+        $publisherTypeCode = data_get($data, 'organisation_type');
         $name = [['narrative' => data_get($data, 'human_readable_name'), 'language' => 'en']];
         $attributes = [
             'identifier'             => $data['organisation_identifier'],
@@ -64,26 +64,6 @@ class IatiDataSyncService
         }
 
         return $existingOrg;
-    }
-
-    private function mapPublisherTypeCode($publisherType): string|null
-    {
-        if (!$publisherType) {
-            return null;
-        }
-
-        $codeList = getCodeList('OrganizationType', 'Organization', false);
-
-        $matches = array_filter(
-            $codeList,
-            fn ($name) => strtolower($name) === strtolower($publisherType)
-        );
-
-        if (!empty($matches)) {
-            return (string) array_key_first($matches);
-        }
-
-        return null;
     }
 
     private function mapSecondaryReporter($reportingSourceType): ?bool
