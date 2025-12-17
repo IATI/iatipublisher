@@ -66,12 +66,12 @@ class IatiDataSyncService
         return $existingOrg;
     }
 
-    private function mapSecondaryReporter($reportingSourceType): ?bool
+    private function mapSecondaryReporter($reportingSourceType): string
     {
         return match ($reportingSourceType) {
-            'primary_source'     => false,
-            'secondary_reporter' => true,
-            default              => null,
+            'primary_source'     => '0',
+            'secondary_reporter' => '1',
+            default              => '',
         };
     }
 
