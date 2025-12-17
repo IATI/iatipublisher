@@ -107,18 +107,21 @@ class IatiDataSyncService
                 'publisher_verification' => $organization->registry_approved,
                 'token_verification'     => $organization->registry_approved,
             ],
-            'default_values'          => [
-                'default_currency' => 'USD',
-                'default_language' => 'en',
-            ],
-            'activity_default_values' => [
-                'hierarchy'           => '1',
-                'humanitarian'        => '0',
-                'budget_not_provided' => '',
-            ],
         ];
 
         if (!$setting) {
+            $attributes[] = [
+                'default_values'          => [
+                    'default_currency' => '',
+                    'default_language' => '',
+                ],
+                'activity_default_values' => [
+                    'hierarchy'           => '',
+                    'humanitarian'        => '',
+                    'budget_not_provided' => '',
+                ],
+            ];
+
             return Setting::create($attributes);
         }
 
