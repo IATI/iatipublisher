@@ -6,36 +6,6 @@
     "hover_text": "elements/org_json_schema.organisation_identifier_hover_text",
     "help_text": "",
     "attributes": {
-      "organization_country": {
-        "name": "organization_country",
-        "label": "elements/label.country",
-        "type": "select",
-        "choices": "Activity/Country.json",
-        "required": false,
-        "criteria": "",
-        "hover_text": "elements/org_json_schema.organisation_identifier_attributes_organization_country_hover_text",
-        "help_text": ""
-      },
-      "organization_registration_agency": {
-        "name": "organization_registration_agency",
-        "label": "elements/label.organisation_registration_agency",
-        "type": "select",
-        "choices": "Organization/OrganizationRegistrationAgency.json",
-        "required": true,
-        "criteria": "mandatory",
-        "hover_text": "elements/org_json_schema.organisation_identifier_attributes_organization_registration_agency_hover_text",
-        "help_text": ""
-      },
-      "registration_number": {
-        "name": "registration_number",
-        "label": "elements/label.registration_number",
-        "type": "text",
-        "required": true,
-        "placeholder": "common/common.for_example_123456",
-        "criteria": "mandatory",
-        "hover_text": "elements/org_json_schema.organisation_identifier_attributes_registration_number_hover_text",
-        "help_text": ""
-      },
       "iati-activity-identifier": {
         "name": "organisation_identifier",
         "label": "elements/label.organisation_identifier",

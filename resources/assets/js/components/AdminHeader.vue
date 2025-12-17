@@ -251,11 +251,13 @@
                   }}</span></a
                 >
               </li>
-              <li class="dropdown__list flex" @click="logout">
-                <svg-vue class="ml-1 mr-3" icon="logout"></svg-vue>
-                <button class="text-sm">
-                  {{ translatedData['adminHeader.admin_header.logout'] }}
-                </button>
+              <li class="dropdown__list">
+                <a href="/logout/iati" class="flex w-full items-center">
+                  <svg-vue class="ml-1 mr-3" icon="logout"></svg-vue>
+                  <span class="text-sm">
+                    {{ translatedData['adminHeader.admin_header.logout'] }}
+                  </span>
+                </a>
               </li>
             </ul>
           </div>
@@ -305,10 +307,10 @@
                   }}</span></a
                 >
               </li>
-              <li class="dropdown__list flex" @click="logout">
-                <button class="text-sm">
+              <li class="dropdown__list flex">
+                <a href="/logout/iati" class="flex w-full items-center text-sm">
                   {{ translatedData['adminHeader.admin_header.logout'] }}
-                </button>
+                </a>
               </li>
             </ul>
           </div>
@@ -344,7 +346,6 @@ import { useToggle, useStorage } from '@vueuse/core';
 import CreateModal from '../views/activity/CreateModal.vue';
 import Toast from './ToastMessage.vue';
 import LanguageService from 'Services/language';
-import Multiselect from '@vueform/multiselect';
 
 const store = detailStore();
 
@@ -431,12 +432,6 @@ const data = reactive({
       ],
       identifier: 'add-import-activity',
       permalink: '#',
-      active: false,
-    },
-    {
-      name: props.translatedData['common.common.users'],
-      identifier: 'users',
-      permalink: '/users',
       active: false,
     },
   ],
@@ -529,7 +524,6 @@ function changeActiveMenu() {
     data.superadmin_menus[0]['active'] = true;
   }
   if (path.includes('users')) {
-    data.org_menus[4]['active'] = true;
     data.superadmin_menus[2]['active'] = true;
   }
   if (path.includes('list-organisations')) {
@@ -550,15 +544,6 @@ const pa = useStorage('vue-use-local-storage', {
   publishingActivities: localStorage.getItem('publishingActivities') ?? {},
 });
 
-async function logout() {
-  pa.value.publishingActivities = {};
-  await axios.post('/logout').then((res) => {
-    if (res.status) {
-      sessionStorage.removeItem('isModelCloseClicked');
-      window.location.href = '/';
-    }
-  });
-}
 /**
  * Search functionality
  *

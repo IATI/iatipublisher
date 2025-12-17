@@ -86,7 +86,7 @@
         href="{{ asset('favicon.ico') }}"
         type="image/x-icon" />
     <link
-        href={{ env('IATI_DESIGN_SYSTEM_URL')}}
+        href={{ config('services.oidc.iatiDesignSystemUrl')}}
         rel="stylesheet"
 
     />
@@ -104,7 +104,8 @@
 
         @if (isSuperAdmin())
 
-            <loggedin-header :user="{{ Auth::user() }}"
+            <loggedin-header
+                :user="{{ Auth::user() }}"
                 has-admin-bar = "{{ isSuperAdmin() && Auth::user()->organization }}"
                 :languages="{{ json_encode(getCodeList('Language', 'Activity'), JSON_THROW_ON_ERROR) }}"
                 v-bind:super-admin="{{ isSuperAdminRoute() ? 1 : 0 }}"
@@ -115,11 +116,12 @@
             > </loggedin-header>
         @else
             <loggedin-header
-                :user="{{ Auth::user() }}" :organization="{{ Auth::user()->organization }}"
+                :user="{{ Auth::user() }}"
+                :organization="{{ Auth::user()->organization }}"
                 :languages="{{ json_encode(getCodeList('Language', 'Activity'), JSON_THROW_ON_ERROR) }}"
                 v-bind:super-admin="{{ isSuperAdminRoute() ? 1 : 0 }}"
                 :default-language="{{ json_encode(getSettingDefaultLanguage()) }}"
-                 :onboarding="{{ json_encode(Auth::user()->organization ? Auth::user()->organization->onboarding : null) }}"
+                :onboarding="{{ json_encode(Auth::user()->organization ? Auth::user()->organization->onboarding : null) }}"
                 :translated-data="{{json_encode($translatedData)}}"
                 :current-language="{{json_encode($currentLanguage)}}"
                 ></loggedin-header>

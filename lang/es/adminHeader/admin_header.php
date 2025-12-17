@@ -6,4 +6,5 @@ return [
     'add_import_activity' => 'Añadir o importar actividad',
     'your_profile'        => 'Mi perfil',
     'logout'              => 'Cerrar sesión',
+    'login'               => 'Acceso',
 ];

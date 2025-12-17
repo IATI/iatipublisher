@@ -171,4 +171,15 @@ class BulkPublishingStatusRepository extends Repository
     {
         return (bool) $this->model->where('organization_id', $organizationId)->delete();
     }
+
+    public function updateBulkStatus(array $activityIds, string $uuid, string $status): bool|int
+    {
+        if (empty($activityIds)) {
+            return 0;
+        }
+
+        return $this->model->whereIn('activity_id', $activityIds)
+            ->where('job_batch_uuid', $uuid)
+            ->update(['status' => $status, 'updated_at' => now()]);
+    }
 }

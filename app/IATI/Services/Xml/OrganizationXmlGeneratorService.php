@@ -15,25 +15,12 @@ class OrganizationXmlGeneratorService
     use XmlServiceTrait;
 
     /**
-     * @var OrganizationXmlGenerator
-     */
-    protected OrganizationXmlGenerator $organizationXmlGenerator;
-
-    /**
-     * @var XmlSchemaErrorParser
-     */
-    protected XmlSchemaErrorParser $xmlErrorParser;
-
-    /**
      * OrganizationOrganizationXmlGeneratorService Constructor.
-     *
-     * @param OrganizationXmlGenerator $organizationXmlGenerator
-     * @param XmlSchemaErrorParser $xmlErrorParser
      */
-    public function __construct(OrganizationXmlGenerator $organizationXmlGenerator, XmlSchemaErrorParser $xmlErrorParser)
-    {
-        $this->organizationXmlGenerator = $organizationXmlGenerator;
-        $this->xmlErrorParser = $xmlErrorParser;
+    public function __construct(
+        protected OrganizationXmlGenerator $organizationXmlGenerator,
+        protected XmlSchemaErrorParser $xmlErrorParser
+    ) {
     }
 
     /**
@@ -47,9 +34,9 @@ class OrganizationXmlGeneratorService
      *
      * @return void
      */
-    public function generateOrganizationXml($settings, $organization)
+    public function generateOrganizationXml($settings, $organization): bool
     {
-        $this->organizationXmlGenerator->generateOrganizationXml($settings, $organization);
+        return $this->organizationXmlGenerator->generateOrganizationXml($settings, $organization);
     }
 
     /**
@@ -59,8 +46,8 @@ class OrganizationXmlGeneratorService
      *
      * @return void
      */
-    public function deleteUnpublishedFile($filename)
+    public function deleteUnpublishedFile($filename): bool
     {
-        $this->organizationXmlGenerator->deleteUnpublishedFile($filename);
+        return $this->organizationXmlGenerator->deleteUnpublishedFile($filename);
     }
 }

@@ -144,6 +144,15 @@ class ActivityRepository extends Repository
         ]);
     }
 
+    public function bulkUpdatePublishedStatus($activityIds, $status, $linkedToIati): bool
+    {
+        return (bool) $this->model->whereIn('id', $activityIds)->update([
+            'status'                  => $status,
+            'linked_to_iati'          => $linkedToIati,
+            'has_ever_been_published' => true,
+        ]);
+    }
+
     /**
      * Deletes desired activity.
      *

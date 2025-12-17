@@ -126,14 +126,8 @@ Route::group(['middleware' => ['can:crud_activity']], static function () {
     Route::get('/activity/{id}/transactions/page/{page?}', [TransactionController::class, 'getPaginatedTransactions'])->name('activity.transactions.paginate');
     Route::delete('/activity/{id}/transactions', [TransactionController::class, 'bulkDeleteTransactions'])->name('activity.transactions.bulkDelete');
 
-    // Publish Activity
-    Route::post('activity/{id}/publish', [ActivityWorkflowController::class, 'publish'])->name('activity.publish');
-
     //Unpublish Activity
     Route::post('activity/{id}/unpublish', [ActivityWorkflowController::class, 'unpublish'])->name('activity.unpublish');
-
-    //Validate Activity
-    Route::post('activity/{id}/validateActivity', [ActivityWorkflowController::class, 'validateActivity'])->name('activity.validateActivity');
 
     Route::resource('activity.result', ResultController::class)->parameters(['activity' => 'id', 'result' => 'resultId']);
     Route::get('/activity/{id}/results/page/{page?}', [ResultController::class, 'getPaginatedResults'])->name('activity.results.paginate');

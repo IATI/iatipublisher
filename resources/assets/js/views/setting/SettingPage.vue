@@ -26,17 +26,6 @@
       >
         <div class="flex">
           <button
-            class="tab-btn mr-2"
-            :class="{
-              active__tab: tab === 'publish',
-            }"
-            @click="toggleTab('publish')"
-          >
-            {{
-              toTitleCase(translatedData['common.common.publishing_settings'])
-            }}
-          </button>
-          <button
             class="tab-btn"
             :class="{
               active__tab: tab === 'default',
@@ -46,16 +35,8 @@
             {{ toTitleCase(translatedData['common.common.default_values']) }}
           </button>
         </div>
-        <SettingPublishingForm
-          v-if="tab === 'publish'"
-          :organization="props.organization"
-          :initial-api-call-completed="initialApiCallCompleted"
-          :show-tag="showTokenTag"
-          @keyup.enter="submitForm"
-          @submit-publishing="submitForm"
-        />
         <SettingDefaultForm
-          v-else
+          v-if="tab === 'default'"
           :currencies="currencies"
           :languages="languages"
           :humanitarian="humanitarian"
@@ -84,11 +65,7 @@
           class="primary-btn save-btn"
           @click="submitForm('setting/store/publisher')"
         >
-          {{
-            tab === 'publish'
-              ? translatedData['common.common.save_publishing_setting']
-              : translatedData['common.common.save_default_values']
-          }}
+          {{ translatedData['common.common.save_default_values'] }}
         </button>
       </div>
     </div>
@@ -101,7 +78,6 @@ import { useStore } from '../../store';
 import { ActionTypes } from '../../store/setting/actions';
 import axios from 'axios';
 import SettingDefaultForm from './SettingDefaultForm.vue';
-import SettingPublishingForm from './SettingPublishingForm.vue';
 import Loader from '../../components/Loader.vue';
 import Toast from 'Components/ToastMessage.vue';
 import { toTitleCase } from '../../composable/utils';
@@ -109,7 +85,6 @@ import { toTitleCase } from '../../composable/utils';
 export default defineComponent({
   components: {
     SettingDefaultForm,
-    SettingPublishingForm,
     Loader,
     Toast,
   },
@@ -172,18 +147,12 @@ export default defineComponent({
   setup(props) {
     let toastTimeoutId;
     let initialApiCallCompleted = ref(false);
-    const tab = ref('publish');
+    const tab = ref('default');
     const store = useStore();
     const loaderVisibility = ref(false);
     const toastVisibility = ref(false);
     const toastMessage = ref('');
     const toastType = ref<boolean | string>(false);
-
-    const publishingForm = computed(() => store.state.publishingForm);
-
-    const publishingInfo = computed(() => store.state.publishingInfo);
-
-    const publishingError = computed(() => store.state.publishingError);
 
     const defaultForm = computed(() => store.state.defaultForm);
 
@@ -226,32 +195,9 @@ export default defineComponent({
         const defaultValues = settingData.default_values
           ? settingData.default_values
           : {};
-        const publisherInfo = settingData.publishing_info
-          ? settingData.publishing_info
-          : {};
         const activityValues = settingData.activity_default_values
           ? settingData.activity_default_values
           : {};
-
-        if (publisherInfo) {
-          for (const key in publisherInfo) {
-            updateStore(
-              typeof publisherInfo[key] === 'string'
-                ? 'UPDATE_PUBLISHING_FORM'
-                : 'UPDATE_PUBLISHER_INFO',
-              key,
-              publisherInfo[key]
-            );
-          }
-
-          if (publisherInfo.api_token) {
-            updateStore(
-              'UPDATE_PUBLISHER_INFO',
-              'isVerificationRequested',
-              true
-            );
-          }
-        }
 
         if (defaultValues) {
           for (const key in defaultValues) {
@@ -321,87 +267,8 @@ export default defineComponent({
         });
     }
 
-    function submitPublishing(url: string) {
-      loaderVisibility.value = true;
-      clearTimeout(toastTimeoutId);
-
-      for (const data in publishingError.value) {
-        updateStore('UPDATE_PUBLISHING_ERROR', data, '');
-      }
-
-      axios
-        .post(url, {
-          ...publishingInfo.value,
-          ...publishingForm.value,
-        })
-        .then((res) => {
-          const response = res.data;
-          const errors = response.errors ?? {};
-
-          setErrors(errors);
-
-          toastType.value = response.success;
-
-          updateStore(
-            'UPDATE_PUBLISHER_INFO',
-            'token_verification',
-            response.data.token_verification ?? false
-          );
-
-          if (response.success) {
-            updateStore(
-              'UPDATE_PUBLISHER_INFO',
-              'publisher_verification',
-              response.data.publisher_verification
-            );
-
-            updateStore(
-              'UPDATE_PUBLISHING_FORM',
-              'token_status',
-              response.data.token_status
-            );
-
-            updateStore(
-              'UPDATE_PUBLISHER_INFO',
-              'isVerificationRequested',
-              true
-            );
-
-            if (url === 'setting/verify') {
-              if (response.data.token_status.toLowerCase() === 'pending') {
-                toastType.value = 'warning';
-              } else if (
-                response.data.token_status.toLowerCase() === 'correct'
-              ) {
-                toastType.value = true;
-              } else {
-                toastType.value = false;
-              }
-            }
-          }
-
-          toastTimeoutId = setTimeout(() => {
-            toastVisibility.value = false;
-          }, 5000);
-
-          toastMessage.value = response.message;
-          loaderVisibility.value = false;
-          toastVisibility.value = true;
-        })
-        .catch((error) => {
-          const { errors } = error.response.data;
-
-          for (const e in errors) {
-            updateStore('UPDATE_PUBLISHING_ERROR', e, errors[e][0]);
-          }
-
-          loaderVisibility.value = false;
-        });
-    }
-
-    function submitForm(url = 'setting/verify') {
+    function submitForm() {
       if (props.userRole === 'admin') {
-        if (tab.value === 'publish') submitPublishing(url);
         if (tab.value === 'default') submitDefault();
       }
     }
@@ -414,7 +281,6 @@ export default defineComponent({
       props,
       tab,
       defaultError,
-      publishingError,
       store,
       loaderVisibility,
       toastVisibility,

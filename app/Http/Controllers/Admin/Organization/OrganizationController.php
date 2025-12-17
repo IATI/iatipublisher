@@ -32,24 +32,12 @@ use JsonException;
 class OrganizationController extends Controller
 {
     /**
-     * @var OrganizationService
-     */
-    protected OrganizationService $organizationService;
-    /**
-     * @var OrganizationWorkflowService
-     */
-    protected OrganizationWorkflowService $organizationWorkflowService;
-
-    /**
      * OrganizationController Constructor.
-     *
-     * @param OrganizationService $organizationService
-     * @param OrganizationWorkflowService $organizationWorkflowService
      */
-    public function __construct(OrganizationService $organizationService, OrganizationWorkflowService $organizationWorkflowService)
-    {
-        $this->organizationService = $organizationService;
-        $this->organizationWorkflowService = $organizationWorkflowService;
+    public function __construct(
+        protected OrganizationService $organizationService,
+        protected OrganizationWorkflowService $organizationWorkflowService
+    ) {
     }
 
     /**
@@ -277,12 +265,13 @@ class OrganizationController extends Controller
         try {
             $publisher_id = Auth::user()->organization->publisher_id;
             $status = $this->organizationService->isPublisherStateActive($publisher_id);
+            $registry_approved = Auth::user()->organization->registry_approved;
             $translatedMessage = 'Publisher Status Successfully Retrieved';
 
             return response()->json([
                 'success' => true,
                 'message' => $translatedMessage,
-                'data' => ['publisher_active' => $status],
+                'data' => ['publisher_active' => $status, 'registry_approved' => $registry_approved],
             ]);
         } catch (Exception $e) {
             logger()->error($e);

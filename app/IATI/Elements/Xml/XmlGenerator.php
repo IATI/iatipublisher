@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\IATI\Elements\Xml;
 
 use App\Constants\Enums;
+use App\IATI\Models\Activity\Activity;
+use App\IATI\Models\Organization\Organization;
 use App\IATI\Models\Setting\Setting;
 use App\IATI\Repositories\Activity\BulkPublishingStatusRepository;
 use App\IATI\Services\Activity\ActivityPublishedService;
@@ -274,30 +276,13 @@ class XmlGenerator
     /**
      * Generates single activity and combines xml file and publishes to IATI.
      */
-    public function generateActivityXml($activity, $transaction, $result, $settings, $organization): ?DOMDocument
+    public function getSingleActivityXmlDom($activity, $transaction, $result, $settings, $organization): ?DOMDocument
     {
-        $publishingInfo = $settings->publishing_info;
-        $publisherId = Arr::get($publishingInfo, 'publisher_id', 'Not Available');
-        $publishedActivity = sprintf('%s-%s.xml', $publisherId, $activity->id);
-        $xml = $this->getXml($activity, $transaction, $result, $settings, $organization);
-
-        $result = awsUploadFile(
-            sprintf('%s/%s/%s', 'xml', 'activityXmlFiles', $publishedActivity),
-            $xml->saveXML()
-        );
-
-        if ($result) {
-            $filename = sprintf('%s-%s.xml', $publisherId, 'activities');
-            $this->savePublishedFiles($filename, $activity->org_id, $publishedActivity);
-
-            return $xml;
-        }
-
-        return null;
+        return $this->getXml($activity, $transaction, $result, $settings, $organization);
     }
 
     /**
-     * Generates multiple activities and combines xml file and publishes to IATI.
+     * Generates multiple activities XML data structures (No side effects/I/O).
      *
      * @param $activityData
      * @param $settings
@@ -317,6 +302,8 @@ class XmlGenerator
         $innerActivityXmlArray = [];
         $activityMappedToActivityIdentifier = [];
         $successfullyProcessedActivities = [];
+        $publishedFiles = [];
+        $activityXmlContents = [];
 
         foreach ($activityData as $activity) {
             if ($this->isNormalWorkflow($refreshTimestamp)) {
@@ -335,20 +322,20 @@ class XmlGenerator
             $innerActivityXmlArray[$iatiIdentifierText] = $innerActivityXml;
             $activityIdentifier = $activity->iati_identifier['activity_identifier'];
             $activityMappedToActivityIdentifier[$activityIdentifier] = $activity;
-            $publishedFiles[] = $publishedActivity;
 
-            awsUploadFile(sprintf('%s/%s/%s', 'xml', 'activityXmlFiles', $publishedActivity), $activityCompleteXml->saveXML());
+            $publishedFiles[] = $publishedActivity;
+            $activityXmlContents[$publishedActivity] = $activityCompleteXml->saveXML();
 
             $successfullyProcessedActivities[] = $activity;
         }
 
-        if (count($innerActivityXmlArray)) {
-            $filename = sprintf('%s-%s.xml', $publisherId, 'activities');
-            $this->savePublishedFiles($filename, $activity->org_id, $publishedFiles);
-            $this->appendMultipleInnerActivityXmlToMergedXml($innerActivityXmlArray, $settings, $organization, $activityMappedToActivityIdentifier, $refreshTimestamp);
-        }
-
-        return $successfullyProcessedActivities;
+        return [
+            'activities'                     => $successfullyProcessedActivities,
+            'inner_activity_xmls'            => $innerActivityXmlArray,
+            'activity_mapped_to_identifiers' => $activityMappedToActivityIdentifier,
+            'single_xml_filenames'           => $publishedFiles,
+            'single_xml_contents'            => $activityXmlContents,
+        ];
     }
 
     /**
@@ -362,20 +349,25 @@ class XmlGenerator
      */
     public function savePublishedFiles($filename, $organizationId, $publishedActivity): array
     {
-        $published = $this->activityPublishedService->findOrCreate($filename, $organizationId);
+        $activityPublished = $this->activityPublishedService->findOrCreate($filename, $organizationId);
         $publishedActivities = $publishedActivity;
 
         if (!is_array($publishedActivity)) {
-            $publishedActivities = (array) $published->published_activities;
+            $publishedActivities = (array) $activityPublished->published_activities;
             (in_array($publishedActivity, $publishedActivities, true)) ?: array_push($publishedActivities, $publishedActivity);
         }
 
         if (is_array($publishedActivity)) {
-            $publishedActivities = (array) $published->published_activities;
+            $publishedActivities = (array) $activityPublished->published_activities;
             $publishedActivities = array_merge($publishedActivities, $publishedActivity);
         }
 
-        $this->activityPublishedService->update($published, array_values(array_unique($publishedActivities)));
+        $_ = $this->activityPublishedService->update(
+            $activityPublished->id,
+            [
+                'published_activities' => array_values(array_unique($publishedActivities)),
+            ]
+        );
 
         return $publishedActivities;
     }
@@ -741,7 +733,7 @@ class XmlGenerator
      *
      * @throws Exception
      */
-    public function removeActivityXmlFromMergedXmlInS3($activity, $organization, $settings): void
+    public function removeActivityXmlFromMergedXmlInS3(Activity $activity, Organization $organization, Setting $settings): void
     {
         $targetIatiIdentifier = $activity->iati_identifier['iati_identifier_text'];
         $mergedXml = $this->getMergedXmlFromS3($settings);

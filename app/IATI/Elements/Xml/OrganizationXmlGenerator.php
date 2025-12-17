@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\IATI\Elements\Xml;
 
+use App\IATI\Models\Organization\Organization;
+use App\IATI\Models\Setting\Setting;
 use App\IATI\Services\Organization\DocumentLinkService;
 use App\IATI\Services\Organization\NameService;
 use App\IATI\Services\Organization\OrganizationIdentifierService;
@@ -16,7 +18,6 @@ use App\IATI\Services\Organization\ReportingOrgService;
 use App\IATI\Services\Organization\TotalBudgetService;
 use App\IATI\Services\Organization\TotalExpenditureService;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * Class OrganizationXmlGenerator.
@@ -102,46 +103,15 @@ class OrganizationXmlGenerator
 
     /**
      * Generates combines activities xml file and publishes to IATI.
-     *
-     * @param $settings
-     * @param $organization
-     * @param bool $refreshTimestamp
-     *
-     * @return void
      */
-    public function generateOrganizationXml($settings, $organization, bool $refreshTimestamp = true): void
+    public function generateOrganizationXml(Setting $settings, Organization $organization, bool $refreshTimestamp = true): bool
     {
-        $publishingInfo = $settings->publishing_info;
-
-        $publisherId = Arr::get($publishingInfo, 'publisher_id', 'Not Available');
+        $publisherId = Arr::get($organization, 'publisher_id', 'Not Available');
         $filename = sprintf('%s-%s.xml', $publisherId, 'organisation');
-        $publishedOrganization = sprintf('%s-%s.xml', $publisherId, $organization->id);
+
         $xml = $this->getXml($settings, $organization, $refreshTimestamp);
-        $result = Storage::disk('s3')->put(
-            sprintf('%s/%s', 'organizationXmlFiles', $filename),
-            $xml->saveXML(),
-            $filename
-        );
 
-        if ($result) {
-            $publishedFiles = $this->savePublishedFiles($filename, $organization->id, $publishedOrganization);
-        }
-    }
-
-    /**
-     * Stores published file details in database.
-     *
-     * @param $filename
-     * @param $organizationId
-     * @param $publishedActivity
-     *
-     * @return array
-     */
-    public function savePublishedFiles($filename, $organizationId, $publishedActivity): array
-    {
-        $published = $this->organizationPublishedService->findOrCreate($filename, $organizationId);
-
-        return $published->toArray();
+        return awsUploadFile(sprintf('%s/%s', 'organizationXmlFiles', $filename), $xml->saveXML());
     }
 
     /**
@@ -223,15 +193,13 @@ class OrganizationXmlGenerator
 
     /**
      * Deletes the unpublished file from server.
-     *
-     * @param $filename
-     *
-     * @return void
      */
-    public function deleteUnpublishedFile($filename)
+    public function deleteUnpublishedFile(string $filename): bool
     {
         if (awsHasFile(sprintf('%s/%s', 'organizationXmlFiles', $filename))) {
-            awsDeleteFile(sprintf('%s/%s', 'organizationXmlFiles', $filename));
+            return awsDeleteFile(sprintf('%s/%s', 'organizationXmlFiles', $filename));
         }
+
+        return true;
     }
 }

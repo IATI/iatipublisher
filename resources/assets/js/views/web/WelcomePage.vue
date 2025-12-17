@@ -14,46 +14,15 @@
                 'public.login.iati_publishing_tool_section.welcome_text'
               ]
             }}
-            <br />
-            <span v-if="pageContent !== 'Join Now'">
-              {{
-                translatedData[
-                  'public.login.iati_publishing_tool_section.page_to_register'
-                ]
-              }}
-            </span>
           </p>
-          <div class="block leading-6">
-            <span class="flex flex-wrap">
-              {{
-                pageContent === 'Join Now'
-                  ? translatedData[
-                      'public.login.iati_publishing_tool_section.havent_registered_label'
-                    ]
-                  : translatedData['common.common.already_have_an_account']
-              }}
-              <button
-                class="ml-1 border-b-2 border-b-transparent text-base text-turquoise hover:border-b-2 hover:border-b-turquoise"
-                @click="togglePage"
-              >
-                {{
-                  pageContent === 'Join Now'
-                    ? translatedData['common.common.join_now']
-                    : translatedData['common.common.sign_in']
-                }}
-              </button>
-            </span>
-          </div>
         </div>
       </div>
 
       <SignIn
-        v-if="pageContent === 'Join Now'"
         :message="message"
         :intent="intent"
         :translated-data="translatedData"
       />
-      <JoinNow v-else :translated-data="translatedData" />
     </div>
   </section>
 </template>
@@ -61,11 +30,9 @@
 <script>
 import { defineComponent, ref } from 'vue';
 import SignIn from './partials/SignIn.vue';
-import JoinNow from './partials/JoinNow.vue';
 
 export default defineComponent({
   components: {
-    JoinNow,
     SignIn,
   },
   props: {
@@ -87,17 +54,11 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
-    const pageContent = ref(props.page === 'signin' ? 'Join Now' : 'Sign In');
-
-    function togglePage() {
-      pageContent.value =
-        pageContent.value === 'Join Now' ? 'Sign In' : 'Join Now';
-    }
+  setup() {
+    const pageContent = ref('Sign In');
 
     return {
       pageContent,
-      togglePage,
     };
   },
 });

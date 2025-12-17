@@ -5,13 +5,16 @@ declare(strict_types=1);
 namespace App\IATI\Services\Workflow;
 
 use App\IATI\Models\Activity\Activity;
+use App\IATI\Models\Activity\ActivityPublished;
+use App\IATI\Models\Organization\Organization;
+use App\IATI\Models\Setting\Setting;
 use App\IATI\Repositories\ApiLog\ApiLogRepository;
 use App\IATI\Services\Activity\ActivityPublishedService;
 use App\IATI\Services\Activity\ActivityService;
 use App\IATI\Services\Activity\ActivitySnapshotService;
 use App\IATI\Services\Audit\AuditService;
 use App\IATI\Services\Organization\OrganizationService;
-use App\IATI\Services\Publisher\PublisherService;
+use App\IATI\Services\RegisterYourDataApi\DatasetApiService;
 use App\IATI\Services\Setting\SettingService;
 use App\IATI\Services\Validator\ActivityValidatorResponseService;
 use App\IATI\Services\Xml\XmlGeneratorService;
@@ -28,95 +31,20 @@ use Illuminate\Support\Arr;
 class ActivityWorkflowService
 {
     /**
-     * @var OrganizationService
-     */
-    protected OrganizationService $organizationService;
-
-    /**
-     * @var SettingService
-     */
-    protected SettingService $settingService;
-
-    /**
-     * @var ActivityService
-     */
-    protected ActivityService $activityService;
-
-    /**
-     * @var XmlGeneratorService
-     */
-    protected XmlGeneratorService $xmlGeneratorService;
-
-    /**
-     * @var PublisherService
-     */
-    protected PublisherService $publisherService;
-
-    /**
-     * @var ActivityPublishedService
-     */
-    protected ActivityPublishedService $activityPublishedService;
-
-    /**
-     * @var ActivitySnapshotService
-     */
-    protected ActivitySnapshotService $activitySnapshotService;
-
-    /**
-     * @var ActivityValidatorResponseService
-     */
-    protected ActivityValidatorResponseService $validatorService;
-
-    /**
-     * @var AuditService
-     */
-    protected AuditService $auditService;
-
-    /**
-     * @var ApiLogRepository
-     */
-    protected ApiLogRepository $apiLogRepo;
-
-    private Client $client;
-
-    /**
      * ActivityWorkflowService Constructor.
-     *
-     * @param OrganizationService                       $organizationService
-     * @param SettingService $settingService
-     * @param ActivityService                           $activityService
-     * @param XmlGeneratorService                       $xmlGeneratorService
-     * @param PublisherService                          $publisherService
-     * @param ActivityPublishedService                  $activityPublishedService
-     * @param ActivitySnapshotService                   $activitySnapshotService
-     * @param ActivityValidatorResponseService          $validatorService
-     * @param ApiLogRepository                          $apiLogRepo
-     * @param AuditService                              $auditService
      */
     public function __construct(
-        OrganizationService $organizationService,
-        SettingService $settingService,
-        ActivityService $activityService,
-        XmlGeneratorService $xmlGeneratorService,
-        PublisherService $publisherService,
-        ActivityPublishedService $activityPublishedService,
-        ActivitySnapshotService $activitySnapshotService,
-        ActivityValidatorResponseService $validatorService,
-        ApiLogRepository $apiLogRepo,
-        AuditService $auditService
+        protected OrganizationService $organizationService,
+        protected SettingService $settingService,
+        protected ActivityService $activityService,
+        protected XmlGeneratorService $xmlGeneratorService,
+        protected ActivityPublishedService $activityPublishedService,
+        protected ActivitySnapshotService $activitySnapshotService,
+        protected ActivityValidatorResponseService $validatorService,
+        protected ApiLogRepository $apiLogRepo,
+        protected AuditService $auditService,
+        protected DatasetApiService $datasetApiService,
     ) {
-        $this->organizationService = $organizationService;
-        $this->settingService = $settingService;
-        $this->activityService = $activityService;
-        $this->xmlGeneratorService = $xmlGeneratorService;
-        $this->publisherService = $publisherService;
-        $this->activityPublishedService = $activityPublishedService;
-        $this->activitySnapshotService = $activitySnapshotService;
-        $this->validatorService = $validatorService;
-        $this->apiLogRepo = $apiLogRepo;
-        $this->auditService = $auditService;
-
-        $this->client = new Client();
     }
 
     /**
@@ -132,117 +60,78 @@ class ActivityWorkflowService
     }
 
     /**
-     * Publish an activity to the IATI registry.
-     *
-     * @param $activity
-     * @param bool $publishFile
-     *
-     * @return void
-     *
-     * @throws Exception
-     */
-    public function publishActivity($activity, bool $publishFile = true): void
-    {
-        $organization = $activity->organization;
-        $settings = $organization->settings;
-        $generatedXmlContent = $this->xmlGeneratorService->generateActivityXml(
-            $activity,
-            $activity->transactions,
-            $activity->results,
-            $settings,
-            $organization
-        );
-
-        if ($generatedXmlContent) {
-            $this->xmlGeneratorService->appendCompleteActivityXmlToMergedXml($generatedXmlContent, $settings, $activity, $organization);
-        } else {
-            throw new Exception('Failed appending new activity to merged xml.');
-        }
-
-        if ($publishFile) {
-            $activityPublished = $this->activityPublishedService->getActivityPublished($organization->id);
-            $publishingInfo = $settings->publishing_info;
-            $this->publisherService->publishFile($publishingInfo, $activityPublished, $organization);
-        }
-
-        $organizationIdentifier = $activity->organization->identifier;
-        $iatiIdentifier = [
-            'activity_identifier'  => $activity->activity_identifier,
-            'iati_identifier_text' => $organizationIdentifier . '-' . $activity->activity_identifier,
-            'present_organization_identifier' => $organizationIdentifier,
-        ];
-
-        $this->activityService->updateActivity($activity->id, [
-            'status'                  => 'published',
-            'linked_to_iati'          => true,
-            'iati_identifier'         => $iatiIdentifier,
-            'has_ever_been_published' => true,
-        ]);
-        $this->activitySnapshotService->createOrUpdateActivitySnapshot($activity);
-    }
-
-    /**
      * Publish an activities to the IATI registry.
      *
-     * @param $activities
-     * @param $organization
-     * @param $settings
-     * @param bool $publishFile
-     * @param bool|string $uuid
-     *
-     * @return void
-     *
+     * @throws \App\IATI\Services\RegisterYourDataApi\RegisterYourDataApiException
      * @throws \JsonException
+     * @throws Exception
      */
-    public function publishActivities($activities, $organization, $settings, bool $publishFile = true, bool|string $uuid = false): void
+    public function publishActivities(object $activities, Organization $organization, Setting $settings, string $accessToken, bool|string $uuid = false): void
     {
         if ($uuid) {
             $this->xmlGeneratorService->setUuid($uuid);
         }
 
-        $successfullyProcessedActivities = $this->xmlGeneratorService->generateActivitiesXml(
+        $publisherId = Arr::get($organization, 'publisher_id', false);
+        $mergedFileName = "{$publisherId}-activities.xml";
+
+        $generationData = $this->xmlGeneratorService->generateActivitiesXml(
             $activities,
             $settings,
             $organization
         );
 
-        $activityPublished = $this->activityPublishedService->getActivityPublished($organization->id);
-        $publishingInfo = $settings->publishing_info;
-        $this->publisherService->publishFile($publishingInfo, $activityPublished, $organization);
+        $successfullyProcessedActivities = $generationData['activities'];
+        $innerActivityXmlArray = $generationData['inner_activity_xmls'];
+        $publishedActivityFileNames = $generationData['single_xml_filenames'];
+        $activityMappedToActivityIdentifier = $generationData['activity_mapped_to_identifiers'];
 
-        $publisherId = Arr::get($settings, 'publishing_info.publisher_id', false);
-        $mergedXmlPath = "xml/mergedActivityXml/$publisherId-activities.xml";
+        $activityPublished = $this->activityPublishedService->getActivityPublished($organization->id);
+
+        if (!empty($innerActivityXmlArray)) {
+            $this->xmlGeneratorService->appendMultipleInnerActivityXmlToMergedXml(
+                $innerActivityXmlArray,
+                $settings,
+                $organization,
+                $activityMappedToActivityIdentifier
+            );
+        }
+
+        $payload = generateDatasetApiPayload($organization, 'activities', 'public');
+
+        $response = $activityPublished
+            ? $this->datasetApiService->updateDataset($accessToken, $activityPublished->dataset_uuid, $payload)
+            : $this->datasetApiService->createDataset($accessToken, $payload);
+
+        $mergedXmlPath = "xml/mergedActivityXml/$mergedFileName";
         $mergedFilesize = calculateStringSizeInMb(awsGetFile($mergedXmlPath));
 
-        $this->activityPublishedService->updateFilesize($activityPublished, $mergedFilesize);
+        $this->activityPublishedService->trackActivityPublished($organization->id, $mergedFileName, $publishedActivityFileNames, $mergedFilesize, $response['id']);
 
-        foreach ($successfullyProcessedActivities as $activity) {
-            $this->activityService->updatePublishedStatus($activity, 'published', true);
-            $this->activitySnapshotService->createOrUpdateActivitySnapshot($activity);
-        }
+        $activityIds = $activities->pluck('id')->toArray();
+        $this->activityService->bulkUpdatePublishedStatus($activityIds, 'published', true);
     }
 
     /**
      * Unpublish activity and then republish required file to the IATI registry.
      *
-     * @param $activity
-     *
-     * @return void
-     *
+     * @throws \App\IATI\Services\RegisterYourDataApi\RegisterYourDataApiException
      * @throws Exception
      */
-    public function unpublishActivity($activity): void
+    public function unpublishActivity(Activity $activity, string $accessToken): void
     {
         $organization = $activity->organization;
         $settings = $organization->settings;
-        $publishedFile = $this->activityPublishedService->getActivityPublished($activity->org_id);
-        $publishingInfo = $settings->publishing_info;
 
-        $this->removeActivityFromPublishedArray($publishedFile, $activity);
         $activityPublished = $this->activityPublishedService->getActivityPublished($organization->id);
+        $payload = generateDatasetApiPayload($organization, 'activities');
+
+        $_ = $this->removeActivityFromPublishedArray($activityPublished, $activity);
 
         $this->xmlGeneratorService->removeActivityXmlFromMergedXmlInS3($activity, $organization, $settings);
-        $this->publisherService->publishFile($publishingInfo, $activityPublished, $organization);
+
+        $_ = $this->datasetApiService->updateDataset($accessToken, $activityPublished->dataset_uuid, $payload);
+
         $this->activityService->updatePublishedStatus($activity, 'draft', false);
         $this->validatorService->deleteValidatorResponse($activity->id);
     }
@@ -250,16 +139,22 @@ class ActivityWorkflowService
     /**
      * Removes activity file name from activity published row.
      *
-     * @param $publishedFile
-     * @param $activity
+     * @param ActivityPublished $activityPublished
+     * @param Activity          $activity
      *
-     * @return void
+     * @return bool
      */
-    public function removeActivityFromPublishedArray($publishedFile, $activity): void
+    public function removeActivityFromPublishedArray(ActivityPublished $activityPublished, Activity $activity): bool
     {
-        $containedActivities = $publishedFile->extractActivities();
+        $containedActivities = $activityPublished->extractActivities();
         $newPublishedFiles = Arr::except($containedActivities, $activity->id);
-        $this->activityPublishedService->updateActivityPublished($publishedFile, $newPublishedFiles);
+
+        return $this->activityPublishedService->update(
+            $activityPublished->id,
+            [
+                'published_activities'=>array_values($newPublishedFiles),
+            ]
+        );
     }
 
     /**
@@ -308,7 +203,10 @@ class ActivityWorkflowService
     {
         $client = new Client();
         $URI = env('IATI_VALIDATOR_ENDPOINT');
-        $params['headers'] = ['Content-Type' => 'application/json', 'Ocp-Apim-Subscription-Key' => env('IATI_VALIDATOR_KEY')];
+        $params['headers'] = [
+            'Content-Type'              => 'application/json',
+            'Ocp-Apim-Subscription-Key' => env('IATI_VALIDATOR_KEY'),
+        ];
         $params['query'] = ['group' => 'false', 'details' => 'true'];
         $params['body'] = $xmlData;
         $response = $client->post($URI, $params);
@@ -336,47 +234,6 @@ class ActivityWorkflowService
     }
 
     /**
-     * Check if the Organization's publisher_id and api_token has been filled out and are correct.
-     *
-     * @param $settings
-     *
-     * @return bool
-     */
-    public function hasNoPublisherInfo($settings): bool
-    {
-        if (!$settings) {
-            return true;
-        }
-
-        $registryInfo = $settings->publishing_info;
-
-        if (!$registryInfo) {
-            return true;
-        }
-
-        if (
-            empty(Arr::get($registryInfo, 'publisher_id', null)) ||
-            empty(Arr::get($registryInfo, 'api_token', null)) ||
-            !Arr::get($registryInfo, 'publisher_verification', false) ||
-            !Arr::get($registryInfo, 'token_verification', false)
-        ) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Returns if logged in user is verified or not.
-     *
-     * @return bool
-     */
-    public function isUserVerified(): bool
-    {
-        return !is_null(auth()->user()->email_verified_at);
-    }
-
-    /**
      * Returns errors related to publishing activity.
      *
      * @param        $organization
@@ -395,33 +252,12 @@ class ActivityWorkflowService
             return $messages;
         }
 
-        if (!$this->isUserVerified()) {
-            $messages[] = 'You have not verified your email address.';
+        if (!$organization->registry_approved) {
+            $messages[] = 'Your organisation is pending approval by the IATI team.';
         }
-        if ($this->hasNoPublisherInfo($organization)) {
-            $messages[] = 'Your API Key is not valid or it is empty.';
 
-            try {
-                $tokenVerificationStatus = $this->settingService->verifyPublisher($organization->toArray());
-                $tokenVerificationStatus = json_decode(json_encode($tokenVerificationStatus), true);
-
-                if ($tokenVerificationStatus['state'] === 'active') {
-                    $publisherInfo = Arr::get($organization, 'settings.publishing_info', []);
-                    $publisherInfo['token_status'] = Arr::get($tokenVerificationStatus, 'state', 'pending');
-                    $publisherInfo['token_verification'] = $publisherInfo['token_status'] === 'active';
-
-                    $this->settingService->storePublishingInfo($publisherInfo);
-
-                    array_pop($messages);
-                }
-            } catch (Exception $e) {
-            }
-        }
         if ($type === 'activity' && !$this->isOrganizationPublished($organization)) {
             $messages[] = 'Your Organisation data is not published.';
-        }
-        if (!$this->organizationService->isPublisherStateActive($organization['publisher_id'])) {
-            $messages[] = 'The Publisher ID is not verified in IATI Registry.';
         }
 
         return $messages;
@@ -452,35 +288,7 @@ class ActivityWorkflowService
         $publishingInfo = $settings->publishing_info;
         $publisherId = Arr::get($publishingInfo, 'publisher_id', 'Not Available');
         $publishedActivity = sprintf('%s-%s.xml', $publisherId, $activity->id);
+
         $this->xmlGeneratorService->deleteUnpublishedFile($publishedActivity);
-    }
-
-    /**
-     * Checks if sector is missing from activity and transaction level
-     * if Missing it populates default value.
-     *
-     * @param $activity
-     * @return object
-     */
-    public function populateSectorIfMissing($activity): object
-    {
-        $data = sectorDefaultValue();
-
-        if (
-            (empty($activity->sector) && !$this->activityService->checkIfTransactionHasSector($activity))
-            || (is_variable_null($activity->sector))
-        ) {
-            $this->sectorService->update($activity->id, $data);
-        }
-
-        return $activity->refresh();
-    }
-
-    /**
-     * @throws GuzzleException
-     */
-    public function validateMultipleActivities(string $xmlData): string
-    {
-        return $this->getResponse($xmlData);
     }
 }

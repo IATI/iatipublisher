@@ -30,6 +30,7 @@ class OrganizationPublished extends Model
       'publish_status',
       'filename',
       'published_to_registry',
+      'dataset_uuid',
       'created_at',
       'updated_at',
     ];

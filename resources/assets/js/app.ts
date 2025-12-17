@@ -10,12 +10,10 @@ import WebHeader from './views/web/partials/WebHeader.vue';
 import WebFooter from './views/web/partials/WebFooter.vue';
 import AdminFooter from './views/web/partials/AdminFooter.vue';
 import WelcomeSignIn from './views/web/WelcomePage.vue';
-import RegisterPage from './views/web/RegisterPage.vue';
 import AboutPage from './views/web/AboutPage.vue';
 import SupportPage from './views/web/SupportPage.vue';
 import IatiStandard from './views/web/IatiStandard.vue';
 import PublishingChecklist from './views/web/PublishingChecklist.vue';
-import IatiRegisterPage from './views/web/IatiRegisterPage.vue';
 
 /**
  * Vue components for Activities Listing
@@ -97,9 +95,7 @@ app
   .component('WebFooter', WebFooter) //y
   .component('AdminFooter', AdminFooter) //y
 
-  .component('WelcomeSignin', WelcomeSignIn)
-  .component('RegisterForm', RegisterPage)
-  .component('IatiRegisterForm', IatiRegisterPage);
+  .component('WelcomeSignin', WelcomeSignIn);
 
 /**
  * registering web portal pages

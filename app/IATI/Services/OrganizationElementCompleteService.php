@@ -171,10 +171,8 @@ class OrganizationElementCompleteService
     public function isIdentifierElementCompleted($organization): bool
     {
         $identifier = $organization->identifier;
-        $registration_agency = $organization->registration_agency;
-        $registration_number = $organization->registration_number;
 
-        return !(empty($identifier) || empty($registration_agency) || empty($registration_number));
+        return !(empty($identifier));
     }
 
     /**

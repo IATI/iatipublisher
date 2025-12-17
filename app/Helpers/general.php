@@ -1624,3 +1624,37 @@ function getActivityAttributes(): array
         'result',
     ];
 }
+
+function generateDatasetApiPayload($org, string $fileType = 'organization', string $visibility = 'private'): array
+{
+    $isActivityFile = ($fileType === 'activities');
+
+    if ($isActivityFile) {
+        $nameSuffix = 'Activity File';
+        $pathPrefix = 'xml/mergedActivityXml';
+        $fileSuffix = '-activities.xml';
+    } else {
+        $nameSuffix = 'Organisation File';
+        $pathPrefix = 'organizationXmlFiles';
+        $fileSuffix = '-organisation.xml';
+    }
+
+    $fileName = $org->publisher_id . $fileSuffix;
+    $xmlPath = sprintf('%s/%s', $pathPrefix, $fileName);
+
+    $humanReadableForPublishing = sprintf(
+        '%s %s',
+        ($org->human_readable_name ?? $org->publisher_id),
+        $nameSuffix
+    );
+
+    return [
+        'human_readable_name'   => $humanReadableForPublishing,
+        'source_type'           => $org->source_type,
+        'short_name'            => $org->publisher_id,
+        'url'                   => awsUrl($xmlPath),
+        'visibility'            => $visibility,
+        'licence_id'            => $org->data_license,
+        'owner_organisation_id' => $org->uuid,
+    ];
+}
