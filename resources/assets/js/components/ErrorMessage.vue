@@ -184,14 +184,13 @@ onMounted(async () => {
   axios
     .all([axios.get('/setting/status'), axios.get('/organisation/status')])
     .then(
-      axios.spread(function (setting_res, org_res) {
+      axios.spread(function (setting_res) {
         const response = setting_res.data;
-        const org_response = org_res.data;
 
         errorData.default_setting = response?.data?.default_status;
         errorData.publisher_active = true;
         errorData.registry_approved =
-          org_response.data?.registry_approved ?? false;
+          response?.data?.registry_approved ?? false;
 
         let groupedError = ['default_setting', 'account_verified'];
 
