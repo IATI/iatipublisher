@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin\Workflow;
 
 use App\Http\Controllers\Controller;
-use App\IATI\Services\ApiLog\ApiLogService;
 use App\IATI\Services\Validator\ActivityValidatorResponseService;
 use App\IATI\Services\Workflow\ActivityWorkflowService;
 use App\IATI\Traits\IatiValidatorResponseTrait;
@@ -22,8 +21,7 @@ class ActivityWorkflowController extends Controller
 
     public function __construct(
         protected ActivityWorkflowService $activityWorkflowService,
-        protected ActivityValidatorResponseService $validatorService,
-        protected ApiLogService $apiLogService
+        protected ActivityValidatorResponseService $validatorService
     ) {
     }
 

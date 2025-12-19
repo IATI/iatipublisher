@@ -12,13 +12,29 @@ class RegisterYourDataApiException extends Exception
      */
     public static function fromRequestException(RequestException $e): self
     {
-        // Attempt to parse a more specific error message from the JSON response body.
-        $errorMessage = $e->response->json('error.error_msg')
-            ?? $e->response->json('error_description')
-            ?? 'An unknown API error occurred.';
+        if (!$e->response) {
+            return new self(
+                'API Error: No response received from Register Your Data API.',
+                0,
+                $e
+            );
+        }
 
         $statusCode = $e->response->status();
+        $body = $e->response->json();
 
-        return new self("API Error (HTTP {$statusCode}): {$errorMessage}", $statusCode, $e);
+        $errorMessage =
+            data_get($body, 'error.error_msg')
+            ?? data_get($body, 'error_description')
+            ?? data_get($body, 'error')
+            ?? data_get($body, 'message')
+            ?? $e->response->body()
+            ?? 'An unknown API error occurred.';
+
+        return new self(
+            "API Error (HTTP {$statusCode}): {$errorMessage}",
+            0,
+            $e
+        );
     }
 }
