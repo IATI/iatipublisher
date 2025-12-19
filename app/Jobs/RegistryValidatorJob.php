@@ -7,7 +7,6 @@ namespace App\Jobs;
 use App\IATI\Models\Activity\Activity;
 use App\IATI\Models\User\User;
 use App\IATI\Repositories\Activity\ValidationStatusRepository;
-use App\IATI\Services\ApiLog\ApiLogService;
 use App\IATI\Services\Validator\ActivityValidatorResponseService;
 use App\IATI\Services\Workflow\ActivityWorkflowService;
 use App\IATI\Traits\IatiValidatorResponseTrait;
@@ -114,12 +113,9 @@ class RegistryValidatorJob implements ShouldQueue
      */
     public function storeValidation($response): void
     {
-        $apiLogService = app()->make(ApiLogService::class);
         $validatorService = app()->make(ActivityValidatorResponseService::class);
         $validationStatusRepository = app()->make(ValidationStatusRepository::class);
         $response = $this->addElementOnIatiValidatorResponse($response, $this->activity);
-
-        $apiLogService->store(generateApiInfo('POST', env('IATI_VALIDATOR_ENDPOINT'), ['form_params' => json_encode($this->activity)], json_encode($response)));
 
         $recordResponse = [
             'activity_id'   =>  $this->activity->id,
