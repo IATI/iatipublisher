@@ -84,6 +84,7 @@ class SettingService
                 ? ($setting['publishing_info']['api_token'] && $setting['publishing_info']['token_verification'] ? true : false)
                 : false,
             'token_status' => Arr::get($setting, 'publishing_info.token_verification', false),
+            'registry_approved' => auth()->user()->organization->registry_approved,
         ];
     }
 
