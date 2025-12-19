@@ -18,7 +18,7 @@ class IatiDataSyncService
 
     public function syncOrganizationDownstream(string $uuid, array $data): Organization
     {
-        $existingOrg = Organization::where('uuid', $uuid)->first();
+        $existingOrg = Organization::where('identifier', $data['organisation_identifier'])->first();
 
         $publisherTypeCode = data_get($data, 'organisation_type');
         $name = [['narrative' => data_get($data, 'human_readable_name'), 'language' => 'en']];
@@ -136,7 +136,7 @@ class IatiDataSyncService
 
     public function syncUserFromClaims(string $uuid, array $claims, int|null $orgId, string $publisherUserRole): User
     {
-        $user = User::where('uuid', $uuid)->first();
+        $user = User::where('email', data_get($claims, 'email'))->first();
 
         if ($user) {
             $user->update([
