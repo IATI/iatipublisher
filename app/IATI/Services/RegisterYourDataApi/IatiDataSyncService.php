@@ -189,6 +189,7 @@ class IatiDataSyncService
     {
         return match ($registryRole) {
             'provider_admin' => 'iati_admin',
+            'iati_superadmin' => 'iati_admin',
 //            'admin'          => 'admin',
 //            'editor'         => 'admin',
 //            'contributor'    => 'admin',

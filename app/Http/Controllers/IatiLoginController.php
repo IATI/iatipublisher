@@ -52,36 +52,33 @@ class IatiLoginController extends Controller
 
             $publisherOrg = null;
             $publisherOrgUUID = null;
-            $publisherUserRole = 'admin';
+            $publisherUserRole = in_array('iati_superadmin', data_get($authResult->claims, 'roles', []), true) ? 'iati_superadmin' : 'admin';
 
             $reportingOrgs = $this->reportingOrgApiService->getReportingOrgs($authResult->accessToken, ['include_meta' => 'yes', 'include_actions' => 'yes']);
-
+            $firstOrg = data_get($reportingOrgs, 0);
             DB::beginTransaction();
 
             if (count($reportingOrgs) > 1) {
                 $this->showNotSupportMultipleOrgsPage();
             } elseif (!empty($reportingOrgs) && count($reportingOrgs) === 1) {
-                $firstOrg = $reportingOrgs[0];
-
                 // check if role is contributor_pending
                 if ($firstOrg['user_role'] === 'contributor_pending') {
                     $this->showYouArePendingApprovalPage();
                 }
 
                 $publisherOrgUUID = data_get($firstOrg, 'id');
-                $publisherUserRole = $this->dataSyncService->mapRegisterRoleToPublisher(data_get($firstOrg, 'user_role', $publisherUserRole));
 
-                if ($publisherUserRole !== 'iati_admin') {
-                    if ($publisherOrgUUID) {
-                        $reportingOrgMetadata = $firstOrg['metadata'] ?? [];
-                        $publisherOrg = $this->dataSyncService->syncOrganizationDownstream(
-                            $publisherOrgUUID,
-                            $reportingOrgMetadata
-                        );
-                        $__ = $this->dataSyncService->syncSettings($publisherOrg);
-                    }
+                if ($publisherOrgUUID) {
+                    $reportingOrgMetadata = $firstOrg['metadata'] ?? [];
+                    $publisherOrg = $this->dataSyncService->syncOrganizationDownstream(
+                        $publisherOrgUUID,
+                        $reportingOrgMetadata
+                    );
+                    $__ = $this->dataSyncService->syncSettings($publisherOrg);
                 }
             }
+
+            $publisherUserRole = $this->dataSyncService->mapRegisterRoleToPublisher(data_get($firstOrg, 'user_role', $publisherUserRole));
 
             $user = $this->dataSyncService->syncUserFromClaims(
                 $authResult->uuid,
