@@ -55,6 +55,7 @@ class OrganizationWorkflowService
         $this->xmlGeneratorService->generateOrganizationXml($settings, $organization);
 
         $payload = generateDatasetApiPayload($organization, 'organization', 'public');
+        logger($payload);
         $response = $organizationPublished
             ? $this->datasetApiService->updateDataset($accessToken, $organizationPublished->dataset_uuid, $payload)
             : $this->datasetApiService->createDataset($accessToken, $payload);

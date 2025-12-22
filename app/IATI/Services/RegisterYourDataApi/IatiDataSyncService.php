@@ -22,6 +22,7 @@ class IatiDataSyncService
 
         $publisherTypeCode = data_get($data, 'organisation_type');
         $name = [['narrative' => data_get($data, 'human_readable_name'), 'language' => 'en']];
+
         $attributes = [
             'identifier'             => $data['organisation_identifier'],
             'uuid'                   => $uuid,
@@ -178,6 +179,7 @@ class IatiDataSyncService
     {
         return match ($registryRole) {
             'provider_admin' => 'iati_admin',
+            'iati_superadmin' => 'iati_admin',
 //            'admin'          => 'admin',
 //            'editor'         => 'admin',
 //            'contributor'    => 'admin',

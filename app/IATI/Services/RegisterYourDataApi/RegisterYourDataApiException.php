@@ -14,7 +14,7 @@ class RegisterYourDataApiException extends Exception
     {
         if (!$e->response) {
             return new self(
-                'API Error: No response received from Register Your Data API.',
+                '##### API Error: No response received from Register Your Data API. #####',
                 0,
                 $e
             );
@@ -32,7 +32,7 @@ class RegisterYourDataApiException extends Exception
             ?? 'An unknown API error occurred.';
 
         return new self(
-            "API Error (HTTP {$statusCode}): {$errorMessage}",
+            "##### API Error (HTTP {$statusCode}): {$errorMessage} #####",
             0,
             $e
         );
