@@ -173,7 +173,6 @@ const errorCount = ref(0);
 
 const toastData = inject('toastData') as ToastInterface;
 const errorData = reactive({
-  account_verified: false,
   publisher_active: false,
   registry_approved: false,
   default_setting: false,
@@ -192,16 +191,10 @@ onMounted(async () => {
         errorData.registry_approved =
           response?.data?.registry_approved ?? false;
 
-        let groupedError = ['default_setting', 'account_verified'];
-
         for (const error in errorData) {
-          if (!errorData[error] && groupedError.indexOf(error) === -1) {
+          if (!errorData[error]) {
             errorCount.value += 1;
           }
-        }
-
-        if (!(errorData.account_verified && errorData.default_setting)) {
-          errorCount.value += 1;
         }
 
         if (Object.values(errorData).indexOf(false) > -1) {

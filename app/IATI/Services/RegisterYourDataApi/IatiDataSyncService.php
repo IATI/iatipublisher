@@ -18,7 +18,17 @@ class IatiDataSyncService
 
     public function syncOrganizationDownstream(string $uuid, array $data): Organization
     {
-        $existingOrg = Organization::where('identifier', $data['organisation_identifier'])->orWhere('uuid', $uuid)->first();
+        if ($uuid) {
+            $existingOrg = Organization::where('uuid', $uuid)->first();
+        }
+
+        if (!$existingOrg && !empty($data['organisation_identifier'])) {
+            $existingOrg = Organization::where('identifier', $data['organisation_identifier'])->first();
+        }
+
+        if (!$existingOrg && !empty($data['short_name'])) {
+            $existingOrg = Organization::where('publisher_id', $data['short_name'])->first();
+        }
 
         $publisherTypeCode = data_get($data, 'organisation_type');
         $name = [['narrative' => data_get($data, 'human_readable_name'), 'language' => 'en']];

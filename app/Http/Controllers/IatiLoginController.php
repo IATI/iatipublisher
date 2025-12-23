@@ -68,8 +68,8 @@ class IatiLoginController extends Controller
                     $this->showYouArePendingApprovalPage();
                 }
 
-                $publisherOrgUUID = $firstOrg['id'] ?? null;
-                $publisherUserRole = $this->dataSyncService->mapRegisterRoleToPublisher($firstOrg['user_role'] ?? $publisherUserRole);
+                $publisherOrgUUID = data_get($firstOrg, 'id');
+                $publisherUserRole = $this->dataSyncService->mapRegisterRoleToPublisher(data_get($firstOrg, 'user_role', $publisherUserRole));
 
                 if ($publisherUserRole !== 'iati_admin') {
                     if ($publisherOrgUUID) {
