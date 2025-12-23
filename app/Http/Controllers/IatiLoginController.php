@@ -66,7 +66,7 @@ class IatiLoginController extends Controller
                     $this->showYouArePendingApprovalPage();
                 }
 
-                $publisherOrgUUID = $firstOrg['id'] ?? null;
+                $publisherOrgUUID = data_get($firstOrg, 'id');
 
                 if ($publisherOrgUUID) {
                     $reportingOrgMetadata = $firstOrg['metadata'] ?? [];
