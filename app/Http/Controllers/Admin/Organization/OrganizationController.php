@@ -263,8 +263,7 @@ class OrganizationController extends Controller
     public function getPublisherStatus(): JsonResponse
     {
         try {
-            $publisher_id = Auth::user()->organization->publisher_id;
-            $status = $this->organizationService->isPublisherStateActive($publisher_id);
+            $status = Auth::user()->organization->registry_approved;
             $registry_approved = Auth::user()->organization->registry_approved;
             $translatedMessage = 'Publisher Status Successfully Retrieved';
 
