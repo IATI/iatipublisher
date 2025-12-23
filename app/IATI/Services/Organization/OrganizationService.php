@@ -15,7 +15,6 @@ use App\IATI\Repositories\Organization\OrganizationRepository;
 use App\IATI\Services\Publisher\PublisherService;
 use App\IATI\Traits\OrganizationXmlBaseElements;
 use Exception;
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
@@ -203,49 +202,6 @@ class OrganizationService
     public function pluckAllOrganizations(): Collection
     {
         return $this->organizationRepo->pluckAllOrganizations();
-    }
-
-    /**
-     * Check if publisher id is active in iati registry.
-     *
-     * @param string $publisher_id
-     *
-     * @return bool
-     */
-    public function isPublisherStateActive(string $publisher_id): bool
-    {
-        $clientConfig = ['base_uri' => env('IATI_API_ENDPOINT')];
-        $requestConfig = [
-            'http_errors' => false,
-            'query' => ['id' => $publisher_id ?? ''],
-        ];
-        $clientConfig['headers']['X-CKAN-API-Key'] = env('IATI_API_KEY');
-        $clientConfig['headers']['User-Agent'] = 'iati-publisher';
-
-        if (env('APP_ENV') !== 'production') {
-            $requestConfig['auth'] = [env('IATI_USERNAME'), env('IATI_PASSWORD')];
-        }
-
-        $client = new Client($clientConfig);
-        $res = $client->request('GET', env('IATI_API_ENDPOINT') . '/action/organization_show', $requestConfig);
-        $this->apiLogRepo->store(generateApiInfo('GET', env('IATI_API_ENDPOINT') . '/action/organization_show', $requestConfig, $res));
-
-        if ($res->getStatusCode() === 404) {
-            return false;
-        }
-
-        $response = json_decode($res->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
-        try {
-            $result = $response->result;
-
-            if (strcasecmp($result->state, 'active') === 0) {
-                return true;
-            }
-        } catch (Exception $e) {
-            return false;
-        }
-
-        return false;
     }
 
     /**
