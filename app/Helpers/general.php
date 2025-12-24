@@ -1633,10 +1633,12 @@ function generateDatasetApiPayload($org, string $fileType = 'organization', stri
         $nameSuffix = 'Activity File';
         $pathPrefix = 'xml/mergedActivityXml';
         $fileSuffix = '-activities.xml';
+        $shortName = sprintf('%s-organisation', $org->publisher_id);
     } else {
         $nameSuffix = 'Organisation File';
         $pathPrefix = 'organizationXmlFiles';
         $fileSuffix = '-organisation.xml';
+        $shortName = sprintf('%s-activity', $org->publisher_id);
     }
 
     $fileName = $org->publisher_id . $fileSuffix;
@@ -1651,7 +1653,7 @@ function generateDatasetApiPayload($org, string $fileType = 'organization', stri
     return [
         'human_readable_name'   => $humanReadableForPublishing,
         'source_type'           => $org->source_type,
-        'short_name'            => $org->publisher_id,
+        'short_name'            => $shortName,
         'url'                   => awsUrl($xmlPath),
         'visibility'            => $visibility,
         'licence_id'            => $org->data_license,
