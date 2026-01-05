@@ -77,12 +77,12 @@ class DatasetApiService
      *
      * @param string $accessToken The user's API access token.
      * @param string $datasetId The UUID of the dataset to delete.
-     * @return void
+
      * @throws RegisterYourDataApiException
      */
-    public function deleteDataset(string $accessToken, string $datasetId): void
+    public function deleteDataset(string $accessToken, string $datasetId)
     {
-        $this->apiClient->executeRequest(
+        return $this->apiClient->executeRequest(
             fn (PendingRequest $request) => $request->delete("datasets/{$datasetId}"),
             $accessToken,
             false

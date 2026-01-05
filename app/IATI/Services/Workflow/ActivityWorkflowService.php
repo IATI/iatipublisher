@@ -130,9 +130,15 @@ class ActivityWorkflowService
 
         $this->xmlGeneratorService->removeActivityXmlFromMergedXmlInS3($activity, $organization, $settings);
 
-        $_ = $this->datasetApiService->updateDataset($accessToken, $activityPublished->dataset_uuid, $payload);
-
         $this->activityService->updatePublishedStatus($activity, 'draft', false);
+
+        if (count($organization->allActivities->where('status', 'published')) === 0) {
+            $this->datasetApiService->deleteDataset($accessToken, $activityPublished->dataset_uuid);
+            $this->activityPublishedService->deleteActivity($activityPublished->id);
+        } else {
+            $this->datasetApiService->updateDataset($accessToken, $activityPublished->dataset_uuid, $payload);
+        }
+
         $this->validatorService->deleteValidatorResponse($activity->id);
     }
 
