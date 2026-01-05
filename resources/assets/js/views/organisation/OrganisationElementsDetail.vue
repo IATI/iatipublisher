@@ -80,7 +80,7 @@
         </div>
         <div class="icons flex flex-row-reverse items-center">
           <a
-            v-if="userRole === 'admin'"
+            v-if="userRole === 'admin' && !nonEditableElements.includes(title)"
             class="edit-button mx-2.5 flex items-center text-xs font-bold uppercase"
             :href="'/organisation/' + title"
           >
@@ -257,6 +257,7 @@ const getTranslatedElementName = (string) => {
 };
 
 let notDeletableElements = ['organisation_identifier', 'name', 'reporting_org'];
+let nonEditableElements = ['organisation_identifier'];
 let [deleteValue, deleteToggle] = useToggle();
 interface ToastDataTypeface {
   message: string;
