@@ -54,18 +54,10 @@
             </div>
         </nav>
         <div class="user-nav pt-2">
-            <button class="button secondary-btn dropdown-btn">
-                <ul>
-                    <li class="dropdown__list">
-                        <a href="{{ route('logout.iati') }}" class="flex w-full items-center">
-                            <svg-vue class="ml-1 mr-3" icon="logout"></svg-vue>
-                            <span class="text-sm">
-                    {{ trans('adminHeader/admin_header.logout') }}
-                  </span>
-                        </a>
-                    </li>
-                </ul>
-            </button>
+            <a href="{{ route('logout.iati') }}" class="button secondary-btn flex w-full items-center">
+                <svg-vue class="ml-1 mr-3" icon="logout"></svg-vue>
+                <span class="text-sm">{{ trans('adminHeader/admin_header.logout') }}</span>
+            </a>
         </div>
     </header>
 

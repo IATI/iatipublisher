@@ -13,4 +13,6 @@ return [
     'multiple_organizations_message' => 'Your user account is associated with more than one organisation, which IATI Publisher does not currently support. Please contact us for further advice or support.',
     'contact_support_button' => 'Contact IATI Support',
     'support_resolution_note' => 'Our support team will help you resolve this organization association issue.',
+    'account_error' => 'Account Error',
+    'account_error_description' => 'We encountered an issue syncing your account data. Please contact IATI Support.',
 ];

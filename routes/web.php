@@ -56,6 +56,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/pending-approval', [IatiLoginController::class, 'showYouArePendingApprovalPage'])->name('pending-approval');
 Route::get('/multiple-orgs', [IatiLoginController::class, 'showNotSupportMultipleOrgsPage'])->name('multiple-orgs');
+Route::get('/sync-error', [IatiLoginController::class, 'showErrorPage'])->name('sync-error');
 
 Route::post('/logout/callback', function () {
     return redirect(session()->has('redirect') ? sprintf('/%s', session('redirect')) : '/');

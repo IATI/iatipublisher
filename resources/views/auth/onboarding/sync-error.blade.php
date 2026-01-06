@@ -38,7 +38,7 @@
           href="{{ asset('favicon.ico') }}"
           type="image/x-icon" />
     <link
-            href={{ config('services.oidc.iatiDesignSystemUrl')}}
+        href={{ config('services.oidc.iatiDesignSystemUrl')}}
         rel="stylesheet"
 
     />
@@ -47,7 +47,8 @@
 </head>
 <body class="overflow-x-hidden">
 <div id="app">
-    <header class="activity__header flex min-h-[60px] max-w-full justify-between gap-5 bg-bluecoral px-5 text-xs leading-normal text-white sm:gap-10 xl:px-10">
+    <header
+        class="activity__header flex min-h-[60px] max-w-full justify-between gap-5 bg-bluecoral px-5 text-xs leading-normal text-white sm:gap-10 xl:px-10">
 
         <nav
             class="activity__header flex min-h-[60px] max-w-full justify-between gap-5 bg-bluecoral px-5 text-xs leading-normal text-white sm:gap-10 xl:px-10"
@@ -69,41 +70,28 @@
     </header>
 
 
-    <div class="bg-slate-100 flex pt-8">
-        <div class="mx-auto mt-8 w-[80%] space-y-2 rounded-xl bg-white p-8 shadow-lg">
+    <div class="bg-slate-100 flex pt-8 min-h-screen">
+        <div class="mx-auto mt-8 w-[80%] max-w-3xl space-y-6 rounded-xl bg-white p-8 shadow-lg">
             <div class="text-center">
-                <i class="fas fa-sitemap text-blue-600 mb-4 text-5xl"></i>
+                <i class="fas fa-exclamation-triangle text-yellow-500 mb-4 text-5xl"></i>
 
                 <h2 class="text-slate-900 text-3xl font-bold tracking-tight">
-                    {{ trans('auth.account_verification_in_progress') }}
+                    {{ trans('auth.account_error') }}
                 </h2>
 
                 <p class="text-slate-600 mt-2 text-lg">
-                    {{ trans('auth.registration_submitted_review') }}
+                    {{ trans('auth.account_error_description') }}
                 </p>
             </div>
-
-            <div class="bg-slate-50 border-slate-200 rounded-lg border p-4 px-4 text-left">
-                <p class="text-slate-800 font-medium text-center">
-                    {{ trans('auth.account_pending_admin_approval') }}
-                </p>
-            </div>
-
             <div class="py-4 text-center">
                 <a
-                        href="https://iatistandard.org/en/guidance/get-support/"
-                        class="primary-btn font-bold"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    href="https://iatistandard.org/en/guidance/get-support/"
+                    class="primary-btn font-bold"
+                    target="_blank"
+                    rel="noopener noreferrer"
                 >
                     {{ trans('auth.contact_support_button') }}
                 </a>
-            </div>
-
-            <div class="text-center">
-                <p class="text-slate-400 text-sm">
-                    {{ trans('auth.account_approved_sign_in') }}
-                </p>
             </div>
         </div>
     </div>
@@ -116,16 +104,16 @@
 <script id="ze-snippet"
         src="https://static.zdassets.com/ekr/snippet.js?key=f1df04e0-f01e-4ab5-9091-67b2fddd6e60"></script>
 <script type="text/javascript">
-  window.zESettings = {
-    webWidget: {
-      color: {
-        theme: '#FFFFFF',
-        launcherText: '#155366',
-      },
+    window.zESettings = {
+        webWidget: {
+            color: {
+                theme: '#FFFFFF',
+                launcherText: '#155366',
+            },
 
-      contactForm: {
-        attachments: true,
-      },
-    },
-  };
+            contactForm: {
+                attachments: true,
+            },
+        },
+    };
 </script>
