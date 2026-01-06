@@ -3,7 +3,6 @@
 use App\Http\Controllers\Admin\Organization\DocumentLinkController;
 use App\Http\Controllers\Admin\Organization\NameController;
 use App\Http\Controllers\Admin\Organization\OrganizationController;
-use App\Http\Controllers\Admin\Organization\OrganizationIdentifierController;
 use App\Http\Controllers\Admin\Organization\OrganizationOnboardingController;
 use App\Http\Controllers\Admin\Organization\RecipientCountryBudgetController;
 use App\Http\Controllers\Admin\Organization\RecipientOrgBudgetController;
@@ -38,8 +37,6 @@ Route::group(['middleware' => ['can:crud_organization']], static function () {
     Route::get('organisation/name', [NameController::class, 'edit'])->name('organisation.name.edit');
     Route::get('organisation/name', [NameController::class, 'edit'])->name('organisation.name.edit');
     Route::put('organisation/name', [NameController::class, 'update'])->name('organisation.name.update');
-    Route::get('organisation/organisation_identifier', [OrganizationIdentifierController::class, 'edit'])->name('organisation.identifier.edit');
-    Route::put('organisation/organisation_identifier', [OrganizationIdentifierController::class, 'update'])->name('organisation.identifier.update');
     Route::get('organisation/reporting_org', [ReportingOrgController::class, 'edit'])->name('organisation.reporting-org.edit');
     Route::put('organisation/reporting_org', [ReportingOrgController::class, 'update'])->name('organisation.reporting-org.update');
     Route::get('organisation/total_budget', [TotalBudgetController::class, 'edit'])->name('organisation.total-budget.edit');
