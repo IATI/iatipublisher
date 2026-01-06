@@ -99,4 +99,13 @@ class ActivityPublishedService
             ]
         );
     }
+
+    /**
+     * @param int $activityId
+     * @return bool
+     */
+    public function deleteActivity(int $activityId): bool
+    {
+        return $this->activityPublishedRepository->delete($activityId);
+    }
 }
