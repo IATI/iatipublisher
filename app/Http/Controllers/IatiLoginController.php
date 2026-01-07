@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\IATI\Services\OIDC\IatiOidcService;
 use App\IATI\Services\OIDC\OidcAuthenticationException;
-use App\IATI\Services\RegisterYourDataApi\DatasetApiService;
 use App\IATI\Services\RegisterYourDataApi\IatiDataSyncService;
 use App\IATI\Services\RegisterYourDataApi\ReportingOrgApiService;
 use Exception;
@@ -20,7 +19,6 @@ class IatiLoginController extends Controller
     public function __construct(
         private IatiOidcService $oidcService,
         private IatiDataSyncService $dataSyncService,
-        private DatasetApiService $datasetApiService,
         private ReportingOrgApiService $reportingOrgApiService
     ) {
     }
@@ -36,7 +34,7 @@ class IatiLoginController extends Controller
     /**
      * Handles the OIDC callback by orchestrating the service and session management.
      */
-    public function handleProviderCallback(): RedirectResponse
+    public function handleProviderCallback()
     {
         try {
             $authResult = $this->oidcService->handleCallback();
@@ -116,11 +114,7 @@ class IatiLoginController extends Controller
             DB::rollBack();
             Log::error('Error when OIDC login', ['message' => $e->getMessage()]);
 
-            $this->logout();
-
-            return redirect()
-                ->route('web.index.login')
-                ->withErrors(['message' => 'Authentication error: ' . $e->getMessage()]);
+            return $this->showErrorPage();
         }
     }
 
@@ -157,5 +151,12 @@ class IatiLoginController extends Controller
         session(['redirect' => 'multiple-orgs']);
 
         return view('auth.onboarding.multiple-orgs');
+    }
+
+    public function showErrorPage()
+    {
+        session(['redirect' => 'sync-error']);
+
+        return view('auth.onboarding.sync-error');
     }
 }
