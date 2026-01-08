@@ -171,7 +171,7 @@ class IatiDataSyncService
                 'email_verified_at'       => now(),
                 'role_id'                 => Role::where('role', $publisherUserRole)->value('id'),
                 'status'                  => true,
-                'language_preference'     => Arr::get($claims, 'iatiPreferredLanguage', 'en'),
+                'language_preference'     => explode(' ', Arr::get($claims, 'iatiPreferredLanguage', 'en'))[0] ?? 'en',
                 'last_logged_in'          => now(),
                 'sign_on_method'          => 'oidc',
                 'organization_id'         => $orgId,
