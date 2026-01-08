@@ -155,7 +155,7 @@ class IatiDataSyncService
                 'full_name'          => Arr::get($claims, 'family_name'),
                 'username'           => Arr::get($claims, 'family_name'),
                 'last_logged_in'     => now(),
-                'language_preference'=> Arr::get($claims, 'iatiPreferredLanguage', 'en'),
+                'language_preference'=> explode(' ', Arr::get($claims, 'iatiPreferredLanguage', 'en'))[0] ?? 'en',
                 'organization_id'    => $orgId,
                 'role_id'            => Role::where('role', $publisherUserRole)->value('id'),
             ]);
