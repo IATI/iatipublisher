@@ -48,38 +48,17 @@ class AuthServiceProvider extends ServiceProvider
             }
         );
 
-        Gate::define(
-            'crud_activity',
-            function ($user) {
-                if (in_array($this->getUserRole($user), ['general_user', 'admin'])) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        );
+        Gate::define('crud_activity', function ($user) {
+            return $this->getUserRole($user) === 'admin';
+        });
 
-        Gate::define(
-            'view_setting',
-            function ($user) {
-                if (in_array($this->getUserRole($user), ['general_user', 'admin'])) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        );
+        Gate::define('view_setting', function ($user) {
+            return $this->getUserRole($user) === 'admin';
+        });
 
-        Gate::define(
-            'view_organization',
-            function ($user) {
-                if (in_array($this->getUserRole($user), ['general_user', 'admin'])) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        );
+        Gate::define('view_organization', function ($user) {
+            return $this->getUserRole($user) === 'admin';
+        });
 
         foreach ($this->admin_permissions as $permission) {
             Gate::define(

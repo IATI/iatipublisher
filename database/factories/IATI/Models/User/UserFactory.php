@@ -25,9 +25,6 @@ class UserFactory extends Factory
         $iatiAdmin = Role::factory()->make(['role' => 'iati_admin'])->toArray();
         Role::firstOrCreate(['role' => 'iati_admin'], $iatiAdmin);
 
-        $generalUserRold = Role::factory()->make(['role' => 'general_user'])->toArray();
-        Role::firstOrCreate(['role' => 'general_user'], $generalUserRold);
-
         $adminRole = Role::factory()->make(['role' => 'admin'])->toArray();
         Role::firstOrCreate(['role' => 'admin'], $adminRole);
 
