@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\IATI\Services\RegisterYourDataApi;
 
+use App\Constants\Enums;
 use App\IATI\Models\Organization\Organization;
 use App\IATI\Models\Setting\Setting;
 use App\IATI\Models\User\Role;
@@ -31,11 +32,11 @@ class IatiDataSyncService
             $existingOrg = Organization::where('publisher_id', $data['short_name'])->first();
         }
 
-        $publisherTypeCode = data_get($data, 'organisation_type');
+        $publisherTypeCode = $this->mapPublisherTypeCode(data_get($data, 'organisation_type'));
         $name = [['narrative' => data_get($data, 'human_readable_name'), 'language' => 'en']];
 
         $attributes = [
-            'identifier'             => $data['organisation_identifier'],
+            'identifier'             => !empty($data['organisation_identifier']) ? $data['organisation_identifier'] : '-',
             'uuid'                   => $uuid,
             'publisher_id'           => data_get($data, 'short_name'),
             'publisher_name'         => data_get($data, 'human_readable_name'),
@@ -55,7 +56,7 @@ class IatiDataSyncService
             'iati_status'            => 'pending',
             'org_status'             => 'active',
             'migrated_from_aidsteam' => false,
-            'registration_type'      => 'existing_org',
+            'registration_type'      => Enums::EXISTING_ORG,
             'registry_approved'      => data_get($data, 'registry_approved', false),
             'data_license'           => data_get($data, 'default_licence_id'),
         ];
@@ -78,11 +79,31 @@ class IatiDataSyncService
         return $existingOrg;
     }
 
+    private function mapPublisherTypeCode($publisherType): string|null
+    {
+        if (!$publisherType) {
+            return null;
+        }
+
+        $codeList = getCodeList('OrganizationType', 'Organization', false);
+
+        $matches = array_filter(
+            $codeList,
+            fn ($name) => strtolower($name) === strtolower($publisherType)
+        );
+
+        if (!empty($matches)) {
+            return (string) array_key_first($matches);
+        }
+
+        return null;
+    }
+
     private function mapSecondaryReporter($reportingSourceType): string
     {
         return match ($reportingSourceType) {
             'primary_source'     => '0',
-            'secondary_reporter' => '1',
+            'secondary_source'   => '1',
             default              => '',
         };
     }

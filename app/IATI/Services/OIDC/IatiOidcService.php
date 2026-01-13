@@ -103,7 +103,7 @@ class IatiOidcService
      *
      * @throws OpenIDConnectClientException
      */
-    public function logout(string $idToken): void
+    public function logout(?string $idToken): void
     {
         $logoutEndpoint = Arr::get($this->oidcConfig, 'logout_endpoint');
         $logoutRedirectUri = Arr::get($this->oidcConfig, 'logout_redirect_uri');
