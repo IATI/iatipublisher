@@ -63,6 +63,7 @@
             {{ getTranslatedElementName(title) }}
           </div>
           <div
+            v-if="!nonEditableElements.includes(title)"
             class="status ml-2.5 flex text-xs leading-5"
             :class="{
               'text-spring-50': status,
