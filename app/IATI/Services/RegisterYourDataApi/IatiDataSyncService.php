@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\IATI\Services\RegisterYourDataApi;
 
-use App\Constants\Enums;
 use App\IATI\Models\Organization\Organization;
 use App\IATI\Models\Setting\Setting;
 use App\IATI\Models\User\Role;
@@ -159,7 +158,6 @@ class IatiDataSyncService
             $user->update([
                 'email'              => Arr::get($claims, 'email'),
                 'full_name'          => Arr::get($claims, 'family_name'),
-                'username'           => Str::lower(Str::random(5)),
                 'last_logged_in'     => now(),
                 'language_preference'=> explode(' ', Arr::get($claims, 'iatiPreferredLanguage', 'en'))[0] ?? 'en',
                 'organization_id'    => $orgId,
