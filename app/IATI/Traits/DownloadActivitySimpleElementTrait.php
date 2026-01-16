@@ -125,7 +125,7 @@ trait DownloadActivitySimpleElementTrait
      */
     public function getActivityTitle($activityArray, $rowIndex): ?string
     {
-        return ($rowIndex === 0) ? $this->getNarrativeText(Arr::get($activityArray, 'title', []), Arr::get($activityArray, 'default_field_values.default_language', '')) : '';
+        return ($rowIndex === 0) ? $this->getNarrativeText(Arr::get($activityArray, 'title', []), strtolower(Arr::get($activityArray, 'default_field_values.default_language', ''))) : '';
     }
 
     /**
