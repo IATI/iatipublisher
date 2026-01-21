@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\IATI\Services\RegisterYourDataApi;
 
-use App\Constants\Enums;
 use App\IATI\Models\Organization\Organization;
 use App\IATI\Models\Setting\Setting;
 use App\IATI\Models\User\Role;
