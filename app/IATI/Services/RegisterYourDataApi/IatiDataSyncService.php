@@ -32,6 +32,10 @@ class IatiDataSyncService
             $existingOrg = Organization::where('publisher_id', $data['short_name'])->first();
         }
 
+        if (!$existingOrg && !empty($data['human_readable_name'])) {
+            $existingOrg = Organization::where('publisher_name', $data['human_readable_name'])->first();
+        }
+
         $publisherTypeCode = $this->mapPublisherTypeCode(data_get($data, 'organisation_type'));
         $name = [['narrative' => data_get($data, 'human_readable_name'), 'language' => 'en']];
 
