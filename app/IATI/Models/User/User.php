@@ -38,10 +38,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
-        'password',
-        'username',
         'full_name',
         'address',
         'organization_id',
@@ -55,10 +52,8 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         'migrated_from_aidstream',
         'created_at',
         'updated_at',
-        'registration_method',
         'last_logged_in',
         'uuid',
-        'sign_on_method',
     ];
 
     /**
@@ -159,7 +154,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     public static function sendNewUserEmail($user): void
     {
         $mailDetails = [
-            'greeting' =>trans('common/common.hello') . ' ' . $user->username,
+            'greeting' =>trans('common/common.hello') . ' ' . $user->full_name,
             'message' => trans('common/common.welcome_to_iati_publisher_your_email_has_been_used_to_create_a_new_account_here_please_click_the_button_below_to_update_the_password_of_your_account'),
             'password_update' => true,
             'token' => app('auth.password.broker')->createToken($user),

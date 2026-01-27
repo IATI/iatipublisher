@@ -39,30 +39,6 @@ class RegisterTest extends TestCase
     }
 
     /**
-     * Publisher does not exist test.
-     *
-     * @return void
-     */
-    //    public function test_publisher_name_does_not_exist(): void
-    //    {
-    //        $this->post('/verifyPublisher', [
-    //            'publisher_name'      => 'test',
-    //            'publisher_id'        => env('IATI_YIPL_PUBLISHER_ID'),
-    //            'registration_agency' => env('IATI_YIPL_REGISTRATION_AGENCY'),
-    //            'registration_number' => env('IATI_YIPL_REGISTRATION_NUMBER'),
-    //            'identifier'          => env('IATI_YIPL_REGISTRATION_AGENCY') . '-' . env('IATI_YIPL_REGISTRATION_NUMBER'),
-    //        ])
-    //             ->assertStatus(200)
-    //             ->assertJsonStructure([
-    //                 'success',
-    //                 'errors' => [
-    //                     'publisher_name',
-    //                 ],
-    //             ])
-    //             ->assertJsonValidationErrors(['publisher_name']);
-    //    }
-
-    /**
      * Publisher name and id mismatch test.
      *
      * @return void
@@ -142,30 +118,7 @@ class RegisterTest extends TestCase
     {
         $this->post('/register')
             ->assertStatus(200)
-            ->assertJsonValidationErrors(['username', 'full_name', 'email', 'password', 'publisher_id']);
-    }
-
-    /**
-     * Username `unique` test.
-     *
-     * @return void
-     * @throws \Exception
-     */
-    public function test_username_must_be_unique(): void
-    {
-        $role = Role::factory()->create();
-        $org = Organization::factory()->has(User::factory(['role_id' => $role->id]))->create();
-
-        $this->post('/register', [
-            'username'              => $org->user->username,
-            'full_name'             => Str::random(5),
-            'email'                 => 'test+1@gmail.com',
-            'password'              => 'password',
-            'password_confirmation' => 'password',
-            'publisher_id'          => Str::random(5),
-        ])
-            ->assertStatus(200)
-            ->assertJsonValidationErrors(['username']);
+            ->assertJsonValidationErrors(['full_name', 'email', 'publisher_id']);
     }
 
     /**
@@ -180,38 +133,12 @@ class RegisterTest extends TestCase
         $org = Organization::factory()->has(User::factory(['role_id' => $role->id]))->create();
 
         $this->post('/register', [
-            'username'              => Str::random(5),
             'full_name'             => Str::random(5),
             'email'                 => $org->user->email,
-            'password'              => 'password',
-            'password_confirmation' => 'password',
             'publisher_id'          => Str::random(5),
         ])
             ->assertStatus(200)
             ->assertJsonValidationErrors(['email']);
-    }
-
-    /**
-     * Password confirm test.
-     *
-     * @return void
-     * @throws \Exception
-     */
-    public function test_password_confirm_must_be_same(): void
-    {
-        $role = Role::factory()->create();
-        Organization::factory()->has(User::factory(['role_id' => $role->id]))->create();
-
-        $this->post('/register', [
-            'username'              => Str::random(5),
-            'full_name'             => Str::random(5),
-            'email'                 => 'test+1@gmail.com',
-            'password'              => 'password',
-            'password_confirmation' => 'password1',
-            'publisher_id'          => Str::random(5),
-        ])
-            ->assertStatus(200)
-            ->assertJsonValidationErrors(['password']);
     }
 
     /**
@@ -223,7 +150,6 @@ class RegisterTest extends TestCase
     public function test_successful_registration(): void
     {
         Role::factory()->create(['id' => 1]);
-        $password = Str::random(11);
 
         $this->post('/register', [
             'publisher_id'          => Str::random(5),
@@ -233,11 +159,8 @@ class RegisterTest extends TestCase
             'registration_number'   => 10101,
             'identifier'            => Str::random(5),
             'status'                => 'pending',
-            'username'              => 'ztest',
             'full_name'             => Str::random(5),
             'email'                 => 'test+1@gmail.com',
-            'password'              => $password,
-            'password_confirmation' => $password,
             'default_language'      => 'en',
         ])->assertJsonStructure([
             'success',
