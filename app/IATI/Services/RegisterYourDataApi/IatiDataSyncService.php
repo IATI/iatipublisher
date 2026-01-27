@@ -36,7 +36,7 @@ class IatiDataSyncService
             $existingOrg = Organization::where('publisher_name', $data['human_readable_name'])->first();
         }
 
-        $publisherTypeCode = $this->mapPublisherTypeCode(data_get($data, 'organisation_type'));
+        $publisherTypeCode = data_get($data, 'organisation_type');
         $name = [['narrative' => data_get($data, 'human_readable_name'), 'language' => 'en']];
 
         $attributes = [
@@ -81,26 +81,6 @@ class IatiDataSyncService
         }
 
         return $existingOrg;
-    }
-
-    private function mapPublisherTypeCode($publisherType): string|null
-    {
-        if (!$publisherType) {
-            return null;
-        }
-
-        $codeList = getCodeList('OrganizationType', 'Organization', false);
-
-        $matches = array_filter(
-            $codeList,
-            fn ($name) => strtolower($name) === strtolower($publisherType)
-        );
-
-        if (!empty($matches)) {
-            return (string) array_key_first($matches);
-        }
-
-        return null;
     }
 
     private function mapSecondaryReporter($reportingSourceType): string
@@ -314,11 +294,11 @@ class IatiDataSyncService
 
         if (Arr::has($dirtyAttributes, 'reporting_org')) {
             $reportingOrgData = $organization->reporting_org;
+            $publisherType = $organization->publisher_type ?? data_get($reportingOrgData, '0.type');
 
             $isSecondary = Arr::get($reportingOrgData, '0.secondary_reporter');
-            $organisationTypeCode = ($organization->publisher_type ?? $reportingOrgData[0]['type']) ?? null;
             $payload['reporting_source_type'] = $this->mapSecondaryReporterToLabel($isSecondary);
-            $payload['organisation_type'] = $this->mapPublisherCodeToLabel($organisationTypeCode ? (string) ($organisationTypeCode) : null);
+            $payload['organisation_type'] = $publisherType === null ? null : (string) $publisherType;
         }
 
         return $payload;
