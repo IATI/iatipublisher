@@ -20,20 +20,17 @@ trait MigrateUserTrait
     public function getNewUser($aidstreamUser, $iatiOrganization): array
     {
         return [
-            'username'                => $aidstreamUser->username,
             'full_name'               => sprintf('%s %s', $aidstreamUser->first_name, $aidstreamUser->last_name),
             'email'                   => $aidstreamUser->email,
             'address'                 => $iatiOrganization->address,
             'organization_id'         => $iatiOrganization->id,
             'is_active'               => true,
             'email_verified_at'       => $aidstreamUser->verified ? ($aidstreamUser->verification_created_at ?: $aidstreamUser->created_at) : null,
-            'password'                => $aidstreamUser->password,
             'remember_token'          => null,
             'created_at'              => $aidstreamUser->created_at,
             'updated_at'              => $aidstreamUser->updated_at,
             'role_id'                 => $this->getRoleId($aidstreamUser->role_id),
             'status'                  => true,
-            'registration_method'     => $aidstreamUser->role_id === 1 ? 'existing_org' : 'user_create',
             'language_preference'     => 'en',
             'created_by'              => null,
             'updated_by'              => null,
@@ -72,11 +69,10 @@ trait MigrateUserTrait
         $iatiAllUsers = $iatiOrganization->users;
 
         $iatiUserEmails = ($iatiAllUsers && count($iatiAllUsers)) ? $iatiAllUsers->pluck('email')->toArray() : [];
-        $iatiUserUsernames = ($iatiAllUsers && count($iatiAllUsers)) ? $iatiAllUsers->pluck('username')->toArray() : [];
 
         if (count($aidstreamUsers)) {
             foreach ($aidstreamUsers as $aidstreamUser) {
-                if (!in_array($aidstreamUser->email, $iatiUserEmails, true) && !in_array($aidstreamUser->username, $iatiUserUsernames, true)) {
+                if (!in_array($aidstreamUser->email, $iatiUserEmails, true)) {
                     $this->logInfo(
                         'Started user migration for user id: ' . $aidstreamUser->id . ' of organization: ' . $aidStreamOrganization->name
                     );
@@ -87,8 +83,8 @@ trait MigrateUserTrait
                     $this->logInfo(
                         'Completed user migration for user id: ' . $aidstreamUser->id . ' of organization: ' . $aidStreamOrganization->name
                     );
-                } elseif (in_array($aidstreamUser->email, $iatiUserEmails, true) && in_array($aidstreamUser->username, $iatiUserUsernames, true)) {
-                    $message = "User with email {$aidstreamUser->email} and username {$aidstreamUser->username} already exists in IATI Publisher so not migrated.";
+                } elseif (in_array($aidstreamUser->email, $iatiUserEmails, true)) {
+                    $message = "User with email {$aidstreamUser->email}already exists in IATI Publisher so not migrated.";
                     $this->setGeneralError($message)->setDetailedError(
                         $message,
                         $aidStreamOrganization->id,
@@ -98,15 +94,6 @@ trait MigrateUserTrait
                     );
                 } elseif (in_array($aidstreamUser->email, $iatiUserEmails, true)) {
                     $message = "User with email {$aidstreamUser->email} already exists in IATI Publisher so not migrated.";
-                    $this->setGeneralError($message)->setDetailedError(
-                        $message,
-                        $aidStreamOrganization->id,
-                        'users',
-                        $aidstreamUser->id,
-                        $iatiOrganization->id
-                    );
-                } elseif (in_array($aidstreamUser->username, $iatiUserUsernames, true)) {
-                    $message = "User with username {$aidstreamUser->username} already exists in IATI Publisher so not migrated.";
                     $this->setGeneralError($message)->setDetailedError(
                         $message,
                         $aidStreamOrganization->id,

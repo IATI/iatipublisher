@@ -32,15 +32,10 @@ class UserUpdateRequest extends FormRequest
         $role = Auth::user()->role->role;
 
         $rules = [
-            'username' => ['required', 'max:255', 'string', sprintf('unique:users,username,%d', $id), 'regex:/^[a-z]([0-9a-z-_])*$/'],
             'full_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,}$/ix', 'max:255', sprintf('unique:users,email,%d', $id), 'not_in_spam_emails'],
         ];
 
-        if (!empty(Arr::get($request, 'password', null))) {
-            $rules['password'] = ['required', 'string', 'min:8', 'max:255', 'confirmed'];
-            $rules['password_confirmation'] = ['required', 'string', 'min:8', 'max:255'];
-        }
         if ($role === 'admin') {
             $rules['role_id'] = 'required';
         }
@@ -55,7 +50,6 @@ class UserUpdateRequest extends FormRequest
      */
     public function messages(): array
     {
-        $messages['username.regex'] = trans('validation.username_regex');
         $messages['email.unique'] = trans('validation.email_unique');
 
         return $messages;
