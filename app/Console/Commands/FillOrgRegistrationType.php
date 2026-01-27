@@ -6,7 +6,6 @@ namespace App\Console\Commands;
 
 use App\IATI\Models\Organization\Organization;
 use App\IATI\Models\User\User;
-use Arr;
 use DB;
 use Illuminate\Console\Command;
 
@@ -37,18 +36,11 @@ class FillOrgRegistrationType extends Command
         try {
             DB::beginTransaction();
 
-            $registrationMethodMapping = [
-                'new_org' =>'new_org',
-                'existing_org' =>'existing_org',
-                'user_create' =>'existing_org',
-            ];
-
             $organizations = Organization::get();
 
             foreach ($organizations as $organization) {
                 $user = User::where('organization_id', $organization->id)->first();
-                $userRegistrationType = $user ? $user->registration_method : 'existing_org';
-                $organization['registration_type'] = Arr::get($registrationMethodMapping, $userRegistrationType, 'existing_org');
+                $organization['registration_type'] = 'existing_org';
                 $organization->timestamps = false;
                 $organization->saveQuietly(['touch' => false]);
             }
