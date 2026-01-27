@@ -195,7 +195,7 @@ class AuditService
 
         if ($auditableType === 'App\\IATI\\Models\\User\\User' && $event === 'signin') {
             foreach ($auditables as $index => $item) {
-                if ($index === 'id' || $index === 'username') {
+                if ($index === 'id') {
                     $auditables[$index] = Crypt::encryptString($item);
                 } else {
                     unset($auditables[$index]);

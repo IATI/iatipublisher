@@ -308,31 +308,6 @@
         <table>
           <thead>
             <tr class="bg-n-10">
-              <th id="title" scope="col">
-                <span class="inline-flex items-center">
-                  <span
-                    v-if="
-                      filter.direction === 'desc' &&
-                      filter.orderBy === 'username'
-                    "
-                  >
-                    <svg-vue
-                      class="mx-2 h-3 w-2 cursor-pointer"
-                      icon="sort-descending"
-                      @click="sort('username')"
-                    />
-                  </span>
-                  <span v-else>
-                    <svg-vue
-                      class="mx-2 h-3 w-2 cursor-pointer"
-                      icon="sort-ascending"
-                      @click="sort('username')"
-                    />
-                  </span>
-
-                  <span>{{ translatedData['common.common.users'] }}</span>
-                </span>
-              </th>
               <th id="measure" scope="col" style="width: 210px">
                 <span>{{ translatedData['common.common.email'] }}</span>
               </th>
@@ -431,13 +406,6 @@
                     class="w-32 overflow-x-hidden overflow-ellipsis whitespace-nowrap text-sm capitalize text-n-50"
                   >
                     {{ user['full_name'] }}
-                  </p>
-                </div>
-                <div class="ellipsis relative">
-                  <p
-                    class="w-32 overflow-x-hidden overflow-ellipsis whitespace-nowrap"
-                  >
-                    {{ user['username'] }}
                   </p>
                 </div>
               </td>
@@ -647,7 +615,6 @@ const dropdownRange = ref({
 });
 
 const formData = reactive({
-  username: '',
   full_name: '',
   email: '',
   status: '1',
@@ -657,7 +624,6 @@ const formData = reactive({
 });
 
 const formError = reactive({
-  username: '',
   full_name: '',
   email: '',
   status: '',
@@ -677,13 +643,6 @@ const isFilterApplied = computed(() => {
 const { ignoreUpdates } = watchIgnorable(toastData, () => undefined, {
   flush: 'sync',
 });
-
-watch(
-  () => formData.full_name,
-  (fullname) => {
-    formData.username = generateUsername(fullname);
-  }
-);
 
 watch(
   () => toastData.visibility,
@@ -828,7 +787,6 @@ const openStatusModel = (user) => {
   statusId.value = user.id;
   statusValue.value = user.status;
   statusModal.value = true;
-  statusUsername.value = user.username;
 };
 
 watch(
@@ -876,7 +834,6 @@ function fetchUsersList(active_page: number, filtered = false) {
 const openDeletemodel = (user) => {
   deleteModal.value = true;
   deleteId.value = user.id;
-  deleteUsername.value = user.username;
 };
 
 function deleteUser(id: number) {

@@ -169,7 +169,6 @@ class IatiDataSyncService
             $user = User::create([
                 'uuid'                     => $uuid,
                 'email'                   => Arr::get($claims, 'email'),
-                'username'                => Str::lower(Str::random(5)),
                 'password'                => null,
                 'full_name'               => Arr::get($claims, 'family_name'),
                 'address'                 => Arr::get($claims, 'address'),
@@ -179,7 +178,6 @@ class IatiDataSyncService
                 'status'                  => true,
                 'language_preference'     => explode(' ', Arr::get($claims, 'iatiPreferredLanguage', 'en'))[0] ?? 'en',
                 'last_logged_in'          => now(),
-                'sign_on_method'          => 'oidc',
                 'organization_id'         => $orgId,
                 'migrated_from_aidstream' => false,
             ]);

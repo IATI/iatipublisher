@@ -35,7 +35,6 @@ class UserFactory extends Factory
         Role::firstOrCreate(['role' => 'superadmin'], $superAdminRole);
 
         return [
-            'username'  => 'yipl_user',
             'email'     => 'yipl_user@gmail.com',
             'password'  => Hash::make('password'),
             'full_name' => 'Young Innovations',

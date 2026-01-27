@@ -31,19 +31,10 @@ class UserProfileRequest extends FormRequest
         $id = Auth::user()->id;
 
         $rules = [
-            'username'              => ['required', 'max:255', sprintf('unique:users,username,%d', $id), 'regex:/^[a-z]([0-9a-z-_])*$/'],
             'full_name'             => ['required', 'string', 'max:255'],
             'email'                 => ['required', 'string', 'email', 'regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,}$/ix', 'max:255', sprintf('unique:users,email,%d', $id), 'not_in_spam_emails'],
             'language_preference'   => 'required',
         ];
-
-        if ($form_type === 'password') {
-            $rules = [
-                'current_password'      => ['required', 'string', 'min:8', 'max:255'],
-                'password'              => ['required', 'string', 'min:8', 'max:255', 'confirmed'],
-                'password_confirmation' => ['required', 'string', 'min:8', 'max:255'],
-            ];
-        }
 
         return $rules;
     }
@@ -57,12 +48,6 @@ class UserProfileRequest extends FormRequest
     {
         $messages = [];
         $form_type = $this->get('form_type');
-
-        if ($form_type === 'password') {
-            $messages['publisher_id.regex'] = trans('common/common.the_publisher_id_is_invalid');
-        } else {
-            $messages['username.regex'] = trans('common/common.the_username_is_invalid');
-        }
 
         $messages['email.unique'] = trans('common/common.email_is_already_in_use_in_iati_publisher');
 
