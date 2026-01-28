@@ -142,6 +142,18 @@ class UserService
     }
 
     /**
+     * Returns user if found.
+     *
+     * @param $id
+     *
+     * @return object
+     */
+    public function getUser($id): object
+    {
+        return $this->userRepo->getUser($id);
+    }
+
+    /**
      * Check publisher id in iati registry.
      *
      * @param string $publisher_id
