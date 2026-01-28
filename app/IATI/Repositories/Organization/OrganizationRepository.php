@@ -444,7 +444,6 @@ class OrganizationRepository extends Repository
                 'types' => [
                     'publisher' => $data['Publishers_settings_not_completed'],
                     'defaultValue' => $data['Default_values_not_completed'],
-                    'both' => $data['Both_publishing_settings_and_default_values_not_completed'],
                 ],
             ],
         ];
@@ -572,24 +571,6 @@ class OrganizationRepository extends Repository
                     (settings.activity_default_values->>'hierarchy' IS NULL OR settings.activity_default_values->>'hierarchy' = '') OR
                     (settings.activity_default_values->>'humanitarian' IS NULL OR settings.activity_default_values->>'humanitarian' = '') OR
                     (settings.activity_default_values->>'budget_not_provided' IS NULL OR settings.activity_default_values->>'budget_not_provided' = ''))
-            ",
-            'Both_publishing_settings_and_default_values_not_completed' => "
-                ((
-                    (settings.publishing_info->>'publisher_id' IS NULL OR settings.publishing_info->>'publisher_id' = '') OR
-                    (settings.publishing_info->>'api_token' IS NULL OR settings.publishing_info->>'api_token' = '') OR
-                    (settings.publishing_info->>'publisher_verification' IS NULL) OR
-                    (CAST(settings.publishing_info->>'publisher_verification' as bool) = false) OR
-                    (settings.publishing_info->>'token_verification' IS NULL) OR
-                    (CAST(settings.publishing_info->>'token_verification' as bool) = false)
-                )
-                 AND
-                (
-                    (settings.default_values->>'default_currency' IS NULL OR settings.default_values->>'default_currency' = '') OR
-                    (settings.default_values->>'default_language' IS NULL OR settings.default_values->>'default_language' = '') OR
-                    (settings.activity_default_values->>'hierarchy' IS NULL OR settings.activity_default_values->>'hierarchy' = '') OR
-                    (settings.activity_default_values->>'humanitarian' IS NULL OR settings.activity_default_values->>'humanitarian' = '') OR
-                    (settings.activity_default_values->>'budget_not_provided' IS NULL OR settings.activity_default_values->>'budget_not_provided' = '')
-                ))
             ",
             'Publishers_with_incomplete_setup' => "
                     (

@@ -470,20 +470,6 @@
                 </td>
               </tr>
               <tr class="border-b border-n-20">
-                <td class="text-sm text-bluecoral">
-                  <a
-                    class="cursor-pointer py-3 pl-8 text-left"
-                    @click="
-                      NavigateWithFilter(
-                        'list-organisations',
-                        'completeness',
-                        'Both_publishing_settings_and_default_values_not_completed'
-                      )
-                    "
-                  >
-                    Both publishing settings and default value not completed
-                  </a>
-                </td>
                 <td class="text-semi-dark text-sm">
                   <div class="px-4 py-3 text-right">
                     {{ completeNess?.incompleteSetup?.types?.both }}
