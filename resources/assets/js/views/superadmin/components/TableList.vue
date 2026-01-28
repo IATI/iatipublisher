@@ -443,24 +443,6 @@
                   <span
                     class="flex w-fit"
                     :class="
-                      registryApiKeyStatus[data.id]
-                        ? 'text-spring-50'
-                        : 'text-crimson-50'
-                    "
-                  >
-                    <svg-vue
-                      class="text-md mt-1 cursor-pointer"
-                      :icon="
-                        registryApiKeyStatus[data.id]
-                          ? 'tick'
-                          : 'circle-red-cross'
-                      "
-                    ></svg-vue>
-                    <span class="px-1"> Registry API Key </span>
-                  </span>
-                  <span
-                    class="mx-2 flex w-fit"
-                    :class="
                       defaultValueStatus[data.id]
                         ? 'text-spring-50'
                         : 'text-crimson-50'
