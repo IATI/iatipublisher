@@ -148,7 +148,6 @@ class DashboardService
         $userCounts = [
             'iati_admin' => ['active' => 0, 'disabled' => 0, 'display'=>'IATI Admin', 'roleId'=>''],
             'admin' => ['active' => 0, 'disabled' => 0, 'display'=>'Organisation Admin', 'roleId'=>''],
-            'general_user' => ['active' => 0, 'disabled' => 0, 'display'=>'General Users', 'roleId'=>''],
         ];
 
         foreach ($results as $result) {

@@ -160,12 +160,6 @@
 
               <td>
                 <p class="block px-8 py-3 text-center">
-                  {{ organisation.general_user_count }}
-                </p>
-              </td>
-
-              <td>
-                <p class="block px-8 py-3 text-center">
                   {{ organisation.active_user_count }}
                 </p>
               </td>
