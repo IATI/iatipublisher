@@ -76,7 +76,6 @@ class UserRepository extends Repository
             ->select(
                 DB::raw('
                     users.id,
-                    username,
                     full_name,
                     publisher_name,
                     email,
@@ -148,7 +147,7 @@ class UserRepository extends Repository
             $query = $this->filterUsers($query, $queryParams);
         }
 
-        return $query->get(['username', 'full_name', 'name->0->narrative as publisher_name', 'email', 'roles.role', 'users.created_at', 'users.id as id']);
+        return $query->get(['full_name', 'name->0->narrative as publisher_name', 'email', 'roles.role', 'users.created_at', 'users.id as id']);
     }
 
     /**
@@ -182,8 +181,7 @@ class UserRepository extends Repository
 
         if (array_key_exists('q', $queryParams)) {
             $query = $query->where(function ($query) use ($queryParams) {
-                $query->where('username', 'ilike', '%' . Arr::get($queryParams, 'q') . '%')
-                    ->orWhere('full_name', 'ilike', '%' . Arr::get($queryParams, 'q') . '%')
+                $query->where('full_name', 'ilike', '%' . Arr::get($queryParams, 'q') . '%')
                     ->orWhere('email', 'ilike', '%' . Arr::get($queryParams, 'q') . '%');
             });
         }
@@ -228,7 +226,7 @@ class UserRepository extends Repository
     {
         $superadminId = App::make(RoleRepository::class)->getSuperAdminId();
 
-        return $this->model->select(DB::raw("users.username,
+        return $this->model->select(DB::raw("users.email as user_identifier,
         case when organizations.name::text!='' and ((organizations.name->>0)::json)->>'narrative'!=null then ((organizations.name->>0)::json)->>'narrative' else 'Untitled' end as publisher_name,
         users.email,
         users.created_at,
@@ -289,7 +287,6 @@ class UserRepository extends Repository
     private function applyOrderBy($query, $orderBy, $direction):Builder
     {
         $nullableColumnWithType = [
-            'username'       =>'string',
             'publisher_name' =>'string',
             'last_logged_in' =>'date',
         ];

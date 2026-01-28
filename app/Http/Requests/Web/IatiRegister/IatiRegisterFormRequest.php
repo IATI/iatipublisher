@@ -59,11 +59,8 @@ class IatiRegisterFormRequest extends FormRequest
                 break;
             case '4':
                 $rules = [
-                    'username'              => ['required', 'max:255', 'string', 'unique:users,username', 'regex:/^[a-z]([0-9a-z-_])*$/'],
                     'full_name'             => ['required', 'string', 'max:255'],
                     'email'                 => ['required', 'string', 'email', 'regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,}$/ix', 'max:255', 'unique:users,email', 'not_in_spam_emails'],
-                    'password'              => ['required', 'string', 'min:8', 'max:255', 'confirmed'],
-                    'password_confirmation' => ['required', 'string', 'min:8', 'max:255'],
                 ];
                 break;
         }
@@ -87,7 +84,6 @@ class IatiRegisterFormRequest extends FormRequest
                 $messages['registration_number.regex'] = trans('register/iati_register_form_request.the_registration_number_is_invalid');
                 break;
             case '4':
-                $messages['username.regex'] = trans('common/common.the_username_is_invalid');
                 $messages['email.unique'] = trans('common/common.email_is_already_in_use_in_iati_publisher');
                 break;
         }

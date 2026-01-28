@@ -597,7 +597,7 @@ if (!function_exists('getTableConfig')) {
                     'data_license'      => 'multiple',
                 ],
             ],
-            'user' => ['orderBy' => ['username', 'publisher_name', 'created_at', 'organisation', 'admin', 'general', 'active', 'deactivated', 'total', 'last_logged_in'], 'direction' => ['asc', 'desc']],
+            'user' => ['orderBy' => ['publisher_name', 'created_at', 'organisation', 'admin', 'general', 'active', 'deactivated', 'total', 'last_logged_in'], 'direction' => ['asc', 'desc']],
             'audit' => ['orderBy' => ['user_id', 'user_type', 'event', 'auditable_type', 'created_at'], 'direction' => ['asc', 'desc']],
             'transaction' => [
                 'orderBy'   => ['type', 'value', 'date'],
@@ -762,7 +762,7 @@ if (!function_exists('get_user_csv_header')) {
      */
     function getUserCsvHeader(): array
     {
-        return ['username' => 'User Name', 'full_name' => 'Full Name', 'organization_id' => 'Organization', 'email' => 'Email', 'role_id' => 'Role', 'created_at' => 'Joined On'];
+        return ['full_name' => 'Full Name', 'organization_id' => 'Organization', 'email' => 'Email', 'role_id' => 'Role', 'created_at' => 'Joined On'];
     }
 }
 
