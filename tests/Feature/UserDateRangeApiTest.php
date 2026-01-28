@@ -56,7 +56,7 @@ class UserDateRangeApiTest extends TestCase
         $interval = $startDate->diffInDays($endDate);
 
         Artisan::call('db:seed', ['--class' => 'RoleTableSeeder']);
-        $roleId = Role::where('role', 'general_user')->first()->id;
+        $roleId = Role::where('role', 'admin')->first()->id;
         $superadminRoleId = Role::where('role', 'superadmin')->first()->id;
 
         for ($i = 0; $i <= $interval; $i++) {

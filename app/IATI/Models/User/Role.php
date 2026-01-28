@@ -59,14 +59,4 @@ class Role extends Model
     {
         return $this->where('role', 'admin')->first()->id;
     }
-
-    /**
-     * Returns id of organization general user from roles table.
-     *
-     * @return int
-     */
-    public function getGeneralUserId(): int
-    {
-        return $this->where('role', 'general_user')->first()->id;
-    }
 }

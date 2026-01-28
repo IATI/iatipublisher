@@ -31,10 +31,5 @@ class RoleTableSeeder extends Seeder
         /** @var array $adminRole */
         $adminRole = ['role' => 'admin'];
         Role::updateOrCreate($adminRole, $adminRole);
-
-        /**Create or update general_user */
-        /** @var array $generalUserRole */
-        $generalUserRole = ['role' => 'general_user'];
-        Role::updateOrCreate($generalUserRole, $generalUserRole);
     }
 }

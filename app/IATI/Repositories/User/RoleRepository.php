@@ -62,14 +62,4 @@ class RoleRepository extends Repository
     {
         return $this->model->where('role', 'admin')->first()->id;
     }
-
-    /**
-     * Returns id of organization general user from roles table.
-     *
-     * @return int
-     */
-    public function getGeneralUserId(): int
-    {
-        return $this->model->where('role', 'general_user')->first()->id;
-    }
 }

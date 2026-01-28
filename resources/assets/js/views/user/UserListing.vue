@@ -308,6 +308,9 @@
         <table>
           <thead>
             <tr class="bg-n-10">
+              <th id="measure" scope="col" style="width: 300px">
+                <span>{{ translatedData['common.common.full_name'] }}</span>
+              </th>
               <th id="measure" scope="col" style="width: 210px">
                 <span>{{ translatedData['common.common.email'] }}</span>
               </th>
@@ -376,12 +379,7 @@
                   {{ translatedData['common.common.last_login'] }}
                 </span>
               </th>
-              <th
-                v-if="userRole !== 'general_user'"
-                id="action"
-                scope="col"
-                width="190px"
-              >
+              <th id="action" scope="col" width="190px">
                 <span>
                   {{ translatedData['common.common.action'] }}
                 </span>
@@ -461,10 +459,7 @@
                     : translatedData['common.common.not_available']
                 }}
               </td>
-              <td
-                v-if="userRole !== 'general_user'"
-                class="flex h-full items-center space-x-6"
-              >
+              <td class="flex h-full items-center space-x-6">
                 <p
                   v-if="currentUserId !== user['id']"
                   @click="openDeletemodel(user)"
@@ -546,7 +541,7 @@ import moment from 'moment';
 import Pagination from 'Components/TablePagination.vue';
 import { watchIgnorable } from '@vueuse/core';
 import DateRangeWidget from 'Components/DateRangeWidget.vue';
-import { generateUsername, kebabCaseToSnakecase } from 'Composable/utils';
+import { kebabCaseToSnakecase } from 'Composable/utils';
 
 const props = defineProps({
   organizations: { type: Object, required: true },

@@ -51,8 +51,6 @@ trait MigrateUserTrait
         if ($roleId === 1 || $roleId === 5) {
             return $this->roleRepository->getOrganizationAdminId();
         }
-
-        return $this->roleRepository->getGeneralUserId();
     }
 
     /**

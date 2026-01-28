@@ -592,7 +592,7 @@ class ActivityController extends Controller
 
     private function userOrgNotFound()
     {
-        $rolesThatNeedOrg = ['general_user', 'admin'];
+        $rolesThatNeedOrg = ['admin'];
         $user = \auth()->user();
 
         $userRole = $user->role?->role;

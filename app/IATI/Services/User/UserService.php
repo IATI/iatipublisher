@@ -357,7 +357,7 @@ class UserService
             unset($roles[array_flip($roles)['superadmin']]);
         }
 
-        if (Auth::user()->role->role === 'admin' || Auth::user()->role->role === 'general_user') {
+        if (Auth::user()->role->role === 'admin') {
             unset($roles[array_flip($roles)['iati_admin']], $roles[array_flip($roles)['superadmin']]);
         }
 
