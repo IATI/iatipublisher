@@ -103,6 +103,10 @@ class OrganizationObserver
         $key = array_key_first($updatedElements);
         $data = Arr::get($updatedElements, $key);
 
+        if (Arr::has($organization->getDirty(), 'reporting_org')) {
+            $organization->publisher_type = data_get($organization->reporting_org, '0.type');
+        }
+
         if (!empty($updatedElements) && !in_array($key, getNonArrayElements(), true) && !Arr::has($organization->getDirty(), 'is_published')) {
             $updatedData = $this->organizationElementCompleteService->setOrganizationDefaultValues($data, $organization);
             $organization->$key = $updatedData;
