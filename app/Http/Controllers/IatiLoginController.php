@@ -38,6 +38,7 @@ class IatiLoginController extends Controller
     {
         try {
             $authResult = $this->oidcService->handleCallback();
+            $firstOrg = null;
 
             session([
                 'oidc_id_token'                => $authResult->idToken,
@@ -52,32 +53,34 @@ class IatiLoginController extends Controller
             $publisherOrgUUID = null;
             $publisherUserRole = in_array('iati_superadmin', data_get($authResult->claims, 'roles', []), true) ? 'iati_superadmin' : 'admin';
 
-            $reportingOrgs = $this->reportingOrgApiService->getReportingOrgs($authResult->accessToken, ['include_meta' => 'yes', 'include_actions' => 'yes']);
-            $firstOrg = data_get($reportingOrgs, 0);
             DB::beginTransaction();
 
-            if (count($reportingOrgs) > 1) {
-                $this->showNotSupportMultipleOrgsPage();
-            } elseif (!empty($reportingOrgs) && count($reportingOrgs) === 1) {
-                // check if role is contributor_pending
-                if ($firstOrg['user_role'] === 'contributor_pending') {
-                    $this->showYouArePendingApprovalPage();
-                }
+            if ($publisherUserRole !== 'iati_superadmin') {
+                $reportingOrgs = $this->reportingOrgApiService->getReportingOrgs($authResult->accessToken, ['include_meta' => 'yes', 'include_actions' => 'yes']);
+                $firstOrg = data_get($reportingOrgs, 0);
 
-                $publisherOrgUUID = data_get($firstOrg, 'id');
+                if (count($reportingOrgs) > 1) {
+                    $this->showNotSupportMultipleOrgsPage();
+                } elseif (!empty($reportingOrgs) && count($reportingOrgs) === 1) {
+                    // check if role is contributor_pending
+                    if ($firstOrg['user_role'] === 'contributor_pending') {
+                        $this->showYouArePendingApprovalPage();
+                    }
 
-                if ($publisherOrgUUID) {
-                    $reportingOrgMetadata = $firstOrg['metadata'] ?? [];
-                    $publisherOrg = $this->dataSyncService->syncOrganizationDownstream(
-                        $publisherOrgUUID,
-                        $reportingOrgMetadata
-                    );
-                    $__ = $this->dataSyncService->syncSettings($publisherOrg);
+                    $publisherOrgUUID = data_get($firstOrg, 'id');
+
+                    if ($publisherOrgUUID) {
+                        $reportingOrgMetadata = $firstOrg['metadata'] ?? [];
+                        $publisherOrg = $this->dataSyncService->syncOrganizationDownstream(
+                            $publisherOrgUUID,
+                            $reportingOrgMetadata
+                        );
+                        $__ = $this->dataSyncService->syncSettings($publisherOrg);
+                    }
                 }
             }
 
             $publisherUserRole = $this->dataSyncService->mapRegisterRoleToPublisher(data_get($firstOrg, 'user_role', $publisherUserRole));
-
             $user = $this->dataSyncService->syncUserFromClaims(
                 $authResult->uuid,
                 $authResult->claims,
