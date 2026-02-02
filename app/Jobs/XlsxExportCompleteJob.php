@@ -31,13 +31,6 @@ class XlsxExportCompleteJob implements ShouldQueue
     public string $email;
 
     /**
-     * Stores username.
-     *
-     * @var string
-     */
-    public string $username;
-
-    /**
      * Stores user id.
      *
      * @var int
@@ -56,15 +49,13 @@ class XlsxExportCompleteJob implements ShouldQueue
      *
      * @param $email
      * @param $userId
-     * @param $username
      * @param $statusId
      *
      * @return void
      */
-    public function __construct($email, $username, $userId, $statusId)
+    public function __construct($email, $userId, $statusId)
     {
         $this->email = $email;
-        $this->username = $username;
         $this->userId = $userId;
         $this->statusId = $statusId;
     }

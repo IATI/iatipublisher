@@ -19,6 +19,8 @@ use JsonException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * CAN BE DELETED.
+ *
  * Class LoginController.
  */
 class LoginController extends Controller

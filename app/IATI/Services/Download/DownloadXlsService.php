@@ -189,7 +189,7 @@ class DownloadXlsService
         $authUser = auth()->user();
         ExportXlsJob::withChain([
             new ZipXlsFileJob($authUser->id, $statusId),
-            new XlsxExportCompleteJob($authUser->email, $authUser->username, $authUser->id, $statusId),
+            new XlsxExportCompleteJob($authUser->email, $authUser->id, $statusId),
         ])->dispatch($request->all(), $authUser->toArray(), $statusId);
     }
 }
