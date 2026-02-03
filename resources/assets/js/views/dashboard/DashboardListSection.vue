@@ -50,25 +50,6 @@
               </th>
               <th>
                 <div class="flex items-center space-x-2 px-8 py-3">
-                  <button class="p-1" @click="toggleSort('general')">
-                    <svg-vue
-                      v-if="
-                        filter.sort === 'asc' && filter.orderBy === 'general'
-                      "
-                      class="text-sm"
-                      icon="ascending-arrow"
-                    ></svg-vue>
-                    <svg-vue
-                      v-else
-                      class="text-sm"
-                      icon="descending-arrow"
-                    ></svg-vue>
-                  </button>
-                  <span>general</span>
-                </div>
-              </th>
-              <th>
-                <div class="flex items-center space-x-2 px-8 py-3">
                   <button class="p-1" @click="toggleSort('active')">
                     <svg-vue
                       v-if="
