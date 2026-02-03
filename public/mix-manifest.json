@@ -1,5 +1,9 @@
 {
-    "/js/app.js": "/js/app.js?id=2faf55ea364e020cf7280f47e3d55428",
+<<<<<<< Updated upstream
+    "/js/app.js": "/js/app.js?id=29bb22035b31e4647b8bb6f2a341d1b3",
+=======
+    "/js/app.js": "/js/app.js?id=d89fa13cd19fdaa30300b8a844355e45",
+>>>>>>> Stashed changes
     "/js/script.js": "/js/script.js?id=9b028f02d0e9d5e339258e35b35974aa",
     "/js/webportal-script.js": "/js/webportal-script.js?id=1018b22c09596124081d428d278b702b",
     "/js/formbuilder.js": "/js/formbuilder.js?id=42509f1090a1152af8b729224b2976b1",
