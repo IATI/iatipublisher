@@ -50,25 +50,6 @@
               </th>
               <th>
                 <div class="flex items-center space-x-2 px-8 py-3">
-                  <button class="p-1" @click="toggleSort('general')">
-                    <svg-vue
-                      v-if="
-                        filter.sort === 'asc' && filter.orderBy === 'general'
-                      "
-                      class="text-sm"
-                      icon="ascending-arrow"
-                    ></svg-vue>
-                    <svg-vue
-                      v-else
-                      class="text-sm"
-                      icon="descending-arrow"
-                    ></svg-vue>
-                  </button>
-                  <span>general</span>
-                </div>
-              </th>
-              <th>
-                <div class="flex items-center space-x-2 px-8 py-3">
                   <button class="p-1" @click="toggleSort('active')">
                     <svg-vue
                       v-if="
@@ -402,11 +383,11 @@
                       NavigateWithFilter(
                         'list-organisations',
                         'completeness',
-                        'Publishers_with_complete_setup'
+                        'Default_values_completed'
                       )
                     "
                   >
-                    Publishers with complete setup
+                    Publishers with complete default value
                   </a>
                 </td>
                 <td class="text-semi-dark text-sm">
@@ -417,41 +398,8 @@
               </tr>
               <tr>
                 <td class="text-sm text-bluecoral">
-                  <div class="px-4 py-3 text-left">
-                    Publishers with incomplete setup
-                  </div>
-                </td>
-                <td class="text-semi-dark text-sm">
-                  <div class="px-4 py-3 text-right">
-                    {{ completeNess?.incompleteSetup?.count }}
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="text-sm text-bluecoral">
                   <a
-                    class="cursor-pointer py-3 pl-8 text-left"
-                    @click="
-                      NavigateWithFilter(
-                        'list-organisations',
-                        'completeness',
-                        'Publishers_settings_not_completed'
-                      )
-                    "
-                  >
-                    Publisher settings not completed
-                  </a>
-                </td>
-                <td class="text-semi-dark text-sm">
-                  <div class="px-4 py-3 text-right">
-                    {{ completeNess?.incompleteSetup?.types?.publisher }}
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="text-sm text-bluecoral">
-                  <a
-                    class="cursor-pointer py-3 pl-8 text-left"
+                    class="cursor-pointer px-4 py-3 text-left"
                     @click="
                       NavigateWithFilter(
                         'list-organisations',
@@ -460,19 +408,12 @@
                       )
                     "
                   >
-                    Default values not completed
+                    Publishers with incomplete default value
                   </a>
                 </td>
                 <td class="text-semi-dark text-sm">
                   <div class="px-4 py-3 text-right">
-                    {{ completeNess?.incompleteSetup?.types?.defaultValue }}
-                  </div>
-                </td>
-              </tr>
-              <tr class="border-b border-n-20">
-                <td class="text-semi-dark text-sm">
-                  <div class="px-4 py-3 text-right">
-                    {{ completeNess?.incompleteSetup?.types?.both }}
+                    {{ completeNess?.incompleteSetup?.count }}
                   </div>
                 </td>
               </tr>
