@@ -436,16 +436,12 @@ class OrganizationRepository extends Repository
 
         return [
             'completeSetup' => [
-                'count' => $data['Publishers_with_complete_setup'],
+                'count' => $data['Default_values_completed'],
                 'types' => [],
             ],
             'incompleteSetup' => [
-                'count' => $data['Publishers_with_incomplete_setup'],
-                'types' => [
-                    'publisher' => $data['Publishers_settings_not_completed'],
-                    'defaultValue' => $data['Default_values_not_completed'],
-                    'both' => $data['Both_publishing_settings_and_default_values_not_completed'],
-                ],
+                'count' => $data['Default_values_not_completed'],
+                'types' => [],
             ],
         ];
     }
@@ -511,7 +507,6 @@ class OrganizationRepository extends Repository
     public function getOrganizationDashboardDownload($queryParams): array
     {
         $completenessMap = $this->getCompletenessMap();
-        $statementForPublisher_info = 'case when ' . $completenessMap['Publishers_settings_not_completed'] . " then 'incomplete' else 'complete' end as publisher_info";
         $statementForDefault_values = 'case when ' . $completenessMap['Default_values_not_completed'] . " then 'incomplete' else 'complete' end as default_values";
 
         $query = $this->model->select(DB::raw("name->0->>'narrative' as organization,
@@ -520,7 +515,6 @@ class OrganizationRepository extends Repository
         country,
         registration_type,
         data_license,
-        $statementForPublisher_info,
         $statementForDefault_values,
         organizations.created_at,
         organizations.updated_at
@@ -542,69 +536,21 @@ class OrganizationRepository extends Repository
     private function getCompletenessMap(): array
     {
         return [
-            'Publishers_with_complete_setup' => "
-                ((
-                    (settings.publishing_info->>'publisher_id' IS NOT NULL AND settings.publishing_info->>'publisher_id' <> '') AND
-                    (settings.publishing_info->>'api_token' IS NOT NULL AND settings.publishing_info->>'api_token' <> '') AND
-                    (settings.publishing_info->>'publisher_verification' IS NOT NULL) AND
-                    (CAST(settings.publishing_info->>'publisher_verification' as bool) = true) AND
-                    (settings.publishing_info->>'token_verification' IS NOT NULL) AND
-                    (CAST(settings.publishing_info->>'token_verification' as bool) = true)
-                )
-                AND
+            'Default_values_completed' => "
                 (
                     (settings.default_values->>'default_currency' IS NOT NULL AND settings.default_values->>'default_currency' <> '') AND
                     (settings.default_values->>'default_language' IS NOT NULL AND settings.default_values->>'default_language' <> '') AND
                     (settings.activity_default_values->>'hierarchy' IS NOT NULL AND settings.activity_default_values->>'hierarchy' <> '') AND
                     (settings.activity_default_values->>'humanitarian' IS NOT NULL AND settings.activity_default_values->>'humanitarian' <> '') AND
                     (settings.activity_default_values->>'budget_not_provided' IS NOT NULL AND settings.activity_default_values->>'budget_not_provided' <> '')
-                ))
+                )
             ",
-            'Publishers_settings_not_completed' => "
-                    ((settings.publishing_info->>'publisher_id' IS NULL OR settings.publishing_info->>'publisher_id' = '') OR
-                    (settings.publishing_info->>'api_token' IS NULL OR settings.publishing_info->>'api_token' = '') OR
-                    (settings.publishing_info->>'publisher_verification' IS NULL OR (CAST(settings.publishing_info->>'publisher_verification' as bool) = false)) OR
-                    (settings.publishing_info->>'token_verification' IS NULL OR (CAST(settings.publishing_info->>'token_verification' as bool) = false)))
-             ",
             'Default_values_not_completed' => "
                     ((settings.default_values->>'default_currency' IS NULL OR settings.default_values->>'default_currency' = '') OR
                     (settings.default_values->>'default_language' IS NULL OR settings.default_values->>'default_language' = '') OR
                     (settings.activity_default_values->>'hierarchy' IS NULL OR settings.activity_default_values->>'hierarchy' = '') OR
                     (settings.activity_default_values->>'humanitarian' IS NULL OR settings.activity_default_values->>'humanitarian' = '') OR
                     (settings.activity_default_values->>'budget_not_provided' IS NULL OR settings.activity_default_values->>'budget_not_provided' = ''))
-            ",
-            'Both_publishing_settings_and_default_values_not_completed' => "
-                ((
-                    (settings.publishing_info->>'publisher_id' IS NULL OR settings.publishing_info->>'publisher_id' = '') OR
-                    (settings.publishing_info->>'api_token' IS NULL OR settings.publishing_info->>'api_token' = '') OR
-                    (settings.publishing_info->>'publisher_verification' IS NULL) OR
-                    (CAST(settings.publishing_info->>'publisher_verification' as bool) = false) OR
-                    (settings.publishing_info->>'token_verification' IS NULL) OR
-                    (CAST(settings.publishing_info->>'token_verification' as bool) = false)
-                )
-                 AND
-                (
-                    (settings.default_values->>'default_currency' IS NULL OR settings.default_values->>'default_currency' = '') OR
-                    (settings.default_values->>'default_language' IS NULL OR settings.default_values->>'default_language' = '') OR
-                    (settings.activity_default_values->>'hierarchy' IS NULL OR settings.activity_default_values->>'hierarchy' = '') OR
-                    (settings.activity_default_values->>'humanitarian' IS NULL OR settings.activity_default_values->>'humanitarian' = '') OR
-                    (settings.activity_default_values->>'budget_not_provided' IS NULL OR settings.activity_default_values->>'budget_not_provided' = '')
-                ))
-            ",
-            'Publishers_with_incomplete_setup' => "
-                    (
-                    (settings.publishing_info->>'publisher_id' IS NULL OR settings.publishing_info->>'publisher_id' = '') OR
-                    (settings.publishing_info->>'api_token' IS NULL OR settings.publishing_info->>'api_token' = '') OR
-                    (settings.publishing_info->>'publisher_verification' IS NULL) OR
-                    (CAST(settings.publishing_info->>'publisher_verification' as bool) = false) OR
-                    (settings.publishing_info->>'token_verification' IS NULL) OR
-                    (CAST(settings.publishing_info->>'token_verification' as bool) = false) OR
-                    (settings.default_values->>'default_currency' IS NULL OR settings.default_values->>'default_currency' = '') OR
-                    (settings.default_values->>'default_language' IS NULL OR settings.default_values->>'default_language' = '') OR
-                    (settings.activity_default_values->>'hierarchy' IS NULL OR settings.activity_default_values->>'hierarchy' = '') OR
-                    (settings.activity_default_values->>'humanitarian' IS NULL OR settings.activity_default_values->>'humanitarian' = '') OR
-                    (settings.activity_default_values->>'budget_not_provided' IS NULL OR settings.activity_default_values->>'budget_not_provided' = '')
-                    )
             ",
         ];
     }

@@ -48,10 +48,8 @@ class SuperAdminController extends Controller
         try {
             $country = getCodeList('Country', 'Activity', code: false, filterDeprecated: true);
             $setupCompleteness = [
-                'Publishers_with_complete_setup' => 'Publishers with complete setup',
-                'Publishers_settings_not_completed' => 'Publishers setting not completed',
+                'Default_values_completed' => 'Default values completed',
                 'Default_values_not_completed' => 'Default values not completed',
-                'Both_publishing_settings_and_default_values_not_completed' => 'Both publishing settings and default values not completed',
             ];
             $registrationType = Enums::ORGANIZATION_REGISTRATION_METHOD;
             $publisherType = getCodeList('OrganizationType', 'Organization', filterDeprecated: true);
