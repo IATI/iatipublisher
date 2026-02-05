@@ -205,9 +205,11 @@ class UserRepository extends Repository
      */
     public function getUserCounts(): Collection
     {
-        $query = $this->model->selectRaw('users.role_id, users.status, roles.role, count(*)')
+        $query = $this->model
+            ->selectRaw('users.role_id, users.status, roles.role, count(*)')
             ->leftJoin('roles', 'users.role_id', '=', 'roles.id')
-            ->groupBy(['role_id', 'status', 'role']);
+            ->whereNull('users.deleted_at')
+            ->groupBy(['users.role_id', 'users.status', 'roles.role']);
 
         return $query->get();
     }
