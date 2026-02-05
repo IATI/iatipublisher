@@ -111,9 +111,8 @@ class UserRepository extends Repository
             ->selectRaw("organizations.id as organization_id,
                          COALESCE(organizations.name->0->>'narrative', organizations.publisher_name) as organisation,
                          count(Case when users.role_id = " . $roles['admin'] . ' and users.organization_id = organizations.id then 1 end) as admin_user_count,
-                         count(Case when users.status = true and users.organization_id = organizations.id then 1 end) as active_user_count,
-                         count(Case when users.status = false and users.organization_id = organizations.id then 1 end) as deactivated_user_count,
-                         count(organizations.id) as total_user_count')
+                         count(Case when users.role_id = ' . $roles['admin'] . ' and users.status = true and users.organization_id = organizations.id then 1 end) as active_user_count,
+                         count(Case when users.role_id = ' . $roles['admin'] . ' and users.status = false and users.organization_id = organizations.id then 1 end) as deactivated_user_count')
             ->groupBy('organizations.id', 'organisation');
 
         $direction = Arr::get($queryParam, 'direction', 'asc');

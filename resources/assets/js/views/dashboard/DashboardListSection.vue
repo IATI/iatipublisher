@@ -153,7 +153,7 @@
 
               <td>
                 <p class="block px-8 py-3 text-center">
-                  {{ organisation.total_user_count }}
+                  {{ organisation.admin_user_count }}
                 </p>
               </td>
             </tr>
