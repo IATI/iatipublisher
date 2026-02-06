@@ -44,7 +44,6 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         'organization_id',
         'is_active',
         'email_verified_at',
-        'password',
         'role_id',
         'status',
         'language_preference',
@@ -62,7 +61,6 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 

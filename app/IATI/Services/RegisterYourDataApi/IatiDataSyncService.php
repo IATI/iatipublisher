@@ -167,7 +167,6 @@ class IatiDataSyncService
             $user = User::create([
                 'uuid'                     => $uuid,
                 'email'                   => Arr::get($claims, 'email'),
-                'password'                => null,
                 'full_name'               => Arr::get($claims, 'family_name'),
                 'address'                 => Arr::get($claims, 'address'),
                 'is_active'               => true,
