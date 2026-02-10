@@ -44,7 +44,7 @@ trait XmlBaseElement
         foreach ($narratives as $narrative) {
             // if ($narrative != '') {
             $narrativeData = [
-                '@value' => Arr::get($narrative, 'narrative', null),
+                '@value' => $this->sanitizeXml(Arr::get($narrative, 'narrative', null)),
                 '@attributes' => [
                     'xml:lang' => Arr::get($narrative, 'language', null),
                 ],
@@ -53,6 +53,22 @@ trait XmlBaseElement
             yield $narrativeData;
             // }
         }
+    }
+
+    /**
+     * Remove invalid XML characters.
+     *
+     * @param string|null $text
+     * @return string|null
+     */
+    protected function sanitizeXml(?string $text): ?string
+    {
+        if ($text === null) {
+            return null;
+        }
+
+        // Remove control characters (0-31), except for tab (9), newline (10), and carriage return (13)
+        return preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F]/', '', $text);
     }
 
     protected function category($categories)

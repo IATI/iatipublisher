@@ -22,6 +22,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use JsonException;
+use Throwable;
 
 /**
  * Class RegistryValidatorJob.
@@ -94,10 +95,13 @@ class RegistryValidatorJob implements ShouldQueue
             if ($ex->getCode() === 422) {
                 $response = $ex->getResponse()->getBody()->getContents();
                 $this->storeValidation($response);
+            } else {
+                logger()->error($ex);
+                $this->fail($ex);
             }
-        } catch (BindingResolutionException|JsonException $e) {
+        } catch (Throwable $e) {
             logger()->error($e);
-            $this->fail();
+            $this->fail($e);
         }
     }
 
@@ -131,11 +135,12 @@ class RegistryValidatorJob implements ShouldQueue
     /**
      * Clears up the failed validation.
      *
+     * @param Throwable|null $e
      * @return void
      *
      * @throws BindingResolutionException
      */
-    public function failed(): void
+    public function failed(?Throwable $e = null): void
     {
         $validationStatusRepository = app()->make(ValidationStatusRepository::class);
         $validationStatusRepository->updateValidationStatus((int) $this->activity->id, (int) $this->user->id, status: 'failed');
