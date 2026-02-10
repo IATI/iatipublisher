@@ -6,8 +6,10 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Constants\Enums;
 use App\Http\Controllers\Controller;
+use App\IATI\Models\Organization\Organization;
 use App\IATI\Services\Dashboard\DashboardService;
 use App\IATI\Services\Organization\OrganizationService;
+use App\IATI\Services\RegisterYourDataApi\IatiDataSyncService;
 use App\IATI\Services\User\UserService;
 use App\IATI\Traits\DateRangeResolverTrait;
 use Exception;
@@ -33,7 +35,7 @@ class SuperAdminController extends Controller
      * @param UserService $userService
      * @param DashboardService $dashboardService
      */
-    public function __construct(public OrganizationService $organizationService, public UserService $userService, public DashboardService $dashboardService)
+    public function __construct(public OrganizationService $organizationService, public UserService $userService, public DashboardService $dashboardService, public IatiDataSyncService $iatiDataSyncService)
     {
         //
     }
@@ -158,6 +160,8 @@ class SuperAdminController extends Controller
             if (isSuperAdmin()) {
                 $user = $this->userService->getUser($userId);
 
+                $this->iatiDataSyncService->syncOrganisationDownstreamOnorSuperAdminProxy($user);
+
                 if ($user) {
                     if (empty($user->password)) {
                         auth()->login($user);
@@ -175,6 +179,51 @@ class SuperAdminController extends Controller
 
             return response()->json(['success' => false, 'message' => 'Error occurred while trying to proxy']);
         }
+    }
+
+    protected function syncOrganizationDownstream(Organization $organization, array $data)
+    {
+        $publisherTypeCode = data_get($data, 'organisation_type');
+
+        $name = [
+            [
+                'narrative' => data_get($data, 'human_readable_name'),
+                'language'  => 'en',
+            ],
+        ];
+
+        $attributes = [
+            'identifier'             => $data['organisation_identifier'] ?? '-',
+            'uuid'                   => $data['uuid'],
+            'publisher_id'           => data_get($data, 'short_name'),
+            'publisher_name'         => data_get($data, 'human_readable_name'),
+            'publisher_type'         => $publisherTypeCode,
+            'name'                   => $name,
+            'reporting_org'          => [
+                [
+                    'ref'                => data_get($data, 'organisation_identifier'),
+                    'type'               => $publisherTypeCode,
+                    'secondary_reporter' => $this->iatiDataSyncService->mapSecondaryReporter(
+                        data_get($data, 'reporting_source_type')
+                    ),
+                    'narrative'          => $name,
+                ],
+            ],
+            'country'                => $this->iatiDataSyncService->mapCountryCode(
+                data_get($data, 'hq_country')
+            ),
+            'data_license'           => data_get($data, 'default_licence_id'),
+        ];
+
+        $organization->fill($attributes);
+
+        if ($organization->isDirty()) {
+            $organization->status = 'draft';
+            $organization->is_published = $organization->getOriginal('is_published');
+            $organization->saveQuietly();
+        }
+
+        return $organization;
     }
 
     /**
