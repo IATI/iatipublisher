@@ -100,4 +100,16 @@ class ReportingOrgApiService
             $accessToken
         );
     }
+
+    /**
+     * Get a list of all discoverable orgs
+     * Corresponds to: GET /reporting-orgs/discoverable-reporting-orgs.
+     */
+    public function getDiscoverableOrganisation(string $accessToken, array $queryParams = []): array
+    {
+        return $this->apiClient->executeRequest(
+            fn (PendingRequest $request) => $request->get('discoverable-reporting-orgs', $queryParams),
+            $accessToken
+        );
+    }
 }
