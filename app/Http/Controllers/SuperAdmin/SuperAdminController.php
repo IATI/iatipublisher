@@ -6,8 +6,10 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Constants\Enums;
 use App\Http\Controllers\Controller;
+use App\IATI\Models\Organization\Organization;
 use App\IATI\Services\Dashboard\DashboardService;
 use App\IATI\Services\Organization\OrganizationService;
+use App\IATI\Services\RegisterYourDataApi\IatiDataSyncService;
 use App\IATI\Services\User\UserService;
 use App\IATI\Traits\DateRangeResolverTrait;
 use Exception;
@@ -33,7 +35,7 @@ class SuperAdminController extends Controller
      * @param UserService $userService
      * @param DashboardService $dashboardService
      */
-    public function __construct(public OrganizationService $organizationService, public UserService $userService, public DashboardService $dashboardService)
+    public function __construct(public OrganizationService $organizationService, public UserService $userService, public DashboardService $dashboardService, public IatiDataSyncService $iatiDataSyncService)
     {
         //
     }
@@ -157,6 +159,8 @@ class SuperAdminController extends Controller
         try {
             if (isSuperAdmin()) {
                 $user = $this->userService->getUser($userId);
+
+                $this->iatiDataSyncService->syncOrganisationDownstreamOnorSuperAdminProxy($user);
 
                 if ($user) {
                     if (empty($user->password)) {
