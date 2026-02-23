@@ -37,7 +37,7 @@ class IatiDataSyncService
             }
 
             if (!empty($org['metadata']['short_name']) &&
-                $org['metadata']['short_name'] === $user->organization->publisher_id) {
+                strtolower($org['metadata']['short_name']) === strtolower($user->organization->publisher_id)) {
                 return true;
             }
 
@@ -69,7 +69,7 @@ class IatiDataSyncService
         }
 
         if (!$existingOrg && !empty($data['short_name'])) {
-            $existingOrg = Organization::where('publisher_id', $data['short_name'])->first();
+            $existingOrg = Organization::where('publisher_id', 'ILIKE', $data['short_name'])->first();
         }
 
         if (!$existingOrg && !empty($data['human_readable_name'])) {
@@ -82,7 +82,7 @@ class IatiDataSyncService
         $attributes = [
             'identifier'             => !empty($data['organisation_identifier']) ? $data['organisation_identifier'] : '-',
             'uuid'                   => $uuid,
-            'publisher_id'           => data_get($data, 'short_name'),
+            'publisher_id'           => strtolower(data_get($data, 'short_name')),
             'publisher_name'         => data_get($data, 'human_readable_name'),
             'publisher_type'         => $publisherTypeCode,
             'address'                => data_get($data, 'address'),
