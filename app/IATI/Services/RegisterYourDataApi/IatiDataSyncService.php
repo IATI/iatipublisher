@@ -17,6 +17,47 @@ class IatiDataSyncService
     {
     }
 
+    public function syncOrganisationDownstreamOnorSuperAdminProxy($user): Organization | null
+    {
+        $accessToken = session('oidc_access_token');
+        $reportingOrgs = $this->reportingOrgApiService->getDiscoverableOrganisation($accessToken, []);
+
+        if (empty($reportingOrgs)) {
+            return null;
+        }
+
+        $reportingOrg = collect($reportingOrgs)->first(function ($org) use ($user) {
+            if (!empty($org['id']) && $org['id'] === $user->organization->uuid) {
+                return true;
+            }
+
+            if (!empty($org['metadata']['organisation_identifier']) &&
+                $org['metadata']['organisation_identifier'] === $user->organization->identifier) {
+                return true;
+            }
+
+            if (!empty($org['metadata']['short_name']) &&
+                $org['metadata']['short_name'] === $user->organization->publisher_id) {
+                return true;
+            }
+
+            if (!empty($org['metadata']['human_readable_name']) &&
+                $org['metadata']['human_readable_name'] === $user->organization->publisher_name) {
+                return true;
+            }
+
+            return false;
+        });
+
+        if (!$reportingOrg) {
+            return null;
+        }
+
+        $reportingOrg = $this->reportingOrgApiService->getReportingOrgDetails($accessToken, $reportingOrg['id']);
+
+        return $this->syncOrganizationDownstream($reportingOrg['id'], $reportingOrg['metadata']);
+    }
+
     public function syncOrganizationDownstream(string $uuid, array $data): Organization
     {
         if ($uuid) {
@@ -82,7 +123,7 @@ class IatiDataSyncService
         return $existingOrg;
     }
 
-    private function mapSecondaryReporter($reportingSourceType): string
+    public function mapSecondaryReporter($reportingSourceType): string
     {
         return match ($reportingSourceType) {
             'primary_source'     => '0',
@@ -91,7 +132,7 @@ class IatiDataSyncService
         };
     }
 
-    private function mapCountryCode($countryName): string|null
+    public function mapCountryCode($countryName): string|null
     {
         if (!$countryName) {
             return null;
