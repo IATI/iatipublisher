@@ -87,6 +87,7 @@ class XmlGeneratorService
         $publishedActivityFileName = sprintf('%s-%s.xml', $publisherId, $activityId);
         $path = sprintf('%s/%s/%s', 'xml', 'activityXmlFiles', $publishedActivityFileName);
 
+        awsDeleteOtherCasings($path);
         $result = awsUploadFile($path, $xmlContent);
 
         if (!$result) {
@@ -131,6 +132,7 @@ class XmlGeneratorService
     {
         foreach ($fileContents as $fileName => $content) {
             $path = sprintf('%s/%s/%s', 'xml', 'activityXmlFiles', $fileName);
+            awsDeleteOtherCasings($path);
             $result = awsUploadFile($path, $content);
 
             if (!$result) {
