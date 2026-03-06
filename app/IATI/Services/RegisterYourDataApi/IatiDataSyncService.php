@@ -65,7 +65,7 @@ class IatiDataSyncService
 
         $reportingOrg = $this->reportingOrgApiService->getReportingOrgDetails($accessToken, $reportingOrg['id']);
 
-        logger()->info("For Proxy Syncing calling detail response:". $reportingOrg)
+        logger()->info('For Proxy Syncing calling detail response:' . $reportingOrg);
 
         return $this->syncOrganizationDownstream($reportingOrg['id'], $reportingOrg['metadata']);
     }
