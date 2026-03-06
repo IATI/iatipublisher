@@ -226,3 +226,27 @@ if (!function_exists('getFileNameExtension')) {
         return $explodedFileName[1] ?? null;
     }
 }
+
+if (!function_exists('awsDeleteOtherCasings')) {
+    /**
+     * Deletes any files with the same name but different casing on S3.
+     * Useful for cleaning up legacy uppercase files when publishing lowercase ones.
+     *
+     * @param string $path The exact path being published.
+     * @return void
+     */
+    function awsDeleteOtherCasings(string $path): void
+    {
+        $dir = dirname($path);
+        $basename = basename($path);
+        $files = Storage::disk('s3')->files($dir === '.' ? '' : $dir);
+
+        foreach ($files as $file) {
+            $fileBasename = basename($file);
+            // If it's the same name case-insensitively but NOT the exact same casing
+            if ($fileBasename !== strtolower($fileBasename)) {
+                awsDeleteFile($file);
+            }
+        }
+    }
+}

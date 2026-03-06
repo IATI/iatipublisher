@@ -110,8 +110,11 @@ class OrganizationXmlGenerator
         $filename = sprintf('%s-%s.xml', $publisherId, 'organisation');
 
         $xml = $this->getXml($settings, $organization, $refreshTimestamp);
+        $path = sprintf('%s/%s', 'organizationXmlFiles', $filename);
 
-        return awsUploadFile(sprintf('%s/%s', 'organizationXmlFiles', $filename), $xml->saveXML());
+        awsDeleteOtherCasings($path);
+
+        return awsUploadFile($path, $xml->saveXML());
     }
 
     /**
