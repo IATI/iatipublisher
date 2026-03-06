@@ -6,7 +6,7 @@ resources:
 - namespace.yaml
 - sealed-secret.yaml
 - config.yaml
-#- cronjob.yaml
+- cronjob.yaml
 - ingress.yaml
 - pvc.yaml
 - github-credentails-sealed-secret.yaml
