@@ -112,4 +112,16 @@ class ReportingOrgApiService
             $accessToken
         );
     }
+
+    /**
+     * Get a paginated list of discoverable orgs, returning the full response.
+     */
+    public function getDiscoverableReportingOrgsPaginated(array $queryParams = [], ?string $accessToken = null): array
+    {
+        return $this->apiClient->executeRequest(
+            fn (PendingRequest $request) => $request->get('discoverable-reporting-orgs', $queryParams),
+            $accessToken,
+            false
+        );
+    }
 }

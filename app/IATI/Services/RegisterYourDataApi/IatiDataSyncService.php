@@ -135,6 +135,52 @@ class IatiDataSyncService
         return $existingOrg;
     }
 
+    /**
+     * Sync organization from discovery API, only updating existing organizations
+     * with partial data to avoid overwriting other fields with null.
+     */
+    public function syncOrganizationFromDiscovery(string $uuid, array $data): ?Organization
+    {
+        $existingOrg = Organization::where('uuid', $uuid)->first();
+
+        if (!$existingOrg && !empty($data['organisation_identifier'])) {
+            $existingOrg = Organization::where('identifier', $data['organisation_identifier'])->first();
+        }
+
+        if (!$existingOrg && !empty($data['short_name'])) {
+            $existingOrg = Organization::where('publisher_id', 'ILIKE', $data['short_name'])->first();
+        }
+
+        if (!$existingOrg && !empty($data['human_readable_name'])) {
+            $existingOrg = Organization::where('publisher_name', $data['human_readable_name'])->first();
+        }
+
+        if (!$existingOrg) {
+            return null;
+        }
+
+        $name = [['narrative' => data_get($data, 'human_readable_name'), 'language' => 'en']];
+
+        $existingOrg->uuid = $uuid;
+        $existingOrg->publisher_id = strtolower(data_get($data, 'short_name'));
+        $existingOrg->publisher_name = data_get($data, 'human_readable_name');
+        $existingOrg->identifier = !empty($data['organisation_identifier']) ? $data['organisation_identifier'] : $existingOrg->identifier;
+        $existingOrg->name = $name;
+
+        $reportingOrg = $existingOrg->reporting_org;
+        if (!empty($reportingOrg) && is_array($reportingOrg)) {
+            $reportingOrg[0]['ref'] = !empty($data['organisation_identifier']) ? $data['organisation_identifier'] : ($reportingOrg[0]['ref'] ?? '');
+            $reportingOrg[0]['narrative'] = $name;
+            $existingOrg->reporting_org = $reportingOrg;
+        }
+
+        if ($existingOrg->isDirty()) {
+            $existingOrg->saveQuietly();
+        }
+
+        return $existingOrg;
+    }
+
     public function mapSecondaryReporter($reportingSourceType): string
     {
         return match ($reportingSourceType) {
