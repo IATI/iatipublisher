@@ -20,52 +20,14 @@ class IatiDataSyncService
     public function syncOrganisationDownstreamOnorSuperAdminProxy($user): Organization | null
     {
         $accessToken = session('oidc_access_token');
-        $reportingOrgs = $this->reportingOrgApiService->getDiscoverableOrganisation($accessToken, []);
 
-        if (empty($reportingOrgs)) {
-            logger()->info(' ######## Discoverable Organisation null ########');
-
-            return null;
-        }
-
-        $reportingOrg = collect($reportingOrgs)->first(function ($org) use ($user) {
-            if (!empty($org['id']) && $org['id'] === $user->organization->uuid) {
-                logger()->info('For Proxy Syncing:' . $org['metadata']['human_readable_name']);
-
-                return true;
-            }
-
-            if (!empty($org['metadata']['organisation_identifier']) &&
-                $org['metadata']['organisation_identifier'] === $user->organization->identifier) {
-                logger()->info('For Proxy Syncing:' . $org['metadata']['human_readable_name']);
-
-                return true;
-            }
-
-            if (!empty($org['metadata']['short_name']) &&
-                strtolower($org['metadata']['short_name']) === strtolower($user->organization->publisher_id)) {
-                logger()->info('For Proxy Syncing:' . $org['metadata']['human_readable_name']);
-
-                return true;
-            }
-
-            if (!empty($org['metadata']['human_readable_name']) &&
-                $org['metadata']['human_readable_name'] === $user->organization->publisher_name) {
-                logger()->info('For Proxy Syncing:' . $org['metadata']['human_readable_name']);
-
-                return true;
-            }
-
-            return false;
-        });
+        $reportingOrg = $this->reportingOrgApiService->getReportingOrgDetails($accessToken, $user->organization->uuid);
 
         if (!$reportingOrg) {
+            logger()->info('No reporting Org Found on Proxy -- returning without sync');
+
             return null;
         }
-
-        $reportingOrg = $this->reportingOrgApiService->getReportingOrgDetails($accessToken, $reportingOrg['id']);
-
-        logger()->info('For Proxy Syncing calling detail response:' . $reportingOrg);
 
         return $this->syncOrganizationDownstream($reportingOrg['id'], $reportingOrg['metadata']);
     }
