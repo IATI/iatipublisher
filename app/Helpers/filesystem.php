@@ -244,7 +244,7 @@ if (!function_exists('awsDeleteOtherCasings')) {
         foreach ($files as $file) {
             $fileBasename = basename($file);
             // If it's the same name case-insensitively but NOT the exact same casing
-            if ($fileBasename !== strtolower($fileBasename)) {
+            if (strtolower($fileBasename) === strtolower($basename) && $fileBasename !== $basename) {
                 awsDeleteFile($file);
             }
         }
