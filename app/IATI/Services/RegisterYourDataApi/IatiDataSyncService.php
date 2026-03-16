@@ -43,7 +43,7 @@ class IatiDataSyncService
         }
 
         if (!$existingOrg && !empty($data['short_name'])) {
-            $existingOrg = Organization::where('publisher_id', 'ILIKE', $data['short_name'])->first();
+            $existingOrg = Organization::where('publisher_id', $data['short_name'])->first();
         }
 
         if (!$existingOrg && !empty($data['human_readable_name'])) {
@@ -110,7 +110,7 @@ class IatiDataSyncService
         }
 
         if (!$existingOrg && !empty($data['short_name'])) {
-            $existingOrg = Organization::where('publisher_id', 'ILIKE', $data['short_name'])->first();
+            $existingOrg = Organization::where('publisher_id', $data['short_name'])->first();
         }
 
         if (!$existingOrg && !empty($data['human_readable_name'])) {
