@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: kill-idle-postgres-connections
 spec:
-  schedule: "0 * * * *"
+  schedule: "0 */2 * * *"
   successfulJobsHistoryLimit: 2
   failedJobsHistoryLimit: 2
   jobTemplate:
