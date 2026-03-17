@@ -105,7 +105,11 @@ class ActivityWorkflowService
 
         $mergedXmlPath = "xml/mergedActivityXml/$mergedFileName";
 
-        awsDeleteOtherCasings($mergedXmlPath);
+        if (!awsGetFile($mergedXmlPath)) {
+            $this->datasetApiService->deleteDataset($accessToken, $activityPublished->dataset_uuid);
+            logger()->error('No File present on AWS so deleted dataset with uuid :' . $activityPublished->dataset_uuid);
+        }
+
         $mergedFilesize = calculateStringSizeInMb(awsGetFile($mergedXmlPath));
 
         $this->activityPublishedService->trackActivityPublished($organization->id, $mergedFileName, $publishedActivityFileNames, $mergedFilesize, $response['id']);
