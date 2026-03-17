@@ -104,8 +104,6 @@ class ActivityWorkflowService
             : $this->datasetApiService->createDataset($accessToken, $payload);
 
         $mergedXmlPath = "xml/mergedActivityXml/$mergedFileName";
-
-        awsDeleteOtherCasings($mergedXmlPath);
         $mergedFilesize = calculateStringSizeInMb(awsGetFile($mergedXmlPath));
 
         $this->activityPublishedService->trackActivityPublished($organization->id, $mergedFileName, $publishedActivityFileNames, $mergedFilesize, $response['id']);
