@@ -87,7 +87,6 @@ class XmlGeneratorService
         $publishedActivityFileName = sprintf('%s-%s.xml', $publisherId, $activityId);
         $path = sprintf('%s/%s/%s', 'xml', 'activityXmlFiles', $publishedActivityFileName);
 
-        awsDeleteOtherCasings($path);
         $result = awsUploadFile($path, $xmlContent);
 
         if (!$result) {
@@ -132,8 +131,12 @@ class XmlGeneratorService
     {
         foreach ($fileContents as $fileName => $content) {
             $path = sprintf('%s/%s/%s', 'xml', 'activityXmlFiles', $fileName);
-//            awsDeleteOtherCasings($path);
+//          awsDeleteOtherCasings($path);
+
+            logger()->info('--- path:' . $path . '  ----');
+            logger()->info('--- content:' . $content . '  ----');
             $result = awsUploadFile($path, $content);
+            logger()->info('--- result:' . $result . '  ----');
 
             if (!$result) {
                 throw new \RuntimeException("Failed to upload bulk activity file to AWS S3: {$fileName}");
