@@ -297,8 +297,7 @@ class XmlGenerator
      */
     public function generateActivitiesXml($activityData, $settings, $organization, bool $refreshTimestamp = true): array
     {
-        $publishingInfo = $settings->publishing_info;
-        $publisherId = Arr::get($publishingInfo, 'publisher_id', 'Not Available');
+        $publisherId = data_get($organization, 'publisher_id', 'Not Available');
         $innerActivityXmlArray = [];
         $activityMappedToActivityIdentifier = [];
         $successfullyProcessedActivities = [];
