@@ -140,6 +140,16 @@ class IatiDataSyncService
             $existingOrg->saveQuietly();
         }
 
+        $settings = $existingOrg->settings;
+        if ($settings) {
+            $publishingInfo = $settings->publishing_info;
+            $publishingInfo['publisher_id'] = $existingOrg->publisher_id;
+            $settings->publishing_info = $publishingInfo;
+            if ($settings->isDirty()) {
+                $settings->save();
+            }
+        }
+
         return $existingOrg;
     }
 
