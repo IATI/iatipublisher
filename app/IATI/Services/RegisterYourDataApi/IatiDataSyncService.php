@@ -29,7 +29,10 @@ class IatiDataSyncService
             return null;
         }
 
-        return $this->syncOrganizationDownstream($reportingOrg['id'], $reportingOrg['metadata']);
+        $organisation = $this->syncOrganizationDownstream($reportingOrg['id'], $reportingOrg['metadata']);
+        $__ = $this->syncSettings($organisation);
+
+        return $organisation;
     }
 
     public function syncOrganizationDownstream(string $uuid, array $data): Organization
@@ -138,6 +141,16 @@ class IatiDataSyncService
 
         if ($existingOrg->isDirty()) {
             $existingOrg->saveQuietly();
+        }
+
+        $settings = $existingOrg->settings;
+        if ($settings) {
+            $publishingInfo = $settings->publishing_info;
+            $publishingInfo['publisher_id'] = $existingOrg->publisher_id;
+            $settings->publishing_info = $publishingInfo;
+            if ($settings->isDirty()) {
+                $settings->save();
+            }
         }
 
         return $existingOrg;
