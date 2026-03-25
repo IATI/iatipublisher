@@ -1,9 +1,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: kill-idle-postgres-connections
+  name: kill-idle-postgres-transactions
 spec:
-  schedule: "0 */2 * * *"
+  schedule: "0 */1 * * *"  # runs every hour
   successfulJobsHistoryLimit: 2
   failedJobsHistoryLimit: 2
   jobTemplate:
@@ -12,14 +12,23 @@ spec:
         spec:
           containers:
             - name: psql
-              image: postgres
+              image: postgres:15
               command:
                 - sh
                 - -c
                 - |
-                  PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -d $DB_DATABASE -U $DB_USERNAME -p $DB_PORT -c " SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE  pid <> pg_backend_pid()
-                  AND state in ('idle', 'idle in transaction', 'idle in transaction (aborted)', 'disabled')
-                  AND state_change < current_timestamp - INTERVAL '1' MINUTE;"
+                  PGPASSWORD=$DB_PASSWORD psql \
+                    -h $DB_HOST \
+                    -d $DB_DATABASE \
+                    -U $DB_USERNAME \
+                    -p $DB_PORT \
+                    -c "
+                      SELECT pg_terminate_backend(pid)
+                      FROM pg_stat_activity
+                      WHERE pid <> pg_backend_pid()
+                        AND state IN ('idle in transaction', 'idle in transaction (aborted)')
+                        AND state_change < current_timestamp - INTERVAL '10 minutes';
+                    "
               envFrom:
                 - configMapRef:
                     name: iatipublisher
