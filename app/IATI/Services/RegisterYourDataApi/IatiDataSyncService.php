@@ -12,7 +12,6 @@ use App\IATI\Models\Setting\Setting;
 use App\IATI\Models\User\Role;
 use App\IATI\Models\User\User;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class IatiDataSyncService
 {
@@ -108,18 +107,27 @@ class IatiDataSyncService
     public function syncDatasetsDownstream(array $data, Organization $organization): void
     {
         foreach ($data as $dataset) {
-            $metadata = data_get($dataset, 'metadata', []);
+            $shortName = strtolower(data_get($dataset, 'metadata.short_name', ''));
 
-            if (isset($metadata['short_name']) && Str::of($metadata['short_name'])->lower()->endsWith('-publisher')) {
-                $datasetUuid = data_get($dataset, 'id');
+            if (!$shortName) {
+                continue;
+            }
 
+            $datasetUuid = data_get($dataset, 'id');
+
+            if (str_ends_with($shortName, 'activity-publisher')) {
                 ActivityPublished::where('organization_id', $organization->id)
                     ->update(['dataset_uuid' => $datasetUuid]);
 
+                logger()->info("Synced Activity dataset_uuid for {$organization->uuid} -> {$datasetUuid}");
+                continue;
+            }
+
+            if (str_ends_with($shortName, 'organisation-publisher')) {
                 OrganizationPublished::where('organization_id', $organization->id)
                     ->update(['dataset_uuid' => $datasetUuid]);
 
-                logger()->info("Synced dataset_uuid for {$organization->uuid} -> {$datasetUuid}");
+                logger()->info("Synced Organisation dataset_uuid for {$organization->uuid} -> {$datasetUuid}");
             }
         }
     }
