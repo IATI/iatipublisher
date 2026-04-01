@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\IATI\Services\RegisterYourDataApi;
 
 use App\Constants\Enums;
+use App\IATI\Models\Activity\ActivityPublished;
 use App\IATI\Models\Organization\Organization;
+use App\IATI\Models\Organization\OrganizationPublished;
 use App\IATI\Models\Setting\Setting;
 use App\IATI\Models\User\Role;
 use App\IATI\Models\User\User;
@@ -13,7 +15,7 @@ use Illuminate\Support\Arr;
 
 class IatiDataSyncService
 {
-    public function __construct(private ReportingOrgApiService $reportingOrgApiService)
+    public function __construct(private ReportingOrgApiService $reportingOrgApiService, private DatasetApiService $datasetApiService)
     {
     }
 
@@ -22,6 +24,7 @@ class IatiDataSyncService
         $accessToken = session('oidc_access_token');
 
         $reportingOrg = $this->reportingOrgApiService->getReportingOrgDetails($accessToken, $user->organization->uuid);
+        $datasets = $this->datasetApiService->getDatasets($accessToken, data_get($reportingOrg, 'id', $user->organization->uuid));
 
         if (!$reportingOrg) {
             logger()->info('No reporting Org Found on Proxy -- returning without sync');
@@ -30,6 +33,7 @@ class IatiDataSyncService
         }
 
         $organisation = $this->syncOrganizationDownstream($reportingOrg['id'], $reportingOrg['metadata']);
+        $this->syncDatasetsDownstream($datasets, $organisation);
         $__ = $this->syncSettings($organisation);
 
         return $organisation;
@@ -98,6 +102,41 @@ class IatiDataSyncService
         }
 
         return $existingOrg;
+    }
+
+    public function syncDatasetsDownstream(array $data, Organization $organization): void
+    {
+        foreach ($data as $dataset) {
+            $actions = data_get($dataset, 'actions', []);
+            $hasIatiAccount = false;
+
+            foreach ($actions as $action) {
+                if (data_get($action, 'user_application_name') === 'IATI Account') {
+                    $hasIatiAccount = true;
+
+                    break;
+                }
+            }
+
+            if ($hasIatiAccount) {
+                $datasetUuid = data_get($dataset, 'id');
+                $shortName = data_get($dataset, 'metadata.short_name');
+
+                if ($shortName) {
+                    $filename = "{$shortName}.xml";
+
+                    ActivityPublished::where('filename', $filename)
+                        ->where('organization_id', $organization->id)
+                        ->update(['dataset_uuid' => $datasetUuid]);
+
+                    OrganizationPublished::where('filename', $filename)
+                        ->where('organization_id', $organization->id)
+                        ->update(['dataset_uuid' => $datasetUuid]);
+
+                    logger()->info("Synced dataset_uuid for {$filename} -> {$datasetUuid}");
+                }
+            }
+        }
     }
 
     /**
