@@ -77,13 +77,13 @@ class IatiDataSyncService
                     'narrative'          => $name,
                 ],
             ],
-            'country'                => $this->mapCountryCode(data_get($data, 'hq_country')),
-            'iati_status'            => 'pending',
-            'org_status'             => 'active',
+            'country' => $this->mapCountryCode(data_get($data, 'hq_country')),
+            'iati_status' => 'pending',
+            'org_status' => 'active',
             'migrated_from_aidsteam' => false,
-            'registration_type'      => Enums::EXISTING_ORG,
-            'registry_approved'      => data_get($data, 'registry_approved', false),
-            'data_license'           => data_get($data, 'default_licence_id'),
+            'registration_type' => Enums::EXISTING_ORG,
+            'registry_approved' => data_get($data, 'registry_approved', false),
+            'data_license' => data_get($data, 'default_licence_id'),
         ];
 
         if (!$existingOrg) {
