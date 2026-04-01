@@ -12,6 +12,7 @@ use App\IATI\Models\Setting\Setting;
 use App\IATI\Models\User\Role;
 use App\IATI\Models\User\User;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class IatiDataSyncService
 {
@@ -107,18 +108,9 @@ class IatiDataSyncService
     public function syncDatasetsDownstream(array $data, Organization $organization): void
     {
         foreach ($data as $dataset) {
-            $actions = data_get($dataset, 'actions', []);
-            $hasIatiAccount = false;
+            $metadata = data_get($dataset, 'metadata', []);
 
-            foreach ($actions as $action) {
-                if (data_get($action, 'user_application_name') === 'IATI Account') {
-                    $hasIatiAccount = true;
-
-                    break;
-                }
-            }
-
-            if ($hasIatiAccount) {
+            if (isset($metadata['short_name']) && Str::of($metadata['short_name'])->lower()->endsWith('-publisher')) {
                 $datasetUuid = data_get($dataset, 'id');
 
                 ActivityPublished::where('organization_id', $organization->id)
