@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\IATI\Services\OIDC\IatiOidcService;
 use App\IATI\Services\OIDC\OidcAuthenticationException;
+use App\IATI\Services\RegisterYourDataApi\DatasetApiService;
 use App\IATI\Services\RegisterYourDataApi\IatiDataSyncService;
 use App\IATI\Services\RegisterYourDataApi\ReportingOrgApiService;
 use Exception;
@@ -19,6 +20,7 @@ class IatiLoginController extends Controller
     public function __construct(
         private IatiOidcService $oidcService,
         private IatiDataSyncService $dataSyncService,
+        private DatasetApiService $datasetApiService,
         private ReportingOrgApiService $reportingOrgApiService
     ) {
     }
@@ -76,6 +78,9 @@ class IatiLoginController extends Controller
                             $reportingOrgMetadata
                         );
                         $__ = $this->dataSyncService->syncSettings($publisherOrg);
+
+                        $datasets = $this->datasetApiService->getDatasets($authResult->accessToken, $publisherOrgUUID);
+                        $this->dataSyncService->syncDatasetsDownstream($datasets, $publisherOrg);
                     }
                 }
             }

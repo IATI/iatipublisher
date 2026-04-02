@@ -37,6 +37,23 @@ class DatasetApiService
     }
 
     /**
+     * Get detailed information about an organisations datasets.
+     * Corresponds to: GET /datasets/{did}.
+     *
+     * @param string $accessToken The user's API access token.
+     * @param string $organisationId The UUID of the organisation.
+     * @return array The detailed dataset data.
+     * @throws RegisterYourDataApiException
+     */
+    public function getDatasets(string $accessToken, string $organisationId): array
+    {
+        return $this->apiClient->executeRequest(
+            fn (PendingRequest $request) => $request->get("reporting-orgs/{$organisationId}/datasets?include_actions=yes"),
+            $accessToken
+        );
+    }
+
+    /**
      * Get detailed information about a specific dataset.
      * Corresponds to: GET /datasets/{did}.
      *
