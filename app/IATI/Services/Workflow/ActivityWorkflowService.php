@@ -24,6 +24,7 @@ use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class ActivityWorkflowService.
@@ -106,10 +107,12 @@ class ActivityWorkflowService
         $mergedXmlPath = "xml/mergedActivityXml/$mergedFileName";
         $mergedFilesize = calculateStringSizeInMb(awsGetFile($mergedXmlPath));
 
-        $this->activityPublishedService->trackActivityPublished($organization->id, $mergedFileName, $publishedActivityFileNames, $mergedFilesize, $response['id']);
+        DB::transaction(function () use ($organization, $mergedFileName, $publishedActivityFileNames, $mergedFilesize, $response, $activities) {
+            $this->activityPublishedService->trackActivityPublished($organization->id, $mergedFileName, $publishedActivityFileNames, $mergedFilesize, $response['id']);
 
-        $activityIds = $activities->pluck('id')->toArray();
-        $this->activityService->bulkUpdatePublishedStatus($activityIds, 'published', true);
+            $activityIds = $activities->pluck('id')->toArray();
+            $this->activityService->bulkUpdatePublishedStatus($activityIds, 'published', true);
+        });
     }
 
     /**

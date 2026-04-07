@@ -14,7 +14,6 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class OrganizationWorkflowController.
@@ -48,8 +47,6 @@ class OrganizationWorkflowController extends Controller
                 return response()->json(['success' => false, 'message' => $message]);
             }
 
-            DB::beginTransaction();
-
             $this->organizationWorkflowService->publishOrganization($organization, session('oidc_access_token'));
 
             $this->organizationOnboardingService->updateOrganizationOnboardingStepToComplete(
@@ -57,20 +54,16 @@ class OrganizationWorkflowController extends Controller
                 OrganizationOnboarding::ORGANIZATION_DATA,
             );
 
-            DB::commit();
-
             $translatedMessage = trans(
                 'workflow_backend/organization_workflow_controller.organization_has_been_published_successfully'
             );
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (PublisherNotFound $message) {
-            DB::rollBack();
             logger()->error($message->getMessage());
 
             return response()->json(['success' => false, 'message' => $message->getMessage()]);
         } catch (Exception $e) {
-            DB::rollBack();
             logger()->error($e);
             $translatedMessage = trans(
                 'workflow_backend/organization_workflow_controller.error_has_occurred_while_publishing_organization'
@@ -98,12 +91,8 @@ class OrganizationWorkflowController extends Controller
                 return redirect()->route('admin.activities.index')->with('error', $translatedMessage);
             }
 
-            DB::beginTransaction();
-
             $this->organizationWorkflowService->unpublishOrganization($organization, session('oidc_access_token'));
             $this->organizationOnboardingService->updateOrganizationOnboardingStepToComplete($organization->id, OrganizationOnboarding::ORGANIZATION_DATA, false);
-
-            DB::commit();
 
             $translatedMessage = trans(
                 'workflow_backend/organization_workflow_controller.organization_has_been_un_published_successfully'
@@ -111,7 +100,6 @@ class OrganizationWorkflowController extends Controller
 
             return response()->json(['success' => true, 'message' => $translatedMessage]);
         } catch (Exception $e) {
-            DB::rollBack();
             logger()->error($e);
             $translatedMessage = trans(
                 'workflow_backend/organization_workflow_controller.error_has_occurred_while_un_publishing_organization'

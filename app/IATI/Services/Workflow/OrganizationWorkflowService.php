@@ -9,6 +9,7 @@ use App\IATI\Services\Organization\OrganizationPublishedService;
 use App\IATI\Services\Organization\OrganizationService;
 use App\IATI\Services\RegisterYourDataApi\DatasetApiService;
 use App\IATI\Services\Xml\OrganizationXmlGeneratorService;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class OrganizationWorkflowService.
@@ -68,10 +69,12 @@ class OrganizationWorkflowService
             'dataset_uuid'          => $response['id'],
         ];
 
-        $organizationPublished = $this->organizationPublishedService->findOrCreate($filename, $organization->id);
-        $organizationPublished->fill($organizationPublishedData)->save();
+        DB::transaction(function () use ($filename, $organization, $organizationPublishedData) {
+            $organizationPublished = $this->organizationPublishedService->findOrCreate($filename, $organization->id);
+            $organizationPublished->fill($organizationPublishedData)->save();
 
-        $this->organizationService->updatePublishedStatus($organization, 'published', true);
+            $this->organizationService->updatePublishedStatus($organization, 'published', true);
+        });
     }
 
     /**
@@ -92,9 +95,11 @@ class OrganizationWorkflowService
             $this->datasetApiService->deleteDataset($accessToken, $datasetUUID);
         }
 
-        $this->organizationService->updatePublishedStatus($organization, 'draft', false);
-        $this->xmlGeneratorService->deleteUnpublishedFile($organizationPublished['filename']);
+        DB::transaction(function () use ($organization, $organizationPublished) {
+            $this->organizationService->updatePublishedStatus($organization, 'draft', false);
+            $this->organizationPublishedService->delete($organizationPublished->id);
+        });
 
-        $this->organizationPublishedService->delete($organizationPublished->id);
+        $this->xmlGeneratorService->deleteUnpublishedFile($organizationPublished['filename']);
     }
 }
