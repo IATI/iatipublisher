@@ -131,6 +131,16 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function organizations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Organization::class, 'organization_user', 'user_id', 'organization_id')
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
+    /**
      * Sends verification email to new user.
      */
     public static function sendEmail(): void

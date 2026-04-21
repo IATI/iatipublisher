@@ -5,6 +5,7 @@ return [
     'organisation_data'   => 'Datos de la organización',
     'add_import_activity' => 'Añadir o importar actividad',
     'your_profile'        => 'Mi perfil',
+    'switch_organization' => 'Cambiar organización',
     'logout'              => 'Cerrar sesión',
     'login'               => 'Acceso',
 ];

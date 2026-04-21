@@ -106,6 +106,7 @@
 
             <loggedin-header
                 :user="{{ Auth::user() }}"
+                :has-multiple-organizations="{{ Auth::user()->organizations->count() > 1 ? 1 : 0 }}"
                 has-admin-bar = "{{ isSuperAdmin() && Auth::user()->organization }}"
                 :languages="{{ json_encode(getCodeList('Language', 'Activity'), JSON_THROW_ON_ERROR) }}"
                 v-bind:super-admin="{{ isSuperAdminRoute() ? 1 : 0 }}"
@@ -117,6 +118,7 @@
         @else
             <loggedin-header
                 :user="{{ Auth::user() }}"
+                :has-multiple-organizations="{{ Auth::user()->organizations->count() > 1 ? 1 : 0 }}"
                 :organization="{{ Auth::user()->organization }}"
                 :languages="{{ json_encode(getCodeList('Language', 'Activity'), JSON_THROW_ON_ERROR) }}"
                 v-bind:super-admin="{{ isSuperAdminRoute() ? 1 : 0 }}"
@@ -125,7 +127,7 @@
                 :translated-data="{{json_encode($translatedData)}}"
                 :current-language="{{json_encode($currentLanguage)}}"
                 ></loggedin-header>
-                @endif
+        @endif
                 <main>
                     @yield('content')
                     @stack('scripts')

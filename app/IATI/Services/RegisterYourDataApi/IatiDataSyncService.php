@@ -12,7 +12,6 @@ use App\IATI\Models\Setting\Setting;
 use App\IATI\Models\User\Role;
 use App\IATI\Models\User\User;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class IatiDataSyncService
 {
@@ -261,33 +260,52 @@ class IatiDataSyncService
     {
         $user = User::where('email', data_get($claims, 'email'))->first();
 
+        $attributes = [
+            'email' => Arr::get($claims, 'email'),
+            'full_name' => Arr::get($claims, 'family_name'),
+            'last_logged_in' => now(),
+            'language_preference' => explode(' ', Arr::get($claims, 'iatiPreferredLanguage', 'en'))[0] ?? 'en',
+            'role_id' => Role::where('role', $publisherUserRole)->value('id'),
+        ];
+
+        // Only update organization_id if it's currently null or we explicitly want to set it (e.g. for single org users)
+        if ($orgId && (!$user || $user->organization_id === null)) {
+            $attributes['organization_id'] = $orgId;
+        }
+
         if ($user) {
-            $user->update([
-                'email'              => Arr::get($claims, 'email'),
-                'full_name'          => Arr::get($claims, 'family_name'),
-                'last_logged_in'     => now(),
-                'language_preference'=> explode(' ', Arr::get($claims, 'iatiPreferredLanguage', 'en'))[0] ?? 'en',
-                'organization_id'    => $orgId,
-                'role_id'            => Role::where('role', $publisherUserRole)->value('id'),
-            ]);
+            $user->update($attributes);
         } else {
-            $user = User::create([
-                'uuid'                     => $uuid,
-                'email'                   => Arr::get($claims, 'email'),
-                'full_name'               => Arr::get($claims, 'family_name'),
-                'address'                 => Arr::get($claims, 'address'),
-                'is_active'               => true,
-                'email_verified_at'       => now(),
-                'role_id'                 => Role::where('role', $publisherUserRole)->value('id'),
-                'status'                  => true,
-                'language_preference'     => explode(' ', Arr::get($claims, 'iatiPreferredLanguage', 'en'))[0] ?? 'en',
-                'last_logged_in'          => now(),
-                'organization_id'         => $orgId,
-                'migrated_from_aidstream' => false,
-            ]);
+            $attributes['uuid'] = $uuid;
+            $attributes['address'] = Arr::get($claims, 'address');
+            $attributes['is_active'] = true;
+            $attributes['email_verified_at'] = now();
+            $attributes['status'] = true;
+            $attributes['migrated_from_aidstream'] = false;
+            $user = User::create($attributes);
         }
 
         return $user;
+    }
+
+    public function syncUserOrganizations(User $user, array $reportingOrgs): void
+    {
+        $syncData = [];
+        foreach ($reportingOrgs as $org) {
+            $orgUuid = data_get($org, 'id');
+            $orgModel = Organization::where('uuid', $orgUuid)->first();
+            if ($orgModel) {
+                $syncData[$orgModel->id] = [
+                    'role' => $this->mapRegisterRoleToPublisher(data_get($org, 'user_role', 'admin')),
+                ];
+            }
+        }
+        $user->organizations()->sync($syncData);
+
+        // If user has no organization_id but belongs to organizations, set the first one as default
+        if ($user->organization_id === null && !empty($syncData)) {
+            $user->update(['organization_id' => array_key_first($syncData)]);
+        }
     }
 
     /**

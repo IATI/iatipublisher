@@ -251,6 +251,19 @@
                   }}</span></a
                 >
               </li>
+              <li
+                v-if="hasMultipleOrganizations"
+                class="dropdown__list border-b border-b-n-20"
+              >
+                <a class="flex w-full space-x-4" href="/select-organization">
+                  <svg-vue class="mx-1 rotate-180 text-base" icon="logout" />
+                  <span>{{
+                    translatedData[
+                      'adminHeader.admin_header.switch_organization'
+                    ] || 'Switch Organization'
+                  }}</span>
+                </a>
+              </li>
               <li class="dropdown__list">
                 <a href="/logout/iati" class="flex w-full items-center">
                   <svg-vue class="ml-1 mr-3" icon="logout"></svg-vue>
@@ -306,6 +319,22 @@
                     translatedData['common.common.get_started']
                   }}</span></a
                 >
+              </li>
+              <li
+                v-if="hasMultipleOrganizations"
+                class="dropdown__list border-b border-b-n-20"
+              >
+                <a
+                  class="flex w-full space-x-4 text-sm"
+                  href="/select-organization"
+                >
+                  <svg-vue class="mx-1 rotate-180 text-base" icon="logout" />
+                  <span>{{
+                    translatedData[
+                      'adminHeader.admin_header.switch_organization'
+                    ] || 'Switch Organization'
+                  }}</span>
+                </a>
               </li>
               <li class="dropdown__list flex">
                 <a href="/logout/iati" class="flex w-full items-center text-sm">
@@ -366,6 +395,7 @@ const props = defineProps({
   defaultLanguage: { type: String, default: '' },
   translatedData: { type: Object, required: true },
   currentLanguage: { type: String, required: true },
+  hasMultipleOrganizations: { type: Boolean, default: false },
 });
 
 const showUserDropdown = ref(false);

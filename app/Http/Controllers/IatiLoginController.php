@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\IATI\Models\Organization\Organization;
 use App\IATI\Services\OIDC\IatiOidcService;
 use App\IATI\Services\OIDC\OidcAuthenticationException;
 use App\IATI\Services\RegisterYourDataApi\DatasetApiService;
@@ -40,7 +41,6 @@ class IatiLoginController extends Controller
     {
         try {
             $authResult = $this->oidcService->handleCallback();
-            $firstOrg = null;
 
             session([
                 'oidc_id_token'                => $authResult->idToken,
@@ -51,61 +51,69 @@ class IatiLoginController extends Controller
                     : null,
             ]);
 
-            $publisherOrg = null;
-            $publisherOrgUUID = null;
             $publisherUserRole = in_array('iati_superadmin', data_get($authResult->claims, 'roles', []), true) ? 'iati_superadmin' : 'admin';
 
             DB::beginTransaction();
 
+            $reportingOrgs = [];
+            $syncOrgs = [];
+
             if ($publisherUserRole !== 'iati_superadmin') {
                 $reportingOrgs = $this->reportingOrgApiService->getReportingOrgs($authResult->accessToken, ['include_meta' => 'yes', 'include_actions' => 'yes']);
-                $firstOrg = data_get($reportingOrgs, 0);
 
-                if (count($reportingOrgs) > 1) {
-                    $this->showNotSupportMultipleOrgsPage();
-                } elseif (!empty($reportingOrgs) && count($reportingOrgs) === 1) {
-                    // check if role is contributor_pending
-                    if ($firstOrg['user_role'] === 'contributor_pending') {
-                        return $this->showYouArePendingApprovalPage();
-                    }
+                foreach ($reportingOrgs as $org) {
+                    $orgUuid = data_get($org, 'id');
+                    $orgMetadata = $org['metadata'] ?? [];
 
-                    $publisherOrgUUID = data_get($firstOrg, 'id');
+                    $publisherOrg = $this->dataSyncService->syncOrganizationDownstream($orgUuid, $orgMetadata);
+                    $this->dataSyncService->syncSettings($publisherOrg);
+                    $syncOrgs[] = $publisherOrg;
+                }
 
-                    if ($publisherOrgUUID) {
-                        $reportingOrgMetadata = $firstOrg['metadata'] ?? [];
-                        $publisherOrg = $this->dataSyncService->syncOrganizationDownstream(
-                            $publisherOrgUUID,
-                            $reportingOrgMetadata
-                        );
-                        $__ = $this->dataSyncService->syncSettings($publisherOrg);
+                if (empty($reportingOrgs)) {
+                    DB::rollBack();
 
-                        $datasets = $this->datasetApiService->getDatasets($authResult->accessToken, $publisherOrgUUID);
-                        $this->dataSyncService->syncDatasetsDownstream($datasets, $publisherOrg);
-                    }
+                    return $this->showOrganizationMissingPage();
                 }
             }
 
+            $firstOrg = data_get($reportingOrgs, 0);
             $publisherUserRole = $this->dataSyncService->mapRegisterRoleToPublisher(data_get($firstOrg, 'user_role', $publisherUserRole));
+
             $user = $this->dataSyncService->syncUserFromClaims(
                 $authResult->uuid,
                 $authResult->claims,
-                $publisherOrg?->id,
+                count($syncOrgs) === 1 ? $syncOrgs[0]->id : null,
                 $publisherUserRole
             );
+
+            if ($publisherUserRole !== 'iati_superadmin') {
+                $this->dataSyncService->syncUserOrganizations($user, $reportingOrgs);
+            }
 
             DB::commit();
 
             cache()->put('oidc_id_token', $authResult->idToken);
-
             auth()->login($user);
 
             session([
-                'uuid'    => $publisherOrgUUID,
+                'uuid'    => $user->organization?->uuid,
                 'role_id' => $user->role_id,
             ]);
 
             if (isSuperAdmin()) {
                 session(['superadmin_user_id' => $user->id]);
+            }
+
+            // If user belongs to multiple orgs and hasn't picked one yet (or we want to force pick)
+            if ($publisherUserRole !== 'iati_superadmin' && count($reportingOrgs) > 1) {
+                return redirect()->route('onboarding.select-organization');
+            }
+
+            // Sync datasets for the active organization
+            if ($user->organization) {
+                $datasets = $this->datasetApiService->getDatasets($authResult->accessToken, $user->organization->uuid);
+                $this->dataSyncService->syncDatasetsDownstream($datasets, $user->organization);
             }
 
             return redirect()->intended('/');
@@ -142,6 +150,55 @@ class IatiLoginController extends Controller
         return redirect('/');
     }
 
+    public function showOrganizationSelectionPage()
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return redirect()->route('web.index.login');
+        }
+
+        $organizations = $user->organizations;
+
+        if ($organizations->isEmpty()) {
+            return $this->showOrganizationMissingPage();
+        }
+
+        if ($organizations->count() === 1) {
+            $user->update(['organization_id' => $organizations->first()->id]);
+
+            return redirect()->intended('/');
+        }
+
+        return view('auth.onboarding.select-organization', compact('organizations'));
+    }
+
+    public function selectOrganization(string $orgUuid)
+    {
+        $user = auth()->user();
+        $organization = Organization::where('uuid', $orgUuid)->firstOrFail();
+
+        // Check if user belongs to this org
+        if (!$user->organizations->contains($organization->id)) {
+            abort(403);
+        }
+
+        $user->update(['organization_id' => $organization->id]);
+
+        // Sync datasets for the newly selected organization
+        $accessToken = session('oidc_access_token');
+        if ($accessToken) {
+            $datasets = $this->datasetApiService->getDatasets($accessToken, $organization->uuid);
+            $this->dataSyncService->syncDatasetsDownstream($datasets, $organization);
+        }
+
+        session([
+            'uuid'    => $organization->uuid,
+            'role_id' => $user->role_id,
+        ]);
+
+        return redirect()->intended('/');
+    }
+
     public function showOrganizationMissingPage()
     {
         return view('auth.onboarding.organization-missing');
@@ -156,9 +213,7 @@ class IatiLoginController extends Controller
 
     public function showNotSupportMultipleOrgsPage()
     {
-        session(['redirect' => 'multiple-orgs']);
-
-        return view('auth.onboarding.multiple-orgs');
+        return redirect()->route('onboarding.select-organization');
     }
 
     public function showErrorPage()
