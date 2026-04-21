@@ -151,18 +151,32 @@ class SuperAdminController extends Controller
      * Allows super-admin to masquerade as a user of an organization.
      *
      * @param $userId
+     * @param $orgId
      *
      * @return JsonResponse
      */
-    public function proxyOrganization($userId): JsonResponse
+    public function proxyOrganization($userId, $orgId = null): JsonResponse
     {
         try {
             if (isSuperAdmin()) {
+                if (!$userId && $orgId) {
+                    $organization = Organization::find($orgId);
+                    $userId = $organization?->manyUsers()->first()?->id;
+                }
+
+                if (!$userId) {
+                    return response()->json(['success' => false, 'message' => 'No user found for this organization to proxy as.']);
+                }
+
                 $user = $this->userService->getUser($userId);
 
-                $this->iatiDataSyncService->syncOrganisationDownstreamOnorSuperAdminProxy($user);
-
                 if ($user) {
+                    if ($orgId) {
+                        $user->update(['organization_id' => $orgId]);
+                    }
+
+                    $this->iatiDataSyncService->syncOrganisationDownstreamOnorSuperAdminProxy($user);
+
                     if (empty($user->password)) {
                         auth()->login($user);
                     } else {

@@ -523,7 +523,7 @@
                   text="proxy"
                   type="outline"
                   icon="smile"
-                  @click="proxyUser(<number>data?.user?.id)"
+                  @click="proxyUser(data?.user?.id || data?.usr_id, data.id)"
                 />
               </div>
               <button @click="openDeleteModal(data)">
@@ -893,10 +893,10 @@ export default defineComponent({
      * Proxy User
      */
     // display/hide validator loader
-    const proxyUser = (id: number) => {
+    const proxyUser = (id: number, orgId: number) => {
       loader.status = true;
       loader.text = 'Proxy Login';
-      const endpoint = `/proxy-organisation/${id}`;
+      const endpoint = `/proxy-organisation/${id}/${orgId}`;
 
       axios.get(endpoint).then((res) => {
         const response = res.data;
