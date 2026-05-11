@@ -67,6 +67,7 @@ class Organization extends Model implements Auditable
         'deprecation_status_map',
         'uuid',
         'registry_approved',
+        'has_allowed_access',
     ];
 
     /**

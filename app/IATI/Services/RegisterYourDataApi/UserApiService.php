@@ -83,4 +83,20 @@ class UserApiService
             false
         );
     }
+
+    /**
+     * Gives the organisations a provider_admin has access to.
+     * Corresponds to: DELETE /users/{uid}/roles.
+     *
+     * @param string $accessToken The user's API access token.
+     * @throws RegisterYourDataApiException
+     */
+    public function getProviderAdminOrganisationAccesss(string $accessToken, string $iatiRegistryId)
+    {
+        return $this->apiClient->executeRequest(
+            fn (PendingRequest $request) => $request->get("users/{$iatiRegistryId}/roles"),
+            $accessToken,
+            false
+        );
+    }
 }

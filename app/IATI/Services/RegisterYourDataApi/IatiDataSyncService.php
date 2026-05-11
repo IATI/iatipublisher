@@ -256,6 +256,15 @@ class IatiDataSyncService
         return $setting;
     }
 
+    /**
+     * Syncs Registry User to IATI.
+     *
+     * @param string $uuid
+     * @param array $claims
+     * @param int|null $orgId
+     * @param string $publisherUserRole
+     * @return User
+     */
     public function syncUserFromClaims(string $uuid, array $claims, int|null $orgId, string $publisherUserRole): User
     {
         $user = User::where('email', data_get($claims, 'email'))->first();
@@ -403,5 +412,21 @@ class IatiDataSyncService
         }
 
         return $payload;
+    }
+
+    public function syncAccessibleReportingOrgs(array $accessibleReportingOrgs)
+    {
+        $accessibleUuids = array_keys($accessibleReportingOrgs);
+
+        // Set all to false first
+        Organization::query()->update(['has_allowed_access' => false]);
+
+        // Then set only the accessible ones to true
+        if (!empty($accessibleUuids)) {
+            Organization::whereIn('uuid', $accessibleUuids)
+                ->update(['has_allowed_access' => true]);
+        }
+
+        return $this;
     }
 }

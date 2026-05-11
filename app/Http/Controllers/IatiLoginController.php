@@ -9,6 +9,7 @@ use App\IATI\Services\OIDC\OidcAuthenticationException;
 use App\IATI\Services\RegisterYourDataApi\DatasetApiService;
 use App\IATI\Services\RegisterYourDataApi\IatiDataSyncService;
 use App\IATI\Services\RegisterYourDataApi\ReportingOrgApiService;
+use App\IATI\Services\RegisterYourDataApi\UserApiService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,8 @@ class IatiLoginController extends Controller
         private IatiOidcService $oidcService,
         private IatiDataSyncService $dataSyncService,
         private DatasetApiService $datasetApiService,
-        private ReportingOrgApiService $reportingOrgApiService
+        private ReportingOrgApiService $reportingOrgApiService,
+        private UserApiService $userApiService
     ) {
     }
 
@@ -40,6 +42,7 @@ class IatiLoginController extends Controller
     {
         try {
             $authResult = $this->oidcService->handleCallback();
+
             $firstOrg = null;
 
             session([
@@ -61,7 +64,14 @@ class IatiLoginController extends Controller
                 $reportingOrgs = $this->reportingOrgApiService->getReportingOrgs($authResult->accessToken, ['include_meta' => 'yes', 'include_actions' => 'yes']);
                 $firstOrg = data_get($reportingOrgs, 0);
 
-                if (count($reportingOrgs) > 1) {
+                // when reporting orgs is 0 we check if we got provider admin access first
+                if (count($reportingOrgs) === 0) {
+                    $accessibleReportingOrgs = $this->userApiService->getProviderAdminOrganisationAccesss($authResult->accessToken, $authResult->claims['iatiRegistryId']);
+                    if (count(data_get($accessibleReportingOrgs, 'data.reporting_orgs')) !== 0) {
+                        $this->dataSyncService->syncAccessibleReportingOrgs(data_get($accessibleReportingOrgs, 'data.reporting_orgs'));
+                        $publisherUserRole = 'provider_admin';
+                    }
+                } elseif (count($reportingOrgs) > 1) {
                     $this->showNotSupportMultipleOrgsPage();
                 } elseif (!empty($reportingOrgs) && count($reportingOrgs) === 1) {
                     // check if role is contributor_pending
