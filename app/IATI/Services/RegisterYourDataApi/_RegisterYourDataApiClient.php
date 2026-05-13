@@ -45,15 +45,11 @@ class _RegisterYourDataApiClient
                 ->baseUrl($this->baseUrl)
                 ->acceptJson()
                 ->beforeSending(function (Request $request, array $options) use ($accessToken) {
-                    $currentHeaders = $request->headers();
-
                     $curl = $this->getRequestAsCurl($request, $options);
 
                     Log::debug('RYDA API Request (cURL)', [
                         'curl_command' => $curl,
                         'url' => $request->url(),
-                        'headers' => $currentHeaders,
-                        'access_token' => $accessToken,
                     ]);
                 })
                 ->withHeaders([

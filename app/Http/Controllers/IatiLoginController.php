@@ -66,7 +66,7 @@ class IatiLoginController extends Controller
                 } elseif (!empty($reportingOrgs) && count($reportingOrgs) === 1) {
                     // check if role is contributor_pending
                     if ($firstOrg['user_role'] === 'contributor_pending') {
-                        $this->showYouArePendingApprovalPage();
+                        return $this->showYouArePendingApprovalPage();
                     }
 
                     $publisherOrgUUID = data_get($firstOrg, 'id');
