@@ -67,8 +67,10 @@ class IatiLoginController extends Controller
                 // when reporting orgs is 0 we check if we got provider admin access first
                 if (count($reportingOrgs) === 0) {
                     $accessibleReportingOrgs = $this->userApiService->getProviderAdminOrganisationAccesss($authResult->accessToken, $authResult->claims['iatiRegistryId']);
-                    if (count(data_get($accessibleReportingOrgs, 'data.reporting_orgs')) !== 0) {
-                        $this->dataSyncService->syncAccessibleReportingOrgs(data_get($accessibleReportingOrgs, 'data.reporting_orgs'));
+                    $orgsWithProviderAdminAccess = $this->dataSyncService->getOnlyProviderAdminList($accessibleReportingOrgs);
+
+                    if (count($orgsWithProviderAdminAccess) !== 0) {
+                        $this->dataSyncService->syncAccessibleReportingOrgs($orgsWithProviderAdminAccess);
                         $publisherUserRole = 'provider_admin';
                     }
                 } elseif (count($reportingOrgs) > 1) {
