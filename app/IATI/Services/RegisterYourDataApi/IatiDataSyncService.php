@@ -414,19 +414,33 @@ class IatiDataSyncService
         return $payload;
     }
 
-    public function syncAccessibleReportingOrgs(array $accessibleReportingOrgs)
+    public function syncAccessibleReportingOrgs(array $orgsWithProviderAdminAccess)
     {
-        $accessibleUuids = array_keys($accessibleReportingOrgs);
-
         // Set all to false first
         Organization::query()->update(['has_allowed_access' => false]);
 
         // Then set only the accessible ones to true
-        if (!empty($accessibleUuids)) {
-            Organization::whereIn('uuid', $accessibleUuids)
+        if (!empty($orgsWithProviderAdminAccess)) {
+            Organization::whereIn('uuid', $orgsWithProviderAdminAccess)
                 ->update(['has_allowed_access' => true]);
         }
 
         return $this;
+    }
+
+    /**
+     * Extracts only the IDs of organizations where the user has 'provider_admin' access.
+     *
+     * @param array $accessibleReportingOrgs
+     * @return array A flat list of organization IDs.
+     */
+    public function getOnlyProviderAdminList(array $accessibleReportingOrgs): array
+    {
+        $reportingOrgs = $accessibleReportingOrgs['data']['reporting_orgs'] ?? [];
+
+        // Filter and return only the keys where the value is 'provider_admin'
+        return array_keys(array_filter($reportingOrgs, function ($role) {
+            return $role === 'provider_admin';
+        }));
     }
 }
