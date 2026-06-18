@@ -15,4 +15,6 @@ return [
     'support_resolution_note' => 'Notre équipe de support vous aidera à résoudre ce problème d\'association d\'organisation.',
     'account_error' => 'Erreur de compte',
     'account_error_description' => 'Nous avons rencontré un problème lors de la synchronisation des données de votre compte. Veuillez contacter le support IATI.',
+    'select_organization_title' => 'Pour quelle organisation publiez-vous ?',
+    'organization_selection_note' => "Vous pourrez changer d'organisation ultérieurement depuis vos paramètres.",
 ];

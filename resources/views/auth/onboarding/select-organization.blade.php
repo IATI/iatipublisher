@@ -67,10 +67,6 @@
                 <h2 class="text-slate-900 text-3xl font-bold tracking-tight">
                     {{ trans('auth.select_organization_title', ['default' => 'Select Organization']) }}
                 </h2>
-
-                <p class="text-slate-600 mt-2 text-lg">
-                    {{ trans('auth.select_organization_subtitle', ['default' => 'You are associated with multiple organizations. Please select one to continue.']) }}
-                </p>
             </div>
 
             <div class="grid gap-4 mt-8">
@@ -85,9 +81,6 @@
                                 <h3 class="font-bold text-slate-800 group-hover:text-blue-600">
                                     {{ $org->publisher_name }}
                                 </h3>
-                                <p class="text-sm text-slate-500">
-                                    {{ $org->publisher_id }}
-                                </p>
                             </div>
                         </div>
                         <i class="fas fa-chevron-right text-slate-300 group-hover:translate-x-1 transition-transform"></i>

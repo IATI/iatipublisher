@@ -74,10 +74,10 @@ class IatiLoginController extends Controller
                     if (count($orgsWithProviderAdminAccess) !== 0) {
                         $this->dataSyncService->syncAccessibleReportingOrgs($orgsWithProviderAdminAccess);
                         $publisherUserRole = 'provider_admin';
-                    }else {
+                    } else {
                         return $this->showOrganizationMissingPage();
                     }
-                }else{
+                } else {
                     //sync all orgs at once
                     foreach ($reportingOrgs as $org) {
                         $orgUuid = data_get($org, 'id');

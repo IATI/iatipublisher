@@ -232,20 +232,24 @@
                 class="dropdown__list border-b border-b-n-20"
                 @click="redirectProfile"
               >
-                <a class="flex w-full space-x-4" href="/profile"
-                  ><svg-vue class="mx-1 text-base" icon="user" />
+                <a class="flex w-full items-center space-x-4" href="/profile">
+                  <div class="flex h-6 w-6 items-center justify-center">
+                    <svg-vue class="text-base" icon="user" />
+                  </div>
                   <span>{{
                     translatedData['adminHeader.admin_header.your_profile']
-                  }}</span></a
-                >
+                  }}</span>
+                </a>
               </li>
               <li
                 v-if="!superAdmin"
                 class="dropdown__list border-b border-b-n-20"
                 @click="getStarted"
               >
-                <a class="flex w-full space-x-4">
-                  <svg-vue icon="rocket-icon" class="mx-1 mt-0.5 scale-[1.2]" />
+                <a class="flex w-full items-center space-x-4">
+                  <div class="flex h-6 w-6 items-center justify-center">
+                    <svg-vue icon="rocket-icon" class="scale-[1.1]" />
+                  </div>
                   <span>{{
                     translatedData['common.common.get_started']
                   }}</span></a
@@ -255,8 +259,13 @@
                 v-if="hasMultipleOrganizations"
                 class="dropdown__list border-b border-b-n-20"
               >
-                <a class="flex w-full space-x-4" href="/select-organization">
-                  <svg-vue class="mx-1 rotate-180 text-base" icon="logout" />
+                <a
+                  class="flex w-full items-center space-x-4"
+                  href="/select-organization"
+                >
+                  <div class="flex h-6 w-6 items-center justify-center">
+                    <svg-vue class="rotate-180 text-base" icon="logout" />
+                  </div>
                   <span>{{
                     translatedData[
                       'adminHeader.admin_header.switch_organization'
@@ -265,8 +274,13 @@
                 </a>
               </li>
               <li class="dropdown__list">
-                <a href="/logout/iati" class="flex w-full items-center">
-                  <svg-vue class="ml-1 mr-3" icon="logout"></svg-vue>
+                <a
+                  href="/logout/iati"
+                  class="flex w-full items-center space-x-4"
+                >
+                  <div class="flex h-6 w-6 items-center justify-center">
+                    <svg-vue class="text-base" icon="logout"></svg-vue>
+                  </div>
                   <span class="text-sm">
                     {{ translatedData['adminHeader.admin_header.logout'] }}
                   </span>
