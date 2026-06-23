@@ -73,4 +73,9 @@ abstract class DBTables
      * For activity_published table.
      */
     public const ACTIVITY_PUBLISHED = 'activity_published';
+
+    /**
+     * For bulk_publishing_status table.
+     */
+    public const BULK_PUBLISHING_STATUS = 'bulk_publishing_status';
 }
