@@ -898,24 +898,31 @@ export default defineComponent({
       loader.text = 'Proxy Login';
       const endpoint = `/proxy-organisation/${id}/${orgId}`;
 
-      axios.get(endpoint).then((res) => {
-        const response = res.data;
+      axios
+        .get(endpoint)
+        .then((res) => {
+          const response = res.data;
 
-        if (response.success) {
-          localStorage.removeItem('validatingActivitiesNames');
-          // localStorage.removeItem('validatingActivities');
-          localStorage.removeItem('activityValidating');
-          store.dispatch('updateStartValidation', false);
+          if (response.success) {
+            localStorage.removeItem('validatingActivitiesNames');
+            // localStorage.removeItem('validatingActivities');
+            localStorage.removeItem('activityValidating');
+            store.dispatch('updateStartValidation', false);
 
-          setTimeout(() => {
-            window.location.replace('/activities');
-          }, 1000);
-        } else {
+            setTimeout(() => {
+              window.location.replace('/activities');
+            }, 1000);
+          } else {
+            loader.status = false;
+            toastMessage.message = response.message;
+            toastMessage.type = response.success;
+          }
+        })
+        .catch(() => {
           loader.status = false;
-          toastMessage.message = response.message;
-          toastMessage.type = response.success;
-        }
-      });
+          toastMessage.message = 'Error occurred while trying to proxy';
+          toastMessage.type = false;
+        });
     };
 
     /**

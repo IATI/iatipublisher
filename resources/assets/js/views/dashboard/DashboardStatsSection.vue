@@ -265,17 +265,22 @@ const proxyUser = () => {
   loader.value.text = 'Proxy Login';
   const endpoint = `/proxy-organisation/${userId.value}`;
 
-  axios.get(endpoint).then((res) => {
-    const response = res.data;
+  axios
+    .get(endpoint)
+    .then((res) => {
+      const response = res.data;
 
-    if (response.success === true) {
-      setTimeout(() => {
-        window.location.replace('/activities');
-      }, 1000);
-    } else {
+      if (response.success === true) {
+        setTimeout(() => {
+          window.location.replace('/activities');
+        }, 1000);
+      } else {
+        loader.value.status = false;
+      }
+    })
+    .catch(() => {
       loader.value.status = false;
-    }
-  });
+    });
 };
 
 watch(
