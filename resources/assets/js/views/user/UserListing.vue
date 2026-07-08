@@ -424,22 +424,19 @@
               </td>
               <td v-if="isSuperadmin">
                 <div class="ellipsis relative">
-                  <p
-                    class="w-32 overflow-x-hidden overflow-ellipsis whitespace-nowrap"
+                  <ol
+                    v-if="user['organization_names']?.length"
+                    class="w-32 list-inside list-decimal overflow-x-hidden overflow-ellipsis"
                   >
-                    {{ user['name'] }}
-                    {{
-                      user['publisher_name'] ? user['publisher_name'] : '- -'
-                    }}
-                  </p>
-
-                  <div class="w-52">
-                    <span class="ellipsis__title--hover"
-                      >{{
-                        user['publisher_name'] ? user['publisher_name'] : '- -'
-                      }}
-                    </span>
-                  </div>
+                    <li
+                      v-for="(orgName, orgIndex) in user['organization_names']"
+                      :key="orgIndex"
+                      class="whitespace-nowrap"
+                    >
+                      {{ orgName }}
+                    </li>
+                  </ol>
+                  <p v-else class="w-32">- -</p>
                 </div>
               </td>
               <td class="capitalize">
@@ -575,7 +572,7 @@ const filter = reactive({
 const isLoaderVisible = ref(false);
 const addUserForm = ref(false);
 const editUserForm = ref(false);
-const usersData = reactive({ data: [] });
+const usersData = reactive<{ data: Record<string, any>[] }>({ data: [] });
 const isEmpty = ref(true);
 const allSelected = ref<boolean[]>([]);
 const deleteModal = ref(false);
@@ -589,8 +586,8 @@ const deleteUsername = ref();
 const loader = ref(true);
 const fetchingTableData = ref(false);
 const selectedIds = ref({});
-const checklist = ref([]);
-const currentpageData = ref([]);
+const checklist = ref<any[]>([]);
+const currentpageData = ref<any[]>([]);
 const clearDate = ref(false);
 const editUserId = ref('');
 

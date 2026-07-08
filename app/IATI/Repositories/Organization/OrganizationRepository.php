@@ -96,6 +96,7 @@ class OrganizationRepository extends Repository
             organizations.data_license,
             organizations.registration_type,
             MAX(COALESCE(usr_direct.id, usr_pivot.id)) AS usr_id,
+            MAX(COALESCE(usr_direct.email, usr_pivot.email)) AS usr_email,
             MAX(GREATEST(COALESCE(usr_direct.last_logged_in, \'1970-01-01 00:00:00\'), COALESCE(usr_pivot.last_logged_in, \'1970-01-01 00:00:00\'))) AS last_logged_in'
         )
             ->leftJoin('users AS usr_direct', 'usr_direct.organization_id', '=', 'organizations.id')

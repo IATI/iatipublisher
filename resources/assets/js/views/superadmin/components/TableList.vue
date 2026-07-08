@@ -431,12 +431,12 @@
                   <div
                     class="w-full overflow-x-hidden text-ellipsis text-blue-40"
                   >
-                    {{ data?.user?.email }}
+                    {{ data?.user?.email || data?.usr_email }}
                   </div>
                   <div
                     class="absolute left-0 top-full hidden rounded bg-eggshell p-2 shadow-sm group-hover:block"
                   >
-                    {{ data?.user?.email }}
+                    {{ data?.user?.email || data?.usr_email }}
                   </div>
                 </div>
                 <div class="flex">

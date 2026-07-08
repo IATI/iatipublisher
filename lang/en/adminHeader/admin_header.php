@@ -5,7 +5,7 @@ return [
     'organisation_data'   => 'Organisation Data',
     'add_import_activity' => 'Add or Import Activity',
     'your_profile'        => 'Your Profile',
-    'switch_organization' => 'Switch Organization',
+    'switch_organization' => 'Switch Organisation',
     'logout'              => 'Sign Out',
     'login'               => 'Login',
 ];

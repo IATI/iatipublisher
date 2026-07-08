@@ -90,7 +90,7 @@
 
             <div class="text-center pt-6 border-t border-slate-100">
                 <p class="text-slate-500 text-sm">
-                    {{ trans('auth.organization_selection_note', ['default' => 'You can switch between organizations later from your settings.']) }}
+                    {{ trans('auth.organization_selection_note', ['default' => 'You can switch between organisations later from your settings.']) }}
                 </p>
             </div>
         </div>

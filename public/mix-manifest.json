@@ -1,10 +1,18 @@
 {
-    "/js/app.js": "/js/app.js?id=e50f0eb6be518bfc8b5c1d7e84ef731a",
+<<<<<<< Updated upstream
+    "/js/app.js": "/js/app.js?id=91f9b4cc2b5d143466261f4c013f163b",
+=======
+<<<<<<< HEAD
+    "/js/app.js": "/js/app.js?id=433ebaf815b12b031de059bbb3988a02",
+=======
+    "/js/app.js": "/js/app.js?id=91f9b4cc2b5d143466261f4c013f163b",
+>>>>>>> 1969-multiple-orgs-support
+>>>>>>> Stashed changes
     "/js/script.js": "/js/script.js?id=3c76a186055f6358307e48bdd9ead790",
     "/js/webportal-script.js": "/js/webportal-script.js?id=1bcae4271c042a8b79b241f34a1653fc",
     "/js/formbuilder.js": "/js/formbuilder.js?id=7829990afc55670fb3018d45dccfaf0e",
     "/manifest.js": "/manifest.js?id=3ed1124c8f4dcb98acc36de67cb80349",
-    "/css/webportal-app.css": "/css/webportal-app.css?id=e85d63967ecf6ab49a09952d6a9d17eb",
-    "/css/app.css": "/css/app.css?id=4f6f421783772ce5804b0ff5e50903ee",
+    "/css/webportal-app.css": "/css/webportal-app.css?id=fbad9f96802a70793bbd36d3be59e96b",
+    "/css/app.css": "/css/app.css?id=7b629292e2f8faed8c0e73f08abea29c",
     "/js/vendor.js": "/js/vendor.js?id=61dcbd841cf88ecfb27cc536a46e9f41"
 }

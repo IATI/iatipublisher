@@ -269,7 +269,7 @@
                   <span>{{
                     translatedData[
                       'adminHeader.admin_header.switch_organization'
-                    ] || 'Switch Organization'
+                    ] || 'Switch Organisation'
                   }}</span>
                 </a>
               </li>
@@ -346,7 +346,7 @@
                   <span>{{
                     translatedData[
                       'adminHeader.admin_header.switch_organization'
-                    ] || 'Switch Organization'
+                    ] || 'Switch Organisation'
                   }}</span>
                 </a>
               </li>
