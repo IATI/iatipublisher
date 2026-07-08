@@ -6,7 +6,6 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Constants\Enums;
 use App\Http\Controllers\Controller;
-use App\IATI\Models\Organization\Organization;
 use App\IATI\Services\Dashboard\DashboardService;
 use App\IATI\Services\Organization\OrganizationService;
 use App\IATI\Services\RegisterYourDataApi\IatiDataSyncService;
@@ -151,34 +150,63 @@ class SuperAdminController extends Controller
      * Allows super-admin to masquerade as a user of an organization.
      *
      * @param $userId
+     * @param $orgId
      *
      * @return JsonResponse
      */
-    public function proxyOrganization($userId): JsonResponse
+    public function proxyOrganization($userId, $orgId = null): JsonResponse
     {
         try {
-            if (isSuperAdmin()) {
-                $user = $this->userService->getUser($userId);
-
-                $this->iatiDataSyncService->syncOrganisationDownstreamOnorSuperAdminProxy($user);
-
-                if ($user) {
-                    if (empty($user->password)) {
-                        auth()->login($user);
-                    } else {
-                        auth()->loginUsingId($userId);
-                    }
-
-                    return response()->json(['success' => true, 'message' => 'Proxy successful.']);
-                }
+            if (!isSuperAdmin()) {
+                return response()->json(['success' => false, 'message' => 'Error occurred while trying to proxy']);
             }
 
-            return response()->json(['success' => false, 'message' => 'Error occurred while trying to proxy']);
+            if (!$userId && $orgId) {
+                $userId = $this->getFirstUserIdForOrganization($orgId);
+            }
+
+            if (!$userId) {
+                return response()->json(['success' => false, 'message' => 'No user found for this organization to proxy as.']);
+            }
+
+            $user = $this->userService->getUser($userId);
+
+            if (!$user) {
+                return response()->json(['success' => false, 'message' => 'Error occurred while trying to proxy']);
+            }
+
+            if ($orgId) {
+                $user->update(['organization_id' => $orgId]);
+            }
+
+            $this->iatiDataSyncService->syncOrganisationDownstreamOnorSuperAdminProxy($user);
+
+            empty($user->password) ? auth()->login($user) : auth()->loginUsingId($userId);
+
+            return response()->json(['success' => true, 'message' => 'Proxy successful.']);
         } catch (Exception $e) {
             logger()->error($e);
 
             return response()->json(['success' => false, 'message' => 'Error occurred while trying to proxy']);
         }
+    }
+
+    /**
+     * Returns id of first user belonging to given organization, via injected OrganizationService.
+     *
+     * @param $orgId
+     *
+     * @return int|null
+     */
+    private function getFirstUserIdForOrganization($orgId): ?int
+    {
+        try {
+            $organization = $this->organizationService->getOrganizationData($orgId);
+        } catch (Exception) {
+            return null;
+        }
+
+        return $organization->manyUsers()->first()?->id;
     }
 
     /**

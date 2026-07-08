@@ -72,12 +72,20 @@ class UserRepository extends Repository
     {
         $query = $this->model
             ->leftJoin('organizations', 'organizations.id', 'users.organization_id')
+            ->leftJoin(DB::raw('(
+                    SELECT organization_user.user_id,
+                           json_agg(organizations.publisher_name ORDER BY organizations.publisher_name) AS names
+                    FROM organization_user
+                    JOIN organizations ON organizations.id = organization_user.organization_id
+                    GROUP BY organization_user.user_id
+                ) AS pivot_organizations'), 'pivot_organizations.user_id', '=', 'users.id')
             ->join('roles', 'roles.id', 'users.role_id')
             ->select(
                 DB::raw('
                     users.id,
                     full_name,
                     publisher_name,
+                    COALESCE(pivot_organizations.names, CASE WHEN publisher_name IS NOT NULL THEN json_build_array(publisher_name) END) AS organization_names,
                     email,
                     users.status,
                     roles.role,
@@ -92,7 +100,15 @@ class UserRepository extends Repository
             $query = $this->filterUsers($query, $queryParams);
         }
 
-        return $query->paginate(10, ['*'], 'users', $page);
+        $paginator = $query->paginate(10, ['*'], 'users', $page);
+
+        $paginator->getCollection()->transform(function ($user) {
+            $user->organization_names = $user->organization_names ? json_decode($user->organization_names) : [];
+
+            return $user;
+        });
+
+        return $paginator;
     }
 
     /**
@@ -162,7 +178,17 @@ class UserRepository extends Repository
         $direction = 'desc';
 
         if (!empty($queryParams['organization_id'])) {
-            $query = $query->whereIn('organization_id', Arr::get($queryParams, 'organization_id', []));
+            $orgIds = Arr::get($queryParams, 'organization_id', []);
+            $query = $query->where(function ($query) use ($orgIds) {
+                $query->whereIn('users.id', function ($sub) use ($orgIds) {
+                    $sub->select('user_id')->from('organization_user')->whereIn('organization_id', $orgIds);
+                })->orWhere(function ($query) use ($orgIds) {
+                    $query->whereIn('users.organization_id', $orgIds)
+                        ->whereNotIn('users.id', function ($sub) {
+                            $sub->select('user_id')->from('organization_user');
+                        });
+                });
+            });
         }
 
         if (array_key_exists('users', $queryParams)) {

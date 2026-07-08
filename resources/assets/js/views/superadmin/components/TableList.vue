@@ -431,12 +431,12 @@
                   <div
                     class="w-full overflow-x-hidden text-ellipsis text-blue-40"
                   >
-                    {{ data?.user?.email }}
+                    {{ data?.user?.email || data?.usr_email }}
                   </div>
                   <div
                     class="absolute left-0 top-full hidden rounded bg-eggshell p-2 shadow-sm group-hover:block"
                   >
-                    {{ data?.user?.email }}
+                    {{ data?.user?.email || data?.usr_email }}
                   </div>
                 </div>
                 <div class="flex">
@@ -523,7 +523,7 @@
                   text="proxy"
                   type="outline"
                   icon="smile"
-                  @click="proxyUser(<number>data?.user?.id)"
+                  @click="proxyUser(data?.user?.id || data?.usr_id, data.id)"
                 />
               </div>
               <button @click="openDeleteModal(data)">
@@ -893,29 +893,36 @@ export default defineComponent({
      * Proxy User
      */
     // display/hide validator loader
-    const proxyUser = (id: number) => {
+    const proxyUser = (id: number, orgId: number) => {
       loader.status = true;
       loader.text = 'Proxy Login';
-      const endpoint = `/proxy-organisation/${id}`;
+      const endpoint = `/proxy-organisation/${id}/${orgId}`;
 
-      axios.get(endpoint).then((res) => {
-        const response = res.data;
+      axios
+        .get(endpoint)
+        .then((res) => {
+          const response = res.data;
 
-        if (response.success) {
-          localStorage.removeItem('validatingActivitiesNames');
-          // localStorage.removeItem('validatingActivities');
-          localStorage.removeItem('activityValidating');
-          store.dispatch('updateStartValidation', false);
+          if (response.success) {
+            localStorage.removeItem('validatingActivitiesNames');
+            // localStorage.removeItem('validatingActivities');
+            localStorage.removeItem('activityValidating');
+            store.dispatch('updateStartValidation', false);
 
-          setTimeout(() => {
-            window.location.replace('/activities');
-          }, 1000);
-        } else {
+            setTimeout(() => {
+              window.location.replace('/activities');
+            }, 1000);
+          } else {
+            loader.status = false;
+            toastMessage.message = response.message;
+            toastMessage.type = response.success;
+          }
+        })
+        .catch(() => {
           loader.status = false;
-          toastMessage.message = response.message;
-          toastMessage.type = response.success;
-        }
-      });
+          toastMessage.message = 'Error occurred while trying to proxy';
+          toastMessage.type = false;
+        });
     };
 
     /**

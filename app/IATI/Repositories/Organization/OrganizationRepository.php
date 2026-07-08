@@ -95,18 +95,26 @@ class OrganizationRepository extends Repository
             organizations.publisher_type,
             organizations.data_license,
             organizations.registration_type,
-            MAX(usr.id) AS usr_id,
-            MAX(usr.last_logged_in) AS last_logged_in'
+            MAX(COALESCE(usr_direct.id, usr_pivot.id)) AS usr_id,
+            MAX(COALESCE(usr_direct.email, usr_pivot.email)) AS usr_email,
+            MAX(GREATEST(COALESCE(usr_direct.last_logged_in, \'1970-01-01 00:00:00\'), COALESCE(usr_pivot.last_logged_in, \'1970-01-01 00:00:00\'))) AS last_logged_in'
         )
-            ->leftJoin('users AS usr', 'usr.organization_id', '=', 'organizations.id')
+            ->leftJoin('users AS usr_direct', 'usr_direct.organization_id', '=', 'organizations.id')
+            ->leftJoin('organization_user AS pivot', 'pivot.organization_id', '=', 'organizations.id')
+            ->leftJoin('users AS usr_pivot', 'usr_pivot.id', '=', 'pivot.user_id')
             ->whereRaw($whereSql)
             ->withCount('allActivities')
             ->with([
                 'user' => function ($user) use ($adminRoleId) {
-                    return $user->where('role_id', $adminRoleId)
-                        ->where('status', 1)
-                        ->whereNull('deleted_at')
-                        ->min('created_at');
+                    return $user->where(function ($query) use ($adminRoleId) {
+                        $query->where('role_id', $adminRoleId)
+                              ->orWhereHas('organizations', function ($q) use ($adminRoleId) {
+                                  $q->where('role_id', $adminRoleId);
+                              });
+                    })
+                    ->where('status', 1)
+                    ->whereNull('deleted_at')
+                    ->orderBy('created_at', 'asc');
                 },
             ])
             ->with('latestUpdatedActivity')

@@ -226,6 +226,16 @@ class Organization extends Model implements Auditable
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function manyUsers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'organization_user', 'organization_id', 'user_id')
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
+    /**
      * Organization has many users.
      *
      * @return HasOne
