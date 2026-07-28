@@ -203,6 +203,8 @@ trait FillDefaultValuesTrait
         if ($refillDefaultValues) {
             $defaultFieldValues = $this->resolveDefaultValues($data);
             $data['default_field_values'] = $defaultFieldValues;
+        } else {
+            $defaultFieldValues = $this->fillMissingDefaultsFromSettings($defaultFieldValues);
         }
 
         $data = $this->populateDefaultFields($data, $defaultFieldValues);
@@ -262,6 +264,33 @@ trait FillDefaultValuesTrait
         }
 
         return $defaultValueTemplate;
+    }
+
+    /**
+     * Fills in organization/activity settings values for any default field that the activity
+     * itself hasn't set, without persisting them to the activity's default_field_values.
+     * Used on regular element updates (title, description, sector, ...) so a language/currency
+     * default configured in settings is picked up even when the activity's own default_field_values
+     * was never explicitly refreshed.
+     *
+     * @param array $defaultFieldValues
+     *
+     * @return array
+     */
+    protected function fillMissingDefaultsFromSettings(array $defaultFieldValues): array
+    {
+        $setting = auth()?->user()?->organization->settings ?? [];
+        $defaultValuesFromSettings = [];
+
+        if ($setting) {
+            $defaultValuesFromSettings = array_merge(Arr::get($setting, 'default_values', []), Arr::get($setting, 'activity_default_values', []));
+        }
+
+        foreach ($defaultFieldValues as $key => $value) {
+            $defaultFieldValues[$key] = $this->getDefaultValueBasedOnPriority($value, $defaultValuesFromSettings[$key] ?? '');
+        }
+
+        return $defaultFieldValues;
     }
 
     /**
