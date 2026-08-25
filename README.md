@@ -37,7 +37,7 @@ Note: Make sure postgresql and redis services are up and running
 
 
 ## Framework
-This application is coded in PHP using [Laravel](https://laravel.com/docs/11.x) framework. The version of Laravel used for this project is [11.0](https://laravel.com/docs/11.x) . The application also uses [Vue 3](https://vuejs.org) (Composition API), [Typescript](https://www.typescriptlang.org) and [Tailwind](https://tailwindcss.com/).
+This application is coded in PHP using [Laravel](https://laravel.com/docs/12.x) framework. The version of Laravel used for this project is [12.0](https://laravel.com/docs/12.x) . The application also uses [Vue 3](https://vuejs.org) (Composition API), [Typescript](https://www.typescriptlang.org) and [Tailwind](https://tailwindcss.com/).
 
 
 

@@ -189,3 +189,64 @@ S3 data, and either is a call outside this task's scope.
 failure** (the pre-existing one above), **0 errors, 0 deprecations** (4
 pre-existing "No tests found" warnings on abstract base test classes,
 unchanged from the previous pass, not investigated further).
+
+## laravel/framework v11.56.0 -> v12.67.0 (2026-08-25)
+
+**Chain stopped here, by user decision.** `composer audit` was already clean
+(0 advisories) at v12.67.0 — it clears all 3 remaining `laravel/framework`
+floors from the original trigger (>=12.60.0 / >=13.10.0), since 12.67.0 is
+above both. The skill's stated target was v13.x for currency, but since the
+security goal that started this chain was already met, the user chose to
+stop at v12 rather than push further. `docs/version-upgrade-progress.txt`
+reflects `status: DONE` accordingly — a future session picking this back up
+to continue toward v13 should treat this as a fresh chain start from v12,
+not resume mid-chain.
+
+### composer.json
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| `php` | `^8.2` | `^8.2` (unchanged) | Laravel 12 doesn't raise the PHP floor past 11's |
+| `laravel/framework` | `^11.0` | `^12.0` | target of this pass |
+| `psr/simple-cache` | `^2.0` | `^2.0\|^3.0` | Laravel 12's `phiki/phiki` (syntax highlighting) dependency needs `^3.0`; kept `^2.0` as an alternative since nothing forced it out |
+| `owen-it/laravel-auditing` | `^13.0` | `^14.0` | `^13.x` line caps `illuminate/filesystem` at `^11.0`. This is the base package for every audit trail on `Activity`/`Organization` models — full test suite is the check here, flagged per the skill's own risk note for base-class bumps like this |
+| `arcanedev/log-viewer` | `^10.0` | removed, replaced by `opcodesio/log-viewer` `^3.24` | no stable release compatible with Laravel 12 exists (only an unreleased `12.x-dev` branch) — user chose a replacement package over pinning to a dev branch. `opcodesio/log-viewer` supports Laravel 8-13 (checked its own composer constraint), so this also covers a future v13 pass without another swap |
+
+Resolved versions after `composer update --with-all-dependencies`:
+`laravel/framework v12.67.0`, `owen-it/laravel-auditing v14.0.6`,
+`opcodesio/log-viewer v3.24.2` (pulls in `opcodesio/mail-parser v0.2.4`),
+`kris/laravel-form-builder 1.55.0`, `psr/simple-cache 3.0.0`.
+
+`composer audit` after this pass: **0 advisories** (down from 3).
+
+### Code fixes (post-install)
+
+- Swapping `arcanedev/log-viewer` for `opcodesio/log-viewer` required
+  migrating the `/log-viewer` dashboard's config by hand, since they're
+  unrelated packages with different config shapes:
+  - Deleted `config/log-viewer.php` (the old Arcanedev-shaped file —
+    referenced `Arcanedev\LogViewer\Contracts\Utilities\Filesystem`, which
+    no longer exists once the package is gone; this broke
+    `artisan package:discover` outright until removed).
+  - Published `opcodesio/log-viewer`'s own config
+    (`php artisan vendor:publish --tag=log-viewer-config`), then edited it
+    to preserve the old package's access restriction: the old config had
+    `'route' => ['attributes' => ['middleware' => ['web', 'auth',
+    SuperAdminMiddleware::class]]]`, restricting the log dashboard to
+    superadmins only. Added the same `'auth'` + `SuperAdminMiddleware::class`
+    pair to the new config's `middleware` array (the page load) and
+    `api_middleware` array (every AJAX call the page makes) — the new
+    package ships with only its own `AuthorizeLogViewer` gate-based
+    middleware by default, which is a no-op unless a `viewLogViewer` Gate is
+    explicitly defined elsewhere in the app (it wasn't), so leaving it
+    unedited would have made the log dashboard readable by any
+    authenticated user instead of superadmins only.
+  - Deleted `resources/views/vendor/log-viewer/` (the old package's
+    published Bootstrap 3/4 Blade theme overrides) — dead weight, the new
+    package's frontend is a different, self-contained SPA-style UI under
+    its own package assets, not a Blade view tree an app would override the
+    same way.
+
+`vendor/bin/phpunit` after this pass: **602 tests, 931 assertions, 1
+failure** (same pre-existing `ImportActivityTest` failure, unchanged), **0
+errors, 0 deprecations**, same 4 pre-existing warnings.
