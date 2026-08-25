@@ -7,6 +7,7 @@
 /vendor
 .env
 .env.backup
+.env.testing
 .phpunit.result.cache
 docker-compose.override.yml
 Homestead.json
@@ -28,3 +29,4 @@ github-credentials.yaml
 /storage/test.xml
 /public/js/*.js
 /ssl
+/docs/version-upgrade-progress.txt

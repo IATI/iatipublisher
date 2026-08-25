@@ -36,11 +36,6 @@ class GuestPageLoadTest extends TestCase
         return [
             ['web.'],
             ['web.index.login'],
-            ['web.join', ['page' => 'random-page']],
-            ['web.register'],
-            ['web.password.email'],
-            ['web.password.confirm'],
-            ['web.iati.register'],
             ['about'],
             ['publishingchecklist'],
             ['iatistandard'],

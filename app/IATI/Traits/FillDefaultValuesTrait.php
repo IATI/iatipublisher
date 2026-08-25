@@ -204,7 +204,7 @@ trait FillDefaultValuesTrait
             $defaultFieldValues = $this->resolveDefaultValues($data);
             $data['default_field_values'] = $defaultFieldValues;
         } else {
-            $defaultFieldValues = $this->fillMissingDefaultsFromSettings($defaultFieldValues);
+            $defaultFieldValues = $this->fillMissingDefaultsFromSettings($defaultFieldValues ?? []);
         }
 
         $data = $this->populateDefaultFields($data, $defaultFieldValues);
