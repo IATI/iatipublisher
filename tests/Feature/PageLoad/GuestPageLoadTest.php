@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PageLoad;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
@@ -17,9 +19,9 @@ class GuestPageLoadTest extends TestCase
      * @param $route
      * @param null $params
      * @return void
-     * @test
-     * @dataProvider guestUrl
      */
+    #[Test]
+    #[DataProvider('guestUrl')]
     public function check_page_loads_before_login($route, $params = null): void
     {
         $response = $this->get(route($route, $params));
@@ -31,7 +33,7 @@ class GuestPageLoadTest extends TestCase
      *
      * @return array
      */
-    public function guestUrl(): array
+    public static function guestUrl(): array
     {
         return [
             ['web.'],

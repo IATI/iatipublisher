@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\DefaultAidType;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class DefaultAidTypeCsvTest.
@@ -34,9 +35,9 @@ class DefaultAidTypeCsvTest extends CsvBaseTest
      * Pass if all data are valid.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function pass_if_valid_data(): void
     {
         $this->signIn();
@@ -67,8 +68,8 @@ class DefaultAidTypeCsvTest extends CsvBaseTest
      * Throws validation messages for all invalid data.
      *
      * @throws \JsonException
-     * @test
      */
+    #[Test]
     public function throw_validation_if_invalid_data(): void
     {
         $this->signIn();

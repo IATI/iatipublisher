@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\Sector;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class SectorCsvTest.
@@ -59,9 +60,9 @@ class SectorCsvTest extends CsvBaseTest
      * All valid data passed.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function pass_if_valid_data(): void
     {
         $this->signIn();
@@ -98,9 +99,9 @@ class SectorCsvTest extends CsvBaseTest
      * Same 3 vocab but empty percentage.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function throw_validation_if_multiple_sector_same_vocabulary_empty_percentage(): void
     {
         $this->signIn();
@@ -115,9 +116,9 @@ class SectorCsvTest extends CsvBaseTest
      * Test to check if single sector empty percentage passes.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function pass_if_single_sector_empty_percentage(): void
     {
         $this->signIn();
@@ -154,9 +155,9 @@ class SectorCsvTest extends CsvBaseTest
      * When vocabulary 98 or 99 then narrative is required.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function check_if_narrative_required_when_vocabulary_98_or_99(): void
     {
         $this->signIn();
@@ -194,9 +195,9 @@ class SectorCsvTest extends CsvBaseTest
      * All invalid data.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function throws_validation_if_all_invalid_data(): void
     {
         $this->signIn();

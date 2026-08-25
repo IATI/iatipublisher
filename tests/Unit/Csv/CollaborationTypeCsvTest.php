@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\CollaborationType;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class CollaborationTypeCsvTest.
@@ -34,9 +35,9 @@ class CollaborationTypeCsvTest extends CsvBaseTest
      * Throws all validation messages if all invalid data.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function throw_validation_if_invalid_value(): void
     {
         $this->signIn();
@@ -66,9 +67,9 @@ class CollaborationTypeCsvTest extends CsvBaseTest
      * All data invalid.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function pass_if_valid_data(): void
     {
         $this->signIn();

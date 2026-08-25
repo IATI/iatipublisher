@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\OtherIdentifier;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class OtherIdentifierCsvTest.
@@ -14,9 +15,9 @@ class OtherIdentifierCsvTest extends CsvBaseTest
      * All invalid data are provided.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function check_if_throws_validation_when_invalid_data(): void
     {
         $this->signIn();
@@ -59,8 +60,8 @@ class OtherIdentifierCsvTest extends CsvBaseTest
      * All valid data were passed.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function check_if_passes_valid_other_identifier_data(): void
     {
         $this->signIn();

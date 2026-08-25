@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\Title;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class TitleCsvTest.
@@ -14,8 +15,8 @@ class TitleCsvTest extends CsvBaseTest
      * checks if it throws validation if title empty.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function check_if_throws_validation_if_title_empty(): void
     {
         $this->signIn();
@@ -39,8 +40,8 @@ class TitleCsvTest extends CsvBaseTest
      * Check if it throws validation if multiple activity title.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function check_throws_validation_if_title_multiple(): void
     {
         $this->signIn();

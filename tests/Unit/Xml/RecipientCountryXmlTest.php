@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Xml;
 
+use PHPUnit\Framework\Attributes\Test;
+
 /**
  * Class RecipientCountryXmlTest.
  */
@@ -20,9 +22,9 @@ class RecipientCountryXmlTest extends XmlBaseTest
     /**
      * Pass if all valid data.
      *
-     * @test
      * @return void
      */
+    #[Test]
     public function pass_if_all_valid_data(): void
     {
         $rows = $this->valid_data();
@@ -34,8 +36,8 @@ class RecipientCountryXmlTest extends XmlBaseTest
      * Throws validation messages for all invalid data.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if_invalid_data(): void
     {
         $rows = $this->invalid_data();
@@ -124,8 +126,8 @@ class RecipientCountryXmlTest extends XmlBaseTest
     /**
      * Throw validation if recipient country already at activity level.
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if_already_at_activity_level(): void
     {
         $rows = $this->country_at_transaction_data();
@@ -160,8 +162,8 @@ class RecipientCountryXmlTest extends XmlBaseTest
      * Throw validation when sum of region and country percentage not equal to 100.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throws_validation_if_region_country_percentage_sum_not_100(): void
     {
         $rows = $this->invalid_percentage_data();
@@ -236,8 +238,8 @@ class RecipientCountryXmlTest extends XmlBaseTest
      * Throw validation if both have 100% region or country.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if_country_region_both_have_100_percentage(): void
     {
         $rows = $this->country_region_100_data();

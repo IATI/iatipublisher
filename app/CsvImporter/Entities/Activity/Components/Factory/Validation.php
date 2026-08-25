@@ -416,7 +416,12 @@ class Validation extends Factory
         $this->extend(
             'date_greater_than',
             function ($attribute, $value, $parameters, $validator) {
-                $inserted = Carbon::parse($value)->year;
+                $inserted = dateFormat('Y', $value);
+
+                if (!$inserted) {
+                    return false;
+                }
+
                 $since = $parameters[0];
 
                 return $inserted >= $since;

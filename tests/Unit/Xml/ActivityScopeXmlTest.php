@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Xml;
 
+use PHPUnit\Framework\Attributes\Test;
+
 /**
  * Class ActivityScopeXmlTest.
  */
@@ -11,8 +13,8 @@ class ActivityScopeXmlTest extends XmlBaseTest
      * Throws validation for all invalid data.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function check_throws_validation_when_invalid_data(): void
     {
         $rows = $this->invalid_activity_scope_data();

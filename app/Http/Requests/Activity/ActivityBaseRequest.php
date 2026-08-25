@@ -11,7 +11,6 @@ use App\IATI\Services\Activity\ResultService;
 use App\IATI\Services\Activity\TransactionService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -87,7 +86,12 @@ class ActivityBaseRequest extends FormRequest
         Validator::extend(
             'date_greater_than',
             function ($attribute, $value, $parameters, $validator) {
-                $inserted = Carbon::parse($value)->year;
+                $inserted = dateFormat('Y', $value);
+
+                if (!$inserted) {
+                    return false;
+                }
+
                 $since = $parameters[0];
 
                 return $inserted >= $since;

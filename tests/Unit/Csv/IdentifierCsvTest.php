@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\Identifier;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class IdentifierCsvTest.
@@ -14,8 +15,8 @@ class IdentifierCsvTest extends CsvBaseTest
      * All data invalid to check if it throws validation.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function check_throws_validation_if_invalid_data(): void
     {
         $this->signIn();
@@ -56,8 +57,8 @@ class IdentifierCsvTest extends CsvBaseTest
      * All valid data are provided.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function check_if_passes_when_valid_data_identifier(): void
     {
         $this->signIn();
@@ -95,9 +96,9 @@ class IdentifierCsvTest extends CsvBaseTest
      * Check if it throws validation for duplicate identifier.
      *
      * @return void
-     * @test
      * @throws \ReflectionException
      */
+    #[Test]
     public function check_throws_validation_if_duplicate_identifier(): void
     {
         $this->signIn();

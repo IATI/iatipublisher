@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Xml;
 
+use PHPUnit\Framework\Attributes\Test;
+
 /**
  * Class RecipientRegionXmltest.
  */
@@ -11,8 +13,8 @@ class RecipientRegionXmlTest extends XmlBaseTest
      * Throws validation if region or country percentage sum not equal to 100.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function check_if_throws_validation_when_region_country_percentage_sum_not_equal_to_100(): void
     {
         $rows = $this->region_country_percentage_sum_not_equal_to_100_single_data();
@@ -63,8 +65,8 @@ class RecipientRegionXmlTest extends XmlBaseTest
      * Pass if sum percentage is equal to 100.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function pass_if_region_country_percentage_sum_equal_to_100(): void
     {
         $rows = $this->region_country_percentage_sum_equal_to_100_single_data();
@@ -115,8 +117,8 @@ class RecipientRegionXmlTest extends XmlBaseTest
      * Throw validation if sam vocab percentage sum not equal to 100 one 20 but other not 80.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if_same_vocabulary_sum_not_equal_to_80_if_country_20(): void
     {
         $rows = $this->country_20_region_60_multiple_data();
@@ -220,8 +222,8 @@ class RecipientRegionXmlTest extends XmlBaseTest
      * Throws validation if percentage sum not equal withing same vocab.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_percentage_sum_within_same_vocabulary_not_equal(): void
     {
         $rows = $this->diff_vocal_percentage();
@@ -296,8 +298,8 @@ class RecipientRegionXmlTest extends XmlBaseTest
      * Throws validation messages for all invalid data.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_possible_validation_for_all_invalid_data(): void
     {
         $rows = $this->invalid_data();

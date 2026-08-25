@@ -8,7 +8,7 @@ IATI – the International Aid Transparency Initiative – brings together gover
 
 ## Prerequisite
 The prerequisite for this project are:
-- php>=8.1
+- php>=8.2
 - node: 16
 - postgres: 14
 - composer: 2
@@ -37,7 +37,7 @@ Note: Make sure postgresql and redis services are up and running
 
 
 ## Framework
-This application is coded in PHP using [Laravel](https://laravel.com/docs/10.x) framework. The version of Laravel used for this project is [10.0](https://laravel.com/docs/10.x) . The application also uses [Vue 3](https://vuejs.org) (Composition API), [Typescript](https://www.typescriptlang.org) and [Tailwind](https://tailwindcss.com/).
+This application is coded in PHP using [Laravel](https://laravel.com/docs/11.x) framework. The version of Laravel used for this project is [11.0](https://laravel.com/docs/11.x) . The application also uses [Vue 3](https://vuejs.org) (Composition API), [Typescript](https://www.typescriptlang.org) and [Tailwind](https://tailwindcss.com/).
 
 
 

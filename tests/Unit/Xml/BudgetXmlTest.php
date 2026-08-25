@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Xml;
 
+use PHPUnit\Framework\Attributes\Test;
+
 /**
  * Class BudgetXmlTest.
  */
@@ -11,8 +13,8 @@ class BudgetXmlTest extends XmlBaseTest
      * Throw validation if Invalid budget period.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if_two_budget_period_invalid(): void
     {
         $rows = $this->get_invalid_budget_period();
@@ -127,8 +129,8 @@ class BudgetXmlTest extends XmlBaseTest
      * Should not start before 1900.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if_budget_period_longer_than_one_year_date_start_before_1900(): void
     {
         $rows = $this->date_longer_than_one_year_1800_data();
@@ -199,8 +201,8 @@ class BudgetXmlTest extends XmlBaseTest
      * Change source: https://github.com/iati/iatipublisher/issues/1493.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function do_not_throw_validation_if_revised_period_do_not_match_one_of_budget_period(): void
     {
         $rows = $this->get_revised_period_not_matched_date();
@@ -268,8 +270,8 @@ class BudgetXmlTest extends XmlBaseTest
      * Validation messages for all invalid data.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if_other_invalid_data(): void
     {
         $rows = $this->get_invalid_data();

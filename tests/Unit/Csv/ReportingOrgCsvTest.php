@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\ReportingOrganization;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class ReportingOrgCsvTest.
@@ -15,9 +16,9 @@ class ReportingOrgCsvTest extends CsvBaseTest
      * and test if related validation exists.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function check_throws_validation_if_invalid_data(): void
     {
         $this->signIn();
@@ -48,9 +49,9 @@ class ReportingOrgCsvTest extends CsvBaseTest
      * Should not contain any errors i.e. $errors array should be empty.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function check_if_passes_when_valid_data_reporting_org(): void
     {
         $this->signIn();
