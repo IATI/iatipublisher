@@ -288,7 +288,7 @@ export default defineComponent({
         .then((res) => {
           const contentType = res.headers['content-type'];
 
-          if (contentType && contentType.includes('application/json')) {
+          if (contentType && String(contentType).includes('application/json')) {
             const reader = new FileReader();
             reader.onload = function () {
               const result = reader.result;
@@ -379,7 +379,7 @@ export default defineComponent({
         .then((res) => {
           const contentType = res.headers['content-type'];
 
-          if (contentType && contentType.includes('application/json')) {
+          if (contentType && String(contentType).includes('application/json')) {
             const reader = new FileReader();
             reader.onload = function () {
               const result = reader.result;
