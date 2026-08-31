@@ -2,11 +2,13 @@ ARG PHP_EXTS="bcmath pdo_mysql pdo_pgsql pcntl gd zip"
 ARG PHP_PECL_EXTS="redis"
 ARG MIX_ENCRYPTION_KEY
 
-FROM composer:2.1 as composer_base
+FROM php:8.4.25-alpine as composer_base
 
 ARG PHP_EXTS
 ARG PHP_PECL_EXTS
 ARG MIX_ENCRYPTION_KEY
+
+COPY --from=composer:2.10.2 /usr/bin/composer /usr/bin/composer
 
 RUN mkdir -p /opt/apps/laravel-in-kubernetes /opt/apps/laravel-in-kubernetes/bin /opt/apps/laravel-in-kubernetes/app_versions
 
@@ -16,7 +18,7 @@ RUN addgroup -S composer \
     && adduser -S composer -G composer \
     && chown -R composer /opt/apps/laravel-in-kubernetes \
     && apk add --virtual build-dependencies --no-cache ${PHPIZE_DEPS} openssl ca-certificates libxml2-dev oniguruma-dev postgresql-dev \
-    && apk add --no-cache libpq libjpeg-turbo-dev libpng-dev libwebp-dev freetype-dev libzip-dev zip \
+    && apk add --no-cache libpq libjpeg-turbo-dev libpng-dev libwebp-dev freetype-dev libzip-dev zip bash \
     && docker-php-ext-install -j$(nproc) ${PHP_EXTS} \
     && pecl install -f ${PHP_PECL_EXTS} \
     && docker-php-ext-enable ${PHP_PECL_EXTS} \
@@ -47,7 +49,7 @@ RUN npm install && \
 
 RUN ./getNodeInfo.sh
 
-FROM php:8-alpine as cli
+FROM php:8.4.25-alpine as cli
 
 ARG PHP_EXTS
 ARG PHP_PECL_EXTS
@@ -70,7 +72,7 @@ RUN apk add --virtual build-dependencies --no-cache ${PHPIZE_DEPS} openssl ca-ce
 COPY --from=composer_base /opt/apps/laravel-in-kubernetes /opt/apps/laravel-in-kubernetes
 COPY --from=frontend /opt/apps/laravel-in-kubernetes/public /opt/apps/laravel-in-kubernetes/public
 
-FROM php:8.1-fpm-alpine as fpm_server
+FROM php:8.4.25-fpm-alpine as fpm_server
 
 ARG PHP_EXTS
 ARG PHP_PECL_EXTS
@@ -105,7 +107,7 @@ RUN php artisan event:cache && \
     php artisan route:cache && \
     php artisan view:cache
 
-FROM nginx:1.20-alpine as web_server
+FROM nginx:1.30.4-alpine as web_server
 
 WORKDIR /opt/apps/laravel-in-kubernetes
 
