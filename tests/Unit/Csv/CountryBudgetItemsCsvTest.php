@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\CountryBudgetItem;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class CountryBudgetItemsCsvTest.
@@ -56,8 +57,8 @@ class CountryBudgetItemsCsvTest extends CsvBaseTest
      *
      * @return void
      * @throws \JsonException
-     * @test
      */
+    #[Test]
     public function pass_if_all_valid_data(): void
     {
         $this->signIn();
@@ -71,9 +72,9 @@ class CountryBudgetItemsCsvTest extends CsvBaseTest
      * Invalid Country budget items data.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function throw_possible_validation_for_invalid_error(): void
     {
         $this->signIn();

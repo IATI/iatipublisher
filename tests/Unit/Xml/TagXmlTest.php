@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Xml;
 
+use PHPUnit\Framework\Attributes\Test;
+
 /**
  * Class TagXmlTest.
  */
@@ -11,8 +13,8 @@ class TagXmlTest extends XmlBaseTest
      * Throws validation messages for all invalid data.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_invalid_data(): void
     {
         $rows = $this->invalid_data();

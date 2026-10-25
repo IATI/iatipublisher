@@ -2,11 +2,13 @@ ARG PHP_EXTS="bcmath pdo_mysql pdo_pgsql pcntl gd zip"
 ARG PHP_PECL_EXTS="redis"
 ARG MIX_ENCRYPTION_KEY
 
-FROM composer:2.1 as composer_base
+FROM php:8.4.27-alpine@sha256:714ac63ece712cea6d3d397e21ce6304b4cb057b82ffe226b540aae0f028a2e2 as composer_base
 
 ARG PHP_EXTS
 ARG PHP_PECL_EXTS
 ARG MIX_ENCRYPTION_KEY
+
+COPY --from=composer:2.10.2@sha256:14c8664aefd7cbf544c6a0cc04025f1ee174200020b2847019985facc53f5794 /usr/bin/composer /usr/bin/composer
 
 RUN mkdir -p /opt/apps/laravel-in-kubernetes /opt/apps/laravel-in-kubernetes/bin /opt/apps/laravel-in-kubernetes/app_versions
 
@@ -16,7 +18,7 @@ RUN addgroup -S composer \
     && adduser -S composer -G composer \
     && chown -R composer /opt/apps/laravel-in-kubernetes \
     && apk add --virtual build-dependencies --no-cache ${PHPIZE_DEPS} openssl ca-certificates libxml2-dev oniguruma-dev postgresql-dev \
-    && apk add --no-cache libpq libjpeg-turbo-dev libpng-dev libwebp-dev freetype-dev libzip-dev zip \
+    && apk add --no-cache libpq libjpeg-turbo-dev libpng-dev libwebp-dev freetype-dev libzip-dev zip bash \
     && docker-php-ext-install -j$(nproc) ${PHP_EXTS} \
     && pecl install -f ${PHP_PECL_EXTS} \
     && docker-php-ext-enable ${PHP_PECL_EXTS} \
@@ -34,7 +36,7 @@ RUN composer install --no-dev --prefer-dist --optimize-autoloader
 
 RUN ./getComposerInfo.sh
 
-FROM node:16 as frontend
+FROM docker.io/library/node:16@sha256:c94b82f9827cab6e421b350965a9ef11b25b13ffbd1030536203d541f55dcbe2 as frontend
 
 ARG MIX_ENCRYPTION_KEY
 
@@ -47,7 +49,7 @@ RUN npm install && \
 
 RUN ./getNodeInfo.sh
 
-FROM php:8-alpine as cli
+FROM php:8.4.27-alpine@sha256:714ac63ece712cea6d3d397e21ce6304b4cb057b82ffe226b540aae0f028a2e2 as cli
 
 ARG PHP_EXTS
 ARG PHP_PECL_EXTS
@@ -70,7 +72,7 @@ RUN apk add --virtual build-dependencies --no-cache ${PHPIZE_DEPS} openssl ca-ce
 COPY --from=composer_base /opt/apps/laravel-in-kubernetes /opt/apps/laravel-in-kubernetes
 COPY --from=frontend /opt/apps/laravel-in-kubernetes/public /opt/apps/laravel-in-kubernetes/public
 
-FROM php:8.1-fpm-alpine as fpm_server
+FROM php:8.4.27-fpm-alpine@sha256:a58708a9676c18f3f3dab3b9b49e39044d7d2b239543122094314dffb0ae05a7 as fpm_server
 
 ARG PHP_EXTS
 ARG PHP_PECL_EXTS
@@ -105,7 +107,7 @@ RUN php artisan event:cache && \
     php artisan route:cache && \
     php artisan view:cache
 
-FROM nginx:1.20-alpine as web_server
+FROM nginx:1.30.4-alpine@sha256:862dc06c359bfe5d3211e4106269f040d261e269e58ebf17060d8328c45067c0 as web_server
 
 WORKDIR /opt/apps/laravel-in-kubernetes
 

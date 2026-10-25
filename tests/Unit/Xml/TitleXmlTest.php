@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Xml;
 
+use PHPUnit\Framework\Attributes\Test;
+
 /**
  * Class TitleXmlTest.
  */
@@ -11,8 +13,8 @@ class TitleXmlTest extends XmlBaseTest
      * Pass if all valid data.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function pass_if_all_valid_data(): void
     {
         $rows = $this->valid_data();
@@ -33,9 +35,9 @@ class TitleXmlTest extends XmlBaseTest
     /**
      * Throws validation messages for all invalid data.
      *
-     * @test
      * @return void
      */
+    #[Test]
     public function throw_validation_if_invalid_data(): void
     {
         $rows = $this->invalid_data();

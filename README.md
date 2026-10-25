@@ -8,7 +8,7 @@ IATI – the International Aid Transparency Initiative – brings together gover
 
 ## Prerequisite
 The prerequisite for this project are:
-- php>=8.0
+- php>=8.4.27
 - node: 16
 - postgres: 14
 - composer: 2
@@ -37,7 +37,7 @@ Note: Make sure postgresql and redis services are up and running
 
 
 ## Framework
-This application is coded in PHP using [Laravel](https://laravel.com/docs/9.x) framework. The version of Laravel used for this project is [9.0](https://laravel.com/docs/9.x) . The application also uses [Vue 3](https://vuejs.org) (Composition API), [Typescript](https://www.typescriptlang.org) and [Tailwind](https://tailwindcss.com/).
+This application is coded in PHP using [Laravel](https://laravel.com/docs/12.x) framework. The version of Laravel used for this project is [12.70](https://laravel.com/docs/12.x) . The application also uses [Vue 3](https://vuejs.org) (Composition API), [Typescript](https://www.typescriptlang.org) and [Tailwind](https://tailwindcss.com/).
 
 
 
@@ -79,9 +79,9 @@ These Sass, Typescript and Vue files are bundled with the help of webpack into p
 ## Queue
 
 IATI Publisher uses Laravel Queue for specific purposes like importing activities and bulk publishing activities. The queue uses redis as queue driver. The configuration for redis and queue can be setup locally in three ways:
-- Manually running artisan command `php artisan horizon`. [Horizon](https://laravel.com/docs/9.x/horizon#configuration) can be paused with `php artisan horizon:pause` command and terminated with `php artisan horizon:terminate` command. To check the status of horizon, use command `php artisan horizon:status`.
+- Manually running artisan command `php artisan horizon`. [Horizon](https://laravel.com/docs/12.x/horizon#configuration) can be paused with `php artisan horizon:pause` command and terminated with `php artisan horizon:terminate` command. To check the status of horizon, use command `php artisan horizon:status`.
 
-- Using [supervisorctl](https://laravel.com/docs/9.x/queues#supervisor-configuration) to run queue
+- Using [supervisorctl](https://laravel.com/docs/12.x/queues#supervisor-configuration) to run queue
 
 - Manually running artisan command `php artisan queue:work` or `php artisan queue:listen` to start queue worker. The command `php artisan queue:work` needs to be restarted every time the changes are made in the code. To run the queue continuously, without having to restart on changes, use command `php artisan queue:listen`.
 

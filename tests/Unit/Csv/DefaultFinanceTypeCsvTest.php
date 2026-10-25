@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\DefaultFinanceType;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class DefaultFinanceTypeCsvTest.
@@ -34,9 +35,9 @@ class DefaultFinanceTypeCsvTest extends CsvBaseTest
      * Throws validation messages for invalid data.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function throw_validation_if_invalid_value(): void
     {
         $this->signIn();
@@ -66,9 +67,9 @@ class DefaultFinanceTypeCsvTest extends CsvBaseTest
      * valid data.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function pass_if_valid_data(): void
     {
         $this->signIn();

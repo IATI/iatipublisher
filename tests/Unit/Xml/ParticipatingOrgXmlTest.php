@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Xml;
 
+use PHPUnit\Framework\Attributes\Test;
+
 /**
  * Class ParticipatingOrgXmlTest.
  */
@@ -13,8 +15,8 @@ class ParticipatingOrgXmlTest extends XmlBaseTest
      * @return void
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
-     * @test
      */
+    #[Test]
     public function throw_validation_if_invalid_data(): void
     {
         $rows = $this->invalid_data();

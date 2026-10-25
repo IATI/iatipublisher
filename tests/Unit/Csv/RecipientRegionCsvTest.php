@@ -5,6 +5,7 @@ namespace Tests\Unit\Csv;
 use App\CsvImporter\Entities\Activity\Components\Elements\RecipientRegion;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class RecipientRegionCsvTest.
@@ -15,10 +16,10 @@ class RecipientRegionCsvTest extends CsvBaseTest
      * Throw validation if sum of region and country percentage not equal to 100.
      *
      * @return void
-     * @test
      * @throws \JsonException
      * @throws BindingResolutionException
      */
+    #[Test]
     public function check_if_throws_validation_when_region_country_percentage_sum_not_equal_to_100(): void
     {
         $this->signIn();
@@ -34,10 +35,10 @@ class RecipientRegionCsvTest extends CsvBaseTest
      * region or country percentage sum equal to 100.
      *
      * @return void
-     * @test
      * @throws \JsonException
      * @throws BindingResolutionException
      */
+    #[Test]
     public function pass_if_region_country_percentage_sum_equal_to_100(): void
     {
         $this->signIn();
@@ -52,10 +53,10 @@ class RecipientRegionCsvTest extends CsvBaseTest
      * if country 20 then vocab percentage not equal to 80.
      *
      * @return void
-     * @test
      * @throws \JsonException
      * @throws BindingResolutionException
      */
+    #[Test]
     public function throw_validation_if_same_vocabulary_sum_not_equal_to_80_if_country_20(): void
     {
         $this->signIn();
@@ -70,8 +71,8 @@ class RecipientRegionCsvTest extends CsvBaseTest
      * Throw validation if Percentage sum withing same vocabulary not equal.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_percentage_sum_within_same_vocabulary_not_equal(): void
     {
         $this->signIn();
@@ -214,8 +215,8 @@ class RecipientRegionCsvTest extends CsvBaseTest
      * country already 100%.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_possible_validation_for_all_invalid_data(): void
     {
         $this->signIn();

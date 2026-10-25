@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\Location;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class LocationCsvTest.
@@ -82,9 +83,9 @@ class LocationCsvTest extends CsvBaseTest
      * Pass if all valid data.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function pass_if_all_valid_data(): void
     {
         $this->signIn();
@@ -98,9 +99,9 @@ class LocationCsvTest extends CsvBaseTest
      * Throw all validation messages for invalid data.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function throw_validation_if_invalid_data(): void
     {
         $this->signIn();

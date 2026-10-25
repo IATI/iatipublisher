@@ -87,7 +87,9 @@ if (!function_exists('readElementJsonSchema')) {
         $jsonContentAsFlattenedArray = Arr::dot($jsonContentAsAssocArray);
 
         foreach ($jsonContentAsFlattenedArray as $key => &$value) {
-            if (preg_match('/label|placeholder|hover_text|help_text|helper_text/', $key)) {
+            /* @Doc: Anchor to the last key segment so keys like `label_has_borders` (bool),
+             * `label_indicator` (enum) and `show_full_help_text` (bool) are not passed through trans(). */
+            if (preg_match('/(^|\.)(label|placeholder|hover_text|help_text|helper_text)$/', $key)) {
                 $value = trans($value);
             }
         }
@@ -121,10 +123,8 @@ if (!function_exists('readOrganizationElementJsonSchema')) {
         $jsonContentAsFlattenedArray = Arr::dot($jsonContentAsAssocArray);
 
         foreach ($jsonContentAsFlattenedArray as $key => &$value) {
-            if (preg_match('/label|placeholder|hover_text|help_text/', $key)) {
-                {
-                    $value = trans($value);
-                }
+            if (preg_match('/(^|\.)(label|placeholder|hover_text|help_text|helper_text)$/', $key)) {
+                $value = trans($value);
             }
         }
 

@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\CapitalSpend;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class CapitalSpendCsvTest.
@@ -48,9 +49,9 @@ class CapitalSpendCsvTest extends CsvBaseTest
      * All valid data.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function pass_if_valid_data(): void
     {
         $this->signIn();
@@ -80,8 +81,8 @@ class CapitalSpendCsvTest extends CsvBaseTest
      *
      * @return void
      * @throws \JsonException
-     * @test
      */
+    #[Test]
     public function throw_all_validation_if_invalid_data(): void
     {
         $this->signIn();

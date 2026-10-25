@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Xml;
 
+use PHPUnit\Framework\Attributes\Test;
+
 /**
  * Class CollaborationTypexmltest.
  */
@@ -11,8 +13,8 @@ class CollaborationTypeXmlTest extends XmlBaseTest
      * Throw validation message for all invalid data.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if_invalid_value(): void
     {
         $rows = $this->invalid_data();

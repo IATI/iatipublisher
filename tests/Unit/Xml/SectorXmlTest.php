@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Xml;
 
+use PHPUnit\Framework\Attributes\Test;
+
 /**
  * Class ScopeXmlTest.
  */
@@ -11,8 +13,8 @@ class SectorXmlTest extends XmlBaseTest
      * throw validation same vocab but empty percentage.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if_multiple_sector_same_vocabulary_empty_percentage(): void
     {
         $rows = $this->vocabulary_same_empty_percentage_data();
@@ -87,8 +89,8 @@ class SectorXmlTest extends XmlBaseTest
      * pass single sector with empty percentage.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function pass_if_single_sector_empty_percentage(): void
     {
         $rows = $this->single_sector_empty_percentage_data();
@@ -130,8 +132,8 @@ class SectorXmlTest extends XmlBaseTest
      * Throw validation ifn empty narrative for vocab 98 or 99.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function check_if_narrative_required_when_vocabulary_98_or_99(): void
     {
         $rows = $this->narrative_empty_vocabulary_98_or_99();
@@ -206,8 +208,8 @@ class SectorXmlTest extends XmlBaseTest
      * Throws validation messages for all invalid data.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throws_validation_if_all_invalid_data(): void
     {
         $rows = $this->get_invalid_data();

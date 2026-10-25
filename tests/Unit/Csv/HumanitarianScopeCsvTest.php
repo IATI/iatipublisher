@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\HumanitarianScope;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class HumanitarianScopeCsvTest.
@@ -60,9 +61,9 @@ class HumanitarianScopeCsvTest extends CsvBaseTest
      * Pass if all valid data.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function pass_if_all_valid_data(): void
     {
         $this->signIn();
@@ -76,8 +77,8 @@ class HumanitarianScopeCsvTest extends CsvBaseTest
      * Throw validation message for all invalid data.
      *
      * @throws \JsonException
-     * @test
      */
+    #[Test]
     public function throw_all_possible_validation_for_invalid_data(): void
     {
         $this->signIn();

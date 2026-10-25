@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\ActivityStatus;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class ActivityStatusCsvTest.
@@ -14,9 +15,9 @@ class ActivityStatusCsvTest extends CsvBaseTest
      * All data are invalid.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function check_throws_validation_if_invalid_data(): void
     {
         $this->signIn();
@@ -56,8 +57,8 @@ class ActivityStatusCsvTest extends CsvBaseTest
      *
      * @return void
      * @throws \JsonException
-     * @test
      */
+    #[Test]
     public function check_if_passes_when_valid_data(): void
     {
         $this->signIn();

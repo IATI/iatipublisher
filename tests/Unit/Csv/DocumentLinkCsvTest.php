@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\DocumentLink;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class DocumentLinkCsvTest.
@@ -64,8 +65,8 @@ class DocumentLinkCsvTest extends CsvBaseTest
      * Pass if all valid data.
      *
      * @throws \JsonException
-     * @test
      */
+    #[Test]
     public function pass_if_all_valid_data(): void
     {
         $this->signIn();
@@ -80,8 +81,8 @@ class DocumentLinkCsvTest extends CsvBaseTest
      *
      * @return void
      * @throws \JsonException
-     * @test
      */
+    #[Test]
     public function throw_validation_if_invalid_data(): void
     {
         $this->signIn();

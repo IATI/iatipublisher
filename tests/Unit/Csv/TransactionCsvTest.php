@@ -5,6 +5,7 @@ namespace Tests\Unit\Csv;
 use App\CsvImporter\Entities\Activity\Components\ActivityRow;
 use App\CsvImporter\Entities\Activity\Components\Elements\Transaction;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 use ReflectionClass;
 
 /**
@@ -19,8 +20,8 @@ class TransactionCsvTest extends CsvBaseTest
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
      * @throws \ReflectionException
-     * @test
      */
+    #[Test]
     public function pass_if_valid_data(): void
     {
         $this->signIn();
@@ -177,9 +178,9 @@ class TransactionCsvTest extends CsvBaseTest
      * pass even if reference is duplicate in transaction.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function pass_when_duplicate_reference(): void
     {
         $this->signIn();
@@ -210,8 +211,8 @@ class TransactionCsvTest extends CsvBaseTest
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
      * @throws \ReflectionException
-     * @test
      */
+    #[Test]
     public function throw_validation_if_sector_at_activity_and_transaction(): void
     {
         $this->signIn();
@@ -248,8 +249,8 @@ class TransactionCsvTest extends CsvBaseTest
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
      * @throws \ReflectionException
-     * @test
      */
+    #[Test]
     public function throw_validation_if_sector_at_one_transaction_empty_at_another_transaction(): void
     {
         $this->signIn();
@@ -303,8 +304,8 @@ class TransactionCsvTest extends CsvBaseTest
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
      * @throws \ReflectionException
-     * @test
      */
+    #[Test]
     public function pass_if_negative_value_passed_in_transaction(): void
     {
         $this->signIn();
@@ -334,8 +335,8 @@ class TransactionCsvTest extends CsvBaseTest
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
      * @throws \ReflectionException
-     * @test
      */
+    #[Test]
     public function throw_all_possible_validation_for_invalid_data(): void
     {
         $this->signIn();
@@ -451,8 +452,8 @@ class TransactionCsvTest extends CsvBaseTest
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
      * @throws \ReflectionException
-     * @test
      */
+    #[Test]
     public function throw_validation_if_region_or_country_already_activity_level(): void
     {
         $this->signIn();
@@ -487,8 +488,8 @@ class TransactionCsvTest extends CsvBaseTest
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
      * @throws \ReflectionException
-     * @test
      */
+    #[Test]
     public function throw_validation_if_both_region_or_country_at_transaction(): void
     {
         $this->signIn();
@@ -554,8 +555,8 @@ class TransactionCsvTest extends CsvBaseTest
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \JsonException
      * @throws \ReflectionException
-     * @test
      */
+    #[Test]
     public function throw_validation_if_region_or_country_at_one_transaction_empty_at_another_transaction(): void
     {
         $this->signIn();

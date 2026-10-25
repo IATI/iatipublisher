@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\Tag;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class TagCsvTest.
@@ -36,9 +37,9 @@ class TagCsvTest extends CsvBaseTest
      * All Data Invalid.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function throw_validation_invalid_data(): void
     {
         $this->signIn();
@@ -78,8 +79,8 @@ class TagCsvTest extends CsvBaseTest
      *
      * @return void
      * @throws \JsonException
-     * @test
      */
+    #[Test]
     public function pass_if_all_valid_data(): void
     {
         $this->signIn();

@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Xml;
 
+use PHPUnit\Framework\Attributes\Test;
+
 /**
  * Class OtherIdentifierXmlTest.
  */
@@ -11,8 +13,8 @@ class OtherIdentifierXmlTest extends XmlBaseTest
      * Throws validation messages for all invalid data.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function check_if_throws_validation_when_invalid_data(): void
     {
         $rows = $this->invalid_other_identifier_data();

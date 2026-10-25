@@ -556,7 +556,7 @@ class ImportXmlService
     }
 
     /**
-     * @param Collection<\App\IATI\Models\Activity\Activity> $activities
+     * @param Collection<Activity> $activities
      *
      * @return array
      * @throws \JsonException

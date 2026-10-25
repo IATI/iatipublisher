@@ -6,7 +6,6 @@ use App\IATI\Models\User\Role;
 use App\IATI\Models\User\User;
 use App\Model;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @extends Factory<Model>
@@ -33,7 +32,6 @@ class UserFactory extends Factory
 
         return [
             'email'     => 'yipl_user@gmail.com',
-            'password'  => Hash::make('password'),
             'full_name' => 'Young Innovations',
             'address'   => 'Mahalaxmisthan, Lalitpur',
             'status'    => true,

@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\PolicyMarker;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class PolicyMarkerCsvTest.
@@ -14,9 +15,9 @@ class PolicyMakerCsvTest extends CsvBaseTest
      * Throw validation for all invalid data.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function throw_all_possible_validation_if_invalid_data(): void
     {
         $this->signIn();

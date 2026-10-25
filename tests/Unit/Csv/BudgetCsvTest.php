@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\Budget;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class BudgetCsvTest.
@@ -40,8 +41,8 @@ class BudgetCsvTest extends CsvBaseTest
      *
      * @return void
      * @throws \JsonException
-     * @test
      */
+    #[Test]
     public function throw_validation_if_two_budget_period_invalid(): void
     {
         $this->signIn();
@@ -95,9 +96,9 @@ class BudgetCsvTest extends CsvBaseTest
      * Change source: https://github.com/iati/iatipublisher/issues/1493.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function do_not_throw_validation_if_revised_period_do_not_match_one_of_budget_period(): void
     {
         $this->signIn();
@@ -139,9 +140,9 @@ class BudgetCsvTest extends CsvBaseTest
      * All Possible invalid data.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function throw_validation_if_other_invalid_data(): void
     {
         $this->signIn();
@@ -186,9 +187,9 @@ class BudgetCsvTest extends CsvBaseTest
      * All valid Data.
      *
      * @return void
-     * @test
      * @throws \JsonException
      */
+    #[Test]
     public function pass_if_valid_data(): void
     {
         $this->signIn();

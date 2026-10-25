@@ -38,7 +38,7 @@ class OrganizationPageLoad extends TestCase
      *
      * @return array
      */
-    public function organization_page_url(): array
+    public static function organization_page_url(): array
     {
         return [
             ['admin.organisation.index'],

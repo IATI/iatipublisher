@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Xml;
 
+use PHPUnit\Framework\Attributes\Test;
+
 /**
  * Class HumanitarianScopeXmlTest.
  */
@@ -11,8 +13,8 @@ class HumanitarianScopeXmlTest extends XmlBaseTest
      * Throws validation messages for all invalid data.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_all_possible_validation_for_invalid_data(): void
     {
         $rows = $this->invalid_data();

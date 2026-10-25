@@ -10,6 +10,8 @@ use App\IATI\Models\Organization\Organization;
 use App\IATI\Models\User\Role;
 use App\IATI\Models\User\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
@@ -24,10 +26,9 @@ class ActivityPageLoadTest extends TestCase
      *
      * @param $route
      * @return void
-     *
-     * @dataProvider activityUrl
-     * @test
      */
+    #[DataProvider('activityUrl')]
+    #[Test]
     public function check_activity_page_load($route): void
     {
         $role = Role::factory()->create();
@@ -47,7 +48,7 @@ class ActivityPageLoadTest extends TestCase
      *
      * @return array
      */
-    public function activityUrl(): array
+    public static function activityUrl(): array
     {
         return [
             ['admin.activities.index', 'Your Activities'],

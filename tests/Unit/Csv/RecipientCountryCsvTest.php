@@ -4,6 +4,7 @@ namespace Tests\Unit\Csv;
 
 use App\CsvImporter\Entities\Activity\Components\Elements\RecipientCountry;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class RecipientCountryCsvTest.
@@ -44,9 +45,8 @@ class RecipientCountryCsvTest extends CsvBaseTest
 
     /**
      * Throws validation if sum of country and region percentage is not equal to 100.
-     *
-     * @test
      */
+    #[Test]
     public function check_throws_validation_if_region_country_percentage_sum_not_100(): void
     {
         $this->signIn();
@@ -64,8 +64,8 @@ class RecipientCountryCsvTest extends CsvBaseTest
      * All data valid.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function check_if_passes_when_data_valid(): void
     {
         $this->signIn();

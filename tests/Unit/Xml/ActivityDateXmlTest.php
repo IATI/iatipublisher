@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Xml;
 
+use PHPUnit\Framework\Attributes\Test;
+
 /**
  * Class ActivityDateXmlTest.
  */
@@ -11,8 +13,8 @@ class ActivityDateXmlTest extends XmlBaseTest
      * Throw validation for all invalid data.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_all_validation_if_invalid_data(): void
     {
         $rows = $this->invalid_data();

@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Xml;
 
+use PHPUnit\Framework\Attributes\Test;
+
 /**
  * Class TransactionXmlTest.
  */
@@ -11,8 +13,8 @@ class TransactionXmlTest extends XmlBaseTest
      * Pass even if duplicate reference.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function pass_when_duplicate_reference(): void
     {
         $rows = $this->duplicate_reference_data();
@@ -246,8 +248,8 @@ class TransactionXmlTest extends XmlBaseTest
      * Throw validation if sector already at activity.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if_sector_at_activity_and_transaction(): void
     {
         $rows = $this->sector_activity_transaction_level_data();
@@ -395,8 +397,8 @@ class TransactionXmlTest extends XmlBaseTest
      * Sector at one transaction but empty at other.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if_sector_at_one_transaction_empty_at_another_transaction(): void
     {
         $rows = $this->sector_at_one_transaction_empty_at_another_transaction_data();
@@ -646,8 +648,8 @@ class TransactionXmlTest extends XmlBaseTest
      * Pass even if negative value is passed.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function pass_if_negative_value_passed_in_transaction(): void
     {
         $rows = $this->negative_value_in_transaction();
@@ -678,8 +680,8 @@ class TransactionXmlTest extends XmlBaseTest
      * Throws validation messages for all invalid data.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_all_possible_validation_for_invalid_data(): void
     {
         $rows = $this->invalid_data();
@@ -969,8 +971,8 @@ class TransactionXmlTest extends XmlBaseTest
      * Throw validation if already at activity level.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if__country_already_activity_level(): void
     {
         $rows = $this->country_already_at_activity_level_data();
@@ -1006,8 +1008,8 @@ class TransactionXmlTest extends XmlBaseTest
      * Throw validation if region at activity level.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if_region_already_activity_level(): void
     {
         $rows = $this->region_already_at_activity_level_data();
@@ -1046,8 +1048,8 @@ class TransactionXmlTest extends XmlBaseTest
      * region or country at transaction level.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if_both_region_or_country_at_transaction(): void
     {
         $rows = $this->both_region_and_country_at_transaction_level_data();
@@ -1099,8 +1101,8 @@ class TransactionXmlTest extends XmlBaseTest
      * Throw validation if region or country at one transaction but empty at other.
      *
      * @return void
-     * @test
      */
+    #[Test]
     public function throw_validation_if_region_or_country_at_one_transaction_empty_at_another_transaction(): void
     {
         $rows = $this->region_or_country_at_one_transaction_empty_at_another_transaction_data();
