@@ -6,7 +6,7 @@ metadata:
     tier: backend
     layer: cron
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       tier: backend
