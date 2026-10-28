@@ -98,3 +98,19 @@ nothing imports `vue-apexcharts`.
 No code fixes. npm audit unchanged (13). The rebuilt `app.js` / `vendor.js`
 hashes are identical to the previous commit, so the browser smoke wasn't re-run.
 `npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## http-proxy-middleware v2.0.10 (root) → removed (2026-10-28)
+
+Unused direct dependency. A security pin put it in `dependencies` (`^2.0.9`),
+but nothing in `resources/` or `webpack.mix.js` imports it. Its only real
+consumer is `webpack-dev-server` (`^2.0.3`), which still resolves it to 2.0.10,
+which is still at or above the patched 2.0.9. It's now flagged dev-only in the
+lockfile.
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| http-proxy-middleware | ^2.0.9 (root) | — (2.0.10 via webpack-dev-server) | unused at runtime |
+
+No code fixes. npm audit unchanged (13). The rebuilt bundle hashes are identical,
+so the browser smoke wasn't re-run. `npm run prod` green (no new warnings).
+`vendor/bin/phpunit` not run (prod DB_HOST).
