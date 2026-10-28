@@ -31,6 +31,69 @@
 
 /*! Axios v1.21.0 Copyright (c) 2026 Matt Zabriskie and contributors */
 
+/*! Bundled license information:
+
+@tanstack/vue-virtual/build/lib/_virtual/_rollupPluginBabelHelpers.mjs:
+  (**
+   * vue-virtual
+   *
+   * Copyright (c) TanStack
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.md file in the root directory of this source tree.
+   *
+   * @license MIT
+   *)
+
+@tanstack/virtual-core/build/lib/_virtual/_rollupPluginBabelHelpers.mjs:
+  (**
+   * virtual-core
+   *
+   * Copyright (c) TanStack
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.md file in the root directory of this source tree.
+   *
+   * @license MIT
+   *)
+
+@tanstack/virtual-core/build/lib/utils.mjs:
+  (**
+   * virtual-core
+   *
+   * Copyright (c) TanStack
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.md file in the root directory of this source tree.
+   *
+   * @license MIT
+   *)
+
+@tanstack/virtual-core/build/lib/index.mjs:
+  (**
+   * virtual-core
+   *
+   * Copyright (c) TanStack
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.md file in the root directory of this source tree.
+   *
+   * @license MIT
+   *)
+
+@tanstack/vue-virtual/build/lib/index.mjs:
+  (**
+   * vue-virtual
+   *
+   * Copyright (c) TanStack
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.md file in the root directory of this source tree.
+   *
+   * @license MIT
+   *)
+*/
+
 /*! svg.draggable.js - v2.2.2 - 2019-01-08
 * https://github.com/svgdotjs/svg.draggable.js
 * Copyright (c) 2019 Wout Fierens; Licensed MIT */

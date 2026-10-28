@@ -238,3 +238,19 @@ audit unchanged (13). Browser smoke: user confirmed the multiselect on activity
 create, default values, and the superadmin/user listing filters.
 
 `npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## @headlessui/vue v1.6.7 → v1.7.23 (2026-10-28)
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| @headlessui/vue | ^1.6.2 (1.6.7) | ^1.7.23 (1.7.23) | last 1.x |
+
+Adds `@tanstack/vue-virtual` + `@tanstack/virtual-core` (new deps of 1.7's
+virtualized Combobox). Tree-shaken out, since only `TransitionRoot` is used.
+
+https://github.com/tailwindlabs/headlessui/blob/main/packages/%40headlessui-vue/CHANGELOG.md
+(1.7.x): Combobox/Listbox changes don't apply. The only usage is
+`TransitionRoot` in `components/ErrorMessage.vue`. No code fixes. npm audit
+unchanged (13). Browser smoke: user confirmed the ErrorMessage toast transitions in and out.
+
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
