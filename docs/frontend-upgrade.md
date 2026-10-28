@@ -169,3 +169,43 @@ Still deferred, `side=dev`: `webpack-dev-server@4` / `webpack-dev-middleware`
 `elliptic` (no fix). Handed off to `/frontend-deps-upgrade`: the direct
 `serialize-javascript@6.0.2` dependency (3 advisories), `follow-redirects`
 (via `axios` and `http-proxy-middleware`), `vue` and `moment`.
+
+## Node v20 → v22 (2026-10-28)
+
+The toolchain needed no changes for Node 22. 22.23.4 / npm 10.9.9 resolves
+the same tree, and the build is green on the first run.
+
+### package.json / runtime pins
+
+| Item | Before | After | Why |
+|---|---|---|---|
+| `.nvmrc` | `20` | `22` | next LTS |
+| `engines.node` | `>=20` | `>=22` | tracks the LTS this pass lands |
+| `Dockerfile.{develop,staging,production}` | `node:20@sha256:8f693eaa…` | `node:22@sha256:577e66a7…` | the deploy-time `frontend` stage |
+
+Resolved toolchain versions are unchanged (`laravel-mix@6.0.49`,
+`webpack@5.106.2` override, `webpackbar@7.0.0`).
+
+### Build / code fixes
+
+- None needed. The only warning is the existing `extendDefaultPlugins`
+  deprecation. The tracked `public/` bundles are byte-identical, and
+  `docker build --target frontend` on `node:22` is green.
+
+### Browser smoke
+
+The user checked locally that the app renders on the Node 22 build.
+
+### npm audit
+
+18 → 18 (high 7, moderate 9, low 2). NEW: 0. No audit-fix commit this
+pass, because none of the deferred items depend on the Node version:
+- `webpack-dev-server@4.15.2` / `webpack-dev-middleware` / `uuid@8`:
+  `npm outdated` lists webpack-dev-server 6.1.0 as latest, but
+  laravel-mix 6 calls the v4 API for `mix watch --hot`. Moving it is part
+  of a mix → Vite migration, not a Node bump.
+- `elliptic`: no fixed release exists.
+
+### Tests
+
+`vendor/bin/phpunit` was not run (see v16 → v18). No backend code changed.
