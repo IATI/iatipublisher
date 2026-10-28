@@ -226,3 +226,15 @@ fixes. npm audit unchanged (13). Browser smoke: user confirmed a form save and a
 listing search/pagination.
 
 `npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## @vueform/multiselect v2.6.9 → v2.6.11 (2026-10-28)
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| @vueform/multiselect | ^2.6.9 | ^2.6.11 (2.6.11) | patch releases |
+
+https://github.com/vueform/multiselect/releases: fixes only. No code fixes. npm
+audit unchanged (13). Browser smoke: user confirmed the multiselect on activity
+create, default values, and the superadmin/user listing filters.
+
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
