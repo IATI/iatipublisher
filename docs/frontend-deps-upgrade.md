@@ -139,3 +139,32 @@ User confirmed spacing on results/indicators/periods, transactions, location,
 contact info, and other identifier.
 
 `npm run prod` green twice in a row with 0 `[tsl] ERROR`. `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## jquery v3.6.1 → v3.7.1 (2026-10-28)
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| jquery | ^3.6.0 (3.6.1) | ^3.7.1 (3.7.1) | last 3.x |
+
+### Migration guide
+
+https://blog.jquery.com/2023/05/11/jquery-3-7-0-released-staying-in-order/ and
+https://blog.jquery.com/2023/08/28/jquery-3-7-1-released-reliable-table-row-dimensions/:
+no removals. Deprecated APIs (`$.trim`, `$.isArray`, `$.isFunction`, `.bind`,
+`.delegate`, `.size` …) were grepped across `resources/assets/js` +
+`resources/views`: none used. No self-closing non-void tags in
+`.html()`/`.append()` strings (the 3.5 `htmlPrefilter` change).
+
+### Code / template fixes
+
+None. jQuery is used in `scripts/{script,webportal-script,formbuilder,DynamicField}.ts`.
+
+### npm audit
+
+Unchanged (13). jQuery 4.0.0 is now stable. That's a separate pass (select2 compatibility to check).
+
+### Browser smoke
+
+User confirmed select2 dropdowns and repeating field groups on activity element forms.
+
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
