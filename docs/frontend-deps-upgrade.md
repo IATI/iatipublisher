@@ -168,3 +168,36 @@ Unchanged (13). jQuery 4.0.0 is now stable. That's a separate pass (select2 comp
 User confirmed select2 dropdowns and repeating field groups on activity element forms.
 
 `npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## apexcharts v3.49.2 → v3.54.1 (+ vue3-apexcharts v1.5.3 → v1.7.0) (2026-10-28)
+
+`vue3-apexcharts` 1.5.3 shipped its **own inlined apexcharts** (built against
+`^3.45.2`, 660 KB dist), so the root `apexcharts` package was never in the
+bundle. 1.6.0+ is a thin wrapper that imports the root `apexcharts`, so the
+chart code actually shipped goes from about 3.45 to 3.54.1.
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| apexcharts | ^3.49.2 (3.49.2) | ^3.54.1 (3.54.1) | last 3.x |
+| vue3-apexcharts | ^1.5.3 (1.5.3) | ~1.7.0 (1.7.0) | last version with peer `apexcharts >3.0.0`. 1.8+ needs `>=4`, 1.11 needs `>=5.10`. Pinned with tilde so `npm update` can't pull a peer-incompatible 1.8+ |
+
+### Migration guide
+
+https://github.com/apexcharts/apexcharts.js/releases (v3.50–v3.54.1) and
+https://github.com/apexcharts/vue3-apexcharts/releases (1.6.0, 1.7.0). The
+plugin API (`app.use(VueApexCharts)`, `<apexchart>`) is unchanged. The only
+chart is the line graph in `views/dashboard/DashboardGraph.vue`.
+
+### Code / template fixes
+
+None.
+
+### npm audit
+
+Unchanged (13).
+
+### Browser smoke
+
+User confirmed the dashboard line graph renders, shows tooltips, and redraws when a filter changes.
+
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
