@@ -29,7 +29,8 @@
                   :key="j"
                   :class="{
                     'mb-1.5':
-                      j != document_link.title['0'].narrative.length - 1,
+                      Number(j) !=
+                      document_link.title['0'].narrative.length - 1,
                   }"
                 >
                   <span v-if="narrative.language" class="language">
@@ -65,7 +66,8 @@
                   :key="j"
                   class="description-content"
                   :class="{
-                    'mb-4': j != document_link.description['0'].length - 1,
+                    'mb-4':
+                      Number(j) != document_link.description['0'].length - 1,
                   }"
                 >
                   <div class="language mb-1.5">
@@ -95,7 +97,9 @@
               <td>
                 <div
                   class="item"
-                  :class="{ 'mb-1.5': i != document_link.language.length - 1 }"
+                  :class="{
+                    'mb-1.5': Number(i) != document_link.language.length - 1,
+                  }"
                 >
                   <span>
                     {{
@@ -132,7 +136,7 @@
                   :key="i"
                   class="item"
                   :class="{
-                    'mb-1.5': i != document_link.category.length - 1,
+                    'mb-1.5': Number(i) != document_link.category.length - 1,
                   }"
                 >
                   <span v-if="category.code">
@@ -189,7 +193,8 @@
                     :key="j"
                     class="description-content"
                     :class="{
-                      'mb-4': j != document_link.description['0'].length - 1,
+                      'mb-4':
+                        Number(j) != document_link.description['0'].length - 1,
                     }"
                   >
                     <div class="language mb-1.5">

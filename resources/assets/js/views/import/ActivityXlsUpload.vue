@@ -662,7 +662,6 @@ const processedCount = ref(0);
 const file = ref();
 const error = ref('');
 const loader = ref(false);
-const loaderText = ref(props.translatedData['common.common.please_wait']);
 const store = useStore();
 const searchValue: Ref<string | null> = ref('');
 const direction = ref('');
@@ -679,6 +678,7 @@ const props = defineProps({
     required: true,
   },
 });
+const loaderText = ref(props.translatedData['common.common.please_wait']);
 
 const sortingDirection = () => {
   direction.value === 'asc'

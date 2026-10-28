@@ -45,6 +45,36 @@
 
 /*! Axios v1.20.0 Copyright (c) 2026 Matt Zabriskie and contributors */
 
+/**
+* @vue/compiler-core v3.5.44
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
+
+/**
+* @vue/compiler-dom v3.5.44
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
+
+/**
+* @vue/runtime-core v3.5.44
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
+
+/**
+* @vue/runtime-dom v3.5.44
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
+
+/**
+* @vue/shared v3.5.44
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
+
 //! moment.js
 
 //! moment.js locale configuration

@@ -112,7 +112,8 @@
                 :key="k"
                 class="description-content"
                 :class="{
-                  'mb-4': k !== post.provider_org[0].narrative.length - 1,
+                  'mb-4':
+                    Number(k) !== post.provider_org[0].narrative.length - 1,
                 }"
               >
                 <div class="language mb-1.5">
@@ -177,7 +178,8 @@
                 :key="k"
                 class="description-content"
                 :class="{
-                  'mb-4': k !== post.receiver_org[0].narrative.length - 1,
+                  'mb-4':
+                    Number(k) !== post.receiver_org[0].narrative.length - 1,
                 }"
               >
                 <div class="language mb-1.5">

@@ -34,7 +34,7 @@
         class="item"
         :class="{
           'mb-4':
-            recipient_org_index !=
+            Number(recipient_org_index) !=
             recipient_org_budget.recipient_org.length - 1,
         }"
       >
@@ -56,7 +56,9 @@
                 :key="narrative_index"
                 class="item"
                 :class="{
-                  'mb-4': narrative_index != recipient_org.narrative.length - 1,
+                  'mb-4':
+                    Number(narrative_index) !=
+                    recipient_org.narrative.length - 1,
                 }"
               >
                 <div class="description-content">
@@ -126,7 +128,7 @@
         :key="j"
         :class="{
           'mb-2 border-b border-n-20':
-            j !== recipient_org_budget.budget_line.length - 1,
+            Number(j) !== recipient_org_budget.budget_line.length - 1,
         }"
       >
         <div class="indicator-content flex px-6 py-2">
@@ -176,7 +178,7 @@
                         :key="k"
                         class="description-content"
                         :class="{
-                          'mb-4': k != budget_line.narrative.length - 1,
+                          'mb-4': Number(k) != budget_line.narrative.length - 1,
                         }"
                       >
                         <div class="language mb-1.5">

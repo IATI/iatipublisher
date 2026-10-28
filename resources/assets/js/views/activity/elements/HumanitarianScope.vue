@@ -56,7 +56,7 @@
                 v-for="(narrative, k) in post.narrative"
                 :key="k"
                 class="description-content"
-                :class="{ 'mb-4': k !== post.narrative.length - 1 }"
+                :class="{ 'mb-4': Number(k) !== post.narrative.length - 1 }"
               >
                 <div class="language mb-1.5">
                   ( {{ getTranslatedLanguage(translatedData) }}:

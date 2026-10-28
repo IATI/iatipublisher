@@ -31,4 +31,5 @@ github-credentials.yaml
 /public/js/*.js
 /ssl
 /docs/version-upgrade-progress.txt
+/docs/frontend-deps-upgrade-progress*
 /docs/frontend-upgrade-progress.txt

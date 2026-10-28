@@ -218,7 +218,7 @@
           v-for="(post, key) in data.content"
           :key="key"
           class="default_aid_type"
-          :class="{ 'mb-4': key !== data.content.length - 1 }"
+          :class="{ 'mb-4': Number(key) !== data.content.length - 1 }"
         >
           <div class="default_aid_type-content">
             <div class="date-type mb-2 text-sm font-bold">
@@ -282,7 +282,9 @@
           v-for="(post, key) in data.content.budget_item"
           :key="key"
           class="elements-detail"
-          :class="{ 'mb-4': key !== data.content.budget_item.length - 1 }"
+          :class="{
+            'mb-4': Number(key) !== data.content.budget_item.length - 1,
+          }"
         >
           <div
             v-if="data.content.country_budget_vocabulary === '1'"
@@ -311,7 +313,7 @@
               v-for="(narrative, k) in item.narrative"
               :key="k"
               class="elements-detail ml-5"
-              :class="{ 'mb-0': k !== item.narrative - 1 }"
+              :class="{ 'mb-0': Number(k) !== item.narrative.length - 1 }"
             >
               <table>
                 <tr class="multiline">
@@ -344,7 +346,7 @@
           v-for="(post, key) in data.content"
           :key="key"
           class="elements-detail"
-          :class="{ 'mb-4': key !== data.content.length - 1 }"
+          :class="{ 'mb-4': Number(key) !== data.content.length - 1 }"
         >
           <div class="category">
             <span v-if="post.budget_type">{{
@@ -357,7 +359,7 @@
             v-for="(item, i) in post.budget_value"
             :key="i"
             class="elements-detail mb-1"
-            :class="{ 'mb-4': i !== post.budget_value.length - 1 }"
+            :class="{ 'mb-4': Number(i) !== post.budget_value.length - 1 }"
           >
             <div class="text-sm">
               <div v-if="item.amount" class="value">
@@ -374,7 +376,7 @@
             <div
               v-for="(item, i) in post.period_start"
               :key="i"
-              :class="{ 'mb-4': i !== post.period_start.length - 1 }"
+              :class="{ 'mb-4': Number(i) !== post.period_start.length - 1 }"
             >
               <table>
                 <tr>
@@ -387,7 +389,7 @@
             <div
               v-for="(item, i) in post.period_end"
               :key="i"
-              :class="{ 'mb-4': i !== post.period_end.length - 1 }"
+              :class="{ 'mb-4': Number(i) !== post.period_end.length - 1 }"
             >
               <table>
                 <tr>
@@ -423,7 +425,7 @@
           v-for="(post, key) in data.content"
           :key="key"
           class="elements-detail"
-          :class="{ 'mb-4': key !== data.content.length - 1 }"
+          :class="{ 'mb-4': Number(key) !== data.content.length - 1 }"
         >
           <div>
             <div v-if="post.url" class="max-w-[887px] text-sm">
