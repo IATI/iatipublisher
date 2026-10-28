@@ -201,3 +201,15 @@ Unchanged (13).
 User confirmed the dashboard line graph renders, shows tooltips, and redraws when a filter changes.
 
 `npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## select2 v4.1.0-rc.0 → v4.1.0 (2026-10-28)
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| select2 | ^4.1.0-rc.0 | ^4.1.0 (4.1.0) | final release of the RC already in use |
+
+https://github.com/select2/select2/releases/tag/4.1.0: bug fixes only. No code
+fixes. npm audit unchanged (13). Browser smoke: user confirmed select2 dropdowns
+(open, search, select) on activity element forms.
+
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
