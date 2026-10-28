@@ -15,7 +15,7 @@
     <div
       v-for="(item, i) in post.narrative"
       :key="i"
-      :class="{ 'mb-4': i !== post.narrative.length - 1 }"
+      :class="{ 'mb-4': Number(i) !== post.narrative.length - 1 }"
       class="description-content text-sm"
     >
       <div v-if="item.narrative" class="flex flex-col">

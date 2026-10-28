@@ -27,7 +27,7 @@
               v-for="(item, i) in post.narrative"
               :key="i"
               class="multiline"
-              :class="{ 'mb-4': i !== post.narrative.length - 1 }"
+              :class="{ 'mb-4': Number(i) !== post.narrative.length - 1 }"
             >
               <td>{{ getTranslatedElement(translatedData, 'narrative') }}</td>
               <td>

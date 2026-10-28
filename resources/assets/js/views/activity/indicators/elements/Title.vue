@@ -7,7 +7,7 @@
         <div
           class="title-content"
           :class="{
-            'mb-3': t !== titleData.narrative.length - 1,
+            'mb-3': Number(t) !== titleData.narrative.length - 1,
           }"
         >
           <div class="language subtle-darker mb-1">

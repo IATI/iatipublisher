@@ -4,7 +4,7 @@
     :key="i"
     class="title-content"
     :class="{
-      'mb-4': i !== Object.keys(tdData[0].narrative).length - 1,
+      'mb-4': Number(i) !== Object.keys(tdData[0].narrative).length - 1,
     }"
   >
     <div v-if="post.narrative" class="language subtle-darker mb-1.5">

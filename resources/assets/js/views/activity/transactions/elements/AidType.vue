@@ -6,7 +6,7 @@
         :key="i"
         class="item"
         :class="{
-          'mb-4': i !== Object.keys(atData).length - 1,
+          'mb-4': Number(i) !== Object.keys(atData).length - 1,
         }"
       >
         <div class="category">

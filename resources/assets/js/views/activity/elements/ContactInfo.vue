@@ -23,7 +23,8 @@
                 :key="k"
                 class="description-content"
                 :class="{
-                  'mb-4': k !== post.organisation[0].narrative.length - 1,
+                  'mb-4':
+                    Number(k) !== post.organisation[0].narrative.length - 1,
                 }"
               >
                 <div class="language mb-1.5">
@@ -50,7 +51,8 @@
                 :key="k"
                 class="description-content"
                 :class="{
-                  'mb-4': k !== post.person_name[0].narrative.length - 1,
+                  'mb-4':
+                    Number(k) !== post.person_name[0].narrative.length - 1,
                 }"
               >
                 <div class="language mb-1.5">
@@ -78,7 +80,7 @@
                 :key="k"
                 class="description-content"
                 :class="{
-                  'mb-4': k !== post.department[0].narrative.length - 1,
+                  'mb-4': Number(k) !== post.department[0].narrative.length - 1,
                 }"
               >
                 <div class="language mb-1.5">
@@ -105,7 +107,7 @@
                 :key="k"
                 class="description-content"
                 :class="{
-                  'mb-4': k !== post.job_title[0].narrative.length - 1,
+                  'mb-4': Number(k) !== post.job_title[0].narrative.length - 1,
                 }"
               >
                 <div class="language mb-1.5">
@@ -132,7 +134,7 @@
                 :key="k"
                 class="description-content"
                 :class="{
-                  'mb-4': k !== post.email.length - 1,
+                  'mb-4': Number(k) !== post.email.length - 1,
                 }"
               >
                 <div class="w-[500px] max-w-full">
@@ -151,7 +153,7 @@
                 :key="k"
                 class="description-content"
                 :class="{
-                  'mb-4': k !== post.telephone.length - 1,
+                  'mb-4': Number(k) !== post.telephone.length - 1,
                 }"
               >
                 <div class="w-[500px] max-w-full">
@@ -168,7 +170,7 @@
                 :key="k"
                 class="description-content"
                 :class="{
-                  'mb-4': k !== post.website.length - 1,
+                  'mb-4': Number(k) !== post.website.length - 1,
                 }"
               >
                 <div class="w-[500px] max-w-full">
@@ -186,7 +188,7 @@
                 v-for="(address, address_index) in post.mailing_address"
                 :key="address_index"
                 :class="{
-                  'mb-4': k !== address.narrative.length - 1,
+                  'mb-4': Number(k) !== address.narrative.length - 1,
                 }"
               >
                 <div

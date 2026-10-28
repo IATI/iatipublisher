@@ -75,7 +75,8 @@
                     :key="c"
                     class="description-content"
                     :class="{
-                      'mb-1.5': c !== tValue.comment[0].narrative.length - 1,
+                      'mb-1.5':
+                        Number(c) !== tValue.comment[0].narrative.length - 1,
                     }"
                   >
                     <div class="language subtle-darker mb-1.5">

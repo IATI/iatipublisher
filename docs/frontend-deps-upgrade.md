@@ -114,3 +114,28 @@ lockfile.
 No code fixes. npm audit unchanged (13). The rebuilt bundle hashes are identical,
 so the browser smoke wasn't re-run. `npm run prod` green (no new warnings).
 `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## Vue 3.5 template types — remaining v-for index coercions (2026-10-28)
+
+Follow-up to the vue v3.2.38 → v3.5.44 entry. Vue 3.5 types the `v-for` index
+as `string` when the source is an object/Record, so `i !== x.length - 1` fails
+`ts-loader` with TS2367. ts-loader reports these nondeterministically: the
+same tree gave 0, 1 or 11 errors from one build to the next. The earlier fix
+missed `Object.keys(...)`, `!=` and comparisons split over several lines.
+
+### Code / template fixes
+
+- 26 `.vue` files under `resources/assets/js/views/activity/` (results,
+  indicators, periods, transactions, elements): 69 comparisons where the left
+  side is that template's own v-for index → `Number(i) !== ….length - 1`.
+  Matched per file against its v-for index names, inside `<template>` only.
+- Behaviour: for object-sourced lists (`Object.keys(...)`) the string index
+  never matched, so the last item always kept its bottom margin. It now drops
+  it as intended.
+
+### Browser smoke
+
+User confirmed spacing on results/indicators/periods, transactions, location,
+contact info, and other identifier.
+
+`npm run prod` green twice in a row with 0 `[tsl] ERROR`. `vendor/bin/phpunit` not run (prod DB_HOST).

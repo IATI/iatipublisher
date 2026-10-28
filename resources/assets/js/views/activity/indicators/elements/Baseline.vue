@@ -7,7 +7,7 @@
         v-for="(base, b) in baseline"
         :key="b"
         :class="{
-          'mb-3': b !== baseline.length - 1,
+          'mb-3': Number(b) !== baseline.length - 1,
         }"
       >
         <div :class="elementSpacing">
@@ -65,7 +65,7 @@
               :key="c"
               class="item"
               :class="{
-                'mb-1.5': c !== base.comment[0].narrative.length - 1,
+                'mb-1.5': Number(c) !== base.comment[0].narrative.length - 1,
               }"
             >
               <div>

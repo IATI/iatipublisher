@@ -55,7 +55,7 @@
         <tr
           v-if="post?.narrative"
           class="multiline"
-          :class="{ 'mb-4': k !== post.narrative.length - 1 }"
+          :class="{ 'mb-4': Number(k) !== post.narrative.length - 1 }"
         >
           <td>{{ getTranslatedElement(translatedData, 'narrative') }}</td>
           <td>

@@ -3,7 +3,7 @@
     <div
       v-for="(identifier, key) in data.content"
       :key="key"
-      :class="{ 'mb-4': key !== Object.keys(data.content).length - 1 }"
+      :class="{ 'mb-4': Number(key) !== Object.keys(data.content).length - 1 }"
     >
       <div class="category">
         <span v-if="identifier.reference_type">{{
@@ -24,7 +24,7 @@
           <div
             v-for="(post, i) in identifier.owner_org"
             :key="i"
-            :class="{ 'mb-4': key !== identifier.owner_org.length - 1 }"
+            :class="{ 'mb-4': Number(key) !== identifier.owner_org.length - 1 }"
           >
             <table>
               <tbody>
@@ -56,7 +56,9 @@
                       v-for="(n, k) in post.narrative"
                       :key="k"
                       class="item"
-                      :class="{ 'mb-2': k != post.narrative.length - 1 }"
+                      :class="{
+                        'mb-2': Number(k) != post.narrative.length - 1,
+                      }"
                     >
                       <div v-if="n.narrative" class="flex flex-col">
                         <span v-if="n.language" class="language top"
