@@ -84,7 +84,7 @@
     "vuex-map-fields": "^1.4.1"
   },
   "engines": {
-    "node": ">=18",
+    "node": ">=20",
     "npm": ">=10"
   },
   "overrides": {

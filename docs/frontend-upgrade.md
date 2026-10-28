@@ -102,3 +102,44 @@ direct `serialize-javascript` dependency.
 points at a remote production Postgres cluster, and the tests use
 `RefreshDatabase`, so they need a local test database first. No backend
 code changed in this pass.
+
+## Node v18 → v20 (2026-10-28)
+
+The toolchain needed no changes for Node 20. `npm install` on 20.20.2 /
+npm 10.8.2 resolves the same tree as the v18 lockfile, and the build is
+green on the first run.
+
+### package.json / runtime pins
+
+| Item | Before | After | Why |
+|---|---|---|---|
+| `.nvmrc` | `18` | `20` | next LTS |
+| `engines.node` | `>=18` | `>=20` | tracks the LTS this pass lands |
+| `Dockerfile.{develop,staging,production}` | `node:18@sha256:c6ae79e3…` | `node:20@sha256:8f693eaa…` | the deploy-time `frontend` stage |
+
+Resolved versions are unchanged from the v18 pass: `laravel-mix@6.0.49`,
+`webpack@5.106.2` (override), `webpackbar@7.0.0`, `sass-loader@11.1.1`,
+`vue-loader@17.4.2`, `postcss@8.5.26`.
+
+### Build / code fixes
+
+- None needed. The production build's only warning is the existing
+  `extendDefaultPlugins` deprecation. The tracked `public/` bundles are
+  byte-identical to the v18 build.
+- `docker build --target frontend` on `node:20` ends with
+  `✔ Compiled Successfully`.
+
+### Browser smoke
+
+The user checked locally that the app renders on the Node 20 build.
+
+### npm audit
+
+Before: 21 (critical 0, high 8, moderate 10, low 3). After: 21. NEW: 0.
+`serialize-javascript@7`, deferred in the v18 pass because it requires
+Node ≥ 20, is retried in this pass's audit-fix commit.
+
+### Tests
+
+`vendor/bin/phpunit` was not run. The local `.env` still points at the
+remote production Postgres (see v16 → v18), and no backend code changed.
