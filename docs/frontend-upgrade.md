@@ -143,3 +143,29 @@ Node ≥ 20, is retried in this pass's audit-fix commit.
 
 `vendor/bin/phpunit` was not run. The local `.env` still points at the
 remote production Postgres (see v16 → v18), and no backend code changed.
+
+#### Toolchain audit fixes (follow-up commit)
+
+| Change | Rung | Cleared |
+|---|---|---|
+| removed `laravel-mix-compress` `^3.0.0` (and with it `compression-webpack-plugin@10` → `serialize-javascript@6`) | dead dependency | GHSA-5c6j-r48x-rmvq (high), GHSA-qj8w-gfj5-8c6v, GHSA-m5mm-p8h7-m29v |
+
+- The Node ≥ 20 requirement deferred in the v18 pass no longer applies.
+  `webpack.mix.js` never `require()`s `laravel-mix-compress` and nothing
+  calls `.compress()`, so the plugin was never loaded. Removing it is
+  cleaner than overriding `serialize-javascript` 7 under it. A scoped
+  override was tried first and also passed, but it pinned a package
+  nothing uses.
+- The build output is unchanged: tracked `public/` files are
+  byte-identical, and `docker build --target frontend` is green.
+
+Audit: **21 → 18** (high 8 → 7, moderate 10 → 9, low 3 → 2). NEW: 0.
+The audit snapshot now attributes each advisory only to the installed
+copies npm flags (`nodes`), not to every copy of the package name. Both
+sides of this diff were measured that way.
+
+Still deferred, `side=dev`: `webpack-dev-server@4` / `webpack-dev-middleware`
+/ `uuid@8` (dev server only; the fix needs webpack-dev-server 5) and
+`elliptic` (no fix). Handed off to `/frontend-deps-upgrade`: the direct
+`serialize-javascript@6.0.2` dependency (3 advisories), `follow-redirects`
+(via `axios` and `http-proxy-middleware`), `vue` and `moment`.
