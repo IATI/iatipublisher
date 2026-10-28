@@ -213,3 +213,16 @@ fixes. npm audit unchanged (13). Browser smoke: user confirmed select2 dropdowns
 (open, search, select) on activity element forms.
 
 `npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## axios v1.20.0 → v1.21.0 (2026-10-28)
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| axios | ^1.8.2 (1.20.0) | ^1.21.0 (1.21.0) | latest 1.x. Floor raised to match the lock |
+
+https://github.com/axios/axios/blob/v1.x/CHANGELOG.md (1.21.0): no breaking
+changes. Only `resources/assets/js/bootstrap.js` configures axios defaults. No code
+fixes. npm audit unchanged (13). Browser smoke: user confirmed a form save and a
+listing search/pagination.
+
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
