@@ -209,3 +209,68 @@ pass, because none of the deferred items depend on the Node version:
 ### Tests
 
 `vendor/bin/phpunit` was not run (see v16 → v18). No backend code changed.
+
+## Node v22 → v24 (2026-10-28)
+
+This is the final step, to the current Active LTS. The toolchain needed no
+changes for Node 24: 24.22.1 / npm 11.19.1 builds green on the first run.
+
+### package.json / runtime pins
+
+| Item | Before | After | Why |
+|---|---|---|---|
+| `.nvmrc` | `22` | `24` | target LTS |
+| `engines.node` | `>=22` | `>=24` | target LTS |
+| `engines.npm` | `>=10` | `>=11` | Node 24 ships npm 11 |
+| `Dockerfile.{develop,staging,production}` | `node:22@sha256:577e66a7…` | `node:24@sha256:df02654f…` | the deploy-time `frontend` stage |
+
+`package-lock.json`: npm 11 adds the optional macOS-only
+`node_modules/fsevents@2.3.3` entry (chokidar's watcher), which npm 10 had
+left out. No other resolution changed.
+
+### Build / code fixes
+
+- None needed. The only build warning is the existing `extendDefaultPlugins`
+  deprecation. `docker build --target frontend` on `node:24` is green.
+- New npm 11 install warning: `install-scripts 2 packages have install
+  scripts not yet covered by allowScripts` for `vue-demi@0.13.11` (nested
+  under `@vueuse/core`) and `core-js@3.31.1`. Neither affects the build.
+  `core-js`'s postinstall only prints a funding banner. `vue-demi`'s
+  postinstall picks its Vue 2 or Vue 3 shim; the default shipped shim is
+  already Vue 3 (`lib/index.mjs`: `isVue3 = true`), which matches this
+  repo's Vue 3. Revisit if a future npm major starts blocking unapproved
+  scripts and `@vueuse/core` breaks; the fix would be
+  `npm install-scripts approve vue-demi`.
+
+### Browser smoke
+
+The user checked locally that the app renders on the Node 24 build.
+
+### npm audit
+
+18 → 18 (high 7, moderate 9, low 2). NEW: 0. No audit-fix commit: the
+remaining `side=dev` items are not Node-gated (see v20 → v22).
+
+### End state of the chain (v16 → v24)
+
+- Audit: **75 → 18** (critical 2 → 0, high 24 → 7, moderate 30 → 9,
+  low 19 → 2).
+- Still deferred, `side=dev`, and what clears them:
+  - `webpack-dev-server@4` (6 moderate), `webpack-dev-middleware` (high)
+    and `uuid@8` (moderate) are reachable only through `mix watch --hot`.
+    Clearing them needs webpack-dev-server ≥ 5, which laravel-mix 6 does
+    not support. Moving off mix (to Vite) clears them.
+  - `elliptic`: no fixed release exists.
+- Pins still committed:
+  - `overrides.webpack: 5.106.2`: laravel-mix 6's `BuildOutputPlugin`
+    requires `webpack/lib/SizeFormatHelpers`, which webpack 5.107 removed.
+    Moving off mix removes this pin.
+  - `overrides.webpackbar` (`$webpackbar`, ^7): dedupes mix's nested
+    `webpackbar@5`, which fails webpack's `ProgressPlugin` schema.
+  - `overrides.express.qs: ^6.16.2`: express 4 declares `~6.15.1`, and this
+    clears two `qs` advisories in the dev server.
+- Handed off to `/frontend-deps-upgrade` (runtime libraries): the direct
+  `serialize-javascript@6` dependency, `follow-redirects` (via `axios` and
+  `http-proxy-middleware`), `@vue/server-renderer` (via `vue`) and `moment`.
+- `vendor/bin/phpunit` was not run during the chain because the local
+  `.env` points at a remote production database. No backend code changed.

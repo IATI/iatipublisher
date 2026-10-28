@@ -9,7 +9,7 @@ IATI – the International Aid Transparency Initiative – brings together gover
 ## Prerequisite
 The prerequisite for this project are:
 - php>=8.4.27
-- node: 22
+- node: 24
 - postgres: 14
 - composer: 2
 - redis: 7
