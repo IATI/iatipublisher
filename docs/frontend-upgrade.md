@@ -48,6 +48,54 @@ Before: 75 advisory×root lines (critical 2, high 24, moderate 30, low 19).
 After: 75. NEW: 0, cleared: 0. The Node bump alone moves no packages.
 Toolchain fixes come in the follow-up audit commit.
 
+#### Toolchain audit fixes (follow-up commit)
+
+Each change was made on its own and checked before the next one: clean
+install with no new peer warnings, a single resolved copy (`npm ls`), a
+production build with no new warnings, bundle sizes within ±0.2%, and no
+new advisories.
+
+| Change | Rung | Cleared |
+|---|---|---|
+| `npm update proxy-addr` → 2.0.8 | in-range update | GHSA-jqcg-44mw-7w3h (critical) |
+| `npm update shell-quote` → 1.12.0 | in-range update | GHSA-pqg4-j6r4-53mv (critical) |
+| `npm update` body-parser 1.20.9, launch-editor 2.14.2, node-forge 1.4.2, compression 1.8.2, browserslist 4.29.5, fast-uri 3.1.9, source-map-js 1.2.2, brace-expansion 1.1.21 | in-range update | high: GHSA-27r3, -587h, -86w9, -vc2v, -73wf, -c83g, -58mr, -qw65, -68fv, -6j4f, -qhr7 |
+| `npm update` colord 2.10.0, pbkdf2 3.1.7, postcss-selector-parser 6.1.5, qs (one copy) | in-range update | moderate |
+| `webpackbar` `^7.0.0` devDependency + `overrides` (`$webpackbar`) | override | none (prerequisite) |
+| `overrides.webpack` `5.95.0` → `5.106.2` | override | GHSA-38r7-794h-5758, GHSA-8fgc-7cc6-rx7x (buildHttp SSRF) |
+| `overrides.express.qs` `^6.16.2` | scoped override | GHSA-4mjr-xmp4-gh2g, GHSA-6pq8-jhm2-2vcw |
+
+- **webpackbar:** mix 6 nests `webpackbar@5.0.2`. On webpack newer than
+  5.95, its options fail the `ProgressPlugin` schema:
+  `[webpack-cli] Invalid options object. Progress Plugin ... unknown property 'name'`.
+  Version 7 avoids that, and the override dedupes mix's nested copy.
+- **webpack pin:** 5.106.2 is the last release that ships
+  `lib/SizeFormatHelpers.js`, which laravel-mix's `BuildOutputPlugin` still
+  `require()`s; 5.107.0 removes it. Keep the pin until laravel-mix stops
+  requiring that path or the build moves off mix.
+- **qs override:** express 4.22.2 declares `qs ~6.15.1`, and 6.16.2 is the
+  same major. express only runs inside the `mix watch --hot` dev server,
+  which was checked to start and serve `app.js`.
+
+The browser smoke test passed again after the fixes. Audit: **75 → 21**
+(critical 2 → 0, high 24 → 8, moderate 30 → 10, low 19 → 3).
+
+Deferred, `side=dev`:
+- `webpack-dev-server@4.15.2` (6 moderate), `webpack-dev-middleware`
+  (high) and `uuid@8` (moderate, via sockjs and node-notifier). The fixes
+  need webpack-dev-server 5, a cross-major change against the API mix 6
+  calls for `mix watch --hot`. They are dev-server only and never used by
+  `npm run prod` or Docker.
+- `serialize-javascript@6` via `laravel-mix-compress` →
+  `compression-webpack-plugin@10`. The fix (7.x) requires Node ≥ 20, so
+  it is retried in the Node 20 pass.
+- `elliptic@6.6.1`: no fixed release exists.
+
+Handed off to `/frontend-deps-upgrade` (runtime libraries):
+`follow-redirects` (via `axios` and `http-proxy-middleware`, 2 high),
+`@vue/server-renderer` (via `vue`, high), `moment` (moderate) and the
+direct `serialize-javascript` dependency.
+
 ### Tests
 
 `vendor/bin/phpunit` was not run this pass. The local `.env` `DB_HOST`
