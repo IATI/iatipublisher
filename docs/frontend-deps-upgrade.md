@@ -50,3 +50,37 @@ and an element form save plus validation errors.
 
 `npm run prod` green (no new warnings), browser smoke passed. `vendor/bin/phpunit`
 not run: `.env` DB_HOST points at prod, and there is no local test DB.
+
+## serialize-javascript v6.0.2 → removed (2026-10-28)
+
+Unused direct dependency. It was added in the squash commit `ef2b383e` (a
+Snyk/dependabot batch), presumably to hoist a patched copy for the old terser.
+No package in the tree requires it any more: `terser-webpack-plugin` 5.6.1
+bundles its own copy into `dist/serialize-javascript.js` and lists it only as
+a devDependency. Nothing in `resources/` or `webpack.mix.js` imports it.
+
+### package.json
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| serialize-javascript | ^6.0.2 | — | unused; 3 advisories on 6.x |
+
+`randombytes` stays in the tree as a dev-only dependency of crypto-browserify.
+
+### Code / template fixes
+
+None.
+
+### npm audit
+
+14 → 13 (high 2). Cleared GHSA-5c6j-r48x-rmvq (RCE), GHSA-qj8w-gfj5-8c6v
+(DoS) and GHSA-m5mm-p8h7-m29v (XSS). The copy bundled inside terser runs only
+at build time and `npm audit` can't see it. It's left to terser's maintainers.
+
+### Browser smoke
+
+Not re-run: the rebuilt `app.js` / `vendor.js` hashes in `mix-manifest.json`
+are identical to the previous commit, so the served assets are the ones already
+smoke-tested.
+
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
