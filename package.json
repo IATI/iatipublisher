@@ -73,7 +73,6 @@
     "tailwind-merge": "^2.5.2",
     "ts-loader": "^9.5.1",
     "typescript": "^4.9.5",
-    "vue-apexcharts": "^1.6.2",
     "vue-skeletor": "^1.0.6",
     "vue3-apexcharts": "^1.5.3",
     "vue3-radial-progress": "^1.1.1",

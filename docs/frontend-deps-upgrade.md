@@ -84,3 +84,17 @@ are identical to the previous commit, so the served assets are the ones already
 smoke-tested.
 
 `npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## vue-apexcharts v1.6.2 → removed (2026-10-28)
+
+Unused direct dependency. `vue-apexcharts` is the Vue 2 wrapper. The app is
+Vue 3 and registers `vue3-apexcharts` (`resources/assets/js/app.ts:84`), and
+nothing imports `vue-apexcharts`.
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| vue-apexcharts | ^1.6.2 | — | unused Vue 2 wrapper |
+
+No code fixes. npm audit unchanged (13). The rebuilt `app.js` / `vendor.js`
+hashes are identical to the previous commit, so the browser smoke wasn't re-run.
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
