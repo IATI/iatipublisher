@@ -153,6 +153,10 @@
                 color: { theme: '#FFFFFF',
                 launcherText: '#155366'},
 
+                helpCenter: {
+                    suppress: true,
+                },
+
                 contactForm: {
                     attachments: true,
                 }
