@@ -89,19 +89,19 @@
             v-for="(value, key) in validActivities"
             :key="Number(key)"
             class="px-4 pt-4 pb-4 text-sm leading-[22px] tracking-normal text-n-50"
-            :class="{ 'bg-[#f6f0ff]': value.top_level_error === 'critical' }"
+            :class="{ 'bg-[#f6f0ff]': isPublishBlocked(value.top_level_error) }"
           >
             <div class="flex items-center justify-between">
               <div>
                 <label
                   class="checkbox_container"
-                  :class="{ disabled: value.top_level_error === 'critical' }"
+                  :class="{ disabled: isPublishBlocked(value.top_level_error) }"
                 >
                   <input
                     v-model="newSelectedActivities"
                     type="checkbox"
                     :value="key"
-                    :disabled="value.top_level_error === 'critical'"
+                    :disabled="isPublishBlocked(value.top_level_error)"
                   />
                   <span class="checkmark"></span>
                 </label>
@@ -116,11 +116,11 @@
                   }}
                 </div>
 
-                <div v-if="value.top_level_error === 'critical'">
+                <div v-if="isPublishBlocked(value.top_level_error)">
                   <span class="text-xs italic text-crimson-50">
                     ({{
                       translatedData[
-                        'workflow_frontend.bulk_publish.the_activity_contains_critical_errors_and_cannot_be_published'
+                        'workflow_frontend.bulk_publish.the_activity_contains_errors_and_cannot_be_published'
                       ]
                     }})
                   </span>
@@ -174,7 +174,7 @@
       <label
         for="selectAll"
         class="checkbox_container !flex"
-        :class="{ disabled: isAllCriticalErrors }"
+        :class="{ disabled: isAllPublishBlocked }"
       >
         <span
           class="inline-block pl-3 pt-1 text-xs font-bold uppercase leading-[18px]"
@@ -187,7 +187,7 @@
           :checked="
             newSelectedActivities.length === Object.keys(validActivities).length
           "
-          :disabled="isAllCriticalErrors"
+          :disabled="isAllPublishBlocked"
           @change="(e) => selectAllActivities(e)"
         />
         <span class="checkmark"></span>
@@ -196,19 +196,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import {
-  watch,
-  defineProps,
-  ref,
-  onMounted,
-  inject,
-  Ref,
-  computed,
-  watchEffect,
-} from 'vue';
+import { watch, defineProps, ref, onMounted, inject, Ref, computed } from 'vue';
 
 import { useStore } from 'Store/activities';
 import RollingLoader from '../RollingLoaderComponent.vue';
+import { isPublishBlocked } from '../../../../../libs/utils';
 
 const store = useStore();
 const props = defineProps({
@@ -241,12 +233,12 @@ const translatedData = inject('translatedData') as Record<string, string>;
 
 const activeTab = ref(1);
 
-const isAllCriticalErrors = computed(() => {
+const isAllPublishBlocked = computed(() => {
   return (
     Object.keys(validActivities.value)
       .map(Number)
       .filter((id) => {
-        return validActivities.value[id].top_level_error === 'critical';
+        return isPublishBlocked(validActivities.value[id].top_level_error);
       }).length === Object.keys(validActivities.value).length
   );
 });
@@ -258,7 +250,7 @@ onMounted(() => {
   if (showPopup) {
     store.dispatch('updateStartValidation', true);
   }
-  removeCheckFromCritical();
+  removeCheckFromBlocked();
 });
 
 const hasError = computed(() => {
@@ -269,7 +261,9 @@ const selectAllActivities = (event) => {
   if (event.target.checked) {
     newSelectedActivities.value = Object.keys(validActivities.value)
       .map(Number)
-      .filter((id) => props.activitiesList[id].top_level_error !== 'critical');
+      .filter(
+        (id) => !isPublishBlocked(props.activitiesList[id].top_level_error)
+      );
   } else {
     newSelectedActivities.value = [];
   }
@@ -289,15 +283,12 @@ watch(
   { deep: true }
 );
 
-const removeCheckFromCritical = () => {
-  newSelectedActivities.value = Object.keys(
-    store.state.bulkActivityPublishStatus.importedActivitiesList
-  )
+// Default selection: every validated activity that is not blocked from publishing.
+const removeCheckFromBlocked = () => {
+  newSelectedActivities.value = Object.keys(validActivities.value)
     .map(Number)
     .filter(
-      (id) =>
-        store.state.bulkActivityPublishStatus.importedActivitiesList[id]
-          .top_level_error !== 'critical'
+      (id) => !isPublishBlocked(validActivities.value[id].top_level_error)
     );
 };
 
@@ -320,28 +311,10 @@ function getTranslatedValidationIncompleteMessage(
     .replace(':totalCount', String(totalCount));
 }
 
-watchEffect(() => {
-  if (validActivities.value) {
-    removeCheckFromCritical();
-  }
+watch(validActivities, removeCheckFromBlocked, {
+  deep: true,
+  immediate: true,
 });
-
-watch(
-  () =>
-    Object.fromEntries(
-      Object.entries(props.activitiesList).filter(
-        ([, value]) => value.status !== 'failed'
-      )
-    ),
-  (value) => {
-    const ids = Object.keys(value);
-    newSelectedActivities.value = ids.map((key) => parseInt(key));
-  },
-  {
-    deep: true,
-    immediate: true,
-  }
-);
 </script>
 
 <style scoped lang="scss">
