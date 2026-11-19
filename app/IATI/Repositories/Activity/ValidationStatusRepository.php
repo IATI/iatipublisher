@@ -271,17 +271,19 @@ class ValidationStatusRepository extends Repository
     }
 
     /**
-     * Returns array of activity_id of the activities that do not contain critical error.
+     * Returns array of activity_id of the activities that do not contain critical issues or errors.
+     * Activities with either of these validation levels are blocked from being published.
      *
      * @param array $activityIds
      *
      * @return array
      */
-    public function getActivitiesWithNoCriticalErrors(array $activityIds): array
+    public function getActivitiesWithNoBlockingErrors(array $activityIds): array
     {
         return $this->model->whereIn('activity_id', $activityIds)
             ->where('status', 'completed')
             ->whereRaw("(response->'response'->'summary'->>'critical')::integer = 0")
+            ->whereRaw("(response->'response'->'summary'->>'error')::integer = 0")
             ->pluck('activity_id')->toArray();
     }
 }

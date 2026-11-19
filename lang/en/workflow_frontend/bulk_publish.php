@@ -9,7 +9,7 @@ return [
     'exceeded_max_publish_size'                                      => 'Maximum file size to publish exceeded.',
     'data_checking_complete_click_continue_to_publish'               => 'Data checking complete. Click continue to publish',
     'activities_marked_with_this_symbol_have_data_quality_issues'    => 'Activities marked with this symbol have data validation issues',
-    'the_activity_contains_critical_errors_and_cannot_be_published'  => 'The activity contains critical errors and cannot be published.',
+    'the_activity_contains_errors_and_cannot_be_published'           => 'The activity contains critical issues or errors and cannot be published.',
     'open_in_new_tab'                                                => 'Open in new tab',
     'no_activities_are_ready_to_publish'                             => 'No activities are ready to publish',
     'select_all'                                                     => 'Select all',

@@ -271,7 +271,7 @@ class BulkPublishingController extends Controller
                         [
                             'success' => false,
                             'status'  => 'error',
-                            'message' => 'All of the selected activities have critical error.',
+                            'message' => trans('workflow_backend/bulk_publishing_controller.all_selected_activities_have_blocking_errors'),
                             'data'    => ['activity_ids' => $activityIds],
                         ]
                     );
