@@ -16,5 +16,7 @@ return [
     'account_error' => 'Account Error',
     'account_error_description' => 'We encountered an issue syncing your account data. Please contact IATI Support.',
     'select_organization_title' => 'Which organisation are you publishing for?',
-    'organization_selection_note' => 'You can switch between organisations later from your settings.'
+    'organization_selection_note' => 'You can switch between organisations later from your settings.',
+    'organization_access_pending' => "Awaiting access",
+    'organization_access_pending_note' => "You can't open this organisation yet.",
 ];

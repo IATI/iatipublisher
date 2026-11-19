@@ -24,7 +24,6 @@ class IatiDataSyncService
         $accessToken = session('oidc_access_token');
 
         $reportingOrg = $this->reportingOrgApiService->getReportingOrgDetails($accessToken, $user->organization->uuid);
-        $datasets = $this->datasetApiService->getDatasets($accessToken, data_get($reportingOrg, 'id', $user->organization->uuid));
 
         if (!$reportingOrg) {
             logger()->info('No reporting Org Found on Proxy -- returning without sync');
@@ -33,7 +32,7 @@ class IatiDataSyncService
         }
 
         $organisation = $this->syncOrganizationDownstream($reportingOrg['id'], $reportingOrg['metadata']);
-        $this->syncDatasetsDownstream($datasets, $organisation);
+        $this->syncMissingDatasetUuids($accessToken, $organisation);
         $__ = $this->syncSettings($organisation);
 
         return $organisation;
@@ -102,6 +101,19 @@ class IatiDataSyncService
         }
 
         return $existingOrg;
+    }
+
+    /**
+     * Backfills dataset_uuid from the registry, only when one of the organisation's published rows is missing it.
+     */
+    public function syncMissingDatasetUuids(string $accessToken, Organization $organization): void
+    {
+        $isMissing = ActivityPublished::where('organization_id', $organization->id)->whereNull('dataset_uuid')->exists()
+            || OrganizationPublished::where('organization_id', $organization->id)->whereNull('dataset_uuid')->exists();
+
+        if ($isMissing) {
+            $this->syncDatasetsDownstream($this->datasetApiService->getDatasets($accessToken, $organization->uuid), $organization);
+        }
     }
 
     public function syncDatasetsDownstream(array $data, Organization $organization): void
@@ -305,7 +317,7 @@ class IatiDataSyncService
             $orgModel = Organization::where('uuid', $orgUuid)->first();
             if ($orgModel) {
                 $syncData[$orgModel->id] = [
-                    'role' => $this->mapRegisterRoleToPublisher(data_get($org, 'user_role', 'admin')),
+                    'role' => $this->mapRegisterRoleToPublisher(data_get($org, 'user_role', 'contributor_pending')),
                 ];
             }
         }
@@ -325,6 +337,7 @@ class IatiDataSyncService
         return match ($registryRole) {
             'provider_admin' => 'iati_admin',
             'iati_superadmin' => 'iati_admin',
+            'contributor_pending' => 'contributor_pending',
 //            'admin'          => 'admin',
 //            'editor'         => 'admin',
 //            'contributor'    => 'admin',

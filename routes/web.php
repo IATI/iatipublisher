@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/pending-approval', [IatiLoginController::class, 'showYouArePendingApprovalPage'])->name('pending-approval');
-Route::get('/multiple-orgs', [IatiLoginController::class, 'showNotSupportMultipleOrgsPage'])->name('multiple-orgs');
+Route::redirect('/multiple-orgs', '/select-organization')->name('multiple-orgs');
 Route::get('/select-organization', [IatiLoginController::class, 'showOrganizationSelectionPage'])->name('onboarding.select-organization');
 Route::get('/select-organization/{orgUuid}', [IatiLoginController::class, 'selectOrganization'])->name('onboarding.process-selection');
 Route::get('/sync-error', [IatiLoginController::class, 'showErrorPage'])->name('sync-error');
