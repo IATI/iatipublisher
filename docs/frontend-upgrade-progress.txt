@@ -1,0 +1,11 @@
+updated: 2026-10-28
+status: DONE
+current_node: v24 (.nvmrc 24, engines node >=24 npm >=11, Docker node:24@sha256:df02654f…)
+target_node: v24 reached
+branch: node-upgrade (not pushed)
+commits: d9c266d7 v16→v18, ee0e627f audit v18, d213b68a v18→v20, 017000fd audit v20, c6a6d25d v20→v22, <HEAD> v22→v24
+audit: 75 -> 18 (crit 0, high 7, mod 9, low 2)
+deferred side=dev: webpack-dev-server 4 / webpack-dev-middleware / uuid 8 (needs mix->Vite), elliptic (no fix)
+handoff /frontend-deps-upgrade: serialize-javascript (direct), follow-redirects (axios, http-proxy-middleware), vue, moment
+phpunit: never run - .env DB_HOST = prod postgres; needs local test DB
+next_action: none (push / MR is the user's call)

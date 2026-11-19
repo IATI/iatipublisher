@@ -45,6 +45,16 @@ class EnsureUserHasOrganization
             return redirect()->route('onboarding.organization-missing');
         }
 
+        $currentOrgRole = $user->organizations()->where('organizations.id', $user->organization_id)->value('organization_user.role');
+
+        if ($currentOrgRole === 'contributor_pending') {
+            if ($this->isApiRequest($request)) {
+                abort(403, trans('auth.organization_access_pending_note'));
+            }
+
+            return redirect()->route('pending-approval');
+        }
+
         return $next($request);
     }
 
