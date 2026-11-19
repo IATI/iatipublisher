@@ -1,0 +1,23 @@
+updated: 2026-10-28T15:40
+status: DONE (items 1-6 committed; bootstrap skipped)
+note: repo is npm + Vue 3 + TS; skill's yarn/Vue2 notes don't apply. pre-commit hook runs stylelint --fix + prettier + git add . (stages whole tree)
+done:
+  - [done] in-range npm audit fix (vue 3.2.38 -> 3.5.44)   0df1be81
+  - [done] serialize-javascript ^6.0.2 removed (unused)     9e24d62b
+audit: 13 (high 2) - all laravel-mix dev-server toolchain (elliptic, uuid, webpack-dev-middleware/-server) -> node-version-upgrade / mix->Vite
+proposed target_list (unconfirmed):
+  - [done] drop vue-apexcharts ^1.6.2 (Vue 2 lib, 0 imports; app uses vue3-apexcharts)
+  - [done] drop http-proxy-middleware ^2.0.9 (0 imports; only webpack-dev-server needs it, pulls own ^2)
+  - [snap3] jquery 3.6.1 -> 3.7.1 (5 files)
+  - [skipped] bootstrap 5.2.0 (NOT in any bundle: resources/assets/js/bootstrap.js never imported; ask user re removal) -> 5.3.8 (+ @popperjs/core 2.11.8)
+  - [snap5] apexcharts 3.49.2 -> 3.54.1 + vue3-apexcharts 1.5.3 -> ~1.7.0 (1.5.3 inlined its own apex ~3.45; 1.8+ needs apex>=4)
+  - [snap6a-d] select2 4.1.0-rc.0 -> 4.1.0 ; axios 1.21.0 ; @vueform/multiselect 2.6.11 ; @headlessui/vue 1.7.23 (in-range)
+  - [ ] @vueuse/core 8 -> 9 -> ... -> 15 (28 files, one hop per pass)
+  - [ ] @vuepic/vue-datepicker 5 -> ... -> 14 (1 file, one hop per pass)
+  - [ ] apexcharts 3 -> 4 -> ... -> 8 (one hop per pass)
+  - [ ] jquery 4.0.0 (check select2 compat first)
+  - [blocked] tailwind-merge 3 (needs tailwindcss 4 = toolchain)
+  - [blocked] @babel/runtime 8 (babel 8 toolchain)
+  - [no-op] moment 2.30.1 latest; clsx, crypto-js current
+next_action: user decides on: drop bootstrap+@popperjs/core+dead bootstrap.js; step-7 chains (vueuse, vue-datepicker, apexcharts 4+, jquery 4)
+  - [fix] 26 .vue: 69 more v-for index comparisons coerced (Number(i)); earlier commit's regex missed Object.keys/multiline/!=; ts-loader reports them nondeterministically -> commit BEFORE jquery in replay

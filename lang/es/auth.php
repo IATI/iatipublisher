@@ -17,4 +17,6 @@ return [
     'account_error_description' => 'Hemos encontrado un problema al sincronizar los datos de su cuenta. Por favor, contacte al Soporte de IATI.',
     'select_organization_title' => 'Para qué organización estás publicando?',
     'organization_selection_note' => 'Podrás cambiar de organización más adelante desde tu configuración.',
+    'organization_access_pending' => "Acceso pendiente",
+    'organization_access_pending_note' => "Todavía no puedes abrir esta organización.",
 ];
