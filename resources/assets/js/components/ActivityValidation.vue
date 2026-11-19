@@ -119,7 +119,7 @@
           <button
             v-if="!hasError && percentageWidth == 100"
             class="flex flex-1 justify-center rounded border border-bluecoral bg-bluecoral px-3 py-2 text-xs font-bold uppercase text-white disabled:cursor-not-allowed disabled:border-0 disabled:bg-n-30 disabled:text-white"
-            :disabled="isAllCriticalErrors"
+            :disabled="isAllPublishBlocked"
             @click="startBulkPublish"
           >
             <span>{{ translatedData['common.common.continue'] }}</span>
@@ -163,7 +163,7 @@ import {
 } from 'vue';
 import { useStore } from 'Store/activities';
 import axios from 'axios';
-import { cn } from '../libs/utils';
+import { cn, isPublishBlocked } from '../libs/utils';
 
 const store = useStore();
 const props = defineProps({
@@ -184,7 +184,7 @@ const props = defineProps({
 
 const translatedData = inject('translatedData') as Record<string, string>;
 const emit = defineEmits(['stopValidation', 'proceed']);
-const isAllCriticalErrors = ref(false);
+const isAllPublishBlocked = ref(false);
 
 //setting percentage of validation progressbar , to maintain consistency when page is reloaded or navigated
 const hasError = ref(false);
@@ -217,11 +217,13 @@ watchEffect(() => {
     .map(Number)
     .filter(
       (id) =>
-        store.state.bulkActivityPublishStatus.importedActivitiesList[id]
-          .top_level_error !== 'critical'
+        !isPublishBlocked(
+          store.state.bulkActivityPublishStatus.importedActivitiesList[id]
+            .top_level_error
+        )
     );
 
-  isAllCriticalErrors.value = activities.length < 1;
+  isAllPublishBlocked.value = activities.length < 1;
 });
 
 const validationCancelHandler = async () => {

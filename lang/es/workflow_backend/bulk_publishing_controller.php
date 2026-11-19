@@ -22,4 +22,5 @@ return [
     'successfully_deleted'                                      => 'Eliminado con éxito.',
     'error_has_occurred_while_deleting_validation_status'       => 'Error al eliminar el estado de validación.',
     'bulk_publish_of_numberofdeletedrows_activities_canceled'   => 'Publicación masiva de :numberOfDeletedRows actividades cancelada.',
+    'all_selected_activities_have_blocking_errors'               => 'Todas las actividades seleccionadas presentan problemas críticos o errores y no pueden publicarse.',
 ];

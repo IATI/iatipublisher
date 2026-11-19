@@ -462,7 +462,7 @@ class BulkPublishingService
     }
 
     /**
-     * Returns array of activity_id of the activities that do not contain critical error.
+     * Returns array of activity_id of the activities that do not contain critical issues or errors.
      *
      * @param array $activityIds
      *
@@ -470,6 +470,6 @@ class BulkPublishingService
      */
     public function getPublishableActivityIds(array $activityIds): array
     {
-        return $this->validationStatusRepository->getActivitiesWithNoCriticalErrors($activityIds);
+        return $this->validationStatusRepository->getActivitiesWithNoBlockingErrors($activityIds);
     }
 }
