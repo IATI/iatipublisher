@@ -9,7 +9,7 @@ return [
     'exceeded_max_publish_size'                                      => 'Se ha superado el tamaño máximo de archivo que se permite publicar.',
     'data_checking_complete_click_continue_to_publish'               => 'Comprobación de datos completada. Haga clic en continuar para publicar',
     'activities_marked_with_this_symbol_have_data_quality_issues'    => 'Las actividades marcadas con este símbolo presentan problemas de validación de datos',
-    'the_activity_contains_critical_errors_and_cannot_be_published'  => 'La actividad presenta errores críticos y no puede publicarse.',
+    'the_activity_contains_errors_and_cannot_be_published'           => 'La actividad presenta problemas críticos o errores y no puede publicarse.',
     'open_in_new_tab'                                                => 'Abrir en una nueva pestaña',
     'no_activities_are_ready_to_publish'                             => 'No hay actividades listas para publicar',
     'select_all'                                                     => 'Seleccionar todo',
