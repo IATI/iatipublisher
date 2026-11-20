@@ -196,16 +196,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import {
-  watch,
-  defineProps,
-  ref,
-  onMounted,
-  inject,
-  Ref,
-  computed,
-  watchEffect,
-} from 'vue';
+import { watch, defineProps, ref, onMounted, inject, Ref, computed } from 'vue';
 
 import { useStore } from 'Store/activities';
 import RollingLoader from '../RollingLoaderComponent.vue';
@@ -292,17 +283,12 @@ watch(
   { deep: true }
 );
 
+// Default selection: every validated activity that is not blocked from publishing.
 const removeCheckFromBlocked = () => {
-  newSelectedActivities.value = Object.keys(
-    store.state.bulkActivityPublishStatus.importedActivitiesList
-  )
+  newSelectedActivities.value = Object.keys(validActivities.value)
     .map(Number)
     .filter(
-      (id) =>
-        !isPublishBlocked(
-          store.state.bulkActivityPublishStatus.importedActivitiesList[id]
-            .top_level_error
-        )
+      (id) => !isPublishBlocked(validActivities.value[id].top_level_error)
     );
 };
 
@@ -325,28 +311,10 @@ function getTranslatedValidationIncompleteMessage(
     .replace(':totalCount', String(totalCount));
 }
 
-watchEffect(() => {
-  if (validActivities.value) {
-    removeCheckFromBlocked();
-  }
+watch(validActivities, removeCheckFromBlocked, {
+  deep: true,
+  immediate: true,
 });
-
-watch(
-  () =>
-    Object.fromEntries(
-      Object.entries(props.activitiesList).filter(
-        ([, value]) => value.status !== 'failed'
-      )
-    ),
-  (value) => {
-    const ids = Object.keys(value);
-    newSelectedActivities.value = ids.map((key) => parseInt(key));
-  },
-  {
-    deep: true,
-    immediate: true,
-  }
-);
 </script>
 
 <style scoped lang="scss">
