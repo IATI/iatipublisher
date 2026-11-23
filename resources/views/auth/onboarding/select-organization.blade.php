@@ -39,6 +39,58 @@
         href={{ config('services.oidc.iatiDesignSystemUrl')}}
         rel="stylesheet"
     />
+    <style>
+        .org-list { display: grid; gap: 12px; margin-top: 32px; }
+
+        .org-card {
+            display: flex; align-items: center; gap: 16px;
+            padding: 16px 20px;
+            background: rgb(var(--n-0));
+            border: 1px solid rgb(var(--n-20));
+            border-left: 4px solid rgb(var(--n-20));
+            border-radius: 8px;
+            color: rgb(var(--n-50));
+            text-decoration: none;
+            transition: border-color .15s ease, background-color .15s ease;
+        }
+        a.org-card:hover { border-color: rgb(var(--bluecoral)); background: rgb(var(--n-10)); }
+        a.org-card:focus-visible { outline: 2px solid rgb(var(--bluecoral)); outline-offset: 2px; }
+
+        .org-card__icon {
+            display: grid; place-items: center; flex-shrink: 0;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgb(var(--n-10)); color: rgb(var(--bluecoral)); font-size: 18px;
+        }
+        .org-card__body { flex: 1; min-width: 0; }
+        .org-card__name { margin: 0; font-size: 17px; font-weight: 700; line-height: 1.4; }
+        .org-card__arrow { color: rgb(var(--n-30)); transition: transform .15s ease, color .15s ease; }
+        a.org-card:hover .org-card__arrow { color: rgb(var(--bluecoral)); transform: translateX(4px); }
+
+        /* Locked: the user's access to this organisation is still awaiting approval */
+        .org-card--locked {
+            cursor: not-allowed;
+            color: rgb(var(--n-40));
+            border-style: dashed;
+            border-left-style: solid;
+            border-left-color: rgb(var(--camel-50));
+            background:
+                repeating-linear-gradient(-45deg, transparent 0 10px, rgba(var(--n-20), .35) 10px 11px),
+                rgb(var(--n-10));
+        }
+        .org-card--locked .org-card__icon { background: rgb(var(--n-0)); color: rgb(var(--n-40)); }
+        .org-card__note { margin: 2px 0 0; font-size: 13px; line-height: 1.45; color: rgb(var(--n-40)); }
+        .org-card__tag {
+            flex-shrink: 0; align-self: flex-start;
+            padding: 3px 10px; border-radius: 999px;
+            background: rgb(var(--camel-10)); color: rgb(var(--n-50));
+            font-size: 11px; font-weight: 700; white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .org-card { flex-wrap: wrap; }
+            .org-card__tag { order: -1; margin-left: 56px; }
+        }
+    </style>
 </head>
 
 <body class="overflow-x-hidden">
@@ -69,22 +121,36 @@
                 </h2>
             </div>
 
-            <div class="grid gap-4 mt-8">
-                @foreach($organizations as $org)
-                    <a href="{{ route('onboarding.process-selection', $org->uuid) }}"
-                       class="flex items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 hover:border-blue-400 transition-colors group">
-                        <div class="flex items-center gap-4">
-                            <div class="bg-white p-2 rounded-full shadow-sm">
-                                <i class="fas fa-building text-blue-600"></i>
+            <div class="org-list">
+                @foreach($organizations->sortBy(fn ($org) => $org->pivot?->role === 'contributor_pending') as $org)
+                    @if($org->pivot?->role === 'contributor_pending')
+                        <div class="org-card org-card--locked" aria-disabled="true">
+                            <span class="org-card__icon" aria-hidden="true">
+                                <svg-vue icon="pw-lock"></svg-vue>
+                            </span>
+                            <div class="org-card__body">
+                                <h3 class="org-card__name">{{ $org->publisher_name }}</h3>
+                                <p class="org-card__note">
+                                    {{ trans('auth.organization_access_pending_note') }}
+                                </p>
                             </div>
-                            <div>
-                                <h3 class="font-bold text-slate-800 group-hover:text-blue-600">
-                                    {{ $org->publisher_name }}
-                                </h3>
-                            </div>
+                            <span class="org-card__tag">
+                                {{ trans('auth.organization_access_pending') }}
+                            </span>
                         </div>
-                        <i class="fas fa-chevron-right text-slate-300 group-hover:translate-x-1 transition-transform"></i>
-                    </a>
+                    @else
+                        <a href="{{ route('onboarding.process-selection', $org->uuid) }}" class="org-card">
+                            <span class="org-card__icon" aria-hidden="true">
+                                <svg-vue icon="building"></svg-vue>
+                            </span>
+                            <div class="org-card__body">
+                                <h3 class="org-card__name">{{ $org->publisher_name }}</h3>
+                            </div>
+                            <span class="org-card__arrow" aria-hidden="true">
+                                <svg-vue icon="arrow-right"></svg-vue>
+                            </span>
+                        </a>
+                    @endif
                 @endforeach
             </div>
 

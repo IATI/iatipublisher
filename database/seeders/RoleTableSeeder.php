@@ -31,5 +31,10 @@ class RoleTableSeeder extends Seeder
         /** @var array $adminRole */
         $adminRole = ['role' => 'admin'];
         Role::updateOrCreate($adminRole, $adminRole);
+
+        /** Create or update contributor_pending role */
+        /** @var array $contributorPendingRole */
+        $contributorPendingRole = ['role' => 'contributor_pending'];
+        Role::updateOrCreate($contributorPendingRole, $contributorPendingRole);
     }
 }
