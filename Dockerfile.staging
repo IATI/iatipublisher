@@ -36,7 +36,7 @@ RUN composer install --prefer-dist --optimize-autoloader
 
 RUN ./getComposerInfo.sh
 
-FROM docker.io/library/node:16@sha256:c94b82f9827cab6e421b350965a9ef11b25b13ffbd1030536203d541f55dcbe2 as frontend
+FROM docker.io/library/node:24@sha256:df02654fe43f6c43191e9eed5b3a54246d41dae8366028893c195b7fc00c745b as frontend
 
 ARG MIX_ENCRYPTION_KEY
 

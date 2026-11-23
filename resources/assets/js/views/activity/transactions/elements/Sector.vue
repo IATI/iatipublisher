@@ -5,7 +5,7 @@
       :key="s"
       class="item"
       :class="{
-        'mb-4': s !== Object.keys(sector).length - 1,
+        'mb-4': Number(s) !== Object.keys(sector).length - 1,
       }"
     >
       <div class="category">
@@ -103,7 +103,7 @@
                   :key="i"
                   class="title-content mb-4"
                   :class="{
-                    'mb-4': i !== sec.narrative.length - 1,
+                    'mb-4': Number(i) !== sec.narrative.length - 1,
                   }"
                 >
                   <div

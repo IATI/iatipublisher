@@ -6,7 +6,7 @@
         v-for="(ref, r) in refData"
         :key="r"
         :class="{
-          'mb-1.5': r !== Object.keys(refData).length - 1,
+          'mb-1.5': Number(r) !== Object.keys(refData).length - 1,
         }"
       >
         <span>

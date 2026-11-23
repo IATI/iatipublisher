@@ -204,7 +204,7 @@
                           class="indicator-content flex px-6 py-2"
                           :class="{
                             'mb-2 border-b border-n-20':
-                              i !== result.indicators.length - 1,
+                              Number(i) !== result.indicators.length - 1,
                           }"
                         >
                           <div class="elements-detail grow">
@@ -259,7 +259,7 @@
                                       class=""
                                       :class="{
                                         'mb-1':
-                                          b !==
+                                          Number(b) !==
                                           indic.indicator.baseline.length - 1,
                                       }"
                                     >
@@ -303,7 +303,8 @@
                                           class="flex"
                                           :class="{
                                             'mb-1':
-                                              p !== indic.periods.length - 1,
+                                              Number(p) !==
+                                              indic.periods.length - 1,
                                           }"
                                         >
                                           <div class="text-xs">
@@ -384,7 +385,7 @@
             </div>
           </div>
           <div
-            v-if="r !== data.content.length - 1"
+            v-if="Number(r) !== data.content.length - 1"
             class="divider my-5 h-px w-full border-b border-n-20"
           ></div>
         </template>

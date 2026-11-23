@@ -114,7 +114,7 @@
                               class="title-content"
                               :class="{
                                 'mb-1.5':
-                                  t !==
+                                  Number(t) !==
                                   post.indicator.title[0].narrative.length - 1,
                               }"
                             >
@@ -179,7 +179,7 @@
                               class="title-content"
                               :class="{
                                 'mb-1.5':
-                                  d !==
+                                  Number(d) !==
                                   post.indicator.description[0].narrative
                                     .length -
                                     1,
@@ -222,7 +222,8 @@
                             :key="r"
                             :class="{
                               'mb-1.5':
-                                r !== post.indicator.reference.length - 1,
+                                Number(r) !==
+                                post.indicator.reference.length - 1,
                             }"
                           >
                             <span>
@@ -305,7 +306,8 @@
                             :key="b"
                             :class="{
                               'mb-1.5':
-                                b !== post.indicator.baseline.length - 1,
+                                Number(b) !==
+                                post.indicator.baseline.length - 1,
                             }"
                           >
                             <div>
@@ -366,7 +368,8 @@
                                   :key="l"
                                   class="item"
                                   :class="{
-                                    'mb-1.5': l !== base.location.length - 1,
+                                    'mb-1.5':
+                                      Number(l) !== base.location.length - 1,
                                   }"
                                 >
                                   <template v-if="loc.reference">
@@ -395,7 +398,8 @@
                                   v-for="(dim, d) in base.dimension"
                                   :key="d"
                                   :class="{
-                                    'mb-1.5': d !== base.dimension.length - 1,
+                                    'mb-1.5':
+                                      Number(d) !== base.dimension.length - 1,
                                   }"
                                 >
                                   <div>
@@ -443,7 +447,7 @@
                                   class="item"
                                   :class="{
                                     'mb-1.5':
-                                      c !==
+                                      Number(c) !==
                                       base.comment[0].narrative.length - 1,
                                   }"
                                 >
@@ -589,7 +593,8 @@
                             <div
                               class="item"
                               :class="{
-                                'mb-1.5': t !== item.period.target.length - 1,
+                                'mb-1.5':
+                                  Number(t) !== item.period.target.length - 1,
                               }"
                             >
                               <div class="language target_value mb-1">
@@ -611,7 +616,8 @@
                                     :key="l"
                                     class="item"
                                     :class="{
-                                      'mb-1.5': l !== tar.location.length - 1,
+                                      'mb-1.5':
+                                        Number(l) !== tar.location.length - 1,
                                     }"
                                   >
                                     <div>
@@ -646,7 +652,8 @@
                                     :key="d"
                                     class="item"
                                     :class="{
-                                      'mb-1.5': d !== tar.dimension.length - 1,
+                                      'mb-1.5':
+                                        Number(d) !== tar.dimension.length - 1,
                                     }"
                                   >
                                     <span>
@@ -689,7 +696,8 @@
                                     :key="c"
                                     class="item"
                                     :class="{
-                                      'mb-1.5': c !== tar.comment.length - 1,
+                                      'mb-1.5':
+                                        Number(c) !== tar.comment.length - 1,
                                     }"
                                   >
                                     <div>
@@ -740,7 +748,8 @@
                             <div
                               class="item"
                               :class="{
-                                'mb-1.5': t !== item.period.actual.length - 1,
+                                'mb-1.5':
+                                  Number(t) !== item.period.actual.length - 1,
                               }"
                             >
                               <div class="language target_value mb-1">
@@ -762,7 +771,8 @@
                                     :key="l"
                                     class="item"
                                     :class="{
-                                      'mb-1.5': l !== tar.location.length - 1,
+                                      'mb-1.5':
+                                        Number(l) !== tar.location.length - 1,
                                     }"
                                   >
                                     <div>
@@ -797,7 +807,8 @@
                                     :key="d"
                                     class="item"
                                     :class="{
-                                      'mb-1.5': d !== tar.dimension.length - 1,
+                                      'mb-1.5':
+                                        Number(d) !== tar.dimension.length - 1,
                                     }"
                                   >
                                     <span>
@@ -840,7 +851,8 @@
                                     :key="c"
                                     class="item"
                                     :class="{
-                                      'mb-1.5': c !== tar.comment.length - 1,
+                                      'mb-1.5':
+                                        Number(c) !== tar.comment.length - 1,
                                     }"
                                   >
                                     <div>
@@ -883,7 +895,7 @@
             </div>
           </div>
           <div
-            v-if="ri != indicatorData.length - 1"
+            v-if="Number(ri) != indicatorData.length - 1"
             class="divider my-8 h-px w-full border-b border-n-20"
           ></div>
         </template>

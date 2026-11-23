@@ -48,7 +48,7 @@
                 :key="j"
                 class="description-content"
                 :class="{
-                  'mb-4': j != reporting_org.narrative.length - 1,
+                  'mb-4': Number(j) != reporting_org.narrative.length - 1,
                 }"
               >
                 <div class="language mb-1.5">

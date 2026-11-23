@@ -1,0 +1,276 @@
+# Frontend / Node upgrade log
+
+This file tracks the Node.js LTS upgrade chain (16 → 18 → 20 → 22 → 24), one
+LTS per section, together with the build toolchain changes each step forces.
+It was run with the `node-version-upgrade` skill, adapted to this repo, which
+uses npm with `package-lock.json` and `overrides` and builds its frontend in
+the Dockerfiles' `frontend` stage.
+
+## Node v16 → v18 (2026-10-28)
+
+The toolchain needed no changes for Node 18. laravel-mix ^6 / webpack
+5.95.0 builds byte-identical bundles on 18.20.8, and nothing in the
+toolchain broke. This pass only moves the runtime pins.
+
+### package.json / runtime pins
+
+| Item | Before | After | Why |
+|---|---|---|---|
+| `.nvmrc` | (none) | `18` | new: pins the local Node major for `nvm use` |
+| `engines.node` | `v16.17.1` | `>=18` | the exact 16 pin raised `EBADENGINE` on every `npm install` under 18 |
+| `engines.npm` | `8.15.0` | `>=10` | Node 18 ships npm 10.8.2 |
+| `Dockerfile.{develop,staging,production}` | `node:16@sha256:c94b82f9…` | `node:18@sha256:c6ae79e3…` | the `frontend` stage runs `npm install && npm run prod` at deploy time |
+| `overrides.webpack` | `5.95.0` | `5.95.0` (kept) | unchanged this pass |
+
+Resolved versions: `laravel-mix@6.0.49`, `webpack@5.95.0`,
+`sass-loader@11.1.1`, `sass@1.54.7`, `vue-loader@17.4.2`,
+`resolve-url-loader@5.0.0`, `ts-loader@9.6.2`, `postcss@8.5.26`.
+
+`package-lock.json`: npm 10 drops the root `"name"` field because
+`package.json` has none. It also syncs the root `engines` block.
+
+### Build / code fixes
+
+- None needed. `npm run prod` was green on the first run. Its only warning
+  is the existing `"extendDefaultPlugins" utility is deprecated`, the same
+  as the v16 baseline.
+- `docker build --target frontend -f Dockerfile.develop .` on `node:18`
+  ends with `✔ Compiled Successfully`.
+
+### Browser smoke
+
+The user checked locally (`php artisan serve`) that the app renders on the
+Node 18 build.
+
+### npm audit
+
+Before: 75 advisory×root lines (critical 2, high 24, moderate 30, low 19).
+After: 75. NEW: 0, cleared: 0. The Node bump alone moves no packages.
+Toolchain fixes come in the follow-up audit commit.
+
+#### Toolchain audit fixes (follow-up commit)
+
+Each change was made on its own and checked before the next one: clean
+install with no new peer warnings, a single resolved copy (`npm ls`), a
+production build with no new warnings, bundle sizes within ±0.2%, and no
+new advisories.
+
+| Change | Rung | Cleared |
+|---|---|---|
+| `npm update proxy-addr` → 2.0.8 | in-range update | GHSA-jqcg-44mw-7w3h (critical) |
+| `npm update shell-quote` → 1.12.0 | in-range update | GHSA-pqg4-j6r4-53mv (critical) |
+| `npm update` body-parser 1.20.9, launch-editor 2.14.2, node-forge 1.4.2, compression 1.8.2, browserslist 4.29.5, fast-uri 3.1.9, source-map-js 1.2.2, brace-expansion 1.1.21 | in-range update | high: GHSA-27r3, -587h, -86w9, -vc2v, -73wf, -c83g, -58mr, -qw65, -68fv, -6j4f, -qhr7 |
+| `npm update` colord 2.10.0, pbkdf2 3.1.7, postcss-selector-parser 6.1.5, qs (one copy) | in-range update | moderate |
+| `webpackbar` `^7.0.0` devDependency + `overrides` (`$webpackbar`) | override | none (prerequisite) |
+| `overrides.webpack` `5.95.0` → `5.106.2` | override | GHSA-38r7-794h-5758, GHSA-8fgc-7cc6-rx7x (buildHttp SSRF) |
+| `overrides.express.qs` `^6.16.2` | scoped override | GHSA-4mjr-xmp4-gh2g, GHSA-6pq8-jhm2-2vcw |
+
+- **webpackbar:** mix 6 nests `webpackbar@5.0.2`. On webpack newer than
+  5.95, its options fail the `ProgressPlugin` schema:
+  `[webpack-cli] Invalid options object. Progress Plugin ... unknown property 'name'`.
+  Version 7 avoids that, and the override dedupes mix's nested copy.
+- **webpack pin:** 5.106.2 is the last release that ships
+  `lib/SizeFormatHelpers.js`, which laravel-mix's `BuildOutputPlugin` still
+  `require()`s; 5.107.0 removes it. Keep the pin until laravel-mix stops
+  requiring that path or the build moves off mix.
+- **qs override:** express 4.22.2 declares `qs ~6.15.1`, and 6.16.2 is the
+  same major. express only runs inside the `mix watch --hot` dev server,
+  which was checked to start and serve `app.js`.
+
+The browser smoke test passed again after the fixes. Audit: **75 → 21**
+(critical 2 → 0, high 24 → 8, moderate 30 → 10, low 19 → 3).
+
+Deferred, `side=dev`:
+- `webpack-dev-server@4.15.2` (6 moderate), `webpack-dev-middleware`
+  (high) and `uuid@8` (moderate, via sockjs and node-notifier). The fixes
+  need webpack-dev-server 5, a cross-major change against the API mix 6
+  calls for `mix watch --hot`. They are dev-server only and never used by
+  `npm run prod` or Docker.
+- `serialize-javascript@6` via `laravel-mix-compress` →
+  `compression-webpack-plugin@10`. The fix (7.x) requires Node ≥ 20, so
+  it is retried in the Node 20 pass.
+- `elliptic@6.6.1`: no fixed release exists.
+
+Handed off to `/frontend-deps-upgrade` (runtime libraries):
+`follow-redirects` (via `axios` and `http-proxy-middleware`, 2 high),
+`@vue/server-renderer` (via `vue`, high), `moment` (moderate) and the
+direct `serialize-javascript` dependency.
+
+### Tests
+
+`vendor/bin/phpunit` was not run this pass. The local `.env` `DB_HOST`
+points at a remote production Postgres cluster, and the tests use
+`RefreshDatabase`, so they need a local test database first. No backend
+code changed in this pass.
+
+## Node v18 → v20 (2026-10-28)
+
+The toolchain needed no changes for Node 20. `npm install` on 20.20.2 /
+npm 10.8.2 resolves the same tree as the v18 lockfile, and the build is
+green on the first run.
+
+### package.json / runtime pins
+
+| Item | Before | After | Why |
+|---|---|---|---|
+| `.nvmrc` | `18` | `20` | next LTS |
+| `engines.node` | `>=18` | `>=20` | tracks the LTS this pass lands |
+| `Dockerfile.{develop,staging,production}` | `node:18@sha256:c6ae79e3…` | `node:20@sha256:8f693eaa…` | the deploy-time `frontend` stage |
+
+Resolved versions are unchanged from the v18 pass: `laravel-mix@6.0.49`,
+`webpack@5.106.2` (override), `webpackbar@7.0.0`, `sass-loader@11.1.1`,
+`vue-loader@17.4.2`, `postcss@8.5.26`.
+
+### Build / code fixes
+
+- None needed. The production build's only warning is the existing
+  `extendDefaultPlugins` deprecation. The tracked `public/` bundles are
+  byte-identical to the v18 build.
+- `docker build --target frontend` on `node:20` ends with
+  `✔ Compiled Successfully`.
+
+### Browser smoke
+
+The user checked locally that the app renders on the Node 20 build.
+
+### npm audit
+
+Before: 21 (critical 0, high 8, moderate 10, low 3). After: 21. NEW: 0.
+`serialize-javascript@7`, deferred in the v18 pass because it requires
+Node ≥ 20, is retried in this pass's audit-fix commit.
+
+### Tests
+
+`vendor/bin/phpunit` was not run. The local `.env` still points at the
+remote production Postgres (see v16 → v18), and no backend code changed.
+
+#### Toolchain audit fixes (follow-up commit)
+
+| Change | Rung | Cleared |
+|---|---|---|
+| removed `laravel-mix-compress` `^3.0.0` (and with it `compression-webpack-plugin@10` → `serialize-javascript@6`) | dead dependency | GHSA-5c6j-r48x-rmvq (high), GHSA-qj8w-gfj5-8c6v, GHSA-m5mm-p8h7-m29v |
+
+- The Node ≥ 20 requirement deferred in the v18 pass no longer applies.
+  `webpack.mix.js` never `require()`s `laravel-mix-compress` and nothing
+  calls `.compress()`, so the plugin was never loaded. Removing it is
+  cleaner than overriding `serialize-javascript` 7 under it. A scoped
+  override was tried first and also passed, but it pinned a package
+  nothing uses.
+- The build output is unchanged: tracked `public/` files are
+  byte-identical, and `docker build --target frontend` is green.
+
+Audit: **21 → 18** (high 8 → 7, moderate 10 → 9, low 3 → 2). NEW: 0.
+The audit snapshot now attributes each advisory only to the installed
+copies npm flags (`nodes`), not to every copy of the package name. Both
+sides of this diff were measured that way.
+
+Still deferred, `side=dev`: `webpack-dev-server@4` / `webpack-dev-middleware`
+/ `uuid@8` (dev server only; the fix needs webpack-dev-server 5) and
+`elliptic` (no fix). Handed off to `/frontend-deps-upgrade`: the direct
+`serialize-javascript@6.0.2` dependency (3 advisories), `follow-redirects`
+(via `axios` and `http-proxy-middleware`), `vue` and `moment`.
+
+## Node v20 → v22 (2026-10-28)
+
+The toolchain needed no changes for Node 22. 22.23.4 / npm 10.9.9 resolves
+the same tree, and the build is green on the first run.
+
+### package.json / runtime pins
+
+| Item | Before | After | Why |
+|---|---|---|---|
+| `.nvmrc` | `20` | `22` | next LTS |
+| `engines.node` | `>=20` | `>=22` | tracks the LTS this pass lands |
+| `Dockerfile.{develop,staging,production}` | `node:20@sha256:8f693eaa…` | `node:22@sha256:577e66a7…` | the deploy-time `frontend` stage |
+
+Resolved toolchain versions are unchanged (`laravel-mix@6.0.49`,
+`webpack@5.106.2` override, `webpackbar@7.0.0`).
+
+### Build / code fixes
+
+- None needed. The only warning is the existing `extendDefaultPlugins`
+  deprecation. The tracked `public/` bundles are byte-identical, and
+  `docker build --target frontend` on `node:22` is green.
+
+### Browser smoke
+
+The user checked locally that the app renders on the Node 22 build.
+
+### npm audit
+
+18 → 18 (high 7, moderate 9, low 2). NEW: 0. No audit-fix commit this
+pass, because none of the deferred items depend on the Node version:
+- `webpack-dev-server@4.15.2` / `webpack-dev-middleware` / `uuid@8`:
+  `npm outdated` lists webpack-dev-server 6.1.0 as latest, but
+  laravel-mix 6 calls the v4 API for `mix watch --hot`. Moving it is part
+  of a mix → Vite migration, not a Node bump.
+- `elliptic`: no fixed release exists.
+
+### Tests
+
+`vendor/bin/phpunit` was not run (see v16 → v18). No backend code changed.
+
+## Node v22 → v24 (2026-10-28)
+
+This is the final step, to the current Active LTS. The toolchain needed no
+changes for Node 24: 24.22.1 / npm 11.19.1 builds green on the first run.
+
+### package.json / runtime pins
+
+| Item | Before | After | Why |
+|---|---|---|---|
+| `.nvmrc` | `22` | `24` | target LTS |
+| `engines.node` | `>=22` | `>=24` | target LTS |
+| `engines.npm` | `>=10` | `>=11` | Node 24 ships npm 11 |
+| `Dockerfile.{develop,staging,production}` | `node:22@sha256:577e66a7…` | `node:24@sha256:df02654f…` | the deploy-time `frontend` stage |
+
+`package-lock.json`: npm 11 adds the optional macOS-only
+`node_modules/fsevents@2.3.3` entry (chokidar's watcher), which npm 10 had
+left out. No other resolution changed.
+
+### Build / code fixes
+
+- None needed. The only build warning is the existing `extendDefaultPlugins`
+  deprecation. `docker build --target frontend` on `node:24` is green.
+- New npm 11 install warning: `install-scripts 2 packages have install
+  scripts not yet covered by allowScripts` for `vue-demi@0.13.11` (nested
+  under `@vueuse/core`) and `core-js@3.31.1`. Neither affects the build.
+  `core-js`'s postinstall only prints a funding banner. `vue-demi`'s
+  postinstall picks its Vue 2 or Vue 3 shim; the default shipped shim is
+  already Vue 3 (`lib/index.mjs`: `isVue3 = true`), which matches this
+  repo's Vue 3. Revisit if a future npm major starts blocking unapproved
+  scripts and `@vueuse/core` breaks; the fix would be
+  `npm install-scripts approve vue-demi`.
+
+### Browser smoke
+
+The user checked locally that the app renders on the Node 24 build.
+
+### npm audit
+
+18 → 18 (high 7, moderate 9, low 2). NEW: 0. No audit-fix commit: the
+remaining `side=dev` items are not Node-gated (see v20 → v22).
+
+### End state of the chain (v16 → v24)
+
+- Audit: **75 → 18** (critical 2 → 0, high 24 → 7, moderate 30 → 9,
+  low 19 → 2).
+- Still deferred, `side=dev`, and what clears them:
+  - `webpack-dev-server@4` (6 moderate), `webpack-dev-middleware` (high)
+    and `uuid@8` (moderate) are reachable only through `mix watch --hot`.
+    Clearing them needs webpack-dev-server ≥ 5, which laravel-mix 6 does
+    not support. Moving off mix (to Vite) clears them.
+  - `elliptic`: no fixed release exists.
+- Pins still committed:
+  - `overrides.webpack: 5.106.2`: laravel-mix 6's `BuildOutputPlugin`
+    requires `webpack/lib/SizeFormatHelpers`, which webpack 5.107 removed.
+    Moving off mix removes this pin.
+  - `overrides.webpackbar` (`$webpackbar`, ^7): dedupes mix's nested
+    `webpackbar@5`, which fails webpack's `ProgressPlugin` schema.
+  - `overrides.express.qs: ^6.16.2`: express 4 declares `~6.15.1`, and this
+    clears two `qs` advisories in the dev server.
+- Handed off to `/frontend-deps-upgrade` (runtime libraries): the direct
+  `serialize-javascript@6` dependency, `follow-redirects` (via `axios` and
+  `http-proxy-middleware`), `@vue/server-renderer` (via `vue`) and `moment`.
+- `vendor/bin/phpunit` was not run during the chain because the local
+  `.env` points at a remote production database. No backend code changed.

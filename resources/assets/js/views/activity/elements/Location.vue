@@ -8,13 +8,13 @@
     <div
       v-for="(item, i) in post.name"
       :key="i"
-      :class="{ 'mb-4': i !== post.name.length - 1 }"
+      :class="{ 'mb-4': Number(i) !== post.name.length - 1 }"
     >
       <div
         v-for="(narrative, j) in item.narrative"
         :key="j"
         class="text-sm"
-        :class="{ 'mb-4': j !== item.narrative.length - 1 }"
+        :class="{ 'mb-4': Number(j) !== item.narrative.length - 1 }"
       >
         <div v-if="narrative.narrative" class="flex flex-col-reverse space-x-1">
           <span>{{ narrative.narrative }}</span>
@@ -43,7 +43,7 @@
       v-for="(item, i) in post.location_reach"
       :key="i"
       class="ml-5"
-      :class="{ 'mb-0': i !== post.location_reach.length - 1 }"
+      :class="{ 'mb-0': Number(i) !== post.location_reach.length - 1 }"
     >
       <table>
         <tr>
@@ -61,7 +61,7 @@
       <div
         v-for="(item, i) in post.location_id"
         :key="i"
-        :class="{ 'mb-4': i !== post.location_id.length - 1 }"
+        :class="{ 'mb-4': Number(i) !== post.location_id.length - 1 }"
       >
         <table class="w-full">
           <tr>
@@ -99,12 +99,12 @@
       <div
         v-for="(item, i) in post.description"
         :key="i"
-        :class="{ 'mb-4': i !== post.description.length - 1 }"
+        :class="{ 'mb-4': Number(i) !== post.description.length - 1 }"
       >
         <div
           v-for="(narrative, j) in item.narrative"
           :key="j"
-          :class="{ 'mb-4': j !== item.narrative.length - 1 }"
+          :class="{ 'mb-4': Number(j) !== item.narrative.length - 1 }"
         >
           <table class="w-full">
             <tr class="multiline">
@@ -128,12 +128,12 @@
       <div
         v-for="(item, i) in post.activity_description"
         :key="i"
-        :class="{ 'mb-4': i !== post.activity_description.length - 1 }"
+        :class="{ 'mb-4': Number(i) !== post.activity_description.length - 1 }"
       >
         <div
           v-for="(narrative, j) in item.narrative"
           :key="j"
-          :class="{ 'mb-4': j !== item.narrative.length - 1 }"
+          :class="{ 'mb-4': Number(j) !== item.narrative.length - 1 }"
         >
           <table class="w-full">
             <tr class="multiline">
@@ -162,7 +162,7 @@
       <div
         v-for="(item, i) in post.administrative"
         :key="i"
-        :class="{ 'mb-4': i !== post.administrative.length - 1 }"
+        :class="{ 'mb-4': Number(i) !== post.administrative.length - 1 }"
       >
         <table class="w-full">
           <tr>
@@ -215,7 +215,7 @@
         v-for="(item, i) in post.point"
         :key="i"
         class="flex space-x-1"
-        :class="{ 'mb-4': i !== post.point.length - 1 }"
+        :class="{ 'mb-4': Number(i) !== post.point.length - 1 }"
       >
         <table class="w-full">
           <tr>
@@ -264,7 +264,7 @@
       <div
         v-for="(item, i) in post.exactness"
         :key="i"
-        :class="{ 'mb-4': i !== post.exactness.length - 1 }"
+        :class="{ 'mb-4': Number(i) !== post.exactness.length - 1 }"
       >
         <table class="w-full">
           <tr>
@@ -281,7 +281,7 @@
       <div
         v-for="(item, i) in post.location_class"
         :key="i"
-        :class="{ 'mb-4': i !== post.location_class.length - 1 }"
+        :class="{ 'mb-4': Number(i) !== post.location_class.length - 1 }"
       >
         <table class="w-full">
           <tr>
@@ -300,7 +300,7 @@
       <div
         v-for="(item, i) in post.feature_designation"
         :key="i"
-        :class="{ 'mb-4': i !== post.feature_designation.length - 1 }"
+        :class="{ 'mb-4': Number(i) !== post.feature_designation.length - 1 }"
       >
         <table class="w-full">
           <tr>

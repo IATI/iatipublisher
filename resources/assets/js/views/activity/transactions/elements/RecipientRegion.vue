@@ -5,7 +5,7 @@
       :key="c"
       class="item"
       :class="{
-        'mb-4': c !== Object.keys(country).length - 1,
+        'mb-4': Number(c) !== Object.keys(country).length - 1,
       }"
     >
       <div class="category">
@@ -50,7 +50,7 @@
                   :key="i"
                   class="title-content mb-4"
                   :class="{
-                    'mb-4': i !== cou.narrative.length - 1,
+                    'mb-4': Number(i) !== cou.narrative.length - 1,
                   }"
                 >
                   <div v-if="sd.narrative" class="language mb-1.5">

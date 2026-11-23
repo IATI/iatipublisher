@@ -54,7 +54,7 @@
         class="item"
         :class="{
           'mb-2 border-b border-n-20':
-            j !== total_expenditure.expense_line.length - 1,
+            Number(j) !== total_expenditure.expense_line.length - 1,
         }"
       >
         <div class="indicator-content flex px-6 py-2">
@@ -100,7 +100,8 @@
                         :key="k"
                         class="description-content"
                         :class="{
-                          'mb-4': k != expense_line.narrative.length - 1,
+                          'mb-4':
+                            Number(k) != expense_line.narrative.length - 1,
                         }"
                       >
                         <div class="language mb-1.5">

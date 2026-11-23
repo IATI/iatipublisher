@@ -19,7 +19,7 @@
     <div
       v-for="(item, i) in participating_org.narrative"
       :key="i"
-      :class="{ 'mb-4': i !== participating_org.narrative.length - 1 }"
+      :class="{ 'mb-4': Number(i) !== participating_org.narrative.length - 1 }"
       class="recipient_country-content text-sm"
     >
       <div v-if="item.narrative" class="flex max-w-[887px] flex-col">

@@ -1,11 +1,11 @@
 /*!
- * ApexCharts v3.45.2
+ * ApexCharts v3.54.1
  * (c) 2018-2024 ApexCharts
  * Released under the MIT License.
  */
 
 /*!
- * Select2 4.1.0-rc.0
+ * Select2 4.1.0
  * https://select2.github.io
  *
  * Released under the MIT license
@@ -13,28 +13,14 @@
  */
 
 /*!
- * Sizzle CSS Selector Engine v2.3.6
- * https://sizzlejs.com/
- *
- * Copyright JS Foundation and other contributors
- * Released under the MIT license
- * https://js.foundation/
- *
- * Date: 2021-02-16
- */
-
-/*!
- * jQuery JavaScript Library v3.6.1
+ * jQuery JavaScript Library v3.7.1
  * https://jquery.com/
- *
- * Includes Sizzle.js
- * https://sizzlejs.com/
  *
  * Copyright OpenJS Foundation and other contributors
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2022-08-26T17:52Z
+ * Date: 2023-08-28T13:37Z
  */
 
 /*!
@@ -43,7 +29,108 @@
  * @license MIT
  */
 
-/*! Axios v1.20.0 Copyright (c) 2026 Matt Zabriskie and contributors */
+/*! Axios v1.21.0 Copyright (c) 2026 Matt Zabriskie and contributors */
+
+/*! Bundled license information:
+
+@tanstack/vue-virtual/build/lib/_virtual/_rollupPluginBabelHelpers.mjs:
+  (**
+   * vue-virtual
+   *
+   * Copyright (c) TanStack
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.md file in the root directory of this source tree.
+   *
+   * @license MIT
+   *)
+
+@tanstack/virtual-core/build/lib/_virtual/_rollupPluginBabelHelpers.mjs:
+  (**
+   * virtual-core
+   *
+   * Copyright (c) TanStack
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.md file in the root directory of this source tree.
+   *
+   * @license MIT
+   *)
+
+@tanstack/virtual-core/build/lib/utils.mjs:
+  (**
+   * virtual-core
+   *
+   * Copyright (c) TanStack
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.md file in the root directory of this source tree.
+   *
+   * @license MIT
+   *)
+
+@tanstack/virtual-core/build/lib/index.mjs:
+  (**
+   * virtual-core
+   *
+   * Copyright (c) TanStack
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.md file in the root directory of this source tree.
+   *
+   * @license MIT
+   *)
+
+@tanstack/vue-virtual/build/lib/index.mjs:
+  (**
+   * vue-virtual
+   *
+   * Copyright (c) TanStack
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.md file in the root directory of this source tree.
+   *
+   * @license MIT
+   *)
+*/
+
+/*! svg.draggable.js - v2.2.2 - 2019-01-08
+* https://github.com/svgdotjs/svg.draggable.js
+* Copyright (c) 2019 Wout Fierens; Licensed MIT */
+
+/*! svg.filter.js - v2.0.2 - 2016-02-24
+* https://github.com/wout/svg.filter.js
+* Copyright (c) 2016 Wout Fierens; Licensed MIT */
+
+/**
+* @vue/compiler-core v3.5.44
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
+
+/**
+* @vue/compiler-dom v3.5.44
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
+
+/**
+* @vue/runtime-core v3.5.44
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
+
+/**
+* @vue/runtime-dom v3.5.44
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
+
+/**
+* @vue/shared v3.5.44
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
 
 //! moment.js
 

@@ -1,0 +1,256 @@
+# Frontend runtime dependency upgrades
+
+## In-range audit fix — vue v3.2.38 → v3.5.44 (2026-10-28)
+
+`npm audit fix` (in-range only, no `--force`) on Node 24, following the
+Node v22 → v24 bump. `package.json` unchanged; lockfile only.
+
+### package-lock.json
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| vue (+ @vue/*) | 3.2.38 | 3.5.44 | in-range update pulled by audit fix |
+| follow-redirects | 1.16.0 | 1.16.2 | advisory fix |
+| csstype | 2.6.20 | 3.2.3 | transitive (vue 3.5) |
+| magic-string | 0.25.9 | 0.30.21 | transitive (vue 3.5 compiler-sfc) |
+
+21 packages moved, 2 added, 7 removed. No other major-version jumps.
+
+### Migration guide
+
+https://github.com/vuejs/core/blob/main/changelogs/CHANGELOG-3.3.md,
+CHANGELOG-3.4.md, CHANGELOG-3.5.md. Checked: reactivity transform removal,
+`v-is` / `@vnode-*` removal, props destructure. None used in this repo.
+
+### Code / template fixes
+
+Vue 3.5 types the `v-for` index as `string | number` in generated render code,
+so `ts-loader` failed the build (34 `[tsl] ERROR`s):
+
+- 14 `.vue` files under `resources/assets/js/views/{activity,organisation}/`:
+  `k !== arr.length - 1` → `Number(k) !== arr.length - 1`.
+- `resources/assets/js/views/activity/partials/ActivityElement.vue:314`: real bug.
+  `item.narrative - 1` → `item.narrative.length - 1`, so the last narrative no
+  longer gets `mb-0`.
+- `resources/assets/js/views/import/ActivityXlsUpload.vue`: `loaderText` read
+  `props` before `defineProps` (TDZ under 3.5's compiled `<script setup>`). It
+  now comes after `defineProps`.
+
+### npm audit
+
+18 → 14 (high 3, moderate 6, low 5). Remaining: serialize-javascript
+(`<=7.1.2`), elliptic (no fix), uuid / webpack-dev-middleware (dev server,
+need mix → Vite). Handled in later passes.
+
+### Browser smoke
+
+User confirmed: login page with a clean console, dashboard charts and a filter,
+activity and organisation detail narrative spacing, the XLS import page loader,
+and an element form save plus validation errors.
+
+`npm run prod` green (no new warnings), browser smoke passed. `vendor/bin/phpunit`
+not run: `.env` DB_HOST points at prod, and there is no local test DB.
+
+## serialize-javascript v6.0.2 → removed (2026-10-28)
+
+Unused direct dependency. It was added in the squash commit `ef2b383e` (a
+Snyk/dependabot batch), presumably to hoist a patched copy for the old terser.
+No package in the tree requires it any more: `terser-webpack-plugin` 5.6.1
+bundles its own copy into `dist/serialize-javascript.js` and lists it only as
+a devDependency. Nothing in `resources/` or `webpack.mix.js` imports it.
+
+### package.json
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| serialize-javascript | ^6.0.2 | — | unused; 3 advisories on 6.x |
+
+`randombytes` stays in the tree as a dev-only dependency of crypto-browserify.
+
+### Code / template fixes
+
+None.
+
+### npm audit
+
+14 → 13 (high 2). Cleared GHSA-5c6j-r48x-rmvq (RCE), GHSA-qj8w-gfj5-8c6v
+(DoS) and GHSA-m5mm-p8h7-m29v (XSS). The copy bundled inside terser runs only
+at build time and `npm audit` can't see it. It's left to terser's maintainers.
+
+### Browser smoke
+
+Not re-run: the rebuilt `app.js` / `vendor.js` hashes in `mix-manifest.json`
+are identical to the previous commit, so the served assets are the ones already
+smoke-tested.
+
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## vue-apexcharts v1.6.2 → removed (2026-10-28)
+
+Unused direct dependency. `vue-apexcharts` is the Vue 2 wrapper. The app is
+Vue 3 and registers `vue3-apexcharts` (`resources/assets/js/app.ts:84`), and
+nothing imports `vue-apexcharts`.
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| vue-apexcharts | ^1.6.2 | — | unused Vue 2 wrapper |
+
+No code fixes. npm audit unchanged (13). The rebuilt `app.js` / `vendor.js`
+hashes are identical to the previous commit, so the browser smoke wasn't re-run.
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## http-proxy-middleware v2.0.10 (root) → removed (2026-10-28)
+
+Unused direct dependency. A security pin put it in `dependencies` (`^2.0.9`),
+but nothing in `resources/` or `webpack.mix.js` imports it. Its only real
+consumer is `webpack-dev-server` (`^2.0.3`), which still resolves it to 2.0.10,
+which is still at or above the patched 2.0.9. It's now flagged dev-only in the
+lockfile.
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| http-proxy-middleware | ^2.0.9 (root) | — (2.0.10 via webpack-dev-server) | unused at runtime |
+
+No code fixes. npm audit unchanged (13). The rebuilt bundle hashes are identical,
+so the browser smoke wasn't re-run. `npm run prod` green (no new warnings).
+`vendor/bin/phpunit` not run (prod DB_HOST).
+
+## Vue 3.5 template types — remaining v-for index coercions (2026-10-28)
+
+Follow-up to the vue v3.2.38 → v3.5.44 entry. Vue 3.5 types the `v-for` index
+as `string` when the source is an object/Record, so `i !== x.length - 1` fails
+`ts-loader` with TS2367. ts-loader reports these nondeterministically: the
+same tree gave 0, 1 or 11 errors from one build to the next. The earlier fix
+missed `Object.keys(...)`, `!=` and comparisons split over several lines.
+
+### Code / template fixes
+
+- 26 `.vue` files under `resources/assets/js/views/activity/` (results,
+  indicators, periods, transactions, elements): 69 comparisons where the left
+  side is that template's own v-for index → `Number(i) !== ….length - 1`.
+  Matched per file against its v-for index names, inside `<template>` only.
+- Behaviour: for object-sourced lists (`Object.keys(...)`) the string index
+  never matched, so the last item always kept its bottom margin. It now drops
+  it as intended.
+
+### Browser smoke
+
+User confirmed spacing on results/indicators/periods, transactions, location,
+contact info, and other identifier.
+
+`npm run prod` green twice in a row with 0 `[tsl] ERROR`. `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## jquery v3.6.1 → v3.7.1 (2026-10-28)
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| jquery | ^3.6.0 (3.6.1) | ^3.7.1 (3.7.1) | last 3.x |
+
+### Migration guide
+
+https://blog.jquery.com/2023/05/11/jquery-3-7-0-released-staying-in-order/ and
+https://blog.jquery.com/2023/08/28/jquery-3-7-1-released-reliable-table-row-dimensions/:
+no removals. Deprecated APIs (`$.trim`, `$.isArray`, `$.isFunction`, `.bind`,
+`.delegate`, `.size` …) were grepped across `resources/assets/js` +
+`resources/views`: none used. No self-closing non-void tags in
+`.html()`/`.append()` strings (the 3.5 `htmlPrefilter` change).
+
+### Code / template fixes
+
+None. jQuery is used in `scripts/{script,webportal-script,formbuilder,DynamicField}.ts`.
+
+### npm audit
+
+Unchanged (13). jQuery 4.0.0 is now stable. That's a separate pass (select2 compatibility to check).
+
+### Browser smoke
+
+User confirmed select2 dropdowns and repeating field groups on activity element forms.
+
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## apexcharts v3.49.2 → v3.54.1 (+ vue3-apexcharts v1.5.3 → v1.7.0) (2026-10-28)
+
+`vue3-apexcharts` 1.5.3 shipped its **own inlined apexcharts** (built against
+`^3.45.2`, 660 KB dist), so the root `apexcharts` package was never in the
+bundle. 1.6.0+ is a thin wrapper that imports the root `apexcharts`, so the
+chart code actually shipped goes from about 3.45 to 3.54.1.
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| apexcharts | ^3.49.2 (3.49.2) | ^3.54.1 (3.54.1) | last 3.x |
+| vue3-apexcharts | ^1.5.3 (1.5.3) | ~1.7.0 (1.7.0) | last version with peer `apexcharts >3.0.0`. 1.8+ needs `>=4`, 1.11 needs `>=5.10`. Pinned with tilde so `npm update` can't pull a peer-incompatible 1.8+ |
+
+### Migration guide
+
+https://github.com/apexcharts/apexcharts.js/releases (v3.50–v3.54.1) and
+https://github.com/apexcharts/vue3-apexcharts/releases (1.6.0, 1.7.0). The
+plugin API (`app.use(VueApexCharts)`, `<apexchart>`) is unchanged. The only
+chart is the line graph in `views/dashboard/DashboardGraph.vue`.
+
+### Code / template fixes
+
+None.
+
+### npm audit
+
+Unchanged (13).
+
+### Browser smoke
+
+User confirmed the dashboard line graph renders, shows tooltips, and redraws when a filter changes.
+
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## select2 v4.1.0-rc.0 → v4.1.0 (2026-10-28)
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| select2 | ^4.1.0-rc.0 | ^4.1.0 (4.1.0) | final release of the RC already in use |
+
+https://github.com/select2/select2/releases/tag/4.1.0: bug fixes only. No code
+fixes. npm audit unchanged (13). Browser smoke: user confirmed select2 dropdowns
+(open, search, select) on activity element forms.
+
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## axios v1.20.0 → v1.21.0 (2026-10-28)
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| axios | ^1.8.2 (1.20.0) | ^1.21.0 (1.21.0) | latest 1.x. Floor raised to match the lock |
+
+https://github.com/axios/axios/blob/v1.x/CHANGELOG.md (1.21.0): no breaking
+changes. Only `resources/assets/js/bootstrap.js` configures axios defaults. No code
+fixes. npm audit unchanged (13). Browser smoke: user confirmed a form save and a
+listing search/pagination.
+
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## @vueform/multiselect v2.6.9 → v2.6.11 (2026-10-28)
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| @vueform/multiselect | ^2.6.9 | ^2.6.11 (2.6.11) | patch releases |
+
+https://github.com/vueform/multiselect/releases: fixes only. No code fixes. npm
+audit unchanged (13). Browser smoke: user confirmed the multiselect on activity
+create, default values, and the superadmin/user listing filters.
+
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).
+
+## @headlessui/vue v1.6.7 → v1.7.23 (2026-10-28)
+
+| Package | Before | After | Why |
+|---|---|---|---|
+| @headlessui/vue | ^1.6.2 (1.6.7) | ^1.7.23 (1.7.23) | last 1.x |
+
+Adds `@tanstack/vue-virtual` + `@tanstack/virtual-core` (new deps of 1.7's
+virtualized Combobox). Tree-shaken out, since only `TransitionRoot` is used.
+
+https://github.com/tailwindlabs/headlessui/blob/main/packages/%40headlessui-vue/CHANGELOG.md
+(1.7.x): Combobox/Listbox changes don't apply. The only usage is
+`TransitionRoot` in `components/ErrorMessage.vue`. No code fixes. npm audit
+unchanged (13). Browser smoke: user confirmed the ErrorMessage toast transitions in and out.
+
+`npm run prod` green (no new warnings). `vendor/bin/phpunit` not run (prod DB_HOST).

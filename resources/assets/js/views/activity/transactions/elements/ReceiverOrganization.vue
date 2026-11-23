@@ -31,7 +31,7 @@
                 :key="i"
                 class="title-content mb-4"
                 :class="{
-                  'mb-4': i !== PoData[0].narrative.length - 1,
+                  'mb-4': Number(i) !== PoData[0].narrative.length - 1,
                 }"
               >
                 <div v-if="po.narrative" class="language subtle-darker mb-1.5">

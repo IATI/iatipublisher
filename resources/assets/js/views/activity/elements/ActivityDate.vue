@@ -25,7 +25,7 @@
     <div
       v-for="(item, i) in post.narrative"
       :key="i"
-      :class="{ 'mb-4': i !== post.narrative.length - 1 }"
+      :class="{ 'mb-4': Number(i) !== post.narrative.length - 1 }"
       class="date-content elements-detail"
     >
       <table class="ml-5">
