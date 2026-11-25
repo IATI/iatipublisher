@@ -22,4 +22,5 @@ return [
     'successfully_deleted'                                      => 'Successfully deleted.',
     'error_has_occurred_while_deleting_validation_status'       => 'Error deleting validation status.',
     'bulk_publish_of_numberofdeletedrows_activities_canceled'   => 'Bulk publish of :numberOfDeletedRows activities cancelled.',
+    'all_selected_activities_have_blocking_errors'               => 'All of the selected activities have critical issues or errors and cannot be published.',
 ];

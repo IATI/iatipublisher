@@ -22,4 +22,5 @@ return [
     'successfully_deleted'                                      => 'Supprimé avec succès.',
     'error_has_occurred_while_deleting_validation_status'       => 'Erreur lors de la suppression du statut de validation.',
     'bulk_publish_of_numberofdeletedrows_activities_canceled'   => 'La publication groupée de :numberOfDeletedRows activités a été annulée.',
+    'all_selected_activities_have_blocking_errors'               => 'Toutes les activités sélectionnées contiennent des problèmes critiques ou des erreurs et ne peuvent pas être publiées.',
 ];
